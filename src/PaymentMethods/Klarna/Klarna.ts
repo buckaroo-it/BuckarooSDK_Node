@@ -1,4 +1,3 @@
-import Payload from "../../Models/Payload";
 import PaymentMethod from "../PaymentMethod";
 import BuckarooClient from "../../BuckarooClient";
 import PayPayload from "../../Models/PayPayload";
@@ -32,17 +31,11 @@ export default class Klarna extends PaymentMethod {
     this.paymentName = "klarna";
     this.requiredConfigFields = this.requiredFields;
   }
-  getEndpoint(path: string): string {
-    return super.getEndpoint(path);
-  }
 
   async pay(model?) {
-    let url = new URL(this.api.client.getTransactionUrl());
-
     let data = this.formatData(model, "Pay");
-    // const options = this.api.client.getOptions(url, data, "POST");
-    //
-    // return this.api.client.call(options);
+    let method = "POST";
+    return this.api.client.call(data, method);
   }
 
   payInInstallments(model?) {
@@ -53,7 +46,6 @@ export default class Klarna extends PaymentMethod {
   }
   formatData(data: {}, action) {
     const pay = new Pay();
-    console.log(pay);
     const newData = new PayPayload(data, this, action, pay);
 
     // console.log(JSON.stringify(newData));

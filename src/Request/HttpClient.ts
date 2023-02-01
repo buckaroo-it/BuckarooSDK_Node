@@ -1,5 +1,4 @@
 import * as https from "https";
-import { Console } from "inspector";
 import Endpoints from "../Constants/Endpoints";
 import Config from "./Config";
 import Hmac from "./Hmac";
@@ -19,7 +18,6 @@ export default class HttpClient {
     };
   }
   getOptions(data, method) {
-    console.log(this.getHeaders(method, data));
     let url = new URL(this.getTransactionUrl());
     return {
       hostname: url.host,
@@ -38,13 +36,9 @@ export default class HttpClient {
     return this.getEndpoint("json/Transaction");
   }
 
-  async call(options: {
-    hostname?: string;
-    path: string;
-    method: string;
-    headers: {};
-    data?: string;
-  }): Promise<any> {
+  async call(data, method): Promise<any> {
+    const options = this.getOptions(data, method);
+
     return new Promise(function (resolve, reject) {
       const req = https.request(options, (res) => {
         console.log(`statusCode: ${res.statusCode}`);

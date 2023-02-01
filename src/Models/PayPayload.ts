@@ -3,7 +3,6 @@ import Services from "./Services";
 
 export default class PayPayload extends Payload {
   protected order: string = "";
-
   protected amountDebit: number = 0;
 
   constructor(data, model, action, pay) {

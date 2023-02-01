@@ -1,4 +1,3 @@
-import Ideal from "../PaymentMethods/Ideal/Ideal";
 import Parameters from "./Parameters";
 
 export default class Services {
@@ -13,8 +12,8 @@ export default class Services {
       version: model.serviceVersion,
       action: action,
     };
-    let parameters = new Parameters(pay, data).parameterList;
-    formatedService.parameters = parameters;
+    formatedService.parameters = new Parameters(pay, data).parameterList;
+    console.log(formatedService);
     return formatedService;
   }
 }

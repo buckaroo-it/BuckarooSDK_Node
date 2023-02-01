@@ -15,16 +15,11 @@ export default class Alipay extends PaymentMethod {
       this.requiredFields
     );
   }
-  getEndpoint(path: string): string {
-    return super.getEndpoint(path);
-  }
 
   async pay(model?) {
     let data = this.formatData(model, "Pay");
-
-    const options = this.api.client.getOptions(data, "POST");
-
-    return this.api.client.call(options);
+    let method = "POST";
+    return this.api.client.call(data, method);
   }
 
   payRemainder(model?) {
