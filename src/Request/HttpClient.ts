@@ -38,22 +38,13 @@ export default class HttpClient {
 
   async call(data, method): Promise<any> {
     const options = this.getOptions(data, method);
-
+    throw new Error("Not implemented");
     return new Promise(function (resolve, reject) {
       const req = https.request(options, (res) => {
         console.log(`statusCode: ${res.statusCode}`);
         console.log("headers: ", res.headers);
-        let body = "";
-        res.on("data", (chunk) => {
-          process.stdout.write(chunk);
-          try {
-            body = JSON.parse(Buffer.concat([chunk]).toString());
-          } catch (e) {
-            reject(e);
-          }
-        });
-        res.on("end", function () {
-          resolve(body);
+        res.on("data", (d) => {
+          process.stdout.write(d);
         });
       });
       req.on("error", (error) => {
