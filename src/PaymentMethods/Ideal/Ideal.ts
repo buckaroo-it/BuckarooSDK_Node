@@ -1,7 +1,7 @@
-import Payload from "../models/Payload";
-import PaymentMethod from "./paymentMethod";
-import BuckarooClient from "../BuckarooClient";
-import PayPayload from "../models/PayPayload";
+import Payload from "../../Models/Payload";
+import PaymentMethod from "../PaymentMethod";
+import BuckarooClient from "../../BuckarooClient";
+import PayPayload from "../../Models/PayPayload";
 
 class Pay {
   issuer: string = "";
@@ -27,11 +27,9 @@ export default class Ideal extends PaymentMethod {
   }
 
   async pay(model?) {
-    let url = new URL(this.api.client.getTransactionUrl());
-
     let data = this.formatData(model, "Pay");
 
-    const options = this.api.client.getOptions(url, data, "POST");
+    const options = this.api.client.getOptions(data, "POST");
 
     return this.api.client.call(options);
   }

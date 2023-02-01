@@ -12,20 +12,12 @@ export default class Parameters {
   }
   setUp(pay, data) {
     for (const payKey in pay) {
-      console.log(payKey);
-      console.log(this.method_exists(pay, payKey));
-
       let param = { name: "", value: "", groupType: "", groupID: "" };
-      if (typeof data[payKey] !== "object") {
-        param.name = payKey;
-        param.value = data[payKey];
-        param.groupType = "";
-        param.groupID = "";
-        this.parameterList.push(param);
-      } else {
-        console.log("ss", pay);
-        pay[payKey];
-      }
+      param.name = payKey;
+      param.value = data[payKey];
+      param.groupType = "";
+      param.groupID = "";
+      this.parameterList.push(param);
     }
   }
 }

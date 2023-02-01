@@ -1,8 +1,8 @@
-import PaymentMethod from "./methods/paymentMethod";
-import Config from "./request/config";
-import HttpClient from "./request/client";
-import Ideal from "./methods/ideal";
-import Klarna from "./methods/klarna";
+import PaymentMethod from "./PaymentMethods/PaymentMethod";
+import Config from "./Request/Config";
+import HttpClient from "./Request/HttpClient";
+import Ideal from "./PaymentMethods/Ideal/Ideal";
+import Klarna from "./PaymentMethods/Klarna/Klarna";
 const payments: {} = {
   ideal: Ideal,
   klarna: Klarna,

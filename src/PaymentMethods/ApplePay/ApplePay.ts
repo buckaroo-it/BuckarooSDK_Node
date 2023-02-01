@@ -1,16 +1,17 @@
-import PaymentMethod from "./paymentMethod";
-import BuckarooClient from "../BuckarooClient";
-import PayPayload from "../models/PayPayload";
+import PaymentMethod from "../PaymentMethod";
+import BuckarooClient from "../../BuckarooClient";
+import PayPayload from "../../Models/PayPayload";
 
 class Pay {
-  useMobileView: boolean = false;
+  paymentData: string = "";
+  customerCardName: string = "";
 }
 
-export default class Alipay extends PaymentMethod {
+export default class ApplePay extends PaymentMethod {
   protected requiredConfigFields: Array<string> = [];
   constructor(api: BuckarooClient) {
     super(api);
-    this.paymentName = "alipay";
+    this.paymentName = "applepay";
     this.requiredConfigFields = this.requiredConfigFields.concat(
       this.requiredFields
     );
@@ -20,21 +21,11 @@ export default class Alipay extends PaymentMethod {
   }
 
   async pay(model?) {
-    let urlFormatted = new URL(this.api.client.getTransactionUrl());
-
     let data = this.formatData(model, "Pay");
 
-    let headers = this.api.client.getHeaders("POST", data);
+    const options = this.api.client.getOptions(data, "POST");
 
-    const options = {
-      hostname: urlFormatted.host,
-      path: urlFormatted.pathname + urlFormatted.search,
-      method: "POST",
-      headers: headers,
-      data: JSON.stringify(data),
-    };
-    await this.api.client.call(options);
-    return model;
+    return this.api.client.call(options);
   }
 
   payRemainder(model?) {

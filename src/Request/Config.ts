@@ -19,7 +19,6 @@ export default class Config {
     pushURL?: string
   ) {
     this.websiteKey = websiteKey || process.env.BPE_WEBSITE_KEY || "KEY";
-
     this.secretKey = secretKey || process.env.BPE_SECRET_KEY || "SECRET";
 
     this.mode = process.env.BPE_MODE || "test";

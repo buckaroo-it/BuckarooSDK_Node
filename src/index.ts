@@ -2,11 +2,11 @@ require("dotenv").config({ path: "../.env" });
 import BuckarooClient from "./BuckarooClient";
 const api = new BuckarooClient();
 
-import Ideal from "./methods/ideal";
-import Klarna from "./methods/klarna";
-import Alipay from "./methods/alipay";
-import Sofort from "./methods/sofort";
-import ApplePay from "./methods/ApplePay";
+import Ideal from "./PaymentMethods/Ideal/Ideal";
+import Klarna from "./PaymentMethods/Klarna/Klarna";
+import Alipay from "./PaymentMethods/Alipay/Alipay";
+import Sofort from "./PaymentMethods/Sofort/Sofort";
+import ApplePay from "./PaymentMethods/ApplePay/ApplePay";
 
 const method = new Klarna(api);
 const method2 = new Alipay(api);
@@ -21,67 +21,67 @@ function uniqid(prefix = "", random = false) {
     random ? `.${Math.trunc(Math.random() * 100000000)}` : ""
   }`;
 }
-method.pay({
-  amountDebit: 50.3,
-  order: uniqid(),
-  invoice: uniqid(),
-  billing: {
-    recipient: {
-      category: "B2C",
-      gender: "female",
-      firstName: "John",
-      lastName: "Do",
-      birthDate: "1990-01-01",
-    },
-    address: {
-      street: "Hoofdstraat",
-      houseNumber: "13",
-      houseNumberAdditional: "a",
-      zipcode: "1234AB",
-      city: "Heerenveen",
-      country: "NL",
-    },
-    phone: {
-      mobile: "0698765433",
-      landline: "0109876543",
-    },
-    email: "test@buckaroo.nl",
-  },
-  shipping: {
-    recipient: {
-      category: "B2B",
-      gender: "male",
-      firstName: "John",
-      lastName: "Do",
-      birthDate: "1990-01-01",
-    },
-    address: {
-      street: "Kalverstraat",
-      houseNumber: "13",
-      houseNumberAdditional: "b",
-      zipcode: "4321EB",
-      city: "Amsterdam",
-      country: "NL",
-    },
-    email: "test@buckaroo.nl",
-  },
-  articles: [
-    {
-      identifier: "Articlenumber1",
-      description: "Blue Toy Car",
-      vatPercentage: "21",
-      quantity: "2",
-      price: "20.10",
-    },
-    {
-      identifier: "Articlenumber2",
-      description: "Red Toy Car",
-      vatPercentage: "21",
-      quantity: "1",
-      price: "10.10",
-    },
-  ],
-});
+// method.pay({
+//   amountDebit: 50.3,
+//   order: uniqid(),
+//   invoice: uniqid(),
+//   billing: {
+//     recipient: {
+//       category: "B2C",
+//       gender: "female",
+//       firstName: "John",
+//       lastName: "Do",
+//       birthDate: "1990-01-01",
+//     },
+//     address: {
+//       street: "Hoofdstraat",
+//       houseNumber: "13",
+//       houseNumberAdditional: "a",
+//       zipcode: "1234AB",
+//       city: "Heerenveen",
+//       country: "NL",
+//     },
+//     phone: {
+//       mobile: "0698765433",
+//       landline: "0109876543",
+//     },
+//     email: "test@buckaroo.nl",
+//   },
+//   shipping: {
+//     recipient: {
+//       category: "B2B",
+//       gender: "male",
+//       firstName: "John",
+//       lastName: "Do",
+//       birthDate: "1990-01-01",
+//     },
+//     address: {
+//       street: "Kalverstraat",
+//       houseNumber: "13",
+//       houseNumberAdditional: "b",
+//       zipcode: "4321EB",
+//       city: "Amsterdam",
+//       country: "NL",
+//     },
+//     email: "test@buckaroo.nl",
+//   },
+//   articles: [
+//     {
+//       identifier: "Articlenumber1",
+//       description: "Blue Toy Car",
+//       vatPercentage: "21",
+//       quantity: "2",
+//       price: "20.10",
+//     },
+//     {
+//       identifier: "Articlenumber2",
+//       description: "Red Toy Car",
+//       vatPercentage: "21",
+//       quantity: "1",
+//       price: "10.10",
+//     },
+//   ],
+// });
 
 // method4.pay({
 //   amountDebit: 10,
@@ -95,11 +95,11 @@ method.pay({
 //   amountDebit: 10.1,
 // });
 
-// method2.pay({
-//   amountDebit: 10,
-//   invoice: uniqid(),
-//   useMobileView: true,
-// });
+method2.pay({
+  amountDebit: 10,
+  invoice: uniqid(),
+  useMobileView: true,
+});
 
 // method.pay({
 //   invoice: 123123,

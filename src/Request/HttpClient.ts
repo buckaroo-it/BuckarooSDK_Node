@@ -1,8 +1,8 @@
 import * as https from "https";
 import { Console } from "inspector";
 import Endpoints from "../Constants/Endpoints";
-import Config from "./config";
-import Hmac from "./hmac";
+import Config from "./Config";
+import Hmac from "./Hmac";
 
 export default class HttpClient {
   private _config: Config;
@@ -18,7 +18,9 @@ export default class HttpClient {
       Culture: "en-GB",
     };
   }
-  getOptions(url, data, method) {
+  getOptions(data, method) {
+    console.log(this.getHeaders(method, data));
+    let url = new URL(this.getTransactionUrl());
     return {
       hostname: url.host,
       path: url.pathname + url.search,

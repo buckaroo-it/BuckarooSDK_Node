@@ -1,6 +1,6 @@
-import PaymentMethod from "./paymentMethod";
-import BuckarooClient from "../BuckarooClient";
-import PayPayload from "../models/PayPayload";
+import PaymentMethod from "../PaymentMethod";
+import BuckarooClient from "../../BuckarooClient";
+import PayPayload from "../../Models/PayPayload";
 
 class Pay {}
 
@@ -19,21 +19,11 @@ export default class Sofort extends PaymentMethod {
   }
 
   async pay(model?) {
-    let urlFormatted = new URL(this.api.client.getTransactionUrl());
-
     let data = this.formatData(model, "Pay");
 
-    let headers = this.api.client.getHeaders("POST", data);
+    const options = this.api.client.getOptions(data, "POST");
 
-    const options = {
-      hostname: urlFormatted.host,
-      path: urlFormatted.pathname + urlFormatted.search,
-      method: "POST",
-      headers: headers,
-      data: JSON.stringify(data),
-    };
-    await this.api.client.call(options);
-    return model;
+    return this.api.client.call(options);
   }
 
   payRemainder(model?) {
