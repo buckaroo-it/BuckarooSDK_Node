@@ -10,3 +10,5 @@ class CreditManagementInstallmentInterval {
     public static readonly HALFYEAR: string = 'HalfYear';
     public static readonly YEAR: string = 'Year';
 }
+
+export default CreditManagementInstallmentInterval;
