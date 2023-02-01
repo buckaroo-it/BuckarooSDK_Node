@@ -3,14 +3,15 @@ import BuckarooClient from "../BuckarooClient";
 import PayPayload from "../models/PayPayload";
 
 class Pay {
-  useMobileView: boolean = false;
+  paymentData: string = "";
+  customerCardName: string = "";
 }
 
-export default class Alipay extends PaymentMethod {
+export default class ApplePay extends PaymentMethod {
   protected requiredConfigFields: Array<string> = [];
   constructor(api: BuckarooClient) {
     super(api);
-    this.paymentName = "alipay";
+    this.paymentName = "applepay";
     this.requiredConfigFields = this.requiredConfigFields.concat(
       this.requiredFields
     );

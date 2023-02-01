@@ -1,19 +1,17 @@
-import Config from "../request/config";
 import BuckarooClient from "../BuckarooClient";
 import Endpoints from "../Constants/Endpoints";
 
 export default class PaymentMethod {
   private readonly _api: BuckarooClient;
   public paymentName: string = "";
-  private _serviceVersion: number = 0;
+  public serviceVersion: number = 0;
 
   private _requiredConfigFields: string[] = ["currency", "pushURL"];
-
   get requiredFields(): string[] {
     return this._requiredConfigFields;
   }
-  get serviceVersion(): number {
-    return this._serviceVersion;
+  getServiceVersion(): number {
+    return this.serviceVersion;
   }
 
   constructor(api: BuckarooClient) {
@@ -29,5 +27,10 @@ export default class PaymentMethod {
       : Endpoints.TEST;
 
     return baseUrl + path;
+  }
+
+  setServiceVersion(version: number) {
+    this.serviceVersion = version;
+    return this;
   }
 }

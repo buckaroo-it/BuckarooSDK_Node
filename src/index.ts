@@ -1,11 +1,18 @@
-import BuckarooClient from "./BuckarooClient";
-
 require("dotenv").config({ path: "../.env" });
-
+import BuckarooClient from "./BuckarooClient";
 const api = new BuckarooClient();
+
 import Ideal from "./methods/ideal";
 import Klarna from "./methods/klarna";
+import Alipay from "./methods/alipay";
+import Sofort from "./methods/sofort";
+import ApplePay from "./methods/ApplePay";
+
 const method = new Klarna(api);
+const method2 = new Alipay(api);
+const method3 = new Sofort(api);
+const method4 = new ApplePay(api);
+const method5 = new Ideal(api);
 
 function uniqid(prefix = "", random = false) {
   const sec = Date.now() * 1000 + Math.random() * 1000;
@@ -75,6 +82,41 @@ method.pay({
     },
   ],
 });
+
+// method4.pay({
+//   amountDebit: 10,
+//   invoice: uniqid(),
+//   paymentData: "XXXXXXXXXXXXX",
+//   customerCardName: "Buck Aroo",
+// });
+
+// method3.pay({
+//   invoice: uniqid(),
+//   amountDebit: 10.1,
+// });
+
+// method2.pay({
+//   amountDebit: 10,
+//   invoice: uniqid(),
+//   useMobileView: true,
+// });
+
+// method.pay({
+//   invoice: 123123,
+//   amountDebit: 10.1,
+//   issuer: "ABNANL2A",
+//   pushURL: "https://buckaroo.nextto.dev/push",
+//   returnURL: "https://buckaroo.nextto.dev/return",
+//   clientIP: {
+//     Address: "123.456.789.123",
+//     Type: "0",
+//   },
+//   additionalParameters: {
+//     initiated_by_magento: "1",
+//     service_action: "something",
+//   },
+// });
+
 //
 // method.pay({
 //         returnURL     : 'https://example.com/return',
