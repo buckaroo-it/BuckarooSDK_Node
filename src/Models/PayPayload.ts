@@ -10,8 +10,8 @@ export default class PayPayload extends Payload {
   constructor(data, method, action, pay) {
     super(data, method, action);
     this.order = this.uniqId("ORDER_NO_");
-    this.paymentName = method.paymentName
-    this.serviceVersion = method.serviceVersion
+    this.paymentName = method.paymentName;
+    this.serviceVersion = method.serviceVersion;
 
     this.setProperties(data, method, action, pay);
   }
@@ -25,8 +25,8 @@ export default class PayPayload extends Payload {
     }
     this.services = new Services(data, this, action, pay);
 
-    // console.log(this.services.serviceList[0].parameters)
-    // throw new Error('s');
+    console.log(this.services.serviceList[0].parameters);
+    throw new Error("s");
   }
 
   uniqId(prefix = "", random = false) {

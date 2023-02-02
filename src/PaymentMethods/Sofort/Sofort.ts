@@ -14,11 +14,11 @@ export default class Sofort extends PaymentMethod {
       this.requiredFields
     );
   }
-
   async pay(model?) {
-    let data = this.formatData(model, "Pay");
-    let method = "POST";
-    return this.api.client.call(data, method);
+    return this.api.client.call(
+      new PayPayload(model, this, "Pay", new Pay()),
+      "POST"
+    );
   }
 
   payRemainder(model?) {
@@ -26,12 +26,5 @@ export default class Sofort extends PaymentMethod {
   }
   issuers(): any {
     return this;
-  }
-  formatData(data: {}, action) {
-    const pay = new Pay();
-    const newData = new PayPayload(data, this, action, pay);
-
-    console.log(JSON.stringify(newData));
-    return newData;
   }
 }
