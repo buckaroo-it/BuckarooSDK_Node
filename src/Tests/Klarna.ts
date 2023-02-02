@@ -27,15 +27,14 @@ method.pay({
     },
     address: {
       street: "Hoofdstraat",
-      houseNumber: "13",
-      houseNumberAdditional: "a",
-      zipcode: "1234AB",
+      StreetNumber: "13",
+      StreetNumberAdditional: "a",
+      PostalCode: "1234AB",
       city: "Heerenveen",
       country: "NL",
     },
     phone: {
-      mobile: "0698765433",
-      landline: "0109876543",
+      Phone: "0698765433",
     },
     email: "test@buckaroo.nl",
   },
@@ -49,9 +48,9 @@ method.pay({
     },
     address: {
       street: "Kalverstraat",
-      houseNumber: "13",
-      houseNumberAdditional: "b",
-      zipcode: "4321EB",
+      StreetNumber: "13",
+      StreetNumberAdditional: "b",
+      PostalCode: "4321EB",
       city: "Amsterdam",
       country: "NL",
     },
@@ -64,7 +63,7 @@ method.pay({
       vatPercentage: "21",
       quantity: "2",
       price: "20.10",
-      fdsgfdsfg:'mmm,sds/'
+      fdsgfdsfg: "mmm,sds/",
     },
     {
       identifier: "Articlenumber2",

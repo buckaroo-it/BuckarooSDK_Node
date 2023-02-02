@@ -17,10 +17,7 @@ export default class Alipay extends PaymentMethod {
   }
 
   async pay(model?) {
-    return this.api.client.call(
-      new PayPayload(model, this, "Pay", new Pay()),
-      "POST"
-    );
+    return this.api.client.post(new PayPayload(model, this, "Pay", new Pay()));
   }
 
   payRemainder(model?) {

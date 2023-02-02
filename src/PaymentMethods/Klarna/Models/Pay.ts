@@ -7,10 +7,18 @@ export default class Pay {
   shipping = (data) => this.shippingFormat(data);
 
   billingFormat(data) {
-    return { data: new ServiceObject(data), key: "Billing", groupID: "" };
+    return {
+      data: new ServiceObject(data),
+      key: "BillingCustomer",
+      groupID: "",
+    };
   }
   shippingFormat(data) {
-    return { data: new ServiceObject(data), key: "Shipping", groupID: "" };
+    return {
+      data: new ServiceObject(data),
+      key: "ShippingCustomer",
+      groupID: "",
+    };
   }
   articlesFormat(data) {
     if (!Array.isArray(data)) {
