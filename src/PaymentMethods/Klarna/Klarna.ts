@@ -2,25 +2,51 @@ import PaymentMethod from "../PaymentMethod";
 import BuckarooClient from "../../BuckarooClient";
 import PayPayload from "../../Models/PayPayload";
 
-class Pay {
-  countableProperties: Array<string> = ["articles"];
-  billingRecipient = "";
-  shippingRecipient = "";
-  _articles = [];
-  groupData = {
-    articles: {
-      groupType: "Article",
-    },
-  };
-  billing(data?) {
-    console.log("a", data);
+class Article {
+  // GrossUnitPrice:'' = ''
+  constructor(data) {
+    for (const dataKey in data) {
+      this[dataKey] = data[dataKey]
+    }
+    // if(this['price']){
+      // this.GrossUnitPrice = this['price']
+      // delete  this['price']
+    // }
   }
-  shipping(data) {
-    console.log("b", data);
+}
+
+class Shipping {
+  constructor(data) {
+    for (const dataKey in data) {
+      this[dataKey] = data[dataKey]
+    }
   }
 
-  articles(data) {
-    console.log("c", data);
+}
+
+class Billing {
+  constructor(data) {
+    for (const dataKey in data) {
+      this[dataKey] = data[dataKey]
+    }
+  }
+
+}
+
+class Pay {
+  billing = (data) =>  this.billingFormat(data)
+  articles = (data) =>  this.articlesFormat(data);
+
+  shipping = (data) =>  this.shippingFormat(data);
+
+  billingFormat(data) {
+    return {data: new Billing(data),key:'Billing',groupID: ''}
+  }
+  shippingFormat(data) {
+    return {data: new Shipping(data),key:'Shipping',groupID: ''};
+  }
+  articlesFormat(data) {
+    return {data: new Article(data),key:'Article',groupID: 1}
   }
 }
 
@@ -34,8 +60,7 @@ export default class Klarna extends PaymentMethod {
 
   async pay(model?) {
     let data = this.formatData(model, "Pay");
-    let method = "POST";
-    return this.api.client.call(data, method);
+    return this.api.client.call(data, "POST");
   }
 
   payInInstallments(model?) {

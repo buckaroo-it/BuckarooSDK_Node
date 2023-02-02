@@ -6,14 +6,11 @@ export default class Services {
     this.serviceList.push(this.formatServices(data, model, action, pay));
   }
   formatServices(data, model, action, pay) {
-    let formatedService = {
-      parameters: {}[""],
+    return {
+      parameters: new Parameters(pay, data).parameterList,
       name: model.paymentName,
       version: model.serviceVersion,
       action: action,
     };
-    formatedService.parameters = new Parameters(pay, data).parameterList;
-    console.log(formatedService);
-    return formatedService;
   }
 }

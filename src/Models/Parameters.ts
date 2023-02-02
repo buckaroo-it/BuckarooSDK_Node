@@ -3,26 +3,28 @@ export default class Parameters {
   constructor(pay, data) {
     this.setUp(pay, data);
   }
-  method_exists(obj, method) {
-    if (typeof obj === "string") {
-      return window[obj] && typeof window[obj][method] === "function";
-    }
-    return typeof obj[method] === "function";
-  }
-  setUp(pay, data) {
+  setUp(pay, data ,groupType='',groupID ='') {
     let param;
-    // qekjo po punon veq duhet me kqyr qa me bo me kto
-    for (const property in data) {
-      if (this.method_exists(pay, property)) {
-        pay[property](data[property]);
-      }
-    }
+
     for (const payKey in pay) {
+      if(typeof pay[payKey] === "function"){
+        let temp = pay[payKey](data[payKey]);
+        this.setUp(temp.data , data[payKey],temp.key,temp.groupID)
+        continue
+      }
+      if(typeof data[payKey] ==='object'){
+
+        this.setUp(data[payKey], data[payKey] ,groupType,groupID)
+        if(typeof groupID == 'number'){
+          groupID++;
+        }
+        continue
+      }
       param = {
         name: payKey,
-        value: data[payKey],
-        groupType: "",
-        groupID: "",
+        value: data[payKey] || pay[payKey],
+        groupType: groupType,
+        groupID: groupID,
       };
       this.parameterList.push(param);
     }

@@ -41,34 +41,4 @@ export default class Ideal extends PaymentMethod {
     console.log(JSON.stringify(newData));
     return newData;
   }
-  getData(data) {
-    // return {
-    //     Order:"ORDER_NO_1",
-    //     AmountDebit:11.1,
-    //     Currency:"EUR",
-    //     ReturnURL:"https://example.com/return",
-    //     ReturnURLCancel:"",
-    //     PushURL: 'https://testcheckout.buckaroo.nl/push',
-    //     Invoice:"r1001",
-    //     Issuer:"ABNANL2A",
-    //     ClientUserAgent:"",
-    //     Services: {
-    //         ServiceList: [
-    //             {
-    //                 Name: "ideal",
-    //                 Action: "Pay",
-    //                 Version: 0,
-    //                 Parameters: [
-    //                     {
-    //                         Name: "issuer",
-    //                         Value: "ABNANL2A",
-    //                         GroupType:"",
-    //                         GroupID:""
-    //                     }
-    //                 ]
-    //             }
-    //         ]
-    //     }
-    // }
-  }
 }
