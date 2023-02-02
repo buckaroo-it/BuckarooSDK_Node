@@ -23,13 +23,10 @@ export default class PayPayload extends Payload {
     for (const datum in data) {
       this[datum] = data[datum];
     }
-
-    console.log(this)
-    throw new Error('s');
     this.services = new Services(data, this, action, pay);
 
-    console.log(this.services.serviceList[0].parameters)
-    throw new Error('s');
+    // console.log(this.services.serviceList[0].parameters)
+    // throw new Error('s');
   }
 
   uniqId(prefix = "", random = false) {

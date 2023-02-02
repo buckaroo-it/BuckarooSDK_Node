@@ -2,16 +2,42 @@ import PaymentMethod from "../PaymentMethod";
 import BuckarooClient from "../../BuckarooClient";
 import PayPayload from "../../Models/PayPayload";
 
-class Article {
-  // GrossUnitPrice:'' = ''
+class AricleForm {
+  protected identifier?: string;
+  protected type?: string;
+  protected brand: string = '';
+  protected manufacturer?: string;
+  protected unitCode?: string;
+  protected quantity?: number;
+  protected price?: number;
+  protected vatCategory?: number;
+  protected vatPercentage?: number;
+  protected description?: string;
+
+  constructor(props) {
+    this.identifier = props.identifier;
+    this.type = props.type;
+    this.description = props.description;
+  }
+}
+
+class Article extends AricleForm{
+  // keys = {
+  //   price: "vegim",
+  //   address: "a"
+  // }
+
   constructor(data) {
-    for (const dataKey in data) {
-      this[dataKey] = data[dataKey]
-    }
-    // if(this['price']){
-      // this.GrossUnitPrice = this['price']
-      // delete  this['price']
-    // }
+      super(data)
+
+      for (const dataKey in this) {
+        if (!this[dataKey]) {
+        delete this[dataKey]
+        }
+      }
+  }
+  getKeyConfig(){
+    // keys.price=
   }
 }
 
@@ -46,7 +72,14 @@ class Pay {
     return {data: new Shipping(data),key:'Shipping',groupID: ''};
   }
   articlesFormat(data) {
-    return {data: new Article(data),key:'Article',groupID: 1}
+    if(!Array.isArray(data)){
+      data = [data]
+    }
+    let articles:Array<Article> = []
+    for (const datum of data) {
+      articles.push(new Article(datum))
+    }
+    return {data: articles,key:'Article',groupID: 1}
   }
 }
 

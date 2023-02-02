@@ -64,6 +64,7 @@ method.pay({
       vatPercentage: "21",
       quantity: "2",
       price: "20.10",
+      fdsgfdsfg:'mmm,sds/'
     },
     {
       identifier: "Articlenumber2",

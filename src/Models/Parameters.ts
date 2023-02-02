@@ -3,7 +3,7 @@ export default class Parameters {
   constructor(pay, data) {
     this.setUp(pay, data);
   }
-  setUp(pay, data ,groupType='',groupID ='') {
+  setUp(pay, data ,groupType?,groupID?) {
     let param;
 
     for (const payKey in pay) {
@@ -13,8 +13,14 @@ export default class Parameters {
         continue
       }
       if(typeof data[payKey] ==='object'){
+        if(groupType==="Article"){
 
-        this.setUp(data[payKey], data[payKey] ,groupType,groupID)
+          this.setUp(pay[groupID-1], data[payKey] ,groupType,groupID)
+
+        }else{
+          this.setUp(data[payKey], data[payKey] ,groupType,groupID)
+
+        }
         if(typeof groupID == 'number'){
           groupID++;
         }
