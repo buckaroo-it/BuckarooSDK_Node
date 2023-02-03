@@ -1,27 +1,24 @@
-import AddressModel from "../../../Models/Address";
-
-export default class Address extends AddressModel {
+// import AddressModel  from "../../../Models/Address";
+import {AddressParams} from "../../../Models/Address";
+export default class Address {
   constructor(data) {
-    super(data);
 
-    this.setKeys();
+    this.setKeys(data);
   }
 
-  setKeys() {
+  setKeys(data) {
     const keys: any = {
       houseNumber: "StreetNumber",
       houseNumberAdditional: "StreetNumberAdditional",
       zipcode: "PostalCode",
     };
 
-    for (let dataKey in this) {
-      if (keys[dataKey]) {
-        this[keys[dataKey]] = this[dataKey];
-        delete this[dataKey];
-      }
-      if (!this[dataKey]) {
-        delete this[dataKey];
-      }
+    for (const key in AddressParams) {
+        if(keys[key]){
+          this[keys[key]] = data[key]
+        }else if(data[key]){
+          this[AddressParams[key]] = data[key]
+        }
     }
   }
 }

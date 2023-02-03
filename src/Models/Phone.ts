@@ -9,3 +9,8 @@ export default class Phone {
     this.fax = props.fax;
   }
 }
+export const PhoneParams ={
+  landline: 'landline',
+  mobile:'mobile',
+  fax:'fax'
+}

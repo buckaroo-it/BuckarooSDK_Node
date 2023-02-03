@@ -27,8 +27,6 @@ export default class PayPayload extends Payload {
       }
     }
     this.services = new Services(data, this, action, pay);
-    console.log(this)
-    console.log(this.services.serviceList[0].parameters);
-    throw new Error("s");
+    // console.log(this);
   }
 }

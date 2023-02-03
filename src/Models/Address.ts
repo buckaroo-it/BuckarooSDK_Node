@@ -17,3 +17,13 @@ export default class Address {
     this.country = props.country;
   }
 }
+
+export const AddressParams = {
+  street: 'Street',
+  houseNumber : 'HouseNumber',
+  houseNumberAdditional:'HouseNumberAdditional',
+  zipcode:'Zipcode',
+  city:'City',
+  state:'State',
+  country:'Country'
+}

@@ -10,7 +10,7 @@ export default class Parameters {
       if(typeof pay[payKey] === "function"){
         let payLoadObject;
         if(data[payKey]) {
-          payLoadObject = pay[payKey](data[payKey]);
+          payLoadObject = pay[payKey](data[payKey],groupType);
           this.setUp(payLoadObject.data, data[payKey], payLoadObject.key, payLoadObject.groupID)
         }
         continue
@@ -21,7 +21,7 @@ export default class Parameters {
           groupID++;
           this.setUp(pay[groupID-1], data[payKey] ,groupType,groupID)
         }else{
-          this.setUp(pay, data[payKey] ,groupType,groupID)
+          this.setUp(pay[payKey], data[payKey] ,groupType,groupID)
 
         }
         continue

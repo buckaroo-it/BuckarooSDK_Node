@@ -19,12 +19,18 @@ export default class Client {
   }
   getOptions(data, method,url) {
     url = new URL(url);
+    if(typeof data === "object"){
+      if(Object.keys(data).length === 0){
+        data = ''
+      }
+    }
+
     return  {
       hostname: url.host,
       path: url.pathname + url.search,
       method: method,
       headers: this.getHeaders(method, data, url.href),
-      data: data
+      data:data
     };
   }
   getEndpoint(path: string) {
@@ -57,7 +63,7 @@ export default class Client {
       data = '';
     }
     const options = this.getOptions(data, method,url);
-    console.log(options)
+    // console.log(options,options.data.services.serviceList)
     return new HttpClient().call(options);
   }
 }

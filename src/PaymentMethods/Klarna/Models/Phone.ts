@@ -1,25 +1,22 @@
-import PhoneModel from "../../../Models/Phone";
+import {PhoneParams} from "../../../Models/Phone";
 
-export default class Phone extends PhoneModel {
+
+export default class Phone  {
   constructor(data) {
-    super(data);
-    this.setKeys();
+    this.setKeys(data);
   }
 
-  setKeys() {
+  setKeys(data) {
     const keys: any = {
       mobile: "Phone",
     };
-    // console.log(this)
-    for (let dataKey in this) {
-      if (keys[dataKey]) {
-        this[keys[dataKey]] = this[dataKey];
-        delete this[dataKey];
-      }
-      if (!this[dataKey] ) {
-        delete this[dataKey];
+
+    for (const key in PhoneParams) {
+      if(data[key]){
+        if(keys[key]){
+          this[keys[key]] = data[key]
+        }
       }
     }
-    // console.log(this)
   }
 }

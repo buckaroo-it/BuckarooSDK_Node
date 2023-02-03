@@ -10,29 +10,23 @@ export default class Recipient {
     }
   }
 
-  // recipient = (data) => this.recipientFormat(data);
-  address = (data) => this.addressFormat(data);
-  phone = (data) => this.phoneFormat(data);
+  address = (data, key) => this.addressFormat(data, key);
+  phone = (data, key) => this.phoneFormat(data,key);
 
-  // recipientFormat = (data) => {};
 
-  addressFormat(data) {
-    // throw new Error('d')
+  addressFormat(data, key) {
      return {
-      data: new Address(data),
-       key: "ShippingCustomer",
+       data: new Address(data),
+       key: key,
        groupID: "",
     };
   };
 
-  phoneFormat(data) {
-    // if (data)
+  phoneFormat(data,key) {
       return {
         data: new Phone(data),
-        key: "ShippingCustomer",
+        key: key,
         groupID: "",
       };
-    // return new Phone(data);
-    // return '';
   };
 }
