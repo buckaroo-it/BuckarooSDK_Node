@@ -4,7 +4,9 @@ import Phone from "../Models/Phone";
 export default class Recipient {
   constructor(data) {
     for (const dataKey in data) {
-      this[dataKey] = data[dataKey];
+      if (typeof this[dataKey] !== 'function'){
+        this[dataKey] = data[dataKey];
+      }
     }
   }
 
@@ -14,25 +16,23 @@ export default class Recipient {
 
   // recipientFormat = (data) => {};
 
-  addressFormat = (data: any = "") => {
-    if (!Array.isArray(data)) {
-      data = [data];
-    }
-    let address: Array<Address> = [];
-    for (const datum of data) {
-      address.push(new Address(datum));
-    }
-    return address;
+  addressFormat(data) {
+    // throw new Error('d')
+     return {
+      data: new Address(data),
+       key: "ShippingCustomer",
+       groupID: "",
+    };
   };
 
-  phoneFormat = (data: any = "") => {
-    if (!Array.isArray(data)) {
-      data = [data];
-    }
-    let phone: Array<Phone> = [];
-    for (const datum of data) {
-      phone.push(new Phone(datum));
-    }
-    return phone;
+  phoneFormat(data) {
+    // if (data)
+      return {
+        data: new Phone(data),
+        key: "ShippingCustomer",
+        groupID: "",
+      };
+    // return new Phone(data);
+    // return '';
   };
 }

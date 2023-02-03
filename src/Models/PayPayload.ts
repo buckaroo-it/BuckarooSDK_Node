@@ -22,11 +22,13 @@ export default class PayPayload extends Payload {
       this[datum] = method.api.config[datum] ? method.api.config[datum] : "";
     }
     for (const datum in data) {
-      this[datum] = data[datum];
+      if (typeof data[datum] !== 'object'){
+        this[datum] = data[datum];
+      }
     }
     this.services = new Services(data, this, action, pay);
-
-    // console.log(this.services.serviceList[0].parameters);
-    // throw new Error("s");
+    console.log(this)
+    console.log(this.services.serviceList[0].parameters);
+    throw new Error("s");
   }
 }

@@ -8,8 +8,11 @@ export default class Parameters {
 
     for (const payKey in pay) {
       if(typeof pay[payKey] === "function"){
-        let payLoadObject = pay[payKey](data[payKey]);
-        this.setUp(payLoadObject.data , data[payKey],payLoadObject.key,payLoadObject.groupID)
+        let payLoadObject;
+        if(data[payKey]) {
+          payLoadObject = pay[payKey](data[payKey]);
+          this.setUp(payLoadObject.data, data[payKey], payLoadObject.key, payLoadObject.groupID)
+        }
         continue
       }
       if(typeof data[payKey] ==='object'){

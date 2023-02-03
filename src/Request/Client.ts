@@ -24,7 +24,7 @@ export default class Client {
       path: url.pathname + url.search,
       method: method,
       headers: this.getHeaders(method, data, url.href),
-      // data: data
+      data: data
     };
   }
   getEndpoint(path: string) {
@@ -57,6 +57,7 @@ export default class Client {
       data = '';
     }
     const options = this.getOptions(data, method,url);
+    console.log(options)
     return new HttpClient().call(options);
   }
 }
