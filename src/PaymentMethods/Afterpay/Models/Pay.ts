@@ -1,4 +1,4 @@
-import Recipient from "../Service/Recipient";
+import ServiceObject from "../Service/ServiceObject";
 import Article from "./Article";
 
 export default class Pay {
@@ -8,14 +8,14 @@ export default class Pay {
 
   billingFormat(data) {
     return {
-      data: new Recipient(data),
+      data: new ServiceObject(data),
       key: "BillingCustomer",
       groupID: "",
     };
   }
   shippingFormat(data) {
     return {
-      data: new Recipient(data),
+      data: new ServiceObject(data),
       key: "ShippingCustomer",
       groupID: "",
     };

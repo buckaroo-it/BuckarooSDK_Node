@@ -18,7 +18,10 @@ export default class ApplePay extends PaymentMethod {
   }
 
   async pay(model?) {
-    return this.api.client.post(new PayPayload(model, this, "Pay", new Pay()));
+    return this.api.client.post(
+      new PayPayload(model, this, "Pay", new Pay()),
+      this.api.client.getTransactionUrl()
+    );
   }
 
   payRemainder(model?) {

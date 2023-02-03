@@ -1,5 +1,6 @@
 import Payload from "./Payload";
 import Services from "./Services";
+import { uniqid } from "../Functions/Functions";
 
 export default class PayPayload extends Payload {
   protected order: string = "";
@@ -9,7 +10,7 @@ export default class PayPayload extends Payload {
 
   constructor(data, method, action, pay) {
     super(data, method, action);
-    this.order = this.uniqId("ORDER_NO_");
+    this.order = uniqid("ORDER_NO_");
     this.paymentName = method.paymentName;
     this.serviceVersion = method.serviceVersion;
 
@@ -27,13 +28,5 @@ export default class PayPayload extends Payload {
 
     // console.log(this.services.serviceList[0].parameters);
     // throw new Error("s");
-  }
-
-  uniqId(prefix = "", random = false) {
-    const sec = Date.now() * 1000 + Math.random() * 1000;
-    const id = sec.toString(16).replace(/\./g, "").padEnd(14, "0");
-    return `${prefix}${id}${
-      random ? `.${Math.trunc(Math.random() * 100000000)}` : ""
-    }`;
   }
 }

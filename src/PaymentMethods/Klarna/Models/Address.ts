@@ -1,6 +1,6 @@
-import ArticleModel from "../../../Models/Article";
+import AddressModel from "../../../Models/Address";
 
-export default class Article extends ArticleModel {
+export default class Address extends AddressModel {
   constructor(data) {
     super(data);
 
@@ -9,7 +9,9 @@ export default class Article extends ArticleModel {
 
   setKeys() {
     const keys: any = {
-      price: "GrossUnitPrice",
+      houseNumber: "StreetNumber",
+      houseNumberAdditional: "StreetNumberAdditional",
+      zipcode: "PostalCode",
     };
 
     for (let dataKey in this) {

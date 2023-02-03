@@ -1,15 +1,14 @@
-import ArticleModel from "../../../Models/Article";
+import PhoneModel from "../../../Models/Phone";
 
-export default class Article extends ArticleModel {
+export default class Phone extends PhoneModel {
   constructor(data) {
     super(data);
-
     this.setKeys();
   }
 
   setKeys() {
     const keys: any = {
-      price: "GrossUnitPrice",
+      mobile: "Phone",
     };
 
     for (let dataKey in this) {

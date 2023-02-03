@@ -1,30 +1,23 @@
 import PaymentMethod from "../PaymentMethod";
 import BuckarooClient from "../../BuckarooClient";
 import PayPayload from "../../Models/PayPayload";
+import Pay from "./Models/Pay";
 
-class Pay {}
-
-export default class Sofort extends PaymentMethod {
+export default class Afterpay extends PaymentMethod {
   protected requiredConfigFields: Array<string> = [];
-  public serviceVersion = 1;
+
   constructor(api: BuckarooClient) {
     super(api);
-    this.paymentName = "sofortueberweisung";
-    this.requiredConfigFields = this.requiredConfigFields.concat(
-      this.requiredFields
+    this.paymentName = "afterpay";
+    this.requiredConfigFields = this.requiredFields.concat(
+      this.requiredConfigFields
     );
   }
+
   async pay(model?) {
     return this.api.client.post(
       new PayPayload(model, this, "Pay", new Pay()),
       this.api.client.getTransactionUrl()
     );
-  }
-
-  payRemainder(model?) {
-    return model;
-  }
-  issuers(): any {
-    return this;
   }
 }

@@ -1,7 +1,7 @@
 export default class Article {
   protected identifier?: string;
   protected type?: string;
-  protected brand: string = "";
+  protected brand?: string;
   protected manufacturer?: string;
   protected unitCode?: string;
   protected quantity?: number;

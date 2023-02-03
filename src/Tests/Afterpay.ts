@@ -1,10 +1,12 @@
 require("dotenv").config({ path: "../../.env" });
+
+import RecipientCategory from "../Constants/RecipientCategory";
 import BuckarooClient from "../BuckarooClient";
-import Klarna from "../PaymentMethods/Klarna/Klarna";
+import Afterpay from "../PaymentMethods/Afterpay/Afterpay";
 import { uniqid } from "../Functions/Functions";
 
 const client = new BuckarooClient();
-const method = new Klarna(client);
+const method = new Afterpay(client);
 
 method.pay({
   amountDebit: 50.3,
@@ -12,11 +14,15 @@ method.pay({
   invoice: uniqid(),
   billing: {
     recipient: {
-      category: "B2C",
-      gender: "female",
+      category: RecipientCategory.PERSON,
+      careOf: "John Smith",
+      title: "Mrs",
       firstName: "John",
       lastName: "Do",
       birthDate: "1990-01-01",
+      conversationLanguage: "NL",
+      identificationNumber: "IdNumber12345",
+      customerNumber: "customerNumber12345",
     },
     address: {
       street: "Hoofdstraat",
@@ -34,11 +40,12 @@ method.pay({
   },
   shipping: {
     recipient: {
-      category: "B2B",
-      gender: "male",
+      category: RecipientCategory.COMPANY,
+      careOf: "John Smith",
+      companyName: "Buckaroo B.V.",
       firstName: "John",
       lastName: "Do",
-      birthDate: "1990-01-01",
+      chamberOfCommerce: "12345678",
     },
     address: {
       street: "Kalverstraat",
@@ -48,7 +55,6 @@ method.pay({
       city: "Amsterdam",
       country: "NL",
     },
-    email: "test@buckaroo.nl",
   },
   articles: [
     {
