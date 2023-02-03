@@ -13,9 +13,4 @@ function uniqid(prefix = "", random = false) {
   }`;
 }
 
-method.pay({
-  returnURL: "https://example.com/return",
-  invoice: uniqid(),
-  amountDebit: 10.1,
-  issuer: "ABNANL2A",
-});
+method.issuers();

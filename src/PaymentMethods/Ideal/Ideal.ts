@@ -23,13 +23,38 @@ export default class Ideal extends PaymentMethod {
   }
 
   async pay(model?) {
-    return this.api.client.post(new PayPayload(model, this, "Pay", new Pay()));
+    return this.api.client.post(new PayPayload(model, this, "Pay", new Pay()),
+        this.api.client.getTransactionUrl());
   }
 
   payRemainder(model?) {
     return model;
   }
   issuers(): any {
-    return this;
+    let issuerList: { id: any; name: any }[] = [];
+    try {
+      let response = this.api.client.specification({}, this.paymentName, 2).then((response)=>{
+
+        if (
+            response['Actions'] &&
+            response['Actions']['0'] &&
+            response['Actions']['0']['RequestParameters'] &&
+            response['Actions']['0']['RequestParameters'][0] &&
+            response['Actions']['0']['RequestParameters'][0]['ListItemDescriptions']
+        ) {
+          let issuersData =
+              response['Actions']['0']['RequestParameters'][0]['ListItemDescriptions'];
+          if (issuersData.length > 0) {
+            for (let issuer of issuersData) {
+              issuerList.push({ id: issuer['Value'], name: issuer['Description'] });
+            }
+          }
+        }
+      });
+
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
   }
 }

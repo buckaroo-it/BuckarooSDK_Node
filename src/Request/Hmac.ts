@@ -10,9 +10,8 @@ export default class Hmac {
   private config: Config;
   private hash: string | undefined;
 
-  constructor(config: Config) {
-    this.uri = this.setUri("https://testcheckout.buckaroo.nl/json/Transaction");
-
+  constructor(config: Config,url) {
+    this.uri = this.setUri(url);
     this.base64Data = "";
     this.nonce = "";
     this.time = "";
@@ -33,26 +32,14 @@ export default class Hmac {
     return this.uri;
   }
 
-  public setBase64Data(data?: any) {
-    this.base64Data = "";
-    if (data) {
-      if (typeof data === "object") {
-        data = JSON.stringify(data);
-      }
-
-      this.base64Data = Base64.stringify(md5(data));
-    }
-  }
-
   public generate(method, data) {
     const hashString =
       this.config.getWebsiteKey() +
       method +
-      this.getUri() +
-      this.getTime() +
-      this.getNonce() +
+      this.getUri()+
+      this.getTime()+
+      this.getNonce()+
       this.getBase64Data(data);
-
     this.hash = Base64.stringify(
       hmacSHA256(hashString, this.config.getSecretKey())
     );
@@ -66,7 +53,6 @@ export default class Hmac {
       if (typeof data === "object") {
         data = JSON.stringify(data);
       }
-
       this.base64Data = Base64.stringify(md5(data));
     }
     return this.base64Data;

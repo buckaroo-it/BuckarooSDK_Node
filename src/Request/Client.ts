@@ -9,22 +9,22 @@ export default class Client {
   constructor(config: Config) {
     this._config = config;
   }
-  getHeaders(method, data) {
+  getHeaders(method, data,url) {
     return {
       "Content-Type": "application/json; charset=utf-8",
       Accept: "application/json",
-      Authorization: "hmac " + new Hmac(this._config).generate(method, data),
+      Authorization: "hmac " + new Hmac(this._config,url).generate(method, data),
       Culture: "en-GB",
     };
   }
-  getOptions(data, method) {
-    let url = new URL(this.getTransactionUrl());
-    return {
+  getOptions(data, method,url) {
+    url = new URL(url);
+    return  {
       hostname: url.host,
       path: url.pathname + url.search,
       method: method,
-      headers: this.getHeaders(method, data),
-      data: JSON.stringify(data),
+      headers: this.getHeaders(method, data, url.href),
+      // data: data
     };
   }
   getEndpoint(path: string) {
@@ -35,18 +35,28 @@ export default class Client {
   getTransactionUrl(): string {
     return this.getEndpoint("json/Transaction");
   }
+  getSpecificationUrl(paymentName,serviceVersion){
+    return this.getEndpoint(
+        `json/Transaction/Specification/${paymentName}?serviceVersion=${serviceVersion}`
+    );
 
-  get(data) {
-    this.call(data, HttpMethods.METHOD_GET).then((r) => r);
+  }
+  async get(data,url) {
+    this.call(data, HttpMethods.METHOD_GET,url).then((r) => r);
   }
 
-  post(data) {
-    this.call(data, HttpMethods.METHOD_POST).then((r) => r);
+  async post(data,url) {
+    this.call(data, HttpMethods.METHOD_POST,url).then((r) => r);
   }
-
-  call(data, method) {
-    const options = this.getOptions(data, method);
-
+  async specification(data?: {}, paymentName?: string, serviceVersion = 0): Promise<any> {
+    const endPoint = this.getSpecificationUrl(paymentName,serviceVersion)
+    return  this.call(data,HttpMethods.METHOD_GET,endPoint);
+  }
+  async call(data, method,url) {
+    if(typeof data==='object' && Object.keys(data).length===0){
+      data = '';
+    }
+    const options = this.getOptions(data, method,url);
     return new HttpClient().call(options);
   }
 }
