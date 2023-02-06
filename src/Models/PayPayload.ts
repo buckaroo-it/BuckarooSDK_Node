@@ -22,7 +22,7 @@ export default class PayPayload extends Payload {
       this[datum] = method.api.config[datum] ? method.api.config[datum] : "";
     }
     for (const datum in data) {
-      if (typeof data[datum] !== 'object'){
+      if (typeof data[datum] !== "object") {
         this[datum] = data[datum];
       }
     }

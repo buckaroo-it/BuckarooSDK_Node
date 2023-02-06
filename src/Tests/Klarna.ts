@@ -12,11 +12,11 @@ method.pay({
   invoice: uniqid(),
   billing: {
     recipient: {
-      Category: "B2C",
-      Gender: "female",
-      FirstName: "John",
-      LastName: "Do",
-      BirthDate: "1990-01-01",
+      category: "B2C",
+      gender: "female",
+      firstName: "John",
+      lastName: "Do",
+      birthDate: "1990-01-01",
     },
     address: {
       street: "Hoofdstraat",
@@ -27,17 +27,17 @@ method.pay({
       country: "NL",
     },
     phone: {
-      Mobile: "0698765433",
+      mobile: "0698765433",
     },
-    Email: "test@buckaroo.nl",
+    email: "test@buckaroo.nl",
   },
   shipping: {
     recipient: {
-      Category: "B2B",
-      Gender: "male",
-      FirstName: "John",
-      LastName: "Do",
-      BirthDate: "1990-01-01",
+      category: "B2C",
+      gender: "male",
+      firstName: "John",
+      lastName: "Do",
+      birthDate: "1990-01-01",
     },
     address: {
       street: "Kalverstraat",
@@ -47,7 +47,7 @@ method.pay({
       city: "Amsterdam",
       country: "NL",
     },
-    Email: "test@buckaroo.nl",
+    email: "test@buckaroo.nl",
   },
   articles: [
     {

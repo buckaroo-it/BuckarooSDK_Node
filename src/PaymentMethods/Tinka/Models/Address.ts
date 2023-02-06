@@ -1,5 +1,4 @@
 import AddressModel from "../../../Models/Address";
-// import { AddressParams } from "../../../Models/Address";
 export default class Address implements AddressModel {
   street?: string;
   houseNumber?: string;

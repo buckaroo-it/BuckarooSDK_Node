@@ -1,4 +1,5 @@
 import PhoneModel from "../../../Models/Phone";
+
 export default class Phone implements PhoneModel {
   landline?: string;
   mobile?: string;
