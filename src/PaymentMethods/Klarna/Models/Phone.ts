@@ -4,8 +4,8 @@ export default class Phone implements PhoneModel {
   mobile?: string;
   fax?: string;
   constructor(data) {
-    this.landline = data.landline;
     this.mobile = data.mobile;
+    this.landline = data.landline;
     this.fax = data.fax;
     this.setKeys();
   }

@@ -2,23 +2,27 @@ import Recipient from "../Service/Recipient";
 import Article from "./Article";
 
 export default class Pay {
+
+  shippingRecipient: Recipient = new Recipient({});
+
   billing = (data) => this.billingFormat(data);
   articles = (data) => this.articlesFormat(data);
   shipping = (data) => this.shippingFormat(data);
 
   billingFormat(data) {
+    this.shippingRecipient = new Recipient(data);
     return {
       data: new Recipient(data),
-      key: "BillingCustomer",
+      groupType: "BillingCustomer",
       groupID: "",
     };
   }
   shippingFormat(data) {
     return {
-      data: new Recipient(data),
-      key: "ShippingCustomer",
+      data:  data ? new Recipient(data) :  this.shippingRecipient,
+      groupType: "ShippingCustomer",
       groupID: "",
-    };
+    }
   }
   articlesFormat(data) {
     if (!Array.isArray(data)) {
@@ -28,6 +32,6 @@ export default class Pay {
     for (const datum of data) {
       articles.push(new Article(datum));
     }
-    return { data: articles, key: "Article", groupID: 1 };
+    return { data: articles, groupType: "Article", groupID: 0};
   }
 }

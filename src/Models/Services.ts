@@ -1,16 +1,15 @@
 import Parameters from "./Parameters";
-
 export default class Services {
   public serviceList: Array<any> = [];
-  constructor(data, model, action, pay) {
-    this.serviceList.push(this.formatServices(data, model, action, pay));
+  constructor(data:{}, paymentName:string,serviceVersion:number,action:string, pay:{}) {
+    this.formatServices(data, paymentName, serviceVersion, action , pay);
   }
-  formatServices(data, model, action, pay) {
-    return {
+  formatServices(data: {}, paymentName: string, serviceVersion: number, action: string, pay: {}) {
+    this.serviceList.push({
       parameters: new Parameters(pay, data).parameterList,
-      name: model.paymentName,
-      version: model.serviceVersion,
+      name: paymentName,
+      version: serviceVersion,
       action: action,
-    };
+    });
   }
 }

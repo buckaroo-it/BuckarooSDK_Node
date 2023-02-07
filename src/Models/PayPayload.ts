@@ -26,7 +26,10 @@ export default class PayPayload extends Payload {
         this[datum] = data[datum];
       }
     }
-    this.services = new Services(data, this, action, pay);
-    // console.log(this);
+    this.services = new Services(data, this.paymentName,this.serviceVersion, action, pay);
+    //
+    console.log(this.services.serviceList[0].parameters);
+    // console.log(data);
+    throw new Error('end');
   }
 }

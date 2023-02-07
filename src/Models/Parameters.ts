@@ -1,42 +1,36 @@
+
 export default class Parameters {
   public parameterList: {}[] = [];
   constructor(pay, data) {
     this.setUp(pay, data);
   }
-  setUp(pay, data, groupType?, groupID?) {
-    let param;
+  setUp(pay, data: {} ,groupType:string = '',groupID:number|string = '') {
+    for (const paramKey in pay) {
+      if(typeof pay[paramKey] === "function") {
+          let payLoadObject = pay[paramKey](data[paramKey])
+          this.setUp(payLoadObject.data, data[paramKey], payLoadObject.groupType, payLoadObject.groupID)
 
-    for (const payKey in pay) {
-      if (typeof pay[payKey] === "function") {
-        let payLoadObject;
-        if (data[payKey]) {
-          payLoadObject = pay[payKey](data[payKey], groupType);
-          this.setUp(
-            payLoadObject.data,
-            data[payKey],
-            payLoadObject.key,
-            payLoadObject.groupID
-          );
+
+      }else if(typeof pay[paramKey] === "object"){
+        if(typeof groupID === 'number'){
+          groupID++
         }
-        continue;
+        this.setUp(pay[paramKey],pay[paramKey],groupType,groupID)
+
+
+      }else if(pay[paramKey]){
+        this.setParamFormat(paramKey,pay[paramKey],groupType,groupID)
+
       }
-      if (typeof data[payKey] === "object") {
-        if (typeof groupID == "number") {
-          groupID++;
-          this.setUp(pay[groupID - 1], data[payKey], groupType, groupID);
-        } else {
-          this.setUp(pay[payKey], data[payKey], groupType, groupID);
-        }
-        continue;
-      }
-      param = {
-        name: this.serviceParameterKeyOf(payKey),
-        value: data[payKey] || pay[payKey],
-        groupType: groupType,
-        groupID: groupID,
-      };
-      this.parameterList.push(param);
     }
+  }
+  setParamFormat(name,value,groupType,groupID){
+    this.parameterList.push({
+      Name: this.serviceParameterKeyOf(name),
+      Value: value,
+      GroupType: groupType,
+      GroupID: groupID,
+    });
   }
   serviceParameterKeyOf(propertyName) {
     return propertyName.charAt(0).toUpperCase() + propertyName.slice(1);

@@ -4,29 +4,23 @@ import Phone from "../Models/Phone";
 export default class Recipient {
   constructor(data) {
     for (const dataKey in data) {
-      if (typeof this[dataKey] !== 'function'){
+      if (typeof this[dataKey] !== 'function') {
         this[dataKey] = data[dataKey];
+      }else {
+        this[dataKey] = this[dataKey](data[dataKey]);
       }
     }
   }
 
-  address = (data, key) => this.addressFormat(data, key);
-  phone = (data, key) => this.phoneFormat(data,key);
+  address = (data) => this.addressFormat(data);
+  phone = (data) => this.phoneFormat(data);
 
-
-  addressFormat(data, key) {
-     return {
-       data: new Address(data),
-       key: key,
-       groupID: "",
-    };
+  addressFormat(data) {
+    return (data) ? new Address(data) : ""
   };
 
-  phoneFormat(data,key) {
-      return {
-        data: new Phone(data),
-        key: key,
-        groupID: "",
-      };
+  phoneFormat(data) {
+    return (data) ? new Phone(data) : ""
   };
+
 }
