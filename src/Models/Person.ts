@@ -1,4 +1,4 @@
-export default interface Article {
+export default interface Person {
   category?: string;
   gender?: string;
   culture?: string;
