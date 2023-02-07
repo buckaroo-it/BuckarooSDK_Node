@@ -33,7 +33,7 @@ export default class PayPayload extends Payload {
       action,
       pay
     );
-    //
+
     // console.log(this.services.serviceList[0].parameters);
     // console.log(data);
     // throw new Error("end");
