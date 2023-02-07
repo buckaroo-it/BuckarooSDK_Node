@@ -11,7 +11,7 @@ export default class Pay {
   billingFormat(data) {
     return {
       data: new Recipient(data),
-      key: "BillingCustomer",
+      groupType: "BillingCustomer",
       groupID: "",
     };
   }
@@ -19,7 +19,7 @@ export default class Pay {
   shippingFormat(data) {
     return {
       data: new Recipient(data),
-      key: "ShippingCustomer",
+      groupType: "ShippingCustomer",
       groupID: "",
     };
   }
@@ -32,13 +32,13 @@ export default class Pay {
     for (const datum of data) {
       articles.push(new Article(datum));
     }
-    return { data: articles, key: "Article", groupID: 1 };
+    return { data: articles, groupType: "Article", groupID: 1 };
   }
 
   customerFormat(data) {
     return {
       data: new Recipient(data),
-      key: "Customer",
+      groupType: "Customer",
       groupID: "",
     };
   }

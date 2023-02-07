@@ -9,14 +9,14 @@ export default class Pay {
   billingFormat(data) {
     return {
       data: new ServiceObject(data),
-      key: "BillingCustomer",
+      groupType: "BillingCustomer",
       groupID: "",
     };
   }
   shippingFormat(data) {
     return {
       data: new ServiceObject(data),
-      key: "ShippingCustomer",
+      groupType: "ShippingCustomer",
       groupID: "",
     };
   }
@@ -28,6 +28,6 @@ export default class Pay {
     for (const datum of data) {
       articles.push(new Article(datum));
     }
-    return { data: articles, key: "Article", groupID: 1 };
+    return { data: articles, groupType: "Article", groupID: 1 };
   }
 }
