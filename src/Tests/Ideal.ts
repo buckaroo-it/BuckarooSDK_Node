@@ -1,3 +1,5 @@
+import { uniqid } from "../Functions/Functions";
+
 require("dotenv").config({ path: "../../.env" });
 import BuckarooClient from "../BuckarooClient";
 import Ideal from "../PaymentMethods/Ideal/Ideal";
@@ -12,4 +14,11 @@ const method = new Ideal(client);
 //   issuer: "ABNANL2A",
 // });
 
-method.issuers();
+method.payRemainder({
+  returnURL: "https://example.com/return",
+  invoice: uniqid(),
+  amountDebit: 10.1,
+  issuer: "ABNANL2A",
+});
+
+// method.issuers();

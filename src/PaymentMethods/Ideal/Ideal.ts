@@ -1,7 +1,11 @@
 import PaymentMethod from "../PaymentMethod";
 import BuckarooClient from "../../BuckarooClient";
 import PayPayload from "../../Models/PayPayload";
-import Pay from "./Pay";
+// import Pay from "./Pay";
+
+class Pay {
+  issuer: string = "";
+}
 
 export default class Ideal extends PaymentMethod {
   protected requiredConfigFields: Array<string> = [
@@ -27,12 +31,15 @@ export default class Ideal extends PaymentMethod {
   }
 
   payRemainder(model?) {
-    return model;
+    return this.api.client.post(
+      new PayPayload(model, this, "Pay", new Pay()),
+      this.api.client.getTransactionUrl()
+    );
   }
   issuers(): any {
     let issuerList: { id: any; name: any }[] = [];
     try {
-      let response = this.api.client
+      this.api.client
         .specification({}, this.paymentName, 2)
         .then((response) => {
           if (
@@ -56,6 +63,7 @@ export default class Ideal extends PaymentMethod {
                 });
               }
             }
+            return issuerList;
           }
         });
     } catch (e) {

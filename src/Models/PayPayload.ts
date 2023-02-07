@@ -22,7 +22,7 @@ export default class PayPayload extends Payload {
       this[datum] = method.api.config[datum] ? method.api.config[datum] : "";
     }
     for (const datum in data) {
-      if (!pay.hasOwnProperty(datum)) {
+      if (typeof data[datum] !== "object") {
         this[datum] = data[datum];
       }
     }
@@ -35,7 +35,7 @@ export default class PayPayload extends Payload {
     );
     //
     // console.log(this.services.serviceList[0].parameters);
-    // // console.log(data);
-    // throw new Error('end');
+    // console.log(data);
+    // throw new Error("end");
   }
 }

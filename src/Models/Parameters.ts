@@ -3,6 +3,7 @@ export default class Parameters {
   constructor(pay, data) {
     this.setUp(pay, data);
   }
+
   setUp(pay, data: {}, groupType: string = "", groupID: number | string = "") {
     for (const paramKey in pay) {
       if (typeof pay[paramKey] === "function") {
@@ -18,8 +19,8 @@ export default class Parameters {
           groupID++;
         }
         this.setUp(pay[paramKey], pay[paramKey], groupType, groupID);
-      } else if (pay[paramKey]) {
-        this.setParamFormat(paramKey, pay[paramKey], groupType, groupID);
+      } else {
+        this.setParamFormat(paramKey, data[paramKey], groupType, groupID);
       }
     }
   }
