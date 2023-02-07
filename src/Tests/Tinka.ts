@@ -40,7 +40,7 @@ let getPaymentPayload = {
     recipient: {
       lastNamePrefix: "the",
     },
-    email: "test@buckaroo.nl",
+    email: "billingcustomer@buckaroo.nl",
     phone: {
       mobile: "0698765433",
     },
@@ -57,7 +57,7 @@ let getPaymentPayload = {
     recipient: {
       lastNamePrefix: "the",
     },
-    email: "test@buckaroo.nl",
+    email: "billingcustomer@buckaroo.nl",
     phone: {
       mobile: "0698765433",
     },

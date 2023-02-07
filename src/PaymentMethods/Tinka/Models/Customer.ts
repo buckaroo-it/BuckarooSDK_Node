@@ -15,7 +15,7 @@ export default class Customer extends Model implements PersonModel {
   birthDate?: string;
   placeOfBirth?: string;
   constructor(data) {
-    super()
+    super();
     this.category = data.category;
     this.gender = data.gender;
     this.culture = data.culture;
@@ -28,6 +28,12 @@ export default class Customer extends Model implements PersonModel {
     this.lastName = data.lastName;
     this.birthDate = data.birthDate;
     this.placeOfBirth = data.placeOfBirth;
+
+    for (let dataKey in this) {
+      if (!this[dataKey]) {
+        delete this[dataKey];
+      }
+    }
 
     this.setKeys({
       lastNamePrefix: "PrefixLastName",

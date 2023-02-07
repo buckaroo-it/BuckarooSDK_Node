@@ -12,8 +12,9 @@ export default class Article extends Model implements ArticleModel {
   vatCategory?: number;
   vatPercentage?: number;
   description?: string;
+  color?: string;
   constructor(data) {
-    super()
+    super();
     this.identifier = data.identifier;
     this.type = data.type;
     this.description = data.description;
@@ -24,6 +25,7 @@ export default class Article extends Model implements ArticleModel {
     this.price = data.price;
     this.vatCategory = data.vatCategory;
     this.vatPercentage = data.vatPercentage;
+    this.color = data.color;
 
     this.setKeys({
       price: "GrossUnitPrice",

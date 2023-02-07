@@ -20,7 +20,7 @@ export default class Parameters {
         }
         this.setUp(pay[paramKey], pay[paramKey], groupType, groupID);
       } else {
-        this.setParamFormat(paramKey, data[paramKey], groupType, groupID);
+        this.setParamFormat(paramKey, pay[paramKey], groupType, groupID);
       }
     }
   }
