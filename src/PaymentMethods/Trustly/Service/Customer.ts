@@ -7,14 +7,12 @@ export default class Customer extends Model implements Person {
 
   constructor(data) {
     super();
-    console.log(data.country);
     this.firstName = data.firstName;
     this.lastName = data.lastName;
 
     this.setKeys({
       firstName: "CustomerFirstName",
       lastName: "CustomerLastName",
-      country: "CustomerCountryCode",
     });
   }
 }
