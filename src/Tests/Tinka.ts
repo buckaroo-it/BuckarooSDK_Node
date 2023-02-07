@@ -9,7 +9,7 @@ const client = new BuckarooClient();
 const method = new Tinka(client);
 
 let getPaymentPayload = {
-  amountDebit: 50.3,
+  amountDebit: 3.5,
   order: uniqid(),
   invoice: uniqid(),
   description: "This is a test order",

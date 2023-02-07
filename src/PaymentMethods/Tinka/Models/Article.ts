@@ -28,7 +28,7 @@ export default class Article extends Model implements ArticleModel {
     this.color = data.color;
 
     this.setKeys({
-      price: "GrossUnitPrice",
+      price: "UnitGrossPrice",
     });
   }
 }

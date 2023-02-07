@@ -10,7 +10,9 @@ export default class Pay {
   shipping = (data) => this.shippingFormat(data);
   customer = (data) => this.customerFormat(data);
 
-  paymentMethod = "a";
+  paymentMethod;
+  deliveryMethod;
+  deliveryDate;
 
   billingFormat(data) {
     this.shippingRecipient = new Recipient(data);
