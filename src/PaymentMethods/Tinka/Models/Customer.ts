@@ -1,6 +1,7 @@
 import PersonModel from "../../../Models/Person";
+import Model from "../../../Models/Model";
 
-export default class Customer implements PersonModel {
+export default class Customer extends Model implements PersonModel {
   category?: string;
   gender?: string;
   culture?: string;
@@ -14,6 +15,7 @@ export default class Customer implements PersonModel {
   birthDate?: string;
   placeOfBirth?: string;
   constructor(data) {
+    super()
     this.category = data.category;
     this.gender = data.gender;
     this.culture = data.culture;
@@ -27,23 +29,9 @@ export default class Customer implements PersonModel {
     this.birthDate = data.birthDate;
     this.placeOfBirth = data.placeOfBirth;
 
-    this.setKeys();
-  }
-
-  setKeys() {
-    const keys: any = {
+    this.setKeys({
       lastNamePrefix: "PrefixLastName",
       birthDate: "DateOfBirth",
-    };
-
-    for (let dataKey in this) {
-      if (keys[dataKey]) {
-        this[keys[dataKey]] = this[dataKey];
-        delete this[dataKey];
-      }
-      if (!this[dataKey]) {
-        delete this[dataKey];
-      }
-    }
+    });
   }
 }

@@ -1,6 +1,7 @@
 import AddressModel from "../../../Models/Address";
+import Model from "../../../Models/Model";
 // import { AddressParams } from "../../../Models/Address";
-export default class Address implements AddressModel {
+export default class Address extends Model implements AddressModel {
   street?: string;
   houseNumber?: string;
   houseNumberAdditional?: string;
@@ -9,6 +10,7 @@ export default class Address implements AddressModel {
   country?: string;
 
   constructor(data) {
+    super()
     this.street = data.street;
     this.houseNumber = data.houseNumber;
     this.houseNumberAdditional = data.houseNumberAdditional;
@@ -16,21 +18,10 @@ export default class Address implements AddressModel {
     this.city = data.city;
     this.country = data.country;
 
-    this.setKeys();
-  }
-
-  setKeys() {
-    const keys: any = {
+    this.setKeys({
       houseNumber: "StreetNumber",
       houseNumberAdditional: "StreetNumberAdditional",
       zipcode: "PostalCode",
-    };
-
-    for (let dataKey in this) {
-      if (keys[dataKey]) {
-        this[keys[dataKey]] = this[dataKey];
-        delete this[dataKey];
-      }
-    }
+    });
   }
 }

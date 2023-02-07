@@ -1,6 +1,7 @@
 import ArticleModel from "../../../Models/Article";
+import Model from "../../../Models/Model";
 
-export default class Article implements ArticleModel {
+export default class Article extends Model implements ArticleModel {
   identifier?: string;
   type?: string;
   brand?: string;
@@ -12,6 +13,7 @@ export default class Article implements ArticleModel {
   vatPercentage?: number;
   description?: string;
   constructor(data) {
+    super()
     this.identifier = data.identifier;
     this.type = data.type;
     this.description = data.description;
@@ -23,22 +25,8 @@ export default class Article implements ArticleModel {
     this.vatCategory = data.vatCategory;
     this.vatPercentage = data.vatPercentage;
 
-    this.setKeys();
-  }
-
-  setKeys() {
-    const keys: any = {
+    this.setKeys({
       price: "GrossUnitPrice",
-    };
-
-    for (let dataKey in this) {
-      if (keys[dataKey]) {
-        this[keys[dataKey]] = this[dataKey];
-        delete this[dataKey];
-      }
-      if (!this[dataKey]) {
-        delete this[dataKey];
-      }
-    }
+    });
   }
 }

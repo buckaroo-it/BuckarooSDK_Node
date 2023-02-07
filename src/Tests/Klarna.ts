@@ -28,6 +28,7 @@ method.pay({
     },
     phone: {
       mobile: "0698765433",
+      VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV: "VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV"
     },
     email: "test@buckaroo.nl",
   },
