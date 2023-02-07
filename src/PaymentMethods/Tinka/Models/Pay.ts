@@ -1,7 +1,10 @@
 import Recipient from "../Service/Recipient";
 import Article from "./Article";
+import Customer from "../../Trustly/Service/Customer";
 
 export default class Pay {
+  shippingRecipient: Recipient = new Recipient({});
+
   billing = (data) => this.billingFormat(data);
   articles = (data) => this.articlesFormat(data);
   shipping = (data) => this.shippingFormat(data);
@@ -9,6 +12,8 @@ export default class Pay {
   customer = (data) => this.customerFormat(data);
 
   billingFormat(data) {
+    this.shippingRecipient = new Recipient(data);
+
     return {
       data: new Recipient(data),
       groupType: "BillingCustomer",
@@ -18,7 +23,7 @@ export default class Pay {
 
   shippingFormat(data) {
     return {
-      data: new Recipient(data),
+      data: data ? new Recipient(data) : this.shippingRecipient,
       groupType: "ShippingCustomer",
       groupID: "",
     };
@@ -32,12 +37,12 @@ export default class Pay {
     for (const datum of data) {
       articles.push(new Article(datum));
     }
-    return { data: articles, groupType: "Article", groupID: 1 };
+    return { data: articles, groupType: "Article", groupID: 0 };
   }
 
   customerFormat(data) {
     return {
-      data: new Recipient(data),
+      data: new Customer(data),
       groupType: "Customer",
       groupID: "",
     };
