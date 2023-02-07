@@ -1,7 +1,7 @@
 import PaymentMethod from "../PaymentMethod";
 import BuckarooClient from "../../BuckarooClient";
-import PayPayload from "../../Models/PayPayload";
 import Verify from "./Models/Verify";
+import Services from "../../Models/Services";
 
 export default class Surepay extends PaymentMethod {
   protected requiredConfigFields: Array<string> = [];
@@ -13,9 +13,15 @@ export default class Surepay extends PaymentMethod {
     );
   }
   async verify(model?) {
-    return this.api.client.post(
-      new PayPayload(model, this, "verify", new Verify()),
-      this.api.client.getDataRequestUrl()
-    );
+    let services = {
+      Services: new Services(
+        model,
+        this.paymentName,
+        this.serviceVersion,
+        "verify",
+        new Verify()
+      ),
+    };
+    return this.api.client.post(services, this.api.client.getDataRequestUrl());
   }
 }
