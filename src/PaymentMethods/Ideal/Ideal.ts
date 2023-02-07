@@ -1,27 +1,23 @@
 import PaymentMethod from "../PaymentMethod";
 import BuckarooClient from "../../BuckarooClient";
 import PayPayload from "../../Models/PayPayload";
-// import Pay from "./Pay";
-
-class Pay {
-  issuer: string = "";
-}
+import Pay from "./Models/Pay";
 
 export default class Ideal extends PaymentMethod {
-  protected requiredConfigFields: Array<string> = [
-    "currency",
-    "returnURL",
-    "returnURLCancel",
-    "pushURL",
-  ];
+    protected requiredConfigFields: Array<string> = [
+        "currency",
+        "returnURL",
+        "returnURLCancel",
+        "pushURL",
+    ];
 
-  constructor(api: BuckarooClient) {
-    super(api);
-    this.paymentName = "ideal";
-    this.requiredConfigFields = this.requiredFields.concat(
-      this.requiredConfigFields
-    );
-  }
+    constructor(api: BuckarooClient) {
+        super(api);
+        this.paymentName = "ideal";
+        this.requiredConfigFields = this.requiredFields.concat(
+            this.requiredConfigFields
+        );
+    }
 
   async pay(model?) {
     return this.api.client.post(

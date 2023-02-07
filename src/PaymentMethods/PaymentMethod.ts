@@ -5,6 +5,7 @@ export default class PaymentMethod {
   public paymentName: string = "";
   public serviceVersion: number = 0;
   private _requiredConfigFields: string[] = ["currency", "pushURL"];
+  protected payLoad: any;
 
   constructor(api: BuckarooClient) {
     this._api = api;
@@ -14,5 +15,8 @@ export default class PaymentMethod {
   }
   get requiredFields(): string[] {
     return this._requiredConfigFields;
+  }
+  setPayLoad(model){
+    this.payLoad = model
   }
 }

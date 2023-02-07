@@ -1,3 +1,3 @@
 export default class Pay {
-  issuer: string = "";
+    issuer: string = "";
 }

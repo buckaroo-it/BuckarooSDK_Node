@@ -1,5 +1,4 @@
 import Payload from "./Payload";
-import Services from "./Services";
 import { uniqid } from "../Functions/Functions";
 
 export default class PayPayload extends Payload {
@@ -9,7 +8,7 @@ export default class PayPayload extends Payload {
   protected serviceVersion;
 
   constructor(data, method, action, pay) {
-    super(data, method, action);
+    super();
     this.order = uniqid("ORDER_NO_");
     this.paymentName = method.paymentName;
     this.serviceVersion = method.serviceVersion;
@@ -26,14 +25,9 @@ export default class PayPayload extends Payload {
         this[datum] = data[datum];
       }
     }
-    this.services = new Services(
-      data,
-      this.paymentName,
-      this.serviceVersion,
-      action,
-      pay
-    );
-
+    this.setServices(
+        data,this.paymentName,this.serviceVersion,action,pay
+    )
     // console.log(this.services.serviceList[0].parameters);
     // console.log(data);
     // throw new Error("end");

@@ -1,10 +1,8 @@
 import PaymentMethod from "../PaymentMethod";
 import BuckarooClient from "../../BuckarooClient";
 import PayPayload from "../../Models/PayPayload";
+import Pay from "./Models/Pay";
 
-class Pay {
-  useMobileView: boolean = false;
-}
 
 export default class Alipay extends PaymentMethod {
   protected requiredConfigFields: Array<string> = [];
@@ -18,7 +16,7 @@ export default class Alipay extends PaymentMethod {
 
   async pay(model?) {
     return this.api.client.post(
-      new PayPayload(model, this, "Pay", new Pay()),
+      new PayPayload(model, this, "Pay", new Pay(model)),
       this.api.client.getTransactionUrl()
     );
   }
