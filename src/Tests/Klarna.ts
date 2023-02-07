@@ -6,10 +6,11 @@ import { uniqid } from "../Functions/Functions";
 const client = new BuckarooClient();
 const method = new Klarna(client);
 
-method.pay({
+let getPaymentPayload = {
   amountDebit: 50.3,
   order: uniqid(),
   invoice: uniqid(),
+  currency: "GBP",
   billing: {
     recipient: {
       category: "B2C",
@@ -24,11 +25,10 @@ method.pay({
       houseNumberAdditional: "a",
       zipcode: "1234AB",
       city: "Heerenveen",
-      country: "NL",
+      country: "GB",
     },
     phone: {
       mobile: "0698765433",
-      VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV: "VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV"
     },
     email: "test@buckaroo.nl",
   },
@@ -46,7 +46,7 @@ method.pay({
       houseNumberAdditional: "b",
       zipcode: "4321EB",
       city: "Amsterdam",
-      country: "NL",
+      country: "GB",
     },
     email: "test@buckaroo.nl",
   },
@@ -66,4 +66,7 @@ method.pay({
       price: "10.10",
     },
   ],
-});
+};
+
+method.pay(getPaymentPayload);
+// method.payInInstallments(getPaymentPayload);

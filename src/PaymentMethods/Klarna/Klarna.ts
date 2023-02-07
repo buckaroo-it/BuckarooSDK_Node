@@ -19,7 +19,10 @@ export default class Klarna extends PaymentMethod {
   }
 
   payInInstallments(model?) {
-    return model;
+    return this.api.client.post(
+      new PayPayload(model, this, "PayInInstallments", new Pay()),
+      this.api.client.getTransactionUrl()
+    );
   }
   issuers(): any {
     return this;
