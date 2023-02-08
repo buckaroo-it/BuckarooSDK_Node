@@ -1,5 +1,6 @@
 export default class Parameters {
   public parameterList: {}[] = [];
+
   constructor(pay, data) {
     this.setUp(pay, data);
   }
@@ -20,15 +21,17 @@ export default class Parameters {
         }
         this.setUp(pay[paramKey], pay[paramKey], groupType, groupID);
       } else {
-        this.setParamFormat(
-          paramKey,
-          pay[paramKey] || data[paramKey],
-          groupType,
-          groupID
-        );
+        if (pay[paramKey] || data[paramKey])
+          this.setParamFormat(
+            paramKey,
+            pay[paramKey] || data[paramKey],
+            groupType,
+            groupID
+          );
       }
     }
   }
+
   setParamFormat(name, value, groupType, groupID) {
     this.parameterList.push({
       Name: this.serviceParameterKeyOf(name),
@@ -37,6 +40,7 @@ export default class Parameters {
       GroupID: groupID,
     });
   }
+
   serviceParameterKeyOf(propertyName) {
     return propertyName.charAt(0).toUpperCase() + propertyName.slice(1);
   }
