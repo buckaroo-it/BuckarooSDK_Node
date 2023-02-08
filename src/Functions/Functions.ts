@@ -5,3 +5,7 @@ export function uniqid(prefix = "", random = false) {
     random ? `.${Math.trunc(Math.random() * 100000000)}` : ""
   }`;
 }
+
+export function serviceParameterKeyOf(propertyName) {
+  return propertyName.charAt(0).toUpperCase() + propertyName.slice(1);
+}

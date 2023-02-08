@@ -20,9 +20,10 @@ function it_creates_a_subscription() {
     },
   });
 }
+// it_creates_a_subscription();
 
 function it_creates_a_combined_subscription() {
-  method.create({
+  method.createCombined({
     pushURL: "https://buckaroo.nextto.dev/push",
     includeTransaction: false,
     transactionVatPercentage: 5,
@@ -30,7 +31,7 @@ function it_creates_a_combined_subscription() {
     email: "test@buckaroo.nl",
     ratePlans: {
       add: {
-        startDate: "2020-01-01",
+        startDate: "2033-01-01",
         ratePlanCode: "9863hdcj",
       },
     },
@@ -73,7 +74,7 @@ function it_updates_subscription() {
         ratePlanGuid: "F075470B1BB24B9291943A888A2Fxxxx",
         startDate: "2022-01-01",
         endDate: "2030-01-01",
-        charge: {
+        Charge: {
           ratePlanChargeGuid: "AD375E2E188747159673440898B9xxxx",
           baseNumberOfUnits: "1",
           pricePerUnit: 10,
@@ -82,6 +83,8 @@ function it_updates_subscription() {
     },
   });
 }
+
+it_updates_subscription();
 
 function it_updates_combined_subscription() {
   method.manually({
