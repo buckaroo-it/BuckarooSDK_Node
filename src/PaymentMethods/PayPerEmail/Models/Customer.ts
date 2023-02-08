@@ -35,10 +35,6 @@ export default class Customer extends Model implements PersonModel {
       }
     }
 
-    this.setKeys({
-      gender: "customergender",
-      firstName: "CustomerFirstName",
-      lastName: "CustomerLastName",
-    });
+    this.setKeys({});
   }
 }
