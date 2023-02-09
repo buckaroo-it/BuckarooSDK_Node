@@ -13,7 +13,6 @@ export default class Customer extends Model implements PersonModel {
   lastNamePrefix?: string;
   lastName?: string;
   birthDate?: string;
-  placeOfBirth?: string;
   constructor(data) {
     super();
     this.category = data.category;
@@ -24,10 +23,9 @@ export default class Customer extends Model implements PersonModel {
     this.initials = data.initials;
     this.name = data.name;
     this.firstName = data.firstName;
-    this.lastNamePrefix = data.lastNamePrefix;
+    this.PrefixLastName = data.lastNamePrefix;
     this.lastName = data.lastName;
     this.birthDate = data.birthDate;
-    this.placeOfBirth = data.placeOfBirth;
 
     for (let dataKey in this) {
       if (!this[dataKey]) {

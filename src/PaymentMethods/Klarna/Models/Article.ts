@@ -1,22 +1,27 @@
-import ArticleModel from "../../../Models/Article";
-import Model from "../../../Models/Model";
 
-export default class Article extends Model implements ArticleModel {
+export default class Article   {
   identifier?: string;
   quantity?: number;
-  price?: number;
+  price: number;
   vatPercentage?: number;
   description?: string;
+  groupType?:string = 'Article'
+  grossUnitPrice?: number;
   constructor(data) {
-    super();
+
     this.identifier = data.identifier;
     this.description = data.description;
     this.quantity = data.quantity;
-    this.price = data.price;
+    this.price = data.grossUnitPrice ||  data.price;
+
     this.vatPercentage = data.vatPercentage;
 
-    this.setKeys({
-      price: "GrossUnitPrice",
-    });
+    if(this.price){
+      this.grossUnitPrice = this.price
+      delete this.price
+    }
+    // this.setKeys({
+    //   price: "GrossUnitPrice",
+    // });
   }
 }

@@ -1,35 +1,33 @@
 import Payload from "./Payload";
-import { uniqid } from "../Functions/Functions";
-
 export default class PayPayload extends Payload {
-  protected order: string = "";
-  protected amountDebit: number = 0;
   protected paymentName;
   protected serviceVersion;
 
-  constructor(data, method, action, pay) {
+  constructor(method, action, pay) {
     super();
-    this.order = uniqid("ORDER_NO_");
+    this.serviceVersion = method.serviceVersion
     this.paymentName = method.paymentName;
-    this.serviceVersion = method.serviceVersion;
-
-    this.setProperties(data, method, action, pay);
+    this.setProperties( method, action, pay);
   }
 
-  setProperties(data, method, action, pay) {
+  setProperties( method, action, pay) {
     for (const datum of method.requiredConfigFields) {
       this[datum] = method.api.config[datum] ? method.api.config[datum] : "";
     }
-    for (const datum in data) {
-      if (typeof data[datum] !== "object") {
-        this[datum] = data[datum];
+
+    for (const dataKey in pay) {
+      if(typeof pay[dataKey] !== "object" && typeof pay[dataKey] !== "function"
+          && typeof pay[dataKey] !== "undefined"){
+          this[dataKey] =  pay[dataKey]
+          delete pay[dataKey]
       }
     }
+
     this.setServices(
-        data,this.paymentName,this.serviceVersion,action,pay
+        this.paymentName,this.serviceVersion,action,pay
     )
-    // console.log(this.services.serviceList[0].parameters);
-    // console.log(data);
-    // throw new Error("end");
+
+    // console.log(this,this.services.ServiceList[0].parameters);
+    // throw new Error('SSSS')
   }
 }

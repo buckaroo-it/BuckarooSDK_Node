@@ -3,6 +3,8 @@ import BuckarooClient from "../../BuckarooClient";
 import PayPayload from "../../Models/PayPayload";
 import Pay from "./Models/Pay";
 import ExtraInfo from "./Models/ExtraInfo";
+import Refund from "./Models/Refund";
+import PayRecurrent from "./Models/PayRecurrent";
 
 export default class SEPA extends PaymentMethod {
   protected requiredConfigFields: Array<string> = [];
@@ -22,13 +24,13 @@ export default class SEPA extends PaymentMethod {
   }
   async refund(model?) {
     return this.api.client.post(
-      new PayPayload(model, this, "Pay", new Pay()),
+      new PayPayload(model, this, "Refund", new Refund()),
       this.api.client.getTransactionUrl()
     );
   }
   payRecurrent(model?) {
     return this.api.client.post(
-      new PayPayload(model, this, "PayRecurrent", new Pay()),
+      new PayPayload(model, this, "PayRecurrent", new PayRecurrent()),
       this.api.client.getTransactionUrl()
     );
   }

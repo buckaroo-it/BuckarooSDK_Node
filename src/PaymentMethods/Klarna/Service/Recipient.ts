@@ -1,26 +1,21 @@
 import Address from "../Models/Address";
-import Phone from "../Models/Phone";
+// import Phone from "../Models/Phone";
+import Person from "../Models/Person";
 
 export default class Recipient {
-  constructor(data) {
-    for (const dataKey in data) {
-      if (typeof this[dataKey] !== 'function') {
-        this[dataKey] = data[dataKey];
-      }else {
-        this[dataKey] = this[dataKey](data[dataKey]);
-      }
-    }
+  private groupType?: string = '';
+
+  recipient:Person;
+  address:Address;
+  email:string = ''
+  phone:{ mobile: string ,landline?:string }
+  constructor(data,groupType) {
+    this.groupType = groupType
+    this.recipient  =  new Person(data.recipient)
+    this.address  =  new Address(data.address)
+    this.email  =  data.email
+
+    this.phone  =  data.phone
   }
-
-  address = (data) => this.addressFormat(data);
-  phone = (data) => this.phoneFormat(data);
-
-  addressFormat(data) {
-    return (data) ? new Address(data) : ""
-  };
-
-  phoneFormat(data) {
-    return (data) ? new Phone(data) : ""
-  };
 
 }

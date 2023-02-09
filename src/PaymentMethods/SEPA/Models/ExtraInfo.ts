@@ -1,8 +1,9 @@
 import Address from "./Address";
 import PayAdapter from "./PayAdapter";
 import Customer from "./Customer";
+import Pay from "./Pay";
 
-export default class ExtraInfo {
+export default class ExtraInfo extends Pay {
   customer = (data) => this.customerFormat(data);
   address = (data) => this.addressFormat(data);
   bic = (data) => this.payFormat("bic", data);
@@ -26,6 +27,7 @@ export default class ExtraInfo {
     return data ? new Address(data) : "";
   }
   payFormat(key, data) {
+
     return {
       data: new PayAdapter({ [key]: data }),
       groupType: "",

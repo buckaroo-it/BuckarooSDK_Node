@@ -1,7 +1,7 @@
-export default interface Address {
+export default interface IAddress {
   street?: string;
   houseNumber?: string;
-  houseNumberAdditional?: string;
+  houseNumberAdditional: string;
   zipcode?: string;
   city?: string;
   state?: string;

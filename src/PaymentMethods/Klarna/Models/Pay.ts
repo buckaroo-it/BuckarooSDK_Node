@@ -1,37 +1,28 @@
 import Recipient from "../Service/Recipient";
 import Article from "./Article";
+import PayForm from "../../../Models/PayForm";
+import ShippingRecipient from "../Service/ShippingRecipient";
 
-export default class Pay {
 
-  shippingRecipient: Recipient = new Recipient({});
+export default class Pay extends PayForm{
+    currency = '';
+    billing:Recipient;
+    shipping?:ShippingRecipient;
+    articles:Array<Article>;
 
-  billing = (data) => this.billingFormat(data);
-  articles = (data) => this.articlesFormat(data);
-  shipping = (data) => this.shippingFormat(data);
+    constructor(data) {
+        super();
+        this.billing = new Recipient(data,'BillingCustomer');
+        this.shipping = new Recipient(data['shipping'] || data['billing'],'ShippingCustomer');
 
-  billingFormat(data) {
-    this.shippingRecipient = new Recipient(data);
-    return {
-      data: new Recipient(data),
-      groupType: "BillingCustomer",
-      groupID: "",
-    };
-  }
-  shippingFormat(data) {
-    return {
-      data:  data ? new Recipient(data) :  this.shippingRecipient,
-      groupType: "ShippingCustomer",
-      groupID: "",
+        if (!Array.isArray(data['articles'])) {
+            data['articles'] = [data['articles']];
+        }
+        let articles: Array<Article> = [];
+
+        for (const datum of data['articles']) {
+            articles.push(new Article(datum));
+        }
+        this.articles = articles
     }
-  }
-  articlesFormat(data) {
-    if (!Array.isArray(data)) {
-      data = [data];
-    }
-    let articles: Array<Article> = [];
-    for (const datum of data) {
-      articles.push(new Article(datum));
-    }
-    return { data: articles, groupType: "Article", groupID: 0};
-  }
 }

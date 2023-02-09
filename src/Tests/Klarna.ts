@@ -6,12 +6,12 @@ import { uniqid } from "../Functions/Functions";
 const client = new BuckarooClient();
 const method = new Klarna(client);
 
-let getPaymentPayload = {
+
+method.pay( {
   amountDebit: 50.3,
-  order: uniqid(),
   invoice: uniqid(),
   currency: "GBP",
-  billing: {
+  billing:{
     recipient: {
       category: "B2C",
       gender: "female",
@@ -29,24 +29,25 @@ let getPaymentPayload = {
     },
     phone: {
       mobile: "0698765433",
+      landline: "0698765433"
     },
     email: "test@buckaroo.nl",
   },
   shipping: {
     recipient: {
-      category: "B2C",
-      gender: "male",
-      firstName: "John",
-      lastName: "Do",
-      birthDate: "1990-01-01",
+          category: "B2C",
+          gender: "male",
+          firstName: "John",
+          lastName: "Do",
+          birthDate: "1990-01-01",
     },
     address: {
-      street: "Kalverstraat",
-      houseNumber: "13",
-      houseNumberAdditional: "b",
-      zipcode: "4321EB",
-      city: "Amsterdam",
-      country: "GB",
+          street: "Kalverstraat",
+          houseNumber: "13",
+          houseNumberAdditional: "b",
+          zipcode: "4321EB",
+          city: "Amsterdam",
+          country: "GB",
     },
     email: "test@buckaroo.nl",
   },
@@ -54,19 +55,17 @@ let getPaymentPayload = {
     {
       identifier: "Articlenumber1",
       description: "Blue Toy Car",
-      vatPercentage: "21",
-      quantity: "2",
-      price: "20.10",
+      vatPercentage: 21,
+      quantity: 2,
+      price:32
     },
     {
       identifier: "Articlenumber2",
       description: "Red Toy Car",
-      vatPercentage: "21",
-      quantity: "1",
-      price: "10.10",
-    },
+      vatPercentage: 21,
+      quantity: 1,
+      price: 10.10,
+    }
   ],
-};
-
-method.pay(getPaymentPayload);
+});
 // method.payInInstallments(getPaymentPayload);

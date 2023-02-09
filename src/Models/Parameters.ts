@@ -3,33 +3,36 @@ import { serviceParameterKeyOf } from "../Functions/Functions";
 export default class Parameters {
   public parameterList: {}[] = [];
 
-  constructor(pay, data) {
-    this.setUp(pay, data);
+  constructor(pay) {
+    this.setUp(pay);
   }
 
-  setUp(pay, data: {}, groupType: string = "", groupID: number | string = "") {
+  setUp(pay , groupType: string = "", groupID: number | string = "") {
     for (const paramKey in pay) {
-      if (typeof pay[paramKey] === "function") {
-        let payLoadObject = pay[paramKey](data[paramKey]);
-        this.setUp(
-          payLoadObject.data,
-          data[paramKey],
-          payLoadObject.groupType,
-          payLoadObject.groupID
-        );
-      } else if (typeof pay[paramKey] === "object") {
+      // if (typeof pay[paramKey] === "function") {
+      //   let payLoadObject = pay[paramKey](data[paramKey]);
+      //   console.log(paramKey,pay,data)
+      //   console.log(payLoadObject)
+      //   throw new Error('DDD')
+      //   this.setUp(
+      //     payLoadObject.data,
+      //     data[paramKey],
+      //     payLoadObject.groupType,
+      //     payLoadObject.groupID
+      //   );
+      // } else
+      if (typeof pay[paramKey] === "object") {
         if (typeof groupID === "number") {
           groupID++;
         }
-        this.setUp(pay[paramKey], pay[paramKey], groupType, groupID);
+        this.setUp(pay[paramKey], groupType, groupID);
       } else {
-        if (pay[paramKey] || data[paramKey])
-          this.setParamFormat(
+        this.setParamFormat(
             paramKey,
-            pay[paramKey] || data[paramKey],
+            pay[paramKey] ,
             groupType,
             groupID
-          );
+        );
       }
     }
   }
