@@ -1,6 +1,7 @@
 import Address from "../Models/Address";
 // import Phone from "../Models/Phone";
 import Person from "../Models/Person";
+import Phone from "../Models/Phone";
 
 export default class Recipient {
   private groupType?: string = '';
@@ -8,14 +9,13 @@ export default class Recipient {
   recipient:Person;
   address:Address;
   email:string = ''
-  phone:{ mobile: string ,landline?:string }
+  phone:Phone
   constructor(data,groupType) {
     this.groupType = groupType
-    this.recipient  =  new Person(data.recipient)
-    this.address  =  new Address(data.address)
-    this.email  =  data.email
+    this.recipient =  new Person(data.recipient)
+    this.address =  new Address(data.address)
+    this.email =  data.email
 
-    this.phone  =  data.phone
+    this.phone =  new Phone(data.phone)
   }
-
 }

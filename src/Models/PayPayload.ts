@@ -1,4 +1,5 @@
 import Payload from "./Payload";
+
 export default class PayPayload extends Payload {
   protected paymentName;
   protected serviceVersion;
@@ -27,7 +28,7 @@ export default class PayPayload extends Payload {
         this.paymentName,this.serviceVersion,action,pay
     )
 
-    // console.log(this,this.services.ServiceList[0].parameters);
-    // throw new Error('SSSS')
+    console.log(this,this.services.ServiceList[0].parameters);
+    throw new Error('SSSS')
   }
 }

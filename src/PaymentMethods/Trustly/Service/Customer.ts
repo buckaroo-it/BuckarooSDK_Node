@@ -1,7 +1,7 @@
-import Person from "../../../Models/Person";
+import IPerson from "../../../Models/IPerson";
 import Model from "../../../Models/Model";
 
-export default class Customer extends Model implements Person {
+export default class Customer extends Model implements IPerson {
   category?: string;
   gender?: string;
   culture?: string;

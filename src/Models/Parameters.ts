@@ -8,7 +8,12 @@ export default class Parameters {
   }
 
   setUp(pay , groupType: string = "", groupID: number | string = "") {
+    console.log(pay)
+
+    throw new Error('DDD')
     for (const paramKey in pay) {
+      console.log(paramKey)
+      throw new Error('DDD')
       // if (typeof pay[paramKey] === "function") {
       //   let payLoadObject = pay[paramKey](data[paramKey]);
       //   console.log(paramKey,pay,data)
@@ -25,7 +30,7 @@ export default class Parameters {
         if (typeof groupID === "number") {
           groupID++;
         }
-        this.setUp(pay[paramKey], groupType, groupID);
+        this.setUp(paramKey, groupType, groupID);
       } else {
         this.setParamFormat(
             paramKey,

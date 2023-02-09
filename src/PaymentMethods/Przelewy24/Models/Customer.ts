@@ -1,4 +1,4 @@
-import PersonModel from "../../../Models/Person";
+import PersonModel from "../../../Models/IPerson";
 import Model from "../../../Models/Model";
 
 export default class Customer extends Model implements PersonModel {

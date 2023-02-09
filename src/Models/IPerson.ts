@@ -1,4 +1,4 @@
-export default interface Person {
+export default interface IPerson {
   category?: string;
   gender?: string;
   culture?: string;

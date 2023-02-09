@@ -29,7 +29,6 @@ method.pay( {
     },
     phone: {
       mobile: "0698765433",
-      landline: "0698765433"
     },
     email: "test@buckaroo.nl",
   },

@@ -12,8 +12,8 @@ export default class Pay extends PayForm{
 
     constructor(data) {
         super();
-        this.billing = new Recipient(data,'BillingCustomer');
-        this.shipping = new Recipient(data['shipping'] || data['billing'],'ShippingCustomer');
+        this.billing = new Recipient(data['billing'],'BillingCustomer');
+        this.shipping = new ShippingRecipient(data['shipping'] || data['billing']);
 
         if (!Array.isArray(data['articles'])) {
             data['articles'] = [data['articles']];
