@@ -71,7 +71,6 @@ export default class Client {
       data = "";
     }
     const options = this.getOptions(data, method, url);
-    // console.log(options,options.data.services.serviceList)
     return new HttpClient().call(options);
   }
 }

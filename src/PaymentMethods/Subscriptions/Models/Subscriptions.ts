@@ -1,4 +1,4 @@
-import Recipient from "../../Klarna/Service/Recipient";
+import BillingRecipient from "../../Klarna/Models/BillingRecipient";
 import RatePlan from "./RatePlan";
 import Phone from "./Phone";
 import Company from "./Company";
@@ -37,7 +37,7 @@ export default class Subscriptions {
 
   debtorFormat(data) {
     return {
-      data: new Recipient(data),
+      data: new BillingRecipient(data),
       groupType: "Debtor",
       groupID: "",
     };

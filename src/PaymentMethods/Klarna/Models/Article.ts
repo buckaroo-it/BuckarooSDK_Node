@@ -1,27 +1,23 @@
+import Model from "../../../Models/Model";
+import IArticle from "../../../Models/IArticle";
 
-export default class Article   {
-  identifier?: string;
-  quantity?: number;
-  price: number;
-  vatPercentage?: number;
+export default class Article  implements IArticle{
+  identifier: string = '';
+  quantity: number = 0;
+  price: number = 0;
+  vatPercentage: number = 0;
   description?: string;
-  groupType?:string = 'Article'
-  grossUnitPrice?: number;
   constructor(data) {
-
-    this.identifier = data.identifier;
-    this.description = data.description;
-    this.quantity = data.quantity;
-    this.price = data.grossUnitPrice ||  data.price;
-
-    this.vatPercentage = data.vatPercentage;
-
-    if(this.price){
-      this.grossUnitPrice = this.price
-      delete this.price
-    }
-    // this.setKeys({
-    //   price: "GrossUnitPrice",
-    // });
+    Model.setParameters(this,data)
+    Model.setKeys(this,{
+      price: "GrossUnitPrice",
+    })
   }
+  groupType?(): string {
+    return 'Article';
+  }
+  groupID?(id:string): number {
+    return Number(id)+1;
+  }
+
 }

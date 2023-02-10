@@ -1,4 +1,4 @@
-import ArticleModel from "../../../Models/Article";
+import ArticleModel from "../../../Models/IArticle";
 import Model from "../../../Models/Model";
 
 export default class Article extends Model implements ArticleModel {

@@ -23,7 +23,7 @@ export default class HttpClient {
         console.error(error, "error");
       });
       if(options.data){
-        console.log(JSON.stringify(options.data),options.data.services)
+        console.log(JSON.stringify(options.data))
         req.write(JSON.stringify(options.data));
       }
       req.end();

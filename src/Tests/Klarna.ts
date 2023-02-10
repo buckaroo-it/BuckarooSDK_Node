@@ -65,6 +65,6 @@ method.pay( {
       quantity: 1,
       price: 10.10,
     }
-  ],
+  ]
 });
 // method.payInInstallments(getPaymentPayload);

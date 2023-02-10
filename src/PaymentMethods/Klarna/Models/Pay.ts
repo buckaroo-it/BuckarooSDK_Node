@@ -1,28 +1,28 @@
-import Recipient from "../Service/Recipient";
+import BillingRecipient from "./BillingRecipient";
 import Article from "./Article";
-import PayForm from "../../../Models/PayForm";
-import ShippingRecipient from "../Service/ShippingRecipient";
+import ShippingRecipient from "./ShippingRecipient";
+import Model from "../../../Models/Model";
 
 
-export default class Pay extends PayForm{
-    currency = '';
-    billing:Recipient;
+export default class Pay{
+    billing:BillingRecipient;
     shipping?:ShippingRecipient;
     articles:Array<Article>;
 
     constructor(data) {
-        super();
-        this.billing = new Recipient(data['billing'],'BillingCustomer');
-        this.shipping = new ShippingRecipient(data['shipping'] || data['billing']);
+        this.billing = new BillingRecipient(data['billing'] || '');
+        this.shipping = new ShippingRecipient(data['shipping'] || data['billing'] || '');
 
-        if (!Array.isArray(data['articles'])) {
-            data['articles'] = [data['articles']];
+
+        if (data['articles'].length===0){
+            throw new Error('Missing Parameter:articles')
         }
         let articles: Array<Article> = [];
 
-        for (const datum of data['articles']) {
-            articles.push(new Article(datum));
-        }
-        this.articles = articles
+        data['articles'].forEach(value => {
+            articles.push(new Article(value))
+        })
+        this.articles = articles;
+        Model.setParameters(this,data)
     }
 }

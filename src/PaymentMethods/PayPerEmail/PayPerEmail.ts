@@ -1,5 +1,5 @@
 import PaymentMethod from "../PaymentMethod";
-import PayPayload from "../../Models/PayPayload";
+import Transaction from "../../Models/Transaction";
 import PaymentInvitation from "./Models/PaymentInvitation";
 
 export default class PayPerEmail extends PaymentMethod {
@@ -14,7 +14,7 @@ export default class PayPerEmail extends PaymentMethod {
   }
   async paymentInvitation(model?) {
     return this.api.client.post(
-      new PayPayload(model, this, "PaymentInvitation", new PaymentInvitation()),
+      new Transaction(model, this, "PaymentInvitation", new PaymentInvitation()),
       this.api.client.getTransactionUrl()
     );
   }

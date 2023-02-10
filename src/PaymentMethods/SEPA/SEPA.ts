@@ -1,6 +1,6 @@
 import PaymentMethod from "../PaymentMethod";
 import BuckarooClient from "../../BuckarooClient";
-import PayPayload from "../../Models/PayPayload";
+import Transaction from "../../Models/Transaction";
 import Pay from "./Models/Pay";
 import ExtraInfo from "./Models/ExtraInfo";
 import Refund from "./Models/Refund";
@@ -18,37 +18,37 @@ export default class SEPA extends PaymentMethod {
   }
   async pay(model?) {
     return this.api.client.post(
-      new PayPayload(model, this, "Pay", new Pay()),
+      new Transaction(model, this, "Pay", new Pay()),
       this.api.client.getTransactionUrl()
     );
   }
   async refund(model?) {
     return this.api.client.post(
-      new PayPayload(model, this, "Refund", new Refund()),
+      new Transaction(model, this, "Refund", new Refund()),
       this.api.client.getTransactionUrl()
     );
   }
   payRecurrent(model?) {
     return this.api.client.post(
-      new PayPayload(model, this, "PayRecurrent", new PayRecurrent()),
+      new Transaction(model, this, "PayRecurrent", new PayRecurrent()),
       this.api.client.getTransactionUrl()
     );
   }
   authorize(model?) {
     return this.api.client.post(
-      new PayPayload(model, this, "Authorize", new Pay()),
+      new Transaction(model, this, "Authorize", new Pay()),
       this.api.client.getTransactionUrl()
     );
   }
   extraInfo(model?) {
     return this.api.client.post(
-      new PayPayload(model, this, "Pay,ExtraInfo", new ExtraInfo()),
+      new Transaction(model, this, "Pay,ExtraInfo", new ExtraInfo()),
       this.api.client.getTransactionUrl()
     );
   }
   payWithEmandate(model?) {
     return this.api.client.post(
-      new PayPayload(model, this, "PayWithEmandate", new Pay()),
+      new Transaction(model, this, "PayWithEmandate", new Pay()),
       this.api.client.getTransactionUrl()
     );
   }

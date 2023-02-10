@@ -1,6 +1,6 @@
 import PaymentMethod from "../PaymentMethod";
 import BuckarooClient from "../../BuckarooClient";
-import PayPayload from "../../Models/PayPayload";
+import Transaction from "../../Models/Transaction";
 import Pay from "./Models/Pay";
 
 export default class Ideal extends PaymentMethod {
@@ -21,14 +21,14 @@ export default class Ideal extends PaymentMethod {
 
   async pay(model?) {
     return this.api.client.post(
-      new PayPayload(model, this, "Pay", new Pay()),
+      new Transaction(model, this, "Pay", new Pay()),
       this.api.client.getTransactionUrl()
     );
   }
 
   payRemainder(model?) {
     return this.api.client.post(
-      new PayPayload(model, this, "Pay", new Pay()),
+      new Transaction(model, this, "Pay", new Pay()),
       this.api.client.getTransactionUrl()
     );
   }

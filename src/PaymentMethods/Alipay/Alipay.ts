@@ -1,6 +1,6 @@
 import PaymentMethod from "../PaymentMethod";
 import BuckarooClient from "../../BuckarooClient";
-import PayPayload from "../../Models/PayPayload";
+import Transaction from "../../Models/Transaction";
 import Pay from "./Models/Pay";
 
 
@@ -16,7 +16,7 @@ export default class Alipay extends PaymentMethod {
 
   async pay(model?) {
     return this.api.client.post(
-      new PayPayload(model, this, "Pay", new Pay(model)),
+      new Transaction(model, this, "Pay", new Pay(model)),
       this.api.client.getTransactionUrl()
     );
   }

@@ -1,7 +1,8 @@
 import PaymentMethod from "../PaymentMethod";
 import BuckarooClient from "../../BuckarooClient";
-import PayPayload from "../../Models/PayPayload";
+import Transaction from "../../Models/Transaction";
 import Pay from "./Models/Pay";
+import PayForm from "../../Models/PayForm";
 
 export default class Klarna extends PaymentMethod {
   public requiredConfigFields: string[];
@@ -11,9 +12,14 @@ export default class Klarna extends PaymentMethod {
     this.requiredConfigFields = this.requiredFields;
   }
 
-  async pay(model:Pay) {
+  async pay(model:Pay & PayForm) {
+
+    let PayLoad = new Pay(model);
+    let PayLoadTransaction = new PayForm(model);
+    PayLoadTransaction.setServices?.(PayLoad,this.paymentName,this.serviceVersion,'Pay')
+
     return this.api.client.post(
-      new PayPayload(this, "Pay", new Pay(model)),
+      new Transaction(this,PayLoadTransaction),
       this.api.client.getTransactionUrl()
     );
   }

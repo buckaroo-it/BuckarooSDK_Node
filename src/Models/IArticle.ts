@@ -1,4 +1,4 @@
-export default interface Article {
+export default interface IArticle {
   identifier?: string;
   type?: string;
   brand?: string;
