@@ -1,31 +1,34 @@
-export default abstract class Model {
-  static setParameters(modelObject,data){
+export default class Model {
+  constructor() {
+  }
+  setParameters (data) {
     /** Go through model to check which parameter to set,
      * delete if optional with no value,
-     * rewrite if new data is set
-     * and throw error if missing required parameter
+     * rewrite if new data is set,
+     * throw error if missing required parameter
+     * and ignore function parameters
      */
-    for (const key in modelObject) {
-      if(!data[key]){
-        if(typeof modelObject[key] !== 'undefined'){
-          if(!modelObject[key]){
-            throw new Error('Missing Parameter:'+ key +' in '+ modelObject.constructor.name)
+
+    for (const key in this) {
+      if (!data[key]) {
+        if (typeof this[key] !== 'undefined') {
+          if (!this[key]) {
+            throw new Error('Missing Parameter:' + key + ' in ' + this.constructor.name)
           }
         } else {
-          delete modelObject[key]
+          delete this[key]
         }
-      }
-      else {
-        modelObject[key] = modelObject[key] || data[key]
+      } else if (typeof this[key] !== 'function') {
+        this[key] = this[key] || data[key]
       }
     }
-
   }
 
-  static setKeys(modelObject, keys: {}) {
-    for (const modelObjectKey in keys) {
-      if(modelObject[modelObjectKey]){
-        delete Object.assign(modelObject, { [keys[modelObjectKey]]: modelObject[modelObjectKey] })[modelObjectKey];
+  setKeys (keys: Record<string, string>) {
+    /** Go through keys and change names in model if it exists **/
+    for (const thisKey in keys) {
+      if (this[thisKey]) {
+        delete Object.assign(this, { [keys[thisKey]]: this[thisKey] })[thisKey]
       }
     }
   }

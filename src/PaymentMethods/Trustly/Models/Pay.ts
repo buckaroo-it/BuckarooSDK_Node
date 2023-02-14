@@ -1,20 +1,20 @@
-import Customer from "../Service/Customer";
+import Customer from '../Service/Customer'
 export default class Pay {
-  customer = (data) => this.customerFormat(data);
-  country = (data) => this.countryFormat(data);
-  customerFormat(data) {
+  customer = (data) => this.customerFormat(data)
+  country = (data) => this.countryFormat(data)
+  customerFormat (data) {
     return {
       data: new Customer(data),
-      groupType: "Customer",
-      groupID: "",
-    };
+      groupType: 'Customer',
+      groupID: ''
+    }
   }
 
-  countryFormat(data) {
+  countryFormat (data) {
     return {
       data: { CustomerCountryCode: data },
-      groupType: "Country",
-      groupID: "",
-    };
+      groupType: 'Country',
+      groupID: ''
+    }
   }
 }

@@ -1,5 +1,5 @@
 export default interface BankAccount {
-  iban?: string;
-  accountName?: string;
-  bic?: string;
+  iban?: string
+  accountName?: string
+  bic?: string
 }

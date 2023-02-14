@@ -1,28 +1,28 @@
-import Charge from "./Charge";
+import Charge from './Charge'
 export default class RatePlan {
-  type;
-  ratePlanGuid;
-  ratePlanCode;
-  startDate;
-  endDate;
-  Charge = (data) => this.chargeFormat(data);
+  type
+  ratePlanGuid
+  ratePlanCode
+  startDate
+  endDate
+  Charge = (data) => this.chargeFormat(data)
 
-  constructor(key, data) {
-    this.type = key;
+  constructor (key, data) {
+    this.type = key
     for (const dataKey in data) {
-      if (typeof this[dataKey] !== "function") {
-        this[dataKey] = data[dataKey];
+      if (typeof this[dataKey] !== 'function') {
+        this[dataKey] = data[dataKey]
       } else {
-        this[dataKey] = this[dataKey](data[dataKey]);
+        this[dataKey] = this[dataKey](data[dataKey])
       }
     }
   }
 
-  chargeFormat(data) {
+  chargeFormat (data) {
     return {
       data: new Charge(data),
-      groupType: "RatePlanCharge",
-      groupID: "",
-    };
+      groupType: 'RatePlanCharge',
+      groupID: ''
+    }
   }
 }

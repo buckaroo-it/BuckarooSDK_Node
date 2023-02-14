@@ -19,28 +19,14 @@
   "license": "ISC",
   "devDependencies": {
     "@types/crypto-js": "^4.1.1",
-    "@typescript-eslint/eslint-plugin": "^5.48.1",
-    "@typescript-eslint/parser": "^5.48.1",
-    "eslint": "^8.32.0",
-    "eslint-config-prettier": "^8.6.0",
-    "eslint-config-standard-with-typescript": "^27.0.1",
-    "eslint-plugin-import": "^2.27.4",
-    "eslint-plugin-n": "^15.6.1",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-promise": "^6.1.1",
     "prettier": "^2.8.3",
     "typescript": "^4.9.4"
   },
   "dependencies": {
     "@types/node": "^18.11.18",
-    "axios": "^1.2.2",
     "crypto-js": "^4.1.1",
     "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "ip-address": "^8.1.0",
-    "joi": "^17.7.0",
-    "validator": "^13.7.0",
-    "winston": "^3.8.2"
+    "ip-address": "^8.1.0"
   },
   "directories": {
     "example": "examples"

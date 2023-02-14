@@ -1,46 +1,63 @@
-import { uniqid } from "../Functions/Functions";
-import Services from "./Services";
-import Model from "./Model";
+import { uniqid } from '../Utils/Functions'
+import Services from './Services'
+import Model from './Model'
 
-export default class PayForm {
-    order?;
-    amountDebit: number|string;
-    invoice:string;
-    currency?: string
-    amountCredit?: number
-    description?: string
-    clientIP?: 'IPAddress'
-    returnURL?: string
-    returnURLCancel?: string
-    returnURLError?: string
-    returnURLReject?: string
-    originalTransactionKey?: string
-    startRecurrent?: boolean
-    continueOnIncomplete?: 1|0
-    servicesSelectableByClient?: string
-    servicesExcludedForClient?: string
-    pushURL?: string
-    pushURLFailure?: string
-    clientUserAgent?: string
-    originalTransactionReference?: 'TransactionReference'
-    services?: Services
-    customParameters?: 'CustomParameters'
-    additionalParameters?: 'TransactionRequestAdditionalParameters'
+export interface IPayForm {
+  order?: string
+  amountDebit: number | string
+  invoice: string
+  currency?: string
+  amountCredit?: number
+  description?: string
+  clientIP?: 'IPAddress'
+  returnURL?: string
+  returnURLCancel?: string
+  returnURLError?: string
+  returnURLReject?: string
+  originalTransactionKey?: string
+  startRecurrent?: boolean
+  continueOnIncomplete?: 1 | 0
+  servicesSelectableByClient?: string
+  servicesExcludedForClient?: string
+  pushURL?: string
+  pushURLFailure?: string
+  clientUserAgent?: string
+  originalTransactionReference?: 'TransactionReference'
+  services?: Services
+  customParameters?: 'CustomParameters'
+  additionalParameters?: 'TransactionRequestAdditionalParameters'
+}
 
-    constructor(data) {
-        this.order = uniqid("ORDER_NO_");
-        this.amountDebit =  data['amountDebit'] || '';
-        this.invoice = data['invoice'] || '';
-        Model.setParameters(this,data)
+export default class PayForm extends Model  {
+  additionalParameters?: "TransactionRequestAdditionalParameters";
+  amountCredit?: number;
+  clientIP?: "IPAddress";
+  clientUserAgent?: string;
+  continueOnIncomplete?: 1 | 0;
+  currency?: string;
+  customParameters?: "CustomParameters";
+  description?: string;
+  originalTransactionKey?: string;
+  originalTransactionReference?: "TransactionReference";
+  pushURL?: string;
+  pushURLFailure?: string;
+  returnURL?: string;
+  returnURLCancel?: string;
+  returnURLError?: string;
+  returnURLReject?: string;
+  servicesExcludedForClient?: string;
+  servicesSelectableByClient?: string;
+  startRecurrent?: boolean;
+  order: string = uniqid('ORDER_NO_')
+  amountDebit: number | string = ''
+  invoice: string = ''
+  services?: Services
+  constructor (data:IPayForm, services?) {
+    super()
+    this.returnURL = data.returnURL
+    if (services) {
+      this.services = services
     }
-
-    setServices?(payModel,paymentName,serviceVersion,action){
-        this.services = new Services(
-            paymentName,
-            serviceVersion,
-            action,
-            payModel
-        );
-        return this;
-    }
+    this.setParameters(data)
+  }
 }

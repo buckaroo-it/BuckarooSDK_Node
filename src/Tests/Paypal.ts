@@ -1,10 +1,10 @@
-require("dotenv").config({ path: "../../.env" });
-import BuckarooClient from "../BuckarooClient";
-import Paypal from "../PaymentMethods/Paypal/Paypal";
-import { uniqid } from "../Functions/Functions";
+import BuckarooClient from '../BuckarooClient'
+import Paypal from '../PaymentMethods/Paypal/Paypal'
+import { uniqid } from '../Utils/Functions'
+require('dotenv').config({ path: '../../.env' })
 
-const client = new BuckarooClient();
-const method = new Paypal(client);
+const client = new BuckarooClient()
+const method = new Paypal(client)
 
 // method.pay({
 //   amountDebit: 10,
@@ -13,9 +13,9 @@ const method = new Paypal(client);
 
 method.payRecurrent({
   amountDebit: 10,
-  originalTransactionKey: "C32C0B52E1FE4A37835FFB1716XXXXXX",
-  invoice: uniqid(),
-});
+  originalTransactionKey: 'C32C0B52E1FE4A37835FFB1716XXXXXX',
+  invoice: uniqid()
+})
 
 // method.extraInfo({
 //   amountDebit: 10,

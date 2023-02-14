@@ -1,22 +1,29 @@
-import Address from "./Address";
+import Address,{IAddress} from './Address'
 // import Phone from "../Models/Phone";
-import Person from "./Person";
-import Phone from "./Phone";
-import Model from "../../../Models/Model";
+import Person,{IPerson} from './Person'
+import Phone,{IPhone} from './Phone'
+import Model from '../../../Models/Model'
 
-export default class BillingRecipient {
-  recipient:Person;
-  address:Address;
-  email:string;
-  phone:Phone;
-  constructor(data) {
-    this.phone =  new Phone(data.phone || '')
-    this.recipient =  new Person(data.recipient || '')
-    this.address =  new Address(data.address || '')
-    this.email =  data.email || ''
-    Model.setParameters(this,data)
+export declare interface IBillingRecipient  {
+  recipient: IPerson
+  address: IAddress
+  email: string
+  phone: IPhone
+}
+export default class BillingRecipient extends Model{
+  recipient: IPerson | boolean = false
+  address: Address | boolean = false
+  email: string | boolean  = false
+  phone: Phone | boolean = false
+  constructor (data) {
+    super()
+    this.setParameters(data)
+    this.phone = new Phone(this.phone)
+    this.recipient = new Person(this.recipient)
+    this.address = new Address(this.address)
   }
-  groupType?(): string {
-    return 'BillingCustomer';
+
+  groupType? (): string {
+    return 'BillingCustomer'
   }
 }

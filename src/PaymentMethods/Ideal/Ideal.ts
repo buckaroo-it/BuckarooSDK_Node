@@ -1,70 +1,84 @@
-import PaymentMethod from "../PaymentMethod";
-import BuckarooClient from "../../BuckarooClient";
-import Transaction from "../../Models/Transaction";
-import Pay from "./Models/Pay";
+import PaymentMethod from '../PaymentMethod'
+import Transaction from '../../Models/Transaction'
+import Pay, { IPay } from './Models/Pay'
+import PayForm from '../../Models/PayForm'
+import Services from '../../Models/Services'
 
-export default class Ideal extends PaymentMethod {
-    protected requiredConfigFields: Array<string> = [
-        "currency",
-        "returnURL",
-        "returnURLCancel",
-        "pushURL",
-    ];
+class Ideal extends PaymentMethod {
+  protected requiredConfigFields: string[] = [
+    'currency',
+    'returnURL',
+    'returnURLCancel',
+    'pushURL'
+  ]
 
-    constructor(api: BuckarooClient) {
-        super(api);
-        this.paymentName = "ideal";
-        this.requiredConfigFields = this.requiredFields.concat(
-            this.requiredConfigFields
-        );
-    }
-
-  async pay(model?) {
-    return this.api.client.post(
-      new Transaction(model, this, "Pay", new Pay()),
-      this.api.client.getTransactionUrl()
-    );
+  constructor () {
+    super()
+    this.paymentName = 'ideal'
+    this.requiredConfigFields = this.requiredFields.concat(
+      this.requiredConfigFields
+    )
+  }
+  async pay(data:IPay): Promise<any> {
+      return super.pay(data,new Pay(data));
   }
 
-  payRemainder(model?) {
-    return this.api.client.post(
-      new Transaction(model, this, "Pay", new Pay()),
+  // async pay (data: IPay): Promise<any> {
+  //   const services = new Services(this.paymentName, this.serviceVersion, 'Pay', new Pay(data))
+  //   const PayLoad = new PayForm(data, services)
+  //   const TransactionData = new Transaction(this, PayLoad)
+  //
+  //   await this.api.client.post(
+  //     new Transaction(this, TransactionData),
+  //     this.api.client.getTransactionUrl()
+  //   )
+  // }
+
+  async payRemainder (data?): Promise<any> {
+    const services = new Services(this.paymentName, this.serviceVersion, 'PayRemainder', new Pay(data))
+    const PayLoad = new PayForm(data, services)
+    const TransactionData = new Transaction(this, PayLoad)
+    await this.api.client.post(
+      TransactionData,
       this.api.client.getTransactionUrl()
-    );
+    )
   }
-  issuers(): any {
-    let issuerList: { id: any; name: any }[] = [];
+
+  async issuers (): Promise<any> {
+    const issuerList: Array<{ id: any, name: any }> = []
     try {
-      this.api.client
+      await this.api.client
         .specification({}, this.paymentName, 2)
         .then((response) => {
           if (
-            response["Actions"] &&
-            response["Actions"]["0"] &&
-            response["Actions"]["0"]["RequestParameters"] &&
-            response["Actions"]["0"]["RequestParameters"][0] &&
-            response["Actions"]["0"]["RequestParameters"][0][
-              "ListItemDescriptions"
-            ]
+            response.Actions?.['0']?.RequestParameters?.[0]?.ListItemDescriptions
           ) {
-            let issuersData =
-              response["Actions"]["0"]["RequestParameters"][0][
-                "ListItemDescriptions"
-              ];
+            const issuersData =
+              response.Actions['0'].RequestParameters[0].ListItemDescriptions
             if (issuersData.length > 0) {
-              for (let issuer of issuersData) {
+              for (const issuer of issuersData) {
                 issuerList.push({
-                  id: issuer["Value"],
-                  name: issuer["Description"],
-                });
+                  id: issuer.Value,
+                  name: issuer.Description
+                })
               }
             }
-            return issuerList;
+            return issuerList
           }
-        });
+        })
     } catch (e) {
-      console.log(e);
-      return false;
+      console.log(e)
+      return false
     }
   }
 }
+
+const ideal = new Ideal()
+const pay = ideal.pay.bind(ideal);
+const issuers = ideal.issuers.bind(ideal);
+
+export {
+  pay,
+  issuers
+}
+export default ideal

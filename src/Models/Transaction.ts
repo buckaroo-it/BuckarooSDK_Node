@@ -1,25 +1,20 @@
-// import Payload from "./Payload";
+import PaymentMethod from '../PaymentMethods/PaymentMethod'
+import Model from './Model'
 
-import PayForm from "./PayForm";
-
-export default class Transaction {
-  constructor(method, TransactionType) {
-    this.setProperties( method, TransactionType);
+export default class Transaction extends Model {
+  constructor (method: PaymentMethod,payload) {
+    super()
+    this.setProperties(method,payload)
   }
 
-  setProperties(method, TransactionType:PayForm) {
+  setProperties (method,payload) {
     for (const datum of method.requiredConfigFields) {
-      this[datum] = method.api.config[datum] ? method.api.config[datum] : "";
+      this[datum] = method.api.config[datum] ? method.api.config[datum] : ''
     }
-    for (const methodKey in TransactionType) {
-      this[methodKey] = TransactionType[methodKey]
+    for (const key in payload) {
+      if(typeof payload[key] !== 'function') {
+        this[key] = payload[key]
+      }
     }
-    console.log(this,TransactionType.services?.ServiceList[0].parameters)
-
-    throw new Error('ASADASD')
-    // this.setServices(
-    //     this.paymentName,this.serviceVersion,action,modelObject
-    // )
-
   }
 }

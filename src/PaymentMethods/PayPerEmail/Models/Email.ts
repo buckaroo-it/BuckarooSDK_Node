@@ -1,21 +1,21 @@
-import EmailModel from "../../../Models/Email";
-import Model from "../../../Models/Model";
+import EmailModel from '../../../Models/Email'
+import Model from '../../../Models/Model'
 
 export default class Email extends Model implements EmailModel {
-  email?: string;
+  email?: string
 
-  constructor(data) {
-    super();
-    this.email = data.email;
+  constructor (data) {
+    super()
+    this.email = data.email
 
-    for (let dataKey in this) {
+    for (const dataKey in this) {
       if (!this[dataKey]) {
-        delete this[dataKey];
+        delete this[dataKey]
       }
     }
 
     this.setKeys({
-      email: "CustomerEmail",
-    });
+      email: 'CustomerEmail'
+    })
   }
 }

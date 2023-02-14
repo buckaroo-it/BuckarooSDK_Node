@@ -1,33 +1,27 @@
-import ServiceObject from "../Service/ServiceObject";
-import Article from "./Article";
-
-export default class Pay {
-  billing = (data) => this.billingFormat(data);
-  articles = (data) => this.articlesFormat(data);
-  shipping = (data) => this.shippingFormat(data);
-
-  billingFormat(data) {
-    return {
-      data: new ServiceObject(data),
-      groupType: "BillingCustomer",
-      groupID: "",
-    };
-  }
-  shippingFormat(data) {
-    return {
-      data: new ServiceObject(data),
-      groupType: "ShippingCustomer",
-      groupID: "",
-    };
-  }
-  articlesFormat(data) {
-    if (!Array.isArray(data)) {
-      data = [data];
-    }
-    let articles: Array<Article> = [];
-    for (const datum of data) {
-      articles.push(new Article(datum));
-    }
-    return { data: articles, groupType: "Article", groupID: 1 };
-  }
-}
+// import Model from "../../../Models/Model";
+// import BillingRecipient from "../../Klarna/Models/BillingRecipient";
+// import ShippingRecipient from "../../Klarna/Models/ShippingRecipient";
+// import Article from "../../Klarna/Models/Article";
+//
+// export default class Pay extends Model{
+//   billing: BillingRecipient
+//   shipping?: ShippingRecipient
+//   articles: Article[]
+//
+//   constructor (data) {
+//     super()
+//     this.billing = new BillingRecipient(data.billing || '')
+//     this.shipping = new ShippingRecipient(data.shipping || data.billing || '')
+//
+//     if (data.articles.length === 0) {
+//       throw new Error('Missing Parameter:articles')
+//     }
+//     const articles: Article[] = []
+//
+//     data.articles.forEach(value => {
+//       articles.push(new Article(value))
+//     })
+//     this.articles = articles
+//     this.setParameters(data)
+//   }
+// }

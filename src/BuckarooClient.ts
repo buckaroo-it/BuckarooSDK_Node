@@ -1,26 +1,29 @@
-import Config from "./Request/Config";
-import Client from "./Request/Client";
-import Ideal from "./PaymentMethods/Ideal/Ideal";
-import Klarna from "./PaymentMethods/Klarna/Klarna";
-const payments: {} = {
-  ideal: Ideal,
-  klarna: Klarna,
-};
+import Config from './Request/Config'
+import Client from './Request/Client'
+import { IConfig, ICredentials } from './Utils/Types'
+import { config } from 'dotenv'
+config({ path: '../.env' })
 
-export default class BuckarooClient {
-  private _client: Client;
-  private readonly _config: Config;
-  get config(): Config {
-    return this._config;
+export class BuckarooClient {
+  private _client: Client
+  private _config: Config
+  get config (): Config {
+    return this._config
   }
-  get client(): Client {
-    return this._client;
+
+  get client (): Client {
+    return this._client
   }
-  constructor(websiteKey?, secretKey?) {
-    this._config = new Config(websiteKey, secretKey);
-    this._client = new Client(this._config);
+
+  set config (value: Config) {
+    this._config = value
+    this._client = new Client(this._config)
   }
-  method(methodName) {
-    return new payments[methodName]();
+
+  constructor (credentials?: ICredentials, config?: IConfig) {
+    this._config = new Config(credentials, config)
+    this._client = new Client(this._config)
   }
 }
+const Api = new BuckarooClient()
+export default Api

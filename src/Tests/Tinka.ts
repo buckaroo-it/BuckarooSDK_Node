@@ -1,76 +1,76 @@
-import Gender from "../Constants/Gender";
+import Gender from '../Constants/Gender'
+import BuckarooClient from '../BuckarooClient'
+import Tinka from '../PaymentMethods/Tinka/Tinka'
+import { uniqid } from '../Utils/Functions'
 
-require("dotenv").config({ path: "../../.env" });
-import BuckarooClient from "../BuckarooClient";
-import Tinka from "../PaymentMethods/Tinka/Tinka";
-import { uniqid } from "../Functions/Functions";
+require('dotenv').config({ path: '../../.env' })
 
-const client = new BuckarooClient();
-const method = new Tinka(client);
+const client = new BuckarooClient()
+const method = new Tinka(client)
 
-let getPaymentPayload = {
+const getPaymentPayload = {
   amountDebit: 3.5,
   order: uniqid(),
   invoice: uniqid(),
-  description: "This is a test order",
-  paymentMethod: "Credit",
-  deliveryMethod: "Locker",
-  deliveryDate: "2030-01-01",
+  description: 'This is a test order',
+  paymentMethod: 'Credit',
+  deliveryMethod: 'Locker',
+  deliveryDate: '2030-01-01',
   articles: [
     {
       type: 1,
-      description: "Blue Toy Car",
-      brand: "Ford Focus",
-      manufacturer: "Ford",
-      color: "Red",
-      size: "Small",
-      quantity: "1",
-      price: "3.5",
-      unitCode: "test",
-    },
+      description: 'Blue Toy Car',
+      brand: 'Ford Focus',
+      manufacturer: 'Ford',
+      color: 'Red',
+      size: 'Small',
+      quantity: '1',
+      price: '3.5',
+      unitCode: 'test'
+    }
   ],
   customer: {
     gender: Gender.MALE,
-    firstName: "Buck",
-    lastName: "Aroo",
-    initials: "BA",
-    birthDate: "1990-01-01",
+    firstName: 'Buck',
+    lastName: 'Aroo',
+    initials: 'BA',
+    birthDate: '1990-01-01'
   },
   billing: {
     recipient: {
-      lastNamePrefix: "the",
+      lastNamePrefix: 'the'
     },
-    email: "billingcustomer@buckaroo.nl",
+    email: 'billingcustomer@buckaroo.nl',
     phone: {
-      mobile: "0698765433",
+      mobile: '0698765433'
     },
     address: {
-      street: "Hoofdstraat",
-      houseNumber: "80",
-      houseNumberAdditional: "A",
-      zipcode: "8441EE",
-      city: "Heerenveen",
-      country: "NL",
-    },
+      street: 'Hoofdstraat',
+      houseNumber: '80',
+      houseNumberAdditional: 'A',
+      zipcode: '8441EE',
+      city: 'Heerenveen',
+      country: 'NL'
+    }
   },
   shipping: {
     recipient: {
-      lastNamePrefix: "the",
+      lastNamePrefix: 'the'
     },
-    email: "billingcustomer@buckaroo.nl",
+    email: 'billingcustomer@buckaroo.nl',
     phone: {
-      mobile: "0698765433",
+      mobile: '0698765433'
     },
     address: {
-      street: "Hoofdstraat",
-      houseNumber: "80",
-      houseNumberAdditional: "A",
-      zipcode: "8441EE",
-      city: "Heerenveen",
-      country: "NL",
-    },
-  },
-};
+      street: 'Hoofdstraat',
+      houseNumber: '80',
+      houseNumberAdditional: 'A',
+      zipcode: '8441EE',
+      city: 'Heerenveen',
+      country: 'NL'
+    }
+  }
+}
 
-method.pay(getPaymentPayload);
+method.pay(getPaymentPayload)
 // method.payInInstallments(getPaymentPayload);

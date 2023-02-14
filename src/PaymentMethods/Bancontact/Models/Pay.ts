@@ -1,5 +1,5 @@
-import PayForm from "../../../Models/PayForm";
+import PayForm from '../../../Models/PayForm'
 
 export default class Pay extends PayForm {
-    saveToken:boolean|undefined;
+  saveToken: boolean | undefined
 }

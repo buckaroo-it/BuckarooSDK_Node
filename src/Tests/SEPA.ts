@@ -1,10 +1,10 @@
-require("dotenv").config({ path: "../../.env" });
-import BuckarooClient from "../BuckarooClient";
-import SEPA from "../PaymentMethods/SEPA/SEPA";
-import { uniqid } from "../Functions/Functions";
+import BuckarooClient from '../BuckarooClient'
+import SEPA from '../PaymentMethods/SEPA/SEPA'
+import { uniqid } from '../Utils/Functions'
+require('dotenv').config({ path: '../../.env' })
 
-const client = new BuckarooClient();
-const method = new SEPA(client);
+const client = new BuckarooClient()
+const method = new SEPA(client)
 
 // method.pay({
 //   invoice: uniqid(),
@@ -68,6 +68,6 @@ const method = new SEPA(client);
 
 method.payWithEmandate({
   amountDebit: 10,
-  invoice: "testinvoice 123",
-  mandateReference: "001D284C4A887F84756A1425A369997xxxx",
-});
+  invoice: 'testinvoice 123',
+  mandateReference: '001D284C4A887F84756A1425A369997xxxx'
+})

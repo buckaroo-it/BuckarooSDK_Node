@@ -1,53 +1,53 @@
-import Recipient from "../Service/Recipient";
-import Article from "./Article";
-import Customer from "./Customer";
+import Recipient from '../Service/Recipient'
+import Article from './Article'
+import Customer from './Customer'
 
 export default class Pay {
-  shippingRecipient: Recipient = new Recipient({});
+  shippingRecipient: Recipient = new Recipient({})
 
-  billing = (data) => this.billingFormat(data);
-  articles = (data) => this.articlesFormat(data);
-  shipping = (data) => this.shippingFormat(data);
-  customer = (data) => this.customerFormat(data);
+  billing = (data) => this.billingFormat(data)
+  articles = (data) => this.articlesFormat(data)
+  shipping = (data) => this.shippingFormat(data)
+  customer = (data) => this.customerFormat(data)
 
-  paymentMethod;
-  deliveryMethod;
-  deliveryDate;
+  paymentMethod
+  deliveryMethod
+  deliveryDate
 
-  billingFormat(data) {
-    this.shippingRecipient = new Recipient(data);
+  billingFormat (data) {
+    this.shippingRecipient = new Recipient(data)
 
     return {
       data: new Recipient(data),
-      groupType: "BillingCustomer",
-      groupID: "",
-    };
+      groupType: 'BillingCustomer',
+      groupID: ''
+    }
   }
 
-  shippingFormat(data) {
+  shippingFormat (data) {
     return {
       data: data ? new Recipient(data) : this.shippingRecipient,
-      groupType: "ShippingCustomer",
-      groupID: "",
-    };
+      groupType: 'ShippingCustomer',
+      groupID: ''
+    }
   }
 
-  articlesFormat(data) {
+  articlesFormat (data) {
     if (!Array.isArray(data)) {
-      data = [data];
+      data = [data]
     }
-    let articles: Array<Article> = [];
+    const articles: Article[] = []
     for (const datum of data) {
-      articles.push(new Article(datum));
+      articles.push(new Article(datum))
     }
-    return { data: articles, groupType: "Article", groupID: 0 };
+    return { data: articles, groupType: 'Article', groupID: 0 }
   }
 
-  customerFormat(data) {
+  customerFormat (data) {
     return {
       data: new Customer(data),
-      groupType: "",
-      groupID: "",
-    };
+      groupType: '',
+      groupID: ''
+    }
   }
 }

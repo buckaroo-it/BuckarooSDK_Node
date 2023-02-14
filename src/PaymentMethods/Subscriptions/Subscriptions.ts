@@ -1,92 +1,98 @@
-import BuckarooClient from "../../BuckarooClient";
-import Transaction from "../../Models/Transaction";
-import PaymentMethod from "../PaymentMethod";
-import SubscriptionsModel from "./Models/Subscriptions";
-import Payload from "../../Models/Payload";
+import BuckarooClient from '../../BuckarooClient'
+import Transaction from '../../Models/Transaction'
+import PaymentMethod from '../PaymentMethod'
+import SubscriptionsModel from './Models/Subscriptions'
 
 export default class Subscriptions extends PaymentMethod {
-  protected requiredConfigFields: Array<string> = [];
-  public serviceVersion = 1;
-  constructor(api: BuckarooClient) {
-    super(api);
-    this.paymentName = "Subscriptions";
+  protected requiredConfigFields: string[] = []
+  public serviceVersion = 1
+  constructor (api: BuckarooClient) {
+    super(api)
+    this.paymentName = 'Subscriptions'
     this.requiredConfigFields = this.requiredConfigFields.concat(
       this.requiredFields
-    );
+    )
   }
-  async create(model?) {
-    return this.api.client.post(
+
+  async create (model?) {
+    await this.api.client.post(
       new Payload().setServices(
         model,
         this.paymentName,
         this.serviceVersion,
-        "CreateSubscription",
+        'CreateSubscription',
         new SubscriptionsModel()
       ),
       this.api.client.getDataRequestUrl()
-    );
+    )
   }
 
-  async createCombined(model?) {
-    return this.api.client.post(
+  async createCombined (model?) {
+    await this.api.client.post(
       new Payload().setServices(
         model,
         this.paymentName,
         this.serviceVersion,
-        "CreateCombinedSubscription",
+        'CreateCombinedSubscription',
         new SubscriptionsModel()
       ),
       this.api.client.getDataRequestUrl()
-    );
+    )
   }
 
-  async manually(model?) {
-    return this.api.client.post(
-      new Transaction(model, this, "Pay", new SubscriptionsModel()),
+  async manually (model?) {
+    await this.api.client.post(
+      new Transaction(model, this, 'Pay', new SubscriptionsModel()),
       this.api.client.getTransactionUrl()
-    );
-  }
-  async combine(model?) {
-    return this.api.client.post(
-      new Transaction(model, this, "Pay", new SubscriptionsModel()),
-      this.api.client.getTransactionUrl()
-    );
-  }
-  async update(model?) {
-    return this.api.client.post(
-      new Transaction(model, this, "Pay", new SubscriptionsModel()),
-      this.api.client.getTransactionUrl()
-    );
+    )
   }
 
-  async stop(model?) {
-    return this.api.client.post(
-      new Transaction(model, this, "Pay", new SubscriptionsModel()),
+  async combine (model?) {
+    await this.api.client.post(
+      new Transaction(model, this, 'Pay', new SubscriptionsModel()),
       this.api.client.getTransactionUrl()
-    );
+    )
   }
-  async info(model?) {
-    return this.api.client.post(
-      new Transaction(model, this, "Pay", new SubscriptionsModel()),
+
+  async update (model?) {
+    await this.api.client.post(
+      new Transaction(model, this, 'Pay', new SubscriptionsModel()),
       this.api.client.getTransactionUrl()
-    );
+    )
   }
-  async deletePaymentConfig(model?) {
-    return this.api.client.post(
-      new Transaction(model, this, "Pay", new SubscriptionsModel()),
+
+  async stop (model?) {
+    await this.api.client.post(
+      new Transaction(model, this, 'Pay', new SubscriptionsModel()),
       this.api.client.getTransactionUrl()
-    );
+    )
   }
-  async pause(model?) {
-    return this.api.client.post(
-      new Transaction(model, this, "Pay", new SubscriptionsModel()),
+
+  async info (model?) {
+    await this.api.client.post(
+      new Transaction(model, this, 'Pay', new SubscriptionsModel()),
       this.api.client.getTransactionUrl()
-    );
+    )
   }
-  async resume(model?) {
-    return this.api.client.post(
-      new Transaction(model, this, "Pay", new SubscriptionsModel()),
+
+  async deletePaymentConfig (model?) {
+    await this.api.client.post(
+      new Transaction(model, this, 'Pay', new SubscriptionsModel()),
       this.api.client.getTransactionUrl()
-    );
+    )
+  }
+
+  async pause (model?) {
+    await this.api.client.post(
+      new Transaction(model, this, 'Pay', new SubscriptionsModel()),
+      this.api.client.getTransactionUrl()
+    )
+  }
+
+  async resume (model?) {
+    await this.api.client.post(
+      new Transaction(model, this, 'Pay', new SubscriptionsModel()),
+      this.api.client.getTransactionUrl()
+    )
   }
 }

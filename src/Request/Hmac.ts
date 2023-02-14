@@ -1,80 +1,80 @@
-import md5 from "crypto-js/md5";
-import Config from "./Config";
-import hmacSHA256 from "crypto-js/hmac-sha256";
-import Base64 from "crypto-js/enc-base64";
+import md5 from 'crypto-js/md5'
+import Config from './Config'
+import hmacSHA256 from 'crypto-js/hmac-sha256'
+import Base64 from 'crypto-js/enc-base64'
 export default class Hmac {
-  private uri: string;
-  private base64Data: string;
-  private nonce: string;
-  private time: string;
-  private config: Config;
-  private hash: string | undefined;
+  private uri: string
+  private base64Data: string
+  private nonce: string
+  private time: string
+  private readonly config: Config
+  private hash: string | undefined
 
-  constructor(config: Config,url) {
-    this.uri = this.setUri(url);
-    this.base64Data = "";
-    this.nonce = "";
-    this.time = "";
-    this.config = config;
-    this.setNonce("nonce_" + Math.floor(Math.random() * 9999999 + 1));
-    this.setTime(String(Math.round(Date.now() / 1000)));
+  constructor (config: Config, url) {
+    this.uri = this.setUri(url)
+    this.base64Data = ''
+    this.nonce = ''
+    this.time = ''
+    this.config = config
+    this.setNonce('nonce_' + Math.floor(Math.random() * 9999999 + 1))
+    this.setTime(String(Math.round(Date.now() / 1000)))
   }
 
-  public setUri(uri?: string): string {
+  public setUri (uri?: string): string {
     if (uri) {
-      uri = uri.replace(/^[^:/.]*[:/]+/i, "");
-      return (this.uri = encodeURIComponent(uri).toLowerCase());
+      uri = uri.replace(/^[^:/.]*[:/]+/i, '')
+      return (this.uri = encodeURIComponent(uri).toLowerCase())
     }
-    return "";
+    return ''
   }
 
-  public getUri() {
-    return this.uri;
+  public getUri () {
+    return this.uri
   }
 
-  public generate(method, data) {
+  public generate (method, data) {
     const hashString =
       this.config.getWebsiteKey() +
       method +
-      this.getUri()+
-      this.getTime()+
-      this.getNonce()+
-      this.getBase64Data(data);
+      this.getUri() +
+      this.getTime() +
+      this.getNonce() +
+      this.getBase64Data(data)
     this.hash = Base64.stringify(
       hmacSHA256(hashString, this.config.getSecretKey())
-    );
+    )
     return `${this.config.getWebsiteKey()}:${
       this.hash
-    }:${this.getNonce()}:${this.getTime()}`;
+    }:${this.getNonce()}:${this.getTime()}`
   }
 
-  public getBase64Data(data?) {
+  public getBase64Data (data?) {
     if (data) {
-      if (typeof data === "object") {
-        data = JSON.stringify(data);
+      if (typeof data === 'object') {
+        data = JSON.stringify(data)
       }
-      this.base64Data = Base64.stringify(md5(data));
+      this.base64Data = Base64.stringify(md5(data))
     }
-    return this.base64Data;
+    return this.base64Data
   }
 
-  public setNonce(nonce?: string) {
+  public setNonce (nonce?: string) {
     if (nonce) {
-      this.nonce = nonce;
+      this.nonce = nonce
     }
   }
 
-  public getNonce() {
-    return this.nonce;
+  public getNonce () {
+    return this.nonce
   }
 
-  public setTime(time?: string) {
+  public setTime (time?: string) {
     if (time) {
-      this.time = time;
+      this.time = time
     }
   }
 
-  public getTime() {
-    return this.time;
+  public getTime () {
+    return this.time
   }
 }

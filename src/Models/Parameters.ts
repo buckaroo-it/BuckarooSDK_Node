@@ -1,37 +1,36 @@
-import { serviceParameterKeyOf } from "../Functions/Functions";
+import { serviceParameterKeyOf } from '../Utils/Functions'
 
 export default class Parameters {
-  public parameterList: {}[] = [];
+  public parameterList: Array<{}> = []
 
-  constructor(pay) {
-    this.setUp(pay);
-  }
 
-  setUp(model , groupType: string = "", groupID: number | string = "") {
+  setUp (model, groupType: string = '', groupID: number | string = '') {
     for (const paramKey in model) {
-      if (typeof model[paramKey] === "object") {
+      if (typeof model[paramKey] === 'object') {
         this.setUp(model[paramKey], model[paramKey].groupType?.() || groupType,
-            model[paramKey].groupID?.(paramKey) || groupID);
-      } else  {
+          model[paramKey].groupID?.(paramKey) || groupID)
+      } else if( typeof model[paramKey] !== 'function') {
         this.setParamFormat(
-            paramKey,
-            model[paramKey],
-            groupType,
-            groupID
-        );
+          paramKey,
+          model[paramKey],
+          groupType,
+          groupID
+        )
       }
     }
   }
 
-  setParamFormat(name, value, groupType, groupID) {
+  setParamFormat (name, value, groupType, groupID) {
     this.parameterList.push({
       Name: serviceParameterKeyOf(name),
       Value: value,
       GroupType: groupType,
-      GroupID: groupID,
-    });
+      GroupID: groupID
+    })
   }
-  getParameterList(){
-    return  this.parameterList
+
+  addParameterList (pay) {
+    this.setUp(pay)
+    return this.parameterList
   }
 }

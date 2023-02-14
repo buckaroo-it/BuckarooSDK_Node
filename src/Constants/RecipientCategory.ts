@@ -1,4 +1,4 @@
 export default class RecipientCategory {
-    static readonly PERSON = 'Person';
-    static readonly COMPANY = 'Company';
+  static readonly PERSON = 'Person'
+  static readonly COMPANY = 'Company'
 }

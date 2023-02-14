@@ -1,11 +1,11 @@
-import Gender from "../Constants/Gender";
+import Gender from '../Constants/Gender'
+import BuckarooClient from '../BuckarooClient'
+import PayPerEmail from '../PaymentMethods/PayPerEmail/PayPerEmail'
 
-require("dotenv").config({ path: "../../.env" });
-import BuckarooClient from "../BuckarooClient";
-import PayPerEmail from "../PaymentMethods/PayPerEmail/PayPerEmail";
+require('dotenv').config({ path: '../../.env' })
 
-const client = new BuckarooClient();
-const method = new PayPerEmail(client);
+const client = new BuckarooClient()
+const method = new PayPerEmail(client)
 
 // method.paymentInvitation({
 //   amountDebit: 10,
@@ -24,23 +24,23 @@ const method = new PayPerEmail(client);
 
 method.paymentInvitation({
   amountDebit: 10,
-  invoice: "testinvoice 123",
+  invoice: 'testinvoice 123',
   merchantSendsEmail: false,
-  email: "johnsmith@gmail.com",
-  expirationDate: "2030-01-01",
-  paymentMethodsAllowed: "ideal,mastercard,paypal",
-  attachment: "",
+  email: 'johnsmith@gmail.com',
+  expirationDate: '2030-01-01',
+  paymentMethodsAllowed: 'ideal,mastercard,paypal',
+  attachment: '',
   customer: {
     gender: Gender.FEMALE,
-    firstName: "John",
-    lastName: "Smith",
+    firstName: 'John',
+    lastName: 'Smith'
   },
   attachments: [
     {
-      name: "bijlage1.pdf",
+      name: 'bijlage1.pdf'
     },
     {
-      name: "bijlage2.pdf",
-    },
-  ],
-});
+      name: 'bijlage2.pdf'
+    }
+  ]
+})

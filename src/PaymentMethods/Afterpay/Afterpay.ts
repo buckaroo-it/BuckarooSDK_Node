@@ -1,23 +1,23 @@
-import PaymentMethod from "../PaymentMethod";
-import BuckarooClient from "../../BuckarooClient";
-import Transaction from "../../Models/Transaction";
-import Pay from "./Models/Pay";
+import PaymentMethod from '../PaymentMethod'
+// import Pay from './Models/Pay'
+import Pay from '../Klarna/Models/Pay'
+import { IPay } from "../Klarna/Models/Pay";
 
-export default class Afterpay extends PaymentMethod {
-  protected requiredConfigFields: Array<string> = [];
+export class Afterpay extends PaymentMethod {
+  protected requiredConfigFields: string[] = []
 
-  constructor(api: BuckarooClient) {
-    super(api);
-    this.paymentName = "afterpay";
+  constructor() {
+    super();
+    this.paymentName = "afterpay"
     this.requiredConfigFields = this.requiredFields.concat(
       this.requiredConfigFields
-    );
+    )
+  }
+  async pay(data:IPay): Promise<any> {
+    return super.pay(data,new Pay(data));
   }
 
-  async pay(model?) {
-    return this.api.client.post(
-      new Transaction(model, this, "Pay", new Pay()),
-      this.api.client.getTransactionUrl()
-    );
-  }
 }
+
+const afterpay = new Afterpay()
+export default afterpay

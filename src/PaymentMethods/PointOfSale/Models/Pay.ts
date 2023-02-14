@@ -1,3 +1,3 @@
 export default class Pay {
-  terminalID;
+  terminalID
 }

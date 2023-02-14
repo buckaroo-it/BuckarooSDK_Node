@@ -1,6 +1,6 @@
-export default class PayRecurrent  {
-    invoice:string  = ''
-    originalTransactionKey:string = ''
+export default class PayRecurrent {
+  invoice: string = ''
+  originalTransactionKey: string = ''
 
-    amountDebit:number = 0
+  amountDebit: number = 0
 }

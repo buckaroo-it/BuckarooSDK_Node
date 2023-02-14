@@ -1,28 +1,31 @@
-import BillingRecipient from "./BillingRecipient";
-import Article from "./Article";
-import ShippingRecipient from "./ShippingRecipient";
-import Model from "../../../Models/Model";
+import BillingRecipient, { IBillingRecipient } from "./BillingRecipient";
+import Article,{IArticle} from './Article'
+import ShippingRecipient, { IShippingRecipient } from "./ShippingRecipient";
+import Model from '../../../Models/Model'
+import { IPayForm } from "../../../Models/PayForm";
 
+export interface IPay extends IPayForm {
+  billing: IBillingRecipient
+  shipping?: IShippingRecipient
+  articles: IArticle[]
+}
+export default class Pay extends Model{
+  billing: BillingRecipient | boolean = false
+  shipping?: ShippingRecipient
+  articles: Article[] | boolean = false
 
-export default class Pay{
-    billing:BillingRecipient;
-    shipping?:ShippingRecipient;
-    articles:Array<Article>;
+  constructor (data) {
+    super()
+    this.setParameters(data)
+    this.billing = new BillingRecipient(this.billing)
+    this.shipping = new ShippingRecipient(data.shipping || this.billing)
 
-    constructor(data) {
-        this.billing = new BillingRecipient(data['billing'] || '');
-        this.shipping = new ShippingRecipient(data['shipping'] || data['billing'] || '');
-
-
-        if (data['articles'].length===0){
-            throw new Error('Missing Parameter:articles')
-        }
-        let articles: Array<Article> = [];
-
-        data['articles'].forEach(value => {
-            articles.push(new Article(value))
-        })
-        this.articles = articles;
-        Model.setParameters(this,data)
+    if (Array.isArray(this.articles)) {
+      if(this.articles?.length === 0) {
+        throw new Error('Missing Parameter:articles')
+      }
+      this.articles.map(value => new Article(value));
     }
+
+  }
 }
