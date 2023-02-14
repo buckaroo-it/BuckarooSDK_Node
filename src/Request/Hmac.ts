@@ -1,31 +1,29 @@
 import md5 from 'crypto-js/md5'
-import Config from './Config'
 import hmacSHA256 from 'crypto-js/hmac-sha256'
 import Base64 from 'crypto-js/enc-base64'
-export default class Hmac {
+import api from "../index";
+class Hmac {
   private uri: string
   private base64Data: string
   private nonce: string
   private time: string
-  private readonly config: Config
   private hash: string | undefined
 
-  constructor (config: Config, url) {
-    this.uri = this.setUri(url)
+  constructor () {
+    this.uri = ''
     this.base64Data = ''
     this.nonce = ''
     this.time = ''
-    this.config = config
     this.setNonce('nonce_' + Math.floor(Math.random() * 9999999 + 1))
     this.setTime(String(Math.round(Date.now() / 1000)))
   }
 
-  public setUri (uri?: string): string {
+  public setUri (uri?: string): this {
     if (uri) {
       uri = uri.replace(/^[^:/.]*[:/]+/i, '')
-      return (this.uri = encodeURIComponent(uri).toLowerCase())
+      this.uri = encodeURIComponent(uri).toLowerCase() || ''
     }
-    return ''
+    return this
   }
 
   public getUri () {
@@ -34,16 +32,16 @@ export default class Hmac {
 
   public generate (method, data) {
     const hashString =
-      this.config.getWebsiteKey() +
+      api.config.getWebsiteKey() +
       method +
       this.getUri() +
       this.getTime() +
       this.getNonce() +
       this.getBase64Data(data)
     this.hash = Base64.stringify(
-      hmacSHA256(hashString, this.config.getSecretKey())
+      hmacSHA256(hashString, api.config.getSecretKey())
     )
-    return `${this.config.getWebsiteKey()}:${
+    return `${api.config.getWebsiteKey()}:${
       this.hash
     }:${this.getNonce()}:${this.getTime()}`
   }
@@ -78,3 +76,5 @@ export default class Hmac {
     return this.time
   }
 }
+const hmac = new Hmac()
+export default hmac

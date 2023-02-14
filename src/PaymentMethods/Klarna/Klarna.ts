@@ -26,4 +26,8 @@ export class Klarna extends PaymentMethod {
 
 
 const klarna = new Klarna()
-export default klarna
+const pay = klarna.pay.bind(klarna);
+
+export {
+  pay,
+}

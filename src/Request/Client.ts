@@ -1,21 +1,17 @@
 import Endpoints from '../Constants/Endpoints'
-import Config from './Config'
-import Hmac from './Hmac'
-import HttpClient from './HttpClient'
+import hmac from './Hmac'
 import HttpMethods from '../Constants/HttpMethods'
-export default class Client {
-  private readonly _config: Config
+import api from "../index";
+import httpClient from "./HttpClient";
 
-  constructor (config: Config) {
-    this._config = config
-  }
+export class Client {
 
   getHeaders (method, data, url) {
     return {
       'Content-Type': 'application/json; charset=utf-8',
       Accept: 'application/json',
       Authorization:
-        'hmac ' + new Hmac(this._config, url).generate(method, data),
+        'hmac ' + hmac.setUri(url).generate(method, data),
       Culture: 'en-GB'
     }
   }
@@ -38,7 +34,7 @@ export default class Client {
   }
 
   getEndpoint (path: string) {
-    const baseUrl = this._config?.isLiveMode() ? Endpoints.LIVE : Endpoints.TEST
+    const baseUrl = api.config?.isLiveMode() ? Endpoints.LIVE : Endpoints.TEST
 
     return baseUrl + path
   }
@@ -62,7 +58,7 @@ export default class Client {
   }
 
   async post (data, url) {
-    this.call(data, HttpMethods.METHOD_POST, url).then((r) => r)
+    return await this.call(data, HttpMethods.METHOD_POST, url).then((r) => r)
   }
 
   async specification (
@@ -71,6 +67,7 @@ export default class Client {
     serviceVersion = 0
   ): Promise<any> {
     const endPoint = this.getSpecificationUrl(paymentName, serviceVersion)
+
     return await this.call(data, HttpMethods.METHOD_GET, endPoint)
   }
 
@@ -79,6 +76,7 @@ export default class Client {
       data = ''
     }
     const options = this.getOptions(data, method, url)
-    return await new HttpClient().call(options)
+
+    return httpClient.call(options)
   }
 }

@@ -3,6 +3,7 @@ import Transaction from '../../Models/Transaction'
 import Pay, { IPay } from './Models/Pay'
 import PayForm from '../../Models/PayForm'
 import Services from '../../Models/Services'
+import api from "../../index";
 
 class Ideal extends PaymentMethod {
   protected requiredConfigFields: string[] = [
@@ -20,7 +21,7 @@ class Ideal extends PaymentMethod {
     )
   }
   async pay(data:IPay): Promise<any> {
-      return super.pay(data,new Pay(data));
+      return await super.pay(data,new Pay(data));
   }
 
   // async pay (data: IPay): Promise<any> {
@@ -38,38 +39,33 @@ class Ideal extends PaymentMethod {
     const services = new Services(this.paymentName, this.serviceVersion, 'PayRemainder', new Pay(data))
     const PayLoad = new PayForm(data, services)
     const TransactionData = new Transaction(this, PayLoad)
-    await this.api.client.post(
+    await api.client.post(
       TransactionData,
-      this.api.client.getTransactionUrl()
+      api.client.getTransactionUrl()
     )
   }
 
   async issuers (): Promise<any> {
     const issuerList: Array<{ id: any, name: any }> = []
-    try {
-      await this.api.client
+    return await api.client
         .specification({}, this.paymentName, 2)
-        .then((response) => {
-          if (
-            response.Actions?.['0']?.RequestParameters?.[0]?.ListItemDescriptions
-          ) {
-            const issuersData =
-              response.Actions['0'].RequestParameters[0].ListItemDescriptions
-            if (issuersData.length > 0) {
-              for (const issuer of issuersData) {
-                issuerList.push({
-                  id: issuer.Value,
-                  name: issuer.Description
-                })
-              }
-            }
-            return issuerList
-          }
-        })
-    } catch (e) {
-      console.log(e)
-      return false
-    }
+        // .then((response) => {
+        //   if (
+        //     response.Actions?.['0']?.RequestParameters?.[0]?.ListItemDescriptions
+        //   ) {
+        //     const issuersData =
+        //       response.Actions['0'].RequestParameters[0].ListItemDescriptions
+        //     if (issuersData.length > 0) {
+        //       for (const issuer of issuersData) {
+        //         issuerList.push({
+        //           id: issuer.Value,
+        //           name: issuer.Description
+        //         })
+        //       }
+        //     }
+        //     return response
+        //   }
+        // })
   }
 }
 
@@ -79,6 +75,5 @@ const issuers = ideal.issuers.bind(ideal);
 
 export {
   pay,
-  issuers
+  issuers,
 }
-export default ideal

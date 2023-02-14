@@ -1,24 +1,28 @@
-import { uniqid } from '../Utils/Functions'
-import BuckarooClient from '../BuckarooClient'
-import Ideal from '../PaymentMethods/Ideal/Ideal'
+import api from "../index";
+import { issuers , pay} from '../PaymentMethods/Ideal/Ideal'
+import { uniqid } from "../Utils/Functions";
 
-require('dotenv').config({ path: '../../.env' })
-
-const client = new BuckarooClient()
-const method = new Ideal(client)
-
-method.pay({
-  returnURL: 'https://example.com/return',
+let simplePayload = {
+  returnURL: "https://example.com/return",
   invoice: uniqid(),
   amountDebit: 10.1,
-  issuer: 'ABNANL2A'
-})
-
-// method.payRemainder({
-//   returnURL: "https://example.com/return",
-//   invoice: uniqid(),
-//   amountDebit: 10.1,
-//   issuer: "ABNANL2A",
-// });
-
-// method.issuers();
+  issuer: "ABNANL2A",
+}
+describe('testing Ideal methods', () => {
+  test('Issuers', async() => {
+      await issuers()
+        .then(r => {
+          expect(r.data).toBeDefined();
+          expect(r.statusCode).toBeGreaterThanOrEqual(200);
+          expect(r.statusCode).toBeLessThan(300);
+        })
+    });
+  test('Pay Simple Payload', async() => {
+    await pay(simplePayload)
+      .then(r => {
+        expect(r.data).toBeDefined();
+        expect(r.statusCode).toBeGreaterThanOrEqual(200);
+        expect(r.statusCode).toBeLessThan(300);
+      })
+  });
+});

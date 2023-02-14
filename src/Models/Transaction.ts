@@ -1,5 +1,6 @@
 import PaymentMethod from '../PaymentMethods/PaymentMethod'
 import Model from './Model'
+import api from "../index";
 
 export default class Transaction extends Model {
   constructor (method: PaymentMethod,payload) {
@@ -9,7 +10,7 @@ export default class Transaction extends Model {
 
   setProperties (method,payload) {
     for (const datum of method.requiredConfigFields) {
-      this[datum] = method.api.config[datum] ? method.api.config[datum] : ''
+      this[datum] = api.config[datum] ? api.config[datum] : ''
     }
     for (const key in payload) {
       if(typeof payload[key] !== 'function') {

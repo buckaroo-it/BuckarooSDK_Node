@@ -1,6 +1,6 @@
 import { ICredentials, IConfig } from '../Utils/Types'
 
-export default class Config {
+export class Config {
   readonly LIVE_MODE = 'live'
   readonly TEST_MODE = 'test'
   private websiteKey: string
@@ -10,32 +10,28 @@ export default class Config {
   private returnURL: string
   private returnURLCancel: string
   private pushURL: string
-  constructor (
-    credentials?: ICredentials,
-    config?: IConfig
-  ) {
-    this.websiteKey = credentials?.websiteKey || process.env.BPE_WEBSITE_KEY || 'KEY'
-    this.secretKey = credentials?.secretKey || process.env.BPE_SECRET_KEY || 'SECRET'
-    this.mode = config?.mode || process.env.BPE_MODE || 'test'
-    this.currency = config?.currency || process.env.BPE_CURRENCY_CODE || 'EUR'
-    this.returnURL = config?.returnURL || process.env.BPE_RETURN_URL || ''
-    this.returnURLCancel = config?.returnURLCancel ||
-        process.env.BPE_RETURN_URL_CANCEL || ''
-    this.pushURL = config?.pushURL || process.env.BPE_PUSH_URL || ''
+  constructor () {
+    this.websiteKey = 'KEY'
+    this.secretKey = 'SECRET'
+    this.mode = 'test'
+    this.currency = 'EUR'
+    this.returnURL =  ''
+    this.returnURLCancel = ''
+    this.pushURL = ''
   }
 
-  setCredentials (credentials) {
-    this.websiteKey = credentials.websiteKey || this.websiteKey
-    this.secretKey = credentials.secretKey || this.secretKey
+  setCredentials (credentials?:ICredentials) {
+    this.websiteKey = credentials?.websiteKey || process.env.BPE_WEBSITE_KEY || this.websiteKey
+    this.secretKey = credentials?.secretKey || process.env.BPE_SECRET_KEY || this.secretKey
   }
 
   setConfig (config?: IConfig) {
-    this.mode = config?.mode || this.mode
+    this.mode = config?.mode||  this.mode
     this.currency = config?.currency || this.currency
-    this.returnURL = config?.returnURL || this.returnURL
-    this.returnURLCancel = config?.returnURLCancel ||
+    this.returnURL = config?.returnURL || process.env.BPE_RETURN_URL || this.returnURL
+    this.returnURLCancel = config?.returnURLCancel || process.env.BPE_RETURN_URL_CANCEL ||
         this.returnURLCancel
-    this.pushURL = config?.pushURL || this.pushURL
+    this.pushURL = config?.pushURL || process.env.BPE_PUSH_URL ||  this.pushURL
   }
 
   public getWebsiteKey (): string {

@@ -1,12 +1,10 @@
-import BuckarooClient from '../BuckarooClient'
-import Klarna from '../PaymentMethods/Klarna/Klarna'
+import api from "../index";
+import { pay } from '../PaymentMethods/Klarna/Klarna'
 import { uniqid } from '../Utils/Functions'
-require('dotenv').config({ path: '../../.env' })
+import { IPay } from "../PaymentMethods/Klarna/Models/Pay";
 
-const client = new BuckarooClient()
-const method = new Klarna(client)
 
-method.pay({
+let complexPayload:IPay = {
   amountDebit: 50.3,
   invoice: uniqid(),
   currency: 'GBP',
@@ -65,5 +63,16 @@ method.pay({
       price: 10.10
     }
   ]
-})
+}
 // method.payInInstallments(getPaymentPayload);
+
+describe('Testing Klarna methods', () => {
+  test('Pay Complex Payload', async() => {
+    await pay(complexPayload)
+      .then(r => {
+        expect(r.data).toBeDefined();
+        expect(r.statusCode).toBeGreaterThanOrEqual(200);
+        expect(r.statusCode).toBeLessThan(300);
+      })
+  });
+});
