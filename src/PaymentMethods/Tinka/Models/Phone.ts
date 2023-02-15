@@ -1,4 +1,4 @@
-import PhoneModel from '../../../Models/Phone'
+import PhoneModel from '../../../Models/IPhone'
 import Model from '../../../Models/Model'
 
 export default class Phone extends Model implements PhoneModel {

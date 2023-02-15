@@ -1,5 +1,13 @@
-import PayForm from '../../../Models/PayForm'
+import { IPayForm } from "../../../Models/PayForm";
+import Model from "../../../Models/Model";
 
-export default class Pay extends PayForm {
-  saveToken: boolean | undefined
+export interface IPay extends IPayForm {
+  useMobileView:boolean
+}
+export default class Pay extends Model{
+  useMobileView:boolean = false
+  constructor (data) {
+    super()
+    this.setParameters(data)
+  }
 }

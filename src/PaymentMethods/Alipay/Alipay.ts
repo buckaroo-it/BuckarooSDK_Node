@@ -1,30 +1,32 @@
 import PaymentMethod from '../PaymentMethod'
-import BuckarooClient from '../../BuckarooClient'
-import Transaction from '../../Models/Transaction'
 import Pay from './Models/Pay'
+import api from "../../index";
+import { IPay } from "../Bancontact/Models/Pay";
 
-export default class Alipay extends PaymentMethod {
+class Alipay extends PaymentMethod {
   protected requiredConfigFields: string[] = []
-  constructor (api: BuckarooClient) {
-    super(api)
-    this.paymentName = 'alipay'
-    this.requiredConfigFields = this.requiredConfigFields.concat(
-      this.requiredFields
-    )
-  }
+  paymentName = 'alipay'
+  // constructor () {
+  //   super()
+  //   this.paymentName = 'alipay'
+  //   this.requiredConfigFields = this.requiredConfigFields.concat(
+  //     this.requiredFields
+  //   )
+  // }
 
-  async pay (model?) {
-    await this.api.client.post(
-      new Transaction(model, this, 'Pay', new Pay(model)),
-      this.api.client.getTransactionUrl()
-    )
-  }
+}
 
-  payRemainder (model?) {
-    return model
-  }
 
-  issuers (): any {
-    return this
-  }
+const alipay = new Alipay()
+
+const pay = (data:IPay) => alipay.pay(data,new Pay(data));
+
+const refund = (data:IPay) => alipay.pay(data,new Refund(data),'Refund');
+
+const payRemainder = (data:IPay) => alipay.pay(data,new PayRemainder(data),'PayRemainder');
+
+export  {
+  refund,
+  pay,
+  payRemainder
 }

@@ -1,14 +1,15 @@
 import RecipientCategory from '../Constants/RecipientCategory'
-import BuckarooClient from '../BuckarooClient'
-import Afterpay from '../PaymentMethods/Afterpay/Afterpay'
+import {
+  pay,
+  authorize,
+  capture,
+  refund,
+  authorizeRemainder} from '../PaymentMethods/Afterpay/Afterpay'
+
 import { uniqid } from '../Utils/Functions'
+import { IPay } from "../PaymentMethods/Afterpay/Models/Pay";
 
-require('dotenv').config({ path: '../../.env' })
-
-const client = new BuckarooClient()
-const method = new Afterpay(client)
-
-method.pay({
+let payload:IPay = {
   amountDebit: 50.3,
   order: uniqid(),
   invoice: uniqid(),
@@ -32,11 +33,7 @@ method.pay({
       city: 'Heerenveen',
       country: 'NL'
     },
-    phone: {
-      mobile: '0698765433',
-      landline: '0109876543'
-    },
-    email: 'test@buckaroo.nl'
+    email:'sadasd'
   },
   shipping: {
     recipient: {
@@ -45,6 +42,7 @@ method.pay({
       companyName: 'Buckaroo B.V.',
       firstName: 'John',
       lastName: 'Do',
+      gender:'male',
       chamberOfCommerce: '12345678'
     },
     address: {
@@ -60,16 +58,66 @@ method.pay({
     {
       identifier: 'Articlenumber1',
       description: 'Blue Toy Car',
-      vatPercentage: '21',
-      quantity: '2',
-      price: '20.10'
+      vatPercentage: 21,
+      quantity: 2,
+      price: 20.10
     },
     {
       identifier: 'Articlenumber2',
       description: 'Red Toy Car',
-      vatPercentage: '21',
-      quantity: '1',
-      price: '10.10'
+      vatPercentage: 21,
+      quantity: 1,
+      price: 10.10
     }
   ]
-})
+}
+
+let refundPayload = {
+  invoice  : 'testinvoice 123',
+  originalTransactionKey : '4E8BD922192746C3918BF4077CXXXXXX',
+  amountCredit : 1.23
+}
+pay(payload)
+// describe('testing Afterpay methods', () => {
+//   test('Pay', async() => {
+//     await pay(payload)
+//       .then(r => {
+//         console.log(r);
+//         expect(r.data).toBeDefined();
+//         expect(r.statusCode).toBeGreaterThanOrEqual(200);
+//         expect(r.statusCode).toBeLessThan(300);
+//       })
+//   });
+//   test('Refund', async() => {
+//     await refund(refundPayload)
+//       .then(r => {
+//         expect(r.data).toBeDefined();
+//         expect(r.statusCode).toBeGreaterThanOrEqual(200);
+//         expect(r.statusCode).toBeLessThan(300);
+//       })
+//   });
+//   test('Authorize', async() => {
+//     await authorize(refundPayload)
+//       .then(r => {
+//         expect(r.data).toBeDefined();
+//         expect(r.statusCode).toBeGreaterThanOrEqual(200);
+//         expect(r.statusCode).toBeLessThan(300);
+//       })
+//   });
+//   test('Capture', async() => {
+//     await capture(refundPayload)
+//       .then(r => {
+//         expect(r.data).toBeDefined();
+//         expect(r.statusCode).toBeGreaterThanOrEqual(200);
+//         expect(r.statusCode).toBeLessThan(300);
+//       })
+//   });
+//   test('AuthorizeRemainder', async() => {
+//     await authorizeRemainder(refundPayload)
+//       .then(r => {
+//         expect(r.data).toBeDefined();
+//         expect(r.statusCode).toBeGreaterThanOrEqual(200);
+//         expect(r.statusCode).toBeLessThan(300);
+//       })
+//   });
+// });

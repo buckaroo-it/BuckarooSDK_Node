@@ -58,7 +58,8 @@ export class Client {
   }
 
   async post (data, url) {
-    return await this.call(data, HttpMethods.METHOD_POST, url).then((r) => r)
+    console.log(data);
+    return await this.call(data, HttpMethods.METHOD_POST, url)
   }
 
   async specification (

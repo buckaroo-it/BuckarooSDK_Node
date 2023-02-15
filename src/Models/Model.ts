@@ -1,6 +1,9 @@
+type PartialRecord<K extends keyof any, T> = {
+  [P in K]?: T;
+};
+
 export default class Model {
-  constructor() {
-  }
+
   setParameters (data) {
     /** Go through model to check which parameter to set,
      * delete if optional with no value,
@@ -10,26 +13,31 @@ export default class Model {
      */
 
     for (const key in this) {
-      if (!data[key]) {
-        if (typeof this[key] !== 'undefined') {
-          if (!this[key]) {
-            throw new Error('Missing Parameter:' + key + ' in ' + this.constructor.name)
+      if(typeof this[key] !== 'function') {
+        //checkIfMissingRequired
+        if(typeof this[key] === 'undefined' && typeof data[key] === 'undefined'){
+          throw new Error('Missing Parameter:' + key + ' in ' + this.constructor.name)
+        //checkIfOptionalToDelete
+        }else if (typeof data[key] === 'undefined') {
+          if(String(this[key]) === '') {
+            delete this[key]
           }
-        } else {
-          delete this[key]
+        } else{
+          this[key] = data[key]
         }
-      } else if (typeof this[key] !== 'function') {
-        this[key] = this[key] || data[key]
       }
     }
   }
 
-  setKeys (keys: Record<string, string>) {
+  setKeys (keys: PartialRecord<keyof typeof this, string>) {
     /** Go through keys and change names in model if it exists **/
     for (const thisKey in keys) {
       if (this[thisKey]) {
+        // @ts-ignore
         delete Object.assign(this, { [keys[thisKey]]: this[thisKey] })[thisKey]
       }
     }
+    return this
   }
 }
+

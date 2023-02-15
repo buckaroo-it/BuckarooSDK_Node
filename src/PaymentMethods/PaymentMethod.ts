@@ -6,16 +6,19 @@ import api from "../index";
 export default class PaymentMethod {
   public paymentName: string = ''
   public serviceVersion: number = 0
-  private readonly _requiredConfigFields: string[] = ['currency', 'pushURL']
-  protected payLoad: any
+  private _requiredFields: string[] = ['currency', 'pushURL']
 
 
   get requiredFields (): string[] {
-    return this._requiredConfigFields
+    return this._requiredFields
   }
-  async pay (data,PayModel): Promise<any> {
-    const services = new Services(this.paymentName, this.serviceVersion, 'Pay', PayModel)
 
+  set requiredFields(value: string[]) {
+    this._requiredFields = value;
+  }
+
+  async pay (data,PayModel?,action = 'Pay'): Promise<any> {
+    const services = new Services(this.paymentName, this.serviceVersion, action, PayModel)
     const PayLoad = new PayForm(data, services)
     return await api.client.post(
       new Transaction(this,PayLoad),

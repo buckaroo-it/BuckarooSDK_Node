@@ -1,46 +1,61 @@
-import PaymentMethod from '../PaymentMethod'
-import BuckarooClient from '../../BuckarooClient'
-import Transaction from '../../Models/Transaction'
-import Pay from './Models/Pay'
-import PayEncrypted from './Models/PayEncrypted'
-import Authenticate from './Models/Authenticate'
-import PayRecurring from './Models/PayRecurring'
-import PayForm from '../../Models/PayForm'
+import Pay , { IPay } from './Models/Pay'
+import Refund, { IRefund } from "./Models/Refund";
+import PayEncrypted, { IPayEncrypted } from './Models/PayEncrypted'
+import Authenticate, { IAuthenticate } from './Models/Authenticate'
+import PayRecurring, { IPayRecurring } from './Models/PayRecurring'
+import PaymentMethod from "../PaymentMethod";
 
-export default class Bancontact extends PaymentMethod {
+class Bancontact extends PaymentMethod {
   public requiredConfigFields: string[]
-  constructor (api: BuckarooClient) {
-    super(api)
+  constructor () {
+    super()
     this.paymentName = 'bancontactmrcash'
     this.requiredConfigFields = this.requiredFields
   }
-
-  async pay (model: Pay) {
-    const TransactionData = new Transaction(this, new PayForm(model, Pay, this, 'Pay'))
-    await this.api.client.post(
-      TransactionData,
-      this.api.client.getTransactionUrl()
-    )
+  async pay(data:IPay){
+    return await super.pay(data,new Pay(data));
   }
-
-  async payEncrypted (model: PayEncrypted) {
-    await this.api.client.post(
-      new Transaction(model, this, 'PayEncrypted', new PayEncrypted()),
-      this.api.client.getTransactionUrl()
-    )
+  async refund (data: IRefund) {
+    return await super.pay(data,new Refund(data),'Refund');
   }
-
-  async payRecurring (model: PayRecurring) {
-    await this.api.client.post(
-      new Transaction(model, this, 'PayRecurring', new PayRecurring()),
-      this.api.client.getTransactionUrl()
-    )
+  async payRemainder (data) {
+    return await super.pay(data,{},'PayRemainder')
   }
-
-  async authenticate (model: Authenticate) {
-    await this.api.client.post(
-      new Transaction(model, this, 'authenticate', new Authenticate()),
-      this.api.client.getTransactionUrl()
-    )
+  async payEncrypted (data: IPayEncrypted) {
+    return await super.pay(data,new PayEncrypted(data),'PayEncrypted');
   }
+  async payOneClick (data) {
+    return await  super.pay(data,{},'PayOneClick')
+  }
+  async payRecurring (data: IPayRecurring) {
+    return await super.pay(data,new PayRecurring(data),'PayRecurring');
+  }
+  async authenticate (data: IAuthenticate) {
+    return await super.pay(data,new Authenticate(data),'Authenticate');
+  }
+  async authenticateMobile (data) {
+    return await super.pay(data,{},'AuthenticateMobile')
+  }
+}
+
+
+const bancontact = new Bancontact()
+const pay = bancontact.pay
+const refund = bancontact.refund
+const payRemainder = bancontact.payRemainder
+const payEncrypted = bancontact.payEncrypted
+const payOneClick = bancontact.payOneClick
+const payRecurring = bancontact.payRecurring
+const authenticate = bancontact.authenticate
+const authenticateMobile = bancontact.authenticateMobile
+
+export {
+  pay,
+  refund,
+  payRemainder,
+  payEncrypted,
+  payOneClick,
+  payRecurring,
+  authenticate,
+  authenticateMobile
 }

@@ -1,5 +1,4 @@
 import Address,{IAddress} from './Address'
-// import Phone from "../Models/Phone";
 import Person,{IPerson} from './Person'
 import Phone,{IPhone} from './Phone'
 import Model from '../../../Models/Model'

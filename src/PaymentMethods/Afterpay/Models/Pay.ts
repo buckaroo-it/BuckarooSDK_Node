@@ -1,27 +1,31 @@
-// import Model from "../../../Models/Model";
-// import BillingRecipient from "../../Klarna/Models/BillingRecipient";
-// import ShippingRecipient from "../../Klarna/Models/ShippingRecipient";
-// import Article from "../../Klarna/Models/Article";
-//
-// export default class Pay extends Model{
-//   billing: BillingRecipient
-//   shipping?: ShippingRecipient
-//   articles: Article[]
-//
-//   constructor (data) {
-//     super()
-//     this.billing = new BillingRecipient(data.billing || '')
-//     this.shipping = new ShippingRecipient(data.shipping || data.billing || '')
-//
-//     if (data.articles.length === 0) {
-//       throw new Error('Missing Parameter:articles')
-//     }
-//     const articles: Article[] = []
-//
-//     data.articles.forEach(value => {
-//       articles.push(new Article(value))
-//     })
-//     this.articles = articles
-//     this.setParameters(data)
-//   }
-// }
+import BillingRecipient, { IBillingRecipient } from "./BillingRecipient";
+import Article,{IArticle} from './Article'
+import ShippingRecipient, { IShippingRecipient } from "./ShippingRecipient";
+import Model from '../../../Models/Model'
+import { IPayForm } from "../../../Models/PayForm";
+
+export interface IPay extends IPayForm {
+  billing: IBillingRecipient
+  shipping?: IShippingRecipient
+  articles: IArticle[]
+}
+export default class Pay extends Model{
+  billing?: BillingRecipient = undefined // Required
+  shipping: ShippingRecipient = '' // Optional
+  articles?: Article[] = undefined
+  live:string = ''
+  constructor (data) {
+    super()
+    this.setParameters(data)
+    this.billing = new BillingRecipient(this.billing)
+    this.shipping = new ShippingRecipient(this.shipping || this.billing)
+
+    if (Array.isArray(this.articles)) {
+      if(this.articles?.length === 0) {
+        throw new Error('Missing Parameter:articles')
+      }
+      this.articles.map(value => new Article(value));
+    }
+
+  }
+}

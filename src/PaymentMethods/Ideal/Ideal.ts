@@ -24,17 +24,6 @@ class Ideal extends PaymentMethod {
       return await super.pay(data,new Pay(data));
   }
 
-  // async pay (data: IPay): Promise<any> {
-  //   const services = new Services(this.paymentName, this.serviceVersion, 'Pay', new Pay(data))
-  //   const PayLoad = new PayForm(data, services)
-  //   const TransactionData = new Transaction(this, PayLoad)
-  //
-  //   await this.api.client.post(
-  //     new Transaction(this, TransactionData),
-  //     this.api.client.getTransactionUrl()
-  //   )
-  // }
-
   async payRemainder (data?): Promise<any> {
     const services = new Services(this.paymentName, this.serviceVersion, 'PayRemainder', new Pay(data))
     const PayLoad = new PayForm(data, services)
