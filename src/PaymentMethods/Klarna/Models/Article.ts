@@ -12,11 +12,11 @@ export default class Article extends Model implements IArticle {
   quantity: number = 0
   price: number = 0
   vatPercentage: number = 0
-  description?: string
+  description: string = ''
   constructor (data) {
     super()
     this.setParameters( data)
-    this.setKeys( {
+    this.setKeys({
       price: 'GrossUnitPrice'
     })
   }
@@ -27,5 +27,20 @@ export default class Article extends Model implements IArticle {
 
   groupID? (id: string): number {
     return Number(id) + 1
+  }
+}
+
+export class Articles{
+  articles:Article[] = []
+  constructor(data) {
+    if (!Array.isArray(data)) {
+      data = [data]
+    }
+    for (const dataKey in data) {
+      this.articles.push(new Article(data[dataKey]))
+    }
+    if(this.articles?.length === 0) {
+      throw new Error('Missing Parameter:articles')
+    }
   }
 }

@@ -1,5 +1,4 @@
-import api from "../index";
-import { pay } from '../PaymentMethods/Klarna/Klarna'
+import { pay,refund,payInInstallments } from '../PaymentMethods/Klarna/Klarna'
 import { uniqid } from '../Utils/Functions'
 import { IPay } from "../PaymentMethods/Klarna/Models/Pay";
 
@@ -7,7 +6,6 @@ import { IPay } from "../PaymentMethods/Klarna/Models/Pay";
 let complexPayload:IPay = {
   amountDebit: 50.3,
   invoice: uniqid(),
-  currency: 'GBP',
   billing: {
     recipient: {
       category: 'B2C',
@@ -70,6 +68,7 @@ describe('Testing Klarna methods', () => {
   test('Pay Complex Payload', async() => {
     await pay(complexPayload)
       .then(r => {
+        console.log(JSON.stringify(r.data));
         expect(r.data).toBeDefined();
         expect(r.statusCode).toBeGreaterThanOrEqual(200);
         expect(r.statusCode).toBeLessThan(300);

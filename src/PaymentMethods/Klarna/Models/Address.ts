@@ -18,7 +18,7 @@ export default class Address extends Model implements IAddress{
 
   constructor (data) {
     super()
-    // this.setParameters(data)
+    this.setParameters(data)
     this.setKeys({
       houseNumber: 'StreetNumber',
       houseNumberAdditional: 'StreetNumberAdditional',

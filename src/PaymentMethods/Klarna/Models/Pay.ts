@@ -1,31 +1,30 @@
 import BillingRecipient, { IBillingRecipient } from "./BillingRecipient";
-import Article,{IArticle} from './Article'
+import Article,{IArticle,Articles} from './Article'
 import ShippingRecipient, { IShippingRecipient } from "./ShippingRecipient";
 import Model from '../../../Models/Model'
-import { IPayForm } from "../../../Models/PayForm";
+import PayForm, { ITransactionData } from "../../../Models/PayForm";
 
-export interface IPay extends IPayForm {
+export interface IPay extends ITransactionData {
   billing: IBillingRecipient
   shipping?: IShippingRecipient
   articles: IArticle[]
 }
-export default class Pay extends Model{
-  billing: BillingRecipient | boolean = false
+export default class Pay {
+  billing: BillingRecipient
   shipping?: ShippingRecipient
-  articles: Article[] | boolean = false
+  articles: Articles
 
   constructor (data) {
-    super()
-    this.setParameters(data)
-    this.billing = new BillingRecipient(this.billing)
-    this.shipping = new ShippingRecipient(data.shipping || this.billing)
-
-    if (Array.isArray(this.articles)) {
-      if(this.articles?.length === 0) {
-        throw new Error('Missing Parameter:articles')
+    this.billing = data.billing
+    this.shipping = data.shipping || data.billing
+    this.articles = data.articles
+    for (const dataKey in this) {
+      if (typeof this[dataKey] === undefined){
+        throw new Error('Missing Required Parameter:' + dataKey + ' in Pay Klarna')
       }
-      this.articles.map(value => new Article(value));
     }
-
+    this.billing = new BillingRecipient(data.billing)
+    this.shipping = new ShippingRecipient(data.shipping || data.billing)
+    this.articles = new Articles(data.articles)
   }
 }

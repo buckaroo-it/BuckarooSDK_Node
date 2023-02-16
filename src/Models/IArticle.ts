@@ -1,3 +1,5 @@
+import Model from "./Model";
+
 export default interface IArticle {
   identifier?: string
   type?: string
@@ -9,4 +11,17 @@ export default interface IArticle {
   vatCategory?: number
   vatPercentage?: number
   description?: string
+}
+export class Article extends Model implements IArticle {
+  brand?: string = '';
+  description?: string = '';
+  identifier?: string = '';
+  manufacturer?: string = '';
+  price?: number = 0;
+  quantity?: number = 0;
+  type?: string = '';
+  unitCode?: string = '';
+  vatCategory?: number = 0;
+  vatPercentage?: number = 0;
+
 }

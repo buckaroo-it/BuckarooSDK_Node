@@ -58,7 +58,6 @@ export class Client {
   }
 
   async post (data, url) {
-    console.log(data);
     return await this.call(data, HttpMethods.METHOD_POST, url)
   }
 

@@ -12,21 +12,27 @@ export default class Model {
      * and ignore function parameters
      */
 
+    // for (const key in this) {
+    //   if(typeof this[key] !== 'function') {
+    //     //checkIfMissingRequired
+    //     if(typeof this[key] === 'undefined' && typeof data[key] === 'undefined'){
+    //       throw new Error('Missing Requird Parameter:' + key + ' in ' + this.constructor.name)
+    //     //checkIfOptionalToDelete
+    //     }else if (typeof data[key] === 'undefined') {
+    //       if(String(this[key]) === '') {
+    //         delete this[key]
+    //       }
+    //     } else{
+    //       this[key] = data[key]
+    //     }
+    //   }
+    // }
     for (const key in this) {
-      if(typeof this[key] !== 'function') {
-        //checkIfMissingRequired
-        if(typeof this[key] === 'undefined' && typeof data[key] === 'undefined'){
-          throw new Error('Missing Parameter:' + key + ' in ' + this.constructor.name)
-        //checkIfOptionalToDelete
-        }else if (typeof data[key] === 'undefined') {
-          if(String(this[key]) === '') {
-            delete this[key]
-          }
-        } else{
-          this[key] = data[key]
-        }
+      if (typeof this[key] === 'undefined') {
+        throw new Error('Missing Requird Parameter:' + key + ' in ' + this.constructor.name)
       }
     }
+    return this
   }
 
   setKeys (keys: PartialRecord<keyof typeof this, string>) {
@@ -34,7 +40,7 @@ export default class Model {
     for (const thisKey in keys) {
       if (this[thisKey]) {
         // @ts-ignore
-        delete Object.assign(this, { [keys[thisKey]]: this[thisKey] })[thisKey]
+        delete Object.assign(this, {[keys[thisKey]]: this[thisKey] })[thisKey]
       }
     }
     return this

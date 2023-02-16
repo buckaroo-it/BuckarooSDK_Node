@@ -1,7 +1,7 @@
 import Model from '../../../Models/Model'
-import { IPayForm } from '../../../Models/PayForm'
+import { ITransactionData } from '../../../Models/PayForm'
 
-export interface IPay extends IPayForm {
+export interface IPay extends ITransactionData {
   issuer: string
 }
 export default class Pay extends Model {

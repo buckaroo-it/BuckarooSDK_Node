@@ -13,6 +13,11 @@ export default interface IPerson {
   lastName?: string
   birthDate?: string
   placeOfBirth?: string
+  conversationLanguage?: 'NL'| 'FR' | 'DE' | 'FI'
+  identificationNumber?:string
+  customerNumber?:string
+  companyName?:string
+  chamberOfCommerce?:string
 }
 
 export class Person extends Model implements IPerson {
@@ -31,6 +36,5 @@ export class Person extends Model implements IPerson {
 
   constructor(data) {
     super();
-    this.setParameters(data)
   }
 }

@@ -5,49 +5,17 @@ import Authenticate, { IAuthenticate } from './Models/Authenticate'
 import PayRecurring, { IPayRecurring } from './Models/PayRecurring'
 import PaymentMethod from "../PaymentMethod";
 
-class Bancontact extends PaymentMethod {
-  public requiredConfigFields: string[]
-  constructor () {
-    super()
-    this.paymentName = 'bancontactmrcash'
-    this.requiredConfigFields = this.requiredFields
-  }
-  async pay(data:IPay){
-    return await super.pay(data,new Pay(data));
-  }
-  async refund (data: IRefund) {
-    return await super.pay(data,new Refund(data),'Refund');
-  }
-  async payRemainder (data) {
-    return await super.pay(data,{},'PayRemainder')
-  }
-  async payEncrypted (data: IPayEncrypted) {
-    return await super.pay(data,new PayEncrypted(data),'PayEncrypted');
-  }
-  async payOneClick (data) {
-    return await  super.pay(data,{},'PayOneClick')
-  }
-  async payRecurring (data: IPayRecurring) {
-    return await super.pay(data,new PayRecurring(data),'PayRecurring');
-  }
-  async authenticate (data: IAuthenticate) {
-    return await super.pay(data,new Authenticate(data),'Authenticate');
-  }
-  async authenticateMobile (data) {
-    return await super.pay(data,{},'AuthenticateMobile')
-  }
-}
 
 
-const bancontact = new Bancontact()
-const pay = bancontact.pay
-const refund = bancontact.refund
-const payRemainder = bancontact.payRemainder
-const payEncrypted = bancontact.payEncrypted
-const payOneClick = bancontact.payOneClick
-const payRecurring = bancontact.payRecurring
-const authenticate = bancontact.authenticate
-const authenticateMobile = bancontact.authenticateMobile
+const bancontact = new PaymentMethod('bancontactmrcash')
+const pay = (data:IPay) =>  bancontact.pay(data,new Pay(data))
+const refund = (data:IRefund) =>  bancontact.pay(data,{},'Refund')
+const payRemainder = (data) =>  bancontact.pay(data,{},'PayRemainder')
+const payEncrypted = (data:IPayEncrypted) =>  bancontact.pay(data,{},'PayEncrypted')
+const payOneClick = (data) =>  bancontact.pay(data,{},'PayOneClick')
+const payRecurring = (data:IPayRecurring) =>  bancontact.pay(data,{},'PayRecurring')
+const authenticate = (data:IAuthenticate) => bancontact.pay(data,{},'Authenticate')
+const authenticateMobile = (data) => bancontact.pay(data,{},'AuthenticateMobile')
 
 export {
   pay,

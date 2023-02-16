@@ -1,5 +1,4 @@
-import api from "../index";
-import { issuers , pay} from '../PaymentMethods/Ideal/Ideal'
+import { issuers , pay , payRemainder} from '../PaymentMethods/Ideal/Ideal'
 import { uniqid } from "../Utils/Functions";
 
 let simplePayload = {
@@ -7,6 +6,7 @@ let simplePayload = {
   invoice: uniqid(),
   amountDebit: 10.1,
   issuer: "ABNANL2A",
+
 }
 describe('testing Ideal methods', () => {
   test('Issuers', async() => {
@@ -15,6 +15,7 @@ describe('testing Ideal methods', () => {
           expect(r.data).toBeDefined();
           expect(r.statusCode).toBeGreaterThanOrEqual(200);
           expect(r.statusCode).toBeLessThan(300);
+          console.log(r.data)
         })
     });
   test('Pay Simple Payload', async() => {
@@ -23,6 +24,19 @@ describe('testing Ideal methods', () => {
         expect(r.data).toBeDefined();
         expect(r.statusCode).toBeGreaterThanOrEqual(200);
         expect(r.statusCode).toBeLessThan(300);
+        expect(r.data.Status.Code.Code).toBe(791);
+        console.log(r.data)
       })
   });
+//Not Working
+  // test('PayRemainder', async() => {
+  //   payRemainder(simplePayload)
+  //     .then(r => {
+  //       console.log(r)
+  //       expect(r.data).toBeDefined();
+  //       expect(r.statusCode).toBeGreaterThanOrEqual(200);
+  //       expect(r.statusCode).toBeLessThan(300);
+  //       console.log(r.data)
+  //     })
+  // })
 });

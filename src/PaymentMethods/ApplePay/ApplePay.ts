@@ -1,34 +1,13 @@
 import PaymentMethod from '../PaymentMethod'
-import BuckarooClient from '../../BuckarooClient'
-import Transaction from '../../Models/Transaction'
+import Pay,{IPay} from "./Models/Pay";
 
-class Pay {
-  paymentData: string = ''
-  customerCardName: string = ''
-}
+const applePay = new PaymentMethod('applepay')
 
-export default class ApplePay extends PaymentMethod {
-  protected requiredConfigFields: string[] = []
-  constructor (api: BuckarooClient) {
-    super(api)
-    this.paymentName = 'applepay'
-    this.requiredConfigFields = this.requiredConfigFields.concat(
-      this.requiredFields
-    )
-  }
+const pay  = (data:IPay) => applePay.pay(data,new Pay(data))
 
-  async pay (model?) {
-    await this.api.client.post(
-      new Transaction(model, this, 'Pay', new Pay()),
-      this.api.client.getTransactionUrl()
-    )
-  }
+const refund  = (data:IPay) => applePay.pay(data,new Pay(data))
 
-  payRemainder (model?) {
-    return model
-  }
-
-  issuers (): any {
-    return this
-  }
+export {
+  pay,
+  refund
 }
