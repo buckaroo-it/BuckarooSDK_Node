@@ -12,6 +12,8 @@ export class Phone extends Model implements IPhone {
   fax?: string
   constructor (data) {
     super()
-    this.setParameters(data)
+    this.landline = data.landline
+    this.mobile = data.mobile
+    this.fax = data.fax
   }
 }

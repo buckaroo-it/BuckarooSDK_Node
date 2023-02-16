@@ -77,17 +77,16 @@ let refundPayload = {
   originalTransactionKey : '4E8BD922192746C3918BF4077CXXXXXX',
   amountCredit : 1.23
 }
-pay(payload)
 // describe('testing Afterpay methods', () => {
-//   test('Pay', async() => {
-//     await pay(payload)
-//       .then(r => {
-//         console.log(r);
-//         expect(r.data).toBeDefined();
-//         expect(r.statusCode).toBeGreaterThanOrEqual(200);
-//         expect(r.statusCode).toBeLessThan(300);
-//       })
-//   });
+  test('Pay', async() => {
+    await pay(payload)
+      .then(r => {
+        console.log(r);
+        expect(r.data).toBeDefined();
+        expect(r.statusCode).toBeGreaterThanOrEqual(200);
+        expect(r.statusCode).toBeLessThan(300);
+      })
+  });
 //   test('Refund', async() => {
 //     await refund(refundPayload)
 //       .then(r => {
