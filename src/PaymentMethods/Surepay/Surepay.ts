@@ -2,7 +2,7 @@ import PaymentMethod from '../PaymentMethod'
 import client from "../../Request/Client";
 import { PayForm } from "../../Models/PayForm";
 
-export default class Surepay extends PaymentMethod {
+class Surepay extends PaymentMethod {
   constructor () {
     super({
       paymentName:'surepay',
@@ -22,8 +22,8 @@ export default class Surepay extends PaymentMethod {
 
 const surePay = new Surepay();
 
-const pay = () => surePay.verify();
+const verify = (data) => surePay.verify();
 
 export {
-  pay
+  verify
 }

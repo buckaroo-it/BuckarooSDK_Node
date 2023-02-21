@@ -1,5 +1,5 @@
 import PaymentMethod from '../PaymentMethod'
-import Pay ,{ IPay } from './Models/Pay'
+import { Pay, IPay } from './Models/Pay'
 import { Refund } from "./Models/Refund";
 import { ITransactionData } from "../../Models/TransactionData";
 

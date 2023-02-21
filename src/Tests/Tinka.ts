@@ -1,12 +1,6 @@
 import Gender from '../Constants/Gender'
-import BuckarooClient from '../BuckarooClient'
-import Tinka from '../PaymentMethods/Tinka/Tinka'
+import { pay , refund} from '../PaymentMethods/Tinka/Tinka'
 import { uniqid } from '../Utils/Functions'
-
-require('dotenv').config({ path: '../../.env' })
-
-const client = new BuckarooClient()
-const method = new Tinka(client)
 
 const getPaymentPayload = {
   amountDebit: 3.5,
@@ -72,5 +66,4 @@ const getPaymentPayload = {
   }
 }
 
-method.pay(getPaymentPayload)
-// method.payInInstallments(getPaymentPayload);
+pay(getPaymentPayload)

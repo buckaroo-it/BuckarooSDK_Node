@@ -1,6 +1,3 @@
-import Address from './Address'
-import Phone from './Phone'
-import Customer from '../../PayPerEmail/Models/Customer'
 import { ITransactionData } from "../../../Models/TransactionData";
 import IAddress from "../../../Models/IAddress";
 import IPhone from "../../../Models/IPhone";

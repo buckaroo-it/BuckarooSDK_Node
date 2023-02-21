@@ -1,6 +1,6 @@
 import BillingRecipient, { IBillingRecipient } from "./BillingRecipient";
 import { IArticle , Articles} from './Article'
-import ShippingRecipient, { IShippingRecipient } from "./ShippingRecipient";
+import  { ShippingRecipient, IShippingRecipient } from "./ShippingRecipient";
 import  { IPayForm } from "../../../Models/PayForm";
 
 export interface IPay extends IPayForm {

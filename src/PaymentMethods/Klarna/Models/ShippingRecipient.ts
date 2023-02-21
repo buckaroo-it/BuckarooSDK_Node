@@ -9,7 +9,7 @@ export interface IShippingRecipient {
   email: string
   phone?: Phone
 }
-export default class ShippingRecipient extends Model{
+export class ShippingRecipient extends Model{
   recipient:IPerson | boolean = false
   address: IAddress | boolean = false
   email: string = ''

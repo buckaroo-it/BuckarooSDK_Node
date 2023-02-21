@@ -1,13 +1,7 @@
-import BuckarooClient from '../BuckarooClient'
-import Sofort from '../PaymentMethods/Sofort/Sofort'
+import { pay } from '../PaymentMethods/Sofort/Sofort'
 import { uniqid } from '../Utils/Functions'
-require('dotenv').config({ path: '../../.env' })
-
-const client = new BuckarooClient()
-const method = new Sofort(client)
-
-method.pay({
+pay({
   amountDebit: 10,
   invoice: uniqid(),
-  locale: 'en-US'
+  // locale: 'en-US'
 })

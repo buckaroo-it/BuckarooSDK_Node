@@ -1,7 +1,5 @@
 import { issuers , pay , refund ,payRemainder } from '../PaymentMethods/Ideal/Ideal'
 import { uniqid } from "../Utils/Functions";
-import { IPay } from "../PaymentMethods/Ideal/Models/Pay";
-import { IRefund } from "../Models/IRefund";
 
 
 describe('testing Ideal methods', () => {

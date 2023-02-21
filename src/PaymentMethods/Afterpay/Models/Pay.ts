@@ -8,7 +8,7 @@ export interface IPay extends IPayForm {
   shipping?: IShippingRecipient
   articles: IArticle[]
 }
-export default class Pay extends PayForm implements IPay {
+export class Pay extends PayForm implements IPay {
   billing: IBillingRecipient
   shipping?: IShippingRecipient 
   articles: IArticle[]

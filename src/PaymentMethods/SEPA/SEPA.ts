@@ -1,5 +1,6 @@
 import PaymentMethod from '../PaymentMethod'
 import { IPayForm } from "../../Models/PayForm";
+import { IExtraInfo } from "../Paypal/Models/ExtraInfo";
 
 class Sepa extends PaymentMethod {
   constructor() {
@@ -15,7 +16,7 @@ const pay = (data:IPayForm) => sepa.pay(data,{});
 const authorize = (data:IPayForm) =>sepa.pay(data,{},'Authorize')
 const payRecurrent = (data:IPayForm) => sepa.pay(data,{},'PayRecurrent');
 
-const extraInfo = (data:IPayForm) => sepa.pay(data,{},'Pay,ExtraInfo');
+const extraInfo = (data:IExtraInfo) => sepa.pay(data,{},'Pay,ExtraInfo');
 
 const payWithEmandate = (data:IPayForm) => sepa.pay(data,{},'payWithEmandate')
 

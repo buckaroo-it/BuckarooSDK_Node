@@ -1,13 +1,21 @@
-import BuckarooClient from '../BuckarooClient'
-import Payconiq from '../PaymentMethods/Payconiq/Payconiq'
+import {pay,payInInstallments} from '../PaymentMethods/Payconiq/Payconiq'
 import { uniqid } from '../Utils/Functions'
-require('dotenv').config({ path: '../../.env' })
 
-const client = new BuckarooClient()
-const method = new Payconiq(client)
-
-method.pay({
+pay({
   amountDebit: 10,
   description: 'Payment for testinvoice123',
-  invoice: uniqid()
+  invoice: uniqid(),
+  articles: [],
+  billing: {
+    address: {
+      city: "", country: "", houseNumber: "", houseNumberAdditional: "", street: "", zipcode: ""
+    },
+    email: "",
+    phone: {
+      mobile: ""
+    },
+    recipient: {
+      birthDate: "", category: "", firstName: "", gender: "", initials: "", lastName: "", name: "", placeOfBirth: ""
+    }
+  }
 })

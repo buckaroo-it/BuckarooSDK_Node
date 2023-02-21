@@ -1,10 +1,16 @@
 import PaymentMethod from '../PaymentMethod'
-import Pay ,{ IPay } from './Models/Pay'
-import { Refund } from "./Models/Refund";
+import { Pay , IPay} from "../Afterpay/Models/Pay";
 
-const afterpaydigiaccept = PaymentMethod.fromName('afterpaydigiaccept')
+class Afterpay extends PaymentMethod{
+  constructor() {
+    super({
+      paymentName:'afterpaydigiaccept'
+    });
+  }
+}
+const afterpaydigiaccept = new Afterpay()
 const pay = (data:IPay) => afterpaydigiaccept.pay(data,new Pay(data));
-const refund = (data) => afterpaydigiaccept.pay(data,new Refund(data),'Refund');
+const refund = (data) => afterpaydigiaccept.pay(data,{},'Refund');
 
 const authorize = (data) => afterpaydigiaccept.pay(data,new Pay(data),'Authorize');
 const capture = (data) => afterpaydigiaccept.pay(data,new Pay(data),'Capture');
@@ -17,5 +23,7 @@ export  {
   authorize,
   capture,
   refund,
+  cancelAuthorize,
+  payRemainder,
   authorizeRemainder
 }
