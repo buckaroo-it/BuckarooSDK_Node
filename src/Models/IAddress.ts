@@ -10,12 +10,12 @@ export default interface IAddress {
   country?: string
 }
 export class Address extends Model implements IAddress{
-  city: string = '';
-  country: string = '';
-  houseNumber: string = '';
-  houseNumberAdditional: string = '';
-  state: string = '';
-  street: string = '';
-  zipcode: string = '';
+  city?: string
+  country?: string
+  houseNumber?: string
+  houseNumberAdditional?: string
+  state?: string
+  street?: string
+  zipcode?: string
 
 }

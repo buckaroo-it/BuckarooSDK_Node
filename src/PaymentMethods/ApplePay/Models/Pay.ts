@@ -1,4 +1,6 @@
-export interface IPay {
+import { ITransactionData } from "../../../Models/TransactionData";
+
+export interface IPay extends ITransactionData{
   paymentData:string
   customerCardName?:string
 }

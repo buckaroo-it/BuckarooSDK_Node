@@ -4,14 +4,13 @@ import HttpMethods from '../Constants/HttpMethods'
 import api from "../index";
 import httpClient from "./HttpClient";
 
-export class Client {
+class Client {
 
   getHeaders (method, data, url) {
     return {
       'Content-Type': 'application/json; charset=utf-8',
       Accept: 'application/json',
-      Authorization:
-        'hmac ' + hmac.setUri(url).generate(method, data),
+      Authorization: hmac.authHeader(url,method,data),
       Culture: 'en-GB'
     }
   }
@@ -76,7 +75,9 @@ export class Client {
       data = ''
     }
     const options = this.getOptions(data, method, url)
-
     return httpClient.call(options)
   }
 }
+
+const client = new Client()
+export default client

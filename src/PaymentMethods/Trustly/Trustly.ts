@@ -1,23 +1,17 @@
 import PaymentMethod from '../PaymentMethod'
-import BuckarooClient from '../../BuckarooClient'
-import Transaction from '../../Models/Transaction'
-import Pay from './Models/Pay'
 
 export default class Trustly extends PaymentMethod {
-  protected requiredConfigFields: string[] = []
-  public serviceVersion = 1
-  constructor (api: BuckarooClient) {
-    super(api)
-    this.paymentName = 'Trustly'
-    this.requiredConfigFields = this.requiredConfigFields.concat(
-      this.requiredFields
-    )
+  // public serviceVersion = 1
+  constructor () {
+    super({
+      paymentName:'Trustly'
+    })
   }
+}
+const trustly = new Trustly()
 
-  async pay (model?) {
-    await this.api.client.post(
-      new Transaction(model, this, 'Pay', new Pay()),
-      this.api.client.getTransactionUrl()
-    )
-  }
+const pay = (data) => trustly.pay(data,{})
+
+export {
+  pay
 }

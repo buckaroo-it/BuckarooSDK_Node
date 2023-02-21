@@ -1,5 +1,6 @@
 import {Article} from '../../../Models/IArticle'
 
+
 export default class Articles {
     articles:Article[] = [];
     constructor(data) {

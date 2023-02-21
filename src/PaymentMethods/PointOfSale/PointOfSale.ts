@@ -1,22 +1,19 @@
 import PaymentMethod from '../PaymentMethod'
-import Transaction from '../../Models/Transaction'
-import Pay from './Models/Pay'
+import { IPayForm } from "../../Models/PayForm";
 
-export default class PointOfSale extends PaymentMethod {
-  protected requiredConfigFields: string[] = []
-  public serviceVersion = 1
-  constructor (api) {
-    super(api)
-    this.paymentName = 'pospayment'
-    this.requiredConfigFields = this.requiredConfigFields.concat(
-      this.requiredFields
-    )
+class PointOfSale extends PaymentMethod {
+  constructor() {
+    super({
+      paymentName:'pospayment'
+    });
   }
+}
 
-  async pay (model?) {
-    await this.api.client.post(
-      new Transaction(model, this, 'Pay', new Pay()),
-      this.api.client.getTransactionUrl()
-    )
-  }
+
+const pointOfSale = new PointOfSale()
+
+const pay = (data:IPayForm) => pointOfSale.pay(data,{});
+
+export {
+  pay
 }

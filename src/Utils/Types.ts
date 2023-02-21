@@ -10,3 +10,8 @@ export declare interface ICredentials {
   websiteKey?: string
   secretKey?: string
 }
+
+export declare interface IPAddress {
+  address?: string
+  type?: number
+}

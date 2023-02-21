@@ -2,7 +2,7 @@ import PaymentMethod from '../PaymentMethod'
 import Pay ,{ IPay } from './Models/Pay'
 import { Refund } from "./Models/Refund";
 
-const afterpaydigiaccept = new PaymentMethod('afterpaydigiaccept')
+const afterpaydigiaccept = PaymentMethod.fromName('afterpaydigiaccept')
 const pay = (data:IPay) => afterpaydigiaccept.pay(data,new Pay(data));
 const refund = (data) => afterpaydigiaccept.pay(data,new Refund(data),'Refund');
 

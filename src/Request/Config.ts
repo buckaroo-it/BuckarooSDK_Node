@@ -26,14 +26,13 @@ export class Config {
   }
 
   setConfig (config?: IConfig) {
-    this.mode = config?.mode||  this.mode
+    this.mode = config?.mode ||  this.mode
     this.currency = config?.currency || this.currency
     this.returnURL = config?.returnURL || process.env.BPE_RETURN_URL || this.returnURL
     this.returnURLCancel = config?.returnURLCancel || process.env.BPE_RETURN_URL_CANCEL ||
         this.returnURLCancel
     this.pushURL = config?.pushURL || process.env.BPE_PUSH_URL ||  this.pushURL
   }
-
   public getWebsiteKey (): string {
     return this.websiteKey
   }

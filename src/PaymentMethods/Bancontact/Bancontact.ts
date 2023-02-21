@@ -7,7 +7,7 @@ import PaymentMethod from "../PaymentMethod";
 
 
 
-const bancontact = new PaymentMethod('bancontactmrcash')
+const bancontact = PaymentMethod.fromName('bancontactmrcash')
 const pay = (data:IPay) =>  bancontact.pay(data,new Pay(data))
 const refund = (data:IRefund) =>  bancontact.pay(data,{},'Refund')
 const payRemainder = (data) =>  bancontact.pay(data,{},'PayRemainder')

@@ -1,7 +1,6 @@
-import IAddress,{Address} from "../../../Models/IAddress";
-import IPerson,{Person} from "../../../Models/IPerson";
-import IPhone,{Phone} from "../../../Models/IPhone";
-import Model from '../../../Models/Model'
+import IAddress from "../../../Models/IAddress";
+import IPerson from "../../../Models/IPerson";
+import IPhone from "../../../Models/IPhone";
 
 export declare interface IShippingRecipient  {
   recipient: IPerson

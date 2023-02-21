@@ -1,37 +1,37 @@
-import PayForm from "../Models/PayForm";
-import api from "../index";
+import { PayForm } from "../Models/PayForm";
+import client from "../Request/Client";
+import { IConfig } from "../Utils/Types";
+import { ITransactionData } from "../Models/TransactionData";
 
 export default class PaymentMethod {
 
-  public paymentName: string = ''
-  public serviceVersion: number = 0
-  private _requiredFields: string[] = ['currency', 'pushURL']
-  get requiredFields(): string[] {
-    return this._requiredFields;
-  }
-  set requiredFields(value: string[]) {
-    this._requiredFields = value;
-  }
+  protected readonly paymentName: string;
+  protected readonly  serviceVersion: number;
+  protected readonly  requiredFields: Array<keyof IConfig>;
 
-  constructor(paymentName,serviceVersion?,requiredFields?) {
-    this.paymentName = paymentName
-    this.serviceVersion = serviceVersion || this.serviceVersion
-    if (Array.isArray(requiredFields)){
-      this._requiredFields = this._requiredFields.concat(requiredFields)
-    }
+  protected constructor(config:{paymentName:string, serviceVersion?:number,requiredFields?: Array<keyof IConfig>}) {
+    this.paymentName = config.paymentName
+    this.serviceVersion = config.serviceVersion ?? 0
+    this.requiredFields = config.requiredFields ?? ['currency', 'pushURL']
+
   }
 
+  async pay (data:ITransactionData,PayModel?,action = 'Pay'): Promise<any> {
 
-  async pay (data,PayModel?,action = 'Pay'): Promise<any> {
-    const Transaction = new PayForm(data).
-    setServices(this.paymentName, this.serviceVersion, action, PayModel)
-    for (const dataKey of this._requiredFields) {
-      Transaction[dataKey] = data[dataKey] || api.config[dataKey] || ''
-    }
-    console.log(Transaction);
-    return await api.client.post(
+    const Transaction = new PayForm(data)
+      .setServices(this.paymentName, this.serviceVersion, action, PayModel)
+      .setRequired(this.requiredFields)
+
+
+    return await client.post(
       Transaction,
-      api.client.getTransactionUrl()
+      client.getTransactionUrl()
     )
+  }
+
+  public static fromName(name:string){
+    return new PaymentMethod({
+      paymentName: name
+    });
   }
 }

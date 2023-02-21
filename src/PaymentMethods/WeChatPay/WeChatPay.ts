@@ -1,23 +1,18 @@
 import PaymentMethod from '../PaymentMethod'
-import BuckarooClient from '../../BuckarooClient'
-import Transaction from '../../Models/Transaction'
-import Pay from './Models/Pay'
-
-export default class WeChatPay extends PaymentMethod {
-  protected requiredConfigFields: string[] = []
-  public serviceVersion = 1
-  constructor (api: BuckarooClient) {
-    super(api)
-    this.paymentName = 'WeChatPay'
-    this.requiredConfigFields = this.requiredConfigFields.concat(
-      this.requiredFields
-    )
+import { IPayForm } from "../../Models/PayForm";
+class WeChatPay extends PaymentMethod {
+  // public serviceVersion = 1
+  constructor () {
+    super({
+      paymentName:'WeChatPay'
+    })
   }
+}
 
-  async pay (model?) {
-    await this.api.client.post(
-      new Transaction(model, this, 'Pay', new Pay()),
-      this.api.client.getTransactionUrl()
-    )
-  }
+const wechatpay = new WeChatPay()
+
+const pay = (data:IPayForm) => wechatpay.pay(data,{})
+
+export {
+  pay
 }

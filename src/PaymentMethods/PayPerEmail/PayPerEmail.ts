@@ -1,22 +1,25 @@
 import PaymentMethod from '../PaymentMethod'
-import Transaction from '../../Models/Transaction'
-import PaymentInvitation from './Models/PaymentInvitation'
+import { IPayForm } from "../../Models/PayForm";
 
 export default class PayPerEmail extends PaymentMethod {
-  protected requiredConfigFields: string[] = []
-  public serviceVersion = 1
-  constructor (api) {
-    super(api)
-    this.paymentName = 'payperemail'
-    this.requiredConfigFields = this.requiredConfigFields.concat(
-      this.requiredFields
-    )
+  constructor() {
+    super({
+      paymentName:'payperemail',
+      serviceVersion:1
+    });
   }
+}
 
-  async paymentInvitation (model?) {
-    await this.api.client.post(
-      new Transaction(model, this, 'PaymentInvitation', new PaymentInvitation()),
-      this.api.client.getTransactionUrl()
-    )
-  }
+
+const payPerEmail = new PayPerEmail()
+
+const pay = (data:IPayForm) => payPerEmail.pay(data,{});
+const payRecurrent = (data:IPayForm) => payPerEmail.pay(data,{},'PayRecurrent');
+
+const paymentInvitation = (data) => payPerEmail.pay(data,{},'paymentInvitation');
+
+export {
+  pay,
+  payRecurrent,
+  paymentInvitation
 }

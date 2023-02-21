@@ -1,5 +1,6 @@
 import Services from "./Services";
-import Model from "./Model";
+import api from "../index";
+import { IConfig, IPAddress } from "../Utils/Types";
 
 export interface ITransactionData {
   order?: string
@@ -8,7 +9,7 @@ export interface ITransactionData {
   currency?: string
   amountCredit?: number
   description?: string
-  clientIP?: 'IPAddress'
+  clientIP?: IPAddress
   returnURL?: string
   returnURLCancel?: string
   returnURLError?: string
@@ -24,14 +25,16 @@ export interface ITransactionData {
   originalTransactionReference?: 'TransactionReference'
   services?: Services
   customParameters?: 'CustomParameters'
-  additionalParameters?: 'TransactionRequestAdditionalParameters'
+  additionalParameters?: {[name:string]:string|number}
 }
-
-export class TransactionData extends Model implements ITransactionData{
-  additionalParameters?: "TransactionRequestAdditionalParameters";
+type PartialRecord<K> = {
+  [P in keyof K]: K[P]
+};
+export class TransactionData implements ITransactionData{
+  AdditionalParameters?: Array<{[name:string]:string}>;
   amountCredit?: number;
   amountDebit?: number | string;
-  clientIP?: "IPAddress";
+  clientIP?: IPAddress;
   clientUserAgent?: string;
   continueOnIncomplete?: 1 | 0;
   currency?: string;
@@ -51,14 +54,36 @@ export class TransactionData extends Model implements ITransactionData{
   servicesExcludedForClient?: string;
   servicesSelectableByClient?: string;
   startRecurrent?: boolean;
-  constructor(data) {
-    super()
-    // this.setParameters(data)
+
+  constructor(data:PartialRecord<ITransactionData>) {
+    for (const dataKey in data) {
+     this[dataKey] = data[dataKey]
+    }
+
+    if(data.additionalParameters){
+      this.setAdditionalParameters(data.additionalParameters)
+    }
   }
+
   setServices(paymentName,serviceVersion,action,PayModel?){
-    if(typeof PayModel === 'object'){
+    if(PayModel)
       this.services = new Services(paymentName, serviceVersion, action, PayModel)
+    return this
+  }
+  setRequired(requiredFields:Array<keyof IConfig>){
+    for (const requiredField of requiredFields) {
+      this[requiredField] = this[requiredField] || api.config[requiredField]
     }
     return this
+  }
+  setAdditionalParameters(parameters){
+    this.AdditionalParameters = []
+    for (const parametersKey in parameters) {
+      this.AdditionalParameters.push({
+        name:parametersKey,
+        value:parameters[parametersKey]
+      })
+    }
+    delete this['additionalParameters']
   }
 }

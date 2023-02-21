@@ -3,7 +3,7 @@ import Pay from './Models/Pay'
 import { IPay } from "../Bancontact/Models/Pay";
 
 
-const alipay = new PaymentMethod('alipay')
+const alipay =  PaymentMethod.fromName('alipay')
 
 const pay = (data:IPay) => alipay.pay(data,new Pay(data));
 

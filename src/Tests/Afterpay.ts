@@ -5,13 +5,11 @@ import {
   capture,
   refund,
   authorizeRemainder} from '../PaymentMethods/Afterpay/Afterpay'
-
 import { uniqid } from '../Utils/Functions'
 import { IPay } from "../PaymentMethods/Afterpay/Models/Pay";
 
 let payload:IPay = {
   amountDebit: 50.3,
-  order: uniqid(),
   invoice: uniqid(),
   billing: {
     recipient: {

@@ -75,6 +75,9 @@ class Hmac {
   public getTime () {
     return this.time
   }
+  public authHeader(url,method,data){
+    return 'hmac ' + this.setUri(url).generate(method, data)
+  }
 }
 const hmac = new Hmac()
 export default hmac

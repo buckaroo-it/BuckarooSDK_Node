@@ -1,13 +1,9 @@
-import { issuers , pay , payRemainder} from '../PaymentMethods/Ideal/Ideal'
+import { issuers , pay , refund ,payRemainder } from '../PaymentMethods/Ideal/Ideal'
 import { uniqid } from "../Utils/Functions";
+import { IPay } from "../PaymentMethods/Ideal/Models/Pay";
+import { IRefund } from "../Models/IRefund";
 
-let simplePayload = {
-  returnURL: "https://example.com/return",
-  invoice: uniqid(),
-  amountDebit: 10.1,
-  issuer: "ABNANL2A",
 
-}
 describe('testing Ideal methods', () => {
   test('Issuers', async() => {
       await issuers()
@@ -19,7 +15,7 @@ describe('testing Ideal methods', () => {
         })
     });
   test('Pay Simple Payload', async() => {
-    await pay(simplePayload)
+    await create_ideal_Payment()
       .then(r => {
         expect(r.data).toBeDefined();
         expect(r.statusCode).toBeGreaterThanOrEqual(200);
@@ -39,4 +35,51 @@ describe('testing Ideal methods', () => {
   //       console.log(r.data)
   //     })
   // })
+  test('Refund', async() => {
+    await create_ideal_Refund()
+      .then(r => {
+        expect(r.data).toBeDefined();
+        expect(r.statusCode).toBeGreaterThanOrEqual(200);
+        expect(r.statusCode).toBeLessThan(300);
+        expect(r.data.Status.Code.Code).toBeGreaterThan(490);
+      })
+  })
 });
+
+
+
+function create_ideal_Payment() {
+
+  return pay({
+    invoice: uniqid(),
+    amountDebit: 10.1,
+    issuer: "ABNANL2A",
+    pushURL: "https://buckaroo.nextto.dev/push",
+    returnURL: "https://buckaroo.nextto.dev/return",
+    clientIP: {
+      address: "123.456.789.123",
+      type: 0
+    },
+    additionalParameters: {
+      initiated_by_magento: 1,
+      service_action: "something"
+    }
+  })
+}
+
+function create_ideal_Refund() {
+
+  return refund({
+    invoice: "testinvoice 123",
+    originalTransactionKey: "4E8BD922192746C3918BF4077CXXXXXX",
+    amountCredit: 1.23,
+    clientIP: {
+      address: "123.456.789.123",
+      type: 0
+    },
+    additionalParameters: {
+      initiated_by_magento: "1",
+      service_action: "something"
+    }
+  })
+}

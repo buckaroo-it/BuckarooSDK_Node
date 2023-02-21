@@ -1,22 +1,18 @@
-import BuckarooClient from '../../BuckarooClient'
 import PaymentMethod from '../PaymentMethod'
-import Transaction from '../../Models/Transaction'
-import Pay from './Models/Pay'
+import { IPayForm } from "../../Models/PayForm";
 
-export default class Przelewy24 extends PaymentMethod {
-  protected requiredConfigFields: string[] = []
-  constructor (api: BuckarooClient) {
-    super(api)
-    this.paymentName = 'Przelewy24'
-    this.requiredConfigFields = this.requiredConfigFields.concat(
-      this.requiredFields
-    )
-  }
+class Przelewy24 extends PaymentMethod {
 
-  async pay (model?) {
-    await this.api.client.post(
-      new Transaction(model, this, 'Pay', new Pay()),
-      this.api.client.getTransactionUrl()
-    )
+  constructor() {
+    super({
+      paymentName:'Przelewy24'
+    });
   }
+}
+const przelewy24 = new Przelewy24();
+
+const pay = (data:IPayForm) => przelewy24.pay(data,{})
+
+export {
+  pay
 }

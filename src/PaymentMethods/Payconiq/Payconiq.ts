@@ -1,23 +1,22 @@
 import PaymentMethod from '../PaymentMethod'
-import BuckarooClient from '../../BuckarooClient'
-import Transaction from '../../Models/Transaction'
-import Pay from './Models/Pay'
+import Pay, { IPay } from "../Klarna/Models/Pay";
+// class Payconiq extends PaymentMethod {
+//   constructor() {
+//     super({
+//       paymentName:'Payconiq'
+//     });
+//   }
+// }
 
-export default class Payconiq extends PaymentMethod {
-  protected requiredConfigFields: string[] = []
 
-  constructor (api: BuckarooClient) {
-    super(api)
-    this.paymentName = 'payconiq'
-    this.requiredConfigFields = this.requiredFields.concat(
-      this.requiredConfigFields
-    )
-  }
+const payconiq = PaymentMethod.fromName('payconiq')
 
-  async pay (model?) {
-    await this.api.client.post(
-      new Transaction(model, this, 'Pay', new Pay()),
-      this.api.client.getTransactionUrl()
-    )
-  }
+const pay = (data:IPay) => payconiq.pay(data,new Pay(data));
+const refund = (data:IPay) => payconiq.pay(data,{},'refund')
+const payInInstallments = (data:IPay) => payconiq.pay(data,new Pay(data),'PayInInstallments')
+
+export {
+  pay,
+  refund,
+  payInInstallments
 }

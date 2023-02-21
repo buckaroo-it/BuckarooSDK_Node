@@ -19,29 +19,11 @@ export default class BillingRecipient extends Model{
     this.recipient = data.recipient
     this.address = data.address
     this.email = data.email
-    this.setParameters(data)
-
     this.phone = data.phone
-    if((data.address.country ===  'NL' || data.address.country === 'BE')
-        && typeof this.phone === undefined){
-      throw new Error('Missing required Parameter Phone')
-    }
-
-    if(this.phone) {
-      if(!this.phone.mobile && !this.phone.landline){
-        throw new Error('Parameter Phone requires parameters mobile or landline')
-      }
-      this.phone = new Phone(this.phone).setKeys({
-        landline: "Phone",
-        mobile: "MobilePhone",
-      })
-    }
-    console.log(this);
-    this.recipient = new Person(this.recipient)
-
-    this.address = new Address(this.address)
-    console.log(this);
-    throw new Error('sad')
+    // if((data.address.country ===  'NL' || data.address.country === 'BE')
+    //     && typeof this.phone === undefined){
+    //   throw new Error('Missing required Parameter Phone')
+    // }
   }
 
   groupType? (): string {

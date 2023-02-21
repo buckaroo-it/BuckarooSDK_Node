@@ -1,23 +1,23 @@
 import PaymentMethod from '../PaymentMethod'
-import BuckarooClient from '../../BuckarooClient'
-import Transaction from '../../Models/Transaction'
-import Pay from './Models/Pay'
+import { IPayForm } from "../../Models/PayForm";
 
 export default class Tinka extends PaymentMethod {
-  protected requiredConfigFields: string[] = []
-  public serviceVersion = 1
-  constructor (api: BuckarooClient) {
-    super(api)
-    this.paymentName = 'Tinka'
-    this.requiredConfigFields = this.requiredConfigFields.concat(
-      this.requiredFields
-    )
-  }
-
-  async pay (model?) {
-    await this.api.client.post(
-      new Transaction(model, this, 'Pay', new Pay()),
-      this.api.client.getTransactionUrl()
-    )
+  // public serviceVersion = 1
+  constructor () {
+    super({
+      paymentName:'Tinka',
+    })
   }
 }
+
+const tinka = new Tinka()
+
+const pay = (data:IPayForm) => tinka.pay(data,{})
+
+const refund = (data:IPayForm) => tinka.pay(data,{},'Refund')
+
+export {
+  pay,
+  refund
+}
+
