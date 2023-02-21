@@ -1,37 +1,34 @@
-import { PayForm } from "../Models/PayForm";
-import client from "../Request/Client";
-import { IConfig } from "../Utils/Types";
-import { ITransactionData } from "../Models/TransactionData";
+import { PayForm } from '../Models/PayForm'
+import client from '../Request/Client'
+import { IConfig } from '../Utils/Types'
+import { ITransactionData } from '../Models/TransactionData'
 
 export default class PaymentMethod {
+    protected readonly paymentName: string
+    protected readonly serviceVersion: number
+    protected readonly requiredFields: Array<keyof IConfig>
 
-  protected readonly paymentName: string;
-  protected readonly  serviceVersion: number;
-  protected readonly  requiredFields: Array<keyof IConfig>;
+    protected constructor(config: {
+        paymentName: string
+        serviceVersion?: number
+        requiredFields?: Array<keyof IConfig>
+    }) {
+        this.paymentName = config.paymentName
+        this.serviceVersion = config.serviceVersion ?? 0
+        this.requiredFields = config.requiredFields ?? ['currency', 'pushURL']
+    }
 
-  protected constructor(config:{paymentName:string, serviceVersion?:number,requiredFields?: Array<keyof IConfig>}) {
-    this.paymentName = config.paymentName
-    this.serviceVersion = config.serviceVersion ?? 0
-    this.requiredFields = config.requiredFields ?? ['currency', 'pushURL']
+    async pay(data: ITransactionData, PayModel?, action = 'Pay'): Promise<any> {
+        const Transaction = new PayForm(data)
+            .setServices(this.paymentName, this.serviceVersion, action, PayModel)
+            .setRequired(this.requiredFields)
 
-  }
+        return await client.post(Transaction, client.getTransactionUrl())
+    }
 
-  async pay (data:ITransactionData,PayModel?,action = 'Pay'): Promise<any> {
-
-    const Transaction = new PayForm(data)
-      .setServices(this.paymentName, this.serviceVersion, action, PayModel)
-      .setRequired(this.requiredFields)
-
-
-    return await client.post(
-      Transaction,
-      client.getTransactionUrl()
-    )
-  }
-
-  public static fromName(name:string){
-    return new PaymentMethod({
-      paymentName: name
-    });
-  }
+    public static fromName(name: string) {
+        return new PaymentMethod({
+            paymentName: name
+        })
+    }
 }

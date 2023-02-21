@@ -1,45 +1,45 @@
 {
-  "name": "buckaroo_sdk_node_js",
-  "version": "1.0.0",
-  "description": "Buckaroo payment SDK",
-  "main": "index.ts",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "prepare": "npm run build",
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "buckaroo",
-    "sdk",
-    "javascript",
-    "node"
-  ],
-  "author": "Vegim Carkaxhija",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/crypto-js": "^4.1.1",
-    "@types/jest": "^29.4.0",
-    "jest": "^29.4.2",
-    "prettier": "^2.8.3",
-    "ts-jest": "^29.0.5",
-    "typescript": "^4.9.4"
-  },
-  "dependencies": {
-    "@types/node": "^18.11.18",
-    "crypto-js": "^4.1.1",
-    "dotenv": "^16.0.3",
-    "ip-address": "^8.1.0"
-  },
-  "directories": {
-    "example": "examples"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/buckaroo-it/BuckarooSDK_NodeJS.git"
-  },
-  "bugs": {
-    "url": "https://github.com/buckaroo-it/BuckarooSDK_NodeJS/issues"
-  },
-  "homepage": "https://github.com/buckaroo-it/BuckarooSDK_NodeJS#readme"
+    "name": "buckaroo_sdk_node_js",
+    "version": "1.0.0",
+    "description": "Buckaroo payment SDK",
+    "main": "index.ts",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "prepare": "npm run build",
+        "build": "tsc",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "buckaroo",
+        "sdk",
+        "javascript",
+        "node"
+    ],
+    "author": "Vegim Carkaxhija",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/crypto-js": "^4.1.1",
+        "@types/jest": "^29.4.0",
+        "jest": "^29.4.2",
+        "prettier": "^2.8.3",
+        "ts-jest": "^29.0.5",
+        "typescript": "^4.9.4"
+    },
+    "dependencies": {
+        "@types/node": "^18.11.18",
+        "crypto-js": "^4.1.1",
+        "dotenv": "^16.0.3",
+        "ip-address": "^8.1.0"
+    },
+    "directories": {
+        "example": "examples"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/buckaroo-it/BuckarooSDK_NodeJS.git"
+    },
+    "bugs": {
+        "url": "https://github.com/buckaroo-it/BuckarooSDK_NodeJS/issues"
+    },
+    "homepage": "https://github.com/buckaroo-it/BuckarooSDK_NodeJS#readme"
 }

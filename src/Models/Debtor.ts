@@ -1,3 +1,3 @@
 export default interface Debtor {
-  code?: string
+    code?: string
 }

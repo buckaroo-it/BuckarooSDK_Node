@@ -1,46 +1,46 @@
 import Model from '../../../Models/Model'
 
 export interface IArticle {
-  identifier: string
-  quantity: number
-  price: number
-  vatPercentage: number
-  description?: string
+    identifier: string
+    quantity: number
+    price: number
+    vatPercentage: number
+    description?: string
 }
 export default class Article extends Model implements IArticle {
-  identifier: string = ''
-  quantity: number = 0
-  price: number = 0
-  vatPercentage: number = 0
-  description: string = ''
-  constructor (data) {
-    super()
-    this.setParameters( data)
-    this.setKeys({
-      price: 'GrossUnitPrice'
-    })
-  }
+    identifier: string = ''
+    quantity: number = 0
+    price: number = 0
+    vatPercentage: number = 0
+    description: string = ''
+    constructor(data) {
+        super()
+        this.setParameters(data)
+        this.setKeys({
+            price: 'GrossUnitPrice'
+        })
+    }
 
-  groupType? (): string {
-    return 'Article'
-  }
+    groupType?(): string {
+        return 'Article'
+    }
 
-  groupID? (id: string): number {
-    return Number(id) + 1
-  }
+    groupID?(id: string): number {
+        return Number(id) + 1
+    }
 }
 
-export class Articles{
-  articles:Article[] = []
-  constructor(data) {
-    if (!Array.isArray(data)) {
-      data = [data]
+export class Articles {
+    articles: Article[] = []
+    constructor(data) {
+        if (!Array.isArray(data)) {
+            data = [data]
+        }
+        for (const dataKey in data) {
+            this.articles.push(new Article(data[dataKey]))
+        }
+        if (this.articles?.length === 0) {
+            throw new Error('Missing Parameter:articles')
+        }
     }
-    for (const dataKey in data) {
-      this.articles.push(new Article(data[dataKey]))
-    }
-    if(this.articles?.length === 0) {
-      throw new Error('Missing Parameter:articles')
-    }
-  }
 }

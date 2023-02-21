@@ -1,3 +1,3 @@
 export default interface Email {
-  email?: string
+    email?: string
 }

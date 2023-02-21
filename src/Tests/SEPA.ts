@@ -1,18 +1,24 @@
-import {pay,extraInfo,authorize,payRecurrent,payWithEmandate} from '../PaymentMethods/SEPA/SEPA'
+import {
+    pay,
+    extraInfo,
+    authorize,
+    payRecurrent,
+    payWithEmandate
+} from '../PaymentMethods/SEPA/SEPA'
 import { uniqid } from '../Utils/Functions'
 
 pay({
-  invoice: uniqid(),
-  amountDebit: 10.1,
-  // iban: "NL13TEST0123456789",
-  // bic: "TESTNL2A",
-  // collectdate: "2022-12-01",
-  // mandateReference: "1DCtestreference",
-  // mandateDate: "2022-07-03",
-  // customer: {
-  //   name: "John Smith",
-  // },
-});
+    invoice: uniqid(),
+    amountDebit: 10.1
+    // iban: "NL13TEST0123456789",
+    // bic: "TESTNL2A",
+    // collectdate: "2022-12-01",
+    // mandateReference: "1DCtestreference",
+    // mandateDate: "2022-07-03",
+    // customer: {
+    //   name: "John Smith",
+    // },
+})
 //
 // method.refund({
 //   amountCredit: 10,
@@ -62,7 +68,7 @@ pay({
 // });
 
 payWithEmandate({
-  amountDebit: 10,
-  invoice: 'testinvoice 123',
-  // mandateReference: '001D284C4A887F84756A1425A369997xxxx'
+    amountDebit: 10,
+    invoice: 'testinvoice 123'
+    // mandateReference: '001D284C4A887F84756A1425A369997xxxx'
 })

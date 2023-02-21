@@ -1,18 +1,13 @@
 import PaymentMethod from '../PaymentMethod'
 import Pay from './Models/Pay'
-import { IPay } from "../Bancontact/Models/Pay";
+import { IPay } from '../Bancontact/Models/Pay'
 
+const alipay = PaymentMethod.fromName('alipay')
 
-const alipay =  PaymentMethod.fromName('alipay')
+const pay = (data: IPay) => alipay.pay(data, new Pay(data))
 
-const pay = (data:IPay) => alipay.pay(data,new Pay(data));
+const refund = (data: IPay) => alipay.pay(data, new Pay(data), 'Refund')
 
-const refund = (data:IPay) => alipay.pay(data,new Pay(data),'Refund');
+const payRemainder = (data: IPay) => alipay.pay(data, new Pay(data), 'PayRemainder')
 
-const payRemainder = (data:IPay) => alipay.pay(data,new Pay(data),'PayRemainder');
-
-export  {
-  refund,
-  pay,
-  payRemainder
-}
+export { refund, pay, payRemainder }

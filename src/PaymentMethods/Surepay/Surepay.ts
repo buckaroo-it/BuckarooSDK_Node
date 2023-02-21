@@ -1,29 +1,25 @@
 import PaymentMethod from '../PaymentMethod'
-import client from "../../Request/Client";
-import { PayForm } from "../../Models/PayForm";
+import client from '../../Request/Client'
+import { PayForm } from '../../Models/PayForm'
 
 class Surepay extends PaymentMethod {
-  constructor () {
-    super({
-      paymentName:'surepay',
-    })
-  }
+    constructor() {
+        super({
+            paymentName: 'surepay'
+        })
+    }
 
-  async verify (data?) {
-    const Transaction = new PayForm(data)
-      .setServices(this.paymentName, this.serviceVersion, 'Verify', {})
-      .setRequired(this.requiredFields)
+    async verify(data?) {
+        const Transaction = new PayForm(data)
+            .setServices(this.paymentName, this.serviceVersion, 'Verify', {})
+            .setRequired(this.requiredFields)
 
-    await client.post(
-      Transaction,
-      client.getDataRequestUrl())
-  }
+        await client.post(Transaction, client.getDataRequestUrl())
+    }
 }
 
-const surePay = new Surepay();
+const surePay = new Surepay()
 
-const verify = (data) => surePay.verify();
+const verify = (data) => surePay.verify()
 
-export {
-  verify
-}
+export { verify }

@@ -1,8 +1,8 @@
-import {verify} from '../PaymentMethods/Surepay/Surepay'
+import { verify } from '../PaymentMethods/Surepay/Surepay'
 
 verify({
-  bankAccount: {
-    iban: 'NL13TEST0123456789',
-    accountName: 'John Doe'
-  }
+    bankAccount: {
+        iban: 'NL13TEST0123456789',
+        accountName: 'John Doe'
+    }
 })
