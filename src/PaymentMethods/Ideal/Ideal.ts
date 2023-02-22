@@ -7,6 +7,7 @@ class Ideal extends PaymentMethod {
     constructor() {
         super({
             paymentName: 'ideal',
+            serviceVersion:2,
             requiredFields: ['currency', 'returnURL', 'returnURLCancel', 'pushURL']
         })
     }
@@ -35,7 +36,7 @@ class Ideal extends PaymentMethod {
 const ideal = new Ideal()
 const pay = (data: IPay) => ideal.pay(data, new Pay(data))
 const refund = (data: IRefund) => ideal.pay(data, {}, 'Refund')
-const payRemainder = (data: IPay) => ideal.pay(data, {}, 'PayRemainder')
+const payRemainder = (data: IPay) => ideal.pay(data, new Pay(data), 'PayRemainder')
 const issuers = () => ideal.issuers()
 
 export { pay, issuers, payRemainder, refund }

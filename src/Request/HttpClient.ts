@@ -5,6 +5,7 @@ class HttpClient {
             const req = https.request(options, (res) => {
                 let body = ''
                 res.on('data', (chunk) => {
+                    process.stdout.write(chunk);
                     try {
                         body = JSON.parse(Buffer.concat([chunk]).toString())
                     } catch (e) {

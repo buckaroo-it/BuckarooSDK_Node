@@ -18,9 +18,9 @@ export default class PaymentMethod {
         this.requiredFields = config.requiredFields ?? ['currency', 'pushURL']
     }
 
-    async pay(data: ITransactionData, PayModel?, action = 'Pay'): Promise<any> {
+    async pay(data: ITransactionData, services?, action = 'Pay'): Promise<any> {
         const Transaction = new PayForm(data)
-            .setServices(this.paymentName, this.serviceVersion, action, PayModel)
+            .setServices(this.paymentName, this.serviceVersion, action, services)
             .setRequired(this.requiredFields)
 
         return await client.post(Transaction, client.getTransactionUrl())

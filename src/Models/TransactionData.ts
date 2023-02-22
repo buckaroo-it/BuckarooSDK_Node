@@ -31,7 +31,7 @@ type PartialRecord<K> = {
     [P in keyof K]: K[P]
 }
 export class TransactionData implements ITransactionData {
-    AdditionalParameters?: Array<{ [name: string]: string }>
+    AdditionalParameters?: Array<{ [name: string]: string | number }>
     amountCredit?: number
     amountDebit?: number | string
     clientIP?: IPAddress
