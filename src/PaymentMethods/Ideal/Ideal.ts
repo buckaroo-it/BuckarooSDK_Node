@@ -12,8 +12,8 @@ class Ideal extends PaymentMethod {
         })
     }
     async issuers(): Promise<any> {
-        const issuerList: Array<{ id: any; name: any }> = []
         return await client.specification({}, this.paymentName, 2).then((response) => {
+            const issuerList: Array<{ id: any; name: any }> = []
             if (response.data?.Actions?.['0']?.RequestParameters?.[0]?.ListItemDescriptions) {
                 const issuersData =
                     response.data.Actions['0'].RequestParameters[0].ListItemDescriptions
