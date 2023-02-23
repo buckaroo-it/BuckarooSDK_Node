@@ -1,10 +1,11 @@
 import Endpoints from '../Constants/Endpoints'
 import hmac from './Hmac'
 import HttpMethods from '../Constants/HttpMethods'
-import api from '../index'
 import httpClient from './HttpClient'
+import {buckarooClient} from "../BuckarooClient";
 
 class Client {
+
     getHeaders(method, data, url) {
         return {
             'Content-Type': 'application/json; charset=utf-8',
@@ -16,12 +17,6 @@ class Client {
 
     getOptions(data, method, url) {
         url = new URL(url)
-        if (typeof data === 'object') {
-            if (Object.keys(data).length === 0) {
-                data = ''
-            }
-        }
-
         return {
             hostname: url.host,
             path: url.pathname + url.search,
@@ -32,8 +27,7 @@ class Client {
     }
 
     getEndpoint(path: string) {
-        const baseUrl = api.config?.isLiveMode() ? Endpoints.LIVE : Endpoints.TEST
-
+        const baseUrl = buckarooClient().getConfig()?.mode === 'live' ? Endpoints.LIVE : Endpoints.TEST
         return baseUrl + path
     }
 
@@ -51,26 +45,19 @@ class Client {
         )
     }
 
-    async get(data, url) {
-        this.call(data, HttpMethods.METHOD_GET, url).then((r) => r)
+    get(data, url) {
+        const options = this.getOptions(data, HttpMethods.METHOD_GET, url)
+        return  httpClient.call(options)
     }
 
-    async post(data, url) {
-        return await this.call(data, HttpMethods.METHOD_POST, url)
+    post(data, url) {
+        const options = this.getOptions(data, HttpMethods.METHOD_POST, url)
+        return  httpClient.call(options)
     }
 
-    async specification(data?: {}, paymentName?: string, serviceVersion = 0): Promise<any> {
+    specification(data?: {}, paymentName?: string, serviceVersion = 0): Promise<any> {
         const endPoint = this.getSpecificationUrl(paymentName, serviceVersion)
-
-        return await this.call(data, HttpMethods.METHOD_GET, endPoint)
-    }
-
-    async call(data, method, url) {
-        if (typeof data === 'object' && Object.keys(data).length === 0) {
-            data = ''
-        }
-        const options = this.getOptions(data, method, url)
-        return httpClient.call(options)
+        return this.get(data,endPoint)
     }
 }
 

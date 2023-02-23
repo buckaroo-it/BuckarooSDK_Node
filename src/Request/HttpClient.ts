@@ -1,6 +1,6 @@
 const https = require('https')
 class HttpClient {
-    async call(options): Promise<any> {
+    async call(options) {
         return await new Promise(function (resolve) {
             const req = https.request(options, (res) => {
                 let body = ''
@@ -14,7 +14,7 @@ class HttpClient {
                 })
                 res.on('end', function () {
                     res.data = body
-                    resolve(res)
+                    return resolve(res)
                 })
             })
             req.on('error', (error) => {

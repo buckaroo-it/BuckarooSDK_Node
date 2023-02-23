@@ -1,19 +1,22 @@
-import PaymentMethod from '../PaymentMethod'
-import Pay, { IPay } from './Models/Pay'
+import {PayablePaymentMethod} from "../PayablePaymentMethod";
+import Pay, {IPay} from "./Models/Pay";
+class Klarna extends PayablePaymentMethod {
+    protected _paymentName = 'klarna'
 
-class Klarna extends PaymentMethod {
-    constructor() {
-        super({
-            paymentName: 'klarna',
-            serviceVersion: 1
-        })
+    async pay(payload:IPay):Promise<any>{
+        this.action = 'Pay'
+        return super.pay(payload,new Pay(payload))
+    }
+    refund(payload){
+        this.action = 'Refund'
+        return super.pay(payload,{})
+
+    }
+    payInInstallments(payload){
+        this.action = 'PayInInstallments'
+        return super.pay(payload,{})
+
     }
 }
 
-const klarna = new Klarna()
-
-const pay = (data: IPay) => klarna.pay(data, new Pay(data))
-const refund = (data: IPay) => klarna.pay(data, {}, 'refund')
-const payInInstallments = (data: IPay) => klarna.pay(data, new Pay(data), 'PayInInstallments')
-
-export { pay, refund, payInInstallments }
+export { Klarna }

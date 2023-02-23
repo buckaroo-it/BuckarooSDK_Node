@@ -1,24 +1,44 @@
 import { serviceParameterKeyOf } from '../Utils/Functions'
 
-export default class Parameters {
-    public parameterList: Array<{}> = []
+export interface IParameter {
+    Name:string
+    Value: any
+    GroupType?: string
+    GroupID?: string | number
+}
 
-    setUpParameters(model, groupType: string = '', groupID: number | string = '') {
-        for (const paramKey in model) {
-            if (typeof model[paramKey] === 'object') {
-                this.setUpParameters(
-                    model[paramKey],
-                    model[paramKey].groupType?.() || groupType,
-                    model[paramKey].groupID?.(paramKey) || groupID
+export class ParameterList {
+
+    private _parameterList: IParameter[] = []
+
+    get parameterList(): IParameter[] {
+        return this._parameterList;
+    }
+    constructor(services) {
+        this.addParameterList(services)
+    }
+
+    setUpParameters (serviceModel, groupType: string = '', groupID: number | string = '') {
+        for (const paramKey in serviceModel) {
+            if (typeof serviceModel[paramKey] === 'object') {
+                this.setUpParameters(serviceModel[paramKey],
+                    serviceModel[paramKey].groupType?.() || groupType,
+                    serviceModel[paramKey].groupID?.(paramKey) || groupID)
+
+            } else if( typeof serviceModel[paramKey] !== 'function') {
+                this.setParamFormat(
+                    paramKey,
+                    serviceModel[paramKey],
+                    groupType,
+                    groupID
                 )
-            } else if (typeof model[paramKey] !== 'function') {
-                this.setParamFormat(paramKey, model[paramKey], groupType, groupID)
             }
         }
     }
 
-    setParamFormat(name, value, groupType, groupID) {
-        this.parameterList.push({
+    setParamFormat (name, value, groupType, groupID) {
+
+        this._parameterList.push({
             Name: serviceParameterKeyOf(name),
             Value: value,
             GroupType: groupType,
@@ -26,8 +46,8 @@ export default class Parameters {
         })
     }
 
-    addParameterList(pay) {
+    addParameterList (pay) {
         this.setUpParameters(pay)
-        return this.parameterList
+        return this._parameterList
     }
 }

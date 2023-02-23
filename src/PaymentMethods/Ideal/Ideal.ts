@@ -1,16 +1,8 @@
 import PaymentMethod from '../PaymentMethod'
 import Pay, { IPay } from './Models/Pay'
 import client from '../../Request/Client'
-import { IRefund } from '../../Models/IRefund'
-
 class Ideal extends PaymentMethod {
-    constructor() {
-        super({
-            paymentName: 'ideal',
-            serviceVersion:2,
-            requiredFields: ['currency', 'returnURL', 'returnURLCancel', 'pushURL']
-        })
-    }
+
     async issuers(): Promise<any> {
         return await client.specification({}, this.paymentName, 2).then((response) => {
             const issuerList: Array<{ id: any; name: any }> = []

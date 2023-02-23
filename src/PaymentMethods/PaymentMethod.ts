@@ -1,34 +1,26 @@
-import { PayForm } from '../Models/PayForm'
-import client from '../Request/Client'
-import { IConfig } from '../Utils/Types'
-import { ITransactionData } from '../Models/TransactionData'
+import {TransactionRequest} from "../Models/Request";
+import {IConfig} from "../Utils/Types";
 
-export default class PaymentMethod {
-    protected readonly paymentName: string
-    protected readonly serviceVersion: number
-    protected readonly requiredFields: Array<keyof IConfig>
 
-    protected constructor(config: {
-        paymentName: string
-        serviceVersion?: number
-        requiredFields?: Array<keyof IConfig>
-    }) {
-        this.paymentName = config.paymentName
-        this.serviceVersion = config.serviceVersion ?? 0
-        this.requiredFields = config.requiredFields ?? ['currency', 'pushURL']
+export default abstract class PaymentMethod {
+    // protected serviceParameters: Array<string> = []
+    protected readonly requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
+    protected _paymentName = ''
+    protected _serviceVersion = 0
+    protected request: TransactionRequest = new TransactionRequest
+
+    private _action = ''
+    get paymentName(): string {
+        return this._paymentName;
     }
 
-    async pay(data: ITransactionData, services?, action = 'Pay'): Promise<any> {
-        const Transaction = new PayForm(data)
-            .setServices(this.paymentName, this.serviceVersion, action, services)
-            .setRequired(this.requiredFields)
-
-        return await client.post(Transaction, client.getTransactionUrl())
+    get serviceVersion(): number {
+        return this._serviceVersion;
     }
-
-    public static fromName(name: string) {
-        return new PaymentMethod({
-            paymentName: name
-        })
+    get action(): string {
+        return this._action;
+    }
+    set action(value: string) {
+        this._action = value;
     }
 }

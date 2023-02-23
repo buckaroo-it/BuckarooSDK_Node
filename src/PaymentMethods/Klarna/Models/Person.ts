@@ -1,6 +1,3 @@
-// import IPerson from "../../../Models/IPerson";
-import Model from '../../../Models/Model'
-
 export type IPerson = {
     category: string
     gender: string
@@ -11,7 +8,7 @@ export type IPerson = {
     birthDate?: string
     placeOfBirth?: string
 }
-export default class Person extends Model implements IPerson {
+export default class Person implements IPerson {
     category: string = ''
     gender: string = ''
     initials?: string
@@ -22,7 +19,13 @@ export default class Person extends Model implements IPerson {
     placeOfBirth?: string
 
     constructor(data) {
-        super()
-        this.setParameters(data)
+        this.category = data.category
+        this.firstName = data.firstName
+        this.initials = data.initials
+        this.name = data.name
+        this.gender = data.gender
+        this.birthDate = data.birthDate
+        this.lastName = data.lastName
+        this.placeOfBirth = data.placeOfBirth
     }
 }

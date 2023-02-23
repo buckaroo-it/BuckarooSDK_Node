@@ -1,5 +1,3 @@
-import Model from '../../../Models/Model'
-
 export interface IArticle {
     identifier: string
     quantity: number
@@ -7,25 +5,25 @@ export interface IArticle {
     vatPercentage: number
     description?: string
 }
-export default class Article extends Model implements IArticle {
-    identifier: string = ''
-    quantity: number = 0
-    price: number = 0
-    vatPercentage: number = 0
-    description: string = ''
-    constructor(data) {
-        super()
-        this.setParameters(data)
-        this.setKeys({
-            price: 'GrossUnitPrice'
-        })
+export default class Article {
+    identifier: string
+    quantity: number
+    grossUnitPrice: number
+    vatPercentage: number
+    description?: string
+    constructor(data:IArticle) {
+        this.grossUnitPrice = data.price
+        this.identifier = data.identifier
+        this.quantity = data.quantity
+        this.vatPercentage = data.vatPercentage
+        this.description = data.description
     }
 
-    groupType?(): string {
+    groupType(): string {
         return 'Article'
     }
 
-    groupID?(id: string): number {
+    groupID(id: string): number {
         return Number(id) + 1
     }
 }

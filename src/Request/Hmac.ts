@@ -1,7 +1,7 @@
 import md5 from 'crypto-js/md5'
 import hmacSHA256 from 'crypto-js/hmac-sha256'
 import Base64 from 'crypto-js/enc-base64'
-import api from '../index'
+import {buckarooClient} from "../BuckarooClient";
 class Hmac {
     private uri: string
     private base64Data: string
@@ -32,14 +32,14 @@ class Hmac {
 
     public generate(method, data) {
         const hashString =
-            api.config.getWebsiteKey() +
+            buckarooClient().getCredentials().websiteKey +
             method +
             this.getUri() +
             this.getTime() +
             this.getNonce() +
             this.getBase64Data(data)
-        this.hash = Base64.stringify(hmacSHA256(hashString, api.config.getSecretKey()))
-        return `${api.config.getWebsiteKey()}:${this.hash}:${this.getNonce()}:${this.getTime()}`
+        this.hash = Base64.stringify(hmacSHA256(hashString, buckarooClient().getCredentials().secretKey ?? ''))
+        return `${buckarooClient().getCredentials().websiteKey}:${this.hash}:${this.getNonce()}:${this.getTime()}`
     }
 
     public getBase64Data(data?) {
