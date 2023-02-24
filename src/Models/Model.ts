@@ -14,10 +14,4 @@ export default class Model{
         }, {})
     }
 
-    public only(keys: Array<string>): object {
-        return Object.keys(this._payload).filter(key => keys.includes(key)).reduce((obj, key) => {
-            obj[key] = this._payload[key];
-            return obj;
-        }, {})
-    }
 }

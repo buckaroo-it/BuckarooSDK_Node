@@ -6,6 +6,21 @@ let _credentials: ICredentials
 
 let _config: IConfig
 
+
+let defaultSetup = () => {
+    _credentials = {
+        websiteKey: process.env.BPE_WEBSITE_KEY || 'KEY',
+        secretKey: process.env.BPE_SECRET_KEY || 'SECRET'
+    }
+    _config = {
+        mode: process.env.BPE_MODE === 'live' ? "live" : 'test',
+        currency: process.env.BPE_CURRENCY_CODE || 'EUR',
+        returnURL: process.env.BPE_RETURN_URL || '',
+        returnURLCancel: process.env.BPE_RETURN_URL_CANCEL || '',
+        pushURL: process.env.BPE_PUSH_URL || ''
+    }
+}
+
 export const initializeBuckarooClient = (credentials?: ICredentials, config?: IConfig) => {
     if(credentials) {
         _credentials = credentials
@@ -13,23 +28,12 @@ export const initializeBuckarooClient = (credentials?: ICredentials, config?: IC
     if(config) {
         _config = config
     }
-    let defaultSetup = () => {
-        _credentials = {
-            websiteKey: process.env.BPE_WEBSITE_KEY || 'KEY',
-            secretKey: process.env.BPE_SECRET_KEY || 'SECRET'
-        }
-        _config = {
-            mode: process.env.BPE_MODE === 'live' ? "live" : 'test',
-            currency: process.env.BPE_CURRENCY_CODE || 'EUR',
-            returnURL: process.env.BPE_RETURN_URL || '',
-            returnURLCancel: process.env.BPE_RETURN_URL_CANCEL || '',
-            pushURL: process.env.BPE_PUSH_URL || ''
-        }
+    if(!_config && !_credentials){
+        defaultSetup()
     }
     return {
         _credentials,
         _config,
-        defaultSetup
     }
 }
 

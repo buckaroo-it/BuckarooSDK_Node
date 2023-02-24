@@ -1,7 +1,8 @@
+
 const https = require('https')
 class HttpClient {
     async call(options) {
-        return await new Promise(function (resolve) {
+        return await new Promise(function (resolve,reject) {
             const req = https.request(options, (res) => {
                 let body = ''
                 res.on('data', (chunk) => {
@@ -13,12 +14,12 @@ class HttpClient {
                     }
                 })
                 res.on('end', function () {
-                    res.data = body
-                    return resolve(res)
+                    resolve(body)
                 })
             })
             req.on('error', (error) => {
                 console.error(error, 'error')
+                reject(error)
             })
             if (options.data) {
                 console.log(JSON.stringify(options.data))

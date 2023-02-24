@@ -1,7 +1,7 @@
 import md5 from 'crypto-js/md5'
 import hmacSHA256 from 'crypto-js/hmac-sha256'
 import Base64 from 'crypto-js/enc-base64'
-import {buckarooClient} from "../BuckarooClient";
+import { buckarooClient } from "../BuckarooClient";
 class Hmac {
     private uri: string
     private base64Data: string
@@ -39,6 +39,7 @@ class Hmac {
             this.getNonce() +
             this.getBase64Data(data)
         this.hash = Base64.stringify(hmacSHA256(hashString, buckarooClient().getCredentials().secretKey ?? ''))
+
         return `${buckarooClient().getCredentials().websiteKey}:${this.hash}:${this.getNonce()}:${this.getTime()}`
     }
 
@@ -75,5 +76,6 @@ class Hmac {
         return 'hmac ' + this.setUri(url).generate(method, data)
     }
 }
+
 const hmac = new Hmac()
 export default hmac

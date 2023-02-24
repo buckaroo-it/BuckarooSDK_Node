@@ -2,7 +2,7 @@ import Endpoints from '../Constants/Endpoints'
 import hmac from './Hmac'
 import HttpMethods from '../Constants/HttpMethods'
 import httpClient from './HttpClient'
-import {buckarooClient} from "../BuckarooClient";
+import { buckarooClient } from "../BuckarooClient";
 
 class Client {
 
@@ -15,7 +15,7 @@ class Client {
         }
     }
 
-    getOptions(data, method, url) {
+    getOptions(method, url,data) {
         url = new URL(url)
         return {
             hostname: url.host,
@@ -45,19 +45,36 @@ class Client {
         )
     }
 
-    get(data, url) {
-        const options = this.getOptions(data, HttpMethods.METHOD_GET, url)
+    get(url,data = '') {
+        const options = this.getOptions(HttpMethods.METHOD_GET, url,data)
         return  httpClient.call(options)
     }
 
     post(data, url) {
-        const options = this.getOptions(data, HttpMethods.METHOD_POST, url)
+        const options = this.getOptions(HttpMethods.METHOD_POST, url,data)
         return  httpClient.call(options)
     }
 
-    specification(data?: {}, paymentName?: string, serviceVersion = 0): Promise<any> {
+    specification(paymentName?: string, serviceVersion = 0): Promise<any> {
         const endPoint = this.getSpecificationUrl(paymentName, serviceVersion)
-        return this.get(data,endPoint)
+
+        return this.get(endPoint)
+    }
+    getPaymentStatus(transactionKey){
+        const endPoint = this.getEndpoint(`json/Transaction/Status/${transactionKey}`)
+        return this.get(endPoint)
+    }
+    getPaymentCancelStatus(transactionKey){
+        const endPoint = this.getEndpoint(`json/Transaction/Cancel/${transactionKey}`)
+        return this.get(endPoint)
+    }
+    getPaymentRefundInfo(transactionKey){
+        const endPoint = this.getEndpoint(`json/Transaction/RefundInfo/${transactionKey}`)
+        return this.get(endPoint)
+    }
+    getPaymentInvoiceInfo(invoiceKey){
+        const endPoint = this.getEndpoint(`json/Transaction/InvoiceInfo/${invoiceKey}`)
+        return this.get(endPoint)
     }
 }
 

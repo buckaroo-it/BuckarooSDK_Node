@@ -2,10 +2,10 @@ import {Payload} from "./Payload";
 import {IServiceList} from "./ServiceList";
 
 export class Request{
-    protected data:  Partial<Payload> = {}
+    protected data: object = {}
 
-    public getData(): Partial<Payload>   {
-        return this.data
+    public getData(): Payload {
+        return <Payload>this.data
     }
 }
 
@@ -15,8 +15,8 @@ export class TransactionRequest extends Request {
         this.data = payload
     }
 
-    public setServiceParameters(serviceParameters:IServiceList) {
-        this.data.services = serviceParameters
+    public setServices(serviceList:IServiceList) {
+        this.getData().services = serviceList
     }
 
     public setData(key, data) {

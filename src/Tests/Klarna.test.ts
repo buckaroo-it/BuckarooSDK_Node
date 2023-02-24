@@ -1,15 +1,13 @@
 import { Klarna } from '../PaymentMethods/Klarna/Klarna'
 import { uniqid } from '../Utils/Functions'
 import { buckarooClient, initializeBuckarooClient} from "../BuckarooClient";
-initializeBuckarooClient().defaultSetup()
+initializeBuckarooClient()
 
-const klarna  = new Klarna()
+const klarnaTest  = new Klarna()
 
 describe('Testing Klarna methods', () => {
     test('Pay', async () => {
-
-        let PaymentResponse = await klarna.pay(
-            {
+        await klarnaTest.pay({
                 currency: buckarooClient().getConfig().currency || '',
                 order: uniqid(),
                 amountDebit: 50.3,
@@ -70,9 +68,9 @@ describe('Testing Klarna methods', () => {
                     }
                 ]
             }
-
-        )
-        console.log(PaymentResponse)
-        expect(PaymentResponse).toBeDefined()
+        ).then((res)=>{
+            console.log(res)
+            expect(res).toBeDefined()
+        })
     })
 })

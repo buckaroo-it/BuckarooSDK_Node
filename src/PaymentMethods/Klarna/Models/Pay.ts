@@ -1,6 +1,6 @@
 import { IArticle, Articles } from './Article'
 import { BillingRecipient,ShippingRecipient,IBillingRecipient, IShippingRecipient } from './Recipient'
-import { PayPayload} from '../../../Models/Payload'
+import { PayPayload } from '../../../Models/Payload'
 
 export interface IPay extends PayPayload {
     billing: IBillingRecipient

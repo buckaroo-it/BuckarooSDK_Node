@@ -14,10 +14,6 @@ export class ParameterList {
     get parameterList(): IParameter[] {
         return this._parameterList;
     }
-    constructor(services) {
-        this.addParameterList(services)
-    }
-
     setUpParameters (serviceModel, groupType: string = '', groupID: number | string = '') {
         for (const paramKey in serviceModel) {
             if (typeof serviceModel[paramKey] === 'object') {
@@ -25,7 +21,7 @@ export class ParameterList {
                     serviceModel[paramKey].groupType?.() || groupType,
                     serviceModel[paramKey].groupID?.(paramKey) || groupID)
 
-            } else if( typeof serviceModel[paramKey] !== 'function') {
+            } else if( serviceModel[paramKey] && typeof serviceModel[paramKey] !== 'function') {
                 this.setParamFormat(
                     paramKey,
                     serviceModel[paramKey],

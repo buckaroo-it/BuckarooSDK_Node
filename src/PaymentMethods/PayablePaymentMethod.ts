@@ -1,58 +1,65 @@
 import PaymentMethod from "./PaymentMethod";
-import { Payload } from "../Models/Payload";
 import Model from "../Models/Model";
 import client from "../Request/Client";
 import { ParameterList } from "../Models/Parameters";
-import {ServiceList} from "../Models/ServiceList";
-import {buckarooClient} from "../BuckarooClient";
+import { ServiceList } from "../Models/ServiceList";
+import { buckarooClient } from "../BuckarooClient";
 
 export abstract class PayablePaymentMethod extends PaymentMethod{
-    public pay(payload: Payload,services:{} = {}){
-        const payloadModel = new Model(payload)
-        //Set the payload
-        this.setPayload(payloadModel.filter(Object.keys(services)))
+    public pay(services, payload = this.request.getData()){
 
-        this.setRequiredFields(payloadModel)
-        //Set service parameters
-        this.setServiceParameters(services)
+        const payloadModel = new Model(payload)
+
+        //Set the Payload
+        this.setPayload(payloadModel.filter(Object.keys(services ?? {})))
+
+        //Set Services
+        this.setServiceList(services)
+
+        //Set required Fields
+        this.setRequiredFields()
 
         //Set setAdditionalParameters
-        this.setAdditionalParameters(payload.additionalParameters)
+        this.setAdditionalParameters(this.request.getData().additionalParameters)
 
         return client.post(this.request.getData(), client.getTransactionUrl())
-
     }
 
-    protected setPayload(payload){
+    setPayload(payload){
         this.request.setPayload(payload)
     }
 
-    protected setServiceParameters(serviceList: object ){
+    protected setServiceList(serviceList: object ){
         let services = new ServiceList({
             name: this.paymentName,
             action: this.action,
-            parameters: new ParameterList(serviceList).parameterList
+            version: this.serviceVersion,
+            parameters: new ParameterList().addParameterList(serviceList)
         })
-        this.request.setServiceParameters(services)
+        this.request.setServices({
+            ServiceList : [services]
+        })
     }
-
-    protected setAdditionalParameters(additionalParameters: AdditionalParameters) {
+    protected setAdditionalParameters(additionalParameters?: AdditionalParameters) {
         if(additionalParameters) {
-            this.request.setData('additionalParameters', {
-                additionalParameter: Object.keys(additionalParameters).map((key) => {
+            this.request.setData('additionalParameters',
+                // {
+                // additionalParameter:
+                    Object.keys(additionalParameters).map((key) => {
                     return {
                         name: key,
-                        value: additionalParameters?[key]: ''
+                        value: additionalParameters[key] ?? ''
                     };
                 })
-            })
+            // }
+            )
         }
     }
 
-    protected setRequiredFields(payload){
+    protected setRequiredFields(){
         for (const requiredField of this.requiredFields) {
-            this.request.setData(requiredField,
-                payload[requiredField] || buckarooClient().getConfig()[requiredField])
+         if(!this.request.getData()[requiredField])
+            this.request.setData(requiredField, buckarooClient().getConfig()[requiredField])
         }
     }
 }

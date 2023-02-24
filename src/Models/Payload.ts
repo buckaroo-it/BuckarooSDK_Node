@@ -1,8 +1,8 @@
 import {IServiceList} from "./ServiceList";
 
-export declare interface Payload{
+export declare interface Payload {
     clientIP?: ClientIP,
-    currency: string,
+    currency?: string,
     returnURL?: string,
     returnURLError?: string,
     returnURLCancel?: string,
@@ -20,7 +20,7 @@ export declare interface Payload{
     servicesSelectableByClient?: string,
     servicesExcludedForClient?: string,
     customParameters?: Array<any>,
-    additionalParameters?: any
+    additionalParameters?: AdditionalParameter
     services?:IServiceList
 }
 
@@ -29,15 +29,17 @@ export declare interface ClientIP{
     type: number
 }
 
-export declare interface AdditionalParameters{
-    additionalParameter?: Array<AdditionalParameter>
-}
-export declare interface AdditionalParameter {
-    value: number|string,
-    name: string
+export declare type AdditionalParameter = {
+    [name:string]: string | number
 }
 
 export declare interface PayPayload extends Payload{
-    order: string,
+    order: string
     amountDebit: number
+}
+
+export declare interface RefundPayload extends Payload{
+    order: string
+    amountCredit: number
+    originalTransactionKey:string
 }
