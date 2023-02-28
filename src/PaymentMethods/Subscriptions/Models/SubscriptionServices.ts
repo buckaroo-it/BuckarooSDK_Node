@@ -50,7 +50,6 @@ export const subscriptionServices = (data:ISubscription) => {
             companyName:'Name'
         })
     }
-    serviceData.getParameter('company')
     if(serviceData.list.ratePlans){
         const types = Object.keys(serviceData.list.ratePlans.data)
         for (const type of types) {

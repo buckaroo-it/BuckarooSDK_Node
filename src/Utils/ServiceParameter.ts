@@ -29,17 +29,17 @@ export class ServiceParameter {
     }
 }
 export class ServiceParameterList {
-    list:{[key:string]:ServiceParameter} = {}
-
+    list:{[key:string]:ServiceParameter} = {};
+    [index:string] : any
     constructor(data:object = {}) {
         for (const key of Object.keys(data)) {
             if(typeof data[key] !== 'undefined')
                 this.list[key] = new ServiceParameter(data[key])
         }
     }
-    getParameter(param){
-        return this.list[param]
-    }
+    // getParameter(param:string){
+    //     return this.list[param]
+    // }
     setGroupTypes(groupTypes:any){
         for (const groupKey in groupTypes) {
             if (this.list[groupKey])
@@ -51,6 +51,9 @@ export class ServiceParameterList {
         for (const paramKey in this.list[param].data.list) {
             this.list[param].data.list[paramKey].groupId = i++
         }
+    }
+    isEmpty(){
+        return Object.keys(this.list).length === 0
     }
     formatServiceParameters(data:IParameter[] = [] , groupId:Number|string = '', groupType = ''):IParameter[]{
         for (const paramsKey in this.list) {
@@ -72,6 +75,7 @@ export class ServiceParameterList {
         }
         return data
     }
+
     setKeys(keys){
         for (const param in this.list) {
             if(keys[param]){
@@ -81,4 +85,21 @@ export class ServiceParameterList {
             }
         }
     }
+    // flattenList(obj = {}){
+    //     for (const listKey in this.list) {
+    //         if(this.list[listKey].data instanceof ServiceParameterList){
+    //             obj[listKey] = {}
+    //             this.list[listKey].data.flattenList(obj[listKey])
+    //         }else if(typeof this.list[listKey].data !=='object') {
+    //             obj[listKey] = this.list[listKey].data
+    //         }
+    //         if(this.list[listKey].groupId){
+    //             obj[listKey]['groupId'] = this.list[listKey].groupId
+    //         }
+    //         if(this.list[listKey].groupType){
+    //             obj[listKey]['groupType'] = this.list[listKey].groupType
+    //         }
+    //     }
+    //     return obj
+    // }
 }

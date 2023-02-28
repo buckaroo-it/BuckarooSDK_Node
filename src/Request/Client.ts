@@ -1,8 +1,8 @@
-import Endpoints from '../Constants/Endpoints'
+import Endpoints, {RequestType} from '../Constants/Endpoints'
 import hmac from './Hmac'
 import HttpMethods from '../Constants/HttpMethods'
 import httpClient from './HttpClient'
-import { buckarooClient } from '../BuckarooClient'
+import {buckarooClient} from '../BuckarooClient'
 import PaymentMethod from '../PaymentMethods/PaymentMethod'
 
 class Client {
@@ -48,10 +48,14 @@ class Client {
         return this.getEndpoint('json/DataRequest') + path
     }
 
-    getSpecificationUrl(paymentName, serviceVersion) {
-        return this.getEndpoint(
-            `json/Transaction/Specification/${paymentName}?serviceVersion=${serviceVersion}`
-        )
+    getSpecificationUrl(paymentName, serviceVersion,type:RequestType = RequestType.Transaction) {
+        return type === RequestType.Transaction ?
+            this.getTransactionUrl(
+                `/Specification/${paymentName}?serviceVersion=${serviceVersion}`
+            ) :
+            this.getDataRequestUrl(
+            `/Specification/${paymentName}?serviceVersion=${serviceVersion}`
+            )
     }
 
     get(url, data = '') {
@@ -64,34 +68,40 @@ class Client {
         return httpClient.call(options)
     }
 
-    specification(paymentName?: string, serviceVersion = 0) {
-        const endPoint = this.getSpecificationUrl(paymentName, serviceVersion)
+    transactionRequest(data) {
+        const endPoint = this.getTransactionUrl()
+        return this.post(data, endPoint)
+    }
+    dataRequest(data) {
+        const endPoint = this.getDataRequestUrl()
+        return this.post(data, endPoint)
+    }
+    specification(paymentName: string, serviceVersion = 0,type?:RequestType) {
+        const endPoint = this.getSpecificationUrl(paymentName, serviceVersion,type)
         return this.get(endPoint)
     }
     specifications(
-        paymentMethods: PaymentMethod[] | PaymentMethod | { Name: string; Version: Number }[],
-        type: 0 | 1 = 0
+        paymentMethods: PaymentMethod[] |  { name: string; version: Number }[],
+        type:RequestType = RequestType.Transaction
     ) {
-        if (!Array.isArray(paymentMethods)) {
-            paymentMethods = [paymentMethods]
-        }
         let data: { Services: { Name: string; Version: string | Number }[] } = { Services: [] }
+
         for (const paymentMethod of paymentMethods) {
             if (paymentMethod instanceof PaymentMethod) {
                 data.Services.push({
                     Name: paymentMethod.paymentName,
                     Version: paymentMethod.serviceVersion
                 })
-            } else if (paymentMethod.Name && paymentMethod.Version) {
+            } else if (paymentMethod.name && paymentMethod.version) {
                 data.Services.push({
-                    Name: paymentMethod.Name,
-                    Version: paymentMethod.Version
+                    Name: paymentMethod.name,
+                    Version: paymentMethod.version
                 })
             }
         }
 
         const endPoint =
-            type === 0
+            type === RequestType.Transaction
                 ? this.getTransactionUrl('/Specifications')
                 : this.getDataRequestUrl('/Specifications')
 
@@ -112,10 +122,6 @@ class Client {
     getPaymentInvoiceInfo(invoiceKey) {
         const endPoint = this.getTransactionUrl(`/InvoiceInfo/${invoiceKey}`)
         return this.get(endPoint)
-    }
-    dataRequest(data) {
-        const endPoint = this.getDataRequestUrl()
-        return this.post(data, endPoint)
     }
 }
 export default Client

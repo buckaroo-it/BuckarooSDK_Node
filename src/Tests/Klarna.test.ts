@@ -6,6 +6,41 @@ initializeBuckarooClient()
 const klarna = Klarna()
 
 describe('Testing Klarna methods', () => {
+    test('PayUp', async () => {
+
+         klarna
+            .setRequest({
+                currency: buckarooClient().getConfig().currency || '',
+                order: uniqid(),
+                amountDebit: 50.3,
+                invoice: uniqid(),
+                services:{
+                    ServiceList:[
+                        {
+                            "Name": "sample string 1",
+                            "Action": "sample string 2",
+                            "Version": 3,
+                            "Parameters": [
+                                {
+                                    "Name": "sample string 1",
+                                    "GroupType": "sample string 2",
+                                    "GroupID": "sample string 3",
+                                    "Value": "sample string 4"
+                                },
+                                {
+                                    "Name": "sample string 1",
+                                    "GroupType": "sample string 2",
+                                    "GroupID": "sample string 3",
+                                    "Value": "sample string 4"
+                                }
+                            ]
+                        },
+                    ]
+                }
+            })
+        await klarna.pay();
+
+    });
     test('Pay', async () => {
         await klarna
             .pay({

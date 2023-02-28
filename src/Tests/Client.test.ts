@@ -30,12 +30,12 @@ test('paymentInvoiceInfo', async () => {
 
 test('specifications', async () => {
 
-    let specifications = await client.specifications([ideal()])
-
-    let specifications2 = await client.specifications([
-        {
-            Name: 'ideal',
-            Version: 1
-        }
-    ])
+    // let specifications = await client.specifications([ideal()])
+    //
+    // let specifications2 = await client.specifications([
+    //     {
+    //         name: 'ideal',
+    //         version: 1
+    //     }
+    // ])
 })

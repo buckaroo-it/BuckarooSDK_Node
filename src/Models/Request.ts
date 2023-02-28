@@ -10,8 +10,9 @@ export class Request {
     public getData() {
         return this.data
     }
-    requestParams = () => {
+    requestParams:() => string[] = () => {
         return [
+            'order',
             'amountDebit',
             'amountCredit',
             'additionalParameters',
@@ -30,6 +31,7 @@ export class Request {
             'returnURLCancel',
             'returnURLError',
             'returnURLReject',
+            'services',
             'servicesExcludedForClient',
             'servicesSelectableByClient',
             'startRecurrent'

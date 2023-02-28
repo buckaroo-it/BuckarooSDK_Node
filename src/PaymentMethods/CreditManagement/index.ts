@@ -64,7 +64,7 @@ class CreditManagement extends PaymentMethod {
 
         this.services = paymentPlan
 
-        this.setRequest(payload)
+        this.setRequest(<IPaymentPlan>payload)
 
         return this.dataRequest()
     }
@@ -103,7 +103,7 @@ class CreditManagement extends PaymentMethod {
             return serviceData
         }
 
-        this.setRequest(payload)
+        this.setRequest(<IInvoice>payload)
 
         return this.dataRequest()
     }
@@ -133,11 +133,6 @@ class CreditManagement extends PaymentMethod {
 
         return this.dataRequest()
     }
-    // public combine(method:Combinable){
-    //     if (method.isPayable()){
-    //         method.
-    //     }
-    // }
 }
 let _creditManagement:CreditManagement
 const creditManagement = () => {

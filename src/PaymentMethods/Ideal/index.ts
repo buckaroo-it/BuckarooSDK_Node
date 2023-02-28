@@ -1,9 +1,8 @@
-import { IPay, Services } from './Models/Pay'
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { RefundPayload } from '../../Models/ITransaction'
-import { IConfig } from '../../Utils/Types'
-import { TransactionResponse } from '../../Models/TransactionResponse'
-import { buckarooClient } from "../../BuckarooClient";
+import {IPay, Services} from './Models/Pay'
+import {PayablePaymentMethod} from '../PayablePaymentMethod'
+import {RefundPayload} from '../../Models/ITransaction'
+import {IConfig} from '../../Utils/Types'
+
 class Ideal extends PayablePaymentMethod {
     protected _paymentName = 'ideal'
     protected _serviceVersion = 2
@@ -20,13 +19,13 @@ class Ideal extends PayablePaymentMethod {
     pay(payload?: IPay) {
         return super.pay(payload)
     }
-    refund(payload: RefundPayload): Promise<TransactionResponse> {
-        this.action = 'Refund'
-        return super.pay(payload)
+    refund(payload: RefundPayload) {
+        return super.refund(payload)
     }
     issuers() {
-        return buckarooClient().client().specification(this.paymentName, 2).then((response) => {
+        return this.specification().then((response) => {
             const issuerList: { id: any; name: any }[] = []
+
             if (response?.Actions?.['0']?.RequestParameters?.[0]?.ListItemDescriptions) {
                 const issuersData = response.Actions['0'].RequestParameters[0].ListItemDescriptions
 

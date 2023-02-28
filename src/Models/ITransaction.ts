@@ -9,6 +9,9 @@ export declare interface ITransaction {
     pushURL?: string
     pushURLFailure?: string
     invoice?: string
+    order?:string
+    amountDebit?:Number
+    amountCredit?:Number
     description?: string
     originalTransactionKey?: string
     originalTransactionReference?: string
@@ -20,7 +23,7 @@ export declare interface ITransaction {
     servicesExcludedForClient?: string
     customParameters?: Array<any>
     additionalParameters?: AdditionalParameter
-    // services?: IServices
+    services?: any
 }
 
 export declare interface ClientIP {
