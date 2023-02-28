@@ -1,9 +1,12 @@
 import {IParameter} from "./Parameters";
 
 export declare interface IServiceList {
-    ServiceList:[ServiceList]
+    name: string
+    action: string
+    version:number
+    parameters?: Array<IParameter>
 }
-export class ServiceList {
+export class ServiceList implements IServiceList{
     name: string
     action: string
     version:number

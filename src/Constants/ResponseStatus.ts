@@ -1,4 +1,4 @@
-export enum ResponseStatus {
+enum ResponseStatus {
     BUCKAROO_STATUSCODE_SUCCESS = '190',
     BUCKAROO_STATUSCODE_FAILED = '490',
     BUCKAROO_STATUSCODE_VALIDATION_FAILURE = '491',
@@ -14,3 +14,4 @@ export enum ResponseStatus {
     BUCKAROO_AUTHORIZE_TYPE_ACCEPT = 'I013',
     BUCKAROO_AUTHORIZE_TYPE_GROUP_TRANSACTION = 'I150'
 }
+export default ResponseStatus

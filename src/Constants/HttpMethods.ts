@@ -1,4 +1,5 @@
-export default class HttpMethods {
-    public static readonly METHOD_GET: string = 'GET'
-    public static readonly METHOD_POST: string = 'POST'
+enum  HttpMethods {
+    METHOD_GET = 'GET',
+    METHOD_POST = 'POST'
 }
+export default HttpMethods

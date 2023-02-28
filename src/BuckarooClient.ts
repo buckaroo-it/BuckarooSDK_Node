@@ -8,29 +8,30 @@ let _config: IConfig
 
 
 let defaultSetup = () => {
-    _credentials = {
-        websiteKey: process.env.BPE_WEBSITE_KEY || 'KEY',
-        secretKey: process.env.BPE_SECRET_KEY || 'SECRET'
+    let credentials = (credentials) =>  {
+        _credentials = {
+            websiteKey: credentials?.websiteKey || _credentials?.websiteKey || process.env.BPE_WEBSITE_KEY || 'KEY',
+            secretKey: credentials?.secretKey || _credentials?.secretKey || process.env.BPE_SECRET_KEY || 'SECRET'
+        }
     }
-    _config = {
-        mode: process.env.BPE_MODE === 'live' ? "live" : 'test',
-        currency: process.env.BPE_CURRENCY_CODE || 'EUR',
-        returnURL: process.env.BPE_RETURN_URL || '',
-        returnURLCancel: process.env.BPE_RETURN_URL_CANCEL || '',
-        pushURL: process.env.BPE_PUSH_URL || ''
+    let config = (config) => {
+        _config = {
+            mode: config?.mode || _config?.mode || process.env.BPE_MODE === 'live' ? "live" : 'test',
+            currency: config?.currency || _config?.currency || process.env.BPE_CURRENCY_CODE || 'EUR',
+            returnURL: config?.returnURL || _config?.returnURL || process.env.BPE_RETURN_URL || '',
+            returnURLCancel: config?.returnURLCancel || _config?.returnURLCancel || process.env.BPE_RETURN_URL_CANCEL || '',
+            pushURL: config?.pushURL || _config?.pushURL || process.env.BPE_PUSH_URL || ''
+        }
+    }
+    return {
+        credentials,
+        config
     }
 }
 
 export const initializeBuckarooClient = (credentials?: ICredentials, config?: IConfig) => {
-    if(credentials) {
-        _credentials = credentials
-    }
-    if(config) {
-        _config = config
-    }
-    if(!_config && !_credentials){
-        defaultSetup()
-    }
+    defaultSetup().credentials(credentials)
+    defaultSetup().config(config)
     return {
         _credentials,
         _config,
@@ -44,8 +45,9 @@ export const buckarooClient = () => {
     const getConfig = (): IConfig => {
         return _config
     }
+
     return {
         getCredentials,
-        getConfig
+        getConfig,
     }
 }

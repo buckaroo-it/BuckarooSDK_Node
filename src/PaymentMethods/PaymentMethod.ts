@@ -1,6 +1,10 @@
 import {TransactionRequest} from "../Models/Request";
 import {IConfig} from "../Utils/Types";
-
+import {ServiceList} from "../Models/ServiceList";
+import {ParameterList} from "../Models/Parameters";
+import {buckarooClient} from "../BuckarooClient";
+import client from "../Request/Client";
+import {PayablePaymentMethod} from "./PayablePaymentMethod";
 
 export default abstract class PaymentMethod {
     // protected serviceParameters: Array<string> = []
@@ -23,4 +27,61 @@ export default abstract class PaymentMethod {
     set action(value: string) {
         this._action = value;
     }
+
+
+    protected setServiceList(serviceList: object ){
+        let services = new ServiceList({
+            name: this.paymentName,
+            action: this.action,
+            version: this.serviceVersion,
+            parameters: new ParameterList().addParameterList(serviceList)
+        })
+        this.request.addServices([services])
+    }
+    protected setAdditionalParameters(additionalParameters?: AdditionalParameters) {
+        if(additionalParameters) {
+            this.request.setData('additionalParameters',
+                // {
+                // additionalParameter:
+                Object.keys(additionalParameters).map((key) => {
+                    return {
+                        name: key,
+                        value: additionalParameters[key] ?? ''
+                    };
+                })
+                // }
+            )
+        }
+    }
+
+    protected setRequiredFields(){
+        console.log(this.requiredFields)
+        for (const requiredField of this.requiredFields) {
+            if(!this.request.getData()[requiredField])
+                this.request.setData(requiredField, buckarooClient().getConfig()[requiredField])
+        }
+    }
+    combine(method){
+        const combineServices = method.request.getData().services
+        if(typeof combineServices !== 'undefined') {
+            this.request.addServices(combineServices.ServiceList)
+        }
+        return this
+    }
+    protected transactionRequest(){
+        return client.post(this.request.getData(), client.getTransactionUrl())
+    }
+
+    protected dataRequest(){
+        return client.dataRequest(this.request.getData())
+    }
+    public specifications(){
+        return client.specification(this.paymentName,this.serviceVersion)
+    }
+}
+
+
+
+export declare interface AdditionalParameters{
+    additionalParameters?: Array<any>
 }

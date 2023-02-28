@@ -1,5 +1,7 @@
 import { initializeBuckarooClient} from "../BuckarooClient";
 import client from "../Request/Client";
+import {ideal} from "../PaymentMethods/Ideal/Ideal";
+import {klarna} from "../PaymentMethods/Klarna/Klarna";
 initializeBuckarooClient()
 test('PaymentStatus', async () => {
     await client.getPaymentStatus('0B1E824B780248A88546E6A8D092E17A')
@@ -26,5 +28,14 @@ test('paymentInvoiceInfo', async () => {
         .then((data) => {
             expect(data).toBeDefined()
         })
+})
+
+test('specifications', async () => {
+    let specifications  = await client.specifications([ideal,klarna])
+
+    let specifications2  = await client.specifications([{
+        Name:'ideal',
+        Version:1
+    }])
 })
 

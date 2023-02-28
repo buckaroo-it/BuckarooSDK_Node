@@ -2,7 +2,7 @@ import Address, { IAddress } from './Address'
 import Person, { IPerson } from './Person'
 import Phone, { IPhone } from './Phone'
 
-export default class Recipient {
+class Recipient {
     recipient: Person
     address: Address
     email: string

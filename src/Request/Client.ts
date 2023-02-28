@@ -3,6 +3,8 @@ import hmac from './Hmac'
 import HttpMethods from '../Constants/HttpMethods'
 import httpClient from './HttpClient'
 import { buckarooClient } from "../BuckarooClient";
+import PaymentMethod from "../PaymentMethods/PaymentMethod";
+import {isArray} from "util";
 
 class Client {
 
@@ -31,12 +33,12 @@ class Client {
         return baseUrl + path
     }
 
-    getTransactionUrl(): string {
-        return this.getEndpoint('json/Transaction')
+    getTransactionUrl(path: string = ''): string {
+        return this.getEndpoint('json/Transaction') + path
     }
 
-    getDataRequestUrl(): string {
-        return this.getEndpoint('json/DataRequest')
+    getDataRequestUrl(path: string = ''): string {
+        return this.getEndpoint('json/DataRequest') + path
     }
 
     getSpecificationUrl(paymentName, serviceVersion) {
@@ -55,10 +57,35 @@ class Client {
         return  httpClient.call(options)
     }
 
-    specification(paymentName?: string, serviceVersion = 0): Promise<any> {
+    specification(paymentName?: string, serviceVersion = 0){
         const endPoint = this.getSpecificationUrl(paymentName, serviceVersion)
 
         return this.get(endPoint)
+    }
+    specifications(paymentMethods:PaymentMethod[] | PaymentMethod | {Name:string,Version:Number}[],type:0 | 1 = 0){
+        if (!Array.isArray(paymentMethods)){
+            paymentMethods = [paymentMethods]
+        }
+        let data:{Services:{ Name:string, Version:string|Number}[] } = { Services:[] }
+        for (const paymentMethod of paymentMethods) {
+            if(paymentMethod instanceof PaymentMethod){
+                data.Services.push({
+                    Name:paymentMethod.paymentName,
+                    Version:paymentMethod.serviceVersion
+                })
+            }else if(paymentMethod.Name && paymentMethod.Version){
+                data.Services.push({
+                    Name:paymentMethod.Name,
+                    Version:paymentMethod.Version
+                })
+            }
+        }
+
+        const endPoint = type == 0?
+            this.getTransactionUrl('/Specifications') :
+            this.getDataRequestUrl('/Specifications')
+
+        return this.post(data,endPoint)
     }
     getPaymentStatus(transactionKey){
         const endPoint = this.getEndpoint(`json/Transaction/Status/${transactionKey}`)
@@ -76,7 +103,12 @@ class Client {
         const endPoint = this.getEndpoint(`json/Transaction/InvoiceInfo/${invoiceKey}`)
         return this.get(endPoint)
     }
+    dataRequest(data){
+        const endPoint = this.getDataRequestUrl()
+        return this.post(data,endPoint)
+    }
 }
+
 
 const client = new Client()
 export default client

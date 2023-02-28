@@ -1,18 +1,18 @@
-import { Ideal } from '../PaymentMethods/Ideal/Ideal'
+import { ideal } from '../PaymentMethods/Ideal/Ideal'
 import { uniqid } from '../Utils/Functions'
 import { initializeBuckarooClient } from "../BuckarooClient";
+import { TransactionResponse } from "../Models/TransactionResponse";
 initializeBuckarooClient()
 
-const idealTest = new Ideal()
 
 describe('testing Ideal methods', () => {
     test('Issuers', async () => {
-        await idealTest.issuers().then((data) => {
-            expect(data).toBeDefined()
+        await ideal.issuers().then((data) => {
+
         })
     })
     test('Pay Simple Payload', async () => {
-        idealTest.setPayload({
+        ideal.setPayload({
             currency: "",
             order: uniqid(),
             invoice: uniqid(),
@@ -28,8 +28,9 @@ describe('testing Ideal methods', () => {
                 service_action: 'something'
             }
         })
-        await idealTest.pay().then((data) => {
-            expect(data).toBeDefined()
+        await ideal.pay().then((data) => {
+            data.Status.Code.Code;
+            expect(typeof data).toBe('TransactionResponse')
             transactionKey = data.Key
         })
     })
@@ -38,12 +39,16 @@ describe('testing Ideal methods', () => {
             expect(data).toBeDefined()
         })
     })
+    test('Specifications',async ()=>{
+        const idealS = await ideal.specifications()
+        console.log(idealS)
+    })
 })
 
 let transactionKey = '97DC0A03BBDF4DAAAC694D7FEC8785E1'
 
 function create_ideal_Refund() {
-    return idealTest.refund({
+    return ideal.refund({
         order: uniqid(),
         invoice: uniqid(),
         originalTransactionKey: transactionKey,

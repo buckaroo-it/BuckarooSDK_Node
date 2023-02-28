@@ -21,7 +21,7 @@ export declare interface Payload {
     servicesExcludedForClient?: string,
     customParameters?: Array<any>,
     additionalParameters?: AdditionalParameter
-    services?:IServiceList
+    services?:{ServiceList:IServiceList[]}
 }
 
 export declare interface ClientIP{

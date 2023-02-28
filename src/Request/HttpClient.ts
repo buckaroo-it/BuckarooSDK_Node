@@ -1,12 +1,11 @@
-
 const https = require('https')
 class HttpClient {
-    async call(options) {
-        return await new Promise(function (resolve,reject) {
+    call(options):Promise<any> {
+        console.log(options)
+        return new Promise<any>(function (resolve,reject) {
             const req = https.request(options, (res) => {
-                let body = ''
-                res.on('data', (chunk) => {
-                    process.stdout.write(chunk);
+                let body:string
+                res.on('data', (chunk: Uint8Array) => {
                     try {
                         body = JSON.parse(Buffer.concat([chunk]).toString())
                     } catch (e) {
@@ -14,7 +13,7 @@ class HttpClient {
                     }
                 })
                 res.on('end', function () {
-                    resolve(body)
+                    return resolve(body);
                 })
             })
             req.on('error', (error) => {

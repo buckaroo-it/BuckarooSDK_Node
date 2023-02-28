@@ -1,4 +1,5 @@
-export default class RecipientCategory {
-    static readonly PERSON = 'Person'
-    static readonly COMPANY = 'Company'
+enum  RecipientCategory {
+    PERSON = 'Person',
+    COMPANY = 'Company'
 }
+export default RecipientCategory

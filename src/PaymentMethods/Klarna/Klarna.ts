@@ -1,15 +1,17 @@
 import {PayablePaymentMethod} from "../PayablePaymentMethod";
-import Pay, {IPay} from "./Models/Pay";
+import {Services , IPay} from "./Models/Pay";
 import {IConfig} from "../../Utils/Types";
 import {RefundPayload} from "../../Models/Payload";
-class Klarna extends PayablePaymentMethod {
+import {TransactionResponse} from "../../Models/TransactionResponse";
+
+export class Klarna extends PayablePaymentMethod {
     protected _paymentName = 'klarna'
-    protected requiredFields: Array<keyof IConfig> = ['currency']
-    async pay(payload:IPay):Promise<any>{
+    protected _serviceVersion = 1
+    protected requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
+    async pay(payload:IPay):Promise<TransactionResponse>{
         this.action = 'Pay'
 
-        const services = new Pay(payload || this.request.getData())
-
+        const services = Services(payload || this.request.getData())
         return super.pay(services,payload)
     }
     refund(payload:RefundPayload){
@@ -22,5 +24,5 @@ class Klarna extends PayablePaymentMethod {
         return super.pay({},payload)
     }
 }
-
-export { Klarna }
+const klarna =  new Klarna()
+export { klarna }

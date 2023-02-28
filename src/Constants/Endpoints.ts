@@ -1,4 +1,5 @@
-export default class Endpoints {
-    public static readonly LIVE: string = 'https://checkout.buckaroo.nl/'
-    public static readonly TEST: string = 'https://testcheckout.buckaroo.nl/'
+enum Endpoints {
+    LIVE = 'https://checkout.buckaroo.nl/',
+    TEST = 'https://testcheckout.buckaroo.nl/'
 }
+export default Endpoints

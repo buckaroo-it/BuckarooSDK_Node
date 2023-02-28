@@ -7,14 +7,11 @@ export interface IPay extends PayPayload {
     shipping?: IShippingRecipient
     articles: IArticle[]
 }
-export default class Pay {
-    billing: BillingRecipient
-    shipping?: ShippingRecipient
-    articles: Articles
 
-    constructor(data:IPay) {
-        this.billing = new BillingRecipient(data.billing)
-        this.shipping = new ShippingRecipient(data.shipping || data.billing)
-        this.articles = new Articles(data.articles)
+export const Services = (data) => {
+    return {
+        billing : new BillingRecipient(data.billing),
+        shipping : new ShippingRecipient(data.shipping || data.billing),
+        articles : new Articles(data.articles)
     }
 }
