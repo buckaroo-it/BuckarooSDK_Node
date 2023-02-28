@@ -1,7 +1,7 @@
 import Subscription, {ISubscription} from "./Models/Subscription";
 import {IConfig} from "../../Utils/Types";
 import PaymentMethod from "../PaymentMethod";
-export class Subscriptions extends PaymentMethod {
+export class Subscriptions extends PaymentMethod{
     protected _paymentName = 'Subscriptions'
     protected _serviceVersion = 1
     protected requiredFields: Array<keyof IConfig> = ['currency']
@@ -27,7 +27,7 @@ export class Subscriptions extends PaymentMethod {
 
         return this.dataRequest()
     }
-    createCombined(payload){
+    createCombined(payload:ISubscription){
         this.action = 'CreateCombinedSubscription'
 
         const services = new Subscription(payload)
@@ -36,4 +36,11 @@ export class Subscriptions extends PaymentMethod {
 
         return this
     }
+}
+
+const subscription = () => {
+  return new Subscriptions()
+}
+export {
+    subscription
 }

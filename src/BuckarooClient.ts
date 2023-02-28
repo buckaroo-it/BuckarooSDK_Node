@@ -1,6 +1,7 @@
 import { IConfig, ICredentials } from './Utils/Types'
 import dotenv from 'dotenv'
-dotenv.config()
+import path from "path";
+dotenv.config({ path: path.resolve(__dirname, '../.env') })
 
 let _credentials: ICredentials
 

@@ -4,7 +4,6 @@ import HttpMethods from '../Constants/HttpMethods'
 import httpClient from './HttpClient'
 import { buckarooClient } from "../BuckarooClient";
 import PaymentMethod from "../PaymentMethods/PaymentMethod";
-import {isArray} from "util";
 
 class Client {
 
@@ -81,26 +80,26 @@ class Client {
             }
         }
 
-        const endPoint = type == 0?
+        const endPoint = type === 0 ?
             this.getTransactionUrl('/Specifications') :
             this.getDataRequestUrl('/Specifications')
 
         return this.post(data,endPoint)
     }
     getPaymentStatus(transactionKey){
-        const endPoint = this.getEndpoint(`json/Transaction/Status/${transactionKey}`)
+        const endPoint = this.getTransactionUrl(`/Status/${transactionKey}`)
         return this.get(endPoint)
     }
     getPaymentCancelStatus(transactionKey){
-        const endPoint = this.getEndpoint(`json/Transaction/Cancel/${transactionKey}`)
+        const endPoint = this.getTransactionUrl(`/Cancel/${transactionKey}`)
         return this.get(endPoint)
     }
     getPaymentRefundInfo(transactionKey){
-        const endPoint = this.getEndpoint(`json/Transaction/RefundInfo/${transactionKey}`)
+        const endPoint = this.getTransactionUrl(`/RefundInfo/${transactionKey}`)
         return this.get(endPoint)
     }
     getPaymentInvoiceInfo(invoiceKey){
-        const endPoint = this.getEndpoint(`json/Transaction/InvoiceInfo/${invoiceKey}`)
+        const endPoint = this.getTransactionUrl(`/InvoiceInfo/${invoiceKey}`)
         return this.get(endPoint)
     }
     dataRequest(data){

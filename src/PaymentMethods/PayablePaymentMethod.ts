@@ -1,15 +1,14 @@
 import PaymentMethod from "./PaymentMethod";
-import Model from "../Models/Model";
-import client from "../Request/Client";
+import {uniqid} from "../Utils/Functions";
+import {PayPayload} from "../Models/Payload";
 
 
 export abstract class PayablePaymentMethod extends PaymentMethod {
-    protected pay(services, payload = this.request.getData()){
+    protected pay(services, payload = this.request.getPayload()){
 
-        const payloadModel = new Model(payload)
 
         //Set the Payload
-        this.setPayload(payloadModel.filter(Object.keys(services ?? {})))
+        this.setPayload(PaymentMethod.filterServices(payload,services))
 
         //Set required Fields
         this.setRequiredFields()
@@ -24,7 +23,8 @@ export abstract class PayablePaymentMethod extends PaymentMethod {
         return this.transactionRequest()
     }
 
-    setPayload(payload){
+    setPayload(payload: PayPayload){
+        payload.order = payload.order || uniqid()
         this.request.setPayload(payload)
     }
 }

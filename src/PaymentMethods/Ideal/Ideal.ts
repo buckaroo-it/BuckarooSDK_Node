@@ -12,7 +12,7 @@ export class Ideal extends PayablePaymentMethod {
     setPayload(payload:IPay){
         super.setPayload(payload)
     }
-    async pay(payload?:IPay):Promise<TransactionResponse>{
+    pay(payload?:IPay):Promise<TransactionResponse>{
         this.action = 'Pay'
 
         const services = Services(payload || this.request.getData())

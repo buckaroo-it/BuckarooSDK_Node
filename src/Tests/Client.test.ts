@@ -4,9 +4,10 @@ import {ideal} from "../PaymentMethods/Ideal/Ideal";
 import {klarna} from "../PaymentMethods/Klarna/Klarna";
 initializeBuckarooClient()
 test('PaymentStatus', async () => {
-    await client.getPaymentStatus('0B1E824B780248A88546E6A8D092E17A')
+    await client.getPaymentStatus('0AA966B997CB4676B55A07E9C3BA4DB4')
             .then((data) => {
                 expect(data).toBeDefined()
+                console.log(data)
             })
 })
 test('paymentCancelStatus', async () => {

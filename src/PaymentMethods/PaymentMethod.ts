@@ -4,7 +4,6 @@ import {ServiceList} from "../Models/ServiceList";
 import {ParameterList} from "../Models/Parameters";
 import {buckarooClient} from "../BuckarooClient";
 import client from "../Request/Client";
-import {PayablePaymentMethod} from "./PayablePaymentMethod";
 
 export default abstract class PaymentMethod {
     // protected serviceParameters: Array<string> = []
@@ -41,21 +40,27 @@ export default abstract class PaymentMethod {
     protected setAdditionalParameters(additionalParameters?: AdditionalParameters) {
         if(additionalParameters) {
             this.request.setData('additionalParameters',
-                // {
-                // additionalParameter:
+                {
+                additionalParameter:
                 Object.keys(additionalParameters).map((key) => {
                     return {
                         name: key,
                         value: additionalParameters[key] ?? ''
                     };
                 })
-                // }
+                }
             )
         }
     }
+    protected static filterServices(data,services):any{
+        const serviceKeys = Object.keys(services)
+        for (const serviceKey of serviceKeys) {
+            delete data[serviceKey]
+        }
+        return data
+    }
 
     protected setRequiredFields(){
-        console.log(this.requiredFields)
         for (const requiredField of this.requiredFields) {
             if(!this.request.getData()[requiredField])
                 this.request.setData(requiredField, buckarooClient().getConfig()[requiredField])

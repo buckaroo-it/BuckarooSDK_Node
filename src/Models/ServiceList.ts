@@ -1,5 +1,8 @@
 import {IParameter} from "./Parameters";
 
+export declare interface IServices {
+    ServiceList:IServiceList[]
+}
 export declare interface IServiceList {
     name: string
     action: string
@@ -18,8 +21,6 @@ export class ServiceList implements IServiceList{
         if (data.parameters){
             this.parameters = data.parameters
         }
-
     }
-
 }
 

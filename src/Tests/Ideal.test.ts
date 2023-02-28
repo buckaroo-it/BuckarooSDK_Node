@@ -1,21 +1,17 @@
 import { ideal } from '../PaymentMethods/Ideal/Ideal'
 import { uniqid } from '../Utils/Functions'
 import { initializeBuckarooClient } from "../BuckarooClient";
-import { TransactionResponse } from "../Models/TransactionResponse";
 initializeBuckarooClient()
 
 
 describe('testing Ideal methods', () => {
     test('Issuers', async () => {
-        await ideal.issuers().then((data) => {
-
+        await ideal.issuers().then((response) => {
+            console.log(response)
         })
     })
     test('Pay Simple Payload', async () => {
         ideal.setPayload({
-            currency: "",
-            order: uniqid(),
-            invoice: uniqid(),
             amountDebit: 10.1,
             issuer: 'ABNANL2A',
             pushURL: 'https://buckaroo.nextto.dev/push',
@@ -29,8 +25,7 @@ describe('testing Ideal methods', () => {
             }
         })
         await ideal.pay().then((data) => {
-            data.Status.Code.Code;
-            expect(typeof data).toBe('TransactionResponse')
+            expect(data).toBeDefined()
             transactionKey = data.Key
         })
     })
@@ -40,8 +35,8 @@ describe('testing Ideal methods', () => {
         })
     })
     test('Specifications',async ()=>{
-        const idealS = await ideal.specifications()
-        console.log(idealS)
+        const idealSpecifications = await ideal.specifications()
+        console.log(idealSpecifications)
     })
 })
 

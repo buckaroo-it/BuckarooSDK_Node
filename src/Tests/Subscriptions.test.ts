@@ -24,28 +24,27 @@ test('Create', async () => {
 })
 test('Update', async () => {
 
-    const subscriptionSpecifications = await subscription.specifications()
-    console.log(subscriptionSpecifications)
-    expect(subscriptionSpecifications).toBeDefined()
-    // subscription.update({
-    //     subscriptionGuid: "FC512FC9CC3A485D8CF3D1804FF6xxxx",
-    //     configurationCode: "9wqe32ew",
-    //     rate_plans: {
-    //         update: {
-    //             ratePlanGuid: "F075470B1BB24B9291943A888A2Fxxxx",
-    //             startDate: "2022-01-01",
-    //             endDate: "2030-01-01",
-    //             charge: {
-    //                 ratePlanChargeGuid: "AD375E2E188747159673440898B9xxxx",
-    //                 baseNumberOfUnits: "1",
-    //                 pricePerUnit: 10
-    //             }
-    //         }
-    //     }
-    // })
-    // .then((data) => {
-    //     expect(data).toBeDefined()
-    // })
+    subscription.update({
+        subscriptionGuid: "FC512FC9CC3A485D8CF3D1804FF6xxxx",
+        configurationCode: "9wqe32ew",
+        rate_plans: {
+            update: {
+                ratePlanGuid: "F075470B1BB24B9291943A888A2Fxxxx",
+                startDate: "2022-01-01",
+                endDate: "2030-01-01",
+                charge: {
+                    ratePlanChargeGuid: "AD375E2E188747159673440898B9xxxx",
+                    baseNumberOfUnits: "1",
+                    pricePerUnit: 10
+                }
+            }
+        }
+    })
+    .then((data) => {
+        console.log(data)
+        expect(data).toBeDefined()
+
+    })
 })
 
 test('Combined Subscription', async () => {
@@ -73,14 +72,12 @@ test('Combined Subscription', async () => {
             mobile: "0612345678"
         },
         debtor: {
-            email:'test@buckaroo.nl',
             code: "johnsmith4"
         },
         company: {
             culture: "nl-NL",
             companyName: "My Company Coporation",
             vatApplicable: true,
-            vatNumber: "NL140619562B01",
             chamberOfCommerce: "20091741"
         },
         address: {
@@ -93,6 +90,8 @@ test('Combined Subscription', async () => {
     })
 
 
-    let payment = await ideal.combine(combinable)
+      ideal
+        .combine(combinable)
         .pay()
+          .then()
 })
