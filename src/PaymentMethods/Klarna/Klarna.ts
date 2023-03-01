@@ -8,20 +8,20 @@ export class Klarna extends PayablePaymentMethod {
     protected _paymentName = 'klarna'
     protected _serviceVersion = 1
     protected requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
+
+    protected services = (payload) => Services(payload)
     async pay(payload:IPay):Promise<TransactionResponse>{
         this.action = 'Pay'
-
-        const services = Services(payload || this.request.getData())
-        return super.pay(services,payload)
+        return super.pay(payload)
     }
     refund(payload:RefundPayload){
         this.action = 'Refund'
-        return super.pay({},payload)
+        return super.pay(payload)
 
     }
     payInInstallments(payload){
         this.action = 'PayInInstallments'
-        return super.pay({},payload)
+        return super.pay(payload)
     }
 }
 const klarna =  new Klarna()

@@ -9,20 +9,19 @@ export class Ideal extends PayablePaymentMethod {
     protected _serviceVersion = 2
     protected requiredFields: Array<keyof IConfig> = ['currency', 'returnURL', 'returnURLCancel', 'pushURL']
 
+    protected services = (payload) => Services(payload)
     setPayload(payload:IPay){
         super.setPayload(payload)
     }
     pay(payload?:IPay):Promise<TransactionResponse>{
         this.action = 'Pay'
-
-        const services = Services(payload || this.request.getData())
-
-        return super.pay(services,payload)
+        console.log(this.request.getData())
+        return super.pay(payload)
     }
 
     refund(payload:RefundPayload):Promise<TransactionResponse>{
         this.action = 'Refund'
-        return super.pay({},payload)
+        return super.pay(payload)
     }
     issuers() {
         return client.specification( this.paymentName, 2).then((response) => {

@@ -16,6 +16,7 @@ class HttpClient {
                 })
             })
             req.on('error', (error) => {
+                console.log(error)
                 reject(error)
             })
             if (options.data) {

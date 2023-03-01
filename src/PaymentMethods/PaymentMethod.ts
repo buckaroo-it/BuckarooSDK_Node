@@ -11,8 +11,8 @@ export default abstract class PaymentMethod {
     protected _paymentName = ''
     protected _serviceVersion = 0
     protected request: TransactionRequest = new TransactionRequest
-
     private _action = ''
+    protected services: (data) => object = (data) =>  { return {} };
     get paymentName(): string {
         return this._paymentName;
     }
@@ -52,13 +52,6 @@ export default abstract class PaymentMethod {
             )
         }
     }
-    protected static filterServices(data,services):any{
-        const serviceKeys = Object.keys(services)
-        for (const serviceKey of serviceKeys) {
-            delete data[serviceKey]
-        }
-        return data
-    }
 
     protected setRequiredFields(){
         for (const requiredField of this.requiredFields) {
@@ -66,10 +59,19 @@ export default abstract class PaymentMethod {
                 this.request.setData(requiredField, buckarooClient().getConfig()[requiredField])
         }
     }
+    protected static filterServices(data,services){
+        const serviceKeys = Object.keys(services)
+        for (const serviceKey of serviceKeys) {
+            delete data[serviceKey]
+        }
+        return data
+    }
     combine(method){
-        const combineServices = method.request.getData().services
+        const combineServices = method.request.getData()
+
         if(typeof combineServices !== 'undefined') {
-            this.request.addServices(combineServices.ServiceList)
+            this.request.setPayload({...combineServices,...this.request.getData()})
+
         }
         return this
     }

@@ -1,12 +1,19 @@
 import PaymentMethod from "./PaymentMethod";
 import {uniqid} from "../Utils/Functions";
-import {PayPayload} from "../Models/Payload";
+import {Payload} from "../Models/Payload";
 
 
 export abstract class PayablePaymentMethod extends PaymentMethod {
-    protected pay(services, payload = this.request.getPayload()){
+    protected pay(payload = this.request.getPayload()){
 
+        //SetPayPayLoad
+        this.setPayPayload(payload)
 
+        //Call Transaction
+        return this.transactionRequest()
+    }
+    setPayPayload(payload:Payload){
+        const services = this.services(payload)
         //Set the Payload
         this.setPayload(PaymentMethod.filterServices(payload,services))
 
@@ -18,13 +25,10 @@ export abstract class PayablePaymentMethod extends PaymentMethod {
 
         //Set setAdditionalParameters
         this.setAdditionalParameters(payload.additionalParameters)
-
-        //Call Transaction
-        return this.transactionRequest()
     }
 
-    setPayload(payload: PayPayload){
-        payload.order = payload.order || uniqid()
+    setPayload(payload: Payload){
+        payload['order'] = payload['order'] || uniqid()
         this.request.setPayload(payload)
     }
 }

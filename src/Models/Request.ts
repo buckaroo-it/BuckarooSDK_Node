@@ -1,4 +1,4 @@
-import {Payload} from "./Payload";
+import {Payload, PayPayload} from "./Payload";
 import {IServiceList} from "./ServiceList";
 import {uniqid} from "../Utils/Functions";
 
@@ -11,11 +11,15 @@ export class Request{
     public getPayload(): Payload{
         return <Payload>this.data
     }
+
+    public getPayPayload(): PayPayload{
+        return <PayPayload>this.data
+    }
 }
 
 export class TransactionRequest extends Request {
 
-    public setPayload( payload: Payload ) {
+    public setPayload( payload: Payload) {
         this.data = payload
         this.getPayload().invoice = payload.invoice || uniqid()
     }

@@ -21,7 +21,7 @@ export class ParameterList {
                     serviceModel[paramKey].groupType?.() || groupType,
                     serviceModel[paramKey].groupID?.(paramKey) || groupID)
 
-            } else if( serviceModel[paramKey] && typeof serviceModel[paramKey] !== 'function') {
+            } else if( typeof serviceModel[paramKey] !== 'undefined' && typeof serviceModel[paramKey] !== 'function') {
                 this.setParamFormat(
                     paramKey,
                     serviceModel[paramKey],

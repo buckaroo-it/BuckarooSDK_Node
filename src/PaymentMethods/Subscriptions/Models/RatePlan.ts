@@ -1,9 +1,19 @@
+import {serviceParameterKeyOf} from "../../../Utils/Functions";
 
-export default interface IRatePlan {
+export interface IRatePlan {
     add?:{
         startDate:string
         endDate?:string
-        ratePlanCode:string
+        ratePlanCode?:string
+        ratePlanName?:string
+        ratePlanDescription?:string
+        currency?:string
+        billingTiming?:Number
+        automaticTerm?:boolean
+        billingInterval?:string
+        termStartDay?:number
+        trialPeriodDays?:number
+        trialPeriodMonths?:number
     }
     update?:{
         startDate:string
@@ -19,14 +29,33 @@ export default interface IRatePlan {
     }
 }
 
+export interface IRatePlanCharges {
+    add?:{
+        ratePlanChargeName:string
+        rateplanChargeProductId: Number | string
+        rateplanChargeDescription: string
+        unitOfMeasure:string
+        ratePlanChargeType: string
+        baseNumberOfUnits: Number
+        partialBilling: string
+        pricePerUnit: Number
+        priceIncludesVat: boolean
+        vatPercentage: Number
+        b2B:boolean
+    }
+}
 class AddRatePlan {
     startDate:string;
     endDate:string
     ratePlanCode:string
-    constructor(data) {
+    constructor(data,type) {
         this.startDate = data.startDate
         this.endDate = data.endDate
         this.ratePlanCode = data.ratePlanCode
+        for (const dataKey in data) {
+            this[dataKey] = data[dataKey]
+        }
+        this.groupType = () => 'AddRatePlan'  + serviceParameterKeyOf(type)
     }
     groupType(){
         return 'AddRatePlan'
@@ -35,28 +64,27 @@ class AddRatePlan {
 }
 
 class Charge {
-    constructor(charge) {
+    constructor(charge,type) {
         for (const chargeKey in charge) {
             this[chargeKey] = charge[chargeKey]
         }
+        this.groupType = () => serviceParameterKeyOf(type) + 'RatePlanCharge'
     }
     groupType(){
-        return 'UpdateRatePlanCharge'
+        return 'RatePlanCharge'
     }
 
 }
 
 class UpdateRatePlan {
-    update: {
-        startDate: string;
-        endDate?: string;
-        ratePlanGuid: string;
-        charge: Charge
-    };
-
-    constructor(update: any) {
+    update:{
+        charge:Charge
+    }
+    constructor(update: any,type) {
         this.update = update
-        this.update.charge = new Charge(update.charge)
+        this.update.charge = new Charge(update.charge,type)
+
+        this.groupType = () => serviceParameterKeyOf(type) + 'UpdateRatePlan'
     }
     groupType(){
         return 'UpdateRatePlan'
@@ -65,15 +93,14 @@ class UpdateRatePlan {
 
 
 export class RatePlan {
-    private add?:AddRatePlan
-    private update?:UpdateRatePlan;
-    constructor(data) {
+    add?:AddRatePlan
+    update?:UpdateRatePlan;
+    constructor(data,type = '') {
         if(data.add){
-            this.add = new AddRatePlan(data.add)
+            this.add = new AddRatePlan(data.add,type)
         }
         if(data.update){
-            this.update = new UpdateRatePlan(data.update)
+            this.update = new UpdateRatePlan(data.update,type)
         }
-
     }
 }

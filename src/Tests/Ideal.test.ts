@@ -25,6 +25,7 @@ describe('testing Ideal methods', () => {
             }
         })
         await ideal.pay().then((data) => {
+            console.log(data)
             expect(data).toBeDefined()
             transactionKey = data.Key
         })

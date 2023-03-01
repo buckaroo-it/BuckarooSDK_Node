@@ -1,15 +1,15 @@
 import { initializeBuckarooClient } from "../src/BuckarooClient";
-import { subscription } from "../src/PaymentMethods/Subscriptions/Subscriptions";
+import { subscriptions } from "../src/PaymentMethods/Subscriptions/Subscriptions";
 import { ideal } from "../src/PaymentMethods/Ideal/Ideal";
 
 initializeBuckarooClient()
 
-const combinedPayment = subscription().createCombined({
+const combinedPayment = subscriptions().createCombined({
     includeTransaction: false,
     transactionVatPercentage: 5,
     configurationCode: "gfyh9fe4",
     email: "test@buckaroo.nl",
-    rate_plans: {
+    ratePlans: {
         add: {
             startDate: "2033-01-01",
             ratePlanCode: "9863hdcj"
