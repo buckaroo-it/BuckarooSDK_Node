@@ -49,12 +49,9 @@ export default class Subscription implements ISubscription{
         this.person = new ServiceParameter(this.person,'Person').getData()
         this.configuration = new ServiceParameter(this.configuration,'AddConfiguration').getData()
 
-        if(this.ratePlans) {
-            this.ratePlans = new RatePlan(this.ratePlans)
-        }
-        if (this.ratePlanCharges) {
-            this.ratePlanCharges = new RatePlan(this.ratePlanCharges, 'charge')
-        }
+        this.ratePlans = new RatePlan(this.ratePlans)
+        this.ratePlanCharges = new RatePlan(this.ratePlanCharges, 'charge')
+
         if(this.company){
             this.company.name = this.company.companyName
             delete this.company.companyName

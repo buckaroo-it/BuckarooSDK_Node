@@ -4,7 +4,7 @@ import { ideal } from "../src/PaymentMethods/Ideal/Ideal";
 
 initializeBuckarooClient()
 
-const combinedPayment = subscriptions().createCombined({
+const subscription = subscriptions().createCombined({
     includeTransaction: false,
     transactionVatPercentage: 5,
     configurationCode: "gfyh9fe4",
@@ -34,13 +34,13 @@ const combinedPayment = subscriptions().createCombined({
         city: "Heerenveen",
         country: "NL"
     }
-})
+});
 
 
-
-ideal.combine(combinedPayment)
-    .pay({
-        issuer: "ABNANL2A",
-        amountDebit: 10,
-    })
-    .then()
+(async () => {
+    const combinedPayment = await ideal.combine(subscription)
+        .pay({
+            issuer: "ABNANL2A",
+            amountDebit: 10,
+        })
+    })();

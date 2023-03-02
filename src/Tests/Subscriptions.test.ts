@@ -136,7 +136,7 @@ test('Update Combined Subscription', async () => {
 
 
     const combinable = subscription.updateCombined({
-        subscriptionGuid:'65EB06079D854B0C9A9ECB0E2C1Cxxxx',
+        subscriptionGuid:'515461997AD34C50881D74157E38A64D',
     })
     ideal
         .combine(combinable)
@@ -151,28 +151,37 @@ test('Update Combined Subscription', async () => {
 
 test('Stop Subscription', async () => {
     const stop = await subscription.stop({
-        subscriptionGuid:'65EB06079D854B0C9A9ECB0E2C1Cxxxx',
+        subscriptionGuid:'515461997AD34C50881D74157E38A64D',
     })
+    console.log(stop)
+    expect(stop).toBeDefined()
+
 })
 test('Subscription Info', async () => {
     const info = await subscription.info({
-        subscriptionGuid:'65EB06079D854B0C9A9ECB0E2C1Cxxxx',
+        subscriptionGuid:'515461997AD34C50881D74157E38A64D',
     })
+    console.log(info)
+    expect(info).toBeDefined()
 })
 test('Delete Subscription Config', async () => {
     const deleteConfig = await subscription.deletePaymentConfig({
-        subscriptionGuid:'65EB06079D854B0C9A9ECB0E2C1Cxxxx',
+        subscriptionGuid:'515461997AD34C50881D74157E38A64D',
     })
 })
 test('Subscription Pause', async () => {
     const pause = await subscription.pause({
-        subscriptionGuid:'65EB06079D854B0C9A9ECB0E2C1Cxxxx',
+        subscriptionGuid:'515461997AD34C50881D74157E38A64D',
         resumeDate:'2030-01-01'
     })
+    console.log(pause)
+    expect(pause).toBeDefined()
 })
 test('Subscription Resume', async () => {
     const resume = await subscription.resume({
         resumeDate:'2030-01-01',
-        subscriptionGuid:'65EB06079D854B0C9A9ECB0E2C1Cxxxx',
+        subscriptionGuid:'515461997AD34C50881D74157E38A64D',
     })
+    console.log(resume)
+    expect(resume).toBeDefined()
 })

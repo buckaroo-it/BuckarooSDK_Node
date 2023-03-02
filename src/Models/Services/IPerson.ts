@@ -1,6 +1,6 @@
 import Gender from "../../Constants/Gender";
 
-export default interface IPerson {
+export default interface IPerson  {
     category?: string
     gender?: Gender
     culture?: string
@@ -13,9 +13,4 @@ export default interface IPerson {
     lastName?: string
     birthDate?: string
     placeOfBirth?: string
-    conversationLanguage?: 'NL' | 'FR' | 'DE' | 'FI'
-    identificationNumber?: string
-    customerNumber?: string
-    companyName?: string
-    chamberOfCommerce?: string
 }

@@ -3,7 +3,6 @@ import {IConfig} from "../../Utils/Types";
 import PaymentMethod from "../PaymentMethod";
 class Subscriptions extends PaymentMethod{
     protected _paymentName = 'Subscriptions'
-    protected _serviceVersion = 0
     protected requiredFields: Array<keyof IConfig> = ['currency']
     create(payload:ISubscription):Promise<any>{
         this.action = 'CreateSubscription'
@@ -42,6 +41,7 @@ class Subscriptions extends PaymentMethod{
         this.request.setData('startRecurrent',true)
 
         this.setServiceList(new Subscription(<ISubscription>payload))
+
         return this
     }
     stop(payload:{subscriptionGuid:string}){
@@ -90,6 +90,7 @@ class Subscriptions extends PaymentMethod{
         return this.dataRequest()
     }
 }
+
 
 const subscriptions = () => {
   return new Subscriptions()

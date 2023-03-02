@@ -1,4 +1,5 @@
 import { serviceParameterKeyOf } from '../Utils/Functions'
+import {ServiceParameter} from "../Utils/ServiceParameter";
 
 export interface IParameter {
     Name:string
@@ -14,19 +15,25 @@ export class ParameterList {
     get parameterList(): IParameter[] {
         return this._parameterList;
     }
-    setUpParameters (serviceModel, groupType: string = '', groupID: number | string = '') {
-        for (const paramKey in serviceModel) {
-            if (typeof serviceModel[paramKey] === 'object') {
-                this.setUpParameters(serviceModel[paramKey],
-                    serviceModel[paramKey].groupType?.() || groupType,
-                    serviceModel[paramKey].groupID?.(paramKey) || groupID)
+    setUpParameters(serviceModel, groupType: string = '', groupId: number | string = '') {
 
-            } else if( typeof serviceModel[paramKey] !== 'undefined' && typeof serviceModel[paramKey] !== 'function') {
+        for (const paramKey in serviceModel) {
+            if (serviceModel[paramKey] instanceof ServiceParameter) {
+                this.setUpParameters({[paramKey]:serviceModel[paramKey].getData()},
+                    serviceModel[paramKey].groupType() || groupType,
+                    serviceModel[paramKey].groupId() || groupId)
+
+            } else if(typeof serviceModel[paramKey] === "object") {
+                this.setUpParameters(serviceModel[paramKey],
+                    groupType,
+                    groupId)
+            }else if(typeof serviceModel[paramKey] !== 'undefined' && typeof serviceModel[paramKey] !== 'function'){
+
                 this.setParamFormat(
                     paramKey,
                     serviceModel[paramKey],
                     groupType,
-                    groupID
+                    groupId
                 )
             }
         }

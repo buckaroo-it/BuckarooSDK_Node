@@ -1,6 +1,9 @@
 const https = require('https')
 class HttpClient {
     call(options):Promise<any> {
+
+        console.log(JSON.stringify(options.data))
+
         return new Promise<any>(function (resolve,reject) {
             const req = https.request(options, (res) => {
                 let body:string

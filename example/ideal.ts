@@ -5,7 +5,6 @@ initializeBuckarooClient()
 import { ideal } from "../src/PaymentMethods/Ideal/Ideal";
 
 (async () => {
-
     try {
         const response = await ideal.pay({
             order: '123',

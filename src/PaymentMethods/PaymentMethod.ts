@@ -29,13 +29,14 @@ export default abstract class PaymentMethod {
 
 
     protected setServiceList(serviceList: object ){
+        console.log(serviceList)
         let services = new ServiceList({
             name: this.paymentName,
             action: this.action,
             version: this.serviceVersion,
             parameters: new ParameterList().addParameterList(serviceList)
         })
-        this.request.addServices([services])
+        this.request.setData('Services',[...this.request.getServiceList(),services])
     }
     protected setAdditionalParameters(additionalParameters?: AdditionalParameters) {
         if(additionalParameters) {
@@ -59,13 +60,6 @@ export default abstract class PaymentMethod {
                 this.request.setData(requiredField, buckarooClient().getConfig()[requiredField])
         }
     }
-    protected static filterServices(data,services){
-        const serviceKeys = Object.keys(services)
-        for (const serviceKey of serviceKeys) {
-            delete data[serviceKey]
-        }
-        return data
-    }
     combine(method){
         const combineServices = method.request.getData()
 
@@ -81,6 +75,25 @@ export default abstract class PaymentMethod {
 
     protected dataRequest(){
         return client.dataRequest(this.request.getData())
+    }
+    protected setRequest(data){
+
+
+        const services = this.services(data)
+        console.log(services)
+        //Set the Payload
+        this.request.setPayload(this.request.filterServices(data,services))
+
+        //Set required Fields
+        this.setRequiredFields()
+
+        console.log(this.request)
+        //Set Services
+        this.setServiceList(services)
+
+        //Set setAdditionalParameters
+        this.setAdditionalParameters(data.additionalParameters)
+
     }
     public specifications(){
         return client.specification(this.paymentName,this.serviceVersion)

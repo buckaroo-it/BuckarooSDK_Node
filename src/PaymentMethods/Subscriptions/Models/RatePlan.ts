@@ -96,11 +96,13 @@ export class RatePlan {
     add?:AddRatePlan
     update?:UpdateRatePlan;
     constructor(data,type = '') {
-        if(data.add){
-            this.add = new AddRatePlan(data.add,type)
-        }
-        if(data.update){
-            this.update = new UpdateRatePlan(data.update,type)
+        if(data){
+            if(data.add){
+                this.add = new AddRatePlan(data.add,type)
+            }
+            if(data.update){
+                this.update = new UpdateRatePlan(data.update,type)
+            }
         }
     }
 }
