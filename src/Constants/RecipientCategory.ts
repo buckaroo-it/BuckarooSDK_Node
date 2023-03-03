@@ -1,4 +1,4 @@
-enum  RecipientCategory {
+enum RecipientCategory {
     PERSON = 'Person',
     COMPANY = 'Company'
 }

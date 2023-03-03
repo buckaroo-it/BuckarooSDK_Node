@@ -1,46 +1,43 @@
-import {Payload} from "./Payload";
-import {IServiceList} from "./ServiceList";
-import {uniqid} from "../Utils/Functions";
+import { Payload } from './Payload'
+import { IServiceList } from './ServiceList'
+import { uniqid } from '../Utils/Functions'
 
-export class Request{
+export class Request {
     protected data: object = {}
 
     public getData(): object {
         return this.data
     }
-    public getPayload(): Payload{
+    public getPayload(): Payload {
         return <Payload>this.data
     }
 }
 
 export class TransactionRequest extends Request {
-
-
     public setPayload(payload: Payload) {
         this.data = payload
         this.getPayload().invoice = payload.invoice || uniqid()
     }
 
-    public setServices(serviceList:IServiceList[]) {
+    public setServices(serviceList: IServiceList[]) {
         this.getPayload().services = {
-            ServiceList : serviceList
+            ServiceList: serviceList
         }
     }
-    getServiceList():Array<object>{
-        return  this.getPayload().services?.ServiceList || []
+    getServiceList(): Array<object> {
+        return this.getPayload().services?.ServiceList || []
     }
-    public addServices(serviceList:IServiceList[]) {
-        if(!this.getPayload().services){
+    public addServices(serviceList: IServiceList[]) {
+        if (!this.getPayload().services) {
             this.setServices(serviceList)
-        }else {
+        } else {
             for (const serviceListObject of serviceList) {
                 this.getPayload().services?.ServiceList.push(serviceListObject)
             }
         }
     }
-    public filterServices(data,services) {
+    public filterServices(data, services) {
         const serviceKeys = Object.keys(services)
-
         for (const serviceKey of serviceKeys) {
             delete data[serviceKey]
         }

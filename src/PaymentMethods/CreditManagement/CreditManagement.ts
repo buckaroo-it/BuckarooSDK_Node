@@ -1,92 +1,91 @@
-import {IConfig} from "../../Utils/Types";
-import PaymentMethod from "../PaymentMethod";
-import {IInvoice,invoice} from "./Models/Invoice";
+import { IConfig } from '../../Utils/Types'
+import PaymentMethod from '../PaymentMethod'
+import { IInvoice, invoice } from './Models/Invoice'
+import { creditNote, ICreditNote } from './Models/CreditNote'
+import { uniqid } from '../../Utils/Functions'
+import { debtor, IDebtor } from './Models/Debtor'
+import { IPaymentPlan, paymentPlan } from './Models/PaymentPlan'
+import { Payload } from '../../Models/Payload'
+import { multiInfoInvoice } from './Models/multiInfoInvoice'
 
 class CreditManagement extends PaymentMethod {
     protected _paymentName = 'CreditManagement3'
     protected requiredFields: Array<keyof IConfig> = ['currency']
 
-
-    createInvoice(payload:IInvoice):Promise<any>{
+    _serviceVersion = 1
+    createInvoice(payload: IInvoice): Promise<any> {
         this.action = 'CreateInvoice'
-
         this.services = invoice
-
+        this.request.setData('invoice', uniqid())
         this.setRequest(payload)
-
         return this.dataRequest()
     }
-    createCombinedInvoice(payload:IInvoice){
+    createCombinedInvoice(payload: IInvoice) {
         this.action = 'CreateCombinedInvoice'
 
         this.services = invoice
+        this.request.setData('invoice', uniqid())
 
         this.setRequest(payload)
 
-        return this.dataRequest()
+        return this
     }
-    createCreditNote(payload:IInvoice){
+    createCreditNote(payload: ICreditNote) {
         this.action = 'CreateCreditNote'
 
-        this.services = invoice
+        this.services = creditNote
 
         this.setRequest(payload)
 
         return this.dataRequest()
     }
-    addOrUpdateDebtor(payload:IInvoice){
+    addOrUpdateDebtor(payload: IDebtor) {
         this.action = 'AddOrUpdateDebtor'
 
-        this.services = invoice
+        this.services = debtor
 
         this.setRequest(payload)
 
         return this.dataRequest()
     }
-    createPaymentPlan(payload:IInvoice){
+    createPaymentPlan(payload: IPaymentPlan) {
         this.action = 'CreatePaymentPlan'
 
-        this.services = invoice
+        this.services = paymentPlan
 
         this.setRequest(payload)
 
         return this.dataRequest()
     }
-    terminatePaymentPlan(payload:IInvoice){
+    terminatePaymentPlan(payload: Required<Pick<IPaymentPlan, 'includedInvoiceKey'>>) {
         this.action = 'TerminatePaymentPlan'
 
-        this.services = invoice
+        this.services = paymentPlan
 
         this.setRequest(payload)
 
         return this.dataRequest()
     }
-    pauseInvoice(payload:IInvoice){
+    pauseInvoice(payload: Required<Pick<Payload, 'invoice'>>) {
         this.action = 'PauseInvoice'
 
-        this.services = invoice
-
         this.setRequest(payload)
 
         return this.dataRequest()
     }
-    unpauseInvoice(payload:IInvoice){
+    unpauseInvoice(payload: Required<Pick<Payload, 'invoice'>>) {
         this.action = 'UnpauseInvoice'
 
-        this.services = invoice
-
         this.setRequest(payload)
 
         return this.dataRequest()
     }
 
-    invoiceInfo(payload){
+    invoiceInfo(payload: { invoice: string | string[] }) {
         this.action = 'InvoiceInfo'
-
-        this.action = 'UnpauseInvoice'
-
-        this.services = invoice
-
+        if (Array.isArray(payload.invoice)) {
+            this.services = multiInfoInvoice
+        }
         this.setRequest(payload)
 
         return this.dataRequest()
@@ -132,6 +131,4 @@ class CreditManagement extends PaymentMethod {
     }
 }
 const creditManagement = () => new CreditManagement()
-export {
-    creditManagement
-}
+export { creditManagement }

@@ -1,21 +1,19 @@
-import PaymentMethod from "./PaymentMethod";
-import {uniqid} from "../Utils/Functions";
-import {Payload} from "../Models/Payload";
-
+import PaymentMethod from './PaymentMethod'
+import { uniqid } from '../Utils/Functions'
+import { Payload } from '../Models/Payload'
 
 export abstract class PayablePaymentMethod extends PaymentMethod {
-    protected pay(payload = this.request.getPayload()){
-
+    protected pay(payload?) {
         //SetPayPayLoad
-        this.setPayload(payload)
+        if (payload) this.setPayload(payload)
 
         //Call Transaction
         return this.transactionRequest()
     }
 
-    setPayload(payload: Payload){
+    setPayload(payload: Payload) {
         payload['order'] = payload['order'] || uniqid()
-
+        this.action = 'Pay'
         this.setRequest(payload)
     }
 }

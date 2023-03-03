@@ -1,12 +1,12 @@
-import { initializeBuckarooClient} from "../src/BuckarooClient";
+import { initializeBuckarooClient } from '../src/BuckarooClient'
 
 initializeBuckarooClient()
 
-import { Klarna } from "../src/PaymentMethods/Klarna/Klarna";
+import { Klarna } from '../src/PaymentMethods/Klarna/Klarna'
 
 const klarna = new Klarna()
-klarna.pay(
-    {
+klarna
+    .pay({
         order: '123456',
         amountDebit: 50.3,
         invoice: '12345',
@@ -65,7 +65,7 @@ klarna.pay(
                 price: 10.1
             }
         ]
-    }
-).then((res)=>{
-    console.log(res)
-})
+    })
+    .then((res) => {
+        console.log(res)
+    })

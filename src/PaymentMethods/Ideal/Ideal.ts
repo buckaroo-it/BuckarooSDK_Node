@@ -1,35 +1,36 @@
-import {IPay, Services} from './Models/Pay'
+import { IPay, Services } from './Models/Pay'
 import client from '../../Request/Client'
-import { PayablePaymentMethod } from "../PayablePaymentMethod";
-import { RefundPayload } from "../../Models/Payload";
-import { IConfig } from "../../Utils/Types";
-import {TransactionResponse} from "../../Models/TransactionResponse";
+import { PayablePaymentMethod } from '../PayablePaymentMethod'
+import { RefundPayload } from '../../Models/Payload'
+import { IConfig } from '../../Utils/Types'
+import { TransactionResponse } from '../../Models/TransactionResponse'
 export class Ideal extends PayablePaymentMethod {
     protected _paymentName = 'ideal'
     protected _serviceVersion = 2
-    protected requiredFields: Array<keyof IConfig> = ['currency', 'returnURL', 'returnURLCancel', 'pushURL']
+    protected requiredFields: Array<keyof IConfig> = [
+        'currency',
+        'returnURL',
+        'returnURLCancel',
+        'pushURL'
+    ]
 
     protected services = (payload) => Services(payload)
-    setPayload(payload:IPay){
+    setPayload(payload: IPay) {
         super.setPayload(payload)
     }
-    pay(payload?:IPay):Promise<TransactionResponse>{
-        this.action = 'Pay'
-        console.log(this.request.getData())
+    pay(payload?: IPay): Promise<TransactionResponse> {
         return super.pay(payload)
     }
 
-    refund(payload:RefundPayload):Promise<TransactionResponse>{
+    refund(payload: RefundPayload): Promise<TransactionResponse> {
         this.action = 'Refund'
         return super.pay(payload)
     }
     issuers() {
-        return client.specification( this.paymentName, 2).then((response) => {
+        return client.specification(this.paymentName, 2).then((response) => {
             const issuerList: { id: any; name: any }[] = []
-
-            if (response.data?.Actions?.['0']?.RequestParameters?.[0]?.ListItemDescriptions) {
-                const issuersData =
-                    response.data.Actions['0'].RequestParameters[0].ListItemDescriptions
+            if (response?.Actions?.['0']?.RequestParameters?.[0]?.ListItemDescriptions) {
+                const issuersData = response.Actions['0'].RequestParameters[0].ListItemDescriptions
 
                 if (issuersData.length > 0) {
                     for (const issuer of issuersData) {

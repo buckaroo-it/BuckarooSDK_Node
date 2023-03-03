@@ -6,6 +6,6 @@ export interface IPay extends PayPayload {
 
 export const Services = (data) => {
     return {
-        issuer:data.issuer
+        issuer: data.issuer
     }
 }

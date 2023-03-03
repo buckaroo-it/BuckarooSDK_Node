@@ -1,9 +1,9 @@
 export interface IPhone {
     mobile: string
 }
-export default class Phone  {
+export default class Phone {
     phone: string
-    constructor(data:IPhone) {
+    constructor(data: IPhone) {
         this.phone = data.mobile
     }
 }

@@ -11,7 +11,7 @@ export default class Article {
     grossUnitPrice: number
     vatPercentage: number
     description?: string
-    constructor(data:IArticle) {
+    constructor(data: IArticle) {
         this.grossUnitPrice = data.price
         this.identifier = data.identifier
         this.quantity = data.quantity

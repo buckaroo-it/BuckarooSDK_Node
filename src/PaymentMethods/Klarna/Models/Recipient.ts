@@ -7,7 +7,7 @@ class Recipient {
     address: Address
     email: string
     phone?: Phone
-    constructor(data:IBillingRecipient | IShippingRecipient) {
+    constructor(data: IBillingRecipient | IShippingRecipient) {
         if (data.phone) {
             this.phone = new Phone(data.phone)
         }
@@ -17,9 +17,9 @@ class Recipient {
     }
 }
 
-export class BillingRecipient extends Recipient{
-    constructor(data:IBillingRecipient) {
-        super(data);
+export class BillingRecipient extends Recipient {
+    constructor(data: IBillingRecipient) {
+        super(data)
     }
     groupType(): string {
         return 'BillingCustomer'
@@ -31,9 +31,9 @@ export declare interface IBillingRecipient {
     email: string
     phone: IPhone
 }
-export class ShippingRecipient extends Recipient{
-    constructor(data:IShippingRecipient) {
-        super(data);
+export class ShippingRecipient extends Recipient {
+    constructor(data: IShippingRecipient) {
+        super(data)
     }
     groupType(): string {
         return 'ShippingCustomer'

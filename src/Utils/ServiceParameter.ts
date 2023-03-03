@@ -1,26 +1,42 @@
 export class ServiceParameter {
-    key:string
-    [data:string]:any
-    constructor(data,key) {
-        this.key = key
-        this[key] = data
+    constructor(data, dataKey, groupType = '') {
+        this[dataKey] = data
+        this.setGroupType(groupType)
     }
-    setKeys(keys:{[key:string]:string}){
+    private setObjectKeys(keys: { [key: string]: string }) {
         for (const keysKey in keys) {
-            if (this[this.key][keysKey]) {
-                delete Object.assign(this[this.key], { [keys[keysKey] ]: this[this.key][keysKey] })[keysKey]
+            if (this[keysKey]) {
+                delete Object.assign(this, { [keys[keysKey]]: this[keysKey] })[keysKey]
             }
         }
     }
-    setGroupType(type){
+    setKeys(keys: { [key: string]: any }) {
+        for (const pkey in this) {
+            if (typeof this[pkey] === 'object') {
+                if (Array.isArray(this[pkey])) {
+                    for (const arrayKey in this[pkey]) {
+                        this.setObjectKeys.call(this[pkey][arrayKey], keys)
+                    }
+                } else {
+                    this.setObjectKeys.call(this[pkey], keys)
+                }
+            } else if (typeof this[pkey] !== 'function') {
+                this.setObjectKeys.call(this, keys)
+            }
+        }
+    }
+
+    groupType: () => string = () => ''
+    setGroupType(type) {
         this.groupType = () => type
     }
-    groupType = () => ''
     groupId: () => string | number = () => ''
-    setGroupId(id){
+    setGroupId(id) {
         this.groupId = () => id
     }
-    getData():any {
-        return this[this.key]
+    makeCountable(parameterKey) {
+        for (const argumentsKey in this[parameterKey]) {
+            this[parameterKey][argumentsKey].groupId = () => parseInt(argumentsKey) + 1
+        }
     }
 }

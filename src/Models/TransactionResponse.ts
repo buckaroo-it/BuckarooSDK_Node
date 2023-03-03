@@ -1,5 +1,5 @@
-import {ServiceList} from "./ServiceList";
-import {AdditionalParameter} from "./Payload";
+import { ServiceList } from './ServiceList'
+import { AdditionalParameter } from './Payload'
 
 export declare interface TransactionResponse {
     Key: string
@@ -7,37 +7,37 @@ export declare interface TransactionResponse {
         Code: {
             Code: number | string
             Description: string
-        },
+        }
         SubCode: {
-            Code: number | string,
+            Code: number | string
             Description: string
-        },
+        }
         DateTime: string
-    },
+    }
     RequiredAction: {
         RedirectURL: string
         RequestedInformation: {
             Name: string
-            DataType: number,
-            MaxLength: number,
-            Required: boolean,
+            DataType: number
+            MaxLength: number
+            Required: boolean
             Description: string
         }[]
         PayRemainderDetails: {
             RemainderAmount: number
             Currency: string
             GroupTransaction: string
-        },
+        }
         Name: string
         TypeDeprecated: number
     }
-    Services: ServiceList[],
+    Services: ServiceList[]
     CustomParameters: {
         List: AdditionalParameter[]
-    },
+    }
     AdditionalParameters: {
         AdditionalParameter: AdditionalParameter[]
-    },
+    }
     RequestErrors: {
         ChannelErrors: {
             Service: string
@@ -45,34 +45,34 @@ export declare interface TransactionResponse {
             Name: string
             Error: string
             ErrorMessage: string
-        }[],
+        }[]
         ServiceErrors: {
             Name: string
             Error: string
             ErrorMessage: string
-        }[],
+        }[]
         ActionErrors: {
             Service: string
-            Name: string,
-            Error: string,
+            Name: string
+            Error: string
             ErrorMessage: string
-        }[],
+        }[]
         ParameterErrors: {
             Service: string
-            Action: string,
-            Name: string,
-            Error: string,
+            Action: string
+            Name: string
+            Error: string
             ErrorMessage: string
-        }[],
+        }[]
         CustomParameterErrors: {
             Name: string
-            Error: string,
+            Error: string
             ErrorMessage: string
         }[]
     }
     Invoice: string
     ServiceCode: string
-    IsTest: boolean,
+    IsTest: boolean
     Currency: string
     AmountDebit: number
     AmountCredit: number
@@ -83,16 +83,16 @@ export declare interface TransactionResponse {
         RelatedTransactionKey: string
     }[]
     ConsumerMessage: {
-        MustRead: boolean,
-        CultureName: string,
-        Title: string,
-        PlainText: string,
+        MustRead: boolean
+        CultureName: string
+        Title: string
+        PlainText: string
         HtmlText: string
-    },
+    }
     Order: string
     IssuingCountry: string
-    StartRecurrent: boolean,
-    Recurring: boolean,
+    StartRecurrent: boolean
+    Recurring: boolean
     CustomerName: string
     PayerHash: string
     PaymentKey: string

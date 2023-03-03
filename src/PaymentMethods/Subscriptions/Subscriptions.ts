@@ -1,10 +1,10 @@
-import Subscription, {ISubscription} from "./Models/Subscription";
-import {IConfig} from "../../Utils/Types";
-import PaymentMethod from "../PaymentMethod";
-class Subscriptions extends PaymentMethod{
+import Subscription, { ISubscription } from './Models/Subscription'
+import { IConfig } from '../../Utils/Types'
+import PaymentMethod from '../PaymentMethod'
+class Subscriptions extends PaymentMethod {
     protected _paymentName = 'Subscriptions'
     protected requiredFields: Array<keyof IConfig> = ['currency']
-    create(payload:ISubscription):Promise<any>{
+    create(payload: ISubscription): Promise<any> {
         this.action = 'CreateSubscription'
 
         this.setRequiredFields()
@@ -14,7 +14,7 @@ class Subscriptions extends PaymentMethod{
         this.setServiceList(services)
         return this.dataRequest()
     }
-    update(payload:ISubscription){
+    update(payload: ISubscription) {
         this.action = 'UpdateSubscription'
 
         this.setRequiredFields()
@@ -25,7 +25,7 @@ class Subscriptions extends PaymentMethod{
 
         return this.dataRequest()
     }
-    createCombined(payload:ISubscription){
+    createCombined(payload: ISubscription) {
         this.action = 'CreateCombinedSubscription'
 
         const services = new Subscription(payload)
@@ -34,17 +34,16 @@ class Subscriptions extends PaymentMethod{
 
         return this
     }
-    updateCombined(payload:Partial<ISubscription>){
-
+    updateCombined(payload: Partial<ISubscription>) {
         this.action = 'UpdateCombinedSubscription'
 
-        this.request.setData('startRecurrent',true)
+        this.request.setData('startRecurrent', true)
 
         this.setServiceList(new Subscription(<ISubscription>payload))
 
         return this
     }
-    stop(payload:{subscriptionGuid:string}){
+    stop(payload: { subscriptionGuid: string }) {
         this.action = 'StopSubscription'
 
         this.setRequiredFields()
@@ -53,7 +52,7 @@ class Subscriptions extends PaymentMethod{
 
         return this.dataRequest()
     }
-    info(payload:{subscriptionGuid:string}){
+    info(payload: { subscriptionGuid: string }) {
         this.action = 'SubscriptionInfo'
 
         this.setRequiredFields()
@@ -62,7 +61,7 @@ class Subscriptions extends PaymentMethod{
 
         return this.dataRequest()
     }
-    deletePaymentConfig(payload:{subscriptionGuid:string}){
+    deletePaymentConfig(payload: { subscriptionGuid: string }) {
         this.action = 'DeletePaymentConfiguration'
 
         this.setRequiredFields()
@@ -72,29 +71,26 @@ class Subscriptions extends PaymentMethod{
         return this.dataRequest()
     }
 
-    pause(payload:{subscriptionGuid:string,resumeDate:string}){
+    pause(payload: { subscriptionGuid: string; resumeDate: string }) {
         this.action = 'PauseSubscription'
 
         this.setRequiredFields()
 
-        this.setServiceList(new Subscription(<ISubscription><unknown>payload))
+        this.setServiceList(new Subscription(<ISubscription>(<unknown>payload)))
 
         return this.dataRequest()
     }
-    resume(payload:{subscriptionGuid:string,resumeDate:string}){
+    resume(payload: { subscriptionGuid: string; resumeDate: string }) {
         this.action = 'ResumeSubscription'
 
         this.setRequiredFields()
 
-        this.setServiceList(new Subscription(<ISubscription><unknown>payload))
+        this.setServiceList(new Subscription(<ISubscription>(<unknown>payload)))
         return this.dataRequest()
     }
 }
 
-
 const subscriptions = () => {
-  return new Subscriptions()
+    return new Subscriptions()
 }
-export {
-    subscriptions
-}
+export { subscriptions }

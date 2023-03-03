@@ -1,4 +1,3 @@
-
 export interface IAddress {
     country: string
     street: string
@@ -15,7 +14,7 @@ export default class Address {
     postalCode: string
     city: string
 
-    constructor(data:IAddress) {
+    constructor(data: IAddress) {
         this.city = data.city
         this.country = data.city
         this.street = data.street

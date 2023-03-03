@@ -1,3 +1,3 @@
-export default interface IDebtor{
+export default interface IDebtor {
     code: string
 }

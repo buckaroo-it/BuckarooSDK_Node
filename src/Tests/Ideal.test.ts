@@ -1,8 +1,7 @@
 import { ideal } from '../PaymentMethods/Ideal/Ideal'
 import { uniqid } from '../Utils/Functions'
-import { initializeBuckarooClient } from "../BuckarooClient";
+import { initializeBuckarooClient } from '../BuckarooClient'
 initializeBuckarooClient()
-
 
 describe('testing Ideal methods', () => {
     test('Issuers', async () => {
@@ -35,7 +34,7 @@ describe('testing Ideal methods', () => {
             expect(data).toBeDefined()
         })
     })
-    test('Specifications',async ()=>{
+    test('Specifications', async () => {
         const idealSpecifications = await ideal.specifications()
         console.log(idealSpecifications)
     })

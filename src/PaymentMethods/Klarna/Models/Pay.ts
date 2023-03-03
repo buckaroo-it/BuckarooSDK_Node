@@ -1,5 +1,10 @@
 import { IArticle, Articles } from './Article'
-import { BillingRecipient,ShippingRecipient,IBillingRecipient, IShippingRecipient } from './Recipient'
+import {
+    BillingRecipient,
+    ShippingRecipient,
+    IBillingRecipient,
+    IShippingRecipient
+} from './Recipient'
 import { PayPayload } from '../../../Models/Payload'
 
 export interface IPay extends PayPayload {
@@ -10,8 +15,8 @@ export interface IPay extends PayPayload {
 
 export const Services = (data) => {
     return {
-        billing : new BillingRecipient(data.billing),
-        shipping : new ShippingRecipient(data.shipping || data.billing),
-        articles : new Articles(data.articles)
+        billing: new BillingRecipient(data.billing),
+        shipping: new ShippingRecipient(data.shipping || data.billing),
+        articles: new Articles(data.articles)
     }
 }

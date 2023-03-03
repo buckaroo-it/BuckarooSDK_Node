@@ -1,46 +1,35 @@
 import { serviceParameterKeyOf } from '../Utils/Functions'
-import {ServiceParameter} from "../Utils/ServiceParameter";
-
 export interface IParameter {
-    Name:string
+    Name: string
     Value: any
     GroupType?: string
     GroupID?: string | number
 }
 
 export class ParameterList {
-
     private _parameterList: IParameter[] = []
 
     get parameterList(): IParameter[] {
-        return this._parameterList;
+        return this._parameterList
     }
     setUpParameters(serviceModel, groupType: string = '', groupId: number | string = '') {
-
         for (const paramKey in serviceModel) {
-            if (serviceModel[paramKey] instanceof ServiceParameter) {
-                this.setUpParameters({[paramKey]:serviceModel[paramKey].getData()},
-                    serviceModel[paramKey].groupType() || groupType,
-                    serviceModel[paramKey].groupId() || groupId)
-
-            } else if(typeof serviceModel[paramKey] === "object") {
-                this.setUpParameters(serviceModel[paramKey],
-                    groupType,
-                    groupId)
-            }else if(typeof serviceModel[paramKey] !== 'undefined' && typeof serviceModel[paramKey] !== 'function'){
-
-                this.setParamFormat(
-                    paramKey,
+            if (typeof serviceModel[paramKey] === 'object') {
+                this.setUpParameters(
                     serviceModel[paramKey],
-                    groupType,
-                    groupId
+                    serviceModel[paramKey].groupType?.() || groupType,
+                    serviceModel[paramKey].groupId?.() || groupId
                 )
+            } else if (
+                typeof serviceModel[paramKey] !== 'undefined' &&
+                typeof serviceModel[paramKey] !== 'function'
+            ) {
+                this.addParameter(paramKey, serviceModel[paramKey], groupType, groupId)
             }
         }
     }
 
-    setParamFormat (name, value, groupType, groupID) {
-
+    addParameter(name, value, groupType, groupID) {
         this._parameterList.push({
             Name: serviceParameterKeyOf(name),
             Value: value,
@@ -49,7 +38,7 @@ export class ParameterList {
         })
     }
 
-    addParameterList (pay) {
+    addParameterList(pay) {
         this.setUpParameters(pay)
         return this._parameterList
     }

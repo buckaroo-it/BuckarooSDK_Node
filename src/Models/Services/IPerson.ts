@@ -1,6 +1,6 @@
-import Gender from "../../Constants/Gender";
+import Gender from '../../Constants/Gender'
 
-export default interface IPerson  {
+export default interface IPerson {
     category?: string
     gender?: Gender
     culture?: string
