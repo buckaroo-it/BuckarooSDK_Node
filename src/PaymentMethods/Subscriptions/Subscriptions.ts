@@ -1,4 +1,4 @@
-import Subscription, { ISubscription } from './Models/Subscription'
+import { subscription , ISubscription } from './Models/Subscription'
 import { IConfig } from '../../Utils/Types'
 import PaymentMethod from '../PaymentMethod'
 class Subscriptions extends PaymentMethod {
@@ -9,9 +9,8 @@ class Subscriptions extends PaymentMethod {
 
         this.setRequiredFields()
 
-        const services = new Subscription(payload)
+        this.setServiceList(subscription(payload))
 
-        this.setServiceList(services)
         return this.dataRequest()
     }
     update(payload: ISubscription) {
@@ -19,18 +18,14 @@ class Subscriptions extends PaymentMethod {
 
         this.setRequiredFields()
 
-        const services = new Subscription(payload)
-
-        this.setServiceList(services)
+        this.setServiceList(subscription(payload))
 
         return this.dataRequest()
     }
     createCombined(payload: ISubscription) {
         this.action = 'CreateCombinedSubscription'
 
-        const services = new Subscription(payload)
-
-        this.setServiceList(services)
+        this.setServiceList(subscription(payload))
 
         return this
     }
@@ -39,7 +34,7 @@ class Subscriptions extends PaymentMethod {
 
         this.request.setData('startRecurrent', true)
 
-        this.setServiceList(new Subscription(<ISubscription>payload))
+        this.setServiceList(subscription(payload))
 
         return this
     }
@@ -48,7 +43,7 @@ class Subscriptions extends PaymentMethod {
 
         this.setRequiredFields()
 
-        this.setServiceList(new Subscription(<ISubscription>payload))
+        this.setServiceList(this.services(payload))
 
         return this.dataRequest()
     }
@@ -57,7 +52,7 @@ class Subscriptions extends PaymentMethod {
 
         this.setRequiredFields()
 
-        this.setServiceList(new Subscription(<ISubscription>payload))
+        this.setServiceList(this.services(payload))
 
         return this.dataRequest()
     }
@@ -66,7 +61,7 @@ class Subscriptions extends PaymentMethod {
 
         this.setRequiredFields()
 
-        this.setServiceList(new Subscription(<ISubscription>payload))
+        this.setServiceList(this.services(payload))
 
         return this.dataRequest()
     }
@@ -76,7 +71,7 @@ class Subscriptions extends PaymentMethod {
 
         this.setRequiredFields()
 
-        this.setServiceList(new Subscription(<ISubscription>(<unknown>payload)))
+        this.setServiceList(this.services(payload))
 
         return this.dataRequest()
     }
@@ -85,7 +80,7 @@ class Subscriptions extends PaymentMethod {
 
         this.setRequiredFields()
 
-        this.setServiceList(new Subscription(<ISubscription>(<unknown>payload)))
+        this.setServiceList(this.services(payload))
         return this.dataRequest()
     }
 }

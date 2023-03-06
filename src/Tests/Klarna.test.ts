@@ -23,14 +23,14 @@ describe('Testing Klarna methods', () => {
                     },
                     address: {
                         street: 'Hoofdstraat',
-                        houseNumber: '13',
-                        houseNumberAdditional: 'a',
-                        zipcode: '1234AB',
+                        streetNumber: '13',
+                        streetNumberAdditional: 'a',
+                        postalCode: '1234AB',
                         city: 'Heerenveen',
                         country: 'GB'
                     },
                     phone: {
-                        mobile: '0698765433'
+                        phone: '0698765433'
                     },
                     email: 'test@buckaroo.nl'
                 },
@@ -44,9 +44,9 @@ describe('Testing Klarna methods', () => {
                     },
                     address: {
                         street: 'Kalverstraat',
-                        houseNumber: '13',
-                        houseNumberAdditional: 'b',
-                        zipcode: '4321EB',
+                        streetNumber: '13',
+                        streetNumberAdditional: 'b',
+                        postalCode: '4321EB',
                         city: 'Amsterdam',
                         country: 'GB'
                     },
@@ -58,14 +58,14 @@ describe('Testing Klarna methods', () => {
                         description: 'Blue Toy Car',
                         vatPercentage: 21,
                         quantity: 2,
-                        price: 32
+                        grossUnitPrice: 32
                     },
                     {
                         identifier: 'Articlenumber2',
                         description: 'Red Toy Car',
                         vatPercentage: 21,
                         quantity: 1,
-                        price: 10.1
+                        grossUnitPrice: 10.1
                     }
                 ]
             })

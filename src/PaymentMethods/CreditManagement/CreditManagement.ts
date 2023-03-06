@@ -7,6 +7,7 @@ import { debtor, IDebtor } from './Models/Debtor'
 import { IPaymentPlan, paymentPlan } from './Models/PaymentPlan'
 import { Payload } from '../../Models/Payload'
 import { multiInfoInvoice } from './Models/multiInfoInvoice'
+import {ServiceParameter} from "../../Utils/ServiceParameter";
 
 class CreditManagement extends PaymentMethod {
     protected _paymentName = 'CreditManagement3'
@@ -90,10 +91,14 @@ class CreditManagement extends PaymentMethod {
 
         return this.dataRequest()
     }
-    debtorInfo(payload) {
+    debtorInfo(payload: Required<Pick<IInvoice, 'debtor'>>) {
         this.action = 'DebtorInfo'
 
-        this.services = invoice
+        this.services = ({debtor}) => {
+            debtor = new ServiceParameter({DebtorCode:debtor.code})
+            debtor.groupType = 'Debtor'
+            return debtor
+        }
 
         this.setRequest(payload)
 

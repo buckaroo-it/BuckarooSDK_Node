@@ -1,22 +1,31 @@
-import { IArticle, Articles } from './Article'
+import { IKlarnaArticle } from './Article'
 import {
-    BillingRecipient,
-    ShippingRecipient,
     IBillingRecipient,
     IShippingRecipient
 } from './Recipient'
 import { PayPayload } from '../../../Models/Payload'
+import { ServiceParameterList } from "../../../Utils/ServiceParameter";
 
 export interface IPay extends PayPayload {
     billing: IBillingRecipient
     shipping?: IShippingRecipient
-    articles: IArticle[]
+    articles: IKlarnaArticle[]
 }
 
-export const Services = (data) => {
-    return {
-        billing: new BillingRecipient(data.billing),
-        shipping: new ShippingRecipient(data.shipping || data.billing),
-        articles: new Articles(data.articles)
-    }
+export const Services = (data:IPay) => {
+
+    let serviceData = new ServiceParameterList({
+        billing:data.billing,
+        shipping:data.shipping || data.billing,
+        articles:data.articles
+    })
+    serviceData.setGroupTypes({
+        billing:'BillingCostumer',
+        shipping:'ShippingCustomer',
+        articles:'Article',
+    })
+
+    serviceData.setCountable('articles')
+
+    return serviceData
 }

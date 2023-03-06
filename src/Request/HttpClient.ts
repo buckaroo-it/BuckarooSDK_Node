@@ -13,6 +13,7 @@ class HttpClient {
                     }
                 })
                 res.on('end', function () {
+                    console.log(JSON.stringify(body))
                     resolve(body)
                 })
             })

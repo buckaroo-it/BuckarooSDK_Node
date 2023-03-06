@@ -5,8 +5,10 @@ import IPerson from '../../../Models/Services/IPerson'
 import IEmail from '../../../Models/Services/IEmail'
 import ICompany from '../../../Models/Services/ICompany'
 import IDebtor from '../../../Models/Services/IDebtor'
-import { IRatePlan, IRatePlanCharges, RatePlan } from './RatePlan'
-import { ServiceParameter } from './ServiceParameter'
+import { IRatePlan, IRatePlanCharges } from './RatePlan'
+import {ServiceParameterList} from "../../../Utils/ServiceParameter";
+import {serviceParameterKeyOf} from "../../../Utils/Functions";
+import {IConfiguration} from "./Configuration";
 
 export interface ISubscription {
     includeTransaction?: boolean
@@ -25,35 +27,42 @@ export interface ISubscription {
     email: IEmail | string
     phone?: IPhone
     address?: IAddress
-    configuration?: any
+    configuration?: IConfiguration
+    customerIBAN?:string
+    customerAccountName?:string
+    customerBIC?:string
     person?: IPerson
     company?: ICompany
     ratePlans?: IRatePlan
     ratePlanCharges?: IRatePlanCharges
 }
-export default class Subscription implements ISubscription {
-    ratePlans
-    company?
-    ratePlanCharges
-    email
-    configuration?
-    debtor
-    person
-    constructor(data: ISubscription) {
-        for (const dataKey in data) {
-            this[dataKey] = data[dataKey]
-        }
-        this.email = new ServiceParameter(this.email, 'Email', 'email').getData()
-        this.debtor = new ServiceParameter(this.debtor, 'Debtor').getData()
-        this.person = new ServiceParameter(this.person, 'Person').getData()
-        this.configuration = new ServiceParameter(this.configuration, 'AddConfiguration').getData()
+export const subscription = (data) => {
+    let serviceData = new ServiceParameterList(data)
 
-        this.ratePlans = new RatePlan(this.ratePlans)
-        this.ratePlanCharges = new RatePlan(this.ratePlanCharges, 'charge')
-
-        if (this.company) {
-            this.company.name = this.company.companyName
-            delete this.company.companyName
+    serviceData.setGroupTypes({
+        debtor: 'Debtor',
+        person: 'Person',
+        email: 'Email',
+        address: 'Address',
+        configuration: 'AddConfiguration',
+    })
+    if(serviceData.list.company){
+        serviceData.list.company.setKeys({
+            companyName:'Name'
+        })
+    }
+    if(serviceData.list.ratePlans){
+        const types = Object.keys(serviceData.list.ratePlans.data)
+        for (const type of types) {
+            serviceData.list.ratePlans.data[type].groupType = serviceParameterKeyOf(type) + 'RatePlan'
         }
     }
+
+    if(serviceData.list.ratePlanCharges){
+        const types = Object.keys(serviceData.list.ratePlanCharges.data)
+        for (const type of types) {
+            serviceData.list.ratePlanCharges.data[type].groupType = serviceParameterKeyOf(type) + 'RatePlanCharge'
+        }
+    }
+    return serviceData
 }

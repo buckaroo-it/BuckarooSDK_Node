@@ -21,7 +21,6 @@ export class Ideal extends PayablePaymentMethod {
     pay(payload?: IPay): Promise<TransactionResponse> {
         return super.pay(payload)
     }
-
     refund(payload: RefundPayload): Promise<TransactionResponse> {
         this.action = 'Refund'
         return super.pay(payload)

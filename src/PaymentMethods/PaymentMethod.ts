@@ -1,9 +1,9 @@
 import { TransactionRequest } from '../Models/Request'
 import { IConfig } from '../Utils/Types'
 import { ServiceList } from '../Models/ServiceList'
-import { ParameterList } from '../Models/Parameters'
 import { buckarooClient } from '../BuckarooClient'
 import client from '../Request/Client'
+import {ServiceParameterList} from "../Utils/ServiceParameter";
 
 export default abstract class PaymentMethod {
     // protected serviceParameters: Array<string> = []
@@ -12,8 +12,8 @@ export default abstract class PaymentMethod {
     protected _serviceVersion = 0
     protected request: TransactionRequest = new TransactionRequest()
     private _action = ''
-    protected services: (data) => object = (data) => {
-        return {}
+    protected services: (data) => ServiceParameterList = (data) => {
+        return new ServiceParameterList(data)
     }
     get paymentName(): string {
         return this._paymentName
@@ -29,12 +29,12 @@ export default abstract class PaymentMethod {
         this._action = value
     }
 
-    protected setServiceList(serviceList: object) {
+    protected setServiceList(serviceList: ServiceParameterList) {
         let services = new ServiceList({
             name: this.paymentName,
             action: this.action,
             version: this.serviceVersion,
-            parameters: new ParameterList().addParameterList(serviceList)
+            parameters: serviceList.formatServiceParameters()
         })
         this.request.setData('Services', {
             ServiceList: [...this.request.getServiceList(), services]
@@ -63,7 +63,7 @@ export default abstract class PaymentMethod {
         const combineServices = method.request.getData()
 
         if (typeof combineServices !== 'undefined') {
-            this.request.setPayload({ ...combineServices, ...this.request.getData() })
+            this.request.setRequest({ ...combineServices, ...this.request.getData() })
         }
         return this
     }
@@ -75,9 +75,12 @@ export default abstract class PaymentMethod {
         return client.dataRequest(this.request.getData())
     }
     protected setRequest(data) {
+
+        //Get Services
         const services = this.services(data)
+
         //Set the Payload
-        this.request.setPayload(this.request.filterServices(data, services))
+        this.request.setRequest(this.request.filterServices(data, services))
 
         //Set required Fields
         this.setRequiredFields()

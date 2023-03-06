@@ -5,8 +5,7 @@ import IAddress from '../../../Models/Services/IAddress'
 import IPerson from '../../../Models/Services/IPerson'
 import ICompany from '../../../Models/Services/ICompany'
 import { ICreditArticle } from './Article'
-import Person from '../../Klarna/Models/Person'
-import { ServiceParameter } from '../../../Utils/ServiceParameter'
+import {ServiceParameterList} from '../../../Utils/ServiceParameter'
 import { Payload } from '../../../Models/Payload'
 
 export interface IInvoice extends Payload {
@@ -33,31 +32,7 @@ export interface IInvoice extends Payload {
     poNumber?: string
 }
 export const invoice = (data: IInvoice) => {
-    const groupTypes = {
-        articles: {
-            groupType: 'ProductLine'
-        },
-        address: {
-            groupType: 'Address'
-        },
-        company: {
-            groupType: 'Company'
-        },
-        person: {
-            groupType: 'Person'
-        },
-        debtor: {
-            groupType: 'Debtor'
-        },
-        email: {
-            groupType: 'Email'
-        },
-        phone: {
-            groupType: 'Phone'
-        }
-    }
-
-    let serviceData: { [K in keyof Omit<IInvoice, keyof Payload>]: any } = {
+    let services = new ServiceParameterList({
         invoiceAmount: data.invoiceAmount,
         invoiceDate: data.invoiceDate,
         dueDate: data.dueDate,
@@ -79,23 +54,23 @@ export const invoice = (data: IInvoice) => {
         phone: data.phone,
         invoiceNumber: data.invoiceNumber,
         schemeKey: data.schemeKey
-    }
-    for (const dataKey in serviceData) {
-        if (groupTypes[dataKey]) {
-            serviceData[dataKey] = new ServiceParameter(
-                data[dataKey],
-                dataKey,
-                groupTypes[dataKey].groupType
-            )
-        }
-    }
-    if (serviceData.articles instanceof ServiceParameter) {
-        serviceData.articles.makeCountable('articles')
-        serviceData.articles.setKeys({
+    })
+    services.setGroupTypes({
+        articles: 'ProductLine',
+        address: 'Address',
+        company: 'Company',
+        person: 'Person',
+        debtor: 'Debtor',
+        email: 'Email',
+        phone: 'Phone'
+    })
+    if (services.list.articles) {
+        services.list.articles.setKeys({
             identifier: 'ProductId',
             description: 'ProductName',
             price: 'PricePerUnit'
         })
+        services.setCountable('articles')
     }
-    return <IInvoice>serviceData
+    return services
 }

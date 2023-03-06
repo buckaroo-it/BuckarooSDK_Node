@@ -43,8 +43,8 @@ test('Create', async () => {
             ratePlanCharges: {
                 add: {
                     ratePlanChargeName: 'pay and use',
-                    rateplanChargeProductId: '',
-                    rateplanChargeDescription: 'asd',
+                    ratePlanChargeProductId: '',
+                    ratePlanChargeDescription: 'asd',
                     unitOfMeasure: '',
                     ratePlanChargeType: 'Recurring',
                     baseNumberOfUnits: 1,
@@ -71,12 +71,7 @@ test('Update', async () => {
                     ratePlanGuid: 'F075470B1BB24B9291943A888A2Fxxxx',
                     startDate: '2022-01-01',
                     endDate: '2030-01-01',
-                    charge: {
-                        ratePlanChargeGuid: 'AD375E2E188747159673440898B9xxxx',
-                        baseNumberOfUnits: '1',
-                        pricePerUnit: 10
-                    }
-                }
+                },
             }
         })
         .then((data) => {

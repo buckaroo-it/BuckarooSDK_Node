@@ -11,7 +11,6 @@ export class Klarna extends PayablePaymentMethod {
 
     protected services = (payload) => Services(payload)
     async pay(payload: IPay): Promise<TransactionResponse> {
-        this.action = 'Pay'
         return super.pay(payload)
     }
     refund(payload: RefundPayload) {

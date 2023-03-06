@@ -6,13 +6,13 @@ export abstract class PayablePaymentMethod extends PaymentMethod {
     protected pay(payload?) {
         //SetPayPayLoad
         if (payload) this.setPayload(payload)
-
         //Call Transaction
         return this.transactionRequest()
     }
 
     setPayload(payload: Payload) {
         payload['order'] = payload['order'] || uniqid()
+        payload['invoice'] = payload['invoice'] || uniqid()
         this.action = 'Pay'
         this.setRequest(payload)
     }

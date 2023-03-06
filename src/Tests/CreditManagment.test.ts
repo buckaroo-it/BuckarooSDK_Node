@@ -19,10 +19,20 @@ test('Pause', async () => {
         console.log(JSON.stringify(data))
     })
 })
+test('Debtor', async () => {
+    await creditM.debtorInfo({
+        debtor: {
+            code:'adsad'
+        }
+    }).then((data) => {
+        expect(data).toBeDefined()
+        console.log(JSON.stringify(data))
+    })
+})
 test('Info', async () => {
     await creditM
         .invoiceInfo({
-            invoice: 'test'
+            invoice: ['das','dsad']
         })
         .then((data) => {
             expect(data).toBeDefined()
@@ -99,11 +109,11 @@ const invoice = (append: object = {}): IInvoice => {
                 productGroupOrderIndex: 1,
                 productOrderIndex: 2,
                 type: 'Regular',
-                identifier: 'ART12',
-                description: 'Blue Toy Car',
+                identifier: 'ART2',
+                description: 'Red Toy Car',
                 quantity: 3,
                 unitOfMeasurement: 'piece(s)',
-                price: 10,
+                price: 15,
                 discountPercentage: 20,
                 totalDiscount: 6,
                 vatPercentage: 21,

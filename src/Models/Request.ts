@@ -14,11 +14,14 @@ export class Request {
 }
 
 export class TransactionRequest extends Request {
+
+    public setRequest(data) {
+        this.data = data
+    }
     public setPayload(payload: Payload) {
         this.data = payload
         this.getPayload().invoice = payload.invoice || uniqid()
     }
-
     public setServices(serviceList: IServiceList[]) {
         this.getPayload().services = {
             ServiceList: serviceList
@@ -37,7 +40,7 @@ export class TransactionRequest extends Request {
         }
     }
     public filterServices(data, services) {
-        const serviceKeys = Object.keys(services)
+        const serviceKeys = Object.keys(services.list)
         for (const serviceKey of serviceKeys) {
             delete data[serviceKey]
         }

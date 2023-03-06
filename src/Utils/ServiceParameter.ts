@@ -1,42 +1,87 @@
+import {serviceParameterKeyOf} from "./Functions";
+
 export class ServiceParameter {
-    constructor(data, dataKey, groupType = '') {
-        this[dataKey] = data
-        this.setGroupType(groupType)
+    data: any
+    private _groupId: (() => string | Number) = () => ''
+    private _groupType:(() => string) = () => ''
+
+    constructor(data) {
+        this.data = typeof data === 'object' ?  new ServiceParameterList(data) : data
     }
-    private setObjectKeys(keys: { [key: string]: string }) {
-        for (const keysKey in keys) {
-            if (this[keysKey]) {
-                delete Object.assign(this, { [keys[keysKey]]: this[keysKey] })[keysKey]
-            }
-        }
+    get groupId(): string | Number {
+        return this._groupId();
     }
-    setKeys(keys: { [key: string]: any }) {
-        for (const pkey in this) {
-            if (typeof this[pkey] === 'object') {
-                if (Array.isArray(this[pkey])) {
-                    for (const arrayKey in this[pkey]) {
-                        this.setObjectKeys.call(this[pkey][arrayKey], keys)
-                    }
-                } else {
-                    this.setObjectKeys.call(this[pkey], keys)
-                }
-            } else if (typeof this[pkey] !== 'function') {
-                this.setObjectKeys.call(this, keys)
-            }
-        }
+    set groupId(value:string | Number) {
+        this._groupId =  () => value;
     }
 
-    groupType: () => string = () => ''
-    setGroupType(type) {
-        this.groupType = () => type
+    get groupType(): string {
+        return this._groupType();
     }
-    groupId: () => string | number = () => ''
-    setGroupId(id) {
-        this.groupId = () => id
+    set groupType(value: string) {
+        this._groupType = () => value;
     }
-    makeCountable(parameterKey) {
-        for (const argumentsKey in this[parameterKey]) {
-            this[parameterKey][argumentsKey].groupId = () => parseInt(argumentsKey) + 1
+    setObjectKeys(key,value) {
+        if (this.data[key]) {
+            delete Object.assign(this.data, {[value]: this.data[key]})[key]
         }
+    }
+    setKeys(keys: { [key: string]: string }){
+        // if (typeof Array.isArray(this.data)){
+        //     for (const keysKeyElement of this.data) {
+        //         if (keysKeyElement instanceof ServiceParameter){
+        //             keysKeyElement.setKeys(keys)
+        //         }
+        //     }
+        // }else{
+        //     for (const keysKey in keys) {
+        //         if (this.data[keysKey]) {
+        //             this.setObjectKeys(keysKey, keys[keysKey])
+        //         }
+        //     }
+        // }
+    }
+}
+export class ServiceParameterList {
+    list:{[key:string]:ServiceParameter} = {}
+
+    constructor(data:object) {
+        for (const key of Object.keys(data)) {
+            if(typeof data[key] !== 'undefined')
+                this.list[key] = new ServiceParameter(data[key])
+        }
+    }
+    setGroupTypes(groupTypes:any){
+        for (const groupKey in groupTypes) {
+            if (this.list[groupKey])
+                this.list[groupKey].groupType = groupTypes[groupKey]
+        }
+    }
+    setCountable(param:string){
+       if (this.list[param]?.data instanceof ServiceParameterList){
+           for (const paramKey in this.list[param]?.data.list) {
+               this.list[param].data.list[paramKey].groupId = parseInt(paramKey)+1
+           }
+       }
+    }
+    formatServiceParameters(data:{}[] = [] , groupId:Number|string = '',groupType = ''){
+        for (const paramsKey in this.list) {
+            if (this.list[paramsKey].data instanceof ServiceParameterList) {
+                this.list[paramsKey].data.formatServiceParameters(
+                    data,
+                    this.list[paramsKey].groupId || groupId,
+                    this.list[paramsKey].groupType || groupType,
+                )
+            }
+            else{
+                data.push({
+                    Name:serviceParameterKeyOf(paramsKey),
+                    Value:this.list[paramsKey].data,
+                    GroupID:this.list[paramsKey].groupId || groupId,
+                    GroupType:this.list[paramsKey].groupType || groupType
+                })
+            }
+        }
+        return data
     }
 }
