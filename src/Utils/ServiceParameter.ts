@@ -1,4 +1,5 @@
 import {serviceParameterKeyOf} from "./Functions";
+import {IParameter} from "../Models/Parameters";
 
 export class ServiceParameter {
     data: any
@@ -21,35 +22,23 @@ export class ServiceParameter {
     set groupType(value: string) {
         this._groupType = () => value;
     }
-    setObjectKeys(key,value) {
-        if (this.data[key]) {
-            delete Object.assign(this.data, {[value]: this.data[key]})[key]
-        }
-    }
     setKeys(keys: { [key: string]: string }){
-        // if (typeof Array.isArray(this.data)){
-        //     for (const keysKeyElement of this.data) {
-        //         if (keysKeyElement instanceof ServiceParameter){
-        //             keysKeyElement.setKeys(keys)
-        //         }
-        //     }
-        // }else{
-        //     for (const keysKey in keys) {
-        //         if (this.data[keysKey]) {
-        //             this.setObjectKeys(keysKey, keys[keysKey])
-        //         }
-        //     }
-        // }
+        if (this.data instanceof ServiceParameterList){
+            this.data.setKeys(keys)
+        }
     }
 }
 export class ServiceParameterList {
     list:{[key:string]:ServiceParameter} = {}
 
-    constructor(data:object) {
+    constructor(data:object = {}) {
         for (const key of Object.keys(data)) {
             if(typeof data[key] !== 'undefined')
                 this.list[key] = new ServiceParameter(data[key])
         }
+    }
+    getParameter(param){
+        return this.list[param]
     }
     setGroupTypes(groupTypes:any){
         for (const groupKey in groupTypes) {
@@ -57,14 +46,13 @@ export class ServiceParameterList {
                 this.list[groupKey].groupType = groupTypes[groupKey]
         }
     }
-    setCountable(param:string){
-       if (this.list[param]?.data instanceof ServiceParameterList){
-           for (const paramKey in this.list[param]?.data.list) {
-               this.list[param].data.list[paramKey].groupId = parseInt(paramKey)+1
-           }
-       }
+    setCountable(param:any){
+        let i = 1
+        for (const paramKey in this.list[param].data.list) {
+            this.list[param].data.list[paramKey].groupId = i++
+        }
     }
-    formatServiceParameters(data:{}[] = [] , groupId:Number|string = '',groupType = ''){
+    formatServiceParameters(data:IParameter[] = [] , groupId:Number|string = '', groupType = ''):IParameter[]{
         for (const paramsKey in this.list) {
             if (this.list[paramsKey].data instanceof ServiceParameterList) {
                 this.list[paramsKey].data.formatServiceParameters(
@@ -83,5 +71,14 @@ export class ServiceParameterList {
             }
         }
         return data
+    }
+    setKeys(keys){
+        for (const param in this.list) {
+            if(keys[param]){
+                delete Object.assign(this.list, {[keys[param]]: this.list[param]})[param]
+            }else{
+                this.list[param].setKeys(keys)
+            }
+        }
     }
 }

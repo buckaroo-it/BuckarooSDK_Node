@@ -1,44 +1,103 @@
 import { initializeBuckarooClient } from '../BuckarooClient'
-import { creditManagement } from '../PaymentMethods/CreditManagement/CreditManagement'
+import CreditManagement from '../PaymentMethods/CreditManagement'
 import { IInvoice } from '../PaymentMethods/CreditManagement/Models/Invoice'
 import Gender from '../Constants/Gender'
+import ideal from "../PaymentMethods/Ideal/index";
 
 initializeBuckarooClient()
 
-const creditM = creditManagement()
-test('CreateInvoice', async () => {
-    await creditM.createInvoice(invoice()).then((data) => {
-        expect(data).toBeDefined()
-        console.log(JSON.stringify(data))
-    })
-})
+const creditManagement = CreditManagement()
 
-test('Pause', async () => {
-    await creditM.pauseInvoice({ invoice: 'd42' }).then((data) => {
-        expect(data).toBeDefined()
-        console.log(JSON.stringify(data))
-    })
-})
-test('Debtor', async () => {
-    await creditM.debtorInfo({
-        debtor: {
-            code:'adsad'
-        }
-    }).then((data) => {
-        expect(data).toBeDefined()
-        console.log(JSON.stringify(data))
-    })
-})
-test('Info', async () => {
-    await creditM
-        .invoiceInfo({
-            invoice: ['das','dsad']
-        })
-        .then((data) => {
+
+describe('Testing Credit Management', () => {
+
+    test('CreateInvoice', async () => {
+        await creditManagement.createInvoice(invoice()).then((data) => {
             expect(data).toBeDefined()
             console.log(JSON.stringify(data))
         })
-})
+    })
+
+    test('Pause Invoice', async () => {
+        await creditManagement.pauseInvoice({invoice: 'd42'}).then((data) => {
+            expect(data).toBeDefined()
+            console.log(JSON.stringify(data))
+        })
+    })
+    test('Debtor Info', async () => {
+        await creditManagement.debtorInfo({
+            debtor: {
+                code: 'adsad'
+            }
+        }).then((data) => {
+            expect(data).toBeDefined()
+            console.log(JSON.stringify(data))
+        })
+    })
+    test('Invoice Info', async () => {
+        await creditManagement
+            .invoiceInfo({
+                invoice: 'invoice1',
+                invoices:[
+                    'invoice2',
+                    'invoice3'
+                ]
+            })
+            .then((data) => {
+                expect(data).toBeDefined()
+                console.log(JSON.stringify(data))
+            })
+    })
+    test('UnPause Invoice', async () => {
+        await creditManagement.unpauseInvoice({invoice: 'd42'}).then((data) => {
+            expect(data).toBeDefined()
+        })
+    })
+    test('AddOrUpdateProductLines', async () => {
+        await creditManagement.addOrUpdateProductLines({
+            invoiceKey: 'd42',
+            articles:[
+                {
+                    type: "Regular",
+                    identifier: "Articlenumber1",
+                    description: "Blue Toy Car",
+                    vatPercentage: 21,
+                    totalVat: 12,
+                    totalAmount: 123,
+                    quantity: 2,
+                    price: 20.10
+                },
+                {
+                    type: "Regular",
+                    identifier: "Articlenumber2",
+                    description: "Red Toy Car",
+                    vatPercentage: 21,
+                    totalVat: 12,
+                    totalAmount: 123,
+                    quantity: 1,
+                    price: 10.10
+                }
+            ]
+        }).then((data) => {
+            expect(data).toBeDefined()
+        })
+    })
+    test('resumeDebtorFile', async () => {
+        await creditManagement.resumeDebtorFile({debtorFileGuid: 'd42'}).then((data) => {
+            expect(data).toBeDefined()
+        })
+    })
+    test('pauseDebtorFile', async () => {
+        await creditManagement.pauseDebtorFile({debtorFileGuid: 'd42'}).then((data) => {
+            expect(data).toBeDefined()
+        })
+    })
+    test('CreateCombinedInvoice', async () => {
+        creditManagement.createCombinedInvoice(invoice()).
+        combine(ideal())
+    })
+});
+
 
 const invoice = (append: object = {}): IInvoice => {
     return {

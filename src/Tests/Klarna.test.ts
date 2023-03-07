@@ -1,13 +1,13 @@
-import { Klarna } from '../PaymentMethods/Klarna/Klarna'
+import Klarna from '../PaymentMethods/Klarna'
 import { uniqid } from '../Utils/Functions'
 import { buckarooClient, initializeBuckarooClient } from '../BuckarooClient'
 initializeBuckarooClient()
 
-const klarnaTest = new Klarna()
+const klarna = Klarna()
 
 describe('Testing Klarna methods', () => {
     test('Pay', async () => {
-        await klarnaTest
+        await klarna
             .pay({
                 currency: buckarooClient().getConfig().currency || '',
                 order: uniqid(),
@@ -58,14 +58,14 @@ describe('Testing Klarna methods', () => {
                         description: 'Blue Toy Car',
                         vatPercentage: 21,
                         quantity: 2,
-                        grossUnitPrice: 32
+                        price: 32
                     },
                     {
                         identifier: 'Articlenumber2',
                         description: 'Red Toy Car',
                         vatPercentage: 21,
                         quantity: 1,
-                        grossUnitPrice: 10.1
+                        price: 10.1
                     }
                 ]
             })

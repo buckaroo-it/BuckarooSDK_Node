@@ -1,10 +1,10 @@
 import { IPay, Services } from './Models/Pay'
-import client from '../../Request/Client'
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { RefundPayload } from '../../Models/Payload'
+import { RefundPayload } from '../../Models/ITransaction'
 import { IConfig } from '../../Utils/Types'
 import { TransactionResponse } from '../../Models/TransactionResponse'
-export class Ideal extends PayablePaymentMethod {
+import { buckarooClient } from "../../BuckarooClient";
+class Ideal extends PayablePaymentMethod {
     protected _paymentName = 'ideal'
     protected _serviceVersion = 2
     protected requiredFields: Array<keyof IConfig> = [
@@ -13,12 +13,11 @@ export class Ideal extends PayablePaymentMethod {
         'returnURLCancel',
         'pushURL'
     ]
-
-    protected services = (payload) => Services(payload)
+    protected services = Services
     setPayload(payload: IPay) {
         super.setPayload(payload)
     }
-    pay(payload?: IPay): Promise<TransactionResponse> {
+    pay(payload?: IPay) {
         return super.pay(payload)
     }
     refund(payload: RefundPayload): Promise<TransactionResponse> {
@@ -26,7 +25,7 @@ export class Ideal extends PayablePaymentMethod {
         return super.pay(payload)
     }
     issuers() {
-        return client.specification(this.paymentName, 2).then((response) => {
+        return buckarooClient().client().specification(this.paymentName, 2).then((response) => {
             const issuerList: { id: any; name: any }[] = []
             if (response?.Actions?.['0']?.RequestParameters?.[0]?.ListItemDescriptions) {
                 const issuersData = response.Actions['0'].RequestParameters[0].ListItemDescriptions
@@ -44,6 +43,10 @@ export class Ideal extends PayablePaymentMethod {
         })
     }
 }
-const ideal = new Ideal()
-
-export { ideal }
+let _ideal:Ideal
+const ideal = () => {
+    if (!_ideal)
+        _ideal = new Ideal()
+    return _ideal
+}
+export default ideal

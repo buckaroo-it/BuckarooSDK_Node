@@ -6,6 +6,14 @@ import { buckarooClient } from '../BuckarooClient'
 import PaymentMethod from '../PaymentMethods/PaymentMethod'
 
 class Client {
+
+    private constructor() {}
+
+    static initialize(config,credentials){
+        if(!config || !credentials)
+            throw new Error('Initialize Buckaroo Client with credentials!!')
+        return new Client()
+    }
     getHeaders(method, data, url) {
         return {
             'Content-Type': 'application/json; charset=utf-8',
@@ -58,7 +66,6 @@ class Client {
 
     specification(paymentName?: string, serviceVersion = 0) {
         const endPoint = this.getSpecificationUrl(paymentName, serviceVersion)
-
         return this.get(endPoint)
     }
     specifications(
@@ -111,6 +118,4 @@ class Client {
         return this.post(data, endPoint)
     }
 }
-
-const client = new Client()
-export default client
+export default Client

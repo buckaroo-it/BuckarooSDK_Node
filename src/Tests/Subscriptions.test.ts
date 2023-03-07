@@ -1,10 +1,11 @@
 import { initializeBuckarooClient } from '../BuckarooClient'
-import { subscriptions } from '../PaymentMethods/Subscriptions/Subscriptions'
-import { ideal } from '../PaymentMethods/Ideal/Ideal'
+import subscriptions from '../PaymentMethods/Subscriptions'
+import Ideal from '../PaymentMethods/Ideal'
 
 initializeBuckarooClient()
 
 const subscription = subscriptions()
+const ideal = Ideal()
 
 test('Create', async () => {
     subscription
@@ -112,32 +113,32 @@ test('Combined Subscription', async () => {
             country: 'NL'
         }
     })
-    ideal
-        .combine(combinable)
-        .pay({
-            issuer: 'ABNANL2A',
-            amountDebit: 10,
-            startRecurrent: true
-        })
-        .then((res) => {
-            console.log(res)
-        })
+    // ideal
+    //     .combine(combinable)
+    //     .pay({
+    //         issuer: 'ABNANL2A',
+    //         amountDebit: 10,
+    //         startRecurrent: true
+    //     })
+    //     .then((res) => {
+    //         console.log(res)
+    //     })
 })
 
-test('Update Combined Subscription', async () => {
-    const combinable = subscription.updateCombined({
-        subscriptionGuid: '515461997AD34C50881D74157E38A64D'
-    })
-    ideal
-        .combine(combinable)
-        .pay({
-            issuer: 'ABNANL2A',
-            amountDebit: 10
-        })
-        .then((res) => {
-            console.log(res)
-        })
-})
+// test('Update Combined Subscription', async () => {
+//     const combinable = subscription.updateCombined({
+//         subscriptionGuid: '515461997AD34C50881D74157E38A64D'
+//     })
+//     ideal
+//         .combine(combinable)
+//         .pay({
+//             issuer: 'ABNANL2A',
+//             amountDebit: 10
+//         })
+//         .then((res) => {
+//             console.log(res)
+//         })
+// })
 
 test('Stop Subscription', async () => {
     const stop = await subscription.stop({

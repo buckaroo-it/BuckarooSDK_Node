@@ -1,5 +1,5 @@
-import { ServiceList } from './ServiceList'
-import { AdditionalParameter } from './Payload'
+import { IServiceList } from './ServiceList'
+import { AdditionalParameter } from './ITransaction'
 
 export declare interface TransactionResponse {
     Key: string
@@ -31,7 +31,7 @@ export declare interface TransactionResponse {
         Name: string
         TypeDeprecated: number
     }
-    Services: ServiceList[]
+    Services: IServiceList[]
     CustomParameters: {
         List: AdditionalParameter[]
     }

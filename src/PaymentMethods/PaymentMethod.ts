@@ -1,12 +1,11 @@
 import { TransactionRequest } from '../Models/Request'
 import { IConfig } from '../Utils/Types'
-import { ServiceList } from '../Models/ServiceList'
 import { buckarooClient } from '../BuckarooClient'
-import client from '../Request/Client'
 import {ServiceParameterList} from "../Utils/ServiceParameter";
-
+import Model from "../Models/Model";
+import {Combinable} from "../Utils/Combinable";
+import {PayablePaymentMethod} from "./PayablePaymentMethod";
 export default abstract class PaymentMethod {
-    // protected serviceParameters: Array<string> = []
     protected readonly requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
     protected _paymentName = ''
     protected _serviceVersion = 0
@@ -30,19 +29,16 @@ export default abstract class PaymentMethod {
     }
 
     protected setServiceList(serviceList: ServiceParameterList) {
-        let services = new ServiceList({
+        this.request.addServices({
             name: this.paymentName,
             action: this.action,
             version: this.serviceVersion,
             parameters: serviceList.formatServiceParameters()
         })
-        this.request.setData('Services', {
-            ServiceList: [...this.request.getServiceList(), services]
-        })
     }
     protected setAdditionalParameters(additionalParameters?: AdditionalParameters) {
         if (additionalParameters) {
-            this.request.setData('additionalParameters', {
+            this.request.setDataKey('additionalParameters', {
                 additionalParameter: Object.keys(additionalParameters).map((key) => {
                     return {
                         name: key,
@@ -56,31 +52,43 @@ export default abstract class PaymentMethod {
     protected setRequiredFields() {
         for (const requiredField of this.requiredFields) {
             if (!this.request.getData()[requiredField])
-                this.request.setData(requiredField, buckarooClient().getConfig()[requiredField])
+                this.request.setDataKey(requiredField, buckarooClient().getConfig()[requiredField])
         }
     }
-    combine(method) {
-        const combineServices = method.request.getData()
-
-        if (typeof combineServices !== 'undefined') {
-            this.request.setRequest({ ...combineServices, ...this.request.getData() })
+    combine(method: Combinable) {
+        if(typeof method['pay'] === 'function'){
+            if (this['pay'] === 'function'){
+                throw new Error('Cannot Combine')
+            }
+            let services = method["request"].getData().services
+            if(services) {
+                this["request"].addServices(services.ServiceList[0])
+            }
+            return method
+        }else {
+            let services = this.request.getData().services
+            if(services) {
+                method["request"].addServices(services.ServiceList[0])
+            }
+            return this
         }
-        return this
     }
     protected transactionRequest() {
-        return client.post(this.request.getData(), client.getTransactionUrl())
+        return buckarooClient().client().post(this.request.getData(), buckarooClient().client().getTransactionUrl())
     }
 
     protected dataRequest() {
-        return client.dataRequest(this.request.getData())
+        return buckarooClient().client().dataRequest(this.request.getData())
     }
     protected setRequest(data) {
 
+        const model = new Model(data)
+
         //Get Services
-        const services = this.services(data)
+        const services = this.services(model.filter(this.request.requestParams()))
 
         //Set the Payload
-        this.request.setRequest(this.request.filterServices(data, services))
+        this.request.setData(model.only(this.request.requestParams()))
 
         //Set required Fields
         this.setRequiredFields()
@@ -92,10 +100,9 @@ export default abstract class PaymentMethod {
         this.setAdditionalParameters(data.additionalParameters)
     }
     public specifications() {
-        return client.specification(this.paymentName, this.serviceVersion)
+        return buckarooClient().client().specification(this.paymentName, this.serviceVersion)
     }
 }
-
 export declare interface AdditionalParameters {
     additionalParameters?: Array<any>
 }

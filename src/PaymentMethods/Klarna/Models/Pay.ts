@@ -3,10 +3,10 @@ import {
     IBillingRecipient,
     IShippingRecipient
 } from './Recipient'
-import { PayPayload } from '../../../Models/Payload'
+import { Payload } from '../../../Models/ITransaction'
 import { ServiceParameterList } from "../../../Utils/ServiceParameter";
 
-export interface IPay extends PayPayload {
+export interface IPay extends Payload {
     billing: IBillingRecipient
     shipping?: IShippingRecipient
     articles: IKlarnaArticle[]
@@ -23,6 +23,9 @@ export const Services = (data:IPay) => {
         billing:'BillingCostumer',
         shipping:'ShippingCustomer',
         articles:'Article',
+    })
+    serviceData.list.articles.setKeys({
+        price:'grossUnitPrice'
     })
 
     serviceData.setCountable('articles')

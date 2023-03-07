@@ -2,11 +2,11 @@ import { initializeBuckarooClient } from '../src/BuckarooClient'
 
 initializeBuckarooClient()
 
-import { ideal } from '../src/PaymentMethods/Ideal/Ideal'
+import ideal from '../src/PaymentMethods/Ideal'
 
 ;(async () => {
     try {
-        const response = await ideal.pay({
+        const response = await ideal().pay({
             order: '123',
             invoice: '894156',
             amountDebit: 10.1,

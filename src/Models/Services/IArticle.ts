@@ -4,9 +4,9 @@ export default interface IArticle {
     brand?: string
     manufacturer?: string
     unitCode?: string
-    quantity?: number
-    price?: number
-    vatCategory?: number
-    vatPercentage?: number
+    quantity?: Number
+    price?: Number
+    vatCategory?: Number
+    vatPercentage?: Number
     description?: string
 }

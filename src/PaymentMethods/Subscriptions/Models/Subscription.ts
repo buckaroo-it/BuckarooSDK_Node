@@ -36,9 +36,8 @@ export interface ISubscription {
     ratePlans?: IRatePlan
     ratePlanCharges?: IRatePlanCharges
 }
-export const subscription = (data) => {
+export const subscription = (data:ISubscription) => {
     let serviceData = new ServiceParameterList(data)
-
     serviceData.setGroupTypes({
         debtor: 'Debtor',
         person: 'Person',
@@ -51,6 +50,7 @@ export const subscription = (data) => {
             companyName:'Name'
         })
     }
+    serviceData.getParameter('company')
     if(serviceData.list.ratePlans){
         const types = Object.keys(serviceData.list.ratePlans.data)
         for (const type of types) {

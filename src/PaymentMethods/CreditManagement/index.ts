@@ -5,28 +5,28 @@ import { creditNote, ICreditNote } from './Models/CreditNote'
 import { uniqid } from '../../Utils/Functions'
 import { debtor, IDebtor } from './Models/Debtor'
 import { IPaymentPlan, paymentPlan } from './Models/PaymentPlan'
-import { Payload } from '../../Models/Payload'
+import { ITransaction } from '../../Models/ITransaction'
 import { multiInfoInvoice } from './Models/multiInfoInvoice'
-import {ServiceParameter} from "../../Utils/ServiceParameter";
+import { ServiceParameterList} from "../../Utils/ServiceParameter";
+import {AddOrUpdateProductLines, IAddOrUpdateProductLines} from "./Models/AddOrUpdateProductLines";
 
 class CreditManagement extends PaymentMethod {
     protected _paymentName = 'CreditManagement3'
     protected requiredFields: Array<keyof IConfig> = ['currency']
 
-    _serviceVersion = 1
+    protected _serviceVersion = 1
     createInvoice(payload: IInvoice): Promise<any> {
         this.action = 'CreateInvoice'
         this.services = invoice
-        this.request.setData('invoice', uniqid())
+        payload.invoice = payload.invoice || uniqid()
         this.setRequest(payload)
+
         return this.dataRequest()
     }
     createCombinedInvoice(payload: IInvoice) {
         this.action = 'CreateCombinedInvoice'
-
         this.services = invoice
-        this.request.setData('invoice', uniqid())
-
+        payload.invoice = payload.invoice || uniqid()
         this.setRequest(payload)
 
         return this
@@ -67,14 +67,14 @@ class CreditManagement extends PaymentMethod {
 
         return this.dataRequest()
     }
-    pauseInvoice(payload: Required<Pick<Payload, 'invoice'>>) {
+    pauseInvoice(payload: Required<Pick<ITransaction, 'invoice'>>) {
         this.action = 'PauseInvoice'
 
         this.setRequest(payload)
 
         return this.dataRequest()
     }
-    unpauseInvoice(payload: Required<Pick<Payload, 'invoice'>>) {
+    unpauseInvoice(payload: Required<Pick<ITransaction, 'invoice'>>) {
         this.action = 'UnpauseInvoice'
 
         this.setRequest(payload)
@@ -82,11 +82,14 @@ class CreditManagement extends PaymentMethod {
         return this.dataRequest()
     }
 
-    invoiceInfo(payload: { invoice: string | string[] }) {
+    invoiceInfo(payload: { invoice: string | string[],invoices?:string[] }) {
         this.action = 'InvoiceInfo'
         if (Array.isArray(payload.invoice)) {
-            this.services = multiInfoInvoice
+            payload.invoices = payload.invoice
+            payload.invoice = payload.invoice[0]
         }
+        this.services = multiInfoInvoice
+
         this.setRequest(payload)
 
         return this.dataRequest()
@@ -94,10 +97,12 @@ class CreditManagement extends PaymentMethod {
     debtorInfo(payload: Required<Pick<IInvoice, 'debtor'>>) {
         this.action = 'DebtorInfo'
 
-        this.services = ({debtor}) => {
-            debtor = new ServiceParameter({DebtorCode:debtor.code})
-            debtor.groupType = 'Debtor'
-            return debtor
+        this.services = (data:typeof payload) => {
+            let serviceData = new ServiceParameterList(data)
+            serviceData.setGroupTypes({
+                debtor:'Debtor'
+            })
+            return serviceData
         }
 
         this.setRequest(payload)
@@ -105,35 +110,36 @@ class CreditManagement extends PaymentMethod {
         return this.dataRequest()
     }
 
-    addOrUpdateProductLines(payload) {
+    addOrUpdateProductLines(payload:IAddOrUpdateProductLines) {
         this.action = 'AddOrUpdateProductLines'
 
-        this.services = invoice
+        this.services = AddOrUpdateProductLines
 
         this.setRequest(payload)
 
         return this.dataRequest()
     }
 
-    resumeDebtorFile(payload) {
+    resumeDebtorFile(payload:{ debtorFileGuid:string }) {
         this.action = 'ResumeDebtorFile'
 
-        this.services = invoice
-
-        this.setRequest(payload)
+        this.setServiceList(this.services(payload))
 
         return this.dataRequest()
     }
 
-    pauseDebtorFile(payload) {
+    pauseDebtorFile(payload:{ debtorFileGuid:string }) {
         this.action = 'PauseDebtorFile'
 
-        this.services = invoice
-
-        this.setRequest(payload)
+        this.setServiceList(this.services(payload))
 
         return this.dataRequest()
     }
 }
-const creditManagement = () => new CreditManagement()
-export { creditManagement }
+let _creditManagement:CreditManagement
+const creditManagement = () => {
+    if (!_creditManagement)
+        _creditManagement = new CreditManagement()
+    return _creditManagement
+}
+export default creditManagement

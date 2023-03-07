@@ -1,6 +1,5 @@
-import { IServices } from './ServiceList'
 
-export declare interface Payload {
+export declare interface ITransaction {
     clientIP?: ClientIP
     currency?: string
     returnURL?: string
@@ -13,7 +12,7 @@ export declare interface Payload {
     description?: string
     originalTransactionKey?: string
     originalTransactionReference?: string
-    websiteKey?: string
+    // websiteKey?: string
     culture?: string
     startRecurrent?: boolean
     continueOnIncomplete?: string
@@ -21,7 +20,7 @@ export declare interface Payload {
     servicesExcludedForClient?: string
     customParameters?: Array<any>
     additionalParameters?: AdditionalParameter
-    services?: IServices
+    // services?: IServices
 }
 
 export declare interface ClientIP {
@@ -33,12 +32,12 @@ export declare type AdditionalParameter = {
     [name: string]: string | number
 }
 
-export declare interface PayPayload extends Payload {
+export declare interface Payload extends ITransaction {
     order?: string
     amountDebit: number
 }
 
-export declare interface RefundPayload extends Payload {
+export declare interface RefundPayload extends ITransaction {
     order?: string
     amountCredit: number
     originalTransactionKey: string

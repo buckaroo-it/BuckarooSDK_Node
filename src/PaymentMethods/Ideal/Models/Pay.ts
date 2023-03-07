@@ -1,7 +1,7 @@
-import { PayPayload } from '../../../Models/Payload'
+import { Payload } from '../../../Models/ITransaction'
 import { ServiceParameterList } from "../../../Utils/ServiceParameter";
 
-export interface IPay extends PayPayload {
+export interface IPay extends Payload {
     issuer: string
 }
 

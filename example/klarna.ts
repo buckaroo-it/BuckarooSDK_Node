@@ -2,7 +2,7 @@ import { initializeBuckarooClient } from '../src/BuckarooClient'
 
 initializeBuckarooClient()
 
-import { Klarna } from '../src/PaymentMethods/Klarna/Klarna'
+import { Klarna } from '../src/PaymentMethods/Klarna'
 
 const klarna = new Klarna()
 klarna

@@ -6,9 +6,9 @@ import IPerson from '../../../Models/Services/IPerson'
 import ICompany from '../../../Models/Services/ICompany'
 import { ICreditArticle } from './Article'
 import {ServiceParameterList} from '../../../Utils/ServiceParameter'
-import { Payload } from '../../../Models/Payload'
+import { ITransaction } from '../../../Models/ITransaction'
 
-export interface IInvoice extends Payload {
+export interface IInvoice extends ITransaction {
     invoiceAmount: Number
     invoiceAmountVAT?: Number
     invoiceDate: string

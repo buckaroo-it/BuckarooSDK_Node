@@ -1,6 +1,6 @@
 import { initializeBuckarooClient } from '../src/BuckarooClient'
-import { subscriptions } from '../src/PaymentMethods/Subscriptions/Subscriptions'
-import { ideal } from '../src/PaymentMethods/Ideal/Ideal'
+import subscriptions from '../src/PaymentMethods/Subscriptions'
+import ideal from '../src/PaymentMethods/Ideal'
 
 initializeBuckarooClient()
 
@@ -37,7 +37,7 @@ const subscription = subscriptions().createCombined({
 })
 
 ;(async () => {
-    const combinedPayment = await ideal.combine(subscription).pay({
+    const combinedPayment = await ideal().combine(subscription).pay({
         issuer: 'ABNANL2A',
         amountDebit: 10
     })

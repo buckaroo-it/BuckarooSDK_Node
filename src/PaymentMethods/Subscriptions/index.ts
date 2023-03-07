@@ -29,10 +29,10 @@ class Subscriptions extends PaymentMethod {
 
         return this
     }
-    updateCombined(payload: Partial<ISubscription>) {
+    updateCombined(payload: ISubscription) {
         this.action = 'UpdateCombinedSubscription'
 
-        this.request.setData('startRecurrent', true)
+        this.request.setDataKey('startRecurrent', true)
 
         this.setServiceList(subscription(payload))
 
@@ -84,8 +84,10 @@ class Subscriptions extends PaymentMethod {
         return this.dataRequest()
     }
 }
-
+let _subscriptions:Subscriptions;
 const subscriptions = () => {
-    return new Subscriptions()
+    if (!_subscriptions)
+        _subscriptions = new Subscriptions()
+    return _subscriptions
 }
-export { subscriptions }
+export default subscriptions

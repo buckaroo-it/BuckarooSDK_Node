@@ -1,52 +1,59 @@
-import { Payload } from './Payload'
-import { IServiceList } from './ServiceList'
+import { ITransaction } from './ITransaction'
+import {IServiceList, IServices} from './ServiceList'
 import { uniqid } from '../Utils/Functions'
 
+interface RequestData extends ITransaction{
+    services?:IServices
+}
 export class Request {
-    protected data: object = {}
+    protected data: RequestData = {}
 
-    public getData(): object {
+    public getData() {
         return this.data
     }
-    public getPayload(): Payload {
-        return <Payload>this.data
+    requestParams = () => {
+        return [
+            'additionalParameters',
+            'clientIP',
+            'continueOnIncomplete',
+            'culture',
+            'currency',
+            'customParameters',
+            'description',
+            'invoice',
+            'originalTransactionKey',
+            'originalTransactionReference',
+            'pushURL',
+            'pushURLFailure',
+            'returnURL',
+            'returnURLCancel',
+            'returnURLError',
+            'returnURLReject',
+            'servicesExcludedForClient',
+            'servicesSelectableByClient',
+            'startRecurrent'
+        ]
     }
 }
 
 export class TransactionRequest extends Request {
 
-    public setRequest(data) {
+    public setData(data) {
         this.data = data
     }
-    public setPayload(payload: Payload) {
-        this.data = payload
-        this.getPayload().invoice = payload.invoice || uniqid()
-    }
-    public setServices(serviceList: IServiceList[]) {
-        this.getPayload().services = {
-            ServiceList: serviceList
-        }
-    }
-    getServiceList(): Array<object> {
-        return this.getPayload().services?.ServiceList || []
-    }
-    public addServices(serviceList: IServiceList[]) {
-        if (!this.getPayload().services) {
-            this.setServices(serviceList)
-        } else {
-            for (const serviceListObject of serviceList) {
-                this.getPayload().services?.ServiceList.push(serviceListObject)
-            }
-        }
-    }
-    public filterServices(data, services) {
-        const serviceKeys = Object.keys(services.list)
-        for (const serviceKey of serviceKeys) {
-            delete data[serviceKey]
-        }
-        return data
-    }
-    public setData(key, data) {
+    public setDataKey(key, data) {
         this.data[key] = data
+    }
+    public setServices(serviceList: IServiceList) {
+        this.data.services = {
+            ServiceList:[serviceList]
+        }
+    }
+    public addServices(serviceList: IServiceList) {
+        if (this.data?.services) {
+            this.data.services.ServiceList.push(serviceList)
+        } else {
+            this.setServices(serviceList)
+        }
     }
 }

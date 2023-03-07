@@ -1,9 +1,9 @@
 import { ServiceParameterList} from '../../../Utils/ServiceParameter'
 
-export const multiInfoInvoice = (data: { invoice: string[] }) => {
+export const multiInfoInvoice = (data: { invoices: string[] }) => {
     let invoiceInfos = new ServiceParameterList({
-        invoice:data.invoice.map((i) => { return { InvoiceNumber:i }})
+        invoices:data.invoices.map((i) => { return { InvoiceNumber:i }})
     })
-    invoiceInfos.setCountable('invoice')
+    invoiceInfos.setCountable('invoices')
     return invoiceInfos
 }

@@ -1,7 +1,8 @@
 import { initializeBuckarooClient } from '../src/BuckarooClient'
-import { creditManagement } from '../src/PaymentMethods/CreditManagement/CreditManagement'
+import creditManagement from '../src/PaymentMethods/CreditManagement'
 
 initializeBuckarooClient()
+
 
 ;(async () => {
     try {
