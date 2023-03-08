@@ -39,8 +39,12 @@ describe('Testing Credit Management', () => {
             .invoiceInfo({
                 invoice: 'invoice1',
                 invoices:[
-                    'invoice2',
-                    'invoice3'
+                    {
+                        invoiceNumber:'invoice2'
+                    },
+                    {
+                        invoiceNumber:'invoice3'
+                    }
                 ]
             })
             .then((data) => {
@@ -93,8 +97,15 @@ describe('Testing Credit Management', () => {
         })
     })
     test('CreateCombinedInvoice', async () => {
-        creditManagement.createCombinedInvoice(invoice()).
-        combine(ideal())
+        const ideal1 = ideal()
+        ideal1.setPayload({
+            amountDebit: 10.1,
+            issuer: 'ABNANL2A',
+        })
+        const combined = creditManagement.createCombinedInvoice(invoice())
+            .combine(ideal1)
+
+        await ideal1.combine(combined).pay()
     })
 });
 
@@ -139,7 +150,6 @@ const invoice = (append: object = {}): IInvoice => {
         address: {
             street: 'Hoofdtraat',
             houseNumber: '90',
-            houseNumberAdditional: 'A',
             zipcode: '8441ER',
             city: 'Heerenveen',
             state: 'Friesland',

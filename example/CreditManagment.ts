@@ -12,7 +12,15 @@ initializeBuckarooClient()
         console.log(info)
 
         const infoMultiple = await creditManagement().invoiceInfo({
-            invoice: ['test1', 'test2']
+            invoice: 'invoice1',
+            invoices:[
+                {
+                    invoiceNumber:'invoice2'
+                },
+                {
+                    invoiceNumber:'invoice3'
+                }
+            ]
         })
         console.log(infoMultiple)
     } catch (error) {

@@ -6,7 +6,7 @@ import { uniqid } from '../../Utils/Functions'
 import { debtor, IDebtor } from './Models/Debtor'
 import { IPaymentPlan, paymentPlan } from './Models/PaymentPlan'
 import { ITransaction } from '../../Models/ITransaction'
-import { multiInfoInvoice } from './Models/multiInfoInvoice'
+import {IMultiInfoInvoice, multiInfoInvoice} from './Models/multiInfoInvoice'
 import { ServiceParameterList} from "../../Utils/ServiceParameter";
 import {AddOrUpdateProductLines, IAddOrUpdateProductLines} from "./Models/AddOrUpdateProductLines";
 
@@ -15,6 +15,7 @@ class CreditManagement extends PaymentMethod {
     protected requiredFields: Array<keyof IConfig> = ['currency']
 
     protected _serviceVersion = 1
+
     createInvoice(payload: IInvoice): Promise<any> {
         this.action = 'CreateInvoice'
         this.services = invoice
@@ -27,7 +28,7 @@ class CreditManagement extends PaymentMethod {
         this.action = 'CreateCombinedInvoice'
         this.services = invoice
         payload.invoice = payload.invoice || uniqid()
-        this.setRequest(payload)
+        this.setServiceList(this.services(payload))
 
         return this
     }
@@ -82,12 +83,9 @@ class CreditManagement extends PaymentMethod {
         return this.dataRequest()
     }
 
-    invoiceInfo(payload: { invoice: string | string[],invoices?:string[] }) {
+    invoiceInfo(payload: IMultiInfoInvoice) {
         this.action = 'InvoiceInfo'
-        if (Array.isArray(payload.invoice)) {
-            payload.invoices = payload.invoice
-            payload.invoice = payload.invoice[0]
-        }
+
         this.services = multiInfoInvoice
 
         this.setRequest(payload)
@@ -135,6 +133,11 @@ class CreditManagement extends PaymentMethod {
 
         return this.dataRequest()
     }
+    // public combine(method:Combinable){
+    //     if (method.isPayable()){
+    //         method.
+    //     }
+    // }
 }
 let _creditManagement:CreditManagement
 const creditManagement = () => {

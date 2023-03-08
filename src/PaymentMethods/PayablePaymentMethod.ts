@@ -4,6 +4,10 @@ import {Payload} from '../Models/ITransaction'
 import {TransactionResponse} from "../Models/TransactionResponse";
 
 export abstract class PayablePaymentMethod extends PaymentMethod {
+
+    public isPayable(): this is PayablePaymentMethod{
+        return true
+    }
     pay(payload?): Promise<TransactionResponse> {
 
         //SetPayPayLoad

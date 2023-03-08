@@ -1,15 +1,16 @@
-import { subscription , ISubscription } from './Models/Subscription'
+import { subscriptionServices , ISubscription } from './Models/SubscriptionServices'
 import { IConfig } from '../../Utils/Types'
 import PaymentMethod from '../PaymentMethod'
 class Subscriptions extends PaymentMethod {
     protected _paymentName = 'Subscriptions'
     protected requiredFields: Array<keyof IConfig> = ['currency']
+
     create(payload: ISubscription): Promise<any> {
         this.action = 'CreateSubscription'
 
         this.setRequiredFields()
 
-        this.setServiceList(subscription(payload))
+        this.setServiceList(subscriptionServices(payload))
 
         return this.dataRequest()
     }
@@ -18,14 +19,14 @@ class Subscriptions extends PaymentMethod {
 
         this.setRequiredFields()
 
-        this.setServiceList(subscription(payload))
+        this.setServiceList(subscriptionServices(payload))
 
         return this.dataRequest()
     }
     createCombined(payload: ISubscription) {
         this.action = 'CreateCombinedSubscription'
 
-        this.setServiceList(subscription(payload))
+        this.setServiceList(subscriptionServices(payload))
 
         return this
     }
@@ -34,7 +35,7 @@ class Subscriptions extends PaymentMethod {
 
         this.request.setDataKey('startRecurrent', true)
 
-        this.setServiceList(subscription(payload))
+        this.setServiceList(subscriptionServices(payload))
 
         return this
     }

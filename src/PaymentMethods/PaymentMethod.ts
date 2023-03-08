@@ -4,13 +4,13 @@ import { buckarooClient } from '../BuckarooClient'
 import {ServiceParameterList} from "../Utils/ServiceParameter";
 import Model from "../Models/Model";
 import {Combinable} from "../Utils/Combinable";
-import {PayablePaymentMethod} from "./PayablePaymentMethod";
 export default abstract class PaymentMethod {
     protected readonly requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
     protected _paymentName = ''
     protected _serviceVersion = 0
     protected request: TransactionRequest = new TransactionRequest()
     private _action = ''
+
     protected services: (data) => ServiceParameterList = (data) => {
         return new ServiceParameterList(data)
     }
@@ -27,7 +27,6 @@ export default abstract class PaymentMethod {
     set action(value: string) {
         this._action = value
     }
-
     protected setServiceList(serviceList: ServiceParameterList) {
         this.request.addServices({
             name: this.paymentName,
@@ -55,28 +54,20 @@ export default abstract class PaymentMethod {
                 this.request.setDataKey(requiredField, buckarooClient().getConfig()[requiredField])
         }
     }
-    combine(method: Combinable) {
-        if(typeof method['pay'] === 'function'){
-            if (this['pay'] === 'function'){
-                throw new Error('Cannot Combine')
-            }
-            let services = method["request"].getData().services
-            if(services) {
-                this["request"].addServices(services.ServiceList[0])
-            }
-            return method
-        }else {
-            let services = this.request.getData().services
-            if(services) {
-                method["request"].addServices(services.ServiceList[0])
-            }
-            return this
-        }
-    }
     protected transactionRequest() {
         return buckarooClient().client().post(this.request.getData(), buckarooClient().client().getTransactionUrl())
     }
-
+    public combine(method: Combinable){
+        const data = method['request'].getData().services
+        if(data?.ServiceList){
+            for (const serviceList of data.ServiceList) {
+                if (!this.request.getData().services?.ServiceList.includes(serviceList)){
+                    this.request.addServices(serviceList)
+                }
+            }
+        }
+        return this
+    }
     protected dataRequest() {
         return buckarooClient().client().dataRequest(this.request.getData())
     }

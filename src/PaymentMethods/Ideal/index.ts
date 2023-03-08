@@ -44,7 +44,7 @@ class Ideal extends PayablePaymentMethod {
     }
 }
 let _ideal:Ideal
-const ideal = () => {
+const ideal:() => Ideal = () => {
     if (!_ideal)
         _ideal = new Ideal()
     return _ideal

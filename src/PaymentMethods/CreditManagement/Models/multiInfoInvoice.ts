@@ -1,8 +1,12 @@
 import { ServiceParameterList} from '../../../Utils/ServiceParameter'
 
-export const multiInfoInvoice = (data: { invoices: string[] }) => {
+export interface IMultiInfoInvoice {
+    invoice:string
+    invoices?:{invoiceNumber:string}[]
+}
+export const multiInfoInvoice = (data: IMultiInfoInvoice) => {
     let invoiceInfos = new ServiceParameterList({
-        invoices:data.invoices.map((i) => { return { InvoiceNumber:i }})
+        invoices:data.invoices
     })
     invoiceInfos.setCountable('invoices')
     return invoiceInfos

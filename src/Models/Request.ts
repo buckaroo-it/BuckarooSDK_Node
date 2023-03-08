@@ -1,6 +1,5 @@
 import { ITransaction } from './ITransaction'
 import {IServiceList, IServices} from './ServiceList'
-import { uniqid } from '../Utils/Functions'
 
 interface RequestData extends ITransaction{
     services?:IServices
@@ -13,6 +12,8 @@ export class Request {
     }
     requestParams = () => {
         return [
+            'amountDebit',
+            'amountCredit',
             'additionalParameters',
             'clientIP',
             'continueOnIncomplete',

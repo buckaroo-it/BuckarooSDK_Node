@@ -36,7 +36,7 @@ export interface ISubscription {
     ratePlans?: IRatePlan
     ratePlanCharges?: IRatePlanCharges
 }
-export const subscription = (data:ISubscription) => {
+export const subscriptionServices = (data:ISubscription) => {
     let serviceData = new ServiceParameterList(data)
     serviceData.setGroupTypes({
         debtor: 'Debtor',
