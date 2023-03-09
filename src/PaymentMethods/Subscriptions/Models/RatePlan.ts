@@ -1,4 +1,3 @@
-
 export interface IRatePlan {
     add?: {
         startDate: string
@@ -10,27 +9,27 @@ export interface IRatePlan {
         billingTiming?: Number
         automaticTerm?: boolean
         billingInterval?: string
-        customNumberOfDays?:Number
+        customNumberOfDays?: Number
         termStartDay?: number
         termStartWeek?: number
         termStartMonth?: number
         trialPeriodDays?: number
         trialPeriodMonths?: number
-        inheritPaymentMethod?:boolean
+        inheritPaymentMethod?: boolean
     }
     update?: {
         startDate: string
         endDate?: string
         ratePlanGuid: string
     }
-    disable?:{
+    disable?: {
         ratePlanGuid: string
     }
 }
 
 export interface IRatePlanCharges {
     add?: {
-        ratePlanChargeCode?:string,
+        ratePlanChargeCode?: string
         ratePlanChargeName: string
         ratePlanChargeProductId: Number | string
         ratePlanChargeDescription: string
@@ -43,15 +42,15 @@ export interface IRatePlanCharges {
         vatPercentage: Number
         b2B: boolean
     }
-    update?:{
+    update?: {
         ratePlanChargeCode?: string
         vatPercentage?: Number
         ratePlanChargeGuid?: string
         baseNumberOfUnits?: string | Number
         pricePerUnit?: Number
-        priceIncludesVat?:boolean
+        priceIncludesVat?: boolean
     }
-    disable?:{
+    disable?: {
         ratePlanChargeGuid: string
     }
 }

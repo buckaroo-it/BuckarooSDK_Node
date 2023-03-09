@@ -6,3 +6,5 @@ dist/
 *.lock
 *.cache
 package-lock.json
+*.js
+*.map.js

@@ -1,7 +1,7 @@
-import {ServiceParameterList} from "../../../Utils/ServiceParameter";
-import {ITransaction} from "../../../Models/ITransaction";
+import { ServiceParameterList } from '../../../Utils/ServiceParameter'
+import { ITransaction } from '../../../Models/ITransaction'
 
-export interface ICreditNote extends ITransaction{
+export interface ICreditNote extends ITransaction {
     originalInvoiceNumber: string
     invoiceDate: string
     invoiceAmount: string

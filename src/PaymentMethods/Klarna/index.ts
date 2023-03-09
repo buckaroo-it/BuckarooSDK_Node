@@ -8,7 +8,7 @@ class Klarna extends PayablePaymentMethod {
     protected _serviceVersion = 1
     protected requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
 
-    pay(payload?: IPay){
+    pay(payload?: IPay) {
         return super.pay(payload)
     }
     setPayload(payload: IPay) {
@@ -23,10 +23,9 @@ class Klarna extends PayablePaymentMethod {
         return super.transactionRequest(payload)
     }
 }
-let _klarna:Klarna;
+let _klarna: Klarna
 const klarna = () => {
-    if (!_klarna)
-        _klarna = new Klarna()
+    if (!_klarna) _klarna = new Klarna()
     return _klarna
 }
 export default klarna

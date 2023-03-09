@@ -2,8 +2,6 @@ import { initializeBuckarooClient } from '../src/BuckarooClient'
 import creditManagement from '../src/PaymentMethods/CreditManagement'
 
 initializeBuckarooClient()
-
-
 ;(async () => {
     try {
         const info = await creditManagement().invoiceInfo({
@@ -13,12 +11,12 @@ initializeBuckarooClient()
 
         const infoMultiple = await creditManagement().invoiceInfo({
             invoice: 'invoice1',
-            invoices:[
+            invoices: [
                 {
-                    invoiceNumber:'invoice2'
+                    invoiceNumber: 'invoice2'
                 },
                 {
-                    invoiceNumber:'invoice3'
+                    invoiceNumber: 'invoice3'
                 }
             ]
         })

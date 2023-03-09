@@ -1,16 +1,15 @@
-import Endpoints, {RequestType} from '../Constants/Endpoints'
+import Endpoints, { RequestType } from '../Constants/Endpoints'
 import hmac from './Hmac'
 import HttpMethods from '../Constants/HttpMethods'
 import httpClient from './HttpClient'
-import {buckarooClient} from '../BuckarooClient'
+import { buckarooClient } from '../BuckarooClient'
 import PaymentMethod from '../PaymentMethods/PaymentMethod'
 
 class Client {
-
     private constructor() {}
 
-    static initialize(config,credentials){
-        if(!config || !credentials)
+    static initialize(config, credentials) {
+        if (!config || !credentials)
             throw new Error('Initialize Buckaroo Client with credentials!!')
         return new Client()
     }
@@ -48,14 +47,14 @@ class Client {
         return this.getEndpoint('json/DataRequest') + path
     }
 
-    getSpecificationUrl(paymentName, serviceVersion,type:RequestType = RequestType.Transaction) {
-        return type === RequestType.Transaction ?
-            this.getTransactionUrl(
-                `/Specification/${paymentName}?serviceVersion=${serviceVersion}`
-            ) :
-            this.getDataRequestUrl(
-            `/Specification/${paymentName}?serviceVersion=${serviceVersion}`
-            )
+    getSpecificationUrl(paymentName, serviceVersion, type: RequestType = RequestType.Transaction) {
+        return type === RequestType.Transaction
+            ? this.getTransactionUrl(
+                  `/Specification/${paymentName}?serviceVersion=${serviceVersion}`
+              )
+            : this.getDataRequestUrl(
+                  `/Specification/${paymentName}?serviceVersion=${serviceVersion}`
+              )
     }
 
     get(url, data = '') {
@@ -76,13 +75,13 @@ class Client {
         const endPoint = this.getDataRequestUrl()
         return this.post(data, endPoint)
     }
-    specification(paymentName: string, serviceVersion = 0,type?:RequestType) {
-        const endPoint = this.getSpecificationUrl(paymentName, serviceVersion,type)
+    specification(paymentName: string, serviceVersion = 0, type?: RequestType) {
+        const endPoint = this.getSpecificationUrl(paymentName, serviceVersion, type)
         return this.get(endPoint)
     }
     specifications(
-        paymentMethods: PaymentMethod[] |  { name: string; version: Number }[],
-        type:RequestType = RequestType.Transaction
+        paymentMethods: PaymentMethod[] | { name: string; version: Number }[],
+        type: RequestType = RequestType.Transaction
     ) {
         let data: { Services: { Name: string; Version: string | Number }[] } = { Services: [] }
 

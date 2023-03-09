@@ -1,6 +1,6 @@
 import { uniqid } from '../Utils/Functions'
 import { initializeBuckarooClient } from '../BuckarooClient'
-import Ideal from "../PaymentMethods/Ideal";
+import Ideal from '../PaymentMethods/Ideal'
 initializeBuckarooClient()
 
 const ideal = Ideal()

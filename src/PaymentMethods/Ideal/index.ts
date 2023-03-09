@@ -1,7 +1,7 @@
-import {IPay, Services} from './Models/Pay'
-import {PayablePaymentMethod} from '../PayablePaymentMethod'
-import {RefundPayload} from '../../Models/ITransaction'
-import {IConfig} from '../../Utils/Types'
+import { IPay, Services } from './Models/Pay'
+import { PayablePaymentMethod } from '../PayablePaymentMethod'
+import { RefundPayload } from '../../Models/ITransaction'
+import { IConfig } from '../../Utils/Types'
 
 class Ideal extends PayablePaymentMethod {
     protected _paymentName = 'ideal'
@@ -42,10 +42,9 @@ class Ideal extends PayablePaymentMethod {
         })
     }
 }
-let _ideal:Ideal
-const ideal:() => Ideal = () => {
-    if (!_ideal)
-        _ideal = new Ideal()
+let _ideal: Ideal
+const ideal: () => Ideal = () => {
+    if (!_ideal) _ideal = new Ideal()
     return _ideal
 }
 export default ideal

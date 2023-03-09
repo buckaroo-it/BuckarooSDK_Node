@@ -1,4 +1,3 @@
-
 export declare interface ITransaction {
     clientIP?: ClientIP
     currency?: string
@@ -9,9 +8,9 @@ export declare interface ITransaction {
     pushURL?: string
     pushURLFailure?: string
     invoice?: string
-    order?:string
-    amountDebit?:Number
-    amountCredit?:Number
+    order?: string
+    amountDebit?: Number
+    amountCredit?: Number
     description?: string
     originalTransactionKey?: string
     originalTransactionReference?: string

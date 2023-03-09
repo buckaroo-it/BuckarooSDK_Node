@@ -1,37 +1,35 @@
-import {PayablePaymentMethod} from '../PayablePaymentMethod'
+import { PayablePaymentMethod } from '../PayablePaymentMethod'
 
 class Creditcard extends PayablePaymentMethod {
-
     protected _paymentName = 'creditcard'
 
-    pay(payload){
+    pay(payload) {
         return super.pay(payload)
     }
-    refund(payload){
+    refund(payload) {
         return super.refund(payload)
     }
-    payEncrypted(payload){
+    payEncrypted(payload) {
         this.action = 'PayEncrypted'
-        return super.pay (payload)
-    }
-    payWithSecurityCode(payload){
-        this.action ='PayWithSecurityCode'
         return super.pay(payload)
-
     }
-    authorize (payload){
+    payWithSecurityCode(payload) {
+        this.action = 'PayWithSecurityCode'
+        return super.pay(payload)
+    }
+    authorize(payload) {
         this.action = 'Authorize'
-        return super.transactionRequest (payload)
+        return super.transactionRequest(payload)
     }
-    authorizeWithSecurityCode (payload){
+    authorizeWithSecurityCode(payload) {
         this.action = 'Authorizewithsecuritycode'
-        return super.transactionRequest (payload)
+        return super.transactionRequest(payload)
     }
-    authorizeEncrypted (payload){
+    authorizeEncrypted(payload) {
         this.action = 'AuthorizeEncrypted'
-        return super.transactionRequest (payload)
+        return super.transactionRequest(payload)
     }
-    cancelAuthorize(payload){
+    cancelAuthorize(payload) {
         this.action = 'CancelAuthorize'
         return super.transactionRequest(payload)
     }
@@ -43,13 +41,11 @@ class Creditcard extends PayablePaymentMethod {
         this.action = 'Payrecurrent'
         return super.transactionRequest(payload)
     }
-
 }
 
-let _creditcard:Creditcard
-const creditcard:() => Creditcard = () => {
-    if (!_creditcard)
-        _creditcard = new Creditcard()
+let _creditcard: Creditcard
+const creditcard: () => Creditcard = () => {
+    if (!_creditcard) _creditcard = new Creditcard()
     return _creditcard
 }
 export default creditcard

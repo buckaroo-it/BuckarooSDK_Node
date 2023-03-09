@@ -2,15 +2,13 @@ import { initializeBuckarooClient } from '../BuckarooClient'
 import CreditManagement from '../PaymentMethods/CreditManagement'
 import { IInvoice } from '../PaymentMethods/CreditManagement/Models/Invoice'
 import Gender from '../Constants/Gender'
-import ideal from "../PaymentMethods/Ideal/index";
+import ideal from '../PaymentMethods/Ideal/index'
 
 initializeBuckarooClient()
 
 const creditManagement = CreditManagement()
 
-
 describe('Testing Credit Management', () => {
-
     test('CreateInvoice', async () => {
         await creditManagement.createInvoice(invoice()).then((data) => {
             expect(data).toBeDefined()
@@ -19,31 +17,33 @@ describe('Testing Credit Management', () => {
     })
 
     test('Pause Invoice', async () => {
-        await creditManagement.pauseInvoice({invoice: 'd42'}).then((data) => {
+        await creditManagement.pauseInvoice({ invoice: 'd42' }).then((data) => {
             expect(data).toBeDefined()
             console.log(JSON.stringify(data))
         })
     })
     test('Debtor Info', async () => {
-        await creditManagement.debtorInfo({
-            debtor: {
-                code: 'adsad'
-            }
-        }).then((data) => {
-            expect(data).toBeDefined()
-            console.log(JSON.stringify(data))
-        })
+        await creditManagement
+            .debtorInfo({
+                debtor: {
+                    code: 'adsad'
+                }
+            })
+            .then((data) => {
+                expect(data).toBeDefined()
+                console.log(JSON.stringify(data))
+            })
     })
     test('Invoice Info', async () => {
         await creditManagement
             .invoiceInfo({
                 invoice: 'invoice1',
-                invoices:[
+                invoices: [
                     {
-                        invoiceNumber:'invoice2'
+                        invoiceNumber: 'invoice2'
                     },
                     {
-                        invoiceNumber:'invoice3'
+                        invoiceNumber: 'invoice3'
                     }
                 ]
             })
@@ -53,46 +53,48 @@ describe('Testing Credit Management', () => {
             })
     })
     test('UnPause Invoice', async () => {
-        await creditManagement.unpauseInvoice({invoice: 'd42'}).then((data) => {
+        await creditManagement.unpauseInvoice({ invoice: 'd42' }).then((data) => {
             expect(data).toBeDefined()
         })
     })
     test('AddOrUpdateProductLines', async () => {
-        await creditManagement.addOrUpdateProductLines({
-            invoiceKey: 'd42',
-            articles:[
-                {
-                    type: "Regular",
-                    identifier: "Articlenumber1",
-                    description: "Blue Toy Car",
-                    vatPercentage: 21,
-                    totalVat: 12,
-                    totalAmount: 123,
-                    quantity: 2,
-                    price: 20.10
-                },
-                {
-                    type: "Regular",
-                    identifier: "Articlenumber2",
-                    description: "Red Toy Car",
-                    vatPercentage: 21,
-                    totalVat: 12,
-                    totalAmount: 123,
-                    quantity: 1,
-                    price: 10.10
-                }
-            ]
-        }).then((data) => {
-            expect(data).toBeDefined()
-        })
+        await creditManagement
+            .addOrUpdateProductLines({
+                invoiceKey: 'd42',
+                articles: [
+                    {
+                        type: 'Regular',
+                        identifier: 'Articlenumber1',
+                        description: 'Blue Toy Car',
+                        vatPercentage: 21,
+                        totalVat: 12,
+                        totalAmount: 123,
+                        quantity: 2,
+                        price: 20.1
+                    },
+                    {
+                        type: 'Regular',
+                        identifier: 'Articlenumber2',
+                        description: 'Red Toy Car',
+                        vatPercentage: 21,
+                        totalVat: 12,
+                        totalAmount: 123,
+                        quantity: 1,
+                        price: 10.1
+                    }
+                ]
+            })
+            .then((data) => {
+                expect(data).toBeDefined()
+            })
     })
     test('resumeDebtorFile', async () => {
-        await creditManagement.resumeDebtorFile({debtorFileGuid: 'd42'}).then((data) => {
+        await creditManagement.resumeDebtorFile({ debtorFileGuid: 'd42' }).then((data) => {
             expect(data).toBeDefined()
         })
     })
     test('pauseDebtorFile', async () => {
-        await creditManagement.pauseDebtorFile({debtorFileGuid: 'd42'}).then((data) => {
+        await creditManagement.pauseDebtorFile({ debtorFileGuid: 'd42' }).then((data) => {
             expect(data).toBeDefined()
         })
     })
@@ -100,15 +102,13 @@ describe('Testing Credit Management', () => {
         const ideal1 = ideal()
         ideal1.setPayload({
             amountDebit: 10.1,
-            issuer: 'ABNANL2A',
+            issuer: 'ABNANL2A'
         })
-        const combined = creditManagement.createCombinedInvoice(invoice())
-            .combine(ideal1)
+        const combined = creditManagement.createCombinedInvoice(invoice()).combine(ideal1)
 
         await ideal1.combine(combined).pay()
     })
-});
-
+})
 
 const invoice = (append: object = {}): IInvoice => {
     return {

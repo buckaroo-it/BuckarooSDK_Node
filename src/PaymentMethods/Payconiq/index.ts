@@ -1,21 +1,19 @@
-import {PayablePaymentMethod} from '../PayablePaymentMethod'
+import { PayablePaymentMethod } from '../PayablePaymentMethod'
 
 class Payconiq extends PayablePaymentMethod {
-
     protected _paymentName = 'payconiq'
 
-    pay(payload){
+    pay(payload) {
         return super.pay(payload)
     }
-    refund(payload){
+    refund(payload) {
         return super.refund(payload)
     }
 }
 
-let _payconiq:Payconiq
-const payconiq:() => Payconiq = () => {
-    if (!_payconiq)
-        _payconiq = new Payconiq()
+let _payconiq: Payconiq
+const payconiq: () => Payconiq = () => {
+    if (!_payconiq) _payconiq = new Payconiq()
     return _payconiq
 }
 export default payconiq

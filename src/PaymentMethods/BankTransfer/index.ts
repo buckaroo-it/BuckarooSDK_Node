@@ -1,19 +1,17 @@
-import {PayablePaymentMethod} from '../PayablePaymentMethod'
+import { PayablePaymentMethod } from '../PayablePaymentMethod'
 
 class Banktransfer extends PayablePaymentMethod {
-
     protected _paymentName = 'transfer'
     protected _serviceVersion = 1
 
-    pay(payload){
+    pay(payload) {
         return super.pay(payload)
     }
 }
 
-let _banktransfer:Banktransfer
-const banktransfer:() => Banktransfer = () => {
-    if (!_banktransfer)
-        _banktransfer = new Banktransfer()
+let _banktransfer: Banktransfer
+const banktransfer: () => Banktransfer = () => {
+    if (!_banktransfer) _banktransfer = new Banktransfer()
     return _banktransfer
 }
 export default banktransfer

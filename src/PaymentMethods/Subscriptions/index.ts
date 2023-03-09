@@ -1,4 +1,4 @@
-import { subscriptionServices , ISubscription } from './Models/SubscriptionServices'
+import { subscriptionServices, ISubscription } from './Models/SubscriptionServices'
 import { IConfig } from '../../Utils/Types'
 import PaymentMethod from '../PaymentMethod'
 class Subscriptions extends PaymentMethod {
@@ -85,10 +85,9 @@ class Subscriptions extends PaymentMethod {
         return this.dataRequest()
     }
 }
-let _subscriptions:Subscriptions;
+let _subscriptions: Subscriptions
 const subscriptions = () => {
-    if (!_subscriptions)
-        _subscriptions = new Subscriptions()
+    if (!_subscriptions) _subscriptions = new Subscriptions()
     return _subscriptions
 }
 export default subscriptions

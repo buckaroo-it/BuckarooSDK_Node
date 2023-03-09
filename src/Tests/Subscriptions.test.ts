@@ -71,8 +71,8 @@ test('Update', async () => {
                 update: {
                     ratePlanGuid: 'F075470B1BB24B9291943A888A2Fxxxx',
                     startDate: '2022-01-01',
-                    endDate: '2030-01-01',
-                },
+                    endDate: '2030-01-01'
+                }
             }
         })
         .then((data) => {

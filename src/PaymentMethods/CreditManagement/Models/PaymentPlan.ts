@@ -1,7 +1,7 @@
-import {ServiceParameterList} from "../../../Utils/ServiceParameter";
-import {ITransaction} from "../../../Models/ITransaction";
+import { ServiceParameterList } from '../../../Utils/ServiceParameter'
+import { ITransaction } from '../../../Models/ITransaction'
 
-export interface IPaymentPlan extends ITransaction{
+export interface IPaymentPlan extends ITransaction {
     includedInvoiceKey: string
     dossierNumber: string
     installmentCount: Number

@@ -3,7 +3,6 @@ import { initializeBuckarooClient } from '../src/BuckarooClient'
 initializeBuckarooClient()
 
 import ideal from '../src/PaymentMethods/Ideal'
-
 ;(async () => {
     try {
         const response = await ideal().pay({

@@ -1,8 +1,8 @@
 import { ITransaction } from './ITransaction'
-import {IServiceList, IServices} from './ServiceList'
+import { IServiceList, IServices } from './ServiceList'
 
-interface RequestData extends ITransaction{
-    services?:IServices
+interface RequestData extends ITransaction {
+    services?: IServices
 }
 export class Request {
     protected data: RequestData = {}
@@ -10,7 +10,7 @@ export class Request {
     public getData() {
         return this.data
     }
-    requestParams:() => string[] = () => {
+    requestParams: () => string[] = () => {
         return [
             'order',
             'amountDebit',
@@ -40,7 +40,6 @@ export class Request {
 }
 
 export class TransactionRequest extends Request {
-
     public setData(data) {
         this.data = data
     }
@@ -49,7 +48,7 @@ export class TransactionRequest extends Request {
     }
     public setServices(serviceList: IServiceList) {
         this.data.services = {
-            ServiceList:[serviceList]
+            ServiceList: [serviceList]
         }
     }
     public addServices(serviceList: IServiceList) {

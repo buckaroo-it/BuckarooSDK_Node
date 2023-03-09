@@ -1,1 +1,0 @@
-{"version":3,"file":"multiInfoInvoice.js","sourceRoot":"","sources":["multiInfoInvoice.ts"],"names":[],"mappings":";;;AAAA,oEAAqE;AAM9D,IAAM,gBAAgB,GAAG,UAAC,IAAuB;IACpD,IAAI,YAAY,GAAG,IAAI,uCAAoB,CAAC;QACxC,QAAQ,EAAC,IAAI,CAAC,QAAQ;KACzB,CAAC,CAAA;IACF,YAAY,CAAC,YAAY,CAAC,UAAU,CAAC,CAAA;IACrC,OAAO,YAAY,CAAA;AACvB,CAAC,CAAA;AANY,QAAA,gBAAgB,oBAM5B"}

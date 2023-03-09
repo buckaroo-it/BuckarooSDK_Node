@@ -1,4 +1,4 @@
-import IArticle from "../../../Models/Services/IArticle";
+import IArticle from '../../../Models/Services/IArticle'
 
 export interface IKlarnaArticle extends IArticle {
     identifier: string

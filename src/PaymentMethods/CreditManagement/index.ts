@@ -6,9 +6,9 @@ import { uniqid } from '../../Utils/Functions'
 import { debtor, IDebtor } from './Models/Debtor'
 import { IPaymentPlan, paymentPlan } from './Models/PaymentPlan'
 import { ITransaction } from '../../Models/ITransaction'
-import {IMultiInfoInvoice, multiInfoInvoice} from './Models/multiInfoInvoice'
-import { ServiceParameterList} from "../../Utils/ServiceParameter";
-import {AddOrUpdateProductLines, IAddOrUpdateProductLines} from "./Models/AddOrUpdateProductLines";
+import { IMultiInfoInvoice, multiInfoInvoice } from './Models/multiInfoInvoice'
+import { ServiceParameterList } from '../../Utils/ServiceParameter'
+import { AddOrUpdateProductLines, IAddOrUpdateProductLines } from './Models/AddOrUpdateProductLines'
 
 class CreditManagement extends PaymentMethod {
     protected _paymentName = 'CreditManagement3'
@@ -95,10 +95,10 @@ class CreditManagement extends PaymentMethod {
     debtorInfo(payload: Required<Pick<IInvoice, 'debtor'>>) {
         this.action = 'DebtorInfo'
 
-        this.services = (data:typeof payload) => {
+        this.services = (data: typeof payload) => {
             let serviceData = new ServiceParameterList(data)
             serviceData.setGroupTypes({
-                debtor:'Debtor'
+                debtor: 'Debtor'
             })
             return serviceData
         }
@@ -108,7 +108,7 @@ class CreditManagement extends PaymentMethod {
         return this.dataRequest()
     }
 
-    addOrUpdateProductLines(payload:IAddOrUpdateProductLines) {
+    addOrUpdateProductLines(payload: IAddOrUpdateProductLines) {
         this.action = 'AddOrUpdateProductLines'
 
         this.services = AddOrUpdateProductLines
@@ -118,7 +118,7 @@ class CreditManagement extends PaymentMethod {
         return this.dataRequest()
     }
 
-    resumeDebtorFile(payload:{ debtorFileGuid:string }) {
+    resumeDebtorFile(payload: { debtorFileGuid: string }) {
         this.action = 'ResumeDebtorFile'
 
         this.setServiceList(this.services(payload))
@@ -126,7 +126,7 @@ class CreditManagement extends PaymentMethod {
         return this.dataRequest()
     }
 
-    pauseDebtorFile(payload:{ debtorFileGuid:string }) {
+    pauseDebtorFile(payload: { debtorFileGuid: string }) {
         this.action = 'PauseDebtorFile'
 
         this.setServiceList(this.services(payload))
@@ -134,10 +134,9 @@ class CreditManagement extends PaymentMethod {
         return this.dataRequest()
     }
 }
-let _creditManagement:CreditManagement
+let _creditManagement: CreditManagement
 const creditManagement = () => {
-    if (!_creditManagement)
-        _creditManagement = new CreditManagement()
+    if (!_creditManagement) _creditManagement = new CreditManagement()
     return _creditManagement
 }
 export default creditManagement

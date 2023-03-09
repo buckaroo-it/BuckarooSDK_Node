@@ -1,5 +1,5 @@
-import {buckarooClient, initializeBuckarooClient} from '../BuckarooClient'
-import ideal  from '../PaymentMethods/Ideal'
+import { buckarooClient, initializeBuckarooClient } from '../BuckarooClient'
+import ideal from '../PaymentMethods/Ideal'
 
 initializeBuckarooClient()
 
@@ -29,7 +29,6 @@ test('paymentInvoiceInfo', async () => {
 })
 
 test('specifications', async () => {
-
     // let specifications = await client.specifications([ideal()])
     //
     // let specifications2 = await client.specifications([
