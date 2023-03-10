@@ -1,32 +1,37 @@
 const https = require('https')
-class HttpClient {
-    call(options): Promise<any> {
-        console.log(JSON.stringify(options.data))
-        return new Promise<any>(function (resolve, reject) {
-            const req = https.request(options, (res) => {
-                let body: string
-                res.on('data', (chunk: Uint8Array) => {
-                    try {
-                        body = JSON.parse(Buffer.concat([chunk]).toString())
-                    } catch (e) {
-                        body = Buffer.concat([chunk]).toString()
-                    }
-                })
-                res.on('end', function () {
-                    console.log(JSON.stringify(body))
-                    resolve(body)
-                })
+
+const httpsCall = (options:{
+    hostname,
+    path,
+    method,
+    headers
+    data?
+}) => {
+    console.log(JSON.stringify(options.data))
+    return new Promise<any>(function (resolve, reject) {
+        const req = https.request(options, (res) => {
+            let body: string
+            res.on('data', (chunk: Uint8Array) => {
+                try {
+                    body = JSON.parse(Buffer.concat([chunk]).toString())
+                } catch (e) {
+                    body = Buffer.concat([chunk]).toString()
+                }
             })
-            req.on('error', (error) => {
-                console.log(error)
-                reject(error)
+            res.on('end', function () {
+                console.log(JSON.stringify(body))
+                resolve(body)
             })
-            if (options.data) {
-                req.write(JSON.stringify(options.data))
-            }
-            req.end()
         })
-    }
+        req.on('error', (error) => {
+            console.log(error)
+            reject(error)
+        })
+        if (options.data) {
+            req.write(JSON.stringify(options.data))
+        }
+        req.end()
+    })
 }
-const httpClient = new HttpClient()
-export default httpClient
+
+export default httpsCall

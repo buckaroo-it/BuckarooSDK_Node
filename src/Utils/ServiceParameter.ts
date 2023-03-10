@@ -30,22 +30,20 @@ export class ServiceParameter {
 }
 export class ServiceParameterList {
     list: { [key: string]: ServiceParameter } = {};
-    [index: string]: any
     constructor(data: object = {}) {
         for (const key of Object.keys(data)) {
             if (typeof data[key] !== 'undefined') this.list[key] = new ServiceParameter(data[key])
         }
     }
-    // getParameter(param:string){
-    //     return this.list[param]
-    // }
-    setGroupTypes(groupTypes: any) {
+    setGroupTypes(groupTypes: {[key:string]:string}){
         for (const groupKey in groupTypes) {
             if (this.list[groupKey]) this.list[groupKey].groupType = groupTypes[groupKey]
         }
     }
-    setCountable(param: any) {
+    setCountable(param: string) {
         let i = 1
+        if (!this.list[param]) return
+        if (!(this.list[param].data instanceof ServiceParameterList)) return
         for (const paramKey in this.list[param].data.list) {
             this.list[param].data.list[paramKey].groupId = i++
         }
@@ -104,3 +102,131 @@ export class ServiceParameterList {
     //     return obj
     // }
 }
+
+export class ServiceParameters {
+
+    [data:string]:any
+    private _groupId?: groupIdType
+    private _groupType?: { type: string }
+
+    get groupType(): string {
+        switch (typeof this._groupType) {
+            case 'object':
+                return this._groupType.type
+            default:
+                return ''
+        }
+    }
+    set groupType(value: string) {
+        this._groupType = { type: value };
+    }
+    set groupId(value: groupIdType) {
+        this._groupId = value
+    }
+    get groupId(): groupIdType{
+        switch (typeof this._groupId) {
+            case 'object':
+                return this._groupId.next().value
+            default:
+                return <number>this._groupId
+        }
+    }
+    constructor(data:object) {
+         for (const dataKey in data) {
+          this[dataKey] = typeof data[dataKey] === 'object'?
+              new ServiceParameters(data[dataKey]):
+              data[dataKey]
+         }
+    }
+    searchParameters(param:string,params:any = []){
+        let parameter = this[param]
+        if(parameter) {
+            params.push(this)
+        }
+        for (const paramKey of Object.keys(this)){
+            if (this[paramKey] instanceof ServiceParameters){
+                parameter = this[paramKey].searchParameters(param,params)
+            }
+        }
+        return params
+    }
+    findParameter(param:string):ServiceParameters | undefined {
+        if(this[param] instanceof ServiceParameters){
+            return this[param]
+        }
+        for (const paramKey of Object.keys(this)) {
+            if(typeof this[paramKey] === "object"){
+                let parameter = this[paramKey].findParameter(param)
+                if(parameter){
+                    return parameter
+                }
+            }
+        }
+    }
+    addParameter(param:object){
+        for (const paramKey in param) {
+           this[paramKey] = typeof param[paramKey] === 'object'?
+                        new ServiceParameters(param[paramKey]):
+                        param[paramKey]
+        }
+    }
+    setGroupTypes(groupTypes: {[key:string]:string}){
+        for (const groupKey in groupTypes) {
+            let parameter = this.searchParameters(groupKey)
+            for (const parameterElement of parameter) {
+                if (!(parameterElement[groupKey] instanceof ServiceParameters))
+                    parameterElement.addParameter({[groupKey]:{[groupKey]:parameterElement[groupKey]}})
+
+                parameterElement[groupKey].groupType = groupTypes[groupKey]
+            }
+        }
+    }
+    makeCountable(param?:string){
+        if(!param){
+            this.groupId = count()
+        }else {
+            let parameter = this.searchParameters(param)
+            for (const parameterElement of parameter) {
+                if (!(parameterElement[param] instanceof ServiceParameters))
+                    parameterElement.addParameter({[param]:{[param]:parameterElement[param]}})
+
+                parameterElement[param].groupId = count()
+            }
+        }
+    }
+    formatServiceParameters(
+        data: IParameter[] = [],
+        groupId: groupIdType = '',
+        groupType = ''
+    ): IParameter[] {
+        for (const paramsKey of Object.keys(this)) {
+            if (this[paramsKey] instanceof ServiceParameters) {
+                if(this._groupId){
+                    groupId = this.groupId
+                }
+                this[paramsKey].formatServiceParameters(
+                    data,
+                    groupId,
+                    this[paramsKey].groupType || groupType
+                )
+            } else if(typeof this[paramsKey] !== 'object') {
+                data.push({
+                    Name: serviceParameterKeyOf(paramsKey),
+                    Value: this[paramsKey],
+                    GroupID:  <number>groupId,
+                    GroupType: groupType
+                })
+            }
+        }
+        return data
+    }
+
+}
+function* count() {
+    let index = 1;
+    while (true) {
+        yield index++;
+    }
+    return index;
+}
+type groupIdType = string | number | ReturnType<typeof count>

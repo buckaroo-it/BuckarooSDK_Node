@@ -2,6 +2,7 @@ import { IConfig, ICredentials } from './Utils/Types'
 import dotenv from 'dotenv'
 import path from 'path'
 import Client from './Request/Client'
+
 dotenv.config({ path: path.resolve(__dirname, '../.env') })
 
 let _credentials: ICredentials
@@ -49,7 +50,7 @@ export const initializeBuckarooClient = (credentials?: ICredentials, config?: IC
     // _credentials = _credentials
     defaultSetup().credentials(credentials)
     defaultSetup().config(config)
-    _client = Client.initialize(_credentials, _config)
+    if (!_client) _client = Client.initialize(_credentials, _config)
     return {
         _credentials,
         _config

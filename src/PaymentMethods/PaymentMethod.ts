@@ -20,14 +20,13 @@ export default abstract class PaymentMethod {
     get paymentName(): string {
         return this._paymentName
     }
-
     get serviceVersion(): number {
         return this._serviceVersion
     }
-    get action(): string {
+    protected get action(): string {
         return this._action
     }
-    set action(value: string) {
+    protected set action(value: string) {
         this._action = value
     }
     protected setServiceList(serviceList: ServiceParameterList) {

@@ -1,9 +1,10 @@
 import Endpoints, { RequestType } from '../Constants/Endpoints'
 import hmac from './Hmac'
 import HttpMethods from '../Constants/HttpMethods'
-import httpClient from './HttpClient'
+import httpsCall from './HttpClient'
 import { buckarooClient } from '../BuckarooClient'
 import PaymentMethod from '../PaymentMethods/PaymentMethod'
+import headers from "./Headers";
 
 class Client {
     private constructor() {}
@@ -14,15 +15,10 @@ class Client {
         return new Client()
     }
     getHeaders(method, data, url) {
-        return {
-            'Content-Type': 'application/json; charset=utf-8',
-            Accept: 'application/json',
-            Authorization: hmac.authHeader(url, method, data),
-            Culture: 'en-GB'
-        }
+        headers.addHeader('Authorization', hmac(url, method, data))
+        return headers.getHeaders()
     }
-
-    getOptions(method, url, data) {
+    getOptions(method: HttpMethods, url: string | URL, data: string) {
         url = new URL(url)
         return {
             hostname: url.host,
@@ -33,21 +29,21 @@ class Client {
         }
     }
 
-    getEndpoint(path: string) {
+    private getEndpoint(path: string) {
         const baseUrl =
             buckarooClient().getConfig()?.mode === 'live' ? Endpoints.LIVE : Endpoints.TEST
         return baseUrl + path
     }
 
-    getTransactionUrl(path: string = ''): string {
+    private getTransactionUrl(path: string = ''): string {
         return this.getEndpoint('json/Transaction') + path
     }
 
-    getDataRequestUrl(path: string = ''): string {
+    private getDataRequestUrl(path: string = ''): string {
         return this.getEndpoint('json/DataRequest') + path
     }
 
-    getSpecificationUrl(paymentName, serviceVersion, type: RequestType = RequestType.Transaction) {
+    protected getSpecificationUrl(paymentName, serviceVersion, type: RequestType = RequestType.Transaction) {
         return type === RequestType.Transaction
             ? this.getTransactionUrl(
                   `/Specification/${paymentName}?serviceVersion=${serviceVersion}`
@@ -59,12 +55,12 @@ class Client {
 
     get(url, data = '') {
         const options = this.getOptions(HttpMethods.METHOD_GET, url, data)
-        return httpClient.call(options)
+        return httpsCall(options)
     }
 
     post(data, url) {
         const options = this.getOptions(HttpMethods.METHOD_POST, url, data)
-        return httpClient.call(options)
+        return httpsCall(options)
     }
 
     transactionRequest(data) {
