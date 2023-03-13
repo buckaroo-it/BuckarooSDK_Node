@@ -1,5 +1,5 @@
 import { IInvoice, invoice } from './Invoice'
-import { ServiceParameterList } from '../../../Utils/ServiceParameter'
+import { ServiceParameters } from '../../../Utils/ServiceParameter'
 
 export interface IDebtor extends IInvoice {
     addressUnreachable?: boolean
@@ -13,19 +13,22 @@ export interface IDebtor extends IInvoice {
     faxUnreachable?: boolean
 }
 export const debtor = (data: IDebtor) => {
-    let serviceData = new ServiceParameterList({
+    let invoiceData = invoice(data)
+
+    let debtorData = new ServiceParameters({
         addressUnreachable: data.addressUnreachable,
         emailUnreachable: data.emailUnreachable,
         mobileUnreachable: data.mobileUnreachable,
         landlineUnreachable: data.landlineUnreachable,
         faxUnreachable: data.faxUnreachable
     })
-    serviceData.setGroupTypes({
-        addressUnreachable: 'Address',
-        emailUnreachable: 'Email',
-        mobileUnreachable: 'Phone',
-        landlineUnreachable: 'Phone',
-        faxUnreachable: 'Phone'
-    })
-    return Object.assign(serviceData, invoice(data))
+    debtorData.setGroupType('addressUnreachable', 'Address')
+    debtorData.setGroupType('emailUnreachable', 'Email')
+    debtorData.setGroupType('mobileUnreachable', 'Phone')
+    debtorData.setGroupType('landlineUnreachable', 'Phone')
+    debtorData.setGroupType('faxUnreachable', 'Phone')
+
+    invoiceData.addParameter(debtorData)
+
+    return invoiceData
 }

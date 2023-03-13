@@ -1,4 +1,4 @@
-import { ServiceParameterList } from '../../../Utils/ServiceParameter'
+
 import { ITransaction } from '../../../Models/ITransaction'
 
 export interface ICreditNote extends ITransaction {
@@ -10,11 +10,11 @@ export interface ICreditNote extends ITransaction {
 }
 
 export const creditNote = (data: ICreditNote) => {
-    return new ServiceParameterList({
+    return {
         originalInvoiceNumber: data.originalInvoiceNumber,
         invoiceDate: data.invoiceDate,
         invoiceAmount: data.invoiceAmount,
         invoiceAmountVAT: data.invoiceAmountVAT,
         sendCreditNoteMessage: data.sendCreditNoteMessage
-    })
+    }
 }

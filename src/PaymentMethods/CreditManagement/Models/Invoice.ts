@@ -5,7 +5,7 @@ import IAddress from '../../../Models/Services/IAddress'
 import IPerson from '../../../Models/Services/IPerson'
 import ICompany from '../../../Models/Services/ICompany'
 import { ICreditArticle } from './Article'
-import { ServiceParameterList } from '../../../Utils/ServiceParameter'
+import { ServiceParameters } from '../../../Utils/ServiceParameter'
 import { ITransaction } from '../../../Models/ITransaction'
 
 export interface IInvoice extends ITransaction {
@@ -32,7 +32,7 @@ export interface IInvoice extends ITransaction {
     poNumber?: string
 }
 export const invoice = (data: IInvoice) => {
-    let services = new ServiceParameterList({
+    let services = new ServiceParameters({
         invoiceAmount: data.invoiceAmount,
         invoiceDate: data.invoiceDate,
         dueDate: data.dueDate,
@@ -55,22 +55,23 @@ export const invoice = (data: IInvoice) => {
         invoiceNumber: data.invoiceNumber,
         schemeKey: data.schemeKey
     })
-    services.setGroupTypes({
+    services.setObjectGroupTypes({
         articles: 'ProductLine',
         address: 'Address',
         company: 'Company',
         person: 'Person',
         debtor: 'Debtor',
-        email: 'Email',
         phone: 'Phone'
     })
-    if (services.list.articles) {
-        services.list.articles.setKeys({
+    services.setGroupType('Email', 'email')
+
+    if (services.find('articles')) {
+        services.articles.setKeys({
             identifier: 'ProductId',
             description: 'ProductName',
             price: 'PricePerUnit'
         })
-        services.setCountable('articles')
+        services.makeCountable('articles')
     }
 
     return services

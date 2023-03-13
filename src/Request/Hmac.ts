@@ -6,7 +6,7 @@ import HttpMethods from "../Constants/HttpMethods";
 
 const hmacHeader = (method:HttpMethods, url:string = '', data:string | object = '') => {
     let base64Data = data
-    let nonce = 'nonce_' + Math.floor(Math.random() * 9999999 + 1)
+    let nonce = 'nonce_'
     let time = String(Math.round(Date.now() / 1000))
     if (url) {
         url = url.replace(/^[^:/.]*[:/]+/i, '')
@@ -26,11 +26,7 @@ const hmacHeader = (method:HttpMethods, url:string = '', data:string | object = 
         nonce +
         base64Data
 
-    return `hmac ` + `
-        ${buckarooClient().getCredentials().websiteKey }:
-        ${Base64.stringify(
-        hmacSHA256(hashString, buckarooClient().getCredentials().secretKey ?? ''))}:
-        ${nonce}:${time}`
+    return `hmac ` + `${buckarooClient().getCredentials().websiteKey}:${Base64.stringify(hmacSHA256(hashString, buckarooClient().getCredentials().secretKey ?? ''))}:${nonce}:${time}`
 }
 
 export default hmacHeader

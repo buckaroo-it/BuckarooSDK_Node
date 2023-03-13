@@ -1,4 +1,4 @@
-import { ServiceParameterList } from '../../../Utils/ServiceParameter'
+import { ServiceParameters } from '../../../Utils/ServiceParameter'
 import { ICreditArticle } from './Article'
 import { ITransaction } from '../../../Models/ITransaction'
 
@@ -7,18 +7,17 @@ export interface IAddOrUpdateProductLines extends ITransaction {
     articles: ICreditArticle[]
 }
 export const AddOrUpdateProductLines = (data: IAddOrUpdateProductLines) => {
-    let services = new ServiceParameterList({
+    let services = new ServiceParameters({
         invoiceKey: data.invoiceKey,
         articles: data.articles
     })
+    services.setGroupType('ProductLine', 'articles').makeCountable()
 
-    services.list.articles.groupType = 'ProductLine'
-    services.list.articles.setKeys({
+    services.find('articles')?.setKeys({
         identifier: 'ProductId',
         description: 'ProductName',
         price: 'PricePerUnit'
     })
-    services.setCountable('articles')
 
     return services
 }

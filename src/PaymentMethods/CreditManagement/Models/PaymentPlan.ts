@@ -1,4 +1,3 @@
-import { ServiceParameterList } from '../../../Utils/ServiceParameter'
 import { ITransaction } from '../../../Models/ITransaction'
 
 export interface IPaymentPlan extends ITransaction {
@@ -14,7 +13,7 @@ export interface IPaymentPlan extends ITransaction {
     recipientEmail: string
 }
 export const paymentPlan = (data) => {
-    return new ServiceParameterList({
+    return {
         dossierNumber: data.dossierNumber,
         includedInvoiceKey: data.includedInvoiceKey,
         initialAmount: data.initialAmount,
@@ -25,5 +24,5 @@ export const paymentPlan = (data) => {
         paymentPlanCostAmountVat: data.paymentPlanCostAmountVat,
         recipientEmail: data.recipientEmail,
         startDate: data.startDate
-    })
+    }
 }

@@ -1,7 +1,7 @@
 import { IAfterPayArticle } from './Article'
 import { IBillingRecipient } from './Recipient'
 import { ClientIP, Payload } from '../../../Models/ITransaction'
-import { ServiceParameterList } from '../../../Utils/ServiceParameter'
+import { ServiceParameters } from '../../../Utils/ServiceParameter'
 
 export interface IPay extends Payload {
     clientIP: ClientIP
@@ -16,19 +16,23 @@ export interface IPay extends Payload {
     ourReference?: string
 }
 
-export const Services = (data: IPay) => {
-    let serviceData = new ServiceParameterList(data)
+export const afterPayServices = (data: IPay) => {
+    let serviceData = new ServiceParameters(data)
 
-    serviceData.setGroupTypes({
-        billing: 'BillingCostumer',
-        shipping: 'ShippingCustomer',
-        articles: 'Article'
-    })
-    serviceData.list.articles.setKeys({
+    if (!serviceData.shipping){
+        serviceData.addParameter({
+            shipping:data.billing
+        })
+    }
+    serviceData.setGroupType('BillingCostumer','billing')
+
+    serviceData.setGroupType('ShippingCustomer','shipping')
+
+    serviceData.setGroupType('Article','articles')
+    serviceData.find('articles')?.makeCountable()
+    serviceData.setKeys({
         price: 'grossUnitPrice'
     })
-
-    serviceData.setCountable('articles')
 
     return serviceData
 }

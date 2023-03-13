@@ -7,7 +7,7 @@ import { debtor, IDebtor } from './Models/Debtor'
 import { IPaymentPlan, paymentPlan } from './Models/PaymentPlan'
 import { ITransaction } from '../../Models/ITransaction'
 import { IMultiInfoInvoice, multiInfoInvoice } from './Models/multiInfoInvoice'
-import { ServiceParameterList } from '../../Utils/ServiceParameter'
+import { ServiceParameters } from '../../Utils/ServiceParameter'
 import { AddOrUpdateProductLines, IAddOrUpdateProductLines } from './Models/AddOrUpdateProductLines'
 
 class CreditManagement extends PaymentMethod {
@@ -96,10 +96,8 @@ class CreditManagement extends PaymentMethod {
         this.action = 'DebtorInfo'
 
         this.services = (data: typeof payload) => {
-            let serviceData = new ServiceParameterList(data)
-            serviceData.setGroupTypes({
-                debtor: 'Debtor'
-            })
+            let serviceData = new ServiceParameters(data)
+            serviceData.setGroupType('debtor', 'Debtor')
             return serviceData
         }
 

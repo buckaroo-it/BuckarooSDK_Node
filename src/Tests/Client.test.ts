@@ -1,5 +1,5 @@
 import { buckarooClient, initializeBuckarooClient } from '../BuckarooClient'
-import ideal from '../PaymentMethods/Ideal'
+
 
 initializeBuckarooClient()
 

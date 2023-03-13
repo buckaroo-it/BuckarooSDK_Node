@@ -15,7 +15,7 @@ class Client {
         return new Client()
     }
     getHeaders(method, data, url) {
-        headers.addHeader('Authorization', hmac(url, method, data))
+        headers.addHeader('Authorization', hmac( method,url, data))
         return headers.getHeaders()
     }
     getOptions(method: HttpMethods, url: string | URL, data: string) {

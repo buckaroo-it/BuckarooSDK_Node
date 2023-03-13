@@ -1,7 +1,7 @@
 import { TransactionRequest } from '../Models/Request'
 import { IConfig } from '../Utils/Types'
 import { buckarooClient } from '../BuckarooClient'
-import { ServiceParameterList } from '../Utils/ServiceParameter'
+import { ServiceParameters } from '../Utils/ServiceParameter'
 import Model from '../Models/Model'
 import { Combinable } from '../Utils/Combinable'
 import { ITransaction } from '../Models/ITransaction'
@@ -14,8 +14,10 @@ export default abstract class PaymentMethod {
     protected request: TransactionRequest = new TransactionRequest()
     private _action = ''
 
-    protected services: (data) => ServiceParameterList = (data) => {
-        return new ServiceParameterList(data)
+    private serviceParameters = { action:'',name:'',version:0}
+
+    protected services: (data) => object = (data) => {
+        return new ServiceParameters(data)
     }
     get paymentName(): string {
         return this._paymentName
@@ -27,17 +29,22 @@ export default abstract class PaymentMethod {
         return this._action
     }
     protected set action(value: string) {
-        this._action = value
+        this.serviceParameters.action = value
     }
-    protected setServiceList(serviceList: ServiceParameterList) {
-        if (!serviceList.isEmpty()) {
-            this.request.addServices({
-                name: this.paymentName,
-                action: this.action,
-                version: this.serviceVersion,
-                parameters: serviceList.formatServiceParameters()
+    protected setServiceList(serviceList: object) {
+
+        if (Object.keys(serviceList).length > 0) {
+            Object.assign(this.serviceParameters,{
+                parameters:ServiceParameters.formatServiceParameters(serviceList)
             })
         }
+        this.serviceParameters.action = this.action
+        this.serviceParameters.name = this.paymentName
+        this.serviceParameters.version = this.serviceVersion
+
+        this.request.addServices(
+            this.serviceParameters
+        )
     }
     protected setAdditionalParameters(additionalParameters?: AdditionalParameters) {
         if (additionalParameters) {

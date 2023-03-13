@@ -1,3 +1,5 @@
+import IArticle from "./Services/IArticle";
+
 export declare interface ITransaction {
     clientIP?: ClientIP
     currency?: string
@@ -43,4 +45,9 @@ export declare interface RefundPayload extends ITransaction {
     order?: string
     amountCredit: number
     originalTransactionKey: string
+}
+export declare interface ICapture extends ITransaction {
+    originalTransactionKey: string
+    invoice: string
+    articles?:IArticle[]
 }
