@@ -53,12 +53,12 @@ class Client {
               )
     }
 
-    get(url, data = '') {
+    private get(url, data = '') {
         const options = this.getOptions(HttpMethods.METHOD_GET, url, data)
         return httpsCall(options)
     }
 
-    post(data, url) {
+    private post(data, url) {
         const options = this.getOptions(HttpMethods.METHOD_POST, url, data)
         return httpsCall(options)
     }

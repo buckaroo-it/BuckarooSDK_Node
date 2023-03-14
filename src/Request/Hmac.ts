@@ -6,7 +6,7 @@ import HttpMethods from "../Constants/HttpMethods";
 
 const hmacHeader = (method:HttpMethods, url:string = '', data:string | object = '') => {
     let base64Data = data
-    let nonce = 'nonce_'
+    let nonce = 'nonce_' + Math.floor(Math.random() * 9999999 + 1)
     let time = String(Math.round(Date.now() / 1000))
     if (url) {
         url = url.replace(/^[^:/.]*[:/]+/i, '')

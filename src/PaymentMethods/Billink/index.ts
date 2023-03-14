@@ -1,9 +1,11 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
+import {IPay, payServices} from "./Models/Pay";
 
 class Billink extends PayablePaymentMethod {
     protected _paymentName = 'Billink'
 
-    pay(payload) {
+    pay(payload:IPay) {
+        this.services = payServices
         return super.pay(payload)
     }
     refund(payload) {

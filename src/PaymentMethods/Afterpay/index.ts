@@ -20,7 +20,7 @@ class Afterpay extends PayablePaymentMethod {
         this.action = 'Capture'
         return super.transactionRequest(payload)
     }
-    refund(payload?:IPay & RefundPayload) {
+    refund(payload?: Partial<Pick<IPay ,'articles'>> & RefundPayload) {
         return super.refund(payload)
     }
 }

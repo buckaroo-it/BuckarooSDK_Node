@@ -1,10 +1,11 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
+import {IPay} from "./Models/Pay";
 
 class ApplePay extends PayablePaymentMethod {
     protected _paymentName = 'applepay'
     protected _serviceVersion = 1
 
-    pay(payload) {
+    pay(payload:IPay) {
         return super.pay(payload)
     }
     refund(payload) {

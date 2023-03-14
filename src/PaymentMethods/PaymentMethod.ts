@@ -14,7 +14,7 @@ export default abstract class PaymentMethod {
     protected request: TransactionRequest = new TransactionRequest()
     private _action = ''
 
-    private serviceParameters = { action:'',name:'',version:0}
+    private serviceParameters = { action:'', name:'', version:0}
 
     protected services: (data) => object = (data) => {
         return new ServiceParameters(data)
@@ -26,9 +26,10 @@ export default abstract class PaymentMethod {
         return this._serviceVersion
     }
     protected get action(): string {
-        return this._action
+        return this.serviceParameters.action
     }
     protected set action(value: string) {
+        this._action = value
         this.serviceParameters.action = value
     }
     protected setServiceList(serviceList: object) {
@@ -86,10 +87,10 @@ export default abstract class PaymentMethod {
         const model = new Model(data)
 
         //Get Services
-        const services = this.services(model.filter(this.request.requestParams()))
+        const services = this.services(model.filter(this.request.basicParameters()))
 
         //Set the Payload
-        this.request.setData(model.only(this.request.requestParams()))
+        this.request.setData(model.only(this.request.basicParameters()))
 
         //Set required Fields
         this.setRequiredFields()

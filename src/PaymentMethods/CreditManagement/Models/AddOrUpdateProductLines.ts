@@ -6,18 +6,18 @@ export interface IAddOrUpdateProductLines extends ITransaction {
     invoiceKey: string
     articles: ICreditArticle[]
 }
-export const AddOrUpdateProductLines = (data: IAddOrUpdateProductLines) => {
-    let services = new ServiceParameters({
-        invoiceKey: data.invoiceKey,
-        articles: data.articles
-    })
-    services.setGroupType('ProductLine', 'articles').makeCountable()
+export const AddOrUpdateProductLines = (data) => {
 
-    services.find('articles')?.setKeys({
+    data.articles = new ServiceParameters(data.articles)
+    data.articles.groupType = 'ProductLine'
+
+    data.articles.makeCountable()
+
+    data.articles.setKeys({
         identifier: 'ProductId',
         description: 'ProductName',
         price: 'PricePerUnit'
     })
 
-    return services
+    return data
 }

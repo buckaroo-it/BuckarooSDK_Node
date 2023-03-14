@@ -1,3 +1,5 @@
+import {Adapters, ServiceModel} from "../Adapters";
+
 export default interface IArticle {
     identifier?: string
     type?: string
@@ -9,4 +11,7 @@ export default interface IArticle {
     vatCategory?: Number
     vatPercentage?: Number
     description?: string
+}
+export function ArticleModel(data,adapters:Adapters = { groupId:true,groupType:'Article'}) {
+    return ServiceModel(data,adapters)
 }

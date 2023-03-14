@@ -6,7 +6,7 @@ import IEmail from '../../../Models/Services/IEmail'
 import ICompany from '../../../Models/Services/ICompany'
 import IDebtor from '../../../Models/Services/IDebtor'
 import { IRatePlan, IRatePlanCharges } from './RatePlan'
-import { ServiceParameterList } from '../../../Utils/ServiceParameter'
+import { ServiceParameters } from '../../../Utils/ServiceParameter'
 import { serviceParameterKeyOf } from '../../../Utils/Functions'
 import { IConfiguration } from './Configuration'
 
@@ -37,31 +37,32 @@ export interface ISubscription {
     ratePlanCharges?: IRatePlanCharges
 }
 export const subscriptionServices = (data: ISubscription) => {
-    let serviceData = new ServiceParameterList(data)
-    serviceData.setGroupTypes({
+    let serviceData = new ServiceParameters(data)
+
+    serviceData.setObjectGroupTypes({
         debtor: 'Debtor',
         person: 'Person',
         email: 'Email',
         address: 'Address',
         configuration: 'AddConfiguration'
     })
-    if (serviceData.list.company) {
-        serviceData.list.company.setKeys({
+    if (serviceData.company) {
+        serviceData.company.setKeys({
             companyName: 'Name'
         })
     }
-    if (serviceData.list.ratePlans) {
-        const types = Object.keys(serviceData.list.ratePlans.data)
+    if (serviceData.ratePlans) {
+        const types = Object.keys(serviceData.ratePlans)
         for (const type of types) {
-            serviceData.list.ratePlans.data[type].groupType =
+            serviceData.ratePlans[type].groupType =
                 serviceParameterKeyOf(type) + 'RatePlan'
         }
     }
 
-    if (serviceData.list.ratePlanCharges) {
-        const types = Object.keys(serviceData.list.ratePlanCharges.data)
+    if (serviceData.ratePlanCharges) {
+        const types = Object.keys(serviceData.ratePlanCharges.data)
         for (const type of types) {
-            serviceData.list.ratePlanCharges.data[type].groupType =
+            serviceData.ratePlanCharges[type].groupType =
                 serviceParameterKeyOf(type) + 'RatePlanCharge'
         }
     }

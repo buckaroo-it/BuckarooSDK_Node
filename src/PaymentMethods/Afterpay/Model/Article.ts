@@ -1,4 +1,5 @@
-import IArticle from '../../../Models/Services/IArticle'
+import IArticle, {ArticleModel} from '../../../Models/Services/IArticle'
+
 
 export interface IAfterPayArticle extends IArticle {
     identifier: string
@@ -19,4 +20,13 @@ export interface IAfterPayArticle extends IArticle {
         | 'ShippingFees'
     unitCode: string
     marketPlaceSellerId?: string
+    refundType?:'Return' | 'Refund'
+}
+
+export const articles = (data:IArticle[]) => {
+    return ArticleModel(data,{
+        keys: { price: 'grossUnitPrice'},
+        groupType: 'Article',
+        groupId:true
+    })
 }

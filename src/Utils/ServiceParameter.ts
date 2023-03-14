@@ -7,7 +7,7 @@ export class ServiceParameters {
     private _groupId?: () => groupIdType
     private _groupType?: () => string
 
-    private set groupType(value: string) {
+    set groupType(value: string) {
         this._groupType = () => value
     }
     private set groupId(value: groupIdType) {
@@ -35,6 +35,7 @@ export class ServiceParameters {
     setGroupType(type:string,key?:string){
         if (!key){
             this.groupType = type
+            return this
         }else {
             let parameter =  this.findParameter(key)
             if (parameter){
@@ -42,9 +43,9 @@ export class ServiceParameters {
                     parameter.addParameter({[key]: {[key]:parameter[key]}})
                 }
                 parameter[key].groupType = type
+                return this
             }
         }
-        return this
     }
     setGroupId(id:string,key?:string){
         if (!key){
@@ -71,21 +72,23 @@ export class ServiceParameters {
         })
         return parameters
     }
-    private findParameter(param:string):ServiceParameters | undefined {
+    findParameter(param:string):ServiceParameters | undefined {
         if(this[param]){
             return this
         }
-        let tree = Object.values(this).filter(a => a instanceof ServiceParameters)
+        let tree = Object.values(this).filter(a => a instanceof ServiceParameters && Object.keys(a).length>0)
         if(tree.length>0){
-            return tree.reduceRight((ac,value) => {
-                return value.findParameter(param)
-            })
+            for (const treeElement of tree) {
+                let parameter = treeElement.findParameter(param)
+                if(parameter){
+                    return parameter
+                }
+            }
         }
     }
-    find(param:string):ServiceParameters | undefined {
-        if(this[param] instanceof ServiceParameters){
-            return this[param]
-        }
+    find(param:string):any | undefined {
+        let find = this.findParameter('param')
+        return find? find[param]:undefined
     }
     addParameter(value:object){
         for (const paramKey in value) {
@@ -93,7 +96,7 @@ export class ServiceParameters {
                 this[paramKey] = value[paramKey]
             }else if (typeof value[paramKey] === 'object'){
                 this[paramKey] = new ServiceParameters(value[paramKey])
-            }else {
+            }else if(typeof value[paramKey] !== 'function') {
                 this[paramKey] = value[paramKey]
             }
         }
@@ -122,6 +125,14 @@ export class ServiceParameters {
                 delete Object.assign(this, { [keys[parameterKey]]: this[parameterKey] })[parameterKey]
             }else if(typeof this[parameterKey] === 'object'){
                 this[parameterKey].setKeys(keys)
+            }
+        }
+    }
+    removeKeys(keys:string[]){
+        for (const key of keys) {
+            let parameter = this.findParameter(key)
+            if (parameter){
+                delete this[key]
             }
         }
     }

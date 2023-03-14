@@ -1,14 +1,13 @@
-import {articles, IAfterPayArticle} from './Article'
-import {IBillingRecipient, recipient} from './Recipient'
-import { ClientIP, Payload } from '../../../Models/ITransaction'
-import { ServiceParameters } from '../../../Utils/ServiceParameter'
+import {Payload} from "../../../Models/ITransaction";
+import {IBillingRecipient, recipient} from "../../Afterpay/Model/Recipient";
+import {articles,IBillinkArticle} from "./Article";
 
 export interface IPay extends Payload {
-    clientIP: ClientIP
     billing: IBillingRecipient
     shipping?: Omit<IBillingRecipient, 'phone'> & Partial<Pick<IBillingRecipient, 'phone'>>
-    articles: IAfterPayArticle[]
-    merchantImageUrl?: string
+    articles: IBillinkArticle[]
+    trackandtrace?: string
+    vATNumber?:string
     summaryImageUrl?: string
     bankAccount?: string
     bankCode?: string
@@ -16,9 +15,10 @@ export interface IPay extends Payload {
     ourReference?: string
 }
 
-export const afterPayServices = (data) => {
+export const payServices = (data) => {
     data.billing = recipient(data.billing)
     data.shipping = recipient(data.shipping || data.billing)
+
     data.articles = articles(data.articles)
 
     data.billing.groupType = 'BillingCustomer'

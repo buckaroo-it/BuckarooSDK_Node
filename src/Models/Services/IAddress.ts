@@ -1,3 +1,4 @@
+
 export default interface IAddress {
     street?: string
     houseNumber?: string

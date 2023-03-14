@@ -10,7 +10,7 @@ export class Request {
     public getData() {
         return this.data
     }
-    requestParams: () =>  Array<keyof ITransaction> = () => {
+    basicParameters: () =>  Array<keyof ITransaction> = () => {
         return [
             'order',
             'amountDebit',
