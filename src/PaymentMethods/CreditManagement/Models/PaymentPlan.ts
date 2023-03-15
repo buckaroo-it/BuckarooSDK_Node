@@ -12,17 +12,4 @@ export interface IPaymentPlan extends ITransaction {
     paymentPlanCostAmountVat?: Number
     recipientEmail: string
 }
-export const paymentPlan = (data) => {
-    return {
-        dossierNumber: data.dossierNumber,
-        includedInvoiceKey: data.includedInvoiceKey,
-        initialAmount: data.initialAmount,
-        installmentAmount: data.installmentAmount,
-        installmentCount: data.installmentCount,
-        interval: data.interval,
-        paymentPlanCostAmount: data.paymentPlanCostAmount,
-        paymentPlanCostAmountVat: data.paymentPlanCostAmountVat,
-        recipientEmail: data.recipientEmail,
-        startDate: data.startDate
-    }
-}
+

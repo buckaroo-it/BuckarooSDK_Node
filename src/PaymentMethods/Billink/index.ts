@@ -1,25 +1,26 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import {IPay, payServices} from "./Models/Pay";
+import {ICapture, RefundPayload} from "../../Models/ITransaction";
 
 class Billink extends PayablePaymentMethod {
     protected _paymentName = 'Billink'
 
     pay(payload:IPay) {
-        this.services = payServices
-        return super.pay(payload)
+        this.servicesStrategy = payServices
+        return super.pay()
     }
-    refund(payload) {
+    refund(payload: RefundPayload) {
         return super.refund(payload)
     }
-    authorize(payload) {
+    authorize(payload?:IPay) {
         this.action = 'Authorize'
         return super.transactionRequest(payload)
     }
-    cancelAuthorize(payload) {
+    cancelAuthorize(payload:RefundPayload ) {
         this.action = 'CancelAuthorize'
         return super.transactionRequest(payload)
     }
-    capture(payload) {
+    capture(payload:ICapture) {
         this.action = 'Capture'
         return super.transactionRequest(payload)
     }

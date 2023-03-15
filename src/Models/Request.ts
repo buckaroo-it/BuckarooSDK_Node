@@ -10,32 +10,30 @@ export class Request {
     public getData() {
         return this.data
     }
-    basicParameters: () =>  Array<keyof ITransaction> = () => {
-        return [
-            'order',
-            'amountDebit',
-            'amountCredit',
-            'additionalParameters',
-            'clientIP',
-            'continueOnIncomplete',
-            'culture',
-            'currency',
-            'customParameters',
-            'description',
-            'invoice',
-            'originalTransactionKey',
-            'originalTransactionReference',
-            'pushURL',
-            'pushURLFailure',
-            'returnURL',
-            'returnURLCancel',
-            'returnURLError',
-            'returnURLReject',
-            'services',
-            'servicesExcludedForClient',
-            'servicesSelectableByClient',
-            'startRecurrent'
-        ]
+    public basicParameters:Record<keyof RequestData, boolean> = {
+        services: true,
+        clientIP: true,
+        currency: true,
+        returnURL: true,
+        returnURLError: true,
+        returnURLCancel: true,
+        returnURLReject: true,
+        pushURL: true,
+        pushURLFailure: true,
+        invoice: true,
+        order: true,
+        amountDebit: true,
+        amountCredit: true,
+        description: true,
+        originalTransactionKey: true,
+        originalTransactionReference: true,
+        culture: true,
+        startRecurrent: true,
+        continueOnIncomplete: true,
+        servicesSelectableByClient: true,
+        servicesExcludedForClient: true,
+        customParameters: true,
+        additionalParameters: true
     }
 }
 

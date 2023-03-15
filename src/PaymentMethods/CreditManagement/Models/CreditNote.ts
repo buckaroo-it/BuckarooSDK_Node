@@ -9,12 +9,4 @@ export interface ICreditNote extends ITransaction {
     sendCreditNoteMessage: string
 }
 
-export const creditNote = (data: ICreditNote) => {
-    return {
-        originalInvoiceNumber: data.originalInvoiceNumber,
-        invoiceDate: data.invoiceDate,
-        invoiceAmount: data.invoiceAmount,
-        invoiceAmountVAT: data.invoiceAmountVAT,
-        sendCreditNoteMessage: data.sendCreditNoteMessage
-    }
-}
+

@@ -36,18 +36,18 @@ export declare type AdditionalParameter = {
     [name: string]: string | number
 }
 
-export declare interface Payload extends ITransaction {
+export declare interface Payload extends Omit<ITransaction,'amountCredit'> {
     order?: string
     amountDebit: number
 }
 
-export declare interface RefundPayload extends ITransaction {
+export declare interface RefundPayload extends Omit<ITransaction,'amountDebit'> {
     order?: string
     amountCredit: number
     originalTransactionKey: string
 }
 export declare interface ICapture extends ITransaction {
     originalTransactionKey: string
-    invoice: string
-    articles?:IArticle[]
+    amountDebit: number
+    invoice?: string
 }

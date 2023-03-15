@@ -12,7 +12,7 @@ class Ideal extends PayablePaymentMethod {
         'returnURLCancel',
         'pushURL'
     ]
-    protected services = Services
+    protected servicesStrategy = Services
     setPayload(payload: IPay) {
         super.setPayload(payload)
     }

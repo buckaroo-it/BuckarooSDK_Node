@@ -99,17 +99,18 @@ export declare interface ITransactionResponse {
     PayerHash: string
     PaymentKey: string
 }
-
-export class TransactionResponse implements TransactionResponse{
-    data : ITransactionResponse
+export class TransactionResponse{
+    data : ServiceParameters
     constructor(data: ITransactionResponse) {
-        this.data = data
+        this.data = new ServiceParameters(data)
     }
     getStatusCode() {
-        return this.data.Status.Code.Code
+        return this.data.findParameter('code')
+            ?.find('code')
     }
     getSubStatusCode() {
-        return this.data.Status.SubCode.Code
+        return this.data.findParameter('SubCode')
+            ?.find('code')
     }
     isSuccess(){
         return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_SUCCESS
@@ -137,42 +138,47 @@ export class TransactionResponse implements TransactionResponse{
         return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_VALIDATION_FAILURE
     }
     hasRedirect(){
-        return this.data.RequiredAction.RedirectURL &&
-            this.data.RequiredAction.Name === 'Redirect'
+        return this.find('RedirectURL') &&
+            this.find('RequiredAction')?.find('name') === 'Redirect'
     }
     getRedirectUrl(){
-        return this.hasRedirect() ? this.data.RequiredAction.RedirectURL : ''
+        return this.hasRedirect()? this.find('RedirectURL') : ''
+    }
+    getServices(){
+        return this.find('services')
     }
     getMethod(){
-        return this.data.Services[0].name
+        return this.getServices()?.[0].name
     }
     getServiceAction(){
-        return this.data.Services[0].action
+        return this.getServices()?.[0].action
     }
     getServiceParameters(){
-        let parameters = this.data.Services[0].parameters
+        let parameters = this.getServices()?.[0].parameters
         let data = {}
         if (parameters)
             for (const key of parameters) {
-                data[key.Name.charAt(0).toLowerCase() + key.Name.slice(1)] = parameters[key.Value]
+                data[key.name.charAt(0).toLowerCase() + key.name.slice(1)] = parameters[key.value]
             }
         return data
     }
     getCustomParameters(){
-        if (this.data.CustomParameters.List){
+        let CustomParameters = this.find('CustomParameters')
+        if (CustomParameters?.list){
             let data = {}
-            for (const param of this.data.CustomParameters.List) {
-                data[param.Name] = param.Value
+            for (const param of CustomParameters.list) {
+                data[param.name] = param.value
             }
             return data
         }
         return {}
     }
     getAdditionalParameters(){
-        if (this.data.AdditionalParameters.AdditionalParameter){
+        let AdditionalParameters = this.find('AdditionalParameters')
+        if (AdditionalParameters?.AdditionalParameter){
             let data = {}
-            for (const param of this.data.AdditionalParameters.AdditionalParameter) {
-                data[param.Name] = param.Value
+            for (const param of AdditionalParameters.AdditionalParameter) {
+                data[param.name] = param.value
             }
             return data
         }
@@ -185,17 +191,9 @@ export class TransactionResponse implements TransactionResponse{
         return this.data.PaymentKey
     }
     hasError(){
-        return this.data.RequestErrors && (
-            this.data.RequestErrors.ChannelErrors.length > 0 ||
-            this.data.RequestErrors.ServiceErrors.length > 0 ||
-            this.data.RequestErrors.ActionErrors.length > 0 ||
-            this.data.RequestErrors.ParameterErrors.length > 0 ||
-            this.data.RequestErrors.CustomParameterErrors.length > 0
-        );
+        return this.data.findParameter('RequestErrors')
     }
-    find(parameter){
-        let data =  new ServiceParameters(this.data)
-        let params = data.findParameter(parameter)
-        return params? params[parameter] : params
+    find(parameter:string){
+        return this.data.findParameter(parameter)
     }
 }

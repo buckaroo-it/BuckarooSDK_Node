@@ -1,6 +1,7 @@
 import { ServiceParameters } from '../../../Utils/ServiceParameter'
 import { ICreditArticle } from './Article'
 import { ITransaction } from '../../../Models/ITransaction'
+import {ArticleService} from "../../../Models/Services/IArticle";
 
 export interface IAddOrUpdateProductLines extends ITransaction {
     invoiceKey: string
@@ -8,15 +9,10 @@ export interface IAddOrUpdateProductLines extends ITransaction {
 }
 export const AddOrUpdateProductLines = (data) => {
 
-    data.articles = new ServiceParameters(data.articles)
-    data.articles.groupType = 'ProductLine'
-
-    data.articles.makeCountable()
-
-    data.articles.setKeys({
-        identifier: 'ProductId',
-        description: 'ProductName',
-        price: 'PricePerUnit'
+    data.articles = ArticleService(data.articles, {
+        keys: { identifier:'ProductId', description:'ProductName', price:'PricePerUnit'},
+        groupId:true,
+        groupType:'ProductLine'
     })
 
     return data

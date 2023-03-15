@@ -1,10 +1,10 @@
 import { IConfig } from '../../Utils/Types'
 import PaymentMethod from '../PaymentMethod'
 import { IInvoice, invoice } from './Models/Invoice'
-import { creditNote, ICreditNote } from './Models/CreditNote'
+import { ICreditNote } from './Models/CreditNote'
 import { uniqid } from '../../Utils/Functions'
-import { debtor, IDebtor } from './Models/Debtor'
-import { IPaymentPlan, paymentPlan } from './Models/PaymentPlan'
+import {debtor, debtorInfo, IDebtor} from './Models/Debtor'
+import { IPaymentPlan } from './Models/PaymentPlan'
 import { ITransaction } from '../../Models/ITransaction'
 import { IMultiInfoInvoice, multiInfoInvoice } from './Models/multiInfoInvoice'
 import { ServiceParameters } from '../../Utils/ServiceParameter'
@@ -18,24 +18,23 @@ class CreditManagement extends PaymentMethod {
 
     createInvoice(payload: IInvoice): Promise<any> {
         this.action = 'CreateInvoice'
-        this.services = invoice
         payload.invoice = payload.invoice || uniqid()
-        this.setRequest(payload)
+
+        this.setRequest(invoice(payload))
 
         return this.dataRequest()
     }
     createCombinedInvoice(payload: IInvoice) {
         this.action = 'CreateCombinedInvoice'
-        this.services = invoice
+
         payload.invoice = payload.invoice || uniqid()
-        this.setServiceList(this.services(payload))
+
+        this.setServiceList(invoice(payload))
 
         return this
     }
     createCreditNote(payload: ICreditNote) {
         this.action = 'CreateCreditNote'
-
-        this.services = creditNote
 
         this.setRequest(payload)
 
@@ -44,16 +43,12 @@ class CreditManagement extends PaymentMethod {
     addOrUpdateDebtor(payload: IDebtor) {
         this.action = 'AddOrUpdateDebtor'
 
-        this.services = debtor
-
-        this.setRequest(payload)
+        this.setRequest(debtor(payload))
 
         return this.dataRequest()
     }
     createPaymentPlan(payload: IPaymentPlan) {
         this.action = 'CreatePaymentPlan'
-
-        this.services = paymentPlan
 
         this.setRequest(payload)
 
@@ -61,8 +56,6 @@ class CreditManagement extends PaymentMethod {
     }
     terminatePaymentPlan(payload: Required<Pick<IPaymentPlan, 'includedInvoiceKey'>>) {
         this.action = 'TerminatePaymentPlan'
-
-        this.services = paymentPlan
 
         this.setRequest(<IPaymentPlan>payload)
 
@@ -86,22 +79,14 @@ class CreditManagement extends PaymentMethod {
     invoiceInfo(payload: IMultiInfoInvoice) {
         this.action = 'InvoiceInfo'
 
-        this.services = multiInfoInvoice
-
-        this.setRequest(payload)
+        this.setRequest(multiInfoInvoice(payload))
 
         return this.dataRequest()
     }
     debtorInfo(payload: Required<Pick<IInvoice, 'debtor'>>) {
         this.action = 'DebtorInfo'
 
-        this.services = (data: typeof payload) => {
-            let serviceData = new ServiceParameters(data)
-            serviceData.setGroupType('debtor', 'Debtor')
-            return serviceData
-        }
-
-        this.setRequest(<IInvoice>payload)
+        this.setRequest(debtorInfo(payload))
 
         return this.dataRequest()
     }
@@ -109,9 +94,7 @@ class CreditManagement extends PaymentMethod {
     addOrUpdateProductLines(payload: IAddOrUpdateProductLines) {
         this.action = 'AddOrUpdateProductLines'
 
-        this.services = AddOrUpdateProductLines
-
-        this.setRequest(payload)
+        this.setRequest(AddOrUpdateProductLines(payload))
 
         return this.dataRequest()
     }
@@ -119,7 +102,7 @@ class CreditManagement extends PaymentMethod {
     resumeDebtorFile(payload: { debtorFileGuid: string }) {
         this.action = 'ResumeDebtorFile'
 
-        this.setServiceList(this.services(payload))
+        this.setServiceList(payload)
 
         return this.dataRequest()
     }
@@ -127,7 +110,7 @@ class CreditManagement extends PaymentMethod {
     pauseDebtorFile(payload: { debtorFileGuid: string }) {
         this.action = 'PauseDebtorFile'
 
-        this.setServiceList(this.services(payload))
+        this.setServiceList(payload)
 
         return this.dataRequest()
     }

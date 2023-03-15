@@ -44,7 +44,7 @@ class Subscriptions extends PaymentMethod {
 
         this.setRequiredFields()
 
-        this.setServiceList(this.services(payload))
+        this.setServiceList(this.servicesStrategy(payload))
 
         return this.dataRequest()
     }
@@ -53,7 +53,7 @@ class Subscriptions extends PaymentMethod {
 
         this.setRequiredFields()
 
-        this.setServiceList(this.services(payload))
+        this.setServiceList(this.servicesStrategy(payload))
 
         return this.dataRequest()
     }
@@ -62,7 +62,7 @@ class Subscriptions extends PaymentMethod {
 
         this.setRequiredFields()
 
-        this.setServiceList(this.services(payload))
+        this.setServiceList(this.servicesStrategy(payload))
 
         return this.dataRequest()
     }
@@ -72,7 +72,7 @@ class Subscriptions extends PaymentMethod {
 
         this.setRequiredFields()
 
-        this.setServiceList(this.services(payload))
+        this.setServiceList(this.servicesStrategy(payload))
 
         return this.dataRequest()
     }
@@ -81,7 +81,7 @@ class Subscriptions extends PaymentMethod {
 
         this.setRequiredFields()
 
-        this.setServiceList(this.services(payload))
+        this.setServiceList(this.servicesStrategy(payload))
         return this.dataRequest()
     }
 }

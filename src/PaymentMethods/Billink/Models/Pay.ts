@@ -1,6 +1,7 @@
 import {Payload} from "../../../Models/ITransaction";
 import {IBillingRecipient, recipient} from "../../Afterpay/Model/Recipient";
-import {articles,IBillinkArticle} from "./Article";
+import {IBillinkArticle} from "./Article";
+import {ArticleService} from "../../../Models/Services/IArticle";
 
 export interface IPay extends Payload {
     billing: IBillingRecipient
@@ -19,7 +20,7 @@ export const payServices = (data) => {
     data.billing = recipient(data.billing)
     data.shipping = recipient(data.shipping || data.billing)
 
-    data.articles = articles(data.articles)
+    data.articles = ArticleService(data.articles)
 
     data.billing.groupType = 'BillingCustomer'
     data.shipping.groupType = 'ShippingCustomer'

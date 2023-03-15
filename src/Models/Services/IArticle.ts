@@ -12,6 +12,6 @@ export default interface IArticle {
     vatPercentage?: Number
     description?: string
 }
-export function ArticleModel(data,adapters:Adapters = { groupId:true,groupType:'Article'}) {
+export function ArticleService(data, adapters:Adapters = { groupId:true,groupType:'Article'}) {
     return ServiceModel(data,adapters)
 }

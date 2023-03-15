@@ -37,7 +37,7 @@ export class ServiceParameters {
             this.groupType = type
             return this
         }else {
-            let parameter =  this.findParameter(key)
+            let parameter =  this.findParameterParent(key)
             if (parameter){
                 if (!(parameter[key] instanceof ServiceParameters)){
                     parameter.addParameter({[key]: {[key]:parameter[key]}})
@@ -51,7 +51,7 @@ export class ServiceParameters {
         if (!key){
             this.groupId = id
         }else {
-            let parameter =  this.findParameter(key)
+            let parameter =  this.findParameterParent(key)
             if (parameter){
                 if (!(parameter[key] instanceof ServiceParameters)){
                     parameter.addParameter({[key]: {[key]:parameter[key]}})
@@ -72,32 +72,40 @@ export class ServiceParameters {
         })
         return parameters
     }
-    findParameter(param:string):ServiceParameters | undefined {
-        if(this[param]){
+    findParameterParent(param:string):ServiceParameters | undefined {
+        if(this[param.toLowerCase()]){
             return this
         }
         let tree = Object.values(this).filter(a => a instanceof ServiceParameters && Object.keys(a).length>0)
         if(tree.length>0){
             for (const treeElement of tree) {
-                let parameter = treeElement.findParameter(param)
+                let parameter = treeElement.findParameterParent(param)
                 if(parameter){
                     return parameter
                 }
             }
         }
     }
+    findParameter(param:string):ServiceParameters | undefined {
+        let find = this.findParameterParent(param)
+        if(find && find[param] instanceof ServiceParameters){
+            return find[param]
+        }
+    }
     find(param:string):any | undefined {
-        let find = this.findParameter('param')
-        return find? find[param]:undefined
+        let find = this.findParameterParent(param)
+        if(find && find[param]){
+            return find[param]
+        }
     }
     addParameter(value:object){
         for (const paramKey in value) {
             if (value[paramKey] instanceof ServiceParameters){
-                this[paramKey] = value[paramKey]
+                this[paramKey.toLowerCase()] = value[paramKey]
             }else if (typeof value[paramKey] === 'object'){
-                this[paramKey] = new ServiceParameters(value[paramKey])
+                this[paramKey.toLowerCase()] = new ServiceParameters(value[paramKey])
             }else if(typeof value[paramKey] !== 'function') {
-                this[paramKey] = value[paramKey]
+                this[paramKey.toLowerCase()] = value[paramKey]
             }
         }
     }
@@ -130,7 +138,7 @@ export class ServiceParameters {
     }
     removeKeys(keys:string[]){
         for (const key of keys) {
-            let parameter = this.findParameter(key)
+            let parameter = this.findParameterParent(key)
             if (parameter){
                 delete this[key]
             }

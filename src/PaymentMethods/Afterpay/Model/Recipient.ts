@@ -3,6 +3,7 @@ import IPerson from '../../../Models/Services/IPerson'
 import IAddress from '../../../Models/Services/IAddress'
 import ICompany from '../../../Models/Services/ICompany'
 import {ServiceParameters} from "../../../Utils/ServiceParameter";
+import {ServiceModel} from "../../../Models/Adapters";
 
 export declare interface IBillingRecipient {
     recipient: Required<IPerson | ICompany>
@@ -11,27 +12,29 @@ export declare interface IBillingRecipient {
     phone: Pick<IPhone,'mobile'>
 }
 
-export const recipient = (data:IBillingRecipient) => {
-    let recipientData = new ServiceParameters(data)
+export const recipient = (data) => {
+    data.recipient = new ServiceParameters(data.recipient)
     if(data.phone){
-        recipientData.phone = phone(data.phone)
+        data.phone = phone(data.phone)
     }
-    recipientData.address = address(recipientData.address)
-    return recipientData
+    data.address = address(data.address)
+    return data
 }
+
 export const address = (data:IAddress) => {
-    let addressData = new ServiceParameters(data)
-    addressData.setKeys({
-        houseNumber:'streetNumber',
-        houseNumberAdditional:'streetNumberAdditional',
-        zipcode:'postalCode'
+    return ServiceModel(data, {
+        keys:{
+            houseNumber:'streetNumber',
+            houseNumberAdditional:'streetNumberAdditional',
+            zipcode:'postalCode'
+        }
     })
-    return addressData
 }
 export const phone = (data:IPhone) => {
-    let phoneData = new ServiceParameters(data)
-    phoneData.setKeys({
-        mobile:'phone'
+    let phoneData = ServiceModel(data, {
+        keys:{
+            mobile:'phone'
+        }
     })
     phoneData.removeKeys(['landline','fax'])
     return phoneData

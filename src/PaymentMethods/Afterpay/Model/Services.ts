@@ -17,12 +17,14 @@ export interface IPay extends Payload {
 }
 
 export const afterPayServices = (data) => {
-    data.billing = recipient(data.billing)
-    data.shipping = recipient(data.shipping || data.billing)
-    data.articles = articles(data.articles)
-
-    data.billing.groupType = 'BillingCustomer'
-    data.shipping.groupType = 'ShippingCustomer'
-
+    if(data.billing){
+        data.billing = recipient(data.billing)
+        data.shipping = recipient(data.shipping || {...data.billing})
+        data.billing.groupType = 'BillingCustomer'
+        data.shipping.groupType = 'ShippingCustomer'
+    }
+    if (data.articles){
+        data.articles = articles(data.articles)
+    }
     return data
 }

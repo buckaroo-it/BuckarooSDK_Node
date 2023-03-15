@@ -1,4 +1,4 @@
-import IArticle, {ArticleModel} from '../../../Models/Services/IArticle'
+import IArticle, {ArticleService} from '../../../Models/Services/IArticle'
 
 
 export interface IAfterPayArticle extends IArticle {
@@ -24,7 +24,7 @@ export interface IAfterPayArticle extends IArticle {
 }
 
 export const articles = (data:IArticle[]) => {
-    return ArticleModel(data,{
+    return ArticleService(data,{
         keys: { price: 'grossUnitPrice'},
         groupType: 'Article',
         groupId:true

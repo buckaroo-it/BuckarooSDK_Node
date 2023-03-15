@@ -64,8 +64,9 @@ describe('testing methods', () => {
 
     test('Capture', async () => {
         await method.capture({
+            amountDebit: 0,
             invoice: '123456789',
-            originalTransactionKey: '123456789',
+            originalTransactionKey: '123456789'
         }).then((data) => {
             expect(data).toBeDefined()
         })

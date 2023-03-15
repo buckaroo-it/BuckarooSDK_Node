@@ -4,7 +4,7 @@ import {ICapture, RefundPayload} from "../../Models/ITransaction";
 class Afterpay extends PayablePaymentMethod {
     protected _paymentName = 'afterpay'
     protected _serviceVersion = 1
-    protected services = afterPayServices
+    protected servicesStrategy = afterPayServices
     pay(payload?:IPay) {
         return super.pay(payload)
     }
@@ -12,11 +12,11 @@ class Afterpay extends PayablePaymentMethod {
         this.action = 'Authorize'
         return super.transactionRequest(payload)
     }
-    cancelAuthorize(payload?:Omit<ICapture,'articles'>) {
+    cancelAuthorize(payload?:ICapture) {
         this.action = 'CancelAuthorize'
         return super.transactionRequest(payload)
     }
-    capture(payload?:ICapture) {
+    capture(payload?:ICapture & Partial<Pick<IPay, 'articles'>> ) {
         this.action = 'Capture'
         return super.transactionRequest(payload)
     }

@@ -60,6 +60,7 @@ class Client {
 
     private post(data, url) {
         const options = this.getOptions(HttpMethods.METHOD_POST, url, data)
+
         return httpsCall(options)
     }
 

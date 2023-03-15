@@ -7,6 +7,7 @@ import ICompany from '../../../Models/Services/ICompany'
 import { ICreditArticle } from './Article'
 import { ServiceParameters } from '../../../Utils/ServiceParameter'
 import { ITransaction } from '../../../Models/ITransaction'
+import {ArticleService} from "../../../Models/Services/IArticle";
 
 export interface IInvoice extends ITransaction {
     invoiceAmount: Number
@@ -31,32 +32,21 @@ export interface IInvoice extends ITransaction {
     applyStartRecurrent?: boolean
     poNumber?: string
 }
-export const invoice = (data: IInvoice) => {
-    let services = new ServiceParameters({
-        invoiceAmount: data.invoiceAmount,
-        invoiceDate: data.invoiceDate,
-        dueDate: data.dueDate,
-        code: data.code,
-        address: data.address,
-        allowedServices: data.allowedServices,
-        allowedServicesAfterDueDate: data.allowedServicesAfterDueDate,
-        applyStartRecurrent: data.applyStartRecurrent,
-        articles: data.articles,
-        company: data.company,
-        disallowedServices: data.disallowedServices,
-        disallowedServicesAfterDueDate: data.disallowedServicesAfterDueDate,
-        invoiceAmountVAT: data.invoiceAmountVAT,
-        maxStepIndex: data.maxStepIndex,
-        person: data.person,
-        poNumber: data.poNumber,
-        debtor: data.debtor,
-        email: data.email,
-        phone: data.phone,
-        invoiceNumber: data.invoiceNumber,
-        schemeKey: data.schemeKey
+export const invoice = (data) => {
+    data.articles = ArticleService(data.articles,{
+        keys: { identifier:'ProductId', description:'ProductName', price:'PricePerUnit'},
+        groupId:true
     })
+    let services = new ServiceParameters({
+        address: data.address,
+        company: data.company,
+        person: data.person,
+        debtor: data.debtor,
+        phone: data.phone,
+        email: data.email
+    })
+
     services.setObjectGroupTypes({
-        articles: 'ProductLine',
         address: 'Address',
         company: 'Company',
         person: 'Person',
@@ -64,15 +54,6 @@ export const invoice = (data: IInvoice) => {
         phone: 'Phone'
     })
     services.setGroupType('Email', 'email')
-
-    if (services.find('articles')) {
-        services.articles.setKeys({
-            identifier: 'ProductId',
-            description: 'ProductName',
-            price: 'PricePerUnit'
-        })
-        services.makeCountable('articles')
-    }
-
-    return services
+    Object.assign(data, services)
+    return data
 }

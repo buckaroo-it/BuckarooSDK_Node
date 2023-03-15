@@ -14,10 +14,10 @@ export default abstract class PaymentMethod {
     protected request: TransactionRequest = new TransactionRequest()
     private _action = ''
 
-    private serviceParameters = { action:'', name:'', version:0}
+    protected serviceParameters = { action:'', name:'', version:0 }
 
-    protected services: (data) => object = (data) => {
-        return new ServiceParameters(data)
+    protected servicesStrategy: (data) => object = (data) => {
+        return data
     }
     get paymentName(): string {
         return this._paymentName
@@ -84,25 +84,32 @@ export default abstract class PaymentMethod {
         return this
     }
     public setRequest(data: ITransaction) {
-        const model = new Model(data)
 
-        //Get Services
-        const services = this.services(model.filter(this.request.basicParameters()))
 
         //Set the Payload
-        this.request.setData(model.only(this.request.basicParameters()))
+        this.request.setData(this.takeBasicParameters(data))
 
         //Set required Fields
         this.setRequiredFields()
 
         //Set Services
-        this.setServiceList(services)
+        this.setServiceList(data)
 
         //Set setAdditionalParameters
-        this.setAdditionalParameters(data.additionalParameters)
+        this.setAdditionalParameters()
     }
     public specification(type?: RequestType) {
         return buckarooClient().client().specification(this.paymentName, this.serviceVersion, type)
+    }
+    private takeBasicParameters(data) {
+        let basicParameterData = {}
+        for (const basicParameterDataKey in data) {
+            if (this.request.basicParameters[basicParameterDataKey]){
+                basicParameterData[basicParameterDataKey] = data[basicParameterDataKey]
+                delete data[basicParameterDataKey]
+            }
+        }
+        return basicParameterData
     }
 }
 export declare interface AdditionalParameters {

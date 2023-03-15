@@ -15,7 +15,9 @@ const handleModelAdapters = (model:ServiceParameters,adapters:Adapters) => {
             break
         case "boolean":
             model.makeCountable()
+            break;
         default:
+            console.log(typeof adapters.groupId)
             model.setGroupId(<string>adapters.groupId)
     }
 }

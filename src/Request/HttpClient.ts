@@ -7,7 +7,6 @@ const httpsCall = (options:{
     headers
     data?
 }) => {
-    console.log(JSON.stringify(options.data))
     return new Promise<any>(function (resolve, reject) {
         const req = https.request(options, (res) => {
             let body: string
@@ -19,7 +18,6 @@ const httpsCall = (options:{
                 }
             })
             res.on('end', function () {
-                console.log(JSON.stringify(body))
                 resolve(body)
             })
         })
