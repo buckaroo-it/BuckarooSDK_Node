@@ -1,5 +1,5 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import {Payload, RefundPayload} from "../../Models/ITransaction";
+import { Payload, RefundPayload } from '../../Models/ITransaction'
 
 class Belfius extends PayablePaymentMethod {
     protected _paymentName = 'belfius'

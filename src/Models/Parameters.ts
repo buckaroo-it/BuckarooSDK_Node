@@ -1,4 +1,3 @@
-
 export interface IParameter {
     Name: string
     Value: any

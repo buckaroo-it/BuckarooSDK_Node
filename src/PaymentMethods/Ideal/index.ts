@@ -1,7 +1,8 @@
-import { IPay, Services } from './Models/Pay'
+import { IPay } from './Models/Pay'
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { RefundPayload } from '../../Models/ITransaction'
 import { IConfig } from '../../Utils/Types'
+import { ServiceParameters } from '../../Utils/ServiceParameter'
 
 class Ideal extends PayablePaymentMethod {
     protected _paymentName = 'ideal'
@@ -12,30 +13,27 @@ class Ideal extends PayablePaymentMethod {
         'returnURLCancel',
         'pushURL'
     ]
-    protected servicesStrategy = Services
-    setPayload(payload: IPay) {
-        super.setPayload(payload)
-    }
     pay(payload?: IPay) {
         return super.pay(payload)
     }
     refund(payload: RefundPayload) {
         return super.refund(payload)
     }
+    setPayload(payload: IPay) {
+        super.setPayload(payload)
+    }
     issuers() {
         return this.specification().then((response) => {
             const issuerList: { id: any; name: any }[] = []
-
-            if (response?.Actions?.['0']?.RequestParameters?.[0]?.ListItemDescriptions) {
-                const issuersData = response.Actions['0'].RequestParameters[0].ListItemDescriptions
-
-                if (issuersData.length > 0) {
-                    for (const issuer of issuersData) {
-                        issuerList.push({
-                            id: issuer.Value,
-                            name: issuer.Description
-                        })
-                    }
+            response = new ServiceParameters(response)
+            let parameters = response.findParameter('listItemDescriptions')
+            if (parameters) {
+                let issuer: any
+                for (issuer of Object.values(parameters)) {
+                    issuerList.push({
+                        id: issuer.value,
+                        name: issuer.description
+                    })
                 }
             }
             return issuerList

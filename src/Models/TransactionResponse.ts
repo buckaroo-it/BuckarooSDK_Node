@@ -1,199 +1,267 @@
 import { IServiceList } from './ServiceList'
 import { AdditionalParameter } from './ITransaction'
-import ResponseStatus from "../Constants/ResponseStatus";
-import {ServiceParameters} from "../Utils/ServiceParameter";
+import ResponseStatus from '../Constants/ResponseStatus'
+import { ServiceParameters } from '../Utils/ServiceParameter'
 
 export declare interface ITransactionResponse {
-    Key: string
-    Status: {
-        Code: {
-            Code: number | string
-            Description: string
+    key: string
+    status: {
+        code: {
+            code: number | string
+            description: string
         }
-        SubCode: {
-            Code: number | string
-            Description: string
+        subCode: {
+            code: number | string
+            description: string
         }
-        DateTime: string
+        dateTime: string
     }
-    RequiredAction: {
-        RedirectURL: string
-        RequestedInformation: {
-            Name: string
-            DataType: number
-            MaxLength: number
-            Required: boolean
-            Description: string
+    requiredAction: {
+        redirectURL: string
+        requestedInformation: {
+            name: string
+            dataType: number
+            maxLength: number
+            required: boolean
+            description: string
         }[]
-        PayRemainderDetails: {
-            RemainderAmount: number
-            Currency: string
-            GroupTransaction: string
+        payRemainderDetails: {
+            remainderAmount: number
+            currency: string
+            groupTransaction: string
         }
-        Name: string
-        TypeDeprecated: number
+        name: string
+        typeDeprecated: number
     }
-    Services: IServiceList[]
-    CustomParameters: {
-        List: AdditionalParameter[]
+    services: IServiceList[]
+    customParameters: {
+        list: AdditionalParameter[]
     }
-    AdditionalParameters: {
-        AdditionalParameter: AdditionalParameter[]
+    additionalParameters: {
+        additionalParameter: AdditionalParameter[]
     }
-    RequestErrors: {
-        ChannelErrors: {
-            Service: string
-            Action: string
-            Name: string
-            Error: string
-            ErrorMessage: string
+    requestErrors: {
+        channelErrors: {
+            service: string
+            action: string
+            name: string
+            error: string
+            errorMessage: string
         }[]
-        ServiceErrors: {
-            Name: string
-            Error: string
-            ErrorMessage: string
+        serviceErrors: {
+            name: string
+            error: string
+            errorMessage: string
         }[]
-        ActionErrors: {
-            Service: string
-            Name: string
-            Error: string
-            ErrorMessage: string
+        actionErrors: {
+            service: string
+            name: string
+            error: string
+            errorMessage: string
         }[]
-        ParameterErrors: {
-            Service: string
-            Action: string
-            Name: string
-            Error: string
-            ErrorMessage: string
+        parameterErrors: {
+            service: string
+            action: string
+            name: string
+            error: string
+            errorMessage: string
         }[]
-        CustomParameterErrors: {
-            Name: string
-            Error: string
-            ErrorMessage: string
+        customParameterErrors: {
+            name: string
+            error: string
+            errorMessage: string
         }[]
     }
-    Invoice: string
-    ServiceCode: string
-    IsTest: boolean
-    Currency: string
-    AmountDebit: number
-    AmountCredit: number
-    TransactionType: string
-    MutationType: number
-    RelatedTransactions: {
-        RelationType: string
-        RelatedTransactionKey: string
+    invoice: string
+    serviceCode: string
+    isTest: boolean
+    currency: string
+    amountDebit: number
+    amountCredit: number
+    transactionType: string
+    mutationType: number
+    relatedTransactions: {
+        relationType: string
+        relatedTransactionKey: string
     }[]
-    ConsumerMessage: {
-        MustRead: boolean
-        CultureName: string
-        Title: string
-        PlainText: string
-        HtmlText: string
+    consumerMessage: {
+        mustRead: boolean
+        cultureName: string
+        title: string
+        plainText: string
+        htmlText: string
     }
-    Order: string
-    IssuingCountry: string
-    StartRecurrent: boolean
-    Recurring: boolean
-    CustomerName: string
-    PayerHash: string
-    PaymentKey: string
+    order: string
+    issuingCountry: string
+    startRecurrent: boolean
+    recurring: boolean
+    customerName: string
+    payerHash: string
+    paymentKey: string
 }
-export class TransactionResponse{
-    data : ServiceParameters
+export class TransactionService extends ServiceParameters implements Partial<ITransactionResponse> {
+    key?: string
+    additionalParameters?: { additionalParameter: AdditionalParameter[] }
+    amountCredit?: number
+    amountDebit?: number
+    consumerMessage?: {
+        mustRead: boolean
+        cultureName: string
+        title: string
+        plainText: string
+        htmlText: string
+    }
+    currency?: string
+    customParameters?: { list: AdditionalParameter[] }
+    customerName?: string
+    invoice?: string
+    isTest?: boolean
+    issuingCountry?: string
+    mutationType?: number
+    order?: string
+    payerHash?: string
+    paymentKey?: string
+    recurring?: boolean
+    relatedTransactions?: { relationType: string; relatedTransactionKey: string }[]
+    requestErrors?: {
+        channelErrors: {
+            service: string
+            action: string
+            name: string
+            error: string
+            errorMessage: string
+        }[]
+        serviceErrors: { name: string; error: string; errorMessage: string }[]
+        actionErrors: { service: string; name: string; error: string; errorMessage: string }[]
+        parameterErrors: {
+            service: string
+            action: string
+            name: string
+            error: string
+            errorMessage: string
+        }[]
+        customParameterErrors: { name: string; error: string; errorMessage: string }[]
+    }
+    requiredAction?: {
+        redirectURL: string
+        requestedInformation: {
+            name: string
+            dataType: number
+            maxLength: number
+            required: boolean
+            description: string
+        }[]
+        payRemainderDetails: { remainderAmount: number; currency: string; groupTransaction: string }
+        name: string
+        typeDeprecated: number
+    }
+    serviceCode?: string
+    services?: IServiceList[]
+    startRecurrent?: boolean
+    status?: {
+        code: { code: number | string; description: string }
+        subCode: { code: number | string; description: string }
+        dateTime: string
+    }
+    transactionType?: string
+
     constructor(data: ITransactionResponse) {
-        this.data = new ServiceParameters(data)
+        super(data)
+    }
+}
+export class TransactionResponse extends TransactionService {
+    constructor(data: ITransactionResponse) {
+        super(data)
     }
     getStatusCode() {
-        return this.data.findParameter('code')
-            ?.find('code')
+        return this.findParameter('code')?.find('code')
     }
     getSubStatusCode() {
-        return this.data.findParameter('SubCode')
-            ?.find('code')
+        return this.findParameter('subCode')?.find('code')
     }
-    isSuccess(){
+    isSuccess() {
         return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_SUCCESS
     }
-    isFailed(){
+    isFailed() {
         return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_FAILED
     }
-    isCanceled(){
-        return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_CANCELLED_BY_USER ||
+    isCanceled() {
+        return (
+            this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_CANCELLED_BY_USER ||
             this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_CANCELLED_BY_MERCHANT
+        )
     }
-    isAwaitingConsumer(){
+    isAwaitingConsumer() {
         return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_WAITING_ON_CONSUMER
     }
-    isPendingProcessing(){
+    isPendingProcessing() {
         return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_PENDING_PROCESSING
     }
-    isWaitingOnUserInput(){
+    isWaitingOnUserInput() {
         return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_WAITING_ON_USER_INPUT
     }
-    isRejected(){
+    isRejected() {
         return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_REJECTED
     }
-    isValidationFailure(){
+    isValidationFailure() {
         return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_VALIDATION_FAILURE
     }
-    hasRedirect(){
-        return this.find('RedirectURL') &&
-            this.find('RequiredAction')?.find('name') === 'Redirect'
+    hasRedirect() {
+        return this.find('redirectURL') && this.find('requiredAction')?.find('name') === 'Redirect'
     }
-    getRedirectUrl(){
-        return this.hasRedirect()? this.find('RedirectURL') : ''
+    getRedirectUrl() {
+        return this.hasRedirect() ? this.find('redirectURL') : ''
     }
-    getServices(){
+    getServices() {
         return this.find('services')
     }
-    getMethod(){
+    getMethod() {
         return this.getServices()?.[0].name
     }
-    getServiceAction(){
+    getServiceAction() {
         return this.getServices()?.[0].action
     }
-    getServiceParameters(){
+    getServiceParameters() {
         let parameters = this.getServices()?.[0].parameters
         let data = {}
         if (parameters)
             for (const key of parameters) {
-                data[key.name.charAt(0).toLowerCase() + key.name.slice(1)] = parameters[key.value]
+                data[parameters[key].name] = parameters[parameters[key].value]
             }
         return data
     }
-    getCustomParameters(){
-        let CustomParameters = this.find('CustomParameters')
-        if (CustomParameters?.list){
+    getCustomParameters() {
+        let customParameters = this.customParameters?.list
+        if (customParameters) {
             let data = {}
-            for (const param of CustomParameters.list) {
-                data[param.name] = param.value
+            for (const param in customParameters) {
+                data[customParameters[param].name] = customParameters[param].value
             }
             return data
         }
         return {}
     }
-    getAdditionalParameters(){
-        let AdditionalParameters = this.find('AdditionalParameters')
-        if (AdditionalParameters?.AdditionalParameter){
+    getAdditionalParameters() {
+        let additionalParameters = this.additionalParameters?.additionalParameter
+        if (additionalParameters) {
             let data = {}
-            for (const param of AdditionalParameters.AdditionalParameter) {
-                data[param.name] = param.value
+            for (const param in additionalParameters) {
+                data[additionalParameters[param].name] = additionalParameters[param].value
             }
             return data
         }
         return {}
     }
-    getTransactionKey(){
-        return this.data.Key
+    getTransactionKey() {
+        return this.key
     }
-    getPaymentKey(){
-        return this.data.PaymentKey
+    getPaymentKey() {
+        return this.paymentKey
     }
-    hasError(){
-        return this.data.findParameter('RequestErrors')
+    hasError() {
+        return Object.keys(this.findParameter('RequestErrors') || {}).length > 0
     }
-    find(parameter:string){
-        return this.data.findParameter(parameter)
+    find(parameter: string) {
+        return super.find(parameter)
     }
 }

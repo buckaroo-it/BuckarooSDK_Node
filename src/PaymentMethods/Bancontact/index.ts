@@ -1,37 +1,37 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import {IPay, IPayComplete, IPayEncrypted, IPayOneClick} from "./Models/Pay";
-import {RefundPayload} from "../../Models/ITransaction";
-import {uniqid} from "../../Utils/Functions";
+import { IPay, IPayComplete, IPayEncrypted, IPayOneClick } from './Models/Pay'
+import { RefundPayload } from '../../Models/ITransaction'
+import { uniqid } from '../../Utils/Functions'
 
 class Bancontact extends PayablePaymentMethod {
     protected _paymentName = 'bancontactmrcash'
     protected _serviceVersion = 1
-    pay(payload:IPay) {
+    pay(payload: IPay) {
         return super.pay(payload)
     }
     refund(payload: RefundPayload) {
         return super.refund(payload)
     }
-    authenticate(payload:IPay) {
+    authenticate(payload: IPay) {
         this.action = 'Authenticate'
         return super.transactionRequest(payload)
     }
-    payOneClick(payload:IPayOneClick) {
+    payOneClick(payload: IPayOneClick) {
         this.action = 'PayOneClick'
         payload.invoice = payload.invoice || uniqid()
         this.setRequest(payload)
         return super.transactionRequest()
     }
-    payEncrypted(payload:IPayEncrypted) {
+    payEncrypted(payload: IPayEncrypted) {
         this.action = 'PayEncrypted'
         return super.transactionRequest(payload)
     }
-    completePayment(payload:IPayComplete) {
+    completePayment(payload: IPayComplete) {
         this.action = 'CompletePayment'
         this.setRequest(payload)
         return this.dataRequest()
     }
-    payRecurring(payload:IPayOneClick) {
+    payRecurring(payload: IPayOneClick) {
         this.action = 'PayRecurring'
         payload.invoice = payload.invoice || uniqid()
         this.setRequest(payload)

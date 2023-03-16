@@ -1,8 +1,13 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 
-class Giftcard extends PayablePaymentMethod {
-    protected _paymentName = 'boekenbon'
-
+class GiftCard extends PayablePaymentMethod {
+    constructor(name: string) {
+        super()
+        this._paymentName = name
+    }
+    setName(name: string) {
+        this._paymentName = name
+    }
     pay(payload) {
         return super.pay(payload)
     }
@@ -11,9 +16,12 @@ class Giftcard extends PayablePaymentMethod {
     }
 }
 
-let _giftcard: Giftcard
-const giftcard: () => Giftcard = () => {
-    if (!_giftcard) _giftcard = new Giftcard()
-    return _giftcard
+let _giftCard: GiftCard
+const giftCard: (name?: string) => GiftCard = (name: string | undefined) => {
+    if (!_giftCard)
+        if (!name) throw new Error('No name provided for giftcard')
+        else _giftCard = new GiftCard(name)
+
+    return _giftCard
 }
-export default giftcard
+export default giftCard

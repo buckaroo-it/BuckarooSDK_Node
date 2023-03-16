@@ -1,4 +1,4 @@
-import {Payload} from "../../../Models/ITransaction";
+import { Payload } from '../../../Models/ITransaction'
 
 export interface IPay extends Payload {
     voucherCode: string

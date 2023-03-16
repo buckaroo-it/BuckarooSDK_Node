@@ -1,6 +1,6 @@
-import {Payload} from "../../../Models/ITransaction";
+import { Payload } from '../../../Models/ITransaction'
 
 export interface IPay extends Payload {
-    paymentData:string
-    customerCardName:string
+    paymentData: string
+    customerCardName: string
 }

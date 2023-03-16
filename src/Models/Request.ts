@@ -10,7 +10,7 @@ export class Request {
     public getData() {
         return this.data
     }
-    public basicParameters:Record<keyof RequestData, boolean> = {
+    public basicParameters: Record<keyof RequestData, boolean> = {
         services: true,
         clientIP: true,
         currency: true,

@@ -1,4 +1,5 @@
-import {Adapters, ServiceModel} from "../Adapters";
+import { Adapters } from '../Adapters'
+import { ServiceParameters } from '../../Utils/ServiceParameter'
 
 export default interface IArticle {
     identifier?: string
@@ -7,11 +8,16 @@ export default interface IArticle {
     manufacturer?: string
     unitCode?: string
     quantity?: Number
-    price?: Number
+    price: Number
     vatCategory?: Number
     vatPercentage?: Number
     description?: string
 }
-export function ArticleService(data, adapters:Adapters = { groupId:true,groupType:'Article'}) {
-    return ServiceModel(data,adapters)
+export function ArticleService(articles, adapters?: Adapters) {
+    articles = new ServiceParameters(articles)
+    articles.makeCountable()
+    articles.groupType = adapters?.groupType || 'Article'
+    if (adapters?.keys) articles.setParameterKeys(adapters.keys)
+
+    return articles
 }

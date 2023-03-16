@@ -1,7 +1,7 @@
-import IArticle from "./Services/IArticle";
+import { IPAddress } from '../Utils/Types'
 
 export declare interface ITransaction {
-    clientIP?: ClientIP
+    clientIP?: string | IPAddress
     currency?: string
     returnURL?: string
     returnURLError?: string
@@ -36,12 +36,12 @@ export declare type AdditionalParameter = {
     [name: string]: string | number
 }
 
-export declare interface Payload extends Omit<ITransaction,'amountCredit'> {
+export declare interface Payload extends Omit<ITransaction, 'amountCredit'> {
     order?: string
     amountDebit: number
 }
 
-export declare interface RefundPayload extends Omit<ITransaction,'amountDebit'> {
+export declare interface RefundPayload extends Omit<ITransaction, 'amountDebit'> {
     order?: string
     amountCredit: number
     originalTransactionKey: string

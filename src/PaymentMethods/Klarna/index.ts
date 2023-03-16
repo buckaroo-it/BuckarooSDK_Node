@@ -1,5 +1,5 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { Services, IPay } from './Models/Pay'
+import { Pay, IPay } from './Models/Pay'
 import { IConfig } from '../../Utils/Types'
 import { RefundPayload } from '../../Models/ITransaction'
 
@@ -12,7 +12,7 @@ class Klarna extends PayablePaymentMethod {
         return super.pay(payload)
     }
     setPayload(payload: IPay) {
-        this.servicesStrategy = (payload) => Services(payload)
+        this.servicesStrategy = Pay
         super.setPayload(payload)
     }
     refund(payload: RefundPayload) {

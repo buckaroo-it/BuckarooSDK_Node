@@ -3,11 +3,10 @@ import PaymentMethod from '../PaymentMethod'
 import { IInvoice, invoice } from './Models/Invoice'
 import { ICreditNote } from './Models/CreditNote'
 import { uniqid } from '../../Utils/Functions'
-import {debtor, debtorInfo, IDebtor} from './Models/Debtor'
+import { debtor, debtorInfo, IDebtor } from './Models/Debtor'
 import { IPaymentPlan } from './Models/PaymentPlan'
 import { ITransaction } from '../../Models/ITransaction'
 import { IMultiInfoInvoice, multiInfoInvoice } from './Models/multiInfoInvoice'
-import { ServiceParameters } from '../../Utils/ServiceParameter'
 import { AddOrUpdateProductLines, IAddOrUpdateProductLines } from './Models/AddOrUpdateProductLines'
 
 class CreditManagement extends PaymentMethod {
@@ -19,8 +18,8 @@ class CreditManagement extends PaymentMethod {
     createInvoice(payload: IInvoice): Promise<any> {
         this.action = 'CreateInvoice'
         payload.invoice = payload.invoice || uniqid()
-
-        this.setRequest(invoice(payload))
+        this.servicesStrategy = invoice
+        this.setRequest(payload)
 
         return this.dataRequest()
     }
@@ -28,8 +27,9 @@ class CreditManagement extends PaymentMethod {
         this.action = 'CreateCombinedInvoice'
 
         payload.invoice = payload.invoice || uniqid()
+        this.servicesStrategy = invoice
 
-        this.setServiceList(invoice(payload))
+        this.setServiceList(payload)
 
         return this
     }
@@ -43,7 +43,8 @@ class CreditManagement extends PaymentMethod {
     addOrUpdateDebtor(payload: IDebtor) {
         this.action = 'AddOrUpdateDebtor'
 
-        this.setRequest(debtor(payload))
+        this.servicesStrategy = debtor
+        this.setRequest(payload)
 
         return this.dataRequest()
     }
@@ -78,24 +79,23 @@ class CreditManagement extends PaymentMethod {
 
     invoiceInfo(payload: IMultiInfoInvoice) {
         this.action = 'InvoiceInfo'
-
-        this.setRequest(multiInfoInvoice(payload))
+        this.servicesStrategy = multiInfoInvoice
+        this.setRequest(payload)
 
         return this.dataRequest()
     }
     debtorInfo(payload: Required<Pick<IInvoice, 'debtor'>>) {
         this.action = 'DebtorInfo'
-
-        this.setRequest(debtorInfo(payload))
+        this.servicesStrategy = debtorInfo
+        this.setRequest(<ITransaction>payload)
 
         return this.dataRequest()
     }
 
     addOrUpdateProductLines(payload: IAddOrUpdateProductLines) {
         this.action = 'AddOrUpdateProductLines'
-
-        this.setRequest(AddOrUpdateProductLines(payload))
-
+        this.servicesStrategy = AddOrUpdateProductLines
+        this.setRequest(payload)
         return this.dataRequest()
     }
 

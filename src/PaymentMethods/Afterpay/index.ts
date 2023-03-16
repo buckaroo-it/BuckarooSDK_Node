@@ -1,26 +1,30 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import {IPay, afterPayServices} from './Model/Services'
-import {ICapture, RefundPayload} from "../../Models/ITransaction";
+import { IPay, Pay } from './Model/Services'
+import { ICapture, RefundPayload } from '../../Models/ITransaction'
+
 class Afterpay extends PayablePaymentMethod {
     protected _paymentName = 'afterpay'
     protected _serviceVersion = 1
-    protected servicesStrategy = afterPayServices
-    pay(payload?:IPay) {
+    pay(payload?: IPay) {
         return super.pay(payload)
     }
-    authorize(payload?:IPay) {
+    setPayload(payload: IPay) {
+        this.servicesStrategy = Pay
+        super.setPayload(payload)
+    }
+    authorize(payload?: IPay) {
         this.action = 'Authorize'
         return super.transactionRequest(payload)
     }
-    cancelAuthorize(payload?:ICapture) {
+    cancelAuthorize(payload?: ICapture) {
         this.action = 'CancelAuthorize'
         return super.transactionRequest(payload)
     }
-    capture(payload?:ICapture & Partial<Pick<IPay, 'articles'>> ) {
+    capture(payload?: ICapture & Partial<Pick<IPay, 'articles'>>) {
         this.action = 'Capture'
         return super.transactionRequest(payload)
     }
-    refund(payload?: Partial<Pick<IPay ,'articles'>> & RefundPayload) {
+    refund(payload?: Partial<Pick<IPay, 'articles'>> & RefundPayload) {
         return super.refund(payload)
     }
 }

@@ -1,6 +1,5 @@
 import { buckarooClient, initializeBuckarooClient } from '../BuckarooClient'
 
-
 initializeBuckarooClient()
 
 const client = buckarooClient().client()

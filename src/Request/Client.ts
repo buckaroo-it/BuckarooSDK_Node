@@ -4,7 +4,7 @@ import HttpMethods from '../Constants/HttpMethods'
 import httpsCall from './HttpClient'
 import { buckarooClient } from '../BuckarooClient'
 import PaymentMethod from '../PaymentMethods/PaymentMethod'
-import headers from "./Headers";
+import headers from './Headers'
 
 class Client {
     private constructor() {}
@@ -15,7 +15,7 @@ class Client {
         return new Client()
     }
     getHeaders(method, data, url) {
-        headers.addHeader('Authorization', hmac( method,url, data))
+        headers.addHeader('Authorization', hmac(method, url, data))
         return headers.getHeaders()
     }
     getOptions(method: HttpMethods, url: string | URL, data: string) {
@@ -43,7 +43,11 @@ class Client {
         return this.getEndpoint('json/DataRequest') + path
     }
 
-    protected getSpecificationUrl(paymentName, serviceVersion, type: RequestType = RequestType.Transaction) {
+    protected getSpecificationUrl(
+        paymentName,
+        serviceVersion,
+        type: RequestType = RequestType.Transaction
+    ) {
         return type === RequestType.Transaction
             ? this.getTransactionUrl(
                   `/Specification/${paymentName}?serviceVersion=${serviceVersion}`

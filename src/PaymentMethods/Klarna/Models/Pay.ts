@@ -1,7 +1,7 @@
 import { IKlarnaArticle } from './Article'
 import { IBillingRecipient, IShippingRecipient } from './Recipient'
 import { Payload } from '../../../Models/ITransaction'
-import { ServiceParameters } from '../../../Utils/ServiceParameter'
+import { Pay as AfterPayPay } from '../../Afterpay/Model/Services'
 
 export interface IPay extends Payload {
     billing: IBillingRecipient
@@ -9,22 +9,6 @@ export interface IPay extends Payload {
     articles: IKlarnaArticle[]
 }
 
-export const Services = (data: IPay) => {
-    let serviceData = new ServiceParameters({
-        billing: data.billing,
-        shipping: data.shipping || data.billing,
-        articles: data.articles
-    })
-    serviceData.setObjectGroupTypes({
-        billing: 'BillingCostumer',
-        shipping: 'ShippingCustomer',
-        articles: 'Article'
-    })
-    serviceData.articles.setKeys({
-        price: 'grossUnitPrice'
-    })
-
-    serviceData.articles.setCountable('articles')
-
-    return serviceData
+export const Pay = (data) => {
+    return AfterPayPay(data)
 }

@@ -12,4 +12,3 @@ export interface IPaymentPlan extends ITransaction {
     paymentPlanCostAmountVat?: Number
     recipientEmail: string
 }
-

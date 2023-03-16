@@ -2,7 +2,6 @@ import { TransactionRequest } from '../Models/Request'
 import { IConfig } from '../Utils/Types'
 import { buckarooClient } from '../BuckarooClient'
 import { ServiceParameters } from '../Utils/ServiceParameter'
-import Model from '../Models/Model'
 import { Combinable } from '../Utils/Combinable'
 import { ITransaction } from '../Models/ITransaction'
 import { RequestType } from '../Constants/Endpoints'
@@ -13,12 +12,16 @@ export default abstract class PaymentMethod {
     protected _serviceVersion = 0
     protected request: TransactionRequest = new TransactionRequest()
     private _action = ''
-
-    protected serviceParameters = { action:'', name:'', version:0 }
+    protected serviceParameters: { action: string; name: string; version: number; parameters? } = {
+        action: '',
+        name: '',
+        version: 0
+    }
 
     protected servicesStrategy: (data) => object = (data) => {
         return data
     }
+
     get paymentName(): string {
         return this._paymentName
     }
@@ -26,26 +29,27 @@ export default abstract class PaymentMethod {
         return this._serviceVersion
     }
     protected get action(): string {
-        return this.serviceParameters.action
+        return this._action
     }
     protected set action(value: string) {
         this._action = value
         this.serviceParameters.action = value
     }
     protected setServiceList(serviceList: object) {
-
+        //Handle service list Parameters
+        this.servicesStrategy(serviceList)
         if (Object.keys(serviceList).length > 0) {
-            Object.assign(this.serviceParameters,{
-                parameters:ServiceParameters.formatServiceParameters(serviceList)
-            })
+            this.serviceParameters.parameters =
+                ServiceParameters.toServiceParameterList(serviceList)
         }
+
         this.serviceParameters.action = this.action
         this.serviceParameters.name = this.paymentName
         this.serviceParameters.version = this.serviceVersion
 
-        this.request.addServices(
-            this.serviceParameters
-        )
+        this.request.addServices(this.serviceParameters)
+        //Reset service Strategy
+        this.servicesStrategy = (data) => data
     }
     protected setAdditionalParameters(additionalParameters?: AdditionalParameters) {
         if (additionalParameters) {
@@ -84,8 +88,6 @@ export default abstract class PaymentMethod {
         return this
     }
     public setRequest(data: ITransaction) {
-
-
         //Set the Payload
         this.request.setData(this.takeBasicParameters(data))
 
@@ -98,13 +100,15 @@ export default abstract class PaymentMethod {
         //Set setAdditionalParameters
         this.setAdditionalParameters()
     }
+
     public specification(type?: RequestType) {
         return buckarooClient().client().specification(this.paymentName, this.serviceVersion, type)
     }
+
     private takeBasicParameters(data) {
         let basicParameterData = {}
         for (const basicParameterDataKey in data) {
-            if (this.request.basicParameters[basicParameterDataKey]){
+            if (this.request.basicParameters[basicParameterDataKey]) {
                 basicParameterData[basicParameterDataKey] = data[basicParameterDataKey]
                 delete data[basicParameterDataKey]
             }

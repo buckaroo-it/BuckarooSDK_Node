@@ -1,47 +1,14 @@
 import Klarna from '../PaymentMethods/Klarna'
 import { uniqid } from '../Utils/Functions'
-import { buckarooClient, initializeBuckarooClient } from '../BuckarooClient'
+import { initializeBuckarooClient } from '../BuckarooClient'
 initializeBuckarooClient()
 
 const klarna = Klarna()
 
 describe('Testing Klarna methods', () => {
-    test('PayUp', async () => {
-        klarna.setRequest({
-            currency: buckarooClient().getConfig().currency || '',
-            order: uniqid(),
-            amountDebit: 50.3,
-            invoice: uniqid(),
-            services: {
-                ServiceList: [
-                    {
-                        Name: 'sample string 1',
-                        Action: 'sample string 2',
-                        Version: 3,
-                        Parameters: [
-                            {
-                                Name: 'sample string 1',
-                                GroupType: 'sample string 2',
-                                GroupID: 'sample string 3',
-                                Value: 'sample string 4'
-                            },
-                            {
-                                Name: 'sample string 1',
-                                GroupType: 'sample string 2',
-                                GroupID: 'sample string 3',
-                                Value: 'sample string 4'
-                            }
-                        ]
-                    }
-                ]
-            }
-        })
-        await klarna.pay()
-    })
     test('Pay', async () => {
         await klarna
             .pay({
-                currency: buckarooClient().getConfig().currency || '',
                 order: uniqid(),
                 amountDebit: 50.3,
                 invoice: uniqid(),
@@ -54,10 +21,10 @@ describe('Testing Klarna methods', () => {
                         birthDate: '1990-01-01'
                     },
                     address: {
-                        street: 'Hoofdstraat',
-                        streetNumber: '13',
-                        streetNumberAdditional: 'a',
-                        postalCode: '1234AB',
+                        street: 'Kalverstraat',
+                        houseNumber: 13,
+                        houseNumberAdditional: 'b',
+                        zipcode: '4321EB',
                         city: 'Heerenveen',
                         country: 'GB'
                     },
@@ -76,9 +43,9 @@ describe('Testing Klarna methods', () => {
                     },
                     address: {
                         street: 'Kalverstraat',
-                        streetNumber: '13',
-                        streetNumberAdditional: 'b',
-                        postalCode: '4321EB',
+                        houseNumber: 13,
+                        houseNumberAdditional: 'b',
+                        zipcode: '4321EB',
                         city: 'Amsterdam',
                         country: 'GB'
                     },
@@ -102,8 +69,9 @@ describe('Testing Klarna methods', () => {
                 ]
             })
             .then((res) => {
-                console.log(res)
+                console.log(JSON.stringify(res))
                 expect(res).toBeDefined()
+                console.log(res.find('parameterErrors'))
             })
     })
 })

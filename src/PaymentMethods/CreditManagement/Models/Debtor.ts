@@ -1,6 +1,5 @@
 import { IInvoice, invoice } from './Invoice'
 import { ServiceParameters } from '../../../Utils/ServiceParameter'
-import {ServiceModel} from "../../../Models/Adapters";
 
 export interface IDebtor extends IInvoice {
     addressUnreachable?: boolean
@@ -13,28 +12,18 @@ export interface IDebtor extends IInvoice {
 
     faxUnreachable?: boolean
 }
-export const debtor = (data: IDebtor) => {
+export const debtor = (data: ServiceParameters) => {
+    invoice(data)
+    data.setGroupType('addressUnreachable', 'Address')
+    data.setGroupType('emailUnreachable', 'Email')
+    data.setGroupType('mobileUnreachable', 'Phone')
+    data.setGroupType('landlineUnreachable', 'Phone')
+    data.setGroupType('faxUnreachable', 'Phone')
 
-    let debtorData = new ServiceParameters({
-        addressUnreachable: data.addressUnreachable,
-        emailUnreachable: data.emailUnreachable,
-        mobileUnreachable: data.mobileUnreachable,
-        landlineUnreachable: data.landlineUnreachable,
-        faxUnreachable: data.faxUnreachable
-    })
-
-    debtorData.setGroupType('addressUnreachable', 'Address')
-    debtorData.setGroupType('emailUnreachable', 'Email')
-    debtorData.setGroupType('mobileUnreachable', 'Phone')
-    debtorData.setGroupType('landlineUnreachable', 'Phone')
-    debtorData.setGroupType('faxUnreachable', 'Phone')
-
-    Object.assign(data, debtorData)
-    return invoice(data)
+    return data
 }
 
-export const debtorInfo = (data) => {
-    data.debtor = new ServiceParameters(data)
-    data.debtor.groupType ='debtor'
+export const debtorInfo = (data: ServiceParameters) => {
+    data.setGroupType('debtor', 'debtor')
     return data
 }

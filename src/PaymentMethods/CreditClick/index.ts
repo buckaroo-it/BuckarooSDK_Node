@@ -1,6 +1,6 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 
-class Creditclick extends PayablePaymentMethod {
+class CreditClick extends PayablePaymentMethod {
     protected _paymentName = 'creditclick'
 
     pay(payload) {
@@ -11,9 +11,9 @@ class Creditclick extends PayablePaymentMethod {
     }
 }
 
-let _creditclick: Creditclick
-const creditclick: () => Creditclick = () => {
-    if (!_creditclick) _creditclick = new Creditclick()
-    return _creditclick
+let _creditClick: CreditClick
+const creditClick: () => CreditClick = () => {
+    if (!_creditClick) _creditClick = new CreditClick()
+    return _creditClick
 }
-export default creditclick
+export default creditClick

@@ -1,28 +1,29 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import {IPay} from "./Models/Pay";
-import {ITransaction, RefundPayload} from "../../Models/ITransaction";
-import {handleDate, ICreate} from "./Models/Create";
+import { IPay } from './Models/Pay'
+import { ITransaction, RefundPayload } from '../../Models/ITransaction'
+import { handleDate, ICreate } from './Models/Create'
 
 class Buckaroovoucher extends PayablePaymentMethod {
     protected _paymentName = 'buckaroovoucher'
 
-    pay(payload:IPay) {
+    pay(payload: IPay) {
         return super.pay(payload)
     }
     refund(payload: RefundPayload) {
         return super.refund(payload)
     }
-    getBalance(payload:Pick<IPay, 'voucherCode'>) {
+    getBalance(payload: Pick<IPay, 'voucherCode'>) {
         this.action = 'GetBalance'
         this.setRequest(<ITransaction>payload)
         return this.dataRequest()
     }
-    createApplication(payload:ICreate) {
+    createApplication(payload: ICreate) {
         this.action = 'CreateApplication'
-        this.setRequest(handleDate(payload))
+        this.servicesStrategy = handleDate
+        this.setRequest(payload)
         return this.dataRequest()
     }
-    deactivateVoucher(payload:Pick<IPay, 'voucherCode'>) {
+    deactivateVoucher(payload: Pick<IPay, 'voucherCode'>) {
         this.action = 'DeactivateVoucher'
         this.setRequest(<ITransaction>payload)
         return this.dataRequest()

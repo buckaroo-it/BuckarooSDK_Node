@@ -1,12 +1,6 @@
 const https = require('https')
 
-const httpsCall = (options:{
-    hostname,
-    path,
-    method,
-    headers
-    data?
-}) => {
+const httpsCall = (options: { hostname; path; method; headers; data? }) => {
     return new Promise<any>(function (resolve, reject) {
         const req = https.request(options, (res) => {
             let body: string

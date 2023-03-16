@@ -1,11 +1,10 @@
 import IAddress from '../../../Models/Services/IAddress'
 
-export interface IKlarnaAddress
-    extends Omit<IAddress, 'houseNumber' | 'zipcode' | 'houseNumberAdditional'> {
+export interface IKlarnaAddress extends IAddress {
     country: string
     street: string
-    streetNumber: string
-    streetNumberAdditional?: string
-    postalCode: string
+    houseNumber: Number | string
+    houseNumberAdditional?: string
+    zipcode: string
     city: string
 }

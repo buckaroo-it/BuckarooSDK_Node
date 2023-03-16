@@ -4,10 +4,9 @@ import IPhone from '../../../Models/Services/IPhone'
 import IAddress from '../../../Models/Services/IAddress'
 import IPerson from '../../../Models/Services/IPerson'
 import ICompany from '../../../Models/Services/ICompany'
-import { ICreditArticle } from './Article'
+import { CreditArticle, ICreditArticle } from './Article'
 import { ServiceParameters } from '../../../Utils/ServiceParameter'
 import { ITransaction } from '../../../Models/ITransaction'
-import {ArticleService} from "../../../Models/Services/IArticle";
 
 export interface IInvoice extends ITransaction {
     invoiceAmount: Number
@@ -32,28 +31,22 @@ export interface IInvoice extends ITransaction {
     applyStartRecurrent?: boolean
     poNumber?: string
 }
-export const invoice = (data) => {
-    data.articles = ArticleService(data.articles,{
-        keys: { identifier:'ProductId', description:'ProductName', price:'PricePerUnit'},
-        groupId:true
-    })
-    let services = new ServiceParameters({
-        address: data.address,
-        company: data.company,
-        person: data.person,
-        debtor: data.debtor,
-        phone: data.phone,
-        email: data.email
-    })
-
-    services.setObjectGroupTypes({
+export const invoice = (data: ServiceParameters) => {
+    if (!(data instanceof ServiceParameters)) {
+        data = new ServiceParameters(data)
+    }
+    let articles = data.findParameter('articles')
+    if (articles) {
+        data.articles = CreditArticle(data.articles)
+    }
+    data.setObjectGroupTypes({
         address: 'Address',
         company: 'Company',
         person: 'Person',
         debtor: 'Debtor',
         phone: 'Phone'
     })
-    services.setGroupType('Email', 'email')
-    Object.assign(data, services)
+    data.setGroupType('Email', 'email')
+
     return data
 }

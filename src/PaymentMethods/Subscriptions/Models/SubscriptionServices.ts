@@ -7,7 +7,7 @@ import ICompany from '../../../Models/Services/ICompany'
 import IDebtor from '../../../Models/Services/IDebtor'
 import { IRatePlan, IRatePlanCharges } from './RatePlan'
 import { ServiceParameters } from '../../../Utils/ServiceParameter'
-import { serviceParameterKeyOf } from '../../../Utils/Functions'
+import { firstUpperCase } from '../../../Utils/Functions'
 import { IConfiguration } from './Configuration'
 
 export interface ISubscription {
@@ -54,16 +54,14 @@ export const subscriptionServices = (data: ISubscription) => {
     if (serviceData.ratePlans) {
         const types = Object.keys(serviceData.ratePlans)
         for (const type of types) {
-            serviceData.ratePlans[type].groupType =
-                serviceParameterKeyOf(type) + 'RatePlan'
+            serviceData.ratePlans[type].groupType = firstUpperCase(type) + 'RatePlan'
         }
     }
 
     if (serviceData.ratePlanCharges) {
         const types = Object.keys(serviceData.ratePlanCharges.data)
         for (const type of types) {
-            serviceData.ratePlanCharges[type].groupType =
-                serviceParameterKeyOf(type) + 'RatePlanCharge'
+            serviceData.ratePlanCharges[type].groupType = firstUpperCase(type) + 'RatePlanCharge'
         }
     }
     return serviceData

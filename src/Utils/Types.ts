@@ -12,6 +12,6 @@ export declare interface ICredentials {
 }
 
 export declare interface IPAddress {
-    address?: string
-    type?: number
+    address: string
+    type: number
 }

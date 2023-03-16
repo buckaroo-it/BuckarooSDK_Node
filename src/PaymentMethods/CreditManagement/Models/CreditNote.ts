@@ -1,4 +1,3 @@
-
 import { ITransaction } from '../../../Models/ITransaction'
 
 export interface ICreditNote extends ITransaction {
@@ -8,5 +7,3 @@ export interface ICreditNote extends ITransaction {
     invoiceAmountVAT: string
     sendCreditNoteMessage: string
 }
-
-

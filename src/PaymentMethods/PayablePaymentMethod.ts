@@ -1,7 +1,7 @@
 import PaymentMethod from './PaymentMethod'
 import { uniqid } from '../Utils/Functions'
 import { Payload, RefundPayload } from '../Models/ITransaction'
-import { TransactionResponse} from '../Models/TransactionResponse'
+import { TransactionResponse } from '../Models/TransactionResponse'
 import { IConfig } from '../Utils/Types'
 
 export abstract class PayablePaymentMethod extends PaymentMethod {
