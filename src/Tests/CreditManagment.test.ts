@@ -1,8 +1,9 @@
-import { initializeBuckarooClient } from '../BuckarooClient'
+import {initializeBuckarooClient} from '../BuckarooClient'
 import CreditManagement from '../PaymentMethods/CreditManagement'
-import { IInvoice } from '../PaymentMethods/CreditManagement/Models/Invoice'
+import {IInvoice} from '../PaymentMethods/CreditManagement/Models/Invoice'
 import Gender from '../Constants/Gender'
 import ideal from '../PaymentMethods/Ideal/index'
+import CreditManagementInstallmentInterval from "../Constants/CreditManagementInstallmentInterval";
 
 initializeBuckarooClient()
 
@@ -108,6 +109,24 @@ describe('Testing Credit Management', () => {
 
         await ideal1.combine(combined).pay()
     })
+    test('CreatePaymentPlan', async () => {
+        await creditManagement.createPaymentPlan({
+            dossierNumber: "",
+            includedInvoiceKey: "",
+            initialAmount: 0,
+            installmentAmount: 0,
+            installmentCount: 0,
+            interval: CreditManagementInstallmentInterval.MONTH,
+            paymentPlanCostAmount: 0,
+            paymentPlanCostAmountVat: 0,
+            recipientEmail: "",
+            startDate: ""
+        }).then((data) => {
+            expect(data).toBeDefined()
+            console.log(JSON.stringify(data))
+        })
+    })
+
 })
 
 const invoice = (append: object = {}): IInvoice => {

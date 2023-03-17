@@ -13,10 +13,10 @@ export default interface IArticle {
     vatPercentage?: Number
     description?: string
 }
-export function ArticleService(articles, adapters?: Adapters) {
-    articles = new ServiceParameters(articles)
+export function ArticleService(_articles, adapters?: Adapters) {
+    let articles:ServiceParameters = new ServiceParameters(_articles)
     articles.makeCountable()
-    articles.groupType = adapters?.groupType || 'Article'
+    articles.setGroupType(adapters?.groupType || 'Article')
     if (adapters?.keys) articles.setParameterKeys(adapters.keys)
 
     return articles

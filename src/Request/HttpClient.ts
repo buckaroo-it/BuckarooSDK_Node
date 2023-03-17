@@ -1,17 +1,29 @@
+import {ServiceObject} from "../Models/ServiceObject";
+import HttpMethods from "../Constants/HttpMethods";
+import headers from "./Headers";
+
 const https = require('https')
 
-const httpsCall = (options: { hostname; path; method; headers; data? }) => {
+type Options = {
+    hostname:string,
+    path:string,
+    method:HttpMethods,
+    headers: ReturnType<typeof headers.getHeaders>
+    data?:any
+}
+const httpsCall = (options: Options) => {
     return new Promise<any>(function (resolve, reject) {
         const req = https.request(options, (res) => {
-            let body: string
+            let body: Uint8Array[] = []
             res.on('data', (chunk: Uint8Array) => {
-                try {
-                    body = JSON.parse(Buffer.concat([chunk]).toString())
-                } catch (e) {
-                    body = Buffer.concat([chunk]).toString()
-                }
+                body.push(chunk)
             })
             res.on('end', function () {
+                try {
+                    body = JSON.parse(Buffer.concat(body).toString());
+                } catch(e) {
+                    reject(e);
+                }
                 resolve(body)
             })
         })

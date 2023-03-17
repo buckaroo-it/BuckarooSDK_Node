@@ -37,10 +37,10 @@ export default abstract class PaymentMethod {
     }
     protected setServiceList(serviceList: object) {
         //Handle service list Parameters
-        this.servicesStrategy(serviceList)
+
         if (Object.keys(serviceList).length > 0) {
             this.serviceParameters.parameters =
-                ServiceParameters.toServiceParameterList(serviceList)
+                ServiceParameters.toServiceParameterList(this.servicesStrategy(serviceList))
         }
 
         this.serviceParameters.action = this.action
@@ -48,6 +48,7 @@ export default abstract class PaymentMethod {
         this.serviceParameters.version = this.serviceVersion
 
         this.request.addServices(this.serviceParameters)
+
         //Reset service Strategy
         this.servicesStrategy = (data) => data
     }

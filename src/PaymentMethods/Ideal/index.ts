@@ -3,6 +3,7 @@ import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { RefundPayload } from '../../Models/ITransaction'
 import { IConfig } from '../../Utils/Types'
 import { ServiceParameters } from '../../Utils/ServiceParameter'
+import {ServiceObject} from "../../Models/ServiceObject";
 
 class Ideal extends PayablePaymentMethod {
     protected _paymentName = 'ideal'
@@ -25,7 +26,7 @@ class Ideal extends PayablePaymentMethod {
     issuers() {
         return this.specification().then((response) => {
             const issuerList: { id: any; name: any }[] = []
-            response = new ServiceParameters(response)
+            response = new ServiceObject(response)
             let parameters = response.findParameter('listItemDescriptions')
             if (parameters) {
                 let issuer: any

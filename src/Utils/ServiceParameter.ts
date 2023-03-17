@@ -3,11 +3,12 @@ import { IParameter } from '../Models/Parameters'
 import { ServiceObject } from '../Models/ServiceObject'
 
 export class ServiceParameters extends ServiceObject {
+
+    addParameter(value: object) {
+        super.addParameter(value, ServiceParameters)
+    }
     private _groupId?: () => groupIdType
     private _groupType?: () => string
-    constructor(data: object) {
-        super(data)
-    }
     set groupType(value: string) {
         this._groupType = () => value
     }
@@ -27,9 +28,6 @@ export class ServiceParameters extends ServiceObject {
             default:
                 return id
         }
-    }
-    addParameter(value: object) {
-        super.addParameter(value, ServiceParameters)
     }
     setGroupType(type: string, key?: string) {
         if (!key) {

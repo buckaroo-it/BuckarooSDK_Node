@@ -69,7 +69,6 @@ describe('Testing Klarna methods', () => {
                 ]
             })
             .then((res) => {
-                console.log(JSON.stringify(res))
                 expect(res).toBeDefined()
                 console.log(res.find('parameterErrors'))
             })
