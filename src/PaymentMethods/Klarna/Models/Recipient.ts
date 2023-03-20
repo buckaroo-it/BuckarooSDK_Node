@@ -1,6 +1,6 @@
 import { IKlarnaAddress } from './Address'
 import { IPerson } from './Person'
-import { IPhone } from './Phone'
+import IPhone from "../../../Models/Services/IPhone";
 
 export declare interface IBillingRecipient {
     recipient: IPerson

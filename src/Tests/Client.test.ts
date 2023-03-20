@@ -1,4 +1,5 @@
 import { buckarooClient, initializeBuckarooClient } from '../BuckarooClient'
+import {TransactionRequest} from "../Models/Request";
 
 initializeBuckarooClient()
 
@@ -15,6 +16,12 @@ test('paymentCancelStatus', async () => {
     })
 })
 
+test('paymentCancelInfo', async () => {
+
+    await client.transactionRequest(new TransactionRequest()).then((data) => {
+        expect(data).toBeDefined()
+    })
+})
 test('paymentRefundInfo', async () => {
     await client.getPaymentRefundInfo('73902D944DC848CBADC49D9B8A8C2F16').then((data) => {
         expect(data).toBeDefined()

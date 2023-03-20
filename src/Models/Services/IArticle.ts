@@ -2,12 +2,12 @@ import { Adapters } from '../Adapters'
 import { ServiceParameters } from '../../Utils/ServiceParameter'
 
 export default interface IArticle {
-    identifier?: string
+    identifier: string
     type?: string
     brand?: string
     manufacturer?: string
     unitCode?: string
-    quantity?: Number
+    quantity: Number
     price: Number
     vatCategory?: Number
     vatPercentage?: Number

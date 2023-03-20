@@ -1,12 +1,13 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
+import { Payload, RefundPayload } from "../../Models/ITransaction";
 
 class Payconiq extends PayablePaymentMethod {
     protected _paymentName = 'payconiq'
 
-    pay(payload) {
+    pay(payload: Payload) {
         return super.pay(payload)
     }
-    refund(payload) {
+    refund(payload:RefundPayload) {
         return super.refund(payload)
     }
 }

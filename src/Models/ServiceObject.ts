@@ -7,7 +7,6 @@ export class ServiceObject {
         this.addParameter(data)
     }
     addParameter(parameters: object, classType = ServiceObject) {
-
             for (const [key, value] of  Object.entries(parameters)){
                 if (value instanceof ServiceObject) {
                     this[firstLowerCase(key)] = value
@@ -55,6 +54,7 @@ export class ServiceObject {
                 }
              }
         }
+        return this
     }
     removeParameterKeys(keys: string[]) {
         for (const key of keys) {

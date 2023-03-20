@@ -1,7 +1,7 @@
 import { ITransaction } from './ITransaction'
 import { IServiceList, IServices } from './ServiceList'
 
-interface RequestData extends ITransaction {
+export interface RequestData extends ITransaction {
     services?: IServices
 }
 export class Request {

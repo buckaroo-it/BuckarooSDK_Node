@@ -23,11 +23,11 @@ export declare interface ITransaction {
     servicesSelectableByClient?: string
     servicesExcludedForClient?: string
     customParameters?: Array<any>
+    services?: object
     additionalParameters?: AdditionalParameter
-    services?: any
 }
 
-export declare interface ClientIP {
+export declare type ClientIP = string | {
     address: string
     type: number
 }

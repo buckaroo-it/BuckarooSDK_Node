@@ -2,9 +2,9 @@ import { initializeBuckarooClient } from '../src/BuckarooClient'
 
 initializeBuckarooClient()
 
-import { Klarna } from '../src/PaymentMethods/Klarna'
+import  Klarna  from '../src/PaymentMethods/Klarna'
 
-const klarna = new Klarna()
+const klarna =  Klarna()
 klarna
     .pay({
         order: '123456',
@@ -27,7 +27,7 @@ klarna
                 country: 'GB'
             },
             phone: {
-                mobile: '0698765433'
+                mobile: '0512345678'
             },
             email: 'test@buckaroo.nl'
         },

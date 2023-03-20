@@ -73,4 +73,21 @@ describe('Testing Klarna methods', () => {
                 console.log(res.find('parameterErrors'))
             })
     })
+    test('Refund', async () => {
+        await klarna.refund({
+            amountCredit:21,
+            originalTransactionKey:''
+        }).then((res) => {
+            expect(res).toBeDefined()
+            console.log(res.find('parameterErrors'))
+        })
+    })
+    test('payInInstallments', async () => {
+        await klarna.payInInstallments({
+            order: uniqid(),
+        }).then((res) => {
+            expect(res).toBeDefined()
+            console.log(res.find('parameterErrors'))
+        })
+    })
 })

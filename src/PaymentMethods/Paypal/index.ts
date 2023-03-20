@@ -1,21 +1,25 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
+import {ICapture, RefundPayload} from "../../Models/ITransaction";
+import {IPay} from "./Models/Pay";
+import {extraInfo, IExtraInfo} from "./Models/ExtraInfo";
 
 class Paypal extends PayablePaymentMethod {
     protected _paymentName = 'paypal'
 
-    pay(payload) {
+    pay(payload:IPay) {
         return super.pay(payload)
     }
-    refund(payload) {
+    refund(payload: RefundPayload) {
         return super.refund(payload)
     }
-    payrecurring(payload) {
+    payRecurring(payload:ICapture) {
         this.action = 'PayRecurring'
         return super.transactionRequest(payload)
     }
-    extraInfo() {
-        this.action = 'extrainfo'
-        return this.dataRequest()
+    extraInfo(payload:IExtraInfo) {
+        this.action = 'Pay,ExtraInfo'
+        this.servicesStrategy = extraInfo
+        return super.transactionRequest(payload)
     }
 }
 

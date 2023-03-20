@@ -5,6 +5,7 @@ import httpsCall from './HttpClient'
 import { buckarooClient } from '../BuckarooClient'
 import PaymentMethod from '../PaymentMethods/PaymentMethod'
 import headers from './Headers'
+import {ITransaction} from "../Models/ITransaction";
 
 class Client {
     private constructor() {}
@@ -68,11 +69,11 @@ class Client {
         return httpsCall(options)
     }
 
-    transactionRequest(data) {
+    transactionRequest(data:ITransaction) {
         const endPoint = this.getTransactionUrl()
         return this.post(data, endPoint)
     }
-    dataRequest(data) {
+    dataRequest(data:ITransaction) {
         const endPoint = this.getDataRequestUrl()
         return this.post(data, endPoint)
     }

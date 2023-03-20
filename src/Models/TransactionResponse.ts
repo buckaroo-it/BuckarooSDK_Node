@@ -99,7 +99,9 @@ export declare interface ITransactionResponse {
     payerHash: string
     paymentKey: string
 }
-export class TransactionService extends ServiceObject implements Partial<ITransactionResponse> {
+
+
+export class TransactionResponse extends ServiceObject implements Partial<ITransactionResponse> {
     key?: string
     additionalParameters?: { additionalParameter: AdditionalParameter[] }
     amountCredit?: number
@@ -165,11 +167,6 @@ export class TransactionService extends ServiceObject implements Partial<ITransa
     }
     transactionType?: string
 
-    constructor(data: ITransactionResponse) {
-        super(data)
-    }
-}
-export class TransactionResponse extends TransactionService {
     constructor(data: ITransactionResponse) {
         super(data)
     }
@@ -259,9 +256,9 @@ export class TransactionResponse extends TransactionService {
         return this.paymentKey
     }
     hasError() {
-        return Object.keys(this.findParameter('RequestErrors') || {}).length > 0
+        return Object.keys(this.findParameter('requestErrors') || {}).length > 0
     }
-    find(parameter: string) {
+    find(parameter) {
         return super.find(parameter)
     }
 }

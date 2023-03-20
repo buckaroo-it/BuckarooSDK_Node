@@ -1,12 +1,14 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
+import {Pay} from "./Models/Pay";
+import {Refund} from "./Models/Refund";
 
 class CreditClick extends PayablePaymentMethod {
     protected _paymentName = 'creditclick'
 
-    pay(payload) {
+    pay(payload:Pay) {
         return super.pay(payload)
     }
-    refund(payload) {
+    refund(payload:Refund) {
         return super.refund(payload)
     }
 }

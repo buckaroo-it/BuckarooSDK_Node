@@ -1,9 +1,13 @@
 import { initializeBuckarooClient, buckarooClient } from '../src/BuckarooClient'
-initializeBuckarooClient()
-;(async () => {
+
+initializeBuckarooClient();
+
+
+(async () => {
     try {
-        // const client = buckarooClient().client().specification()
+        const client = await buckarooClient().client().specification('ideal', 1)
+        console.log(client)
     } catch (error) {
         console.warn(error)
     }
-})()
+})();

@@ -29,7 +29,7 @@ export class ServiceParameters extends ServiceObject {
                 return id
         }
     }
-    setGroupType(type: string, key?: string) {
+    setGroupType(type: string, key?: string): ServiceParameters {
         if (!key) {
             this.groupType = type
             return this
@@ -43,6 +43,7 @@ export class ServiceParameters extends ServiceObject {
                 return parameter[key]
             }
         }
+        return this
     }
     setGroupId(id: string, key?: string) {
         if (!key) {
@@ -62,7 +63,7 @@ export class ServiceParameters extends ServiceObject {
         for (const groupKey in groupTypes) {
             let parameter = this.getParametersByName(groupKey)
             for (const parameterElement of parameter) {
-                parameterElement.groupType = groupTypes[groupKey]
+                parameterElement[groupKey].groupType = groupTypes[groupKey]
             }
         }
     }
@@ -72,9 +73,10 @@ export class ServiceParameters extends ServiceObject {
         } else {
             let parameter = this.getParametersByName(param)
             for (const parameterElement of parameter) {
-                parameterElement.groupId = count()
+                parameterElement[param].groupId = count()
             }
         }
+        return this
     }
     static toServiceParameterList(
         services: object | ServiceParameters,
