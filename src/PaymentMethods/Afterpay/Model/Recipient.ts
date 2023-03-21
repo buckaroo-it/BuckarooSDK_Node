@@ -15,13 +15,13 @@ export declare interface Person extends IPerson {
 }
 
 export declare interface IBillingRecipient {
-    recipient: Person | Required<ICompany>
+    recipient: Person | ICompany
     address: Omit<Required<IAddress>, 'state'>
     email: string
     phone: Pick<IPhone, 'mobile'>
 }
 export declare interface IShippingRecipient {
-    recipient: Person | Required<ICompany>
+    recipient: Person | ICompany
     address: Omit<Required<IAddress>, 'state'>
     email: string
     phone?: Pick<IPhone, 'mobile'>

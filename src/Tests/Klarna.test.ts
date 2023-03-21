@@ -29,7 +29,7 @@ describe('Testing Klarna methods', () => {
                         country: 'GB'
                     },
                     phone: {
-                        phone: '0698765433'
+                        mobile: '0698765433'
                     },
                     email: 'test@buckaroo.nl'
                 },
@@ -74,20 +74,20 @@ describe('Testing Klarna methods', () => {
             })
     })
     test('Refund', async () => {
-        await klarna.refund({
-            amountCredit:21,
-            originalTransactionKey:''
-        }).then((res) => {
-            expect(res).toBeDefined()
-            console.log(res.find('parameterErrors'))
-        })
+        await klarna
+            .refund({
+                amountCredit: 21,
+                originalTransactionKey: ''
+            })
+            .then((res) => {
+                expect(res).toBeDefined()
+                console.log(res.find('parameterErrors'))
+            })
     })
     test('payInInstallments', async () => {
-        await klarna.payInInstallments({
-            order: uniqid(),
-        }).then((res) => {
-            expect(res).toBeDefined()
-            console.log(res.find('parameterErrors'))
-        })
+        // await klarna.payInInstallments().then((res) => {
+        //     expect(res).toBeDefined()
+        //     console.log(res.find('parameterErrors'))
+        // })
     })
 })

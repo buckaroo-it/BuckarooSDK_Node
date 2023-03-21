@@ -5,7 +5,7 @@ import { ServiceParameters } from '../Utils/ServiceParameter'
 import { Combinable } from '../Utils/Combinable'
 import { ITransaction } from '../Models/ITransaction'
 import { RequestType } from '../Constants/Endpoints'
-import {TransactionResponse} from "../Models/TransactionResponse";
+import { TransactionResponse } from '../Models/TransactionResponse'
 
 export default abstract class PaymentMethod {
     protected readonly requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
@@ -39,8 +39,9 @@ export default abstract class PaymentMethod {
     protected setServiceList(serviceList: object) {
         //Handle service list Parameters
         if (Object.keys(serviceList).length > 0) {
-            this.serviceParameters.parameters =
-                ServiceParameters.toServiceParameterList(this.servicesStrategy(serviceList))
+            this.serviceParameters.parameters = ServiceParameters.toServiceParameterList(
+                this.servicesStrategy(serviceList)
+            )
         }
 
         this.serviceParameters.action = this.action
@@ -72,12 +73,14 @@ export default abstract class PaymentMethod {
         }
     }
     protected transactionRequest() {
-        return buckarooClient().client().transactionRequest(this.request.getData())
+        return buckarooClient().transactionRequest(this.request.getData())
     }
     protected dataRequest() {
-        return buckarooClient().client().dataRequest(this.request.getData()).then((response) => {
-            return new TransactionResponse(response)
-        })
+        return buckarooClient()
+            .dataRequest(this.request.getData())
+            .then((response) => {
+                return new TransactionResponse(response)
+            })
     }
     public combine(method: Combinable) {
         const data = method['request'].getData().services
@@ -105,7 +108,7 @@ export default abstract class PaymentMethod {
     }
 
     public specification(type?: RequestType) {
-        return buckarooClient().client().specification(this.paymentName, this.serviceVersion, type)
+        return buckarooClient().specification(this.paymentName, this.serviceVersion, type)
     }
 
     private takeBasicParameters(data) {

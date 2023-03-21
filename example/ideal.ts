@@ -1,7 +1,6 @@
-import { initializeBuckarooClient} from '../src/BuckarooClient'
+import { initializeBuckarooClient } from '../src/BuckarooClient'
 
-initializeBuckarooClient({ secretKey: 'secretKey' , websiteKey: 'websiteKey'})
-
+initializeBuckarooClient({ secretKey: 'secretKey', websiteKey: 'websiteKey' })
 
 import ideal from '../src/PaymentMethods/Ideal'
 
@@ -13,7 +12,7 @@ async function startIdealPayment() {
             address: '123.456.789.123',
             type: 0
         },
-        description: 'Ideal Payment',
+        description: 'Ideal Payment'
     })
 }
 startIdealPayment().then((response) => {

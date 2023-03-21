@@ -5,21 +5,31 @@ import httpsCall from './HttpClient'
 import { buckarooClient } from '../BuckarooClient'
 import PaymentMethod from '../PaymentMethods/PaymentMethod'
 import headers from './Headers'
-import {ITransaction} from "../Models/ITransaction";
+import { ITransaction } from '../Models/ITransaction'
+import { IConfig, ICredentials } from '../Utils/Types'
 
 class Client {
+    private static _credentials: ICredentials
+    private static _config: IConfig
     private constructor() {}
-
     static initialize(config, credentials) {
         if (!config || !credentials)
             throw new Error('Initialize Buckaroo Client with credentials!!')
+        this._credentials = credentials
+        this._config = config
         return new Client()
     }
-    getHeaders(method, data, url) {
+    getCredentials = (): ICredentials => {
+        return Client._credentials
+    }
+    getConfig = (): IConfig => {
+        return Client._config
+    }
+    protected getHeaders(method, data, url) {
         headers.addHeader('Authorization', hmac(method, url, data))
         return headers.getHeaders()
     }
-    getOptions(method: HttpMethods, url: string | URL, data: string) {
+    protected getOptions(method: HttpMethods, url: string | URL, data: string) {
         url = new URL(url)
         return {
             hostname: url.host,
@@ -69,11 +79,11 @@ class Client {
         return httpsCall(options)
     }
 
-    transactionRequest(data:ITransaction) {
+    transactionRequest(data: ITransaction) {
         const endPoint = this.getTransactionUrl()
         return this.post(data, endPoint)
     }
-    dataRequest(data:ITransaction) {
+    dataRequest(data: ITransaction) {
         const endPoint = this.getDataRequestUrl()
         return this.post(data, endPoint)
     }
@@ -108,19 +118,19 @@ class Client {
 
         return this.post(data, endPoint)
     }
-    getPaymentStatus(transactionKey) {
+    status(transactionKey) {
         const endPoint = this.getTransactionUrl(`/Status/${transactionKey}`)
         return this.get(endPoint)
     }
-    getPaymentCancelStatus(transactionKey) {
+    cancelInfo(transactionKey) {
         const endPoint = this.getTransactionUrl(`/Cancel/${transactionKey}`)
         return this.get(endPoint)
     }
-    getPaymentRefundInfo(transactionKey) {
+    refundInfo(transactionKey) {
         const endPoint = this.getTransactionUrl(`/RefundInfo/${transactionKey}`)
         return this.get(endPoint)
     }
-    getPaymentInvoiceInfo(invoiceKey) {
+    invoiceInfo(invoiceKey) {
         const endPoint = this.getTransactionUrl(`/InvoiceInfo/${invoiceKey}`)
         return this.get(endPoint)
     }

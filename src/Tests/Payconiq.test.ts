@@ -1,25 +1,29 @@
-import {initializeBuckarooClient} from "../BuckarooClient";
-import Payconiq from "../PaymentMethods/Payconiq/index";
+import { initializeBuckarooClient } from '../BuckarooClient'
+import Payconiq from '../PaymentMethods/Payconiq/index'
 
-initializeBuckarooClient();
+initializeBuckarooClient()
 
 const payconiq = Payconiq()
 
 describe('Payconiq', () => {
     test('Pay', async () => {
-        await payconiq.pay({
-            amountDebit: 50.3,
-            order: '123456',
-        }).then((info) => {
-            console.log(info)
-        })
+        await payconiq
+            .pay({
+                amountDebit: 50.3,
+                order: '123456'
+            })
+            .then((info) => {
+                console.log(info)
+            })
     })
     test('Refund', async () => {
-        await payconiq.refund({
-            amountCredit: 50.3,
-            originalTransactionKey: '123456',
-        }).then((info) => {
-            console.log(info)
-        })
+        await payconiq
+            .refund({
+                amountCredit: 50.3,
+                originalTransactionKey: '123456'
+            })
+            .then((info) => {
+                console.log(info)
+            })
     })
 })

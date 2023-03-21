@@ -3,7 +3,6 @@ import { IParameter } from '../Models/Parameters'
 import { ServiceObject } from '../Models/ServiceObject'
 
 export class ServiceParameters extends ServiceObject {
-
     addParameter(value: object) {
         super.addParameter(value, ServiceParameters)
     }

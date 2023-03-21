@@ -1,11 +1,11 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
+import PaymentMethod from '../PaymentMethod'
 
-class Surepay extends PayablePaymentMethod {
+class Surepay extends PaymentMethod {
     protected _paymentName = 'surepay'
 
-    verify(payload) {
+    verify() {
         this.action = 'verify'
-        return super.transactionRequest(payload)
+        return this.dataRequest()
     }
 }
 

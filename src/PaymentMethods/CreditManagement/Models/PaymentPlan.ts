@@ -1,5 +1,5 @@
 import { ITransaction } from '../../../Models/ITransaction'
-import CreditManagementInstallmentInterval from "../../../Constants/CreditManagementInstallmentInterval";
+import CreditManagementInstallmentInterval from '../../../Constants/CreditManagementInstallmentInterval'
 
 export interface IPaymentPlan extends ITransaction {
     includedInvoiceKey: string

@@ -27,10 +27,12 @@ export declare interface ITransaction {
     additionalParameters?: AdditionalParameter
 }
 
-export declare type ClientIP = string | {
-    address: string
-    type: number
-}
+export declare type ClientIP =
+    | string
+    | {
+          address: string
+          type: number
+      }
 
 export declare type AdditionalParameter = {
     [name: string]: string | number

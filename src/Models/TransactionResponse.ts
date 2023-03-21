@@ -1,7 +1,7 @@
 import { IServiceList } from './ServiceList'
 import { AdditionalParameter } from './ITransaction'
 import ResponseStatus from '../Constants/ResponseStatus'
-import {ServiceObject} from "./ServiceObject";
+import { ServiceObject } from './ServiceObject'
 
 export declare interface ITransactionResponse {
     key: string
@@ -99,7 +99,6 @@ export declare interface ITransactionResponse {
     payerHash: string
     paymentKey: string
 }
-
 
 export class TransactionResponse extends ServiceObject implements Partial<ITransactionResponse> {
     key?: string

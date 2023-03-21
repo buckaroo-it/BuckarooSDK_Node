@@ -2,8 +2,7 @@ import { IPay } from './Models/Pay'
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { RefundPayload } from '../../Models/ITransaction'
 import { IConfig } from '../../Utils/Types'
-import { ServiceParameters } from '../../Utils/ServiceParameter'
-import {ServiceObject} from "../../Models/ServiceObject";
+import { ServiceObject } from '../../Models/ServiceObject'
 
 class Ideal extends PayablePaymentMethod {
     protected _paymentName = 'ideal'

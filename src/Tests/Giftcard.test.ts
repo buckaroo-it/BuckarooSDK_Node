@@ -34,5 +34,4 @@ describe('testing methods', () => {
                 )
             })
     })
-
 })

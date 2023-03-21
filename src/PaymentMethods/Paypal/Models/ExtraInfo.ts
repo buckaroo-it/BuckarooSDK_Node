@@ -1,25 +1,25 @@
-import { Payload} from "../../../Models/ITransaction";
+import { Payload } from '../../../Models/ITransaction'
 
-export interface IExtraInfo extends Payload{
-    costumer:{
-        name:string
+export interface IExtraInfo extends Payload {
+    costumer: {
+        name: string
     }
-    phone:{
-        mobile:string
-    },
-    address:{
-        street:string
-        street2:string
-        city:string
-        state:string
-        country:string
-        zipcode:string
+    phone: {
+        mobile: string
     }
-    noShipping?:number
-    addressOverride:boolean
+    address: {
+        street: string
+        street2: string
+        city: string
+        state: string
+        country: string
+        zipcode: string
+    }
+    noShipping?: number
+    addressOverride: boolean
 }
 
-export const extraInfo = (data:IExtraInfo) => {
+export const extraInfo = (data: IExtraInfo) => {
     return {
         name: data.costumer.name,
         street1: data.address.street,

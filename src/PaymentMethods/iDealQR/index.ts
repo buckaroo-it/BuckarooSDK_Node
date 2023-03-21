@@ -1,9 +1,9 @@
-import {Generate} from "./Models/Generate";
-import PaymentMethod from "../PaymentMethod";
+import { Generate } from './Models/Generate'
+import PaymentMethod from '../PaymentMethod'
 
 class IdealQr extends PaymentMethod {
     protected _paymentName = 'IdealQr'
-    generate(payload: Generate){
+    generate(payload: Generate) {
         this.action = 'generate'
         this.setRequest(payload)
 

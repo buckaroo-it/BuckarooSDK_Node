@@ -1,21 +1,20 @@
 import { firstLowerCase } from '../Utils/Functions'
 
-
 export class ServiceObject {
-    [data: string]: any
+    [parameter: string]: any
     constructor(data: object) {
         this.addParameter(data)
     }
     addParameter(parameters: object, classType = ServiceObject) {
-            for (const [key, value] of  Object.entries(parameters)){
-                if (value instanceof ServiceObject) {
-                    this[firstLowerCase(key)] = value
-                } else if (value && typeof value === 'object') {
-                    this[firstLowerCase(key)] = new classType(value)
-                } else if (typeof value !== 'function') {
-                    this[firstLowerCase(key)] = value
-                }
+        for (const [key, value] of Object.entries(parameters)) {
+            if (value instanceof ServiceObject) {
+                this[firstLowerCase(key)] = value
+            } else if (value && typeof value === 'object') {
+                this[firstLowerCase(key)] = new classType(value)
+            } else if (typeof value !== 'function') {
+                this[firstLowerCase(key)] = value
             }
+        }
     }
     findParameter(param: string): any | undefined {
         let find = this.findParameterParent(param)
@@ -48,11 +47,13 @@ export class ServiceObject {
     setParameterKeys(keys: { [key: string]: string }) {
         for (const parameterKey in keys) {
             let parameters = this.getParametersByName(parameterKey)
-            if (parameters.length> 0){
+            if (parameters.length > 0) {
                 for (const parameter of parameters) {
-                    delete Object.assign(parameter, { [keys[parameterKey]]: parameter[parameterKey] })[parameterKey]
+                    delete Object.assign(parameter, {
+                        [keys[parameterKey]]: parameter[parameterKey]
+                    })[parameterKey]
                 }
-             }
+            }
         }
         return this
     }
@@ -66,14 +67,13 @@ export class ServiceObject {
     }
 
     getParametersByName(param: string, parameters: any = []): this[] {
-        Object.entries(this)
-            .forEach((value) => {
-                if (value[0] == param) {
-                    parameters.push(this)
-                } else if(value[1] instanceof ServiceObject){
-                    value[1].getParametersByName(param, parameters)
-                }
-            })
+        Object.entries(this).forEach((value) => {
+            if (value[0] == param) {
+                parameters.push(this)
+            } else if (value[1] instanceof ServiceObject) {
+                value[1].getParametersByName(param, parameters)
+            }
+        })
         return parameters
     }
 }

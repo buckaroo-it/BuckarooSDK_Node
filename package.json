@@ -15,7 +15,7 @@
         "javascript",
         "node"
     ],
-    "author": "Vegim Carkaxhija",
+    "author": "Rinor Haziri",
     "license": "ISC",
     "devDependencies": {
         "@types/crypto-js": "^4.1.1",

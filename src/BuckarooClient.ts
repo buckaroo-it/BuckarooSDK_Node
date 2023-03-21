@@ -57,19 +57,4 @@ export const initializeBuckarooClient = (credentials?: ICredentials, config?: IC
     }
 }
 
-export const buckarooClient = () => {
-    const getCredentials = (): ICredentials => {
-        return _credentials
-    }
-    const getConfig = (): IConfig => {
-        return _config
-    }
-    const client = (): Client => {
-        return _client
-    }
-    return {
-        getCredentials,
-        getConfig,
-        client
-    }
-}
+export const buckarooClient = () => _client

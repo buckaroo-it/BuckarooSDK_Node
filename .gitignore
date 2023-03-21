@@ -7,4 +7,5 @@ dist/
 *.cache
 package-lock.json
 *.js
-*.map.js
+*.map
+*.d.ts

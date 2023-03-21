@@ -18,7 +18,7 @@ class Klarna extends PayablePaymentMethod {
     refund(payload: RefundPayload) {
         return super.refund(payload)
     }
-    payInInstallments(payload:IPay) {
+    payInInstallments(payload: IPay) {
         this.action = 'PayInInstallments'
         return super.transactionRequest(payload)
     }

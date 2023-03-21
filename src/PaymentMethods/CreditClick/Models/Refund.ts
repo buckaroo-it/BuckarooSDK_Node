@@ -1,6 +1,11 @@
-import {RefundPayload} from "../../../Models/ITransaction";
+import { RefundPayload } from '../../../Models/ITransaction'
 
-export interface Refund  extends RefundPayload {
+export interface Refund extends RefundPayload {
     description: string
-    refundReason: "Duplicate" | "Fraudulent" | "GoodsNotDelivered" | "RequestedByCustomer" | "TechnicalError"
+    refundReason:
+        | 'Duplicate'
+        | 'Fraudulent'
+        | 'GoodsNotDelivered'
+        | 'RequestedByCustomer'
+        | 'TechnicalError'
 }

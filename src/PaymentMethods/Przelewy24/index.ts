@@ -1,12 +1,12 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import {RefundPayload} from "../../Models/ITransaction";
-import {IPay, pay} from "./Models/Pay";
+import { RefundPayload } from '../../Models/ITransaction'
+import { IPay, Pay } from './Models/Pay'
 
 class Przelewy24 extends PayablePaymentMethod {
     protected _paymentName = 'Przelewy24'
 
-    pay(payload:IPay) {
-        this.servicesStrategy = pay
+    pay(payload: IPay) {
+        this.servicesStrategy = Pay
         return super.pay(payload)
     }
     refund(payload: RefundPayload) {

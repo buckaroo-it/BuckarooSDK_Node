@@ -1,4 +1,4 @@
-import {Payload} from "../../../Models/ITransaction";
+import { Payload } from '../../../Models/ITransaction'
 
 export interface Pay extends Payload {
     costumer?: {

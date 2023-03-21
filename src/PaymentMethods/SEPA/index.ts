@@ -1,26 +1,40 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
+import { IPay, Pay } from './Models/Pay'
+import { ICapture, RefundPayload } from '../../Models/ITransaction'
+import { ExtraInfo, IExtraInfo } from './Models/ExtraInfo'
+import { IEmandate } from './Models/Emandate'
+import { uniqid } from '../../Utils/Functions'
 
 class SEPA extends PayablePaymentMethod {
     protected _paymentName = 'SepaDirectDebit'
     protected _serviceVersion = 1
 
-    pay(payload) {
+    pay(payload: IPay) {
+        this.servicesStrategy = Pay
         return super.pay(payload)
     }
-    refund(payload) {
+    refund(payload: RefundPayload) {
         return super.refund(payload)
     }
-    authorize(payload) {
+    authorize(payload: IPay) {
         this.action = 'Authorize'
+        this.servicesStrategy = Pay
         return super.transactionRequest(payload)
     }
-    payrecurring(payload) {
-        this.action = 'PayRecurring'
+    payRecurrent(payload: Pick<IPay, 'collectDate'> & ICapture) {
+        this.action = 'PayRecurrent'
         return super.transactionRequest(payload)
     }
-    extraInfo() {
-        this.action = 'extrainfo'
-        return this.dataRequest()
+    extraInfo(payload: IExtraInfo) {
+        this.action = 'Pay,ExtraInfo'
+        this.servicesStrategy = ExtraInfo
+        return super.transactionRequest(payload)
+    }
+    payWithEmandate(payload: IEmandate) {
+        this.action = 'PayWithEmandate'
+        payload.invoice = payload.invoice || uniqid()
+        this.setRequest(payload)
+        return super.transactionRequest()
     }
 }
 

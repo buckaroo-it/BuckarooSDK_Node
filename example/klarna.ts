@@ -2,9 +2,9 @@ import { initializeBuckarooClient } from '../src/BuckarooClient'
 
 initializeBuckarooClient()
 
-import  Klarna  from '../src/PaymentMethods/Klarna'
+import Klarna from '../src/PaymentMethods/Klarna'
 
-const klarna =  Klarna()
+const klarna = Klarna()
 klarna
     .pay({
         order: '123456',

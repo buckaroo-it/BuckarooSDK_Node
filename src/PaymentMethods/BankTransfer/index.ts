@@ -1,5 +1,5 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { Pay } from "./Models/Pay";
+import { Pay } from './Models/Pay'
 
 class Banktransfer extends PayablePaymentMethod {
     protected _paymentName = 'transfer'
