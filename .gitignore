@@ -5,7 +5,3 @@ dist/
 .DS_Store
 *.lock
 *.cache
-package-lock.json
-*.js
-*.map
-*.d.ts
