@@ -1,26 +1,25 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
+import {Payload, RefundPayload} from "../../Models/ITransaction";
 
 class GiftCard extends PayablePaymentMethod {
-    constructor(name: string) {
-        super()
-        this._paymentName = name
-    }
-    setName(name: string) {
-        this._paymentName = name
-    }
-    pay(payload) {
+
+    pay(payload:Payload & {name:string}) {
         return super.pay(payload)
     }
-    refund(payload) {
+    refund(payload: RefundPayload & {name:string}) {
         return super.refund(payload)
+    }
+    setPayload(payload:any){
+        this.paymentName = payload.name || this._paymentName
+        delete payload.name
+        super.setPayload(payload)
     }
 }
 
 let _giftCard: GiftCard
-const giftCard: (name?: string) => GiftCard = (name: string | undefined) => {
+const giftCard: () => GiftCard = () => {
     if (!_giftCard)
-        if (!name) throw new Error('No name provided for giftcard')
-        else _giftCard = new GiftCard(name)
+        _giftCard = new GiftCard()
 
     return _giftCard
 }

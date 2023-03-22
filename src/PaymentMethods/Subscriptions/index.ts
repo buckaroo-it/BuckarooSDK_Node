@@ -3,7 +3,7 @@ import { IConfig } from '../../Utils/Types'
 import PaymentMethod from '../PaymentMethod'
 class Subscriptions extends PaymentMethod {
     protected _paymentName = 'Subscriptions'
-    protected requiredFields: Array<keyof IConfig> = ['currency']
+    protected _requiredFields: Array<keyof IConfig> = ['currency']
 
     create(payload: ISubscription): Promise<any> {
         this.action = 'CreateSubscription'

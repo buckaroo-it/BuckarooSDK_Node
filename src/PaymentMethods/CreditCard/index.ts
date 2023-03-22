@@ -2,61 +2,58 @@ import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { IEncrypted, ISecurityCodePay } from './Models/Pay'
 import { ICapture, Payload, RefundPayload } from '../../Models/ITransaction'
 
+
 class Creditcard extends PayablePaymentMethod {
-    constructor(name: string) {
-        super()
-        this._paymentName = name
-    }
-    setName(name: string) {
-        this._paymentName = name
-    }
-    pay(payload: Payload) {
+
+    pay(payload: Payload & { name: string }) {
         return super.pay(payload)
     }
-    refund(payload: RefundPayload) {
+    refund(payload: RefundPayload & { name: string }) {
         return super.refund(payload)
     }
-    payEncrypted(payload: IEncrypted) {
+    payEncrypted(payload: IEncrypted & { name: string }) {
         this.action = 'PayEncrypted'
         return super.pay(payload)
     }
-    payWithSecurityCode(payload: ISecurityCodePay) {
+    payWithSecurityCode(payload: ISecurityCodePay & { name: string }) {
         this.action = 'PayWithSecurityCode'
         return super.pay(payload)
     }
-    authorize(payload: Payload) {
+    authorize(payload: Payload & { name: string }) {
         this.action = 'Authorize'
         return super.transactionRequest(payload)
     }
-    authorizeWithSecurityCode(payload: ISecurityCodePay) {
+    authorizeWithSecurityCode(payload: ISecurityCodePay & { name: string }) {
         this.action = 'AuthorizeWithSecurityCode'
         return super.transactionRequest(payload)
     }
-    authorizeEncrypted(payload) {
+    authorizeEncrypted(payload: IEncrypted & { name: string }) {
         this.action = 'AuthorizeEncrypted'
         return super.transactionRequest(payload)
     }
-    cancelAuthorize(payload: RefundPayload) {
+    cancelAuthorize(payload: RefundPayload & { name: string }) {
         this.action = 'CancelAuthorize'
         return super.transactionRequest(payload)
     }
-    capture(payload: ICapture) {
+    capture(payload: ICapture & { name: string }) {
         this.action = 'Capture'
         return super.transactionRequest(payload)
     }
-    payRecurrent(payload: ICapture) {
+    payRecurrent(payload: ICapture & { name: string }) {
         this.action = 'PayRecurrent'
         return super.transactionRequest(payload)
+    }
+    setPayload(payload: any){
+        this.paymentName = payload.name || this._paymentName
+        delete payload.name
+        super.setPayload(payload)
     }
 }
 let _creditcard: Creditcard
 
-const creditcard: (name?: string) => Creditcard = (name?: string) => {
+const creditcard: () => Creditcard = () => {
     if (!_creditcard) {
-        if (!name) {
-            throw new Error('Creditcard name is required')
-        }
-        _creditcard = new Creditcard(name)
+        _creditcard = new Creditcard()
     }
     return _creditcard
 }

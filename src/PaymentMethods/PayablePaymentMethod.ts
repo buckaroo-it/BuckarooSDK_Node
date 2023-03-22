@@ -5,7 +5,7 @@ import { TransactionResponse } from '../Models/TransactionResponse'
 import { IConfig } from '../Utils/Types'
 
 export abstract class PayablePaymentMethod extends PaymentMethod {
-    protected requiredFields: Array<keyof IConfig> = [
+    protected _requiredFields: Array<keyof IConfig> = [
         'currency',
         'returnURL',
         'returnURLCancel',

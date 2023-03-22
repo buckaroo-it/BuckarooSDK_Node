@@ -7,16 +7,20 @@ import PaymentMethod from '../PaymentMethods/PaymentMethod'
 import headers from './Headers'
 import { ITransaction } from '../Models/ITransaction'
 import { IConfig, ICredentials } from '../Utils/Types'
+import {Methods} from "../Utils/PaymentMethods";
 
-class Client {
+class Client extends Methods {
     private static _credentials: ICredentials
     private static _config: IConfig
-    private constructor() {}
-    static initialize(config, credentials) {
+    private constructor() {
+        super()
+    }
+    static initialize(credentials, config) {
         if (!config || !credentials)
             throw new Error('Initialize Buckaroo Client with credentials!!')
         this._credentials = credentials
         this._config = config
+
         return new Client()
     }
     getCredentials = (): ICredentials => {

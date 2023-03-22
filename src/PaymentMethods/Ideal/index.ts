@@ -7,7 +7,7 @@ import { ServiceObject } from '../../Models/ServiceObject'
 class Ideal extends PayablePaymentMethod {
     protected _paymentName = 'ideal'
     protected _serviceVersion = 2
-    protected requiredFields: Array<keyof IConfig> = [
+    protected _requiredFields: Array<keyof IConfig> = [
         'currency',
         'returnURL',
         'returnURLCancel',

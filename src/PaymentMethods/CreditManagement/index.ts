@@ -11,7 +11,7 @@ import { AddOrUpdateProductLines, IAddOrUpdateProductLines } from './Models/AddO
 
 class CreditManagement extends PaymentMethod {
     protected _paymentName = 'CreditManagement3'
-    protected requiredFields: Array<keyof IConfig> = ['currency']
+    protected _requiredFields: Array<keyof IConfig> = ['currency']
 
     protected _serviceVersion = 1
 

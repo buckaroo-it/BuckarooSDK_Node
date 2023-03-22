@@ -39,7 +39,7 @@ export const invoice = (data: ServiceParameters) => {
     if (articles) {
         data.articles = CreditArticle(data.articles)
     }
-    data.setObjectGroupTypes({
+    data.setMultipleGroupType({
         address: 'Address',
         company: 'Company',
         person: 'Person',

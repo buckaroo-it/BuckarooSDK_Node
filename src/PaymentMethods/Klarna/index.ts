@@ -6,7 +6,7 @@ import { RefundPayload } from '../../Models/ITransaction'
 class Klarna extends PayablePaymentMethod {
     protected _paymentName = 'klarna'
     protected _serviceVersion = 1
-    protected requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
+    protected _requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
 
     pay(payload?: IPay) {
         return super.pay(payload)

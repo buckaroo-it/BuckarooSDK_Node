@@ -2,10 +2,12 @@ import { initializeBuckarooClient } from '../src/BuckarooClient'
 
 initializeBuckarooClient({ secretKey: 'secretKey', websiteKey: 'websiteKey' })
 
-import ideal from '../src/PaymentMethods/Ideal'
+import Ideal from '../src/PaymentMethods/Ideal'
+import creditManagement from "../src/PaymentMethods/CreditManagement/index";
+import Paypal from "../src/PaymentMethods/Paypal/index";
 
 async function startIdealPayment() {
-    return await ideal().pay({
+    return await Ideal().pay({
         amountDebit: 10.1,
         issuer: 'ABNANL2A',
         clientIP: {

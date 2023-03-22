@@ -8,16 +8,15 @@ import { RequestType } from '../Constants/Endpoints'
 import { TransactionResponse } from '../Models/TransactionResponse'
 
 export default abstract class PaymentMethod {
-    protected readonly requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
+    protected readonly _requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
+    get requiredFields(): Array<keyof IConfig> {
+        return this._requiredFields;
+    }
     protected _paymentName = ''
     protected _serviceVersion = 0
     protected request: TransactionRequest = new TransactionRequest()
     private _action = ''
-    protected serviceParameters: { action: string; name: string; version: number; parameters? } = {
-        action: '',
-        name: '',
-        version: 0
-    }
+    protected serviceParameters: { action?: string; name?: string; version?: number; parameters? } = {}
 
     protected servicesStrategy: (data) => object = (data) => {
         return data
@@ -25,6 +24,9 @@ export default abstract class PaymentMethod {
 
     get paymentName(): string {
         return this._paymentName
+    }
+    protected set paymentName(value: string) {
+        this._paymentName = value
     }
     get serviceVersion(): number {
         return this._serviceVersion
@@ -67,7 +69,7 @@ export default abstract class PaymentMethod {
     }
 
     protected setRequiredFields() {
-        for (const requiredField of this.requiredFields) {
+        for (const requiredField of this._requiredFields) {
             if (!this.request.getData()[requiredField])
                 this.request.setDataKey(requiredField, buckarooClient().getConfig()[requiredField])
         }
@@ -94,6 +96,7 @@ export default abstract class PaymentMethod {
         return this
     }
     public setRequest(data: ITransaction) {
+
         //Set the Payload
         this.request.setData(this.takeBasicParameters(data))
 
@@ -112,14 +115,14 @@ export default abstract class PaymentMethod {
     }
 
     private takeBasicParameters(data) {
-        let basicParameterData = {}
+        let basicParametersData = {}
         for (const basicParameterDataKey in data) {
             if (this.request.basicParameters[basicParameterDataKey]) {
-                basicParameterData[basicParameterDataKey] = data[basicParameterDataKey]
+                basicParametersData[basicParameterDataKey] = data[basicParameterDataKey]
                 delete data[basicParameterDataKey]
             }
         }
-        return basicParameterData
+        return basicParametersData
     }
 }
 export declare interface AdditionalParameters {

@@ -2,15 +2,16 @@ import { initializeBuckarooClient } from '../BuckarooClient'
 import CreditCard from '../PaymentMethods/CreditCard'
 
 initializeBuckarooClient()
-const method = CreditCard('Visa')
+const method = CreditCard()
+
 
 describe('testing methods', () => {
-    method.setName('MasterCard')
 
     test('Pay', async () => {
         await method
             .pay({
-                amountDebit: 10
+                amountDebit: 10,
+                name:'Visa'
             })
             .then((data) => {
                 expect(data).toBeDefined()
@@ -25,6 +26,7 @@ describe('testing methods', () => {
         await method
             .refund({
                 amountCredit: 5,
+                name: 'Visa',
                 originalTransactionKey: 'F397DA6A251645F8BDD81547B5005B4B'
             })
             .then((data) => {
@@ -39,7 +41,8 @@ describe('testing methods', () => {
     test('Authorize', async () => {
         await method
             .authorize({
-                amountDebit: 10
+                amountDebit: 10,
+                name: 'Visa'
             })
             .then((data) => {
                 expect(data).toBeDefined()
@@ -54,6 +57,7 @@ describe('testing methods', () => {
         await method
             .payEncrypted({
                 amountDebit: 10,
+                name: 'Visa',
                 encryptedCardData: ''
             })
             .then((data) => {
@@ -69,7 +73,8 @@ describe('testing methods', () => {
         await method
             .payWithSecurityCode({
                 amountDebit: 10,
-                encryptedSecurityCode: 'sad'
+                encryptedSecurityCode: 'sad',
+                name: 'Visa'
             })
             .then((data) => {
                 expect(data).toBeDefined()
@@ -84,7 +89,8 @@ describe('testing methods', () => {
         await method
             .authorizeWithSecurityCode({
                 amountDebit: 10,
-                encryptedSecurityCode: 'sad'
+                encryptedSecurityCode: 'sad',
+                name: 'Visa'
             })
             .then((data) => {
                 expect(data).toBeDefined()
@@ -99,7 +105,8 @@ describe('testing methods', () => {
         await method
             .authorizeEncrypted({
                 amountDebit: 10,
-                encryptedCardData: 'sad'
+                encryptedCardData: 'sad',
+                name: 'Visa'
             })
             .then((data) => {
                 expect(data).toBeDefined()
@@ -114,7 +121,8 @@ describe('testing methods', () => {
         await method
             .cancelAuthorize({
                 originalTransactionKey: 'sad',
-                amountCredit: 10
+                amountCredit: 10,
+                name: 'Visa'
             })
             .then((data) => {
                 expect(data).toBeDefined()
@@ -129,7 +137,8 @@ describe('testing methods', () => {
         await method
             .capture({
                 originalTransactionKey: 'sad',
-                amountDebit: 10
+                amountDebit: 10,
+                name: 'Visa'
             })
             .then((data) => {
                 expect(data).toBeDefined()
@@ -144,7 +153,8 @@ describe('testing methods', () => {
         await method
             .payRecurrent({
                 originalTransactionKey: 'sad',
-                amountDebit: 10
+                amountDebit: 10,
+                name: 'Visa'
             })
             .then((data) => {
                 expect(data).toBeDefined()

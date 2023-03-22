@@ -39,7 +39,7 @@ export interface ISubscription {
 export const subscriptionServices = (data: ISubscription) => {
     let serviceData = new ServiceParameters(data)
 
-    serviceData.setObjectGroupTypes({
+    serviceData.setMultipleGroupType({
         debtor: 'Debtor',
         person: 'Person',
         email: 'Email',
