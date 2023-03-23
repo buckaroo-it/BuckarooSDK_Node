@@ -1,19 +1,19 @@
-import {Payload} from "../../../Models/ITransaction";
-import Gender from "../../../Constants/Gender";
+import { Payload } from '../../../Models/ITransaction'
+import Gender from '../../../Constants/Gender'
 
 export interface Invitation extends Payload {
-    costumer:{
-        firstName: string,
-        lastName: string,
-        gender: Gender,
-    },
-    merchantSendsEmail?: boolean,
+    costumer: {
+        firstName: string
+        lastName: string
+        gender: Gender
+    }
+    merchantSendsEmail?: boolean
     email: string
     expirationDate?: string
     paymentMethodsAllowed?: string
     attachment?: string
 }
-export const services = (data:Invitation) => {
+export const services = (data: Invitation) => {
     return {
         customerGender: data.costumer.gender,
         customerFirstName: data.costumer.firstName,
@@ -23,6 +23,5 @@ export const services = (data:Invitation) => {
         expirationDate: data.expirationDate,
         paymentMethodsAllowed: data.paymentMethodsAllowed,
         attachment: data.attachment
-
     }
 }

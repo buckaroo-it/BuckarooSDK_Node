@@ -10,13 +10,14 @@ import { TransactionResponse } from '../Models/TransactionResponse'
 export default abstract class PaymentMethod {
     protected readonly _requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
     get requiredFields(): Array<keyof IConfig> {
-        return this._requiredFields;
+        return this._requiredFields
     }
     protected _paymentName = ''
     protected _serviceVersion = 0
     protected request: TransactionRequest = new TransactionRequest()
     private _action = ''
-    protected serviceParameters: { action?: string; name?: string; version?: number; parameters? } = {}
+    protected serviceParameters: { action?: string; name?: string; version?: number; parameters? } =
+        {}
 
     protected servicesStrategy: (data) => object = (data) => {
         return data
@@ -96,7 +97,6 @@ export default abstract class PaymentMethod {
         return this
     }
     public setRequest(data: ITransaction) {
-
         //Set the Payload
         this.request.setData(this.takeBasicParameters(data))
 

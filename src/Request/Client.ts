@@ -7,9 +7,9 @@ import PaymentMethod from '../PaymentMethods/PaymentMethod'
 import headers from './Headers'
 import { ITransaction } from '../Models/ITransaction'
 import { IConfig, ICredentials } from '../Utils/Types'
-import {Methods} from "../Utils/PaymentMethods";
+import { Methods } from '../Utils/PaymentMethods'
 
-class Client extends Methods {
+export default class Client extends Methods {
     private static _credentials: ICredentials
     private static _config: IConfig
     private constructor() {
@@ -139,4 +139,3 @@ class Client extends Methods {
         return this.get(endPoint)
     }
 }
-export default Client

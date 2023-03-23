@@ -2,9 +2,7 @@ import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { IEncrypted, ISecurityCodePay } from './Models/Pay'
 import { ICapture, Payload, RefundPayload } from '../../Models/ITransaction'
 
-
 class Creditcard extends PayablePaymentMethod {
-
     pay(payload: Payload & { name: string }) {
         return super.pay(payload)
     }
@@ -43,7 +41,7 @@ class Creditcard extends PayablePaymentMethod {
         this.action = 'PayRecurrent'
         return super.transactionRequest(payload)
     }
-    setPayload(payload: any){
+    setPayload(payload: any) {
         this.paymentName = payload.name || this._paymentName
         delete payload.name
         super.setPayload(payload)

@@ -2,6 +2,7 @@ import { IServiceList } from './ServiceList'
 import { AdditionalParameter } from './ITransaction'
 import ResponseStatus from '../Constants/ResponseStatus'
 import { ServiceObject } from './ServiceObject'
+import { firstLowerCase } from '../Utils/Functions'
 
 export declare interface ITransactionResponse {
     key: string
@@ -258,6 +259,6 @@ export class TransactionResponse extends ServiceObject implements Partial<ITrans
         return Object.keys(this.findParameter('requestErrors') || {}).length > 0
     }
     find(parameter) {
-        return super.find(parameter)
+        return super.find(firstLowerCase(parameter))
     }
 }

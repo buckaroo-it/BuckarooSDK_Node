@@ -23,7 +23,8 @@ export const debtor = (data: ServiceParameters) => {
     return data
 }
 
-export const debtorInfo = (data: ServiceParameters) => {
-    data.setGroupType('debtor', 'debtor')
-    return data
+export const debtorInfo = (data: IDebtor) => {
+    const services = new ServiceParameters(data)
+    services.setGroupType('debtor', 'debtor')
+    return services
 }

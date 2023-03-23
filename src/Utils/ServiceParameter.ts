@@ -53,7 +53,7 @@ export class ServiceParameters extends ServiceObject {
                 if (!(parameter[key] instanceof ServiceParameters)) {
                     parameter.addParameter({ [key]: { [key]: parameter[key] } })
                 }
-                   parameter[key].groupId = id
+                parameter[key].groupId = id
                 return parameter[key]
             }
         }
@@ -62,7 +62,7 @@ export class ServiceParameters extends ServiceObject {
         for (const groupKey in groupTypes) {
             let parameter = this.getParametersByName(groupKey)
             for (const parameterElement of parameter) {
-                if(parameterElement[groupKey] instanceof ServiceParameters){
+                if (parameterElement[groupKey] instanceof ServiceParameters) {
                     parameterElement[groupKey].groupType = groupTypes[groupKey]
                 }
             }

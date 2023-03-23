@@ -1,10 +1,6 @@
-import { initializeBuckarooClient } from '../src/BuckarooClient'
-
-initializeBuckarooClient({ secretKey: 'secretKey', websiteKey: 'websiteKey' })
+require('../BuckarooClient.test')
 
 import Ideal from '../src/PaymentMethods/Ideal'
-import creditManagement from "../src/PaymentMethods/CreditManagement/index";
-import Paypal from "../src/PaymentMethods/Paypal/index";
 
 async function startIdealPayment() {
     return await Ideal().pay({

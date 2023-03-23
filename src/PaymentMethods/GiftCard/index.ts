@@ -1,15 +1,14 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import {Payload, RefundPayload} from "../../Models/ITransaction";
+import { Payload, RefundPayload } from '../../Models/ITransaction'
 
 class GiftCard extends PayablePaymentMethod {
-
-    pay(payload:Payload & {name:string}) {
+    pay(payload: Payload & { name: string }) {
         return super.pay(payload)
     }
-    refund(payload: RefundPayload & {name:string}) {
+    refund(payload: RefundPayload & { name: string }) {
         return super.refund(payload)
     }
-    setPayload(payload:any){
+    setPayload(payload: any) {
         this.paymentName = payload.name || this._paymentName
         delete payload.name
         super.setPayload(payload)
@@ -18,8 +17,7 @@ class GiftCard extends PayablePaymentMethod {
 
 let _giftCard: GiftCard
 const giftCard: () => GiftCard = () => {
-    if (!_giftCard)
-        _giftCard = new GiftCard()
+    if (!_giftCard) _giftCard = new GiftCard()
 
     return _giftCard
 }

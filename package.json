@@ -7,7 +7,8 @@
     "scripts": {
         "prepare": "npm run build",
         "build": "tsc",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "jest",
+        "prettier": "prettier --write ."
     },
     "keywords": [
         "buckaroo",

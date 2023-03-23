@@ -9,7 +9,7 @@ const paymentMethod = creditCard()
         const info = await paymentMethod.pay({
             invoice: 'test1',
             amountDebit: 12,
-            name: 'Visa',
+            name: 'Visa'
         })
         console.log(info)
     } catch (error) {

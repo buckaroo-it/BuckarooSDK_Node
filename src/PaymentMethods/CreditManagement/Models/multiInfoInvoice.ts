@@ -4,7 +4,8 @@ export interface IMultiInfoInvoice {
     invoice: string
     invoices?: { invoiceNumber: string }[]
 }
-export const multiInfoInvoice = (data: ServiceParameters) => {
-    data.findParameter('invoices')?.makeCountable()
-    return data
+export const multiInfoInvoice = (data: IMultiInfoInvoice) => {
+    const services = new ServiceParameters(data)
+    services.findParameter('invoices')?.makeCountable()
+    return services
 }

@@ -1,6 +1,6 @@
-import PaymentMethod from "../PaymentMethod";
-import {Invitation, services} from "./Models/invitation";
-import {uniqid} from "../../Utils/Functions";
+import PaymentMethod from '../PaymentMethod'
+import { Invitation, services } from './Models/invitation'
+import { uniqid } from '../../Utils/Functions'
 
 class PayPerEmail extends PaymentMethod {
     protected _paymentName = 'payperemail'

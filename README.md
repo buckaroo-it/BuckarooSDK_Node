@@ -10,7 +10,7 @@ npm install buckaroo-sdk-nodejs
 
 ### About
 
-Buckaroo is the the Payment Service Provider for all your online payments with more than 15,000 companies relying on Buckaroo's platform to securely process their payments, subscriptions and unpaid invoices.
+Buckaroo is the Payment Service Provider for all your online payments with more than 15,000 companies relying on Buckaroo's platform to securely process their payments, subscriptions and unpaid invoices.
 
 Start accepting payments today with Buckaroo.
 
@@ -36,8 +36,9 @@ Create a payment with all the available payment methods. In this example, we sho
 ```javascript
 import creditCard from './PaymentMethods/CreditCard'
 
-const payment = await creditCard('visa').pay({
+const payment = await creditCard().pay({
     amountDebit: 10,
+    name: 'Mastercard',
     invoice: 'UNIQUE-INVOICE-NO'
 })
 ```

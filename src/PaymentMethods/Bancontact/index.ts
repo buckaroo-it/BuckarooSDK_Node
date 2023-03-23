@@ -40,7 +40,7 @@ class Bancontact extends PayablePaymentMethod {
 }
 
 let _bancontact: Bancontact
-const bancontact: () => Bancontact = () => {
+export const bancontact: () => Bancontact = () => {
     if (!_bancontact) _bancontact = new Bancontact()
     return _bancontact
 }

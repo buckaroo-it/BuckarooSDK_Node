@@ -47,7 +47,7 @@ export const subscriptionServices = (data: ISubscription) => {
         configuration: 'AddConfiguration'
     })
     if (serviceData.company) {
-        serviceData.company.setKeys({
+        serviceData.company.setParameterKeys({
             companyName: 'Name'
         })
     }
@@ -59,7 +59,7 @@ export const subscriptionServices = (data: ISubscription) => {
     }
 
     if (serviceData.ratePlanCharges) {
-        const types = Object.keys(serviceData.ratePlanCharges.data)
+        const types = Object.keys(serviceData.ratePlanCharges)
         for (const type of types) {
             serviceData.ratePlanCharges[type].groupType = firstUpperCase(type) + 'RatePlanCharge'
         }

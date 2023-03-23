@@ -1,5 +1,5 @@
 import PaymentMethod from '../PaymentMethod'
-import {IVerify,Verify} from "./Models/Verify";
+import { IVerify, Verify } from './Models/Verify'
 
 class Surepay extends PaymentMethod {
     protected _paymentName = 'surepay'

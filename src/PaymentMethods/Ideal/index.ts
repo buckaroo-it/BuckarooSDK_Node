@@ -1,18 +1,11 @@
 import { IPay } from './Models/Pay'
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { RefundPayload } from '../../Models/ITransaction'
-import { IConfig } from '../../Utils/Types'
 import { ServiceObject } from '../../Models/ServiceObject'
 
 class Ideal extends PayablePaymentMethod {
     protected _paymentName = 'ideal'
     protected _serviceVersion = 2
-    protected _requiredFields: Array<keyof IConfig> = [
-        'currency',
-        'returnURL',
-        'returnURLCancel',
-        'pushURL'
-    ]
     pay(payload?: IPay) {
         return super.pay(payload)
     }

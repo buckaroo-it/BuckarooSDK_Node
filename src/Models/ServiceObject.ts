@@ -67,7 +67,7 @@ export class ServiceObject {
     }
 
     getParametersByName(param: string, parameters: any = []): this[] {
-        Object.entries(this).forEach(([key,value]) => {
+        Object.entries(this).forEach(([key, value]) => {
             if (key == param) {
                 parameters.push(this)
             } else if (value instanceof ServiceObject) {
