@@ -6,7 +6,7 @@ class Banktransfer extends PayablePaymentMethod {
     protected _serviceVersion = 1
 
     pay(payload) {
-        this.servicesStrategy = Pay
+        this.serviceParametersStrategy = Pay
         return super.pay(payload)
     }
 }

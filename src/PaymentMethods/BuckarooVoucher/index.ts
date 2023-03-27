@@ -1,7 +1,7 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { IPay } from './Models/Pay'
 import { ITransaction, RefundPayload } from '../../Models/ITransaction'
-import { handleDate, ICreate } from './Models/Create'
+import { ICreate } from './Models/Create'
 
 class Buckaroovoucher extends PayablePaymentMethod {
     protected _paymentName = 'buckaroovoucher'
@@ -19,7 +19,6 @@ class Buckaroovoucher extends PayablePaymentMethod {
     }
     createApplication(payload: ICreate) {
         this.action = 'CreateApplication'
-        this.servicesStrategy = handleDate
         this.setRequest(payload)
         return this.dataRequest()
     }

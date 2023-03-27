@@ -6,12 +6,12 @@ class In3 extends PayablePaymentMethod {
     protected _paymentName = 'capayable'
 
     pay(payload: IPay) {
-        this.servicesStrategy = Pay
+        this.serviceParametersStrategy = Pay
         return super.pay(payload)
     }
     payInInstallments(payload) {
         this.action = 'PayInInstallments'
-        this.servicesStrategy = Pay
+        this.serviceParametersStrategy = Pay
         return super.transactionRequest(payload)
     }
     refund(payload: RefundPayload) {

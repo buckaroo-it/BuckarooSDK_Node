@@ -2,7 +2,7 @@ import { Payload } from '../../../Models/ITransaction'
 import { IBillingRecipient, adaptBilling, adaptShipping } from '../../Afterpay/Model/Recipient'
 import { IBillinkArticle } from './Article'
 import { ArticleService } from '../../../Models/Services/IArticle'
-import { ServiceParameters } from '../../../Utils/ServiceParameter'
+import { ServiceParameters } from '../../../Utils/ServiceParameters'
 
 export interface IPay extends Payload {
     billing: IBillingRecipient

@@ -1,14 +1,9 @@
 import { initializeBuckarooClient } from '../src/BuckarooClient'
-
-import dotenv from 'dotenv'
-import path from 'path'
-
-dotenv.config({ path: path.resolve(__dirname, '../.env') })
-
+require('dotenv').config();
 export default initializeBuckarooClient(
     {
-        secretKey: process.env.BPE_SECRET_KEY,
-        websiteKey: process.env.BPE_WEBSITE_KEY
+        secretKey: process.env.BPE_SECRET_KEY || '',
+        websiteKey: process.env.BPE_WEBSITE_KEY || ''
     },
     {
         mode: process.env.BPE_MODE === 'live' ? 'live' : 'test',

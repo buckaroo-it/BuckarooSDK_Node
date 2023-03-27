@@ -18,7 +18,7 @@ class CreditManagement extends PaymentMethod {
     createInvoice(payload: IInvoice): Promise<any> {
         this.action = 'CreateInvoice'
         payload.invoice = payload.invoice || uniqid()
-        this.servicesStrategy = invoice
+        this.serviceParametersStrategy = invoice
         this.setRequest(payload)
 
         return this.dataRequest()
@@ -27,7 +27,7 @@ class CreditManagement extends PaymentMethod {
         this.action = 'CreateCombinedInvoice'
 
         payload.invoice = payload.invoice || uniqid()
-        this.servicesStrategy = invoice
+        this.serviceParametersStrategy = invoice
 
         this.setServiceList(payload)
 
@@ -43,7 +43,7 @@ class CreditManagement extends PaymentMethod {
     addOrUpdateDebtor(payload: IDebtor) {
         this.action = 'AddOrUpdateDebtor'
 
-        this.servicesStrategy = debtor
+        this.serviceParametersStrategy = debtor
         this.setRequest(payload)
 
         return this.dataRequest()
@@ -79,14 +79,14 @@ class CreditManagement extends PaymentMethod {
 
     invoiceInfo(payload: IMultiInfoInvoice) {
         this.action = 'InvoiceInfo'
-        this.servicesStrategy = multiInfoInvoice
+        this.serviceParametersStrategy = multiInfoInvoice
         this.setRequest(payload)
 
         return this.dataRequest()
     }
     debtorInfo(payload: Required<Pick<IInvoice, 'debtor'>>) {
         this.action = 'DebtorInfo'
-        this.servicesStrategy = debtorInfo
+        this.serviceParametersStrategy = debtorInfo
         this.setRequest(<ITransaction>payload)
 
         return this.dataRequest()
@@ -94,7 +94,7 @@ class CreditManagement extends PaymentMethod {
 
     addOrUpdateProductLines(payload: IAddOrUpdateProductLines) {
         this.action = 'AddOrUpdateProductLines'
-        this.servicesStrategy = AddOrUpdateProductLines
+        this.serviceParametersStrategy = AddOrUpdateProductLines
         this.setRequest(payload)
         return this.dataRequest()
     }

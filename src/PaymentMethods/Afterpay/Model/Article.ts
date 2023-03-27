@@ -1,28 +1,13 @@
-import IArticle, { ArticleService } from '../../../Models/Services/IArticle'
+import IArticle from '../../../Models/Services/IArticle'
 
 export interface IAfterPayArticle extends IArticle {
-    identifier: string
-    description: string
-    vatPercentage: Number
-    quantity: Number
+    // grossUnitPrice: Number
     imageUrl?: string
+    quantity: Number
     url?: string
-    type?:
-        | 'PhysicalArticle'
-        | 'DigitalArticle'
-        | 'Giftcard'
-        | 'Discount'
-        | 'ShippingFee'
-        | 'Surcharge'
-        | 'Info'
-        | 'ShippingFees'
-    unitCode?: string
+    identifier: string
     marketPlaceSellerId?: string
-    refundType?: 'Return' | 'Refund'
 }
-
-export const AfterPayArticle = (articles) => {
-    return ArticleService(articles, {
-        keys: { price: 'grossUnitPrice' }
-    })
+export interface IAfterPayArticleRefund extends IAfterPayArticle {
+    refundType?:'Refund' | 'Return'
 }

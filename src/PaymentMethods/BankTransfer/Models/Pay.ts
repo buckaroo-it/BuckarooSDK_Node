@@ -1,6 +1,6 @@
 import IPerson from '../../../Models/Services/IPerson'
 import IEmail from '../../../Models/Services/IEmail'
-import { ServiceParameters } from '../../../Utils/ServiceParameter'
+import { ServiceParameters } from '../../../Utils/ServiceParameters'
 
 export declare interface IPay {
     sendMail: boolean

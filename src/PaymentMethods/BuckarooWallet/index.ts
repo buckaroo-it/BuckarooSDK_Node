@@ -33,7 +33,7 @@ class BuckarooWallet extends PayablePaymentMethod {
     }
     create(payload: IWallet) {
         this.action = 'Create'
-        this.servicesStrategy = Wallet
+        this.serviceParametersStrategy = Wallet
         this.setRequest(payload)
         return this.dataRequest()
     }

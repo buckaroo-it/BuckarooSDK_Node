@@ -16,29 +16,29 @@ export declare interface ITransaction {
     description?: string
     originalTransactionKey?: string
     originalTransactionReference?: string
-    // websiteKey?: string
     culture?: string
     startRecurrent?: boolean
     continueOnIncomplete?: string
     servicesSelectableByClient?: string
     servicesExcludedForClient?: string
-    customParameters?: Array<any>
+    customParameters?: AdditionalParameter
     services?: object
     additionalParameters?: AdditionalParameter
 }
 
 export declare type ClientIP =
-    | string
+    string
     | {
           address: string
           type: number
       }
 
 export declare type AdditionalParameter = {
-    [name: string]: string | number
+    [name: string]: any
 }
 
 export declare interface Payload extends Omit<ITransaction, 'amountCredit'> {
+    invoice?: string
     order?: string
     amountDebit: number
 }

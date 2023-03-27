@@ -46,7 +46,7 @@ describe('testing methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                console.log(data.find('ParameterErrors') || data.find('Parameters'))
+                
             })
     })
     test('Refund', async () => {
@@ -57,13 +57,13 @@ describe('testing methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                console.log(data.find('ParameterErrors') || data.find('Parameters'))
+                
             })
     })
     test('Authorize', async () => {
         await method.authorize().then((data) => {
             expect(data).toBeDefined()
-            console.log(data.find('ParameterErrors') || data.find('Parameters'))
+            
         })
     })
     test('CancelAuthorize', async () => {
@@ -75,7 +75,7 @@ describe('testing methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                console.log(data.find('ParameterErrors') || data.find('Parameters'))
+                
             })
     })
     test('Capture', async () => {
@@ -87,7 +87,7 @@ describe('testing methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                console.log(data.find('ParameterErrors') || data.find('Parameters'))
+                
             })
     })
 })

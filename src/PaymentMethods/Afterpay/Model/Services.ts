@@ -1,26 +1,38 @@
-import { AfterPayArticle, IAfterPayArticle } from './Article'
-import { IBillingRecipient, IShippingRecipient, adaptShipping, adaptBilling } from './Recipient'
+import { IAfterPayArticle } from './Article'
+import { Customer } from "./Customer";
 import { Payload } from '../../../Models/ITransaction'
 import { IPAddress } from '../../../Utils/Types'
-import { ServiceParameters } from '../../../Utils/ServiceParameter'
+import { ServiceParameters } from '../../../Utils/ServiceParameters'
 
 export interface IPay extends Payload {
     clientIP: IPAddress | string
-    billing: IBillingRecipient
-    shipping?: IShippingRecipient
+    billing: Customer
+    shipping?: Customer
     articles: IAfterPayArticle[]
-    merchantImageUrl?: string
-    summaryImageUrl?: string
     bankAccount?: string
     bankCode?: string
+    merchantImageUrl?: string
+    summaryImageUrl?: string
     yourReference?: string
     ourReference?: string
 }
 
-export const Pay = (data) => {
-    data = new ServiceParameters(data)
-    if (data.billing) data.billing = adaptBilling(data.billing)
-    if (data.shipping) data.shipping = adaptShipping(data.shipping || data.billing)
-    if (data.articles) data.articles = AfterPayArticle(data.articles)
-    return data
+export const Services = (data:IPay) => {
+    const services = new ServiceParameters(data)
+    if(services.data.billing){
+        services.data.shipping = services.data.shipping || {...services.data.billing}
+    }
+    services.setGroupTypes({
+        billing:'BillingCustomer',
+        shipping:'ShippingCustomer',
+        articles:'Article'
+    })
+    services.setCountable(['articles'])
+    services.setKeys({
+        articles:{
+            price:'grossUnitPrice',
+        }
+    })
+
+    return services.data
 }

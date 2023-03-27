@@ -1,7 +1,6 @@
 import { IPay } from './Models/Pay'
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { RefundPayload } from '../../Models/ITransaction'
-import { ServiceObject } from '../../Models/ServiceObject'
 
 class Ideal extends PayablePaymentMethod {
     protected _paymentName = 'ideal'
@@ -17,19 +16,15 @@ class Ideal extends PayablePaymentMethod {
     }
     issuers() {
         return this.specification().then((response) => {
-            const issuerList: { id: any; name: any }[] = []
-            response = new ServiceObject(response)
-            let parameters = response.findParameter('listItemDescriptions')
-            if (parameters) {
-                let issuer: any
-                for (issuer of Object.values(parameters)) {
-                    issuerList.push({
-                        id: issuer.value,
-                        name: issuer.description
-                    })
-                }
+            if(response.Actions.length && response.Actions[0].RequestParameters.length) {
+                return response.Actions[0].RequestParameters[0].ListItemDescriptions.map((item) => {
+                    return {
+                        id: item.Value,
+                        name: item.Description
+                    }
+                })
             }
-            return issuerList
+            return []
         })
     }
 }

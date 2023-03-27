@@ -1,5 +1,5 @@
 import { IInvoice, invoice } from './Invoice'
-import { ServiceParameters } from '../../../Utils/ServiceParameter'
+import { ServiceParameters } from '../../../Utils/ServiceParameters'
 
 export interface IDebtor extends IInvoice {
     addressUnreachable?: boolean

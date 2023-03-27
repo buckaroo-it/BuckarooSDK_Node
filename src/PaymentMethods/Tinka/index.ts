@@ -6,7 +6,7 @@ class Tinka extends PayablePaymentMethod {
     protected _paymentName = 'tinka'
 
     pay(payload: IPay) {
-        this.servicesStrategy = Pay
+        this.serviceParametersStrategy = Pay
         return super.pay(payload)
     }
     refund(payload: RefundPayload) {

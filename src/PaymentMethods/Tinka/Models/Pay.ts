@@ -1,6 +1,6 @@
 import { Payload } from '../../../Models/ITransaction'
 
-import { ServiceParameters } from '../../../Utils/ServiceParameter'
+import { ServiceParameters } from '../../../Utils/ServiceParameters'
 import {
     adaptBilling,
     adaptShipping,

@@ -1,6 +1,6 @@
 import IAddress from '../../../Models/Services/IAddress'
 import { IPay, Pay } from './Pay'
-import { ServiceParameters } from '../../../Utils/ServiceParameter'
+import { ServiceParameters } from '../../../Utils/ServiceParameters'
 import { Payload } from '../../../Models/ITransaction'
 
 export interface IExtraInfo extends Payload {

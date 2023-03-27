@@ -3,7 +3,7 @@ import { RefundPayload } from '../../../Models/ITransaction'
 export interface Refund extends RefundPayload {
     description: string
     refundReason:
-        | 'Duplicate'
+        'Duplicate'
         | 'Fraudulent'
         | 'GoodsNotDelivered'
         | 'RequestedByCustomer'

@@ -1,6 +1,6 @@
 import * as IPAddress from 'ip-address'
 
-class IPProtocolVersion {
+export class IPProtocolVersion {
     public static readonly IPV4: number = 0
     public static readonly IPV6: number = 1
 

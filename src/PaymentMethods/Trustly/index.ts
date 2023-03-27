@@ -6,7 +6,7 @@ class Trustly extends PayablePaymentMethod {
     protected _paymentName = 'Trustly'
 
     pay(payload: IPay) {
-        this.servicesStrategy = Pay
+        this.serviceParametersStrategy = Pay
         return super.pay(payload)
     }
     refund(payload: RefundPayload) {

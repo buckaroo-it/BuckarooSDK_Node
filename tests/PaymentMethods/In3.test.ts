@@ -1,8 +1,14 @@
+import {buckarooClient} from "../../src/BuckarooClient";
+
 require('../BuckarooClient.test')
 import In3 from '../../src/PaymentMethods/In3'
 import Gender from '../../src/Constants/Gender'
 
 const in3 = In3()
+
+buckarooClient().ideal.pay({
+
+})
 
 describe('Testing In3 methods', () => {
     test('Pay', async () => {

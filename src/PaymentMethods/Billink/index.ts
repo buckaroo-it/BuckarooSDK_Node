@@ -1,13 +1,14 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { IPay, payServices } from './Models/Pay'
 import { ICapture, RefundPayload } from '../../Models/ITransaction'
+import {buckarooClient} from "../../BuckarooClient";
 
 class Billink extends PayablePaymentMethod {
     protected _paymentName = 'Billink'
 
     pay(payload: IPay) {
-        this.servicesStrategy = payServices
-        return super.pay()
+        this.serviceParametersStrategy = payServices
+        return super.pay(payload)
     }
     refund(payload: RefundPayload) {
         return super.refund(payload)

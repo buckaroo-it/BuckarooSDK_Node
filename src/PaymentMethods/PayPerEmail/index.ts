@@ -7,7 +7,7 @@ class PayPerEmail extends PaymentMethod {
     paymentInvitation(payload: Invitation) {
         this.action = 'paymentInvitation'
         payload.invoice = payload.invoice || uniqid()
-        this.servicesStrategy = services
+        this.serviceParametersStrategy = services
         this.setRequest(payload)
         return super.transactionRequest()
     }

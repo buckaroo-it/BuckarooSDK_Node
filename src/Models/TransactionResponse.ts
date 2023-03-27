@@ -3,178 +3,73 @@ import { AdditionalParameter } from './ITransaction'
 import ResponseStatus from '../Constants/ResponseStatus'
 import { ServiceObject } from './ServiceObject'
 import { firstLowerCase } from '../Utils/Functions'
+import {ITransactionResponse} from "./Services/ITransactionResponse";
 
-export declare interface ITransactionResponse {
-    key: string
-    status: {
-        code: {
-            code: number | string
-            description: string
-        }
-        subCode: {
-            code: number | string
-            description: string
-        }
-        dateTime: string
-    }
-    requiredAction: {
-        redirectURL: string
-        requestedInformation: {
-            name: string
-            dataType: number
-            maxLength: number
-            required: boolean
-            description: string
-        }[]
-        payRemainderDetails: {
-            remainderAmount: number
-            currency: string
-            groupTransaction: string
-        }
-        name: string
-        typeDeprecated: number
-    }
-    services: IServiceList[]
-    customParameters: {
-        list: AdditionalParameter[]
-    }
-    additionalParameters: {
-        additionalParameter: AdditionalParameter[]
-    }
-    requestErrors: {
-        channelErrors: {
-            service: string
-            action: string
-            name: string
-            error: string
-            errorMessage: string
-        }[]
-        serviceErrors: {
-            name: string
-            error: string
-            errorMessage: string
-        }[]
-        actionErrors: {
-            service: string
-            name: string
-            error: string
-            errorMessage: string
-        }[]
-        parameterErrors: {
-            service: string
-            action: string
-            name: string
-            error: string
-            errorMessage: string
-        }[]
-        customParameterErrors: {
-            name: string
-            error: string
-            errorMessage: string
-        }[]
-    }
-    invoice: string
-    serviceCode: string
-    isTest: boolean
-    currency: string
-    amountDebit: number
-    amountCredit: number
-    transactionType: string
-    mutationType: number
-    relatedTransactions: {
-        relationType: string
-        relatedTransactionKey: string
-    }[]
-    consumerMessage: {
-        mustRead: boolean
-        cultureName: string
-        title: string
-        plainText: string
-        htmlText: string
-    }
-    order: string
-    issuingCountry: string
-    startRecurrent: boolean
-    recurring: boolean
-    customerName: string
-    payerHash: string
-    paymentKey: string
-}
 
-export class TransactionResponse extends ServiceObject implements Partial<ITransactionResponse> {
-    key?: string
-    additionalParameters?: { additionalParameter: AdditionalParameter[] }
-    amountCredit?: number
-    amountDebit?: number
-    consumerMessage?: {
-        mustRead: boolean
-        cultureName: string
-        title: string
-        plainText: string
-        htmlText: string
-    }
-    currency?: string
-    customParameters?: { list: AdditionalParameter[] }
-    customerName?: string
-    invoice?: string
-    isTest?: boolean
-    issuingCountry?: string
-    mutationType?: number
-    order?: string
-    payerHash?: string
-    paymentKey?: string
-    recurring?: boolean
-    relatedTransactions?: { relationType: string; relatedTransactionKey: string }[]
-    requestErrors?: {
-        channelErrors: {
-            service: string
-            action: string
-            name: string
-            error: string
-            errorMessage: string
-        }[]
-        serviceErrors: { name: string; error: string; errorMessage: string }[]
-        actionErrors: { service: string; name: string; error: string; errorMessage: string }[]
-        parameterErrors: {
-            service: string
-            action: string
-            name: string
-            error: string
-            errorMessage: string
-        }[]
-        customParameterErrors: { name: string; error: string; errorMessage: string }[]
-    }
-    requiredAction?: {
-        redirectURL: string
-        requestedInformation: {
-            name: string
-            dataType: number
-            maxLength: number
-            required: boolean
-            description: string
-        }[]
-        payRemainderDetails: { remainderAmount: number; currency: string; groupTransaction: string }
-        name: string
-        typeDeprecated: number
-    }
-    serviceCode?: string
-    services?: IServiceList[]
-    startRecurrent?: boolean
-    status?: {
-        code: { code: number | string; description: string }
-        subCode: { code: number | string; description: string }
-        dateTime: string
-    }
-    transactionType?: string
+export class TransactionResponse implements ITransactionResponse {
+    AdditionalParameters: { AdditionalParameter: AdditionalParameter[] };
+    AmountCredit: number;
+    AmountDebit: number;
+    ConsumerMessage: { MustRead: boolean; CultureName: string; Title: string; PlainText: string; HtmlText: string };
+    Currency: string;
+    CustomParameters: { List: AdditionalParameter[] };
+    CustomerName: string;
+    Invoice: string;
+    IsTest: boolean;
+    IssuingCountry: string;
+    Key: string;
+    MutationType: number;
+    Order: string;
+    PayerHash: string;
+    PaymentKey: string;
+    Recurring: boolean;
+    RelatedTransactions: { RelationType: string; RelatedTransactionKey: string }[];
+    RequestErrors: {
+        ChannelErrors: { Service: string; Action: string; Name: string; Error: string; ErrorMessage: string }[];
+        ServiceErrors: { Name: string; Error: string; ErrorMessage: string }[];
+        ActionErrors: { Service: string; Name: string; Error: string; ErrorMessage: string }[];
+        ParameterErrors: { Service: string; Action: string; Name: string; Error: string; ErrorMessage: string }[];
+        CustomParameterErrors: { Name: string; Error: string; ErrorMessage: string }[]
+    };
+    RequiredAction: { RedirectURL: string; RequestedInformation: { Name: string; DataType: number; MaxLength: number; Required: boolean; Description: string }[]; PayRemainderDetails: { RemainderAmount: number; Currency: string; GroupTransaction: string }; Name: string; TypeDeprecated: number };
+    ServiceCode: string;
+    Services: IServiceList[];
+    StartRecurrent: boolean;
+    Status: { Code: { Code: number | string; Description: string }; SubCode: { Code: number | string; Description: string }; DateTime: string };
+    TransactionType: string;
+
 
     constructor(data: ITransactionResponse) {
-        super(data)
+        this.Key = data.Key
+        this.PaymentKey = data.PaymentKey
+        this.PayerHash = data.PayerHash
+        this.CustomerName = data.CustomerName
+        this.Recurring = data.Recurring
+        this.StartRecurrent = data.StartRecurrent
+        this.Services = data.Services
+        this.CustomParameters = data.CustomParameters
+        this.AdditionalParameters = data.AdditionalParameters
+        this.RequestErrors = data.RequestErrors
+        this.Invoice = data.Invoice
+        this.ServiceCode = data.ServiceCode
+        this.IsTest = data.IsTest
+        this.Currency = data.Currency
+        this.AmountDebit = data.AmountDebit
+        this.AmountCredit = data.AmountCredit
+        this.TransactionType = data.TransactionType
+        this.MutationType = data.MutationType
+        this.RelatedTransactions = data.RelatedTransactions
+        this.ConsumerMessage = data.ConsumerMessage
+        this.Order = data.Order
+        this.IssuingCountry = data.IssuingCountry
+        this.Status = data.Status
+        this.RequiredAction = data.RequiredAction
     }
     getStatusCode() {
-        return this.findParameter('code')?.find('code')
+        return this.Status.Code.Code
     }
     getSubStatusCode() {
-        return this.findParameter('subCode')?.find('code')
+        return this.Status.SubCode.Code
     }
     isSuccess() {
         return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_SUCCESS
@@ -204,61 +99,64 @@ export class TransactionResponse extends ServiceObject implements Partial<ITrans
         return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_VALIDATION_FAILURE
     }
     hasRedirect() {
-        return this.find('redirectURL') && this.find('requiredAction')?.find('name') === 'Redirect'
+        return this.RequiredAction?.RedirectURL.length > 0 && this.RequiredAction?.Name === 'Redirect'
     }
     getRedirectUrl() {
-        return this.hasRedirect() ? this.find('redirectURL') : ''
+        if(this.hasRedirect())
+            return this.RequiredAction?.RedirectURL
+        return ''
     }
     getServices() {
-        return this.find('services')
+        return this.Services
     }
     getMethod() {
-        return this.getServices()?.[0].name
+        return this.Services?.[0].Name
     }
     getServiceAction() {
-        return this.getServices()?.[0].action
+        return this.Services?.[0].Action
     }
     getServiceParameters() {
-        let parameters = this.getServices()?.[0].parameters
+        let parameters = this.getServices()?.[0].Parameters
         let data = {}
         if (parameters)
-            for (const key of parameters) {
-                data[parameters[key].name] = parameters[parameters[key].value]
-            }
+            parameters.forEach((param) => {
+                data[param.Name] = param.Value
+            })
         return data
     }
     getCustomParameters() {
-        let customParameters = this.customParameters?.list
+        let customParameters = this.CustomParameters?.List
+        let data = {}
         if (customParameters) {
-            let data = {}
-            for (const param in customParameters) {
-                data[customParameters[param].name] = customParameters[param].value
-            }
-            return data
+            customParameters.forEach((param) => {
+                data[param.Name] = param.Value
+            })
         }
-        return {}
+        return data
     }
     getAdditionalParameters() {
-        let additionalParameters = this.additionalParameters?.additionalParameter
+        let additionalParameters = this.AdditionalParameters?.AdditionalParameter
+        let data = {}
         if (additionalParameters) {
-            let data = {}
-            for (const param in additionalParameters) {
-                data[additionalParameters[param].name] = additionalParameters[param].value
-            }
-            return data
+            additionalParameters.forEach((param) => {
+                data[param.Name] = param.Value
+            })
         }
         return {}
     }
     getTransactionKey() {
-        return this.key
+        return this.Key
     }
     getPaymentKey() {
-        return this.paymentKey
+        return this.PaymentKey
     }
     hasError() {
-        return Object.keys(this.findParameter('requestErrors') || {}).length > 0
-    }
-    find(parameter) {
-        return super.find(firstLowerCase(parameter))
+        return Object.keys(this.RequestErrors).length > 0 && (
+            this.RequestErrors.ChannelErrors.length > 0 ||
+            this.RequestErrors.ServiceErrors.length > 0 ||
+            this.RequestErrors.ActionErrors.length > 0 ||
+            this.RequestErrors.ParameterErrors.length > 0 ||
+            this.RequestErrors.CustomParameterErrors.length > 0
+        )
     }
 }

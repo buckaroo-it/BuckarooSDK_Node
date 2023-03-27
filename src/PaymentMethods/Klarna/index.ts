@@ -12,7 +12,7 @@ class Klarna extends PayablePaymentMethod {
         return super.pay(payload)
     }
     setPayload(payload: IPay) {
-        this.servicesStrategy = Pay
+        this.serviceParametersStrategy = Pay
         super.setPayload(payload)
     }
     refund(payload: RefundPayload) {

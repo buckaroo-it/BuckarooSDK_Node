@@ -1,18 +1,22 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
 
-class Payment extends PayablePaymentMethod {
-    protected _paymentName = 'name'
-    pay(payload?) {
-        return super.pay(payload)
+import PaymentMethod from "../PaymentMethod";
+
+class Idin extends PaymentMethod {
+    protected _paymentName = 'Idin'
+    identify(payload) {
+        return this.dataRequest()
     }
-    refund(payload) {
-        return super.refund(payload)
+    verify(payload) {
+        return this.dataRequest()
+    }
+    login(payload){
+        return this.dataRequest()
     }
 }
 
-let _payment: Payment
-const payment: () => Payment = () => {
-    if (!_payment) _payment = new Payment()
+let _payment: Idin
+const idin: () => Idin = () => {
+    if (!_payment) _payment = new Idin()
     return _payment
 }
-export default payment
+export default idin

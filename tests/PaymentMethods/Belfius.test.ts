@@ -11,7 +11,7 @@ describe('testing methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                console.log(data.find('ParameterErrors') || data.find('Parameters'))
+                
             })
     })
     test('Refund', async () => {
@@ -22,7 +22,7 @@ describe('testing methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                console.log(data.find('ParameterErrors') || data.find('Parameters'))
+                
             })
     })
     test('Specifications', async () => {

@@ -13,7 +13,7 @@ describe('BuckarooWallet methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                console.log(data.find('ParameterErrors') || data.find('Parameters'))
+                
             })
     })
     test('Refund', async () => {
@@ -26,7 +26,7 @@ describe('BuckarooWallet methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                console.log(data.find('ParameterErrors') || data.find('Parameters'))
+                
             })
     })
     test('CancelReservation', async () => {
@@ -37,7 +37,7 @@ describe('BuckarooWallet methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                console.log(data.find('ParameterErrors') || data.find('Parameters'))
+                
             })
     })
     test('deposit', async () => {
@@ -50,7 +50,7 @@ describe('BuckarooWallet methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                console.log(data.find('parameterErrors') || data.find('parameters'))
+                
             })
     })
     test('Withdrawal', async () => {
@@ -63,7 +63,7 @@ describe('BuckarooWallet methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                console.log(data.find('parameterErrors') || data.find('parameters'))
+                
             })
     })
     test('Create Wallet', async () => {
@@ -83,7 +83,7 @@ describe('BuckarooWallet methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                console.log(data.find('ParameterErrors') || data.find('Parameters'))
+                
             })
     })
 })

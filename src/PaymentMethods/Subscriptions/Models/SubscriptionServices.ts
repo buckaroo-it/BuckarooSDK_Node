@@ -6,7 +6,7 @@ import IEmail from '../../../Models/Services/IEmail'
 import ICompany from '../../../Models/Services/ICompany'
 import IDebtor from '../../../Models/Services/IDebtor'
 import { IRatePlan, IRatePlanCharges } from './RatePlan'
-import { ServiceParameters } from '../../../Utils/ServiceParameter'
+import { ServiceParameters } from '../../../Utils/ServiceParameters'
 import { firstUpperCase } from '../../../Utils/Functions'
 import { IConfiguration } from './Configuration'
 

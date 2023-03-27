@@ -1,6 +1,6 @@
 import { ClientIP, Payload } from '../../../Models/ITransaction'
 import IArticle from '../../../Models/Services/IArticle'
-import { ServiceParameters } from '../../../Utils/ServiceParameter'
+import { ServiceParameters } from '../../../Utils/ServiceParameters'
 import IPhone from '../../../Models/Services/IPhone'
 import ICompany from '../../../Models/Services/ICompany'
 import IPerson from '../../../Models/Services/IPerson'

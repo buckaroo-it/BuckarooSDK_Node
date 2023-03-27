@@ -9,7 +9,7 @@ class Subscriptions extends PaymentMethod {
         this.action = 'CreateSubscription'
 
         this.setRequiredFields()
-        this.servicesStrategy = subscriptionServices
+        this.serviceParametersStrategy = subscriptionServices
         this.setServiceList(payload)
 
         return this.dataRequest()
@@ -18,14 +18,14 @@ class Subscriptions extends PaymentMethod {
         this.action = 'UpdateSubscription'
 
         this.setRequiredFields()
-        this.servicesStrategy = subscriptionServices
+        this.serviceParametersStrategy = subscriptionServices
         this.setServiceList(payload)
 
         return this.dataRequest()
     }
     createCombined(payload: ISubscription) {
         this.action = 'CreateCombinedSubscription'
-        this.servicesStrategy = subscriptionServices
+        this.serviceParametersStrategy = subscriptionServices
         this.setServiceList(payload)
 
         return this
@@ -34,7 +34,7 @@ class Subscriptions extends PaymentMethod {
         this.action = 'UpdateCombinedSubscription'
 
         this.request.setDataKey('startRecurrent', true)
-        this.servicesStrategy = subscriptionServices
+        this.serviceParametersStrategy = subscriptionServices
 
         this.setServiceList(payload)
 

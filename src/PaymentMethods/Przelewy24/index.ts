@@ -6,7 +6,7 @@ class Przelewy24 extends PayablePaymentMethod {
     protected _paymentName = 'Przelewy24'
 
     pay(payload: IPay) {
-        this.servicesStrategy = Pay
+        this.serviceParametersStrategy = Pay
         return super.pay(payload)
     }
     refund(payload: RefundPayload) {

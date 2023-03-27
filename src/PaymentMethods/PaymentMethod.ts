@@ -1,11 +1,14 @@
 import { TransactionRequest } from '../Models/Request'
 import { IConfig } from '../Utils/Types'
 import { buckarooClient } from '../BuckarooClient'
-import { ServiceParameters } from '../Utils/ServiceParameter'
+import { ServiceParameters } from '../Utils/ServiceParameters'
 import { Combinable } from '../Utils/Combinable'
 import { ITransaction } from '../Models/ITransaction'
 import { RequestType } from '../Constants/Endpoints'
 import { TransactionResponse } from '../Models/TransactionResponse'
+import {IServiceList} from "../Models/ServiceList";
+import {IParameter} from "../Models/Parameters";
+import {IPProtocolVersion} from "../Constants/IPProtocolVersion";
 
 export default abstract class PaymentMethod {
     protected readonly _requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
@@ -16,12 +19,8 @@ export default abstract class PaymentMethod {
     protected _serviceVersion = 0
     protected request: TransactionRequest = new TransactionRequest()
     private _action = ''
-    protected serviceParameters: { action?: string; name?: string; version?: number; parameters? } =
-        {}
+    protected serviceParameters: IServiceList = {}
 
-    protected servicesStrategy: (data) => object = (data) => {
-        return data
-    }
 
     get paymentName(): string {
         return this._paymentName
@@ -37,32 +36,47 @@ export default abstract class PaymentMethod {
     }
     protected set action(value: string) {
         this._action = value
-        this.serviceParameters.action = value
     }
+    getRequestData(){
+        return this.request.getData()
+    }
+
+    public setRequest(data: ITransaction) {
+
+        this.setBasicParameters(data)
+
+        this.setClientIp()
+
+        this.setRequiredFields()
+
+        this.setAdditionalParameters()
+
+        this.setServiceList(data)
+    }
+
     protected setServiceList(serviceList: object) {
-        //Handle service list Parameters
-        if (Object.keys(serviceList).length > 0) {
-            this.serviceParameters.parameters = ServiceParameters.toServiceParameterList(
-                this.servicesStrategy(serviceList)
-            )
+
+        this.serviceParameters = {
+            Action: this.action,
+            Name: this.paymentName,
+            Version: this.serviceVersion,
         }
 
-        this.serviceParameters.action = this.action
-        this.serviceParameters.name = this.paymentName
-        this.serviceParameters.version = this.serviceVersion
+        if (Object.keys(serviceList).length > 0) {
+            this.serviceParameters.Parameters = this.serviceParametersStrategy(serviceList)
 
+        }
         this.request.addServices(this.serviceParameters)
 
-        //Reset service Strategy
-        this.servicesStrategy = (data) => data
     }
-    protected setAdditionalParameters(additionalParameters?: AdditionalParameters) {
+    protected setAdditionalParameters() {
+        let additionalParameters = this.getRequestData().additionalParameters
         if (additionalParameters) {
             this.request.setDataKey('additionalParameters', {
-                additionalParameter: Object.keys(additionalParameters).map((key) => {
+                additionalParameter: Object.keys(additionalParameters).map((key,value) => {
                     return {
-                        name: key,
-                        value: additionalParameters[key] ?? ''
+                        Name: key,
+                        Value: value || ''
                     }
                 })
             })
@@ -71,50 +85,49 @@ export default abstract class PaymentMethod {
 
     protected setRequiredFields() {
         for (const requiredField of this._requiredFields) {
-            if (!this.request.getData()[requiredField])
+            if (!this.getRequestData()[requiredField])
                 this.request.setDataKey(requiredField, buckarooClient().getConfig()[requiredField])
         }
     }
     protected transactionRequest() {
-        return buckarooClient().transactionRequest(this.request.getData())
+        return buckarooClient()
+            .transactionRequest(this.getRequestData())
+            .then((response) => {
+                return new TransactionResponse(response)
+            })
     }
     protected dataRequest() {
         return buckarooClient()
-            .dataRequest(this.request.getData())
+            .dataRequest(this.getRequestData())
             .then((response) => {
                 return new TransactionResponse(response)
             })
     }
     public combine(method: Combinable) {
-        const data = method['request'].getData().services
-        if (data?.ServiceList) {
-            for (const serviceList of data.ServiceList) {
-                if (!this.request.getData().services?.ServiceList.includes(serviceList)) {
-                    this.request.addServices(serviceList)
-                }
+        const data = method.getRequestData()
+        const services = {...this.getRequestData().services}
+        if (data) {
+            Object.assign(this.getRequestData(), data)
+            if (services?.ServiceList) {
+                this.request.addServices(services.ServiceList[0])
             }
         }
         return this
     }
-    public setRequest(data: ITransaction) {
-        //Set the Payload
-        this.request.setData(this.takeBasicParameters(data))
-
-        //Set required Fields
-        this.setRequiredFields()
-
-        //Set Services
-        this.setServiceList(data)
-
-        //Set setAdditionalParameters
-        this.setAdditionalParameters()
+    public setClientIp() {
+        let ip = this.getRequestData().clientIP
+        if(typeof ip === 'string'){
+            this.request.setDataKey('clientIP' ,{
+                type: IPProtocolVersion.getVersion(ip),
+                address: ip
+            })
+        }
     }
-
     public specification(type?: RequestType) {
         return buckarooClient().specification(this.paymentName, this.serviceVersion, type)
     }
 
-    private takeBasicParameters(data) {
+    private setBasicParameters(data) {
         let basicParametersData = {}
         for (const basicParameterDataKey in data) {
             if (this.request.basicParameters[basicParameterDataKey]) {
@@ -122,9 +135,9 @@ export default abstract class PaymentMethod {
                 delete data[basicParameterDataKey]
             }
         }
-        return basicParametersData
+        this.request.setData(basicParametersData)
     }
-}
-export declare interface AdditionalParameters {
-    additionalParameters?: Array<any>
+    public serviceParametersStrategy(data){
+        return  ServiceParameters.formatData(data)
+    }
 }

@@ -18,7 +18,7 @@ class Paypal extends PayablePaymentMethod {
     }
     extraInfo(payload: IExtraInfo) {
         this.action = 'Pay,ExtraInfo'
-        this.servicesStrategy = extraInfo
+        this.serviceParametersStrategy = extraInfo
         return super.transactionRequest(payload)
     }
 }

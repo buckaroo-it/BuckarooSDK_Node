@@ -5,7 +5,7 @@ import IAddress from '../../../Models/Services/IAddress'
 import IPerson from '../../../Models/Services/IPerson'
 import ICompany from '../../../Models/Services/ICompany'
 import { CreditArticle, ICreditArticle } from './Article'
-import { ServiceParameters } from '../../../Utils/ServiceParameter'
+import { ServiceParameters } from '../../../Utils/ServiceParameters'
 import { ITransaction } from '../../../Models/ITransaction'
 
 export interface IInvoice extends ITransaction {

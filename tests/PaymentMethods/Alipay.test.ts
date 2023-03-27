@@ -3,7 +3,7 @@ import Alipay from '../../src/PaymentMethods/Alipay'
 
 const method = Alipay()
 
-describe('testing methods', () => {
+describe('Alipay methods', () => {
     test('Pay Simple Payload', async () => {
         await method
             .pay({
@@ -12,7 +12,7 @@ describe('testing methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                console.log(data.find('ParameterErrors') || data.find('Parameters'))
+                
             })
     })
     test('Refund', async () => {
@@ -23,7 +23,7 @@ describe('testing methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                console.log(data.find('ParameterErrors') || data.find('Parameters'))
+                
             })
     })
     test('Specifications', async () => {

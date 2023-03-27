@@ -10,7 +10,7 @@ class SEPA extends PayablePaymentMethod {
     protected _serviceVersion = 1
 
     pay(payload: IPay) {
-        this.servicesStrategy = Pay
+        this.serviceParametersStrategy = Pay
         return super.pay(payload)
     }
     refund(payload: RefundPayload) {
@@ -18,7 +18,7 @@ class SEPA extends PayablePaymentMethod {
     }
     authorize(payload: IPay) {
         this.action = 'Authorize'
-        this.servicesStrategy = Pay
+        this.serviceParametersStrategy = Pay
         return super.transactionRequest(payload)
     }
     payRecurrent(payload: Pick<IPay, 'collectDate'> & ICapture) {
@@ -27,7 +27,7 @@ class SEPA extends PayablePaymentMethod {
     }
     extraInfo(payload: IExtraInfo) {
         this.action = 'Pay,ExtraInfo'
-        this.servicesStrategy = ExtraInfo
+        this.serviceParametersStrategy = ExtraInfo
         return super.transactionRequest(payload)
     }
     payWithEmandate(payload: IEmandate) {

@@ -8,13 +8,15 @@ const hmacHeader = (method: HttpMethods, url: string = '', data: string | object
     let base64Data = data
     let nonce = 'nonce_' + Math.floor(Math.random() * 9999999 + 1)
     let time = String(Math.round(Date.now() / 1000))
+    let formatUrl = new URL(url)
     if (url) {
+        url = formatUrl.host + formatUrl.pathname + formatUrl.search
         url = url.replace(/^[^:/.]*[:/]+/i, '')
         url = encodeURIComponent(url).toLowerCase() || ''
     }
     if (base64Data) {
         if (typeof base64Data === 'object') {
-            base64Data = JSON.stringify(data)
+            base64Data = JSON.stringify(base64Data)
         }
         base64Data = Base64.stringify(md5(base64Data))
     }
@@ -24,7 +26,7 @@ const hmacHeader = (method: HttpMethods, url: string = '', data: string | object
     return (
         `hmac ` +
         `${buckarooClient().getCredentials().websiteKey}:${Base64.stringify(
-            hmacSHA256(hashString, buckarooClient().getCredentials().secretKey ?? '')
+            hmacSHA256(hashString, buckarooClient().getCredentials().secretKey)
         )}:${nonce}:${time}`
     )
 }

@@ -12,7 +12,7 @@ describe('testing methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                console.log(data.find('ParameterErrors') || data.find('Parameters'))
+                
             })
     })
     test('Refund', async () => {
@@ -23,7 +23,7 @@ describe('testing methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                console.log(data.find('ParameterErrors') || data.find('Parameters'))
+                
             })
     })
     test('GetBalance', async () => {
@@ -40,8 +40,8 @@ describe('testing methods', () => {
             .createApplication({
                 creationBalance: 12,
                 usageType: 1,
-                validFrom: new Date(),
-                validUntil: new Date()
+                validFrom: '2021-01-01',
+                validUntil: '2024-01-01'
             })
             .then((data) => {
                 expect(data).toBeDefined()
@@ -55,7 +55,7 @@ describe('testing methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                console.log(data.find('ParameterErrors') || data.find('Parameters'))
+                
             })
     })
 })

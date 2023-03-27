@@ -7,7 +7,7 @@ class Surepay extends PaymentMethod {
 
     verify(payload: IVerify) {
         this.action = 'verify'
-        this.servicesStrategy = Verify
+        this.serviceParametersStrategy = Verify
         this.setRequest(payload)
         return this.dataRequest()
     }

@@ -1,4 +1,4 @@
-import { ServiceParameters } from '../../../Utils/ServiceParameter'
+import { ServiceParameters } from '../../../Utils/ServiceParameters'
 
 export interface IMultiInfoInvoice {
     invoice: string

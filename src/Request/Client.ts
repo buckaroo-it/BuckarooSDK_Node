@@ -7,13 +7,13 @@ import PaymentMethod from '../PaymentMethods/PaymentMethod'
 import headers from './Headers'
 import { ITransaction } from '../Models/ITransaction'
 import { IConfig, ICredentials } from '../Utils/Types'
-import { Methods } from '../Utils/PaymentMethods'
+import {SpecificationResponse} from "../Models/SpecificationResponse";
 
-export default class Client extends Methods {
+export default class Client {
     private static _credentials: ICredentials
     private static _config: IConfig
     private constructor() {
-        super()
+        // super()
     }
     static initialize(credentials, config) {
         if (!config || !credentials)
@@ -46,7 +46,7 @@ export default class Client extends Methods {
 
     private getEndpoint(path: string) {
         const baseUrl =
-            buckarooClient().getConfig()?.mode === 'live' ? Endpoints.LIVE : Endpoints.TEST
+            buckarooClient().getConfig().mode === 'live' ? Endpoints.LIVE : Endpoints.TEST
         return baseUrl + path
     }
 
@@ -93,7 +93,9 @@ export default class Client extends Methods {
     }
     specification(paymentName: string, serviceVersion = 0, type?: RequestType) {
         const endPoint = this.getSpecificationUrl(paymentName, serviceVersion, type)
-        return this.get(endPoint)
+        return this.get(endPoint).then((res) => {
+            return new SpecificationResponse(res)
+        })
     }
     specifications(
         paymentMethods: PaymentMethod[] | { name: string; version: Number }[],
