@@ -86,23 +86,28 @@ export class SpecificationResponse implements Services {
         this.SupportedCurrencies = data.SupportedCurrencies
         this.Version = data.Version
     }
-    getActionRequestParameters(actionName: string): any|undefined {
+    getActionRequestParameters(actionName: string): any | undefined {
         actionName = firstUpperCase(actionName)
-
-
-        return this.Actions.find(action => action.Name === actionName)?.RequestParameters.map(parameter => {
+        let action = this.Actions.find(action => action.Name === actionName)?.RequestParameters.map(parameter => {
             return {
                 Name: parameter.Name,
                 Group: parameter.Group,
                 Required: parameter.Required,
                 PossibleValues: parameter.ListItemDescriptions?.map(item => item.Value).join(' | '),
             }
-        }).sort((a, b) => a.Name.localeCompare(b.Name)).reduce((group, product) => {
+        })
+            .sort((a, b) => a.Name.localeCompare(b.Name)).reduce((group, product) => {
             const { Group } = product;
             group[Group] = group[Group] ?? [];
-            group[Group].push(product);
+            let item = group[Group].find(item => item.Name === product.Name)
+            if(!item){
+                group[Group].push(product);
+            }else if(product.Required){
+                item.Required = true
+            }
             return group;
         }, {});
+        return action
     }
 
 }

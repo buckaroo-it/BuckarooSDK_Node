@@ -36,33 +36,32 @@ export interface ISubscription {
     ratePlans?: IRatePlan
     ratePlanCharges?: IRatePlanCharges
 }
-export const subscriptionServices = (data: ISubscription) => {
+export const services = (data: ISubscription) => {
     let serviceData = new ServiceParameters(data)
 
-    serviceData.setMultipleGroupType({
+    serviceData.setGroupTypes({
         debtor: 'Debtor',
         person: 'Person',
         email: 'Email',
         address: 'Address',
         configuration: 'AddConfiguration'
     })
-    if (serviceData.company) {
-        serviceData.company.setParameterKeys({
+    serviceData.setKeys({
+        company: {
             companyName: 'Name'
-        })
-    }
-    if (serviceData.ratePlans) {
-        const types = Object.keys(serviceData.ratePlans)
-        for (const type of types) {
-            serviceData.ratePlans[type].groupType = firstUpperCase(type) + 'RatePlan'
         }
-    }
+    })
+    serviceData.setGroupTypes({
+        add: 'AddRatePlan',
+        update: 'UpdateRatePlan',
+        disable: 'DisableRatePlan'
+    }, serviceData.data.ratePlans)
 
-    if (serviceData.ratePlanCharges) {
-        const types = Object.keys(serviceData.ratePlanCharges)
-        for (const type of types) {
-            serviceData.ratePlanCharges[type].groupType = firstUpperCase(type) + 'RatePlanCharge'
-        }
-    }
-    return serviceData
+    serviceData.setGroupTypes({
+        add: 'AddRatePlanCharge',
+        update: 'UpdateRatePlanCharge',
+        disable: 'DisableRatePlanCharge'
+    }, serviceData.data.ratePlanCharges)
+
+    return serviceData.data
 }

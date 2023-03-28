@@ -14,28 +14,25 @@ class Bancontact extends PayablePaymentMethod {
     }
     authenticate(payload: IPay) {
         this.action = 'Authenticate'
-        return super.transactionRequest(payload)
+        return this.transactionRequest(payload)
     }
     payOneClick(payload: IPayOneClick) {
         this.action = 'PayOneClick'
-        payload.invoice = payload.invoice || uniqid()
-        this.setRequest(payload)
-        return super.transactionRequest()
+        this.request.setDataKey('invoice', payload.invoice || uniqid())
+        return this.transactionRequest(payload)
     }
     payEncrypted(payload: IPayEncrypted) {
         this.action = 'PayEncrypted'
-        return super.transactionRequest(payload)
+        return this.transactionRequest(payload)
     }
     completePayment(payload: IPayComplete) {
         this.action = 'CompletePayment'
-        this.setRequest(payload)
-        return this.dataRequest()
+        return this.dataRequest(payload)
     }
     payRecurring(payload: IPayOneClick) {
         this.action = 'PayRecurring'
-        payload.invoice = payload.invoice || uniqid()
-        this.setRequest(payload)
-        return super.transactionRequest()
+        this.request.setDataKey('invoice', payload.invoice || uniqid())
+        return this.transactionRequest(payload)
     }
 }
 

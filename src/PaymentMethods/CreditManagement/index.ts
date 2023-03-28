@@ -14,105 +14,79 @@ class CreditManagement extends PaymentMethod {
     protected _requiredFields: Array<keyof IConfig> = ['currency']
 
     protected _serviceVersion = 1
+    serviceParametersStrategy(data) {
+        return invoice(data)
+    }
 
     createInvoice(payload: IInvoice): Promise<any> {
         this.action = 'CreateInvoice'
         payload.invoice = payload.invoice || uniqid()
-        this.serviceParametersStrategy = invoice
-        this.setRequest(payload)
-
-        return this.dataRequest()
+        return this.dataRequest(payload)
     }
     createCombinedInvoice(payload: IInvoice) {
         this.action = 'CreateCombinedInvoice'
 
         payload.invoice = payload.invoice || uniqid()
-        this.serviceParametersStrategy = invoice
-
-        this.setServiceList(payload)
-
+        this.setRequest(payload)
         return this
     }
     createCreditNote(payload: ICreditNote) {
         this.action = 'CreateCreditNote'
 
-        this.setRequest(payload)
-
-        return this.dataRequest()
+        return this.dataRequest(payload)
     }
     addOrUpdateDebtor(payload: IDebtor) {
         this.action = 'AddOrUpdateDebtor'
 
-        this.serviceParametersStrategy = debtor
-        this.setRequest(payload)
-
-        return this.dataRequest()
+        return this.dataRequest(debtor(payload))
     }
     createPaymentPlan(payload: IPaymentPlan) {
         this.action = 'CreatePaymentPlan'
 
-        this.setRequest(payload)
-
-        return this.dataRequest()
+        return this.dataRequest(payload)
     }
     terminatePaymentPlan(payload: Required<Pick<IPaymentPlan, 'includedInvoiceKey'>>) {
         this.action = 'TerminatePaymentPlan'
 
-        this.setRequest(<IPaymentPlan>payload)
-
-        return this.dataRequest()
+        return this.dataRequest(payload)
     }
     pauseInvoice(payload: Required<Pick<ITransaction, 'invoice'>>) {
         this.action = 'PauseInvoice'
 
-        this.setRequest(payload)
-
-        return this.dataRequest()
+        return this.dataRequest(payload)
     }
     unpauseInvoice(payload: Required<Pick<ITransaction, 'invoice'>>) {
         this.action = 'UnpauseInvoice'
 
-        this.setRequest(payload)
-
-        return this.dataRequest()
+        return this.dataRequest(payload)
     }
 
     invoiceInfo(payload: IMultiInfoInvoice) {
         this.action = 'InvoiceInfo'
-        this.serviceParametersStrategy = multiInfoInvoice
-        this.setRequest(payload)
 
-        return this.dataRequest()
+        return this.dataRequest(multiInfoInvoice(payload))
     }
     debtorInfo(payload: Required<Pick<IInvoice, 'debtor'>>) {
         this.action = 'DebtorInfo'
-        this.serviceParametersStrategy = debtorInfo
-        this.setRequest(<ITransaction>payload)
 
-        return this.dataRequest()
+        return this.dataRequest(debtorInfo(payload))
     }
 
     addOrUpdateProductLines(payload: IAddOrUpdateProductLines) {
         this.action = 'AddOrUpdateProductLines'
-        this.serviceParametersStrategy = AddOrUpdateProductLines
-        this.setRequest(payload)
-        return this.dataRequest()
+        return this.dataRequest(AddOrUpdateProductLines(payload))
     }
 
     resumeDebtorFile(payload: { debtorFileGuid: string }) {
         this.action = 'ResumeDebtorFile'
 
-        this.setServiceList(payload)
-
-        return this.dataRequest()
+        return this.dataRequest(payload)
     }
 
     pauseDebtorFile(payload: { debtorFileGuid: string }) {
         this.action = 'PauseDebtorFile'
 
-        this.setServiceList(payload)
-
-        return this.dataRequest()
+        return this.dataRequest(payload)
     }
 }
 let _creditManagement: CreditManagement

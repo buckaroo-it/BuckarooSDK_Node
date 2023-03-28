@@ -1,90 +1,58 @@
-import { subscriptionServices, ISubscription } from './Models/SubscriptionServices'
+import { services, ISubscription } from './Models/Services'
 import { IConfig } from '../../Utils/Types'
 import PaymentMethod from '../PaymentMethod'
+import {ITransaction} from "../../Models/ITransaction";
 class Subscriptions extends PaymentMethod {
     protected _paymentName = 'Subscriptions'
     protected _requiredFields: Array<keyof IConfig> = ['currency']
 
+    serviceParametersStrategy(data): any {
+        return services(data)
+    }
+
     create(payload: ISubscription): Promise<any> {
         this.action = 'CreateSubscription'
-
-        this.setRequiredFields()
-        this.serviceParametersStrategy = subscriptionServices
-        this.setServiceList(payload)
-
-        return this.dataRequest()
+        return this.dataRequest(payload)
     }
     update(payload: ISubscription) {
         this.action = 'UpdateSubscription'
-
-        this.setRequiredFields()
-        this.serviceParametersStrategy = subscriptionServices
-        this.setServiceList(payload)
-
-        return this.dataRequest()
+        return this.dataRequest(payload)
     }
     createCombined(payload: ISubscription) {
         this.action = 'CreateCombinedSubscription'
-        this.serviceParametersStrategy = subscriptionServices
-        this.setServiceList(payload)
-
+        this.setRequest(<ITransaction>payload)
         return this
     }
     updateCombined(payload: ISubscription) {
         this.action = 'UpdateCombinedSubscription'
-
         this.request.setDataKey('startRecurrent', true)
-        this.serviceParametersStrategy = subscriptionServices
-
-        this.setServiceList(payload)
-
+        this.setRequest(<ITransaction>payload)
         return this
     }
     stop(payload: { subscriptionGuid: string }) {
         this.action = 'StopSubscription'
-
-        this.setRequiredFields()
-
-        this.setServiceList(payload)
-
-        return this.dataRequest()
+        return this.dataRequest(payload)
     }
     info(payload: { subscriptionGuid: string }) {
         this.action = 'SubscriptionInfo'
 
-        this.setRequiredFields()
-
-        this.setServiceList(payload)
-
-        return this.dataRequest()
+        return this.dataRequest(payload)
     }
     deletePaymentConfig(payload: { subscriptionGuid: string }) {
         this.action = 'DeletePaymentConfiguration'
 
-        this.setRequiredFields()
-
-        this.setServiceList(payload)
-
-        return this.dataRequest()
+        return this.dataRequest(payload)
     }
 
     pause(payload: { subscriptionGuid: string; resumeDate: string }) {
         this.action = 'PauseSubscription'
 
-        this.setRequiredFields()
-
-        this.setServiceList(payload)
-
-        return this.dataRequest()
+        return this.dataRequest(payload)
     }
     resume(payload: { subscriptionGuid: string; resumeDate: string }) {
         this.action = 'ResumeSubscription'
 
-        this.setRequiredFields()
-
-        this.setServiceList(payload)
-
-        return this.dataRequest()
+        return this.dataRequest(payload)
     }
 }
 let _subscriptions: Subscriptions

@@ -10,11 +10,13 @@ export declare interface IPay {
     customer: IPerson
 }
 export const Pay = (data) => {
-    let costumer = new ServiceParameters(data.customer)
-    costumer.setParameterKeys({
-        gender: 'CustomerGender',
-        firstName: 'CustomerFirstName',
-        lastName: 'CustomerLastName',
+    let costumer = new ServiceParameters(data)
+    costumer.setKeys({
+        customer:{
+            gender: 'CustomerGender',
+            firstName: 'CustomerFirstName',
+            lastName: 'CustomerLastName',
+        },
         email: 'CustomerEmail'
     })
     return {

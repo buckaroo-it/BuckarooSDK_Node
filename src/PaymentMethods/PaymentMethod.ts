@@ -63,8 +63,7 @@ export default abstract class PaymentMethod {
         }
 
         if (Object.keys(serviceList).length > 0) {
-            this.serviceParameters.Parameters = this.serviceParametersStrategy(serviceList)
-
+            this.serviceParameters.Parameters = this.formatServiceParameters(serviceList)
         }
         this.request.addServices(this.serviceParameters)
 
@@ -89,14 +88,18 @@ export default abstract class PaymentMethod {
                 this.request.setDataKey(requiredField, buckarooClient().getConfig()[requiredField])
         }
     }
-    protected transactionRequest() {
+    protected transactionRequest(requestData: ITransaction) {
+        this.setRequest(requestData)
+
         return buckarooClient()
             .transactionRequest(this.getRequestData())
             .then((response) => {
                 return new TransactionResponse(response)
             })
     }
-    protected dataRequest() {
+    protected dataRequest(requestData) {
+        this.setRequest(requestData)
+
         return buckarooClient()
             .dataRequest(this.getRequestData())
             .then((response) => {
@@ -138,6 +141,9 @@ export default abstract class PaymentMethod {
         this.request.setData(basicParametersData)
     }
     public serviceParametersStrategy(data){
-        return  ServiceParameters.formatData(data)
+        return data
+    }
+    public formatServiceParameters(data){
+        return ServiceParameters.formatData(this.serviceParametersStrategy(data))
     }
 }

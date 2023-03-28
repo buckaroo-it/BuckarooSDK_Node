@@ -22,8 +22,10 @@ export interface IExtraInfo extends Payload {
 }
 export const ExtraInfo = (data: IExtraInfo) => {
     let address = new ServiceParameters(data.address)
-    address.setParameterKeys({
-        houseNumberAdditional: 'HouseNumberSuffix'
+    address.setKeys({
+        address:{
+            houseNumberAdditional: 'HouseNumberSuffix'
+        }
     })
     return {
         ...Pay(<IPay>data),

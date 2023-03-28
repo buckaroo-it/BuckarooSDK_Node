@@ -12,19 +12,24 @@ export interface IDebtor extends IInvoice {
 
     faxUnreachable?: boolean
 }
-export const debtor = (data: ServiceParameters) => {
-    invoice(data)
-    data.setGroupType('addressUnreachable', 'Address')
-    data.setGroupType('emailUnreachable', 'Email')
-    data.setGroupType('mobileUnreachable', 'Phone')
-    data.setGroupType('landlineUnreachable', 'Phone')
-    data.setGroupType('faxUnreachable', 'Phone')
-
-    return data
+export const debtor = (data:IDebtor) => {
+    const debtorService = new ServiceParameters(data)
+    debtorService.setGroupTypes({
+        addressUnreachable: 'Address',
+        emailUnreachable: 'Email',
+        mobileUnreachable: 'Phone',
+        landlineUnreachable: 'Phone',
+        faxUnreachable: 'Phone'
+    })
+    return debtorService.data
 }
 
-export const debtorInfo = (data: IDebtor) => {
+export const debtorInfo = (data: Pick<IDebtor,'debtor'>) => {
     const services = new ServiceParameters(data)
-    services.setGroupType('debtor', 'debtor')
-    return services
+    services.setKeys({
+        debtor: {
+            code: 'debtorCode'
+        }
+    })
+    return services.data
 }

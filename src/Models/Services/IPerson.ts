@@ -1,16 +1,17 @@
 import Gender from '../../Constants/Gender'
+import RecipientCategory from "../../Constants/RecipientCategory";
 
 export default interface IPerson {
-    category?: string
-    gender?: Gender
+    category: RecipientCategory
+    gender: Gender
     culture?: string
-    careOf?: string
-    title?: string
+    careOf: string
+    title: string
     initials?: string
-    name?: string
-    firstName?: string
+    name: string
+    firstName: string
     lastNamePrefix?: string
-    lastName?: string
+    lastName: string
     birthDate?: string
-    placeOfBirth?: string
+    placeOfBirth: string
 }

@@ -1,13 +1,13 @@
 import { IAfterPayArticle } from './Article'
-import { Customer } from "./Customer";
 import { Payload } from '../../../Models/ITransaction'
 import { IPAddress } from '../../../Utils/Types'
 import { ServiceParameters } from '../../../Utils/ServiceParameters'
+import {IBillingRecipient, IShippingRecipient} from "./Recipient";
 
 export interface IPay extends Payload {
     clientIP: IPAddress | string
-    billing: Customer
-    shipping?: Customer
+    billing: IBillingRecipient
+    shipping?: IShippingRecipient
     articles: IAfterPayArticle[]
     bankAccount?: string
     bankCode?: string
@@ -19,6 +19,7 @@ export interface IPay extends Payload {
 
 export const Services = (data:IPay) => {
     const services = new ServiceParameters(data)
+
     if(services.data.billing){
         services.data.shipping = services.data.shipping || {...services.data.billing}
     }
@@ -28,10 +29,29 @@ export const Services = (data:IPay) => {
         articles:'Article'
     })
     services.setCountable(['articles'])
+
+    let customerKeys = {
+        address:{
+            houseNumber: "streetNumber",
+            houseNumberAdditional: "streetNumberAdditional",
+            zipcode: "postalCode"
+        },
+        recipient:{
+            gender:"salutation",
+            title: "salutation",
+            chamberOfCommerce: "identificationNumber"
+        },
+        phone:{
+            landline: "phone",
+            mobile: "mobilePhone"
+        }
+    }
     services.setKeys({
         articles:{
             price:'grossUnitPrice',
-        }
+        },
+        billing:customerKeys,
+        shipping:customerKeys
     })
 
     return services.data

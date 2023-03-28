@@ -1,3 +1,3 @@
-export default interface IEmail {
-    email: string
-}
+
+type IEmail = string
+export default IEmail

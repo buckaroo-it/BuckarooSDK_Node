@@ -16,9 +16,7 @@ export abstract class PayablePaymentMethod extends PaymentMethod {
         payload.invoice = payload.invoice || uniqid()
         payload.order = payload.order || uniqid()
 
-        this.setRequest(payload)
-
-        return this.transactionRequest()
+        return this.transactionRequest(payload)
     }
     pay(payload: Payload) {
         this.action = 'Pay'

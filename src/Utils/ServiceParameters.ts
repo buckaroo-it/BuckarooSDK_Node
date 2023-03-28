@@ -1,19 +1,22 @@
 import {IParameter} from "../Models/Parameters";
 import {firstUpperCase} from "./Functions";
 
+type keys = {[key: string]: string}
+
+type keyLoop = {[key: string]:  keyLoop | string }
 
 export class ServiceParameters {
     data: any
     constructor(data) {
         this.data = {...data}
     }
-    setGroupTypes(groupTypes:{[key: string]: string }){
+    setGroupTypes(groupTypes:keys, data = this.data){
         for (const key in groupTypes) {
-            if (this.data[key]) {
-                if (!(this.data[key] instanceof Object)) {
-                    this.data[key] = {[key]: this.data[key]}
+            if (data[key]) {
+                if (!(data[key] instanceof Object)) {
+                    data[key] = {[key]: data[key]}
                 }
-                this.data[key].groupType = () => groupTypes[key]
+                data[key].groupType = () => groupTypes[key]
             }
         }
     }
@@ -36,37 +39,33 @@ export class ServiceParameters {
             }
         }
     }
-    setKeys( keys:{[key: string]: string | {[key: string]: string }} , data = this.data){
+    setKey(key:string,newKey:string,data:object = this.data){
+        if (Array.isArray(data)) {
+            data.forEach(item => {
+                delete Object.assign(item, {[<string>newKey]: item[key]})[key]
+            })
+        }else {
+            delete Object.assign(data, {[newKey]: data[key]})[key]
+        }
+    }
+    setKeys( keys:keyLoop , data = this.data){
         for (const key in keys) {
-            if (data[key]) {
-                if (typeof keys[key] === 'object') {
-                    // this.setKeys(keys[key], data[key])
-                    // if (data[key][keys[key]]) {
-                    //     data[key][key] = data[key][keys[key]]
-                    //     delete data[key][keys[key]]
-                    }
-                }else{
-                }
-                if(Array.isArray(data[key])) {
-                    // this.data[key].forEach((item) => {
-                    //     for (const key2 in keys[key]) {
-                    //         if (item[key2]) {
-                    //             item[keys[key][key2]] = item[key2]
-                    //             delete item[key2]
-                    //         }
-                    //     }
-                    // })
-                }else{
-                }
+            let key2 = keys[key]
+            if (typeof key2 !== 'string') {
+                if (!data[key]) return
+                this.setKeys(key2, data[key])
+            } else {
+                this.setKey(key, key2, data)
             }
+        }
     }
     static formatData(data:object,parameters:IParameter[] = [],groupType='',groupId = ''):IParameter[] {
         for (const key in data) {
             if (data[key] instanceof Object) {
-                this.formatData(data[key], parameters,
+                this.formatData(Array.isArray(data[key])? {...data[key]} : data[key],
+                    parameters,
                     data[key].groupType ? data[key].groupType() : groupType,
                     data[key].groupId ? data[key].groupId() : groupId)
-
             }else if(typeof data[key] !== 'function') {
                 parameters.push({
                     Name: firstUpperCase(key),

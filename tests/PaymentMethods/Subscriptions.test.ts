@@ -10,9 +10,9 @@ test('Create', async () => {
         .create({
             configurationCode: 'jpu9xccp',
             debtor: {
-                code: 'Vegim Carkaxhija'
+                code: 'John Doe',
             },
-            email: 'vegim@buckaroo.nl',
+            email: 'test@buckaroo.nl',
             person: {
                 firstName: 'John',
                 lastName: 'Do',
@@ -21,7 +21,7 @@ test('Create', async () => {
                 birthDate: '1990-01-01'
             },
             configuration: {
-                name: 'TestVegim'
+                name: 'John'
             },
             ratePlans: {
                 add: {
@@ -62,7 +62,7 @@ test('Create', async () => {
 test('Update', async () => {
     subscription
         .update({
-            email: 'vegim@buckaroo.nl',
+            email: 'test@buckaroo.nl',
             subscriptionGuid: 'FC512FC9CC3A485D8CF3D1804FF6xxxx',
             configurationCode: '9wqe32ew',
             ratePlans: {

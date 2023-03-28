@@ -4,25 +4,33 @@ import IAddress from '../../../Models/Services/IAddress'
 import ICompany from '../../../Models/Services/ICompany'
 import { ServiceParameters } from '../../../Utils/ServiceParameters'
 import RecipientCategory from '../../../Constants/RecipientCategory'
+import IEmail from "../../../Models/Services/IEmail";
 
-export declare interface Person extends IPerson {
-    category: RecipientCategory
-    firstName: string
-    lastName: string
+interface Person extends Omit<IPerson,'culture'|'initials'|'lastNamePrefix'|'placeOfBirth' | 'name'>{
+
+}
+export declare interface AfterPayPerson extends Person {
+    category: RecipientCategory.PERSON
     customerNumber?: string
     identificationNumber?: string
     conversationLanguage?: 'NL' | 'FR' | 'DE' | 'FI'
 }
+declare interface AfterPayCompany extends Person,ICompany {
+    category: RecipientCategory.COMPANY
+}
+interface Address extends Omit<IAddress,'state'>{
+    country: 'NL' | 'BE' | 'DE' | 'AT' | 'FI'
+}
 
 export declare interface IBillingRecipient {
-    recipient: Person | ICompany
-    address: Omit<Required<IAddress>, 'state'>
-    email: string
-    phone: Pick<IPhone, 'mobile'>
+    recipient: AfterPayPerson | AfterPayCompany
+    address: Address
+    email: IEmail
+    phone: Omit<IPhone, 'fax'>
 }
 export declare interface IShippingRecipient {
-    recipient: Person | ICompany
-    address: Omit<Required<IAddress>, 'state'>
-    email: string
-    phone?: Pick<IPhone, 'mobile'>
+    recipient: AfterPayPerson | AfterPayCompany
+    address: Address
+    email: IEmail
+    phone?: Omit<IPhone, 'fax'>
 }

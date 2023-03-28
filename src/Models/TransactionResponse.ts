@@ -31,11 +31,37 @@ export class TransactionResponse implements ITransactionResponse {
         ParameterErrors: { Service: string; Action: string; Name: string; Error: string; ErrorMessage: string }[];
         CustomParameterErrors: { Name: string; Error: string; ErrorMessage: string }[]
     };
-    RequiredAction: { RedirectURL: string; RequestedInformation: { Name: string; DataType: number; MaxLength: number; Required: boolean; Description: string }[]; PayRemainderDetails: { RemainderAmount: number; Currency: string; GroupTransaction: string }; Name: string; TypeDeprecated: number };
+    RequiredAction: {
+        RedirectURL: string;
+        RequestedInformation: {
+            Name: string;
+            DataType: number;
+            MaxLength: number;
+            Required: boolean;
+            Description: string
+        }[];
+        PayRemainderDetails: {
+            RemainderAmount: number;
+            Currency: string;
+            GroupTransaction: string
+        };
+        Name: string;
+        TypeDeprecated: number
+    };
     ServiceCode: string;
     Services: IServiceList[];
     StartRecurrent: boolean;
-    Status: { Code: { Code: number | string; Description: string }; SubCode: { Code: number | string; Description: string }; DateTime: string };
+    Status: {
+        Code: {
+            Code: number | string;
+            Description: string
+        };
+        SubCode: {
+            Code: number | string;
+            Description: string
+        };
+        DateTime: string
+    };
     TransactionType: string;
 
 

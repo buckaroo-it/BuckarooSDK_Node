@@ -1,6 +1,6 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { IPay, Pay } from './Models/Pay'
-import { ICapture, RefundPayload } from '../../Models/ITransaction'
+import {ICapture, ITransaction, RefundPayload} from '../../Models/ITransaction'
 import { ExtraInfo, IExtraInfo } from './Models/ExtraInfo'
 import { IEmandate } from './Models/Emandate'
 import { uniqid } from '../../Utils/Functions'
@@ -27,14 +27,12 @@ class SEPA extends PayablePaymentMethod {
     }
     extraInfo(payload: IExtraInfo) {
         this.action = 'Pay,ExtraInfo'
-        this.serviceParametersStrategy = ExtraInfo
-        return super.transactionRequest(payload)
+        return super.transactionRequest(<ITransaction>ExtraInfo(payload))
     }
     payWithEmandate(payload: IEmandate) {
         this.action = 'PayWithEmandate'
         payload.invoice = payload.invoice || uniqid()
-        this.setRequest(payload)
-        return super.transactionRequest()
+        return super.transactionRequest(payload)
     }
 }
 

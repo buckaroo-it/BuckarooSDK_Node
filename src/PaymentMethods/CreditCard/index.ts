@@ -41,10 +41,10 @@ class Creditcard extends PayablePaymentMethod {
         this.action = 'PayRecurrent'
         return super.transactionRequest(payload)
     }
-    setPayload(payload: any) {
+    setRequest(payload: any) {
         this.paymentName = payload.name || this._paymentName
         delete payload.name
-        super.setPayload(payload)
+        super.setRequest(payload)
     }
 }
 let _creditcard: Creditcard

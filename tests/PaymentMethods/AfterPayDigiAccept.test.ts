@@ -1,62 +1,28 @@
-import Afterpay from '../../src/PaymentMethods/Afterpay/index'
+require('../BuckarooClient.test')
+import AfterPayDigiAccept from '../../src/PaymentMethods/AfterpayDigiAccept'
 import RecipientCategory from '../../src/Constants/RecipientCategory'
 import Gender from "../../src/Constants/Gender";
 import {IPay} from "../../src/PaymentMethods/Afterpay/Model/Services";
 import {RefundPayload} from "../../src/Models/ITransaction";
 import {IAfterPayArticle} from "../../src/PaymentMethods/Afterpay/Model/Article";
 
-require('../BuckarooClient.test')
 
-const method = Afterpay()
+const method = AfterPayDigiAccept()
 
-describe('AfterPay methods', () => {
+
+describe('AfterPayDigiAccept methods', () => {
+    test('Authorize', async () => {
+        await method.authorize(payload).then((data) => {
+            console.log(data)
+            expect(data).toBeDefined()
+            // expect(data.isSuccess()).toBeTruthy()
+        })
+    });
     test('Pay', async () => {
-       await method.pay(payload).then((data) => {
+        await method.pay(payload).then((data) => {
             expect(data.isSuccess()).toBeTruthy()
         })
     });
-    test('Refund', async () => {
-        await method.refund({...refundPayload,articles:articles}).then((data) => {
-            expect(data).toBeDefined()
-        })
-    })
-    test('Authorize', async () => {
-        await method.authorize(payload).then((data) => {
-            expect(data.isSuccess()).toBeTruthy()
-        })
-    })
-    test('CancelAuthorize', async () => {
-        await method.cancelAuthorize(refundPayload).then((data) => {
-            expect(data).toBeDefined()
-        })
-    })
-
-    test('Capture', async () => {
-        await method
-            .capture({
-                amountDebit: 4,
-                invoice: '123456789',
-                originalTransactionKey: '123456789',
-                articles:articles
-            })
-            .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
-    test('PayRemainder', async () => {
-        await method
-            .payRemainder(payload)
-            .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
-    test('AuthorizeRemainder', async () => {
-        await method
-            .authorizeRemainder(payload)
-            .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
 })
 
 let articles:IAfterPayArticle[] = [

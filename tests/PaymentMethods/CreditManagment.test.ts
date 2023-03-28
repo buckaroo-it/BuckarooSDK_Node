@@ -99,13 +99,12 @@ describe('Testing Credit Management', () => {
     })
     test('CreateCombinedInvoice', async () => {
         const ideal1 = ideal()
-        ideal1.setPayload({
+        const combined = creditManagement.createCombinedInvoice(invoice())
+
+        await ideal1.combine(combined).pay({
             amountDebit: 10.1,
             issuer: 'ABNANL2A'
         })
-        const combined = creditManagement.createCombinedInvoice(invoice()).combine(ideal1)
-
-        await ideal1.combine(combined).pay()
     })
     test('CreatePaymentPlan', async () => {
         await creditManagement
@@ -139,7 +138,7 @@ const invoice = (append: object = {}): IInvoice => {
         invoiceAmountVAT: 1,
         invoiceDate: '2022-01-01',
         dueDate: '2030-01-01',
-        schemeKey: '2amq34',
+        schemeKey: 'xxxx',
         maxStepIndex: 1,
         allowedServices: 'ideal,mastercard',
         debtor: {
@@ -168,6 +167,7 @@ const invoice = (append: object = {}): IInvoice => {
         address: {
             street: 'Hoofdtraat',
             houseNumber: '90',
+            houseNumberAdditional: 'A',
             zipcode: '8441ER',
             city: 'Heerenveen',
             state: 'Friesland',
@@ -193,7 +193,7 @@ const invoice = (append: object = {}): IInvoice => {
             },
             {
                 productGroupName: 'Toys2',
-                productGroupOrderIndex: 1,
+                productGroupOrderIndex: 4,
                 productOrderIndex: 2,
                 type: 'Regular',
                 identifier: 'ART2',

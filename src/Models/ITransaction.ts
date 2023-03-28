@@ -48,8 +48,6 @@ export declare interface RefundPayload extends Omit<ITransaction, 'amountDebit'>
     amountCredit: number
     originalTransactionKey: string
 }
-export declare interface ICapture extends ITransaction {
+export declare interface ICapture extends Payload {
     originalTransactionKey: string
-    amountDebit: number
-    invoice?: string
 }
