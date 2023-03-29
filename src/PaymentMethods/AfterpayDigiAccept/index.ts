@@ -3,9 +3,6 @@ import {AfterpayClass} from "../Afterpay";
 class AfterpayDigiAccept extends AfterpayClass {
     protected _paymentName = 'afterpaydigiaccept'
     protected _serviceVersion = 2
-    serviceParametersStrategy(data) {
-        return data;
-    }
     pay(payload) {
         return super.pay(payload)
     }
@@ -36,3 +33,5 @@ const afterpaydigiaccept: () => AfterpayDigiAccept = () => {
     return _afterpaydigiaccept
 }
 export default afterpaydigiaccept
+
+export { AfterpayDigiAccept as AfterpayDigiAcceptClass }

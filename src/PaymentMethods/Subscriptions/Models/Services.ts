@@ -2,12 +2,10 @@ import IPhone from '../../../Models/Services/IPhone'
 import IAddress from '../../../Models/Services/IAddress'
 import IBankAccount from '../../../Models/Services/IBankAccount'
 import IPerson from '../../../Models/Services/IPerson'
-import IEmail from '../../../Models/Services/IEmail'
 import ICompany from '../../../Models/Services/ICompany'
 import IDebtor from '../../../Models/Services/IDebtor'
 import { IRatePlan, IRatePlanCharges } from './RatePlan'
 import { ServiceParameters } from '../../../Utils/ServiceParameters'
-import { firstUpperCase } from '../../../Utils/Functions'
 import { IConfiguration } from './Configuration'
 
 export interface ISubscription {
@@ -24,7 +22,7 @@ export interface ISubscription {
     allowedServices?: string
     debtor?: IDebtor
     bankAccount?: IBankAccount
-    email: IEmail | string
+    email: string
     phone?: IPhone
     address?: IAddress
     configuration?: IConfiguration

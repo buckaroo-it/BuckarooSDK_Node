@@ -1,12 +1,11 @@
 import IPerson from '../../../Models/Services/IPerson'
-import IEmail from '../../../Models/Services/IEmail'
 import { ServiceParameters } from '../../../Utils/ServiceParameters'
 
 export declare interface IPay {
     sendMail: boolean
     dateDue: string
     country: string
-    email: IEmail
+    email: string
     customer: IPerson
 }
 export const Pay = (data) => {

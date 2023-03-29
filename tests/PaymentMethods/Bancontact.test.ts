@@ -1,3 +1,5 @@
+import {BuckarooError} from "../../src/Utils/BuckarooError";
+
 require('../BuckarooClient.test')
 import BanContact from '../../src/PaymentMethods/Bancontact/index'
 
@@ -11,8 +13,9 @@ describe('testing methods', () => {
                 saveToken: true
             })
             .then((data) => {
-                expect(data).toBeDefined()
-                
+                expect(data.isWaitingOnUserInput()).toBeTruthy()
+            }).catch((err) => {
+                expect(err instanceof BuckarooError).toBeTruthy()
             })
     })
     test('Refund', async () => {
@@ -23,13 +26,13 @@ describe('testing methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                
+            }).catch((err) => {
+                expect(err instanceof BuckarooError).toBeTruthy()
             })
     })
     test('Authenticate', async () => {
         await method.authenticate({ amountDebit: 10 }).then((data) => {
-            console.dir(data)
-            expect(data).toBeDefined()
+            expect(data.isWaitingOnUserInput()).toBeDefined()
         })
     })
     test('PayOneClick', async () => {
@@ -39,8 +42,9 @@ describe('testing methods', () => {
                 amountDebit: 12
             })
             .then((data) => {
-                console.dir(data)
                 expect(data).toBeDefined()
+            }).catch((err) => {
+                expect(err instanceof BuckarooError).toBeTruthy()
             })
     })
     test('CompletePayment', async () => {
@@ -50,19 +54,21 @@ describe('testing methods', () => {
                 encryptedCardData: 'sUIB'
             })
             .then((data) => {
-                console.dir(data)
                 expect(data).toBeDefined()
+            }).catch((err) => {
+                expect(err instanceof BuckarooError).toBeTruthy()
             })
     })
     test('PayEncrypted', async () => {
         await method
             .payEncrypted({
                 amountDebit: 10,
-                encryptedCardData: ''
+                encryptedCardData: 'yrtgdd',
             })
             .then((data) => {
-                console.dir(data)
                 expect(data).toBeDefined()
+            }).catch((err) => {
+                expect(err instanceof BuckarooError).toBeTruthy()
             })
     })
     test('PayRecurring', async () => {
@@ -72,14 +78,16 @@ describe('testing methods', () => {
                 originalTransactionKey: 'sadas'
             })
             .then((data) => {
-                console.dir(data)
                 expect(data).toBeDefined()
+            }).catch((err) => {
+                expect(err instanceof BuckarooError).toBeTruthy()
             })
     })
     test('Specifications', async () => {
         await method.specification().then((data) => {
-            console.dir(data)
             expect(data).toBeDefined()
+        }).catch((err) => {
+            expect(err instanceof BuckarooError).toBeTruthy()
         })
     })
 })

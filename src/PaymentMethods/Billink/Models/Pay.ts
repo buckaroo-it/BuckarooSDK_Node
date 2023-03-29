@@ -1,27 +1,21 @@
 import { Payload } from '../../../Models/ITransaction'
-import { IBillingRecipient, adaptBilling, adaptShipping } from '../../Afterpay/Model/Recipient'
+import {AfterPayPerson, IBillingRecipient, IShippingRecipient,AfterPayCompany} from '../../Afterpay/Model/Recipient'
 import { IBillinkArticle } from './Article'
-import { ArticleService } from '../../../Models/Services/IArticle'
-import { ServiceParameters } from '../../../Utils/ServiceParameters'
+import { servicesStrategy as AfterPayStrategy } from '../../Afterpay/Model/Services'
 
+interface Recipient extends Omit<IBillingRecipient, 'recipient'>{
+    recipient: AfterPayPerson | AfterPayCompany
+}
 export interface IPay extends Payload {
-    billing: IBillingRecipient
-    shipping?: Omit<IBillingRecipient, 'phone'> & Partial<Pick<IBillingRecipient, 'phone'>>
+    billing: Recipient
+    shipping?: Recipient
     articles: IBillinkArticle[]
     trackandtrace?: string
     vATNumber?: string
     summaryImageUrl?: string
     bankAccount?: string
     bankCode?: string
-    yourReference?: string
     ourReference?: string
 }
 
-export const payServices = (data) => {
-    data = new ServiceParameters(data)
-    if (data.billing) data.billing = adaptBilling(data.billing)
-    if (data.shipping) data.shipping = adaptShipping(data.shipping || data.billing)
-    if (data.articles) data.articles = ArticleService(data.articles)
-
-    return data
-}
+export const servicesStrategy = AfterPayStrategy

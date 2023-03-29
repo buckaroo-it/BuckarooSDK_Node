@@ -19,3 +19,4 @@ const alipay: () => Alipay = () => {
     return _alipay
 }
 export default alipay
+export { Alipay as AlipayClass }

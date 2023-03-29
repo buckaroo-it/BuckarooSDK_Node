@@ -1,7 +1,6 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { IPay, IPayComplete, IPayEncrypted, IPayOneClick } from './Models/Pay'
 import { RefundPayload } from '../../Models/ITransaction'
-import { uniqid } from '../../Utils/Functions'
 
 class Bancontact extends PayablePaymentMethod {
     protected _paymentName = 'bancontactmrcash'
@@ -14,16 +13,15 @@ class Bancontact extends PayablePaymentMethod {
     }
     authenticate(payload: IPay) {
         this.action = 'Authenticate'
-        return this.transactionRequest(payload)
+        return this.payTransaction(payload)
     }
     payOneClick(payload: IPayOneClick) {
         this.action = 'PayOneClick'
-        this.request.setDataKey('invoice', payload.invoice || uniqid())
-        return this.transactionRequest(payload)
+        return this.transactionInvoice(payload)
     }
     payEncrypted(payload: IPayEncrypted) {
         this.action = 'PayEncrypted'
-        return this.transactionRequest(payload)
+        return this.transactionInvoice(payload)
     }
     completePayment(payload: IPayComplete) {
         this.action = 'CompletePayment'
@@ -31,8 +29,7 @@ class Bancontact extends PayablePaymentMethod {
     }
     payRecurring(payload: IPayOneClick) {
         this.action = 'PayRecurring'
-        this.request.setDataKey('invoice', payload.invoice || uniqid())
-        return this.transactionRequest(payload)
+        return this.transactionInvoice(payload)
     }
 }
 

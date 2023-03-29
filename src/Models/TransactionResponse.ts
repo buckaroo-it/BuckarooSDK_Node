@@ -92,10 +92,10 @@ export class TransactionResponse implements ITransactionResponse {
         this.RequiredAction = data.RequiredAction
     }
     getStatusCode() {
-        return this.Status.Code.Code
+        return this.Status.Code.Code.toString()
     }
     getSubStatusCode() {
-        return this.Status.SubCode.Code
+        return this.Status.SubCode.Code.toString()
     }
     isSuccess() {
         return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_SUCCESS
@@ -177,12 +177,24 @@ export class TransactionResponse implements ITransactionResponse {
         return this.PaymentKey
     }
     hasError() {
-        return Object.keys(this.RequestErrors).length > 0 && (
+        return this.RequestErrors && Object.keys(this.RequestErrors).length > 0 && (
             this.RequestErrors.ChannelErrors.length > 0 ||
             this.RequestErrors.ServiceErrors.length > 0 ||
             this.RequestErrors.ActionErrors.length > 0 ||
             this.RequestErrors.ParameterErrors.length > 0 ||
             this.RequestErrors.CustomParameterErrors.length > 0
         )
+    }
+    getErrorMessages() {
+        const messages:{[errorType:string]:string} = {}
+        Object.keys(this.RequestErrors).forEach((key) => {
+            if(this.RequestErrors[key].length > 0){
+                messages[key] = this.RequestErrors[key].map((error) => error.ErrorMessage).join('')
+            }
+        });
+        return Object.entries(messages)
+    }
+    getErrorMessage() {
+        return this.Status.Code.Description
     }
 }

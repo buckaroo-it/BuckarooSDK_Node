@@ -1,5 +1,6 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { IPay } from './Models/Pay'
+import {RefundPayload} from "../../Models/ITransaction";
 
 class ApplePay extends PayablePaymentMethod {
     protected _paymentName = 'applepay'
@@ -8,7 +9,7 @@ class ApplePay extends PayablePaymentMethod {
     pay(payload: IPay) {
         return super.pay(payload)
     }
-    refund(payload) {
+    refund(payload: RefundPayload) {
         return super.refund(payload)
     }
 }
@@ -19,3 +20,4 @@ const applepay: () => ApplePay = () => {
     return _applepay
 }
 export default applepay
+export { ApplePay as ApplePayClass }

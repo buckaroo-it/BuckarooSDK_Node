@@ -27,4 +27,10 @@ export abstract class PayablePaymentMethod extends PaymentMethod {
         this.action = 'Refund'
         return this.payTransaction(payload)
     }
+    protected transactionInvoice(payload:ITransaction): Promise<TransactionResponse> {
+
+        payload.invoice = payload.invoice || uniqid()
+
+        return this.transactionRequest(payload)
+    }
 }

@@ -1,5 +1,6 @@
 import {IParameter} from "../Models/Parameters";
 import {firstUpperCase} from "./Functions";
+import {Subset} from "./Types";
 
 type keys = {[key: string]: string}
 
@@ -42,19 +43,21 @@ export class ServiceParameters {
     setKey(key:string,newKey:string,data:object = this.data){
         if (Array.isArray(data)) {
             data.forEach(item => {
-                delete Object.assign(item, {[<string>newKey]: item[key]})[key]
+                if(typeof item[key] !== 'undefined')
+                    delete Object.assign(item, {[<string>newKey]: item[key]})[key]
             })
         }else {
-            delete Object.assign(data, {[newKey]: data[key]})[key]
+            if(typeof data[key] !== 'undefined')
+               delete Object.assign(data, {[newKey]: data[key]})[key]
         }
     }
-    setKeys( keys:keyLoop , data = this.data){
+    setKeys( keys:keyLoop, data = this.data){
         for (const key in keys) {
             let key2 = keys[key]
-            if (typeof key2 !== 'string') {
-                if (!data[key]) return
+            if (key2 instanceof Object) {
+                if (!(data[key] instanceof Object)) continue
                 this.setKeys(key2, data[key])
-            } else {
+            } else if(typeof key2 === 'string'){
                 this.setKey(key, key2, data)
             }
         }

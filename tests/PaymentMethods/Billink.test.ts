@@ -1,52 +1,27 @@
-require('../BuckarooClient.test')
+import RecipientCategory from "../../src/Constants/RecipientCategory";
 import Billink from '../../src/PaymentMethods/Billink/index'
 import Gender from '../../src/Constants/Gender'
+import {BuckarooError} from "../../src/Utils/BuckarooError";
+import {IPay} from "../../src/PaymentMethods/Billink/Models/Pay";
+
+require('../BuckarooClient.test')
 
 const method = Billink()
 
 describe('testing methods', () => {
+    test('Specifications', async () => {
+        await method.specification().then((data) => {
+            data.getActionRequestParameters('Pay')
+            expect(data).toBeDefined()
+        })
+    })
     test('Pay', async () => {
         await method
-            .pay({
-                amountDebit: 12,
-                yourReference: '',
-                articles: [],
-                billing: {
-                    address: {
-                        city: '',
-                        country: '',
-                        houseNumber: '',
-                        houseNumberAdditional: '',
-                        street: '',
-                        zipcode: ''
-                    },
-                    email: 'em',
-                    phone: {
-                        mobile: 'das'
-                    },
-                    recipient: {
-                        birthDate: '',
-                        careOf: '',
-                        category: '',
-                        chamberOfCommerce: '',
-                        companyName: '',
-                        culture: '',
-                        firstName: '',
-                        gender: Gender.MALE,
-                        initials: '',
-                        lastName: '',
-                        lastNamePrefix: '',
-                        name: '',
-                        placeOfBirth: '',
-                        title: '',
-                        vatApplicable: false,
-                        vatNumber: ''
-                    }
-                }
-            })
+            .pay(payload)
             .then((data) => {
                 expect(data).toBeDefined()
-                
+            }).catch((err) => {
+                expect(err instanceof BuckarooError).toBeTruthy()
             })
     })
     test('Refund', async () => {
@@ -57,13 +32,11 @@ describe('testing methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                
             })
     })
     test('Authorize', async () => {
-        await method.authorize().then((data) => {
+        await method.authorize(payload).then((data) => {
             expect(data).toBeDefined()
-            
         })
     })
     test('CancelAuthorize', async () => {
@@ -91,3 +64,35 @@ describe('testing methods', () => {
             })
     })
 })
+
+let payload:IPay = {
+    amountDebit: 12,
+    articles: [],
+    billing: {
+        address: {
+            city: '',
+            country: 'NL',
+            houseNumber: '',
+            houseNumberAdditional: '',
+            street: '',
+            zipcode: ''
+        },
+        email: 'em',
+        phone: {
+            mobile: 'das'
+        },
+        recipient: {
+            birthDate: '',
+            careOf: '',
+            category: RecipientCategory.COMPANY,
+            chamberOfCommerce: '',
+            companyName: '',
+            firstName: '',
+            gender: Gender.MALE,
+            lastName: '',
+            title: '',
+            vatApplicable: false,
+            vatNumber: ''
+        }
+    }
+}

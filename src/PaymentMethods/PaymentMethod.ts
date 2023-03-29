@@ -7,8 +7,8 @@ import { ITransaction } from '../Models/ITransaction'
 import { RequestType } from '../Constants/Endpoints'
 import { TransactionResponse } from '../Models/TransactionResponse'
 import {IServiceList} from "../Models/ServiceList";
-import {IParameter} from "../Models/Parameters";
 import {IPProtocolVersion} from "../Constants/IPProtocolVersion";
+import {BuckarooError} from "../Utils/BuckarooError";
 
 export default abstract class PaymentMethod {
     protected readonly _requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
@@ -94,7 +94,11 @@ export default abstract class PaymentMethod {
         return buckarooClient()
             .transactionRequest(this.getRequestData())
             .then((response) => {
-                return new TransactionResponse(response)
+                const transactionResponse = new TransactionResponse(response)
+                if (transactionResponse.hasError()) {
+                    throw new BuckarooError(transactionResponse)
+                }
+                return transactionResponse
             })
     }
     protected dataRequest(requestData) {

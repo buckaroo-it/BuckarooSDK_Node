@@ -1,5 +1,4 @@
 import IDebtor from '../../../Models/Services/IDebtor'
-import IEmail from '../../../Models/Services/IEmail'
 import IPhone from '../../../Models/Services/IPhone'
 import IAddress from '../../../Models/Services/IAddress'
 import IPerson from '../../../Models/Services/IPerson'
@@ -23,7 +22,7 @@ export interface IInvoice extends ITransaction {
     person?: Omit<IPerson,'careOf'|'category'| 'name'| 'placeOfBirth'>
     address: IAddress
     debtor: IDebtor
-    email: IEmail | string
+    email: string
     phone: IPhone
     articles?: ICreditArticle[]
     invoiceNumber: string
