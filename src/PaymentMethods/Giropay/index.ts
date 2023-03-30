@@ -20,3 +20,4 @@ const giropay: () => Giropay = () => {
     return _giropay
 }
 export default giropay
+export { Giropay as GiropayClass }

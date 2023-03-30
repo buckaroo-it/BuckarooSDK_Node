@@ -5,9 +5,8 @@ class IdealQr extends PaymentMethod {
     protected _paymentName = 'IdealQr'
     generate(payload: Generate) {
         this.action = 'generate'
-        this.setRequest(payload)
 
-        return this.dataRequest()
+        return this.dataRequest(payload)
     }
 }
 
@@ -17,3 +16,4 @@ const idealQr: () => IdealQr = () => {
     return _idealQr
 }
 export default idealQr
+export { IdealQr as IdealQrClass }

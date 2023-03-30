@@ -1,5 +1,5 @@
 import IPerson from '../../../Models/Services/IPerson'
-import { ServiceParameters } from '../../../Utils/ServiceParameters'
+import {ModelStrategy} from "../../../Utils/ModelStrategy";
 
 export declare interface IPay {
     sendMail: boolean
@@ -8,21 +8,20 @@ export declare interface IPay {
     email: string
     customer: IPerson
 }
-export const Pay = (data) => {
-    let costumer = new ServiceParameters(data)
-    costumer.setKeys({
-        customer:{
-            gender: 'CustomerGender',
-            firstName: 'CustomerFirstName',
-            lastName: 'CustomerLastName',
-        },
-        email: 'CustomerEmail'
-    })
-    return {
-        sendMail: data.sendMail,
-        dateDue: data.dateDue,
-        customerCountry: data.country,
-        email: data.email,
-        customer: costumer
+export class BankTransferModelStrategy extends ModelStrategy<IPay>{
+    setData(data: IPay) {
+        super.setData(data);
+    }
+    constructor(data) {
+        super(data);
+        this.keys = {
+            customer:{
+                gender: 'CustomerGender',
+                firstName: 'CustomerFirstName',
+                lastName: 'CustomerLastName',
+            },
+            email: 'CustomerEmail',
+            country: 'CustomerCountry'
+        }
     }
 }

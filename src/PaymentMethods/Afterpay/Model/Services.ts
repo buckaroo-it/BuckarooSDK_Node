@@ -1,13 +1,13 @@
 import { IAfterPayArticle } from './Article'
 import { Payload } from '../../../Models/ITransaction'
 import { IPAddress } from '../../../Utils/Types'
-import { ServiceParameters } from '../../../Utils/ServiceParameters'
-import {IBillingRecipient, IShippingRecipient} from "./Recipient";
+import { AfterPayCustomer } from "./Recipient";
+import {ModelStrategy} from "../../../Utils/ModelStrategy";
 
-export interface IPay extends Payload {
+export interface Pay {
     clientIP: IPAddress | string
-    billing: IBillingRecipient
-    shipping?: IShippingRecipient
+    billing: AfterPayCustomer
+    shipping?: AfterPayCustomer
     articles: IAfterPayArticle[]
     bankAccount?: string
     bankCode?: string
@@ -16,43 +16,47 @@ export interface IPay extends Payload {
     yourReference?: string
     ourReference?: string
 }
+export type IPay = Payload & Pay
 
-export const Services = (data:IPay) => {
-    const services = new ServiceParameters(data)
 
-    if(services.data.billing){
-        services.data.shipping = services.data.shipping || {...services.data.billing}
+export class AfterPayModelStrategy extends ModelStrategy<Pay>{
+    setData(data: Pay) {
+        super.setData(data)
     }
-    services.setGroupTypes({
-        billing:'BillingCustomer',
-        shipping:'ShippingCustomer',
-        articles:'Article'
-    })
-    services.setCountable(['articles'])
-
-    let customerKeys = {
-        address:{
-            houseNumber: "streetNumber",
-            houseNumberAdditional: "streetNumberAdditional",
-            zipcode: "postalCode"
-        },
-        recipient:{
-            gender:"salutation",
-            title: "salutation",
-            chamberOfCommerce: "identificationNumber"
-        },
-        phone:{
-            landline: "phone",
-            mobile: "mobilePhone"
+    constructor(data) {
+        super(data)
+        if (this.data.billing) {
+            this.data.shipping = this.data.shipping || {...this.data.billing}
         }
-    }
-    services.setKeys({
-        articles:{
-            price:'grossUnitPrice',
-        },
-        billing:customerKeys,
-        shipping:customerKeys
-    })
+        this.groupTypes = {
+            billing:'BillingCustomer',
+            shipping:'ShippingCustomer',
+            articles:'Article',
+        }
+        let customerKeys = {
+            address:{
+                houseNumber: "streetNumber",
+                houseNumberAdditional: "streetNumberAdditional",
+                zipcode: "postalCode"
+            },
+            recipient:{
+                gender:"salutation",
+                title: "salutation",
+                chamberOfCommerce: "identificationNumber"
+            },
+            phone:{
+                landline: "phone",
+                mobile: "mobilePhone",
+            }
+        }
 
-    return services.data
+        this.keys = {
+            articles:{
+                price:'grossUnitPrice',
+            },
+            billing: customerKeys,
+            shipping: customerKeys,
+        }
+        this.countable = ['articles']
+    }
 }

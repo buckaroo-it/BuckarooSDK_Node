@@ -5,11 +5,13 @@ import { ServiceObject } from '../../../Models/ServiceObject'
 export interface IWallet extends ITransaction {
     invoice: string
     walletId: string
-    email?: string
-    bankAccount?: Pick<IBankAccount, 'iban'>
+    consumerEmail?: string
+    bankAccount?:{
+        consumerIban: string
+    }
     customer?: {
-        firstName: string
-        lastName: string
+        consumerFirstName: string
+        consumerLastName: string
     }
 }
 export interface IWalletPay extends Payload {
@@ -19,13 +21,4 @@ export interface IWalletPay extends Payload {
 export interface IWalletRefund extends RefundPayload {
     invoice: string
     walletId: string
-}
-export const Wallet = (data: IWallet) => {
-    const formatData = new ServiceObject(data)
-    formatData.setParameterKeys({
-        firstName: 'consumerFirstName',
-        lastName: 'consumerLastName',
-        email: 'consumerEmail'
-    })
-    return formatData
 }

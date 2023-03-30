@@ -1,10 +1,11 @@
 import RecipientCategory from "../../Constants/RecipientCategory";
-import IPerson from "./IPerson";
+import {ICustomer} from "./ICustomer";
 
-export default interface ICompany extends IPerson{
-    category: RecipientCategory.COMPANY
+export default interface ICompany extends ICustomer {
+    category: RecipientCategory.COMPANY | RecipientCategory.B2B
     companyName: string
     vatApplicable: boolean
     vatNumber: string
     chamberOfCommerce: string
+    identificationNumber: string
 }

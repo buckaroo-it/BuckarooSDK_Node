@@ -19,3 +19,4 @@ const belfius: () => Belfius = () => {
     return _belfius
 }
 export default belfius
+export { Belfius as BelfiusClass }

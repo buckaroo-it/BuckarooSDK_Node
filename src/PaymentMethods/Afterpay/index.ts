@@ -1,5 +1,5 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { IPay, Services } from './Model/Services'
+import { IPay, AfterPayModelStrategy } from './Model/Services'
 import { ICapture, RefundPayload } from '../../Models/ITransaction'
 import { IAfterPayArticle } from "./Model/Article";
 
@@ -7,14 +7,11 @@ import { IAfterPayArticle } from "./Model/Article";
 class Afterpay extends PayablePaymentMethod {
     protected _paymentName = 'afterpay'
     protected _serviceVersion = 1
-
-    serviceParametersStrategy(data) {
-        return Services(data);
-    }
+    public modelStrategy = new AfterPayModelStrategy({})
     pay(payload:IPay) {
         return super.pay(payload)
     }
-    refund(payload: RefundPayload & {articles?:IAfterPayArticle[]}) {
+    refund(payload: RefundPayload & { articles?:IAfterPayArticle[] }) {
         return super.refund(payload)
     }
     authorize(payload: IPay) {
@@ -44,4 +41,4 @@ const afterpay: () => Afterpay = () => {
     return _afterpay
 }
 export default afterpay
-export { Afterpay as AfterpayClass}
+export { Afterpay as AfterpayClass }

@@ -6,6 +6,7 @@ import ICompany from '../../../Models/Services/ICompany'
 import { ICreditArticle } from './Article'
 import { ServiceParameters } from '../../../Utils/ServiceParameters'
 import { ITransaction } from '../../../Models/ITransaction'
+import {ModelStrategy} from "../../../Utils/ModelStrategy";
 
 export interface IInvoice extends ITransaction {
     invoiceAmount: Number
@@ -18,8 +19,8 @@ export interface IInvoice extends ITransaction {
     allowedServicesAfterDueDate?: string
     disallowedServicesAfterDueDate?: string
     code: string
-    company?: Pick<ICompany,'culture'|'name'| 'vatApplicable' | 'vatNumber' | 'chamberOfCommerce'>
-    person?: Omit<IPerson,'careOf'|'category'| 'name'| 'placeOfBirth'>
+    company?: Omit<ICompany,'category'> & {culture:string}
+    person?: Omit<IPerson,'careOf'> & {culture:string}
     address: IAddress
     debtor: IDebtor
     email: string
@@ -30,27 +31,31 @@ export interface IInvoice extends ITransaction {
     applyStartRecurrent?: boolean
     poNumber?: string
 }
-export const invoice = (data) => {
-    const invoiceService = new ServiceParameters(data)
-    invoiceService.setGroupTypes({
-        address: 'Address',
-        company: 'Company',
-        person: 'Person',
-        debtor: 'Debtor',
-        phone: 'Phone',
-        email: 'Email',
-        articles: 'ProductLine'
-    })
-    invoiceService.setKeys({
-        articles:{
-            identifier:'ProductId',
-            description:'ProductName',
-            price:'PricePerUnit'
-        },
-        address: {
-            houseNumberAdditional: 'HouseNumberSuffix'
+export class CreditManagementModelStrategy extends ModelStrategy<IInvoice>{
+    setData(data: IInvoice) {
+        super.setData(data);
+    }
+    constructor(data) {
+        super(data);
+        this.groupTypes = {
+            address: 'Address',
+            company: 'Company',
+            person: 'Person',
+            debtor: 'Debtor',
+            phone: 'Phone',
+            email: 'Email',
+            articles: 'ProductLine'
         }
-    })
-    invoiceService.setCountable(['articles'])
-    return invoiceService.data
+        this.keys = {
+            articles:{
+                identifier:'ProductId',
+                description:'ProductName',
+                price:'PricePerUnit',
+            },
+            address: {
+                houseNumberAdditional: 'HouseNumberSuffix'
+            }
+        }
+        this.countable = ['articles']
+    }
 }

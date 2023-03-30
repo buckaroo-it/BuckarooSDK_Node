@@ -1,46 +1,40 @@
 import {IParameter} from "../Models/Parameters";
 import {firstUpperCase} from "./Functions";
-import {Subset} from "./Types";
 
-type keys = {[key: string]: string}
 
-type keyLoop = {[key: string]:  keyLoop | string }
-
-export class ServiceParameters {
-    data: any
+export class ServiceParameters<Type extends object> {
+    protected data: Type
     constructor(data) {
         this.data = {...data}
     }
-    setGroupTypes(groupTypes:keys, data = this.data){
+    setData(data:object) {
+        this.data = {...this.data,...data}
+    }
+    getData() {
+        return this.data
+    }
+    protected setGroupTypes(groupTypes){
         for (const key in groupTypes) {
-            if (data[key]) {
-                if (!(data[key] instanceof Object)) {
-                    data[key] = {[key]: data[key]}
+            let dataKey = this.data[key]
+            if (dataKey) {
+                if (!(dataKey instanceof Object)) {
+                    dataKey = Object.create({[key]: dataKey})
                 }
-                data[key].groupType = () => groupTypes[key]
+                this.data[key].groupType = () => groupTypes[key]
             }
         }
     }
-    setGroupIds(groupIds:{[key: string]: string | Number }){
-        for (const key in groupIds) {
-            if (this.data[key]) {
-                if (!(this.data[key] instanceof Object)) {
-                    this.data[key] = {[key]: this.data[key]}
-                }
-                this.data[key].groupId = () => groupIds[key]
-            }
-        }
-    }
-    setCountable(countable:string[]){
+    protected setCountable(countable:string[]){
         for (const key of countable) {
-            if (this.data[key] && Array.isArray(this.data[key])) {
-                this.data[key].forEach((item, index) => {
+            let dataKey = this.data[key]
+            if (dataKey && Array.isArray(dataKey)) {
+                dataKey.forEach((item, index) => {
                     item.groupId = () => index+1
                 })
             }
         }
     }
-    setKey(key:string,newKey:string,data:object = this.data){
+    protected setKey(key:string,newKey:string,data = this.data){
         if (Array.isArray(data)) {
             data.forEach(item => {
                 if(typeof item[key] !== 'undefined')
@@ -51,11 +45,11 @@ export class ServiceParameters {
                delete Object.assign(data, {[newKey]: data[key]})[key]
         }
     }
-    setKeys( keys:keyLoop, data = this.data){
+    protected setKeys(keys:object, data = this.data){
         for (const key in keys) {
             let key2 = keys[key]
             if (key2 instanceof Object) {
-                if (!(data[key] instanceof Object)) continue
+                // @ts-ignore
                 this.setKeys(key2, data[key])
             } else if(typeof key2 === 'string'){
                 this.setKey(key, key2, data)

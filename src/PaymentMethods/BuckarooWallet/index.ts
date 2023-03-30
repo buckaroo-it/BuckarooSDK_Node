@@ -1,5 +1,5 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { IWallet, IWalletPay, IWalletRefund, Wallet } from './Models/Wallet'
+import { IWallet, IWalletPay, IWalletRefund } from './Models/Wallet'
 import { ITransaction } from '../../Models/ITransaction'
 
 class BuckarooWallet extends PayablePaymentMethod {
@@ -13,41 +13,35 @@ class BuckarooWallet extends PayablePaymentMethod {
     }
     deposit(payload: IWalletRefund) {
         this.action = 'Deposit'
-        this.setRequest(payload)
-        return super.transactionRequest()
+        return super.transactionRequest(payload)
     }
     reserve(payload: IWalletRefund) {
         this.action = 'Reserve'
-        this.setRequest(payload)
-        return super.transactionRequest()
+        return super.transactionRequest(payload)
     }
     withdrawal(payload: IWalletPay) {
         this.action = 'Withdrawal'
-        this.setRequest(payload)
-        return super.transactionRequest()
+        return super.transactionRequest(payload)
     }
     cancel(payload: ITransaction & { walletMutationGuid: string }) {
         this.action = 'CancelReservation'
-        this.setRequest(payload)
-        return super.transactionRequest()
+        return super.transactionRequest(payload)
     }
     create(payload: IWallet) {
         this.action = 'Create'
-        this.serviceParametersStrategy = Wallet
-        this.setRequest(payload)
-        return this.dataRequest()
+        return this.dataRequest(payload)
     }
     update() {
         this.action = 'Update'
-        return this.dataRequest()
+        return this.dataRequest({})
     }
     getInfo() {
         this.action = 'Getinfo'
-        return this.dataRequest()
+        return this.dataRequest({})
     }
     release() {
         this.action = 'Release'
-        return this.dataRequest()
+        return this.dataRequest({})
     }
 }
 
@@ -57,3 +51,4 @@ const buckaroowallet: () => BuckarooWallet = () => {
     return _buckaroowallet
 }
 export default buckaroowallet
+export { BuckarooWallet as BuckarooWalletClass }

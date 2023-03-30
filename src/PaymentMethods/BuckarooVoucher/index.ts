@@ -1,6 +1,6 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { IPay } from './Models/Pay'
-import { ITransaction, RefundPayload } from '../../Models/ITransaction'
+import { RefundPayload } from '../../Models/ITransaction'
 import { ICreate } from './Models/Create'
 
 class Buckaroovoucher extends PayablePaymentMethod {
@@ -14,18 +14,15 @@ class Buckaroovoucher extends PayablePaymentMethod {
     }
     getBalance(payload: Pick<IPay, 'voucherCode'>) {
         this.action = 'GetBalance'
-        this.setRequest(<ITransaction>payload)
-        return this.dataRequest()
+        return this.dataRequest(payload)
     }
     createApplication(payload: ICreate) {
         this.action = 'CreateApplication'
-        this.setRequest(payload)
-        return this.dataRequest()
+        return this.dataRequest(payload)
     }
     deactivateVoucher(payload: Pick<IPay, 'voucherCode'>) {
         this.action = 'DeactivateVoucher'
-        this.setRequest(<ITransaction>payload)
-        return this.dataRequest()
+        return this.dataRequest(payload)
     }
 }
 
@@ -35,3 +32,4 @@ const buckaroovoucher: () => Buckaroovoucher = () => {
     return _buckaroovoucher
 }
 export default buckaroovoucher
+export { Buckaroovoucher as BuckarooVoucherClass }

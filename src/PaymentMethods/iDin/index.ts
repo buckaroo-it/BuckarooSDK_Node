@@ -1,16 +1,15 @@
-
 import PaymentMethod from "../PaymentMethod";
-
+import {IPay} from "../Ideal/Models/Pay";
 class Idin extends PaymentMethod {
     protected _paymentName = 'Idin'
-    identify(payload) {
-        return this.dataRequest()
+    identify(payload:IPay) {
+        return this.dataRequest(payload)
     }
-    verify(payload) {
-        return this.dataRequest()
+    verify(payload:IPay) {
+        return this.dataRequest(payload)
     }
-    login(payload){
-        return this.dataRequest()
+    login(payload:IPay){
+        return this.dataRequest(payload)
     }
 }
 
@@ -20,3 +19,4 @@ const idin: () => Idin = () => {
     return _payment
 }
 export default idin
+export { Idin as IdinClass }

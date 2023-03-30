@@ -1,9 +1,9 @@
 import Afterpay from '../../src/PaymentMethods/Afterpay/index'
 import RecipientCategory from '../../src/Constants/RecipientCategory'
-import Gender from "../../src/Constants/Gender";
 import {IPay} from "../../src/PaymentMethods/Afterpay/Model/Services";
 import {RefundPayload} from "../../src/Models/ITransaction";
 import {IAfterPayArticle} from "../../src/PaymentMethods/Afterpay/Model/Article";
+import {country} from "../../src/PaymentMethods/Afterpay/Model/Recipient";
 
 require('../BuckarooClient.test')
 
@@ -11,6 +11,7 @@ const method = Afterpay()
 
 describe('AfterPay methods', () => {
     test('Pay', async () => {
+
        await method.pay(payload).then((data) => {
             expect(data.isSuccess()).toBeTruthy()
         })
@@ -66,7 +67,7 @@ let articles:IAfterPayArticle[] = [
         identifier: "423f",
         imageUrl: "",
         quantity: 1,
-        type: 'Unknown',
+        type: 'PhysicalArticle',
         unitCode: "",
         url: "",
         vatPercentage: 0
@@ -76,7 +77,7 @@ let articles:IAfterPayArticle[] = [
         price: 7,
         identifier: "423f",
         unitCode: "",
-        type: 'Unknown',
+        type: 'PhysicalArticle',
         quantity: 1,
         vatPercentage: 0
     }
@@ -87,7 +88,7 @@ let payload:IPay = {
     shipping:{
         address: {
             city: "rew",
-            country: "NL",
+            country: country.NL,
             houseNumber: '423',
             houseNumberAdditional: "ewr",
             street: "fsd",
@@ -108,14 +109,14 @@ let payload:IPay = {
             identificationNumber: "675",
             lastName: "a",
             title: "",
-            gender:Gender.FEMALE
+            gender:'Mr'
         }
 
     },
     billing:{
         address: {
             city: "rew",
-            country: "NL",
+            country: country.NL,
             houseNumber: '423',
             houseNumberAdditional: "ewr",
             street: "fsd",
@@ -136,7 +137,7 @@ let payload:IPay = {
             identificationNumber: "675",
             lastName: "a",
             title: "",
-            gender:Gender.FEMALE
+            gender:'Mr'
         }
     },
     articles: articles,

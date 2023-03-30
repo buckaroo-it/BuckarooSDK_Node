@@ -5,10 +5,9 @@ import IPhone from '../../../Models/Services/IPhone'
 import ICompany from '../../../Models/Services/ICompany'
 import IPerson from '../../../Models/Services/IPerson'
 import IAddress from '../../../Models/Services/IAddress'
+import {ModelStrategy} from "../../../Utils/ModelStrategy";
 
-export interface IPay extends Payload {
-    description: string
-    clientIP: ClientIP
+interface Pay {
     customerType: string
     invoiceDate: string
     email: string
@@ -19,30 +18,42 @@ export interface IPay extends Payload {
     articles: Pick<IArticle, 'identifier' | 'description' | 'price' | 'quantity'>[]
     subTotals: { name: string; value: Number }[]
 }
-export const Pay = (data: IPay) => {
-    return {
-        customerType: data.customerType,
-        invoiceDate: data.invoiceDate,
-        email: new ServiceParameters({ email: data.email }).setGroupType('Email'),
-        phone: new ServiceParameters(data.phone)
-            .setGroupType('Phone')
-            .setParameterKeys({ mobile: 'Phone' }),
-        company: new ServiceParameters(data.company).setGroupType('Company').setParameterKeys({
-            companyName: 'Name'
-        }),
-        customer: new ServiceParameters(data.customer).setGroupType('Person'),
-        address: new ServiceParameters(data.address).setGroupType('Address').setParameterKeys({
-            houseNumberAdditional: 'HouseNumberSuffix'
-        }),
-        articles: new ServiceParameters(data.articles)
-            .setGroupType('ProductLine')
-            .makeCountable()
-            .setParameterKeys({
+
+export interface IPay extends Payload,Pay {
+    description: string
+    clientIP: ClientIP
+}
+
+export class In3ModelStrategy extends ModelStrategy<Pay> {
+    setData(data:Pay) {
+        super.setData(data);
+    }
+    constructor(data) {
+        super(data);
+        this.groupTypes = {
+            phone: 'Phone',
+            email: 'Email',
+            company: 'Company',
+            customer: 'Person',
+            address: 'Address',
+            articles: 'ProductLine',
+            subTotals: 'SubtotalLine'
+        }
+        this.keys = {
+            articles:{
                 identifier: 'Code',
                 description: 'Name'
-            }),
-        subTotals: new ServiceParameters(data.subTotals)
-            .setGroupType('SubtotalLine')
-            .makeCountable()
+            },
+            company:{
+                companyName: 'Name'
+            },
+            address:{
+              houseNumberAdditional:'HouseNumberSuffix'
+            },
+            phone:{
+                mobile: 'Phone'
+            }
+        }
+        this.countable = ['articles', 'subTotals']
     }
 }

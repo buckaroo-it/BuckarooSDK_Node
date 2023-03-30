@@ -55,8 +55,8 @@ type RequestParameter = {
     AutoCompleteType: string;
 }
 interface Services  {
+    Actions?: Action[];
     SupportedCurrencies?: SupportedCurrency[];
-    Actions: Action[];
     Name: string;
     Version: number;
     Description: string;
@@ -74,7 +74,7 @@ export class SpecificationsResponse implements ISpecificationResponse {
     }
 }
 export class SpecificationResponse implements Services {
-    Actions: Action[];
+    Actions?: Action[];
     Description: string;
     Name: string;
     SupportedCurrencies?: SupportedCurrency[];
@@ -86,28 +86,12 @@ export class SpecificationResponse implements Services {
         this.SupportedCurrencies = data.SupportedCurrencies
         this.Version = data.Version
     }
-    getActionRequestParameters(actionName: string): any | undefined {
+    getActionRequestParameters(actionName: string): RequestParameter[] | undefined {
+
         actionName = firstUpperCase(actionName)
-        let action = this.Actions.find(action => action.Name === actionName)?.RequestParameters.map(parameter => {
-            return {
-                Name: parameter.Name,
-                Group: parameter.Group,
-                Required: parameter.Required,
-                PossibleValues: parameter.ListItemDescriptions?.map(item => item.Value).join(' | '),
-            }
-        })
-            .sort((a, b) => a.Name.localeCompare(b.Name)).reduce((group, product) => {
-            const { Group } = product;
-            group[Group] = group[Group] ?? [];
-            let item = group[Group].find(item => item.Name === product.Name)
-            if(!item){
-                group[Group].push(product);
-            }else if(product.Required){
-                item.Required = true
-            }
-            return group;
-        }, {});
-        return action
+        return this.Actions?.find(action => action.Name === actionName)?.RequestParameters
+            .sort((a, b) => a.Name.localeCompare(b.Name))
+            .sort((a, b) => a.Group.localeCompare(b.Group))
     }
 
 }

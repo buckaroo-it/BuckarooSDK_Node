@@ -56,3 +56,4 @@ const creditcard: () => Creditcard = () => {
     return _creditcard
 }
 export default creditcard
+export { Creditcard as CreditcardClass }

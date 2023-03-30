@@ -17,3 +17,4 @@ const eps: () => EPS = () => {
     return _eps
 }
 export default eps
+export { EPS as EPSClass }

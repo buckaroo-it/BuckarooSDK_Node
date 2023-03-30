@@ -13,15 +13,14 @@ class Ideal extends PayablePaymentMethod {
     }
     issuers() {
         return this.specification().then((response) => {
-            if(response.Actions.length && response.Actions[0].RequestParameters.length) {
-                return response.Actions[0].RequestParameters[0].ListItemDescriptions.map((item) => {
-                    return {
-                        id: item.Value,
-                        name: item.Description
-                    }
-                })
-            }
-            return []
+            return response.getActionRequestParameters('Pay')
+                ?.find((item) => item.Name === 'issuer')
+                ?.ListItemDescriptions.map((item) => {
+                return {
+                    id: item.Value,
+                    name: item.Description
+                }
+            })
         })
     }
 }
@@ -31,3 +30,4 @@ const ideal: () => Ideal = () => {
     return _ideal
 }
 export default ideal
+export { Ideal as IdealClass }

@@ -19,3 +19,4 @@ const creditClick: () => CreditClick = () => {
     return _creditClick
 }
 export default creditClick
+export { CreditClick as CreditClickClass }

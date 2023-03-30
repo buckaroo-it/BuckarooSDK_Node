@@ -1,6 +1,6 @@
 import { IConfig } from '../../Utils/Types'
 import PaymentMethod from '../PaymentMethod'
-import { IInvoice, invoice } from './Models/Invoice'
+import { IInvoice, CreditManagementModelStrategy } from './Models/Invoice'
 import { ICreditNote } from './Models/CreditNote'
 import { uniqid } from '../../Utils/Functions'
 import { debtor, debtorInfo, IDebtor } from './Models/Debtor'
@@ -14,10 +14,7 @@ class CreditManagement extends PaymentMethod {
     protected _requiredFields: Array<keyof IConfig> = ['currency']
 
     protected _serviceVersion = 1
-    serviceParametersStrategy(data) {
-        return invoice(data)
-    }
-
+    modelStrategy = new CreditManagementModelStrategy({})
     createInvoice(payload: IInvoice): Promise<any> {
         this.action = 'CreateInvoice'
         payload.invoice = payload.invoice || uniqid()
@@ -25,7 +22,6 @@ class CreditManagement extends PaymentMethod {
     }
     createCombinedInvoice(payload: IInvoice) {
         this.action = 'CreateCombinedInvoice'
-
         payload.invoice = payload.invoice || uniqid()
         this.setRequest(payload)
         return this
@@ -95,3 +91,4 @@ const creditManagement = () => {
     return _creditManagement
 }
 export default creditManagement
+export { CreditManagement as CreditManagementClass }

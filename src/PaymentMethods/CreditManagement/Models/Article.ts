@@ -1,6 +1,6 @@
 import IArticle from '../../../Models/Services/IArticle'
 
-export interface ICreditArticle extends Omit<IArticle, 'type'> {
+export interface ICreditArticle extends IArticle{
     type: 'Regular' | 'SubTotal' | 'Discount' | 'TotalAmountExVat' | 'TotalVat' | 'TotalAmount'
     identifier: string
     description: string

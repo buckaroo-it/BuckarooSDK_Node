@@ -1,12 +1,11 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { Pay } from './Models/Pay'
+import { BankTransferModelStrategy } from './Models/Pay'
 
 class Banktransfer extends PayablePaymentMethod {
     protected _paymentName = 'transfer'
     protected _serviceVersion = 1
-
+    modelStrategy = new BankTransferModelStrategy({})
     pay(payload) {
-        this.serviceParametersStrategy = Pay
         return super.pay(payload)
     }
 }
@@ -17,3 +16,4 @@ const banktransfer: () => Banktransfer = () => {
     return _banktransfer
 }
 export default banktransfer
+export { Banktransfer as BanktransferClass }

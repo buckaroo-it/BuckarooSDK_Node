@@ -8,10 +8,10 @@ class GiftCard extends PayablePaymentMethod {
     refund(payload: RefundPayload & { name: string }) {
         return super.refund(payload)
     }
-    setPayload(payload: any) {
+    setRequest(payload: any) {
         this.paymentName = payload.name || this._paymentName
         delete payload.name
-        super.setPayload(payload)
+        super.setRequest(payload)
     }
 }
 
@@ -22,3 +22,4 @@ const giftCard: () => GiftCard = () => {
     return _giftCard
 }
 export default giftCard
+export { GiftCard as GiftCardClass }

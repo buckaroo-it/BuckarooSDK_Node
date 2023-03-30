@@ -1,7 +1,7 @@
 
 export default interface IArticle {
     identifier: string
-    type?: 'Unknown' | 'PhysicalArticle' | 'DigitalArticle' | 'Giftcard' | 'Discount' | 'ShippingFee' | 'Surcharge' | 'Info' | 'ShippingFees'
+    type?: string
     brand?: string
     manufacturer?: string
     unitCode?: string

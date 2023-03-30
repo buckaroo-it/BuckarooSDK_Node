@@ -1,7 +1,6 @@
 import { TransactionRequest } from '../Models/Request'
 import { IConfig } from '../Utils/Types'
 import { buckarooClient } from '../BuckarooClient'
-import { ServiceParameters } from '../Utils/ServiceParameters'
 import { Combinable } from '../Utils/Combinable'
 import { ITransaction } from '../Models/ITransaction'
 import { RequestType } from '../Constants/Endpoints'
@@ -9,6 +8,7 @@ import { TransactionResponse } from '../Models/TransactionResponse'
 import {IServiceList} from "../Models/ServiceList";
 import {IPProtocolVersion} from "../Constants/IPProtocolVersion";
 import {BuckarooError} from "../Utils/BuckarooError";
+import {ModelStrategy} from "../Utils/ModelStrategy";
 
 export default abstract class PaymentMethod {
     protected readonly _requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
@@ -20,7 +20,7 @@ export default abstract class PaymentMethod {
     protected request: TransactionRequest = new TransactionRequest()
     private _action = ''
     protected serviceParameters: IServiceList = {}
-
+    protected modelStrategy:ModelStrategy<any> = new ModelStrategy({})
 
     get paymentName(): string {
         return this._paymentName
@@ -144,10 +144,7 @@ export default abstract class PaymentMethod {
         }
         this.request.setData(basicParametersData)
     }
-    public serviceParametersStrategy(data){
-        return data
-    }
     public formatServiceParameters(data){
-        return ServiceParameters.formatData(this.serviceParametersStrategy(data))
+        return this.modelStrategy.format(data)
     }
 }

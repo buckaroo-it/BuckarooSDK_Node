@@ -1,17 +1,15 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { IPay, Pay } from './Models/Pay'
+import { IPay, In3ModelStrategy } from './Models/Pay'
 import { RefundPayload } from '../../Models/ITransaction'
 
 class In3 extends PayablePaymentMethod {
     protected _paymentName = 'capayable'
-
+    modelStrategy = new In3ModelStrategy({})
     pay(payload: IPay) {
-        this.serviceParametersStrategy = Pay
         return super.pay(payload)
     }
     payInInstallments(payload) {
         this.action = 'PayInInstallments'
-        this.serviceParametersStrategy = Pay
         return super.transactionRequest(payload)
     }
     refund(payload: RefundPayload) {
@@ -25,3 +23,4 @@ const in3: () => In3 = () => {
     return _in3
 }
 export default in3
+export { In3 as In3Class }

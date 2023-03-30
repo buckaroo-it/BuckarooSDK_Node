@@ -4,6 +4,6 @@ export default interface IAddress {
     houseNumberAdditional: string
     zipcode: string
     city: string
-    state: string
+    state?: string
     country: string
 }

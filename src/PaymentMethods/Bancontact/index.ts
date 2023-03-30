@@ -39,3 +39,4 @@ export const bancontact: () => Bancontact = () => {
     return _bancontact
 }
 export default bancontact
+export { Bancontact as BancontactClass }

@@ -18,3 +18,4 @@ const kbc: () => KBC = () => {
     return _kbc
 }
 export default kbc
+export { KBC as KBCClass }
