@@ -1,7 +1,5 @@
-import { initializeBuckarooClient } from '../src/BuckarooClient'
+require('./BuckarooClient')
 import creditManagement from '../src/PaymentMethods/CreditManagement'
-
-initializeBuckarooClient()
 ;(async () => {
     try {
         const info = await creditManagement().invoiceInfo({

@@ -11,4 +11,3 @@ export interface ICreate extends ITransaction {
     validUntil?: string
     creationBalance: Number
 }
-

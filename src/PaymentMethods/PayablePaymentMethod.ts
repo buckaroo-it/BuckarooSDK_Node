@@ -1,6 +1,6 @@
 import PaymentMethod from './PaymentMethod'
 import { uniqid } from '../Utils/Functions'
-import {ITransaction, Payload, RefundPayload} from '../Models/ITransaction'
+import { ITransaction, Payload, RefundPayload } from '../Models/ITransaction'
 import { TransactionResponse } from '../Models/TransactionResponse'
 import { IConfig } from '../Utils/Types'
 
@@ -11,8 +11,7 @@ export abstract class PayablePaymentMethod extends PaymentMethod {
         'returnURLCancel',
         'pushURL'
     ]
-    protected payTransaction(payload:ITransaction): Promise<TransactionResponse> {
-
+    protected payTransaction(payload: ITransaction): Promise<TransactionResponse> {
         payload.invoice = payload.invoice || uniqid()
         payload.order = payload.order || uniqid()
 
@@ -27,10 +26,8 @@ export abstract class PayablePaymentMethod extends PaymentMethod {
         this.action = 'Refund'
         return this.payTransaction(payload)
     }
-    protected transactionInvoice(payload:ITransaction): Promise<TransactionResponse> {
-
+    protected transactionInvoice(payload: ITransaction): Promise<TransactionResponse> {
         payload.invoice = payload.invoice || uniqid()
-
         return this.transactionRequest(payload)
     }
 }

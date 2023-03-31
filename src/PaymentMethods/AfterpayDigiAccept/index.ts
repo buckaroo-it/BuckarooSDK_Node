@@ -1,4 +1,4 @@
-import {AfterpayClass} from "../Afterpay";
+import { AfterpayClass } from '../Afterpay'
 
 class AfterpayDigiAccept extends AfterpayClass {
     protected _paymentName = 'afterpaydigiaccept'
@@ -9,22 +9,21 @@ class AfterpayDigiAccept extends AfterpayClass {
     refund(payload) {
         return super.refund(payload)
     }
-    authorize(payload){
+    authorize(payload) {
         return super.authorize(payload)
     }
-    authorizeRemainder(payload){
+    authorizeRemainder(payload) {
         return super.authorizeRemainder(payload)
     }
-    cancelAuthorize(payload){
+    cancelAuthorize(payload) {
         return super.cancelAuthorize(payload)
     }
     capture(payload) {
         return super.capture(payload)
     }
-    payRemainder(payload){
+    payRemainder(payload) {
         return super.payRemainder(payload)
     }
-
 }
 
 let _afterpaydigiaccept: AfterpayDigiAccept

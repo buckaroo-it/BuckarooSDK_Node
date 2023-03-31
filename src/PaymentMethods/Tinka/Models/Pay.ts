@@ -1,37 +1,70 @@
 import { Payload } from '../../../Models/ITransaction'
+import { AfterPayCustomer } from '../../Afterpay/Model/Recipient'
+import { ITinkaArticle } from './Article'
+import IPerson from '../../../Models/Services/IPerson'
+import { ModelStrategy } from '../../../Utils/ModelStrategy'
 
-import { ServiceParameters } from '../../../Utils/ServiceParameters'
-import {
-    adaptBilling,
-    adaptShipping,
-    IBillingRecipient,
-    IShippingRecipient
-} from '../../Afterpay/Model/Recipient'
-
-import { ITinkaArticle, TinkaArticle } from './Article'
-export interface IPay extends Payload {
-    customer?: {
-        firstName: string
-        lastName: string
-        initials?: string
-        gender?: string
-        dateOfBirth?: string
-    }
+export interface Pay {
+    customer?: Pick<IPerson, 'firstName' | 'lastName' | 'initials' | 'gender' | 'birthDate'>
     paymentMethod: string
     articles: ITinkaArticle[]
-    billing: IBillingRecipient
-    shipping?: IShippingRecipient
+    billing: AfterPayCustomer
+    shipping?: AfterPayCustomer
     deliveryMethod: string
     deliveryDate?: string
 }
+export type IPay = Pay & Payload
+export class TinkaModelStrategy extends ModelStrategy<Pay> {
+    constructor(data) {
+        super(data)
 
-export const Pay = (data) => {
-    data = new ServiceParameters(data)
-    if (data.billing) data.billing = adaptBilling(data.billing)
-    if (data.shipping) data.shipping = adaptShipping(data.shipping || data.billing)
-    data.setParameterKeys({
-        lastNamePrefix: 'PrefixLastName'
-    })
-    if (data.articles) data.articles = TinkaArticle(data.articles)
-    return data
+        if (this.data.billing) {
+            this.data.shipping = this.data.shipping || { ...this.data.billing }
+        }
+        this.groupTypes = {
+            billing: 'BillingCustomer',
+            shipping: 'ShippingCustomer',
+            articles: 'Article'
+        }
+        let customerKeys = {
+            address: {
+                houseNumber: 'streetNumber',
+                houseNumberAdditional: 'streetNumberAdditional',
+                zipcode: 'postalCode',
+                state: false
+            },
+            recipient: {
+                lastNamePrefix: 'PrefixLastName',
+                birthDate: 'dateOfBirth',
+                category: false,
+                vatApplicable: false,
+                careOf: false,
+                vatNumber: false,
+                companyName: false,
+                placeOfBirth: false,
+                culture: false,
+                title: false,
+                chamberOfCommerce: false
+            },
+            phone: {
+                landline: false,
+                mobile: 'phone'
+            }
+        }
+
+        this.keys = {
+            customer: {
+                birthDate: 'dateOfBirth'
+            },
+            articles: {
+                price: 'UnitGrossPrice',
+                vatCategory: false,
+                vatPercentage: false,
+                brand: false
+            },
+            billing: customerKeys,
+            shipping: customerKeys
+        }
+        this.countable = ['articles']
+    }
 }

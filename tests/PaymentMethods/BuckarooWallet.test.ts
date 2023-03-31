@@ -13,7 +13,6 @@ describe('BuckarooWallet methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                
             })
     })
     test('Refund', async () => {
@@ -26,7 +25,6 @@ describe('BuckarooWallet methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                
             })
     })
     test('CancelReservation', async () => {
@@ -37,7 +35,6 @@ describe('BuckarooWallet methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                
             })
     })
     test('deposit', async () => {
@@ -50,7 +47,6 @@ describe('BuckarooWallet methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                
             })
     })
     test('Withdrawal', async () => {
@@ -63,7 +59,6 @@ describe('BuckarooWallet methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                
             })
     })
     test('Create Wallet', async () => {
@@ -83,7 +78,6 @@ describe('BuckarooWallet methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                
             })
     })
 })

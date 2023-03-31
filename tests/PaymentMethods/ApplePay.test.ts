@@ -13,7 +13,7 @@ describe('Applepay methods', () => {
     //         })
     //         .then((data) => {
     //             expect(data).toBeDefined()
-    //             
+    //
     //         })
     // })
     test('Refund', async () => {
@@ -24,7 +24,6 @@ describe('Applepay methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                
             })
     })
     test('Specifications', async () => {

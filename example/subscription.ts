@@ -1,8 +1,6 @@
-import { initializeBuckarooClient } from '../src/BuckarooClient'
+require('./BuckarooClient')
 import subscriptions from '../src/PaymentMethods/Subscriptions'
 import ideal from '../src/PaymentMethods/Ideal'
-
-initializeBuckarooClient()
 
 const subscription = subscriptions().createCombined({
     includeTransaction: false,
@@ -25,11 +23,14 @@ const subscription = subscriptions().createCombined({
         culture: 'nl-NL',
         companyName: 'My Company Coporation',
         vatApplicable: true,
-        chamberOfCommerce: '20091741'
+        chamberOfCommerce: '20091741',
+        vatNumber: '32',
+        identificationNumber: 'dsa'
     },
     address: {
         street: 'Hoofdstraat',
         houseNumber: '90',
+        houseNumberAdditional: '',
         zipcode: '8441ER',
         city: 'Heerenveen',
         country: 'NL'

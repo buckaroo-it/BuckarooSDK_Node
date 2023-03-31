@@ -10,44 +10,45 @@ describe('testing Ideal methods', () => {
         })
     })
     test('Pay Simple Payload', async () => {
-        // ideal.setPayload()
-        await ideal.pay({
-            amountDebit: 10.1,
-            issuer: 'ABNANL2A',
-            pushURL: 'https://buckaroo.nextto.dev/push',
-            clientIP: {
-                address: '123.456.789.123',
-                type: 0
-            },
-            additionalParameters: {
-                initiated_by_magento: 1,
-                service_action: 'something'
-            }
-        }).then((data) => {
-            expect(data.isWaitingOnUserInput()).toBeTruthy()
-        })
+        await ideal
+            .pay({
+                amountDebit: 10.1,
+                issuer: 'ABNANL2A',
+                pushURL: 'https://buckaroo.nextto.dev/push',
+                clientIP: {
+                    address: '123.456.789.123',
+                    type: 0
+                },
+                additionalParameters: {
+                    initiated_by_magento: 1,
+                    service_action: 'something'
+                }
+            })
+            .then((data) => {
+                expect(data.isWaitingOnUserInput()).toBeTruthy()
+            })
     })
     test('Refund', async () => {
-        await ideal.refund({
-            order: uniqid(),
-            invoice: uniqid(),
-            originalTransactionKey: '97DC0A03BBDF4DAAAC694D7FEC8785E1',
-            amountCredit: 4.23,
-            clientIP: {
-                address: '123.456.789.123',
-                type: 0
-            },
-            additionalParameters: {
-                initiated_by_magento: '1',
-                service_action: 'something'
-            }
-        }).then((data) => {
-            expect(data).toBeDefined()
-        })
+        await ideal
+            .refund({
+                order: uniqid(),
+                invoice: uniqid(),
+                originalTransactionKey: '97DC0A03BBDF4DAAAC694D7FEC8785E1',
+                amountCredit: 4.23,
+                clientIP: {
+                    address: '123.456.789.123',
+                    type: 0
+                },
+                additionalParameters: {
+                    initiated_by_magento: '1',
+                    service_action: 'something'
+                }
+            })
+            .then((data) => {
+                expect(data).toBeDefined()
+            })
     })
     // test('Specifications', async () => {
     //     const idealSpecifications = await ideal.specification()
     // })
 })
-
-

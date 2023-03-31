@@ -27,7 +27,7 @@ export declare interface ITransaction {
 }
 
 export declare type ClientIP =
-    string
+    | string
     | {
           address: string
           type: number

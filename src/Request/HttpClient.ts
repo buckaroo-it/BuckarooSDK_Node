@@ -9,8 +9,7 @@ type Options = {
     headers: ReturnType<typeof headers.getHeaders>
     data?: any
 }
-const httpsCall = (options:Options) => {
-
+const httpsCall = (options: Options) => {
     return new Promise<any>(function (resolve, reject) {
         const req = https.request(options, (res) => {
             let body: Uint8Array[] = []

@@ -1,7 +1,6 @@
 require('../BuckarooClient.test')
 import payPerEmail from '../../src/PaymentMethods/PayPerEmail/index'
 import Gender from '../../src/Constants/Gender'
-import { ServiceObject } from '../../src/Models/ServiceObject'
 
 const method = payPerEmail()
 
@@ -20,8 +19,7 @@ describe('PayPerEmail methods', () => {
                 paymentMethodsAllowed: 'ideal'
             })
             .then((response) => {
-                response = new ServiceObject(response)
-                console.log(response.find('parameterErrors'))
+                expect(response).toBeDefined()
             })
     })
 })

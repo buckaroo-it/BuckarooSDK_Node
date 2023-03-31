@@ -1,14 +1,13 @@
-import { services, ISubscription } from './Models/Services'
+import { SubscriptionsModelStrategy, ISubscription } from './Models/Services'
 import { IConfig } from '../../Utils/Types'
 import PaymentMethod from '../PaymentMethod'
-import {ITransaction} from "../../Models/ITransaction";
+import { ITransaction } from '../../Models/ITransaction'
+
 class Subscriptions extends PaymentMethod {
     protected _paymentName = 'Subscriptions'
     protected _requiredFields: Array<keyof IConfig> = ['currency']
-
-    serviceParametersStrategy(data): any {
-        return services(data)
-    }
+    combinable: boolean = true
+    modelStrategy = new SubscriptionsModelStrategy({})
 
     create(payload: ISubscription): Promise<any> {
         this.action = 'CreateSubscription'
@@ -61,3 +60,4 @@ const subscriptions = () => {
     return _subscriptions
 }
 export default subscriptions
+export { Subscriptions as SubscriptionsClass }

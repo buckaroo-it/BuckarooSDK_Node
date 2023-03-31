@@ -1,16 +1,22 @@
 import { Payload } from '../../../Models/ITransaction'
+import { ModelStrategy } from '../../../Utils/ModelStrategy'
+import IPerson from '../../../Models/Services/IPerson'
 
-export interface IPay extends Payload {
-    costumer: {
-        firstName: string
-        lastName: string
-    }
+export interface Pay {
+    costumer: Pick<IPerson, 'firstName' | 'lastName'>
     email: string
 }
-export const Pay = (data: IPay) => {
-    return {
-        customerFirstName: data.costumer.firstName,
-        customerLastName: data.costumer.lastName,
-        customerEmail: data.email
+export type IPay = Pay & Payload
+
+export class Przelewy24ModelStrategy extends ModelStrategy<Pay> {
+    constructor(data) {
+        super(data)
+        this.keys = {
+            costumer: {
+                firstName: 'customerFirstName',
+                lastName: 'customerLastName'
+            },
+            email: 'customerEmail'
+        }
     }
 }

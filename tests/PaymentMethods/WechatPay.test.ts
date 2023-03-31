@@ -12,7 +12,6 @@ describe('WechatPay', () => {
             })
             .then((response) => {
                 console.log(response)
-                console.log(response.find('parameterErrors'))
             })
     })
     test('Refund', async () => {
@@ -23,7 +22,6 @@ describe('WechatPay', () => {
             })
             .then((response) => {
                 console.log(response)
-                console.log(response.find('parameterErrors'))
             })
     })
 })

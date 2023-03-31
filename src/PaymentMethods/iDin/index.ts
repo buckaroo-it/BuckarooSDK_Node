@@ -1,14 +1,14 @@
-import PaymentMethod from "../PaymentMethod";
-import {IPay} from "../Ideal/Models/Pay";
+import PaymentMethod from '../PaymentMethod'
+import { IPay } from '../Ideal/Models/Pay'
 class Idin extends PaymentMethod {
     protected _paymentName = 'Idin'
-    identify(payload:IPay) {
+    identify(payload: IPay) {
         return this.dataRequest(payload)
     }
-    verify(payload:IPay) {
+    verify(payload: IPay) {
         return this.dataRequest(payload)
     }
-    login(payload:IPay){
+    login(payload: IPay) {
         return this.dataRequest(payload)
     }
 }

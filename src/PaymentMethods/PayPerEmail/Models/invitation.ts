@@ -1,7 +1,8 @@
 import { Payload } from '../../../Models/ITransaction'
 import Gender from '../../../Constants/Gender'
+import { ModelStrategy } from '../../../Utils/ModelStrategy'
 
-export interface Invitation extends Payload {
+export interface Invitation {
     costumer: {
         firstName: string
         lastName: string
@@ -13,15 +14,17 @@ export interface Invitation extends Payload {
     paymentMethodsAllowed?: string
     attachment?: string
 }
-export const services = (data: Invitation) => {
-    return {
-        customerGender: data.costumer.gender,
-        customerFirstName: data.costumer.firstName,
-        customerLastName: data.costumer.lastName,
-        merchantSendsEmail: data.merchantSendsEmail,
-        customerEmail: data.email,
-        expirationDate: data.expirationDate,
-        paymentMethodsAllowed: data.paymentMethodsAllowed,
-        attachment: data.attachment
+export type IInvitation = Payload & Invitation
+export class PayPerEmailModelStrategy extends ModelStrategy<Invitation> {
+    constructor(data) {
+        super(data)
+        this.keys = {
+            costumer: {
+                gender: 'customerGender',
+                firstName: 'customerFirstName',
+                lastName: 'customerLastName'
+            },
+            email: 'customerEmail'
+        }
     }
 }

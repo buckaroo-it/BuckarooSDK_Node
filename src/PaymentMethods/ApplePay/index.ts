@@ -1,6 +1,6 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { IPay } from './Models/Pay'
-import {RefundPayload} from "../../Models/ITransaction";
+import { RefundPayload } from '../../Models/ITransaction'
 
 class ApplePay extends PayablePaymentMethod {
     protected _paymentName = 'applepay'

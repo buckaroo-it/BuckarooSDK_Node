@@ -1,5 +1,5 @@
 export default interface IPhone {
-    landline?: string
-    mobile?: string
-    fax?: string
+    landline: string
+    mobile: string
+    fax: string
 }

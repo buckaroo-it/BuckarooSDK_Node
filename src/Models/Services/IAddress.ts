@@ -1,6 +1,6 @@
 export default interface IAddress {
     street: string
-    houseNumber: string | Number
+    houseNumber?: string | Number
     houseNumberAdditional: string
     zipcode: string
     city: string

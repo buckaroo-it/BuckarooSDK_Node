@@ -1,14 +1,13 @@
 import { TransactionRequest } from '../Models/Request'
 import { IConfig } from '../Utils/Types'
 import { buckarooClient } from '../BuckarooClient'
-import { Combinable } from '../Utils/Combinable'
 import { ITransaction } from '../Models/ITransaction'
 import { RequestType } from '../Constants/Endpoints'
 import { TransactionResponse } from '../Models/TransactionResponse'
-import {IServiceList} from "../Models/ServiceList";
-import {IPProtocolVersion} from "../Constants/IPProtocolVersion";
-import {BuckarooError} from "../Utils/BuckarooError";
-import {ModelStrategy} from "../Utils/ModelStrategy";
+import { IServiceList } from '../Models/ServiceList'
+import { IPProtocolVersion } from '../Constants/IPProtocolVersion'
+import { BuckarooError } from '../Utils/BuckarooError'
+import { ModelStrategy } from '../Utils/ModelStrategy'
 
 export default abstract class PaymentMethod {
     protected readonly _requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
@@ -19,8 +18,9 @@ export default abstract class PaymentMethod {
     protected _serviceVersion = 0
     protected request: TransactionRequest = new TransactionRequest()
     private _action = ''
+    public combinable: boolean = false
     protected serviceParameters: IServiceList = {}
-    protected modelStrategy:ModelStrategy<any> = new ModelStrategy({})
+    protected modelStrategy: ModelStrategy<any> = new ModelStrategy({})
 
     get paymentName(): string {
         return this._paymentName
@@ -37,12 +37,11 @@ export default abstract class PaymentMethod {
     protected set action(value: string) {
         this._action = value
     }
-    getRequestData(){
+    getRequestData() {
         return this.request.getData()
     }
 
     public setRequest(data: ITransaction) {
-
         this.setBasicParameters(data)
 
         this.setClientIp()
@@ -55,24 +54,22 @@ export default abstract class PaymentMethod {
     }
 
     protected setServiceList(serviceList: object) {
-
         this.serviceParameters = {
             Action: this.action,
             Name: this.paymentName,
-            Version: this.serviceVersion,
+            Version: this.serviceVersion
         }
 
         if (Object.keys(serviceList).length > 0) {
             this.serviceParameters.Parameters = this.formatServiceParameters(serviceList)
         }
         this.request.addServices(this.serviceParameters)
-
     }
     protected setAdditionalParameters() {
         let additionalParameters = this.getRequestData().additionalParameters
         if (additionalParameters) {
             this.request.setDataKey('additionalParameters', {
-                additionalParameter: Object.keys(additionalParameters).map((key,value) => {
+                additionalParameter: Object.keys(additionalParameters).map((key, value) => {
                     return {
                         Name: key,
                         Value: value || ''
@@ -110,21 +107,23 @@ export default abstract class PaymentMethod {
                 return new TransactionResponse(response)
             })
     }
-    public combine(method: Combinable) {
-        const data = method.getRequestData()
-        const services = {...this.getRequestData().services}
-        if (data) {
-            Object.assign(this.getRequestData(), data)
-            if (services?.ServiceList) {
-                this.request.addServices(services.ServiceList[0])
+    public combine(method: PaymentMethod) {
+        if (method.combinable && this.combinable) {
+            const data = method.getRequestData()
+            if (data) {
+                const services = { ...this.getRequestData().services }
+                Object.assign(this.getRequestData(), data)
+                if (services?.ServiceList) {
+                    this.request.addServices(services.ServiceList[0])
+                }
             }
         }
         return this
     }
     public setClientIp() {
         let ip = this.getRequestData().clientIP
-        if(typeof ip === 'string'){
-            this.request.setDataKey('clientIP' ,{
+        if (typeof ip === 'string') {
+            this.request.setDataKey('clientIP', {
                 type: IPProtocolVersion.getVersion(ip),
                 address: ip
             })
@@ -135,7 +134,7 @@ export default abstract class PaymentMethod {
     }
 
     private setBasicParameters(data) {
-        let basicParametersData = {}
+        let basicParametersData = this.request.getData()
         for (const basicParameterDataKey in data) {
             if (this.request.basicParameters[basicParameterDataKey]) {
                 basicParametersData[basicParameterDataKey] = data[basicParameterDataKey]
@@ -144,7 +143,7 @@ export default abstract class PaymentMethod {
         }
         this.request.setData(basicParametersData)
     }
-    public formatServiceParameters(data){
+    public formatServiceParameters(data) {
         return this.modelStrategy.format(data)
     }
 }

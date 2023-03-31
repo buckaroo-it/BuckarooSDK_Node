@@ -1,12 +1,12 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { RefundPayload } from '../../Models/ITransaction'
-import { IPay, Pay } from './Models/Pay'
+import { IPay, TrustlyModelStrategy } from './Models/Pay'
 
 class Trustly extends PayablePaymentMethod {
     protected _paymentName = 'Trustly'
 
+    modelStrategy = new TrustlyModelStrategy({})
     pay(payload: IPay) {
-        this.serviceParametersStrategy = Pay
         return super.pay(payload)
     }
     refund(payload: RefundPayload) {
@@ -19,3 +19,4 @@ const trustly: () => Trustly = () => {
     return _trustly
 }
 export default trustly
+export { Trustly as TrustlyClass }

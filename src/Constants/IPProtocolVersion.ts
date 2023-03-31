@@ -12,6 +12,5 @@ export class IPProtocolVersion {
             return IPProtocolVersion.IPV6
         }
         throw new Error(`Invalid IP address: ${ipAddress}`)
-
     }
 }

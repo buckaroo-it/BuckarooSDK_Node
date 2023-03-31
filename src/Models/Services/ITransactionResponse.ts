@@ -1,5 +1,5 @@
-import {IServiceList} from "../ServiceList";
-import {AdditionalParameter} from "../ITransaction";
+import { IServiceList } from '../ServiceList'
+import { AdditionalParameter } from '../ITransaction'
 
 export declare interface ITransactionResponse {
     Key: string

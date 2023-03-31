@@ -1,14 +1,15 @@
-import RecipientCategory from "../../src/Constants/RecipientCategory";
+import RecipientCategory from '../../src/Constants/RecipientCategory'
 import Billink from '../../src/PaymentMethods/Billink/index'
 import Gender from '../../src/Constants/Gender'
-import {BuckarooError} from "../../src/Utils/BuckarooError";
-import {IPay} from "../../src/PaymentMethods/Billink/Models/Pay";
+import { BuckarooError } from '../../src/Utils/BuckarooError'
+import { IPay } from '../../src/PaymentMethods/Billink/Models/Pay'
+import { country } from '../../src/PaymentMethods/Afterpay/Model/Recipient'
 
 require('../BuckarooClient.test')
 
 const method = Billink()
 
-describe('testing methods', () => {
+describe('Billink methods', () => {
     test('Specifications', async () => {
         await method.specification().then((data) => {
             data.getActionRequestParameters('Pay')
@@ -20,7 +21,8 @@ describe('testing methods', () => {
             .pay(payload)
             .then((data) => {
                 expect(data).toBeDefined()
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 expect(err instanceof BuckarooError).toBeTruthy()
             })
     })
@@ -48,7 +50,6 @@ describe('testing methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                
             })
     })
     test('Capture', async () => {
@@ -60,18 +61,26 @@ describe('testing methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                
             })
     })
 })
 
-let payload:IPay = {
+let payload: IPay = {
     amountDebit: 12,
-    articles: [],
+    articles: [
+        {
+            price: 23,
+            priceExcl: 232,
+            description: '',
+            identifier: '',
+            vatPercentage: 0,
+            quantity: 23
+        }
+    ],
     billing: {
         address: {
             city: '',
-            country: 'NL',
+            country: country.NL,
             houseNumber: '',
             houseNumberAdditional: '',
             street: '',
@@ -79,19 +88,18 @@ let payload:IPay = {
         },
         email: 'em',
         phone: {
-            mobile: 'das'
+            mobile: '043424243234'
         },
         recipient: {
-            birthDate: '',
+            // birthDate: '',
             careOf: '',
-            category: RecipientCategory.COMPANY,
-            chamberOfCommerce: '',
-            companyName: '',
-            firstName: '',
+            category: RecipientCategory.B2B,
+            chamberOfCommerce: '54t',
+            companyName: 'rwewr',
+            firstName: 't54',
             gender: Gender.MALE,
-            lastName: '',
+            lastName: '5t4',
             title: '',
-            vatApplicable: false,
             vatNumber: ''
         }
     }

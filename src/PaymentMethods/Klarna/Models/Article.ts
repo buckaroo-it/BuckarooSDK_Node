@@ -5,5 +5,4 @@ export interface IKlarnaArticle extends IArticle {
     quantity: number
     price: number
     vatPercentage: number
-    description?: string
 }

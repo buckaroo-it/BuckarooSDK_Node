@@ -1,19 +1,19 @@
 import IArticle from '../../../Models/Services/IArticle'
 
-export interface ICreditArticle extends IArticle{
+export interface ICreditArticle extends IArticle {
     type: 'Regular' | 'SubTotal' | 'Discount' | 'TotalAmountExVat' | 'TotalVat' | 'TotalAmount'
     identifier: string
     description: string
-    quantity: Number
-    price: Number
-    totalVat: Number
-    vatPercentage: Number
+    quantity: number
+    price: number
+    totalVat: number
+    vatPercentage: number
     productGroupName?: string
-    productGroupOrderIndex?: Number
-    productOrderIndex?: Number
+    productGroupOrderIndex?: number
+    productOrderIndex?: number
     unitOfMeasurement?: string
-    discountPercentage?: Number
-    totalDiscount?: Number
-    totalAmountExVat?: Number
-    totalAmount?: Number
+    discountPercentage?: number
+    totalDiscount?: number
+    totalAmountExVat?: number
+    totalAmount?: number
 }

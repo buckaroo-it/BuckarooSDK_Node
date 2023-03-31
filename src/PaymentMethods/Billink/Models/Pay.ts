@@ -1,14 +1,28 @@
 import { Payload } from '../../../Models/ITransaction'
-import {AfterPayPerson, IBillingRecipient, IShippingRecipient,AfterPayCompany} from '../../Afterpay/Model/Recipient'
+import { Address } from '../../Afterpay/Model/Recipient'
 import { IBillinkArticle } from './Article'
-import { servicesStrategy as AfterPayStrategy } from '../../Afterpay/Model/Services'
+import { ModelStrategy } from '../../../Utils/ModelStrategy'
+import IPerson from '../../../Models/Services/IPerson'
+import ICompany from '../../../Models/Services/ICompany'
+import IPhone from '../../../Models/Services/IPhone'
+import { ICustomer } from '../../../Models/Services/ICustomer'
+import RecipientCategory from '../../../Constants/RecipientCategory'
+import Gender from '../../../Constants/Gender'
 
-interface Recipient extends Omit<IBillingRecipient, 'recipient'>{
-    recipient: AfterPayPerson | AfterPayCompany
+export declare interface Recipient extends ICustomer {
+    category: RecipientCategory.B2C | RecipientCategory.B2B
+    gender: Gender
 }
-export interface IPay extends Payload {
-    billing: Recipient
-    shipping?: Recipient
+export declare interface Customer {
+    recipient: Recipient & (IPerson | Omit<ICompany, 'identificationNumber' | 'vatApplicable'>)
+    address: Address
+    phone?: IPhone
+    email: string
+}
+
+export interface Pay {
+    billing: Customer
+    shipping?: Customer
     articles: IBillinkArticle[]
     trackandtrace?: string
     vATNumber?: string
@@ -17,5 +31,55 @@ export interface IPay extends Payload {
     bankCode?: string
     ourReference?: string
 }
+export type IPay = Pay & Payload
 
-export const servicesStrategy = AfterPayStrategy
+export  class BillinkModelStrategy extends ModelStrategy<Pay> {
+    constructor(data) {
+        super(data)
+        this.groupTypes = {
+            billing: 'BillingCustomer',
+            shipping: 'ShippingCustomer',
+            articles: 'Article'
+        }
+        let customerKeys = {
+            address: {
+                houseNumber: 'streetNumber',
+                houseNumberAdditional: 'streetNumberAdditional',
+                zipcode: 'postalCode'
+            },
+            recipient: {
+                gender: 'salutation',
+                companyName: 'careOf',
+                title: 'salutation'
+            },
+            phone: {
+                landline: 'phone',
+                mobile: 'mobilePhone'
+            }
+        }
+        this.keys = {
+            articles: {
+                price: 'grossUnitPriceIncl',
+                priceExcl: 'grossUnitPriceExcl'
+            },
+            billing: {
+                address: {
+                    houseNumber: 'streetNumber',
+                    houseNumberAdditional: 'streetNumberAdditional',
+                    zipcode: 'postalCode'
+                },
+                recipient: {
+                    gender: 'salutation',
+                    companyName: 'careOf',
+                    title: 'salutation'
+                },
+                phone: {
+                    landline: 'phone',
+                    mobile: 'mobilePhone'
+                }
+            },
+            shipping: customerKeys
+        }
+        this.countable = ['articles']
+    }
+}

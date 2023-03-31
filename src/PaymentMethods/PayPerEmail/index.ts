@@ -1,15 +1,14 @@
 import PaymentMethod from '../PaymentMethod'
-import { Invitation, services } from './Models/invitation'
+import { IInvitation, PayPerEmailModelStrategy } from './Models/invitation'
 import { uniqid } from '../../Utils/Functions'
 
 class PayPerEmail extends PaymentMethod {
     protected _paymentName = 'payperemail'
-    paymentInvitation(payload: Invitation) {
+    modelStrategy = new PayPerEmailModelStrategy({})
+    paymentInvitation(payload: IInvitation) {
         this.action = 'paymentInvitation'
         payload.invoice = payload.invoice || uniqid()
-        this.serviceParametersStrategy = services
-        this.setRequest(payload)
-        return super.transactionRequest()
+        return super.transactionRequest(payload)
     }
 }
 
@@ -19,3 +18,4 @@ const payPerEmail: () => PayPerEmail = () => {
     return _payPerEmail
 }
 export default payPerEmail
+export { PayPerEmail as PayPerEmailClass }

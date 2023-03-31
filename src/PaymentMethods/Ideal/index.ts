@@ -5,6 +5,7 @@ import { RefundPayload } from '../../Models/ITransaction'
 class Ideal extends PayablePaymentMethod {
     protected _paymentName = 'ideal'
     protected _serviceVersion = 2
+    combinable = true
     pay(payload: IPay) {
         return super.pay(payload)
     }
@@ -13,14 +14,15 @@ class Ideal extends PayablePaymentMethod {
     }
     issuers() {
         return this.specification().then((response) => {
-            return response.getActionRequestParameters('Pay')
+            return response
+                .getActionRequestParameters('Pay')
                 ?.find((item) => item.Name === 'issuer')
                 ?.ListItemDescriptions.map((item) => {
-                return {
-                    id: item.Value,
-                    name: item.Description
-                }
-            })
+                    return {
+                        id: item.Value,
+                        name: item.Description
+                    }
+                })
         })
     }
 }

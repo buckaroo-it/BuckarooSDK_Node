@@ -1,12 +1,11 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { RefundPayload } from '../../Models/ITransaction'
-import { IPay, Pay } from './Models/Pay'
+import { IPay, TinkaModelStrategy } from './Models/Pay'
 
 class Tinka extends PayablePaymentMethod {
     protected _paymentName = 'tinka'
-
+    modelStrategy = new TinkaModelStrategy({})
     pay(payload: IPay) {
-        this.serviceParametersStrategy = Pay
         return super.pay(payload)
     }
     refund(payload: RefundPayload) {
@@ -20,3 +19,4 @@ const tinka: () => Tinka = () => {
     return _tinka
 }
 export default tinka
+export { Tinka as TinkaClass }

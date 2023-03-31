@@ -1,18 +1,19 @@
 import { IConfig } from '../../Utils/Types'
 import PaymentMethod from '../PaymentMethod'
-import { IInvoice, CreditManagementModelStrategy } from './Models/Invoice'
+import { IInvoice } from './Models/Invoice'
 import { ICreditNote } from './Models/CreditNote'
 import { uniqid } from '../../Utils/Functions'
-import { debtor, debtorInfo, IDebtor } from './Models/Debtor'
+import { IDebtor } from './Models/Debtor'
 import { IPaymentPlan } from './Models/PaymentPlan'
 import { ITransaction } from '../../Models/ITransaction'
-import { IMultiInfoInvoice, multiInfoInvoice } from './Models/multiInfoInvoice'
+import { IMultiInfoInvoice } from './Models/multiInfoInvoice'
 import { AddOrUpdateProductLines, IAddOrUpdateProductLines } from './Models/AddOrUpdateProductLines'
+import { CreditManagementModelStrategy } from './Models/Services'
 
 class CreditManagement extends PaymentMethod {
     protected _paymentName = 'CreditManagement3'
     protected _requiredFields: Array<keyof IConfig> = ['currency']
-
+    combinable = true
     protected _serviceVersion = 1
     modelStrategy = new CreditManagementModelStrategy({})
     createInvoice(payload: IInvoice): Promise<any> {
@@ -34,7 +35,7 @@ class CreditManagement extends PaymentMethod {
     addOrUpdateDebtor(payload: IDebtor) {
         this.action = 'AddOrUpdateDebtor'
 
-        return this.dataRequest(debtor(payload))
+        return this.dataRequest(payload)
     }
     createPaymentPlan(payload: IPaymentPlan) {
         this.action = 'CreatePaymentPlan'
@@ -60,17 +61,17 @@ class CreditManagement extends PaymentMethod {
     invoiceInfo(payload: IMultiInfoInvoice) {
         this.action = 'InvoiceInfo'
 
-        return this.dataRequest(multiInfoInvoice(payload))
+        return this.dataRequest(payload)
     }
     debtorInfo(payload: Required<Pick<IInvoice, 'debtor'>>) {
         this.action = 'DebtorInfo'
 
-        return this.dataRequest(debtorInfo(payload))
+        return this.dataRequest(payload)
     }
 
     addOrUpdateProductLines(payload: IAddOrUpdateProductLines) {
         this.action = 'AddOrUpdateProductLines'
-        return this.dataRequest(AddOrUpdateProductLines(payload))
+        return this.dataRequest(payload)
     }
 
     resumeDebtorFile(payload: { debtorFileGuid: string }) {

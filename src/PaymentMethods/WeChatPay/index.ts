@@ -21,3 +21,4 @@ const wechatpay: () => Wechatpay = () => {
     return _wechatpay
 }
 export default wechatpay
+export { Wechatpay as WechatpayClass }

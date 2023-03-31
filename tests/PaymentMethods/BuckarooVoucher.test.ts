@@ -12,7 +12,6 @@ describe('testing methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                
             })
     })
     test('Refund', async () => {
@@ -23,7 +22,6 @@ describe('testing methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                
             })
     })
     test('GetBalance', async () => {
@@ -55,7 +53,6 @@ describe('testing methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                
             })
     })
 })

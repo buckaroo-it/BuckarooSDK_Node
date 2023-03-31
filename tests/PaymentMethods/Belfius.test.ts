@@ -1,4 +1,4 @@
-import {BuckarooError} from "../../src/Utils/BuckarooError";
+import { BuckarooError } from '../../src/Utils/BuckarooError'
 
 require('../BuckarooClient.test')
 import Belfius from '../../src/PaymentMethods/Belfius/index'
@@ -13,7 +13,8 @@ describe('testing methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 expect(err instanceof BuckarooError).toBeTruthy()
             })
     })
@@ -25,7 +26,8 @@ describe('testing methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 expect(err instanceof BuckarooError).toBeTruthy()
             })
     })

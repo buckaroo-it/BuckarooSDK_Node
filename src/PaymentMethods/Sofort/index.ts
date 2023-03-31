@@ -19,3 +19,4 @@ const sofort: () => Sofort = () => {
     return _sofort
 }
 export default sofort
+export { Sofort as SofortClass }

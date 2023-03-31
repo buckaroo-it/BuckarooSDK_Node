@@ -12,7 +12,6 @@ describe('Alipay methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                
             })
     })
     test('Refund', async () => {
@@ -23,7 +22,6 @@ describe('Alipay methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                
             })
     })
     test('Specifications', async () => {

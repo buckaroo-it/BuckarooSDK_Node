@@ -1,8 +1,8 @@
 import { IAfterPayArticle } from './Article'
 import { Payload } from '../../../Models/ITransaction'
 import { IPAddress } from '../../../Utils/Types'
-import { AfterPayCustomer } from "./Recipient";
-import {ModelStrategy} from "../../../Utils/ModelStrategy";
+import { AfterPayCustomer } from './Recipient'
+import { ModelStrategy } from '../../../Utils/ModelStrategy'
 
 export interface Pay {
     clientIP: IPAddress | string
@@ -18,44 +18,49 @@ export interface Pay {
 }
 export type IPay = Payload & Pay
 
-
-export class AfterPayModelStrategy extends ModelStrategy<Pay>{
-    setData(data: Pay) {
-        super.setData(data)
-    }
+export class AfterPayModelStrategy extends ModelStrategy<Pay> {
     constructor(data) {
         super(data)
         if (this.data.billing) {
-            this.data.shipping = this.data.shipping || {...this.data.billing}
+            this.data.shipping = this.data.shipping || { ...this.data.billing }
         }
         this.groupTypes = {
-            billing:'BillingCustomer',
-            shipping:'ShippingCustomer',
-            articles:'Article',
+            billing: 'BillingCustomer',
+            shipping: 'ShippingCustomer',
+            articles: 'Article'
         }
         let customerKeys = {
-            address:{
-                houseNumber: "streetNumber",
-                houseNumberAdditional: "streetNumberAdditional",
-                zipcode: "postalCode"
+            address: {
+                houseNumber: 'streetNumber',
+                houseNumberAdditional: 'streetNumberAdditional',
+                zipcode: 'postalCode',
+                state: false
             },
-            recipient:{
-                gender:"salutation",
-                title: "salutation",
-                chamberOfCommerce: "identificationNumber"
+            recipient: {
+                vatApplicable: false,
+                vatNumber: false,
+                placeOfBirth: false,
+                lastNamePrefix: false,
+                culture: false,
+                gender: 'salutation',
+                title: 'salutation',
+                chamberOfCommerce: 'identificationNumber'
             },
-            phone:{
-                landline: "phone",
-                mobile: "mobilePhone",
+            phone: {
+                landline: 'phone',
+                mobile: 'mobilePhone'
             }
         }
 
         this.keys = {
-            articles:{
-                price:'grossUnitPrice',
+            articles: {
+                price: 'grossUnitPrice',
+                manufacturer: false,
+                vatCategory: false,
+                brand: false
             },
             billing: customerKeys,
-            shipping: customerKeys,
+            shipping: customerKeys
         }
         this.countable = ['articles']
     }

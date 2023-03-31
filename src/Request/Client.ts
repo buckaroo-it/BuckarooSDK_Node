@@ -7,13 +7,12 @@ import PaymentMethod from '../PaymentMethods/PaymentMethod'
 import headers from './Headers'
 import { ITransaction } from '../Models/ITransaction'
 import { IConfig, ICredentials } from '../Utils/Types'
-import {SpecificationResponse} from "../Models/SpecificationResponse";
+import { SpecificationResponse } from '../Models/SpecificationResponse'
 
 export default class Client {
     private static _credentials: ICredentials
     private static _config: IConfig
     private constructor() {
-        // super()
     }
     static initialize(credentials, config) {
         if (!config || !credentials)

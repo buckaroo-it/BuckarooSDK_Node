@@ -1,5 +1,5 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { IPay, KlarnaModelStrategy} from './Models/Pay'
+import { IPay, KlarnaModelStrategy } from './Models/Pay'
 import { IConfig } from '../../Utils/Types'
 import { RefundPayload } from '../../Models/ITransaction'
 

@@ -1,11 +1,12 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { ICapture, RefundPayload } from '../../Models/ITransaction'
 import { IPay } from './Models/Pay'
-import { extraInfo, IExtraInfo } from './Models/ExtraInfo'
+import { PayPalModelStrategy, IExtraInfo } from './Models/ExtraInfo'
 
 class Paypal extends PayablePaymentMethod {
     protected _paymentName = 'paypal'
 
+    modelStrategy = new PayPalModelStrategy({})
     pay(payload: IPay) {
         return super.pay(payload)
     }
@@ -18,7 +19,6 @@ class Paypal extends PayablePaymentMethod {
     }
     extraInfo(payload: IExtraInfo) {
         this.action = 'Pay,ExtraInfo'
-        this.serviceParametersStrategy = extraInfo
         return super.transactionRequest(payload)
     }
 }
@@ -29,3 +29,4 @@ const paypal: () => Paypal = () => {
     return _paypal
 }
 export default paypal
+export { Paypal as PaypalClass }

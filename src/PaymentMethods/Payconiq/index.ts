@@ -18,3 +18,4 @@ const payconiq: () => Payconiq = () => {
     return _payconiq
 }
 export default payconiq
+export { Payconiq as PayconiqClass }

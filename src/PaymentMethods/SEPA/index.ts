@@ -1,16 +1,16 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { IPay, Pay } from './Models/Pay'
-import {ICapture, ITransaction, RefundPayload} from '../../Models/ITransaction'
-import { ExtraInfo, IExtraInfo } from './Models/ExtraInfo'
+import { IPay } from './Models/Pay'
+import { ICapture, RefundPayload } from '../../Models/ITransaction'
+import { ExtraInfoModelStrategy, IExtraInfo } from './Models/ExtraInfo'
 import { IEmandate } from './Models/Emandate'
 import { uniqid } from '../../Utils/Functions'
 
 class SEPA extends PayablePaymentMethod {
     protected _paymentName = 'SepaDirectDebit'
     protected _serviceVersion = 1
+    modelStrategy = new ExtraInfoModelStrategy({})
 
     pay(payload: IPay) {
-        this.serviceParametersStrategy = Pay
         return super.pay(payload)
     }
     refund(payload: RefundPayload) {
@@ -18,7 +18,6 @@ class SEPA extends PayablePaymentMethod {
     }
     authorize(payload: IPay) {
         this.action = 'Authorize'
-        this.serviceParametersStrategy = Pay
         return super.transactionRequest(payload)
     }
     payRecurrent(payload: Pick<IPay, 'collectDate'> & ICapture) {
@@ -27,7 +26,7 @@ class SEPA extends PayablePaymentMethod {
     }
     extraInfo(payload: IExtraInfo) {
         this.action = 'Pay,ExtraInfo'
-        return super.transactionRequest(<ITransaction>ExtraInfo(payload))
+        return super.transactionRequest(payload)
     }
     payWithEmandate(payload: IEmandate) {
         this.action = 'PayWithEmandate'
@@ -42,3 +41,4 @@ const sepa: () => SEPA = () => {
     return _sepa
 }
 export default sepa
+export { SEPA as SepaClass }

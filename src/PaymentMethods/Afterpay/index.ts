@@ -1,17 +1,16 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { IPay, AfterPayModelStrategy } from './Model/Services'
 import { ICapture, RefundPayload } from '../../Models/ITransaction'
-import { IAfterPayArticle } from "./Model/Article";
-
+import { IAfterPayArticle } from './Model/Article'
 
 class Afterpay extends PayablePaymentMethod {
     protected _paymentName = 'afterpay'
     protected _serviceVersion = 1
     public modelStrategy = new AfterPayModelStrategy({})
-    pay(payload:IPay) {
+    pay(payload: IPay) {
         return super.pay(payload)
     }
-    refund(payload: RefundPayload & { articles?:IAfterPayArticle[] }) {
+    refund(payload: RefundPayload & { articles?: IAfterPayArticle[] }) {
         return super.refund(payload)
     }
     authorize(payload: IPay) {
@@ -22,7 +21,7 @@ class Afterpay extends PayablePaymentMethod {
         this.action = 'CancelAuthorize'
         return super.transactionRequest(payload)
     }
-    capture(payload: ICapture & {articles?:IAfterPayArticle[]}) {
+    capture(payload: ICapture & { articles?: IAfterPayArticle[] }) {
         this.action = 'Capture'
         return super.transactionRequest(payload)
     }

@@ -1,6 +1,8 @@
-require('../BuckarooClient.test')
 import subscriptions from '../../src/PaymentMethods/Subscriptions/index'
 import Ideal from '../../src/PaymentMethods/Ideal/index'
+import RecipientCategory from '../../src/Constants/RecipientCategory'
+
+require('../BuckarooClient.test')
 
 const subscription = subscriptions()
 const ideal = Ideal()
@@ -10,7 +12,7 @@ test('Create', async () => {
         .create({
             configurationCode: 'jpu9xccp',
             debtor: {
-                code: 'John Doe',
+                code: 'John Doe'
             },
             email: 'test@buckaroo.nl',
             person: {
@@ -18,7 +20,14 @@ test('Create', async () => {
                 lastName: 'Do',
                 gender: 1,
                 culture: 'nl-NL',
-                birthDate: '1990-01-01'
+                birthDate: '1990-01-01',
+                careOf: '',
+                category: RecipientCategory.PERSON,
+                initials: '',
+                lastNamePrefix: '',
+                name: '',
+                placeOfBirth: '',
+                title: ''
             },
             configuration: {
                 name: 'John'
@@ -26,7 +35,6 @@ test('Create', async () => {
             ratePlans: {
                 add: {
                     startDate: '2023-03-10',
-                    // ratePlanCode: "zfv59mmy",
                     endDate: '2023-06-10',
                     ratePlanName: 'Test',
                     ratePlanDescription: 'Test',
@@ -98,45 +106,56 @@ test('Combined Subscription', async () => {
             code: 'johnsmith4'
         },
         company: {
+            careOf: '',
+            category: RecipientCategory.COMPANY,
+            chamberOfCommerce: '',
+            companyName: '',
             culture: 'nl-NL',
-            companyName: 'My Company Coporation',
-            vatApplicable: true,
-            chamberOfCommerce: '20091741'
+            firstName: '',
+            gender: '',
+            initials: '',
+            lastName: '432',
+            name: '',
+            title: '',
+            vatApplicable: false,
+            vatNumber: ''
         },
         address: {
             street: 'Hoofdstraat',
             houseNumber: '90',
             zipcode: '8441ER',
             city: 'Heerenveen',
-            country: 'NL'
+            country: 'NL',
+            houseNumberAdditional: 'dsa',
+            state: 'das'
         }
     })
-    // ideal
-    //     .combine(combinable)
-    //     .pay({
-    //         issuer: 'ABNANL2A',
-    //         amountDebit: 10,
-    //         startRecurrent: true
-    //     })
-    //     .then((res) => {
-    //         console.log(res)
-    //     })
+    ideal
+        .combine(combinable)
+        .pay({
+            issuer: 'ABNANL2A',
+            amountDebit: 10,
+            startRecurrent: true
+        })
+        .then((res) => {
+            console.log(res)
+        })
 })
 
-// test('Update Combined Subscription', async () => {
-//     const combinable = subscription.updateCombined({
-//         subscriptionGuid: '515461997AD34C50881D74157E38A64D'
-//     })
-//     ideal
-//         .combine(combinable)
-//         .pay({
-//             issuer: 'ABNANL2A',
-//             amountDebit: 10
-//         })
-//         .then((res) => {
-//             console.log(res)
-//         })
-// })
+test('Update Combined Subscription', async () => {
+    const combinable = subscription.updateCombined({
+        subscriptionGuid: '515461997AD34C50881D74157E38A64D'
+    })
+    ideal
+        .combine(combinable)
+        .pay({
+            issuer: 'ABNANL2A',
+            amountDebit: 10
+        })
+        .then((res) => {
+            console.log(res)
+        })
+})
 
 test('Stop Subscription', async () => {
     const stop = await subscription.stop({

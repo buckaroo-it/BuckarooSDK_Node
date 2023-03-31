@@ -1,12 +1,10 @@
 import { ITransaction, Payload, RefundPayload } from '../../../Models/ITransaction'
-import IBankAccount from '../../../Models/Services/IBankAccount'
-import { ServiceObject } from '../../../Models/ServiceObject'
 
 export interface IWallet extends ITransaction {
     invoice: string
     walletId: string
     consumerEmail?: string
-    bankAccount?:{
+    bankAccount?: {
         consumerIban: string
     }
     customer?: {

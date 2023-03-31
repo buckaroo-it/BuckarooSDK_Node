@@ -5,8 +5,8 @@ import IPerson from '../../../Models/Services/IPerson'
 import ICompany from '../../../Models/Services/ICompany'
 import IDebtor from '../../../Models/Services/IDebtor'
 import { IRatePlan, IRatePlanCharges } from './RatePlan'
-import { ServiceParameters } from '../../../Utils/ServiceParameters'
 import { IConfiguration } from './Configuration'
+import { ModelStrategy } from '../../../Utils/ModelStrategy'
 
 export interface ISubscription {
     includeTransaction?: boolean
@@ -22,8 +22,8 @@ export interface ISubscription {
     allowedServices?: string
     debtor?: IDebtor
     bankAccount?: IBankAccount
-    email: string
-    phone?: IPhone
+    email?: string
+    phone?: Pick<IPhone, 'mobile'>
     address?: IAddress
     configuration?: IConfiguration
     customerIBAN?: string
@@ -34,32 +34,40 @@ export interface ISubscription {
     ratePlans?: IRatePlan
     ratePlanCharges?: IRatePlanCharges
 }
-export const services = (data: ISubscription) => {
-    let serviceData = new ServiceParameters(data)
-
-    serviceData.setGroupTypes({
-        debtor: 'Debtor',
-        person: 'Person',
-        email: 'Email',
-        address: 'Address',
-        configuration: 'AddConfiguration'
-    })
-    serviceData.setKeys({
-        company: {
-            companyName: 'Name'
+export class SubscriptionsModelStrategy extends ModelStrategy<ISubscription> {
+    constructor(data) {
+        super(data)
+        this.groupTypes = {
+            debtor: 'Debtor',
+            person: 'Person',
+            company: 'Person',
+            email: 'Email',
+            address: 'Address',
+            configuration: 'AddConfiguration',
+            ratePlans: {
+                add: 'AddRatePlan',
+                update: 'UpdateRatePlan',
+                disable: 'DisableRatePlan'
+            },
+            ratePlanCharges: {
+                add: 'AddRatePlanCharge',
+                update: 'UpdateRatePlanCharge',
+                disable: 'DisableRatePlanCharge'
+            }
         }
-    })
-    serviceData.setGroupTypes({
-        add: 'AddRatePlan',
-        update: 'UpdateRatePlan',
-        disable: 'DisableRatePlan'
-    }, serviceData.data.ratePlans)
-
-    serviceData.setGroupTypes({
-        add: 'AddRatePlanCharge',
-        update: 'UpdateRatePlanCharge',
-        disable: 'DisableRatePlanCharge'
-    }, serviceData.data.ratePlanCharges)
-
-    return serviceData.data
+        this.keys = {
+            company: {
+                companyName: 'Name',
+                category: false,
+                careOf: false
+            },
+            person: {
+                category: false,
+                careOf: false
+            },
+            address: {
+                houseNumberAdditional: false
+            }
+        }
+    }
 }

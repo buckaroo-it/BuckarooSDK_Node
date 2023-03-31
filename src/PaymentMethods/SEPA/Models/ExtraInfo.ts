@@ -1,17 +1,17 @@
 import IAddress from '../../../Models/Services/IAddress'
-import { IPay, Pay } from './Pay'
-import { ServiceParameters } from '../../../Utils/ServiceParameters'
 import { Payload } from '../../../Models/ITransaction'
+import { ModelStrategy } from '../../../Utils/ModelStrategy'
 
-export interface IExtraInfo extends Payload {
+export interface ExtraInfo {
     bic: string
     iban: string
+    collectDate: string
     mandateReference?: string
     mandateDate?: string
-    collectDate?: string
     customer: {
         name: string
         code: string
+        accountName: string
         referenceParty: {
             code: string
             name: string
@@ -20,21 +20,26 @@ export interface IExtraInfo extends Payload {
     address: IAddress
     contractID: string
 }
-export const ExtraInfo = (data: IExtraInfo) => {
-    let address = new ServiceParameters(data.address)
-    address.setKeys({
-        address:{
-            houseNumberAdditional: 'HouseNumberSuffix'
+export type IExtraInfo = ExtraInfo & Payload
+
+export class ExtraInfoModelStrategy extends ModelStrategy<ExtraInfo> {
+    constructor(data) {
+        super(data)
+        this.keys = {
+            bic: 'customerbic',
+            iban: 'customerIBAN',
+            customer: {
+                name: 'customerName',
+                accountName: 'customeraccountname',
+                code: 'customerName',
+                referenceParty: {
+                    code: 'customerReferencePartyCode',
+                    name: 'customerReferencePartyName'
+                }
+            },
+            address: {
+                houseNumberAdditional: 'HouseNumberSuffix'
+            }
         }
-    })
-    return {
-        ...Pay(<IPay>data),
-        address: address,
-        mandateReference: data.mandateReference,
-        mandateDate: data.mandateDate,
-        customerName: data.customer.name,
-        customerCode: data.customer.code,
-        customerReferencePartyCode: data.customer.referenceParty.code,
-        customerReferencePartyName: data.customer.referenceParty.name
     }
 }

@@ -1,16 +1,23 @@
 import { Payload } from '../../../Models/ITransaction'
+import { ModelStrategy } from '../../../Utils/ModelStrategy'
 
-export interface IPay extends Payload {
+export interface Pay {
     country: 'DE' | 'DK' | 'EE' | 'ES' | 'FI' | 'NL' | 'NO' | 'PL' | 'SE' | 'GB'
     customer: {
         firstName: string
         lastName: string
     }
 }
-export const Pay = (data) => {
-    return {
-        customerCountryCode: data.country,
-        customerFirstName: data.customer.firstName,
-        customerLastName: data.customer.lastName
+export type IPay = Pay & Payload
+export class TrustlyModelStrategy extends ModelStrategy<Pay> {
+    constructor(data) {
+        super(data)
+        this.keys = {
+            country: 'customerCountryCode',
+            customer: {
+                firstName: 'customerFirstName',
+                lastName: 'customerLastName'
+            }
+        }
     }
 }

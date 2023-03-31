@@ -1,9 +1,9 @@
 import Afterpay from '../../src/PaymentMethods/Afterpay/index'
 import RecipientCategory from '../../src/Constants/RecipientCategory'
-import {IPay} from "../../src/PaymentMethods/Afterpay/Model/Services";
-import {RefundPayload} from "../../src/Models/ITransaction";
-import {IAfterPayArticle} from "../../src/PaymentMethods/Afterpay/Model/Article";
-import {country} from "../../src/PaymentMethods/Afterpay/Model/Recipient";
+import { IPay } from '../../src/PaymentMethods/Afterpay/Model/Services'
+import { RefundPayload } from '../../src/Models/ITransaction'
+import { IAfterPayArticle } from '../../src/PaymentMethods/Afterpay/Model/Article'
+import { country } from '../../src/PaymentMethods/Afterpay/Model/Recipient'
 
 require('../BuckarooClient.test')
 
@@ -11,13 +11,12 @@ const method = Afterpay()
 
 describe('AfterPay methods', () => {
     test('Pay', async () => {
-
-       await method.pay(payload).then((data) => {
+        await method.pay(payload).then((data) => {
             expect(data.isSuccess()).toBeTruthy()
         })
-    });
+    })
     test('Refund', async () => {
-        await method.refund({...refundPayload,articles:articles}).then((data) => {
+        await method.refund({ ...refundPayload, articles: articles }).then((data) => {
             expect(data).toBeDefined()
         })
     })
@@ -38,111 +37,111 @@ describe('AfterPay methods', () => {
                 amountDebit: 4,
                 invoice: '123456789',
                 originalTransactionKey: '123456789',
-                articles:articles
+                articles: articles
             })
             .then((data) => {
                 expect(data).toBeDefined()
             })
     })
     test('PayRemainder', async () => {
-        await method
-            .payRemainder(payload)
-            .then((data) => {
-                expect(data).toBeDefined()
-            })
+        await method.payRemainder(payload).then((data) => {
+            expect(data).toBeDefined()
+        })
     })
     test('AuthorizeRemainder', async () => {
-        await method
-            .authorizeRemainder(payload)
-            .then((data) => {
-                expect(data).toBeDefined()
-            })
+        await method.authorizeRemainder(payload).then((data) => {
+            expect(data).toBeDefined()
+        })
     })
 })
 
-let articles:IAfterPayArticle[] = [
+let articles: IAfterPayArticle[] = [
     {
-        description: "ter",
-        price: 7,
-        identifier: "423f",
-        imageUrl: "",
-        quantity: 1,
+        brand: '',
+        description: 'T',
+        identifier: 'FSD',
+        imageUrl: '',
+        manufacturer: '',
+        marketPlaceSellerId: '',
+        price: 0,
+        quantity: 0,
+        refundType: undefined,
         type: 'PhysicalArticle',
-        unitCode: "",
-        url: "",
-        vatPercentage: 0
-    },
-    {
-        description: "ter",
-        price: 7,
-        identifier: "423f",
-        unitCode: "",
-        type: 'PhysicalArticle',
-        quantity: 1,
+        unitCode: '',
+        url: '',
+        vatCategory: 0,
         vatPercentage: 0
     }
 ]
-let payload:IPay = {
+let payload: IPay = {
     amountDebit: 14,
     clientIP: '127.0.0.1',
-    shipping:{
+    shipping: {
         address: {
-            city: "rew",
+            city: 'rew',
             country: country.NL,
             houseNumber: '423',
-            houseNumberAdditional: "ewr",
-            street: "fsd",
-            zipcode: "1234AB"
+            houseNumberAdditional: 'ewr',
+            street: 'fsd',
+            zipcode: '1234AB',
+            state: ''
         },
-        email:"example@hotmail.com",
+        email: 'example@hotmail.com',
         phone: {
-            mobile: "+31612345678",
-            landline: "+31201234567"
+            mobile: '+31612345678',
+            landline: '+31201234567'
         },
         recipient: {
-            birthDate: "1999-11-21",
-            careOf: "",
+            birthDate: '1999-11-21',
+            careOf: '',
             category: RecipientCategory.PERSON,
             conversationLanguage: 'NL',
-            customerNumber: "a",
-            firstName: "a",
-            identificationNumber: "675",
-            lastName: "a",
-            title: "",
-            gender:'Mr'
+            customerNumber: 'a',
+            firstName: 'a',
+            identificationNumber: '675',
+            lastName: 'a',
+            title: '',
+            gender: 'Mr',
+            culture: '',
+            lastNamePrefix: '',
+            placeOfBirth: ''
         }
-
     },
-    billing:{
+    billing: {
         address: {
-            city: "rew",
+            city: 'rew',
             country: country.NL,
             houseNumber: '423',
-            houseNumberAdditional: "ewr",
-            street: "fsd",
-            zipcode: "1234AB"
+            houseNumberAdditional: 'ewr',
+            street: 'fsd',
+            zipcode: '1234AB',
+            state: ''
         },
-        email:"example@hotmail.com",
+        email: 'example@hotmail.com',
         phone: {
-            mobile: "+31612345678",
-            landline: "+31201234567"
+            mobile: '+31612345678',
+            landline: '+31201234567'
         },
         recipient: {
-            birthDate: "1999-11-21",
-            careOf: "",
-            category: RecipientCategory.PERSON,
+            careOf: '',
+            category: RecipientCategory.COMPANY,
             conversationLanguage: 'NL',
-            customerNumber: "a",
-            firstName: "a",
-            identificationNumber: "675",
-            lastName: "a",
-            title: "",
-            gender:'Mr'
+            customerNumber: 'a',
+            firstName: 'a',
+            identificationNumber: '675',
+            lastName: 'a',
+            title: '',
+            gender: 'Mr',
+            chamberOfCommerce: '',
+            companyName: '',
+            culture: '',
+            vatApplicable: false,
+            vatNumber: 'd'
         }
     },
-    articles: articles,
+    articles: articles
 }
-let refundPayload:RefundPayload = {
+let refundPayload: RefundPayload = {
     amountCredit: 14,
-    originalTransactionKey: '123456789',
+    originalTransactionKey: '123456789'
 }

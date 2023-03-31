@@ -1,6 +1,5 @@
-import { initializeBuckarooClient } from '../src/BuckarooClient'
+require('./BuckarooClient')
 import creditCard from '../src/PaymentMethods/CreditCard'
-initializeBuckarooClient()
 
 const paymentMethod = creditCard()
 

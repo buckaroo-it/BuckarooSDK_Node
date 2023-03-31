@@ -10,3 +10,4 @@ const pointofsale: () => Pointofsale = () => {
     return _pointofsale
 }
 export default pointofsale
+export { Pointofsale as PointofsaleClass }

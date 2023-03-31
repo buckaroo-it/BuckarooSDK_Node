@@ -1,69 +1,83 @@
 import { IServiceList } from './ServiceList'
 import { AdditionalParameter } from './ITransaction'
 import ResponseStatus from '../Constants/ResponseStatus'
-import { ServiceObject } from './ServiceObject'
-import { firstLowerCase } from '../Utils/Functions'
-import {ITransactionResponse} from "./Services/ITransactionResponse";
-
+import { ITransactionResponse } from './Services/ITransactionResponse'
 
 export class TransactionResponse implements ITransactionResponse {
-    AdditionalParameters: { AdditionalParameter: AdditionalParameter[] };
-    AmountCredit: number;
-    AmountDebit: number;
-    ConsumerMessage: { MustRead: boolean; CultureName: string; Title: string; PlainText: string; HtmlText: string };
-    Currency: string;
-    CustomParameters: { List: AdditionalParameter[] };
-    CustomerName: string;
-    Invoice: string;
-    IsTest: boolean;
-    IssuingCountry: string;
-    Key: string;
-    MutationType: number;
-    Order: string;
-    PayerHash: string;
-    PaymentKey: string;
-    Recurring: boolean;
-    RelatedTransactions: { RelationType: string; RelatedTransactionKey: string }[];
+    AdditionalParameters: { AdditionalParameter: AdditionalParameter[] }
+    AmountCredit: number
+    AmountDebit: number
+    ConsumerMessage: {
+        MustRead: boolean
+        CultureName: string
+        Title: string
+        PlainText: string
+        HtmlText: string
+    }
+    Currency: string
+    CustomParameters: { List: AdditionalParameter[] }
+    CustomerName: string
+    Invoice: string
+    IsTest: boolean
+    IssuingCountry: string
+    Key: string
+    MutationType: number
+    Order: string
+    PayerHash: string
+    PaymentKey: string
+    Recurring: boolean
+    RelatedTransactions: { RelationType: string; RelatedTransactionKey: string }[]
     RequestErrors: {
-        ChannelErrors: { Service: string; Action: string; Name: string; Error: string; ErrorMessage: string }[];
-        ServiceErrors: { Name: string; Error: string; ErrorMessage: string }[];
-        ActionErrors: { Service: string; Name: string; Error: string; ErrorMessage: string }[];
-        ParameterErrors: { Service: string; Action: string; Name: string; Error: string; ErrorMessage: string }[];
+        ChannelErrors: {
+            Service: string
+            Action: string
+            Name: string
+            Error: string
+            ErrorMessage: string
+        }[]
+        ServiceErrors: { Name: string; Error: string; ErrorMessage: string }[]
+        ActionErrors: { Service: string; Name: string; Error: string; ErrorMessage: string }[]
+        ParameterErrors: {
+            Service: string
+            Action: string
+            Name: string
+            Error: string
+            ErrorMessage: string
+        }[]
         CustomParameterErrors: { Name: string; Error: string; ErrorMessage: string }[]
-    };
+    }
     RequiredAction: {
-        RedirectURL: string;
+        RedirectURL: string
         RequestedInformation: {
-            Name: string;
-            DataType: number;
-            MaxLength: number;
-            Required: boolean;
+            Name: string
+            DataType: number
+            MaxLength: number
+            Required: boolean
             Description: string
-        }[];
+        }[]
         PayRemainderDetails: {
-            RemainderAmount: number;
-            Currency: string;
+            RemainderAmount: number
+            Currency: string
             GroupTransaction: string
-        };
-        Name: string;
+        }
+        Name: string
         TypeDeprecated: number
-    };
-    ServiceCode: string;
-    Services: IServiceList[];
-    StartRecurrent: boolean;
+    }
+    ServiceCode: string
+    Services: IServiceList[]
+    StartRecurrent: boolean
     Status: {
         Code: {
-            Code: number | string;
+            Code: number | string
             Description: string
-        };
+        }
         SubCode: {
-            Code: number | string;
+            Code: number | string
             Description: string
-        };
+        }
         DateTime: string
-    };
-    TransactionType: string;
-
+    }
+    TransactionType: string
 
     constructor(data: ITransactionResponse) {
         this.Key = data.Key
@@ -125,11 +139,12 @@ export class TransactionResponse implements ITransactionResponse {
         return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_VALIDATION_FAILURE
     }
     hasRedirect() {
-        return this.RequiredAction?.RedirectURL.length > 0 && this.RequiredAction?.Name === 'Redirect'
+        return (
+            this.RequiredAction?.RedirectURL.length > 0 && this.RequiredAction?.Name === 'Redirect'
+        )
     }
     getRedirectUrl() {
-        if(this.hasRedirect())
-            return this.RequiredAction?.RedirectURL
+        if (this.hasRedirect()) return this.RequiredAction?.RedirectURL
         return ''
     }
     getServices() {
@@ -177,21 +192,23 @@ export class TransactionResponse implements ITransactionResponse {
         return this.PaymentKey
     }
     hasError() {
-        return this.RequestErrors && Object.keys(this.RequestErrors).length > 0 && (
-            this.RequestErrors.ChannelErrors.length > 0 ||
-            this.RequestErrors.ServiceErrors.length > 0 ||
-            this.RequestErrors.ActionErrors.length > 0 ||
-            this.RequestErrors.ParameterErrors.length > 0 ||
-            this.RequestErrors.CustomParameterErrors.length > 0
+        return (
+            this.RequestErrors &&
+            Object.keys(this.RequestErrors).length > 0 &&
+            (this.RequestErrors.ChannelErrors.length > 0 ||
+                this.RequestErrors.ServiceErrors.length > 0 ||
+                this.RequestErrors.ActionErrors.length > 0 ||
+                this.RequestErrors.ParameterErrors.length > 0 ||
+                this.RequestErrors.CustomParameterErrors.length > 0)
         )
     }
     getErrorMessages() {
-        const messages:{[errorType:string]:string} = {}
+        const messages: { [errorType: string]: string } = {}
         Object.keys(this.RequestErrors).forEach((key) => {
-            if(this.RequestErrors[key].length > 0){
+            if (this.RequestErrors[key].length > 0) {
                 messages[key] = this.RequestErrors[key].map((error) => error.ErrorMessage).join('')
             }
-        });
+        })
         return Object.entries(messages)
     }
     getErrorMessage() {

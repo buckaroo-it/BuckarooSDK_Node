@@ -24,7 +24,6 @@ describe('Testing CreditClick methods', () => {
             })
             .then((response) => {
                 console.log(response)
-                console.log(response.find('parameterErrors'))
             })
     })
 })

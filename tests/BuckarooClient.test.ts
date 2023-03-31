@@ -1,5 +1,5 @@
 import { initializeBuckarooClient } from '../src/BuckarooClient'
-require('dotenv').config();
+require('dotenv').config()
 export default initializeBuckarooClient(
     {
         secretKey: process.env.BPE_SECRET_KEY || '',

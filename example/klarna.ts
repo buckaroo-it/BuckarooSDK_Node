@@ -1,7 +1,4 @@
-import { initializeBuckarooClient } from '../src/BuckarooClient'
-
-initializeBuckarooClient()
-
+require('./BuckarooClient')
 import Klarna from '../src/PaymentMethods/Klarna'
 
 const klarna = Klarna()
