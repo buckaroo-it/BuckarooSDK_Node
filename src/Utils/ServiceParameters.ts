@@ -7,7 +7,7 @@ export class ServiceParameters<Type extends object> {
         this.data = { ...data }
     }
     setData(data: Type) {
-        this.data = { ...data }
+        this.data = { ...this.data, ...data }
     }
     getData() {
         return this.data
@@ -37,20 +37,36 @@ export class ServiceParameters<Type extends object> {
             }
         }
     }
-    protected setKey(key: string, newKey: string | false, data = this.data) {
+    protected setKey(
+        key: string,
+        newKey: string | boolean | ((data: any) => string | boolean),
+        data = this.data
+    ) {
         if (Array.isArray(data)) {
             data.forEach((item) => {
                 this.setKey(key, newKey, item)
             })
-        } else if (typeof data[key] !== 'undefined') {
-            if (newKey !== false) Object.assign(data, { [newKey]: data[key] })
-            delete data[key]
+        } else {
+            if (typeof newKey === 'function') {
+                newKey = newKey.apply(data, [data[key]])
+            }
+            switch (typeof newKey) {
+                case 'string':
+                    delete Object.assign(data, { [newKey]: data[key] })[key]
+                    break;
+                case 'boolean':
+                    if (newKey === true && !data[key])
+                        throw new Error(`Required parameter ${key} is not defined`)
+                    break
+                default:
+                    data[key] = newKey
+            }
         }
     }
     protected setKeys(keys: object, data = this.data) {
         for (const key in keys) {
             let key2 = keys[key]
-            if (key2 instanceof Object && data[key]) {
+            if (typeof key2 !== 'function' && key2 instanceof Object && data[key]) {
                 this.setKeys(key2, data[key])
             } else {
                 this.setKey(key, key2, data)

@@ -12,8 +12,7 @@ import { SpecificationResponse } from '../Models/SpecificationResponse'
 export default class Client {
     private static _credentials: ICredentials
     private static _config: IConfig
-    private constructor() {
-    }
+    private constructor() {}
     static initialize(credentials, config) {
         if (!config || !credentials)
             throw new Error('Initialize Buckaroo Client with credentials!!')

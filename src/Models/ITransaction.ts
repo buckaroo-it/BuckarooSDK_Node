@@ -34,8 +34,9 @@ export declare type ClientIP =
       }
 
 export declare type AdditionalParameter = {
-    [name: string]: any
+    [name: string]: string | number | boolean
 }
+
 
 export declare interface Payload extends Omit<ITransaction, 'amountCredit'> {
     invoice?: string

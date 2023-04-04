@@ -7,7 +7,7 @@ type keyLoop<T, Possible> = {
         : Possible
 }
 
-export  class ModelStrategy<Type extends object> extends ServiceParameters<Type> {
+export class ModelStrategy<Type extends object> extends ServiceParameters<Type> {
     private _groupTypes?
     private _keys?
     private _countable?
@@ -21,10 +21,10 @@ export  class ModelStrategy<Type extends object> extends ServiceParameters<Type>
     set groupTypes(value: keyLoop<Type, string>) {
         this._groupTypes = value
     }
-    get keys(): keyLoop<Type, string | false> {
+    get keys(): keyLoop<Type, string | boolean | Function> {
         return this._keys
     }
-    set keys(value: keyLoop<Type, string | boolean>) {
+    set keys(value: keyLoop<Type, string | boolean | Function>) {
         this._keys = value
     }
     get countable(): Array<keyof Type> {
@@ -32,19 +32,6 @@ export  class ModelStrategy<Type extends object> extends ServiceParameters<Type>
     }
     set countable(value: Array<keyof Type>) {
         this._countable = value
-    }
-    addKeys(newKey: keyLoop<Type, string>) {
-        const stack = [[this._keys, newKey]]
-        while (stack.length) {
-            const [currentNewKey, currentKey] = stack.pop()!
-            for (const [key, value] of Object.entries(currentKey)) {
-                if (value instanceof Object && currentNewKey[key]) {
-                    stack.push([currentNewKey[key], value])
-                } else {
-                    currentNewKey[key] ??= value
-                }
-            }
-        }
     }
     format(data) {
         this.setData(data)

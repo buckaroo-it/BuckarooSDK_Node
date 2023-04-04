@@ -13,8 +13,6 @@
 // import { KBCClass } from '../PaymentMethods/KBC/index'
 // import PaymentMethod from '../PaymentMethods/PaymentMethod'
 
-
-
 // export type Combinables = CreditManagementClass | SubscriptionsClass
 // | ReturnType<typeof CreditCard>
 // | ReturnType<typeof Bancontact>

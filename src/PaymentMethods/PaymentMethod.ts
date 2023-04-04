@@ -42,13 +42,10 @@ export default abstract class PaymentMethod {
     }
 
     public setRequest(data: ITransaction) {
+
         this.setBasicParameters(data)
 
-        this.setClientIp()
-
         this.setRequiredFields()
-
-        this.setAdditionalParameters()
 
         this.setServiceList(data)
     }
@@ -64,19 +61,6 @@ export default abstract class PaymentMethod {
             this.serviceParameters.Parameters = this.formatServiceParameters(serviceList)
         }
         this.request.addServices(this.serviceParameters)
-    }
-    protected setAdditionalParameters() {
-        let additionalParameters = this.getRequestData().additionalParameters
-        if (additionalParameters) {
-            this.request.setDataKey('additionalParameters', {
-                additionalParameter: Object.keys(additionalParameters).map((key, value) => {
-                    return {
-                        Name: key,
-                        Value: value || ''
-                    }
-                })
-            })
-        }
     }
 
     protected setRequiredFields() {
@@ -134,14 +118,16 @@ export default abstract class PaymentMethod {
     }
 
     private setBasicParameters(data) {
-        let basicParametersData = this.request.getData()
-        for (const basicParameterDataKey in data) {
-            if (this.request.basicParameters[basicParameterDataKey]) {
-                basicParametersData[basicParameterDataKey] = data[basicParameterDataKey]
-                delete data[basicParameterDataKey]
+        let params = {}
+        Object.keys(data).forEach((key) => {
+            if (this.request.basicParameters[key]) {
+                params[key] = data[key]
+                delete data[key]
             }
-        }
-        this.request.setData(basicParametersData)
+        })
+        this.request.setData(params)
+        this.request.formatParameters()
+        this.setClientIp()
     }
     public formatServiceParameters(data) {
         return this.modelStrategy.format(data)

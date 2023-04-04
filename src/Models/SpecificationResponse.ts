@@ -73,7 +73,7 @@ export class SpecificationsResponse implements ISpecificationResponse {
         this.Services = data.Services
     }
 }
-export class SpecificationResponse implements Services{
+export class SpecificationResponse implements Services {
     Actions?: Action[]
     Description: string
     Name: string
@@ -88,10 +88,10 @@ export class SpecificationResponse implements Services{
     }
     getActionRequestParameters(actionName: string): RequestParameter[] | undefined {
         actionName = firstUpperCase(actionName)
-        let actions = this.Actions?.find((action) => action.Name === actionName)
-            ?.RequestParameters
-        if(actions){
-            actions.sort((a, b) => a.Name.localeCompare(b.Name))
+        let actions = this.Actions?.find((action) => action.Name === actionName)?.RequestParameters
+        if (actions) {
+            actions
+                .sort((a, b) => a.Name.localeCompare(b.Name))
                 .sort((a, b) => a.Group.localeCompare(b.Group))
         }
         return actions

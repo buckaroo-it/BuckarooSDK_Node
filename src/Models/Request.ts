@@ -1,5 +1,6 @@
-import { ITransaction } from './ITransaction'
+import {AdditionalParameter, ITransaction} from './ITransaction'
 import { IServiceList, IServices } from './ServiceList'
+import {IParameter} from "./Parameters";
 
 export interface RequestData extends ITransaction {
     services?: IServices
@@ -55,5 +56,28 @@ export class TransactionRequest extends Request {
         } else {
             this.setServices(serviceList)
         }
+    }
+
+    formatParameters() {
+        if(this.data.additionalParameters){
+            this.setDataKey('additionalParameters',
+                {
+                    additionalParameter: this.formatParametersMap(this.data.additionalParameters)
+                })
+        }
+        if(this.data.customParameters){
+            this.setDataKey('customParameters',
+                {
+                    list: this.formatParametersMap(this.data.customParameters)
+                })
+        }
+    }
+    protected formatParametersMap(value:AdditionalParameter):IParameter[] {
+        return Object.keys(value).map((key, value) => {
+            return {
+                Name: key,
+                Value: value || ''
+            }
+        })
     }
 }

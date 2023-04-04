@@ -33,7 +33,7 @@ export interface Pay {
 }
 export type IPay = Pay & Payload
 
-export  class BillinkModelStrategy extends ModelStrategy<Pay> {
+export class BillinkModelStrategy extends ModelStrategy<Pay> {
     constructor(data) {
         super(data)
         this.groupTypes = {
