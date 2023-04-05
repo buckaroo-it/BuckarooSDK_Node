@@ -1,6 +1,7 @@
 import { IServiceList } from './ServiceList'
 import ResponseStatus from '../Constants/ResponseStatus'
 import {AdditionalParameterResponse, ITransactionResponse} from './Services/ITransactionResponse'
+import {firstLowerCase, firstUpperCase} from "../Utils/Functions";
 
 export class TransactionResponse implements ITransactionResponse {
     AdditionalParameters?: { AdditionalParameter: AdditionalParameterResponse[] }
@@ -158,11 +159,26 @@ export class TransactionResponse implements ITransactionResponse {
     getServiceParameters() {
         let parameters = this.getServices()?.[0].Parameters
         let data = {}
-        if (parameters)
+        if (parameters) {
             parameters.forEach((param) => {
-                data[param.Name] = param.Value
+                let current = param
+                current.GroupType = firstLowerCase(param.GroupType)
+                if (param.GroupType && param.GroupID) {
+                    current = data[param.GroupType+'s'] = data[param.GroupType+'s'] || []
+                    current = current[parseInt(<string>param.GroupID)-1] = current[parseInt(<string>param.GroupID)-1] || {[param.GroupType]:{}}
+                    current = current[param.GroupType]
+
+                    current[firstLowerCase(param.Name)] = param.Value
+                }else if(param.GroupType){
+                    current = data[param.GroupType] = data[param.GroupType] ?? {}
+                    current[firstLowerCase(param.Name)] = param.Value
+                }else if(param.GroupID){
+                    data[param.Name] = data[param.Name] ?? []
+                    data[param.Name].push(param.Value)
+                }
             })
-        return data
+            return data
+        }
     }
     getCustomParameters() {
         let customParameters = this.CustomParameters?.List

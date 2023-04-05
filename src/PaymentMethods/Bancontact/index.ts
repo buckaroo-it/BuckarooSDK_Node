@@ -2,7 +2,7 @@ import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { IPay, IPayComplete, IPayEncrypted, IPayOneClick } from './Models/Pay'
 import { RefundPayload } from '../../Models/ITransaction'
 
-class Bancontact extends PayablePaymentMethod {
+export default class Bancontact extends PayablePaymentMethod {
     protected _paymentName = 'bancontactmrcash'
     protected _serviceVersion = 1
     pay(payload: IPay) {
@@ -33,10 +33,3 @@ class Bancontact extends PayablePaymentMethod {
     }
 }
 
-let _bancontact: Bancontact
-export const bancontact: () => Bancontact = () => {
-    if (!_bancontact) _bancontact = new Bancontact()
-    return _bancontact
-}
-export default bancontact
-export { Bancontact as BancontactClass }

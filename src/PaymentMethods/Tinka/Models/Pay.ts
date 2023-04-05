@@ -1,5 +1,5 @@
 import { Payload } from '../../../Models/ITransaction'
-import { AfterPayCustomer } from '../../Afterpay/Model/Recipient'
+import { AfterPayCustomer } from '../../Afterpay/Model/Customer'
 import { ITinkaArticle } from './Article'
 import IPerson from '../../../Models/Services/IPerson'
 import { ModelStrategy } from '../../../Utils/ModelStrategy'

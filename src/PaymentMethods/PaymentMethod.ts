@@ -8,6 +8,8 @@ import { IServiceList } from '../Models/ServiceList'
 import { IPProtocolVersion } from '../Constants/IPProtocolVersion'
 import { BuckarooError } from '../Utils/BuckarooError'
 import { ModelStrategy } from '../Utils/ModelStrategy'
+import {ServiceParameters} from "../Utils/ServiceParameters";
+import {firstUpperCase} from "../Utils/Functions";
 
 export default abstract class PaymentMethod {
     protected readonly _requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
@@ -129,7 +131,24 @@ export default abstract class PaymentMethod {
         this.request.formatParameters()
         this.setClientIp()
     }
-    public formatServiceParameters(data) {
-        return this.modelStrategy.format(data)
+    public formatServiceParameters(data:object,types:{GroupType?:string,GroupID?:number } = {}) {
+        return Object.keys(data).flatMap((name) => {
+            if (Array.isArray(data[name])){
+                types.GroupID = 0
+                return this.formatServiceParameters(data[name],types)
+            }
+            if (data[name] instanceof Object){
+                types.GroupType = firstUpperCase(name)
+                if (types.GroupID === parseInt(name)){
+                    types.GroupID++
+                }
+                return this.formatServiceParameters(data[name],types)
+            }
+            return {
+                Name: firstUpperCase(name),
+                Value: data[name],
+                ...types
+            }
+        })
     }
 }

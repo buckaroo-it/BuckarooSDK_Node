@@ -1,4 +1,4 @@
-import { country } from '../../src/PaymentMethods/Afterpay/Model/Recipient'
+import { country } from '../../src/PaymentMethods/Afterpay/Model/Customer'
 import AfterPayDigiAccept from '../../src/PaymentMethods/AfterpayDigiAccept'
 import RecipientCategory from '../../src/Constants/RecipientCategory'
 import { IPay } from '../../src/PaymentMethods/Afterpay/Model/Services'

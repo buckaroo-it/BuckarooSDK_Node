@@ -1,16 +1,15 @@
 import Afterpay from '../../src/PaymentMethods/Afterpay/index'
-import RecipientCategory from '../../src/Constants/RecipientCategory'
 import {IPay, ServiceParameters} from '../../src/PaymentMethods/Afterpay/Model/Services'
-import { RefundPayload } from '../../src/Models/ITransaction'
-import { IAfterPayArticle } from '../../src/PaymentMethods/Afterpay/Model/Article'
-import { country } from '../../src/PaymentMethods/Afterpay/Model/Recipient'
+import {RefundPayload} from '../../src/Models/ITransaction'
+import RecipientCategory from "../../src/Constants/RecipientCategory";
 
 require('../BuckarooClient.test')
 
-const method = Afterpay()
+const method = new  Afterpay()
 
 describe('AfterPay methods', () => {
     test('Pay', async () => {
+
         try {
             await method.pay(payload).then((data) => {
                 expect(data.isSuccess()).toBeTruthy()
@@ -20,7 +19,7 @@ describe('AfterPay methods', () => {
         }
     })
     test('Refund', async () => {
-        await method.refund({ ...refundPayload, articles: articles }).then((data) => {
+        await method.refund({ ...refundPayload}).then((data) => {
             expect(data).toBeDefined()
         })
     })
@@ -41,7 +40,6 @@ describe('AfterPay methods', () => {
                 amountDebit: 4,
                 invoice: '123456789',
                 originalTransactionKey: '123456789',
-                articles: articles
             })
             .then((data) => {
                 expect(data).toBeDefined()
@@ -59,77 +57,73 @@ describe('AfterPay methods', () => {
     })
 })
 
-let articles: IAfterPayArticle[] = [
-    {
-        description: 'T',
-        identifier: 'FSD',
-        imageUrl: '',
-        // marketPlaceSellerId: '',
-        price: 0,
-        quantity: 0,
-        refundType: undefined,
-        type: 'PhysicalArticle',
-        unitCode: '',
-        url: '',
-        vatPercentage: 0
-    }
-]
 let serviceParameters: ServiceParameters = {
-    shipping: {
-        address: {
-            city: 'rew',
-            country: country.NL,
-            houseNumber: '423',
-            houseNumberAdditional: 'ewr',
-            street: 'fsd',
-            zipcode: '1234AB',
-        },
-        email: 'example@hotmail.com',
-        phone: {
-            mobile: '+31612345678',
-            landline: '+31201234567'
-        },
-        recipient: {
-            birthDate: '1999-11-21',
-            category: RecipientCategory.PERSON,
-            conversationLanguage: 'NL',
-            customerNumber: 'a',
-            firstName: 'a',
-            identificationNumber: '675',
-            lastName: 'a',
-            title: '',
-            gender: 'Mr',
-        }
+    shippingCustomer: {
+        city: "rew",
+        country: "NL",
+        street: "fsd",
+        streetNumber: "423",
+        streetNumberAdditional: "ewr",
+        postalCode: "1234AB",
+        email: "example@hotmail.com",
+        phone: "+31201234567",
+        mobilePhone: "+31612345678",
+        birthDate: "1999-11-21",
+        careOf: "",
+        category: RecipientCategory.PERSON,
+        conversationLanguage: "NL",
+        customerNumber: "a",
+        firstName: "a",
+        identificationNumber: "675",
+        lastName: "a",
+        salutation: "Mr"
     },
-    billing: {
-        address: {
-            city: 'rew',
-            country: country.NL,
-            houseNumber: '423',
-            houseNumberAdditional: 'ewr',
-            street: 'fsd',
-            zipcode: '1234AB',
-        },
-        email: 'example@hotmail.com',
-        phone: {
-            mobile: '+31612345678',
-            landline: '+31201234567'
-        },
-        recipient: {
-            category: RecipientCategory.COMPANY,
-            conversationLanguage: 'NL',
-            customerNumber: 'a',
-            firstName: 'a',
-            identificationNumber: '675',
-            lastName: 'a',
-            title: '',
-            gender: 'Mr',
-            chamberOfCommerce: '',
-            companyName: '',
-        }
+    billingCustomer: {
+        city: "rew",
+        country: "NL",
+        street: "fsd",
+        streetNumber: "423",
+        streetNumberAdditional: "ewr",
+        postalCode: "1234AB",
+        email: "example@hotmail.com",
+        phone: "+31201234567",
+        mobilePhone: "+31612345678",
+        birthDate: "1999-11-21",
+        careOf: "",
+        category: RecipientCategory.PERSON,
+        conversationLanguage: "NL",
+        customerNumber: "a",
+        firstName: "a",
+        identificationNumber: "675",
+        lastName: "a",
+        salutation: "Mr"
     },
-
-    articles: articles
+    articles: [
+        {
+            article: {
+                description: "ter",
+                identifier: "423f",
+                imageUrl: "",
+                quantity: 1,
+                type: "PhysicalArticle",
+                unitCode: "",
+                url: "",
+                vatPercentage: 0,
+                grossUnitPrice: 7
+            }
+        },
+        {
+            article: {
+                description: "ter",
+                identifier: "423f",
+                unitCode: "",
+                type: "PhysicalArticle",
+                quantity: 1,
+                vatPercentage: 0,
+                grossUnitPrice: 7
+            }
+        }
+    ]
 }
 let refundPayload: RefundPayload = {
     amountCredit: 14,

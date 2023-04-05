@@ -1,4 +1,8 @@
-import IArticle from '../../../Models/Services/IArticle'
-export interface IBillinkArticle extends Omit<IArticle,'brand'|'manufacturer'|'vatCategory' | 'type' | 'unitCode'> {
-    priceExcl: number
+
+export interface IBillinkArticle {
+    quantity: number
+    description: string
+    identifier: string
+    grossUnitPriceIncl: number
+    grossUnitPriceExcl: number
 }

@@ -1,7 +1,7 @@
 require('../BuckarooClient.test')
 import RecipientCategory from '../../src/Constants/RecipientCategory'
 import Tinka from '../../src/PaymentMethods/Tinka/index'
-import { country } from '../../src/PaymentMethods/Afterpay/Model/Recipient'
+import { country } from '../../src/PaymentMethods/Afterpay/Model/Customer'
 
 const method = Tinka()
 

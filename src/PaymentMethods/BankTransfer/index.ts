@@ -1,23 +1,14 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { BankTransferModelStrategy, IPay } from './Models/Pay'
-import { Payload, RefundPayload } from '../../Models/ITransaction'
+import { IPay } from './Models/Pay'
+import { RefundPayload } from '../../Models/ITransaction'
 
-class Banktransfer extends PayablePaymentMethod {
+export default class Banktransfer extends PayablePaymentMethod {
     protected _paymentName = 'transfer'
     protected _serviceVersion = 1
-    modelStrategy = new BankTransferModelStrategy({})
-    pay(payload: IPay & Payload) {
+    pay(payload: IPay) {
         return super.pay(payload)
     }
     refund(payload: RefundPayload) {
         return super.refund(payload)
     }
 }
-
-let _banktransfer: Banktransfer
-const banktransfer: () => Banktransfer = () => {
-    if (!_banktransfer) _banktransfer = new Banktransfer()
-    return _banktransfer
-}
-export default banktransfer
-export { Banktransfer as BanktransferClass }

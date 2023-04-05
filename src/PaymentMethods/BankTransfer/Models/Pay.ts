@@ -1,28 +1,18 @@
-import IPerson from '../../../Models/Services/IPerson'
-import { ModelStrategy } from '../../../Utils/ModelStrategy'
 import Gender from '../../../Constants/Gender'
+import {Payload} from "../../../Models/ITransaction";
 
 export type BankTransferPerson = {
-    gender: Gender
-} & Pick<IPerson, 'gender' | 'firstName' | 'lastName'>
-export declare interface IPay {
+    customerFirstName: string
+    customerLastName: string
+    customerGender:Gender
+}
+type ServiceParameters = {
     sendMail: boolean
     dateDue: string
-    country: string
-    email: string
-    customer: BankTransferPerson
-}
-export class BankTransferModelStrategy extends ModelStrategy<IPay> {
-    constructor(data) {
-        super(data)
-        this.keys = {
-            customer: {
-                gender: 'CustomerGender',
-                firstName: 'CustomerFirstName',
-                lastName: 'CustomerLastName'
-            },
-            email: 'CustomerEmail',
-            country: 'CustomerCountry'
-        }
-    }
-}
+    customerCountry: string
+    customerEmail: string
+} & BankTransferPerson
+
+export type IPay = Payload & ServiceParameters
+
+

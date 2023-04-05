@@ -1,4 +1,4 @@
-import { AfterpayClass } from '../Afterpay'
+import AfterpayClass from '../Afterpay'
 
 class AfterpayDigiAccept extends AfterpayClass {
     protected _paymentName = 'afterpaydigiaccept'

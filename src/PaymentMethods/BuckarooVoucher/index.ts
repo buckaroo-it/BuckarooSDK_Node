@@ -3,7 +3,7 @@ import { IPay } from './Models/Pay'
 import { RefundPayload } from '../../Models/ITransaction'
 import { ICreate } from './Models/Create'
 
-class Buckaroovoucher extends PayablePaymentMethod {
+export default class Buckaroovoucher extends PayablePaymentMethod {
     protected _paymentName = 'buckaroovoucher'
 
     pay(payload: IPay) {
@@ -25,11 +25,3 @@ class Buckaroovoucher extends PayablePaymentMethod {
         return this.dataRequest(payload)
     }
 }
-
-let _buckaroovoucher: Buckaroovoucher
-const buckaroovoucher: () => Buckaroovoucher = () => {
-    if (!_buckaroovoucher) _buckaroovoucher = new Buckaroovoucher()
-    return _buckaroovoucher
-}
-export default buckaroovoucher
-export { Buckaroovoucher as BuckarooVoucherClass }

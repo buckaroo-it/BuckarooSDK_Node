@@ -3,7 +3,7 @@ import Billink from '../../src/PaymentMethods/Billink/index'
 import Gender from '../../src/Constants/Gender'
 import { BuckarooError } from '../../src/Utils/BuckarooError'
 import { IPay } from '../../src/PaymentMethods/Billink/Models/Pay'
-import { country } from '../../src/PaymentMethods/Afterpay/Model/Recipient'
+import { country } from '../../src/PaymentMethods/Afterpay/Model/Customer'
 
 require('../BuckarooClient.test')
 

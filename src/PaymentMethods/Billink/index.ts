@@ -1,11 +1,10 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { IPay, BillinkModelStrategy } from './Models/Pay'
+import { IPay } from './Models/Pay'
 import { ICapture, RefundPayload } from '../../Models/ITransaction'
 
-class Billink extends PayablePaymentMethod {
+export default class Billink extends PayablePaymentMethod {
     protected _paymentName = 'Billink'
     protected _serviceVersion = 1
-    modelStrategy = new BillinkModelStrategy({})
     pay(payload: IPay) {
         return super.pay(payload)
     }
@@ -25,11 +24,3 @@ class Billink extends PayablePaymentMethod {
         return super.transactionRequest(payload)
     }
 }
-
-let _billink: Billink
-const billink: () => Billink = () => {
-    if (!_billink) _billink = new Billink()
-    return _billink
-}
-export default billink
-export { Billink as BillinkClass }

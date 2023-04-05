@@ -2,7 +2,7 @@ import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { IPay } from './Models/Pay'
 import { RefundPayload } from '../../Models/ITransaction'
 
-class ApplePay extends PayablePaymentMethod {
+export default class ApplePay extends PayablePaymentMethod {
     protected _paymentName = 'applepay'
     protected _serviceVersion = 1
 
@@ -14,10 +14,3 @@ class ApplePay extends PayablePaymentMethod {
     }
 }
 
-let _applepay: ApplePay
-const applepay: () => ApplePay = () => {
-    if (!_applepay) _applepay = new ApplePay()
-    return _applepay
-}
-export default applepay
-export { ApplePay as ApplePayClass }

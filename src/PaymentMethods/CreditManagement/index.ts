@@ -8,14 +8,12 @@ import { IPaymentPlan } from './Models/PaymentPlan'
 import { ITransaction } from '../../Models/ITransaction'
 import { IMultiInfoInvoice } from './Models/multiInfoInvoice'
 import { AddOrUpdateProductLines, IAddOrUpdateProductLines } from './Models/AddOrUpdateProductLines'
-import { CreditManagementModelStrategy } from './Models/Services'
 
-class CreditManagement extends PaymentMethod {
+export default class CreditManagement extends PaymentMethod {
     protected _paymentName = 'CreditManagement3'
     protected _requiredFields: Array<keyof IConfig> = ['currency']
     combinable = true
     protected _serviceVersion = 1
-    modelStrategy = new CreditManagementModelStrategy({})
     createInvoice(payload: IInvoice): Promise<any> {
         this.action = 'CreateInvoice'
         payload.invoice = payload.invoice || uniqid()
@@ -86,10 +84,3 @@ class CreditManagement extends PaymentMethod {
         return this.dataRequest(payload)
     }
 }
-let _creditManagement: CreditManagement
-const creditManagement = () => {
-    if (!_creditManagement) _creditManagement = new CreditManagement()
-    return _creditManagement
-}
-export default creditManagement
-export { CreditManagement as CreditManagementClass }

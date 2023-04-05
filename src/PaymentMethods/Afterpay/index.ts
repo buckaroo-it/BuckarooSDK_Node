@@ -1,13 +1,15 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { IPay, AfterPayModelStrategy } from './Model/Services'
+import { IPay } from './Model/Services'
 import { ICapture, RefundPayload } from '../../Models/ITransaction'
 import { IAfterPayArticle } from './Model/Article'
 
-class Afterpay extends PayablePaymentMethod {
+export default class Afterpay extends PayablePaymentMethod {
     protected _paymentName = 'afterpay'
     protected _serviceVersion = 1
-    public modelStrategy = new AfterPayModelStrategy({})
     pay(payload: IPay) {
+        if (payload.billingCustomer){
+            payload.shippingCustomer = payload.shippingCustomer || {...payload.billingCustomer}
+        }
         return super.pay(payload)
     }
     refund(payload: RefundPayload & { articles?: IAfterPayArticle[] }) {
@@ -34,10 +36,3 @@ class Afterpay extends PayablePaymentMethod {
         return super.transactionRequest(payload)
     }
 }
-let _afterpay: Afterpay
-const afterpay: () => Afterpay = () => {
-    if (!_afterpay) _afterpay = new Afterpay()
-    return _afterpay
-}
-export default afterpay
-export { Afterpay as AfterpayClass }

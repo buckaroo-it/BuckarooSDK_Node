@@ -5,28 +5,43 @@ import IPerson from '../../../Models/Services/IPerson'
 import ICompany from '../../../Models/Services/ICompany'
 import { ICreditArticle } from './Article'
 import { ITransaction } from '../../../Models/ITransaction'
+import Gender from "../../../Constants/Gender";
 
 export interface Invoice {
-    invoiceAmount: Number
-    invoiceAmountVAT?: Number
+    invoiceAmount: number
+    invoiceAmountVAT?: number
     invoiceDate: string
     dueDate: string
+    schemeKey?: string
     maxStepIndex?: Number
     allowedServices?: string
-    disallowedServices?: string
     allowedServicesAfterDueDate?: string
-    disallowedServicesAfterDueDate?: string
     code: string
-    company?: Omit<ICompany, 'category'> & { culture: string }
-    person?: Omit<IPerson, 'careOf'> & { culture: string }
-    address: IAddress
+    person: {
+        culture: string,
+        title: string,
+        initials: string,
+        firstName: string,
+        lastName: string,
+        lastNamePrefix: string,
+        gender: Gender,
+        birthDate: string,
+        placeOfBirth: string,
+    }
+    company:{
+        culture: string,
+        name: string,
+        vatApplicable: boolean,
+        vatNumber: string,
+        chamberOfCommerce: string,
+    }
+    address: Omit<IAddress,'houseNumberAdditional'|'zipcode'> & {houseNumberSuffix?: string,postalCode: string}
     debtor: IDebtor
-    email: string
+    email?: {email: string}
     phone: IPhone
-    articles?: ICreditArticle[]
-    invoiceNumber: string
-    schemeKey: string
+    products?: { productLine:ICreditArticle }[]
+    invoiceNumber?: string
     applyStartRecurrent?: boolean
-    poNumber?: string
+    [key:string]: any
 }
 export type IInvoice = Invoice & ITransaction

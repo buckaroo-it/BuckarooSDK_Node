@@ -2,7 +2,7 @@ import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { Pay } from './Models/Pay'
 import { Refund } from './Models/Refund'
 
-class CreditClick extends PayablePaymentMethod {
+export default class CreditClick extends PayablePaymentMethod {
     protected _paymentName = 'creditclick'
 
     pay(payload: Pay) {
@@ -12,11 +12,3 @@ class CreditClick extends PayablePaymentMethod {
         return super.refund(payload)
     }
 }
-
-let _creditClick: CreditClick
-const creditClick: () => CreditClick = () => {
-    if (!_creditClick) _creditClick = new CreditClick()
-    return _creditClick
-}
-export default creditClick
-export { CreditClick as CreditClickClass }

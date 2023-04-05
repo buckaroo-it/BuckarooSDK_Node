@@ -1,7 +1,7 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { Payload, RefundPayload } from '../../Models/ITransaction'
 
-class Alipay extends PayablePaymentMethod {
+export default class Alipay extends PayablePaymentMethod {
     protected _paymentName = 'alipay'
     protected _serviceVersion = 1
 
@@ -12,11 +12,3 @@ class Alipay extends PayablePaymentMethod {
         return super.refund(payload)
     }
 }
-
-let _alipay: Alipay
-const alipay: () => Alipay = () => {
-    if (!_alipay) _alipay = new Alipay()
-    return _alipay
-}
-export default alipay
-export { Alipay as AlipayClass }

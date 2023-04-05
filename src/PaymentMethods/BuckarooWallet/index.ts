@@ -2,7 +2,7 @@ import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { IWallet, IWalletPay, IWalletRefund } from './Models/Wallet'
 import { ITransaction } from '../../Models/ITransaction'
 
-class BuckarooWallet extends PayablePaymentMethod {
+export default class BuckarooWallet extends PayablePaymentMethod {
     protected _paymentName = 'BuckarooWalletCollecting'
     protected _serviceVersion = 1
     pay(payload: IWalletPay) {
@@ -44,11 +44,3 @@ class BuckarooWallet extends PayablePaymentMethod {
         return this.dataRequest({})
     }
 }
-
-let _buckaroowallet: BuckarooWallet
-const buckaroowallet: () => BuckarooWallet = () => {
-    if (!_buckaroowallet) _buckaroowallet = new BuckarooWallet()
-    return _buckaroowallet
-}
-export default buckaroowallet
-export { BuckarooWallet as BuckarooWalletClass }

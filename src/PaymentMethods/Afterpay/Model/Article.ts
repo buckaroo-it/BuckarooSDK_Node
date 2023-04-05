@@ -1,7 +1,6 @@
-import IArticle from '../../../Models/Services/IArticle'
 
-export interface IAfterPayArticle extends IArticle {
-    type:
+export interface IAfterPayArticle  {
+    type?:
         | 'PhysicalArticle'
         | 'DigitalArticle'
         | 'Giftcard'
@@ -14,4 +13,10 @@ export interface IAfterPayArticle extends IArticle {
     url?: string
     refundType?: 'Refund' | 'Return'
     marketPlaceSellerId?: string
+    identifier: string
+    unitCode?: string
+    quantity: number
+    grossUnitPrice: number
+    vatPercentage: number
+    description: string
 }
