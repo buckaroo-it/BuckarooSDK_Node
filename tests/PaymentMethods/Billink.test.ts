@@ -74,7 +74,7 @@ let payload: IPay = {
             description: '',
             identifier: '',
             vatPercentage: 0,
-            quantity: 23
+            quantity: 23,
         }
     ],
     billing: {

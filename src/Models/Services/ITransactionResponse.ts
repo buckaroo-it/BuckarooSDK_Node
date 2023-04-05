@@ -1,6 +1,9 @@
 import { IServiceList } from '../ServiceList'
-import { AdditionalParameter } from '../ITransaction'
 
+export type AdditionalParameterResponse = {
+    Name: string
+    Value: string | boolean | number
+}
 export declare interface ITransactionResponse {
     Key: string
     Status: {
@@ -32,11 +35,11 @@ export declare interface ITransactionResponse {
         TypeDeprecated: number
     }
     Services: IServiceList[]
-    CustomParameters: {
-        List: AdditionalParameter[]
+    CustomParameters?: {
+        List: AdditionalParameterResponse[]
     }
-    AdditionalParameters: {
-        AdditionalParameter: AdditionalParameter[]
+    AdditionalParameters?: {
+        AdditionalParameter: AdditionalParameterResponse[]
     }
     RequestErrors: {
         ChannelErrors: {

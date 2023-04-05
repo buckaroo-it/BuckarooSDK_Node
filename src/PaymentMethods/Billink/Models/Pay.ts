@@ -1,5 +1,5 @@
 import { Payload } from '../../../Models/ITransaction'
-import { Address } from '../../Afterpay/Model/Recipient'
+import { AfterPayAddress } from '../../Afterpay/Model/Recipient'
 import { IBillinkArticle } from './Article'
 import { ModelStrategy } from '../../../Utils/ModelStrategy'
 import IPerson from '../../../Models/Services/IPerson'
@@ -14,9 +14,9 @@ export declare interface Recipient extends ICustomer {
     gender: Gender
 }
 export declare interface Customer {
-    recipient: Recipient & (IPerson | Omit<ICompany, 'identificationNumber' | 'vatApplicable'>)
-    address: Address
-    phone?: IPhone
+    recipient: Recipient & (Omit<IPerson,'lastNamePrefix'> | Omit<ICompany, 'identificationNumber' | 'vatApplicable'>)
+    address: AfterPayAddress
+    phone?: Pick<IPhone, 'mobile'>
     email: string
 }
 
@@ -62,22 +62,7 @@ export class BillinkModelStrategy extends ModelStrategy<Pay> {
                 price: 'grossUnitPriceIncl',
                 priceExcl: 'grossUnitPriceExcl'
             },
-            billing: {
-                address: {
-                    houseNumber: 'streetNumber',
-                    houseNumberAdditional: 'streetNumberAdditional',
-                    zipcode: 'postalCode'
-                },
-                recipient: {
-                    gender: 'salutation',
-                    companyName: 'careOf',
-                    title: 'salutation'
-                },
-                phone: {
-                    landline: 'phone',
-                    mobile: 'mobilePhone'
-                }
-            },
+            billing: customerKeys,
             shipping: customerKeys
         }
         this.countable = ['articles']

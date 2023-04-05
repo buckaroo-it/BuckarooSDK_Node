@@ -1,10 +1,10 @@
 import { IServiceList } from './ServiceList'
-import { AdditionalParameter } from './ITransaction'
 import ResponseStatus from '../Constants/ResponseStatus'
-import { ITransactionResponse } from './Services/ITransactionResponse'
+import {AdditionalParameterResponse, ITransactionResponse} from './Services/ITransactionResponse'
 
 export class TransactionResponse implements ITransactionResponse {
-    AdditionalParameters: { AdditionalParameter: AdditionalParameter[] }
+    AdditionalParameters?: { AdditionalParameter: AdditionalParameterResponse[] }
+    CustomParameters?: { List: AdditionalParameterResponse[] }
     AmountCredit: number
     AmountDebit: number
     ConsumerMessage: {
@@ -15,7 +15,6 @@ export class TransactionResponse implements ITransactionResponse {
         HtmlText: string
     }
     Currency: string
-    CustomParameters: { List: AdditionalParameter[] }
     CustomerName: string
     Invoice: string
     IsTest: boolean
@@ -81,12 +80,12 @@ export class TransactionResponse implements ITransactionResponse {
 
     constructor(data: ITransactionResponse) {
         this.Key = data.Key
+        this.Services = data.Services
         this.PaymentKey = data.PaymentKey
         this.PayerHash = data.PayerHash
         this.CustomerName = data.CustomerName
         this.Recurring = data.Recurring
         this.StartRecurrent = data.StartRecurrent
-        this.Services = data.Services
         this.CustomParameters = data.CustomParameters
         this.AdditionalParameters = data.AdditionalParameters
         this.RequestErrors = data.RequestErrors

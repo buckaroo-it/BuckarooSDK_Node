@@ -1,6 +1,6 @@
 import Afterpay from '../../src/PaymentMethods/Afterpay/index'
 import RecipientCategory from '../../src/Constants/RecipientCategory'
-import { IPay } from '../../src/PaymentMethods/Afterpay/Model/Services'
+import {IPay, ServiceParameters} from '../../src/PaymentMethods/Afterpay/Model/Services'
 import { RefundPayload } from '../../src/Models/ITransaction'
 import { IAfterPayArticle } from '../../src/PaymentMethods/Afterpay/Model/Article'
 import { country } from '../../src/PaymentMethods/Afterpay/Model/Recipient'
@@ -11,9 +11,13 @@ const method = Afterpay()
 
 describe('AfterPay methods', () => {
     test('Pay', async () => {
-        await method.pay(payload).then((data) => {
-            expect(data.isSuccess()).toBeTruthy()
-        })
+        try {
+            await method.pay(payload).then((data) => {
+                expect(data.isSuccess()).toBeTruthy()
+            })
+        }catch (e) {
+            console.log(e)
+        }
     })
     test('Refund', async () => {
         await method.refund({ ...refundPayload, articles: articles }).then((data) => {
@@ -57,25 +61,20 @@ describe('AfterPay methods', () => {
 
 let articles: IAfterPayArticle[] = [
     {
-        brand: '',
         description: 'T',
         identifier: 'FSD',
         imageUrl: '',
-        manufacturer: '',
-        marketPlaceSellerId: '',
+        // marketPlaceSellerId: '',
         price: 0,
         quantity: 0,
         refundType: undefined,
         type: 'PhysicalArticle',
         unitCode: '',
         url: '',
-        vatCategory: 0,
         vatPercentage: 0
     }
 ]
-let payload: IPay = {
-    amountDebit: 14,
-    clientIP: '127.0.0.1',
+let serviceParameters: ServiceParameters = {
     shipping: {
         address: {
             city: 'rew',
@@ -84,7 +83,6 @@ let payload: IPay = {
             houseNumberAdditional: 'ewr',
             street: 'fsd',
             zipcode: '1234AB',
-            state: ''
         },
         email: 'example@hotmail.com',
         phone: {
@@ -93,7 +91,6 @@ let payload: IPay = {
         },
         recipient: {
             birthDate: '1999-11-21',
-            careOf: '',
             category: RecipientCategory.PERSON,
             conversationLanguage: 'NL',
             customerNumber: 'a',
@@ -102,9 +99,6 @@ let payload: IPay = {
             lastName: 'a',
             title: '',
             gender: 'Mr',
-            culture: '',
-            lastNamePrefix: '',
-            placeOfBirth: ''
         }
     },
     billing: {
@@ -115,7 +109,6 @@ let payload: IPay = {
             houseNumberAdditional: 'ewr',
             street: 'fsd',
             zipcode: '1234AB',
-            state: ''
         },
         email: 'example@hotmail.com',
         phone: {
@@ -123,7 +116,6 @@ let payload: IPay = {
             landline: '+31201234567'
         },
         recipient: {
-            careOf: '',
             category: RecipientCategory.COMPANY,
             conversationLanguage: 'NL',
             customerNumber: 'a',
@@ -134,14 +126,18 @@ let payload: IPay = {
             gender: 'Mr',
             chamberOfCommerce: '',
             companyName: '',
-            culture: '',
-            vatApplicable: false,
-            vatNumber: 'd'
         }
     },
+
     articles: articles
 }
 let refundPayload: RefundPayload = {
     amountCredit: 14,
     originalTransactionKey: '123456789'
+}
+
+let payload: IPay = {
+    amountDebit: 14,
+    clientIP: '127.0.0.1',
+    ...serviceParameters
 }

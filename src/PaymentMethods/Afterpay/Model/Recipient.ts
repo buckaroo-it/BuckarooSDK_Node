@@ -10,63 +10,20 @@ export const enum country {
     FI = 'FI',
     BE = 'BE'
 }
-type AfterPayRecipient = {
+export type AfterPayRecipient = {
     category: RecipientCategory.COMPANY | RecipientCategory.PERSON
     conversationLanguage?: 'NL' | 'FR' | 'DE' | 'FI'
     identificationNumber?: string
     customerNumber?: string
     gender?: 'Mr' | 'Mrs' | 'Miss'
-} & (ICompany | IPerson)
+}
 
-export declare interface Address extends IAddress {
+export declare interface AfterPayAddress extends IAddress {
     country: country
 }
 export declare interface AfterPayCustomer {
-    recipient: AfterPayRecipient
-    address: Address
-    phone?: Omit<IPhone, 'fax'>
+    recipient: AfterPayRecipient & (IPerson | ICompany)
+    address: AfterPayAddress
+    phone?: IPhone
     email: string
 }
-// export interface CountryNlBe{
-//     recipient:  {
-//         gender: 'Mr' | 'Mrs' | 'Miss'
-//         birthDate:string
-//     }
-//     address:{
-//         country: country.NL | country.BE
-//         houseNumber: string
-//         zipcode: string
-//     }
-//     phone:{
-//         mobile: string
-//     }
-// }
-// export interface CountryFi{
-//     recipient:  {
-//         identificationNumber:string
-//     }
-//     address: {
-//         country: country.FI
-//     }
-// }
-// export interface CountryDe {
-//     address: {
-//         country: country.DE
-//     }
-// }
-// export declare interface Company {
-//     recipient:  {
-//         category: RecipientCategory.COMPANY
-//         companyName: string
-//     }
-// }
-// export declare interface Person {
-//     recipient:  {
-//         category: RecipientCategory.PERSON
-//     }
-// }
-//
-// type CountryFilter =  CountryFi | CountryNlBe | CountryDe
-// type CategoryFilter =  Company | Person
-//
-// export type AfterPayCustomer = Customer & (CountryFilter & CategoryFilter)

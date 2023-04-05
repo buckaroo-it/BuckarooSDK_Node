@@ -26,11 +26,11 @@ class AfterpayDigiAccept extends AfterpayClass {
     }
 }
 
-let _afterpaydigiaccept: AfterpayDigiAccept
-const afterpaydigiaccept: () => AfterpayDigiAccept = () => {
-    if (!_afterpaydigiaccept) _afterpaydigiaccept = new AfterpayDigiAccept()
-    return _afterpaydigiaccept
-}
-export default afterpaydigiaccept
-
-export { AfterpayDigiAccept as AfterpayDigiAcceptClass }
+// let _afterpaydigiaccept: AfterpayDigiAccept
+// const afterpaydigiaccept: () => AfterpayDigiAccept = () => {
+//     if (!_afterpaydigiaccept) _afterpaydigiaccept = new AfterpayDigiAccept()
+//     return _afterpaydigiaccept
+// }
+// export default afterpaydigiaccept
+//
+// export { AfterpayDigiAccept as AfterpayDigiAcceptClass }

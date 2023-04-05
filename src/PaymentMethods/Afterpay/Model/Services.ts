@@ -4,7 +4,7 @@ import { IPAddress } from '../../../Utils/Types'
 import { AfterPayCustomer } from './Recipient'
 import { ModelStrategy } from '../../../Utils/ModelStrategy'
 
-export interface Pay {
+export interface ServiceParameters {
     clientIP: IPAddress | string
     billing: AfterPayCustomer
     shipping?: AfterPayCustomer
@@ -16,14 +16,11 @@ export interface Pay {
     yourReference?: string
     ourReference?: string
 }
-export type IPay = Payload & Pay
+export type IPay = Payload & ServiceParameters
 
-export class AfterPayModelStrategy extends ModelStrategy<Pay> {
+export class AfterPayModelStrategy extends ModelStrategy<ServiceParameters> {
     constructor(data) {
         super(data)
-        if (this.data.billing) {
-            this.data.shipping = this.data.shipping || { ...this.data.billing }
-        }
         this.groupTypes = {
             billing: 'BillingCustomer',
             shipping: 'ShippingCustomer',
@@ -34,30 +31,33 @@ export class AfterPayModelStrategy extends ModelStrategy<Pay> {
                 houseNumber: 'streetNumber',
                 houseNumberAdditional: 'streetNumberAdditional',
                 zipcode: 'postalCode',
-                state: false
             },
             recipient: {
-                vatApplicable: false,
-                vatNumber: false,
-                placeOfBirth: false,
-                lastNamePrefix: false,
-                culture: false,
                 gender: 'salutation',
                 title: 'salutation',
-                chamberOfCommerce: 'identificationNumber'
+                chamberOfCommerce: 'identificationNumber',
+                careOf:undefined,
+                placeOfBirth:undefined,
+                lastNamePrefix:undefined,
+                culture:undefined,
+                vatApplicable:undefined,
+                vatNumber:undefined,
             },
             phone: {
                 landline: 'phone',
-                mobile: 'mobilePhone'
+                mobile: 'mobilePhone',
+                fax:undefined
             }
         }
-
+        if (this.data.billing) {
+            this.data.shipping = this.data.shipping || { ...this.data.billing }
+        }
         this.keys = {
             articles: {
                 price: 'grossUnitPrice',
-                manufacturer: false,
-                vatCategory: false,
-                brand: false
+                brand: undefined,
+                manufacturer: undefined,
+                vatCategory: undefined,
             },
             billing: customerKeys,
             shipping: customerKeys
