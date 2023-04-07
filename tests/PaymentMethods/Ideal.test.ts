@@ -2,7 +2,7 @@ require('../BuckarooClient.test')
 import { uniqid } from '../../src/Utils/Functions'
 import Ideal from '../../src/PaymentMethods/Ideal/index'
 
-const ideal = Ideal()
+const ideal = new Ideal()
 describe('testing Ideal methods', () => {
     test('Issuers', async () => {
         await ideal.issuers().then((response) => {

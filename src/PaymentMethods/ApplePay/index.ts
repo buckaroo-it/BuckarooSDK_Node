@@ -13,4 +13,3 @@ export default class ApplePay extends PayablePaymentMethod {
         return super.refund(payload)
     }
 }
-

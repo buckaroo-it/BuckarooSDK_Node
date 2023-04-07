@@ -1,16 +1,35 @@
 require('../BuckarooClient.test')
 import SurePay from '../../src/PaymentMethods/Surepay/index'
 
-const method = SurePay()
+const method = new SurePay()
 
 describe('Sofort', () => {
     test('Verify', async () => {
         await method
             .verify({
-                bankAccount: {
-                    accountName: 'John Doe',
-                    iban: 'NL91ABNA0417164300'
-                }
+                additionalParameters: undefined,
+                amountCredit: 0,
+                amountDebit: 0,
+                clientIP: undefined,
+                continueOnIncomplete: '',
+                culture: '',
+                currency: '',
+                customParameters: undefined,
+                customeraccountname: 'string',
+                description: '',
+                invoice: '',
+                order: '',
+                originalTransactionKey: '',
+                originalTransactionReference: '',
+                pushURL: '',
+                pushURLFailure: '',
+                returnURL: '',
+                returnURLCancel: '',
+                returnURLError: '',
+                returnURLReject: '',
+                servicesExcludedForClient: '',
+                servicesSelectableByClient: '',
+                startRecurrent: false
             })
             .then((info) => {
                 console.log(info)

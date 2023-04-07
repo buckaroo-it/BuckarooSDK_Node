@@ -1,8 +1,9 @@
-import IArticle from '../../../Models/Services/IArticle'
-
-export interface IKlarnaArticle extends IArticle {
+export interface IKlarnaArticle {
+    description: string
+    grossUnitPrice: number
     identifier: string
-    quantity: number
-    price: number
-    vatPercentage: number
+    imageUrl?: string
+    quantity: string
+    uRL?: string
+    vatPercentage: string
 }

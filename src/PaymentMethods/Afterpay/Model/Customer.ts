@@ -1,9 +1,8 @@
 import RecipientCategory from '../../../Constants/RecipientCategory'
 
 type Salutation = 'Mr' | 'Mrs' | 'Miss'
-interface Customer {
+type Customer = {
     companyName?: string
-    salutation?: Salutation
     firstName: string
     lastName: string
     birthDate?: string
@@ -20,28 +19,31 @@ interface Customer {
     customerNumber?: string
     mobilePhone?: string
     phone?: string
+    salutation?: Salutation
 }
-interface Person extends Customer {
+type Person = {
     category: RecipientCategory.PERSON
 }
-interface Company extends Customer {
+type Company = {
     category: RecipientCategory.COMPANY
     companyName: string
     identificationNumber: string
 }
-interface countryNLBE extends Customer {
+type countryNLBE = {
     country: 'NL' | 'BE'
     salutation: Salutation
     birthDate: string
     streetNumber: string
+    phone: string
 }
 
-interface countryFI  extends Customer  {
+type countryFI = {
     country: 'FI'
     identificationNumber: string
 }
-interface countryDE  extends Customer  {
+type countryDE = {
     country: 'DE'
 }
 
-export type AfterPayCustomer = ((Person | Company) & (countryNLBE | countryFI | countryDE))
+export type AfterPayCustomer = Customer &
+    ((Person | Company) & (countryNLBE | countryFI | countryDE))

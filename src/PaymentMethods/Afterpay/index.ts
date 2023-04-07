@@ -1,5 +1,5 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { IPay } from './Model/Services'
+import { IPay } from './Model/Pay'
 import { ICapture, RefundPayload } from '../../Models/ITransaction'
 import { IAfterPayArticle } from './Model/Article'
 
@@ -7,8 +7,8 @@ export default class Afterpay extends PayablePaymentMethod {
     protected _paymentName = 'afterpay'
     protected _serviceVersion = 1
     pay(payload: IPay) {
-        if (payload.billingCustomer){
-            payload.shippingCustomer = payload.shippingCustomer || {...payload.billingCustomer}
+        if (payload.billingCustomer) {
+            payload.shippingCustomer = payload.shippingCustomer || { ...payload.billingCustomer }
         }
         return super.pay(payload)
     }
@@ -23,7 +23,7 @@ export default class Afterpay extends PayablePaymentMethod {
         this.action = 'CancelAuthorize'
         return super.transactionRequest(payload)
     }
-    capture(payload: ICapture & { articles?: IAfterPayArticle[] }) {
+    capture(payload: ICapture) {
         this.action = 'Capture'
         return super.transactionRequest(payload)
     }

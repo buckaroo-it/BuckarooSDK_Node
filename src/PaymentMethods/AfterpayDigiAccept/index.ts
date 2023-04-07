@@ -1,6 +1,6 @@
 import AfterpayClass from '../Afterpay'
 
-class AfterpayDigiAccept extends AfterpayClass {
+export default class AfterpayDigiAccept extends AfterpayClass {
     protected _paymentName = 'afterpaydigiaccept'
     protected _serviceVersion = 2
     pay(payload) {
@@ -25,12 +25,3 @@ class AfterpayDigiAccept extends AfterpayClass {
         return super.payRemainder(payload)
     }
 }
-
-// let _afterpaydigiaccept: AfterpayDigiAccept
-// const afterpaydigiaccept: () => AfterpayDigiAccept = () => {
-//     if (!_afterpaydigiaccept) _afterpaydigiaccept = new AfterpayDigiAccept()
-//     return _afterpaydigiaccept
-// }
-// export default afterpaydigiaccept
-//
-// export { AfterpayDigiAccept as AfterpayDigiAcceptClass }

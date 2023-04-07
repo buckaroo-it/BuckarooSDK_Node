@@ -1,7 +1,7 @@
 require('../BuckarooClient.test')
 import Alipay from '../../src/PaymentMethods/Alipay'
 
-const method = Alipay()
+const method = new Alipay()
 
 describe('Alipay methods', () => {
     test('Pay Simple Payload', async () => {

@@ -3,7 +3,7 @@ require('../BuckarooClient.test')
 import CreditManagement from '../../src/PaymentMethods/CreditManagement/index'
 import { IInvoice } from '../../src/PaymentMethods/CreditManagement/Models/Invoice'
 import Gender from '../../src/Constants/Gender'
-import ideal from '../../src/PaymentMethods/Ideal'
+import Ideal from '../../src/PaymentMethods/Ideal'
 import CreditManagementInstallmentInterval from '../../src/Constants/CreditManagementInstallmentInterval'
 
 const creditManagement = new CreditManagement()
@@ -61,8 +61,7 @@ describe('Testing Credit Management', () => {
         await creditManagement
             .addOrUpdateProductLines({
                 invoiceKey: 'd42',
-                articles: [
-                ]
+                articles: []
             })
             .then((data) => {
                 expect(data).toBeDefined()
@@ -79,7 +78,7 @@ describe('Testing Credit Management', () => {
         })
     })
     test('CreateCombinedInvoice', async () => {
-        const ideal1 = ideal()
+        const ideal1 = new Ideal()
         const combined = creditManagement.createCombinedInvoice(invoice())
 
         await ideal1.combine(combined).pay({
@@ -135,7 +134,7 @@ const invoice = (append: object = {}): IInvoice => {
         debtor: {
             code: 'johnsmith4'
         },
-        email: {email:'youremail@example.nl'},
+        email: { email: 'youremail@example.nl' },
         phone: {
             mobile: '06198765432',
             landline: '06198765432',
@@ -149,15 +148,15 @@ const invoice = (append: object = {}): IInvoice => {
             lastNamePrefix: 'Jones',
             lastName: 'Aflever',
             gender: Gender.MALE,
-            birthDate: "",
-            placeOfBirth: ""
+            birthDate: '',
+            placeOfBirth: ''
         },
         company: {
             culture: 'nl-NL',
             name: 'My Company Corporation',
             vatApplicable: true,
             vatNumber: 'NL140619562B01',
-            chamberOfCommerce: ""
+            chamberOfCommerce: ''
         },
         address: {
             street: 'Hoofdtraat',
@@ -172,7 +171,7 @@ const invoice = (append: object = {}): IInvoice => {
             {
                 productLine: {
                     discountPercentage: 0,
-                    productGroupName: "",
+                    productGroupName: '',
                     productGroupOrderIndex: 0,
                     productOrderIndex: 0,
                     quantity: 0,
@@ -181,12 +180,12 @@ const invoice = (append: object = {}): IInvoice => {
                     totalDiscount: 0,
                     totalVat: 0,
                     type: 'Regular',
-                    unitOfMeasurement: "",
+                    unitOfMeasurement: '',
                     vatPercentage: 0,
                     pricePerUnit: 0,
-                    productName: "324"
+                    productName: '324'
                 }
-            },
+            }
         ],
         ...append
     }

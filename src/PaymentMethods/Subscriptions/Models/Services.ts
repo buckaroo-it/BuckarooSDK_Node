@@ -1,27 +1,31 @@
 import IPhone from '../../../Models/Services/IPhone'
 import IAddress from '../../../Models/Services/IAddress'
-import IBankAccount from '../../../Models/Services/IBankAccount'
 import IPerson from '../../../Models/Services/IPerson'
 import ICompany from '../../../Models/Services/ICompany'
-import IDebtor from '../../../Models/Services/IDebtor'
-import { IRatePlan, IRatePlanCharges } from './RatePlan'
+import { IRatePlan, IRatePlanCharge } from './RatePlan'
 import { IConfiguration } from './Configuration'
-import { ModelStrategy } from '../../../Utils/ModelStrategy'
+import { ServiceParameter } from '../../../Utils/Types'
 
-export interface ISubscription {
+export interface ISubscription extends ServiceParameter {
     includeTransaction?: boolean
-    transactionVatPercentage?: Number
+    transactionVatPercentage?: number
     configurationCode?: string
     subscriptionGuid?: string
-    termStartDay?: Number
-    termStartMonth?: Number
-    billingTiming?: Number
+    termStartDay?: number
+    termStartMonth?: number
+    billingTiming?: number
     termStartWeek?: string
     b2b?: string
     mandateReference?: string
     allowedServices?: string
-    debtor?: IDebtor
-    bankAccount?: IBankAccount
+    debtor?: {
+        code: string
+    }
+    bankAccount?: {
+        iban: string
+        accountName: string
+        bic: string
+    }
     email?: string
     phone?: Pick<IPhone, 'mobile'>
     address?: IAddress
@@ -29,45 +33,8 @@ export interface ISubscription {
     customerIBAN?: string
     customerAccountName?: string
     customerBIC?: string
-    person?: IPerson
-    company?: ICompany
-    ratePlans?: IRatePlan
-    ratePlanCharges?: IRatePlanCharges
-}
-export class SubscriptionsModelStrategy extends ModelStrategy<ISubscription> {
-    constructor(data) {
-        super(data)
-        this.groupTypes = {
-            debtor: 'Debtor',
-            person: 'Person',
-            company: 'Person',
-            email: 'Email',
-            address: 'Address',
-            configuration: 'AddConfiguration',
-            ratePlans: {
-                add: 'AddRatePlan',
-                update: 'UpdateRatePlan',
-                disable: 'DisableRatePlan'
-            },
-            ratePlanCharges: {
-                add: 'AddRatePlanCharge',
-                update: 'UpdateRatePlanCharge',
-                disable: 'DisableRatePlanCharge'
-            }
-        }
-        this.keys = {
-            company: {
-                companyName: 'Name',
-                category: false,
-                careOf: false
-            },
-            person: {
-                category: false,
-                careOf: false
-            },
-            address: {
-                houseNumberAdditional: false
-            }
-        }
-    }
+    person?: Omit<IPerson, 'category' | 'careOf'>
+    company?: Omit<ICompany, 'companyName' | 'category' | 'careOf'> & { name: string }
+    ratePlan?: IRatePlan
+    ratePlanCharge?: IRatePlanCharge
 }

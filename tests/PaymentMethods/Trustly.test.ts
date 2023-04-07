@@ -1,21 +1,19 @@
 require('../BuckarooClient.test')
 import Trustly from '../../src/PaymentMethods/Trustly/index'
 
-const method = Trustly()
+const method = new Trustly()
 
 describe('Trustly', () => {
     test('Pay', async () => {
         await method
             .pay({
-                amountDebit: 3.5,
-                country: 'DE',
-                customer: {
-                    firstName: 'test',
-                    lastName: 'a'
-                }
+                amountDebit: 12,
+                customerCountryCode: 'DE',
+                customerFirstName: 'da',
+                customerLastName: '34'
             })
             .then((response) => {
-                console.log(response)
+                expect(response).toBeDefined()
             })
     })
 })

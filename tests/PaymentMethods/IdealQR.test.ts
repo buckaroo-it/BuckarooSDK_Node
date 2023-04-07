@@ -1,7 +1,7 @@
 require('../BuckarooClient.test')
 import IDealQR from '../../src/PaymentMethods/iDealQR'
 
-const method = IDealQR()
+const method = new IDealQR()
 
 describe('Testing iDealQR methods', () => {
     test('Pay', async () => {

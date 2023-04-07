@@ -1,7 +1,7 @@
 require('../BuckarooClient.test')
 import ApplePay from '../../src/PaymentMethods/ApplePay/index'
 
-const method = ApplePay()
+const method = new ApplePay()
 
 describe('Applepay methods', () => {
     // test('Pay Simple Payload', async () => {

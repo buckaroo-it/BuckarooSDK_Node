@@ -1,5 +1,3 @@
-import IArticle from '../../../Models/Services/IArticle'
-
 export interface ICreditArticle {
     type: 'Regular' | 'SubTotal' | 'Discount' | 'TotalAmountExVat' | 'TotalVat' | 'TotalAmount'
     productName: string

@@ -1,7 +1,7 @@
 require('../BuckarooClient.test')
 import GiftCard from '../../src/PaymentMethods/GiftCard/index'
 
-const method = GiftCard()
+const method = new GiftCard()
 
 describe('GiftCard methods', () => {
     test('Pay', async () => {
@@ -12,11 +12,6 @@ describe('GiftCard methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                console.log(
-                    data.hasError()
-                        ? data.find('ParameterErrors') || data.find('Parameters')
-                        : data.getStatusCode()
-                )
             })
     })
     test('Refund', async () => {
@@ -28,11 +23,6 @@ describe('GiftCard methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                console.log(
-                    data.hasError()
-                        ? data.find('ParameterErrors') || data.find('Parameters')
-                        : data.getStatusCode()
-                )
             })
     })
 })

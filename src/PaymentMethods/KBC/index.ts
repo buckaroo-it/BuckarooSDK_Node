@@ -1,21 +1,11 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
+import { RefundPayload } from '../../Models/ITransaction'
 
-class KBC extends PayablePaymentMethod {
+export default class KBC extends PayablePaymentMethod {
     protected _paymentName = 'kbcpaymentbutton'
     protected _serviceVersion = 1
 
-    pay(payload) {
-        return super.pay(payload)
-    }
-    refund(payload) {
+    refund(payload: RefundPayload) {
         return super.refund(payload)
     }
 }
-
-let _kbc: KBC
-const kbc: () => KBC = () => {
-    if (!_kbc) _kbc = new KBC()
-    return _kbc
-}
-export default kbc
-export { KBC as KBCClass }

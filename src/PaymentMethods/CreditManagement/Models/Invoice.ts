@@ -1,11 +1,8 @@
-import IDebtor from '../../../Models/Services/IDebtor'
 import IPhone from '../../../Models/Services/IPhone'
 import IAddress from '../../../Models/Services/IAddress'
-import IPerson from '../../../Models/Services/IPerson'
-import ICompany from '../../../Models/Services/ICompany'
 import { ICreditArticle } from './Article'
 import { ITransaction } from '../../../Models/ITransaction'
-import Gender from "../../../Constants/Gender";
+import Gender from '../../../Constants/Gender'
 
 export interface Invoice {
     invoiceAmount: number
@@ -18,30 +15,35 @@ export interface Invoice {
     allowedServicesAfterDueDate?: string
     code: string
     person: {
-        culture: string,
-        title: string,
-        initials: string,
-        firstName: string,
-        lastName: string,
-        lastNamePrefix: string,
-        gender: Gender,
-        birthDate: string,
-        placeOfBirth: string,
+        culture: string
+        title: string
+        initials: string
+        firstName: string
+        lastName: string
+        lastNamePrefix: string
+        gender: Gender
+        birthDate: string
+        placeOfBirth: string
     }
-    company:{
-        culture: string,
-        name: string,
-        vatApplicable: boolean,
-        vatNumber: string,
-        chamberOfCommerce: string,
+    company: {
+        culture: string
+        name: string
+        vatApplicable: boolean
+        vatNumber: string
+        chamberOfCommerce: string
     }
-    address: Omit<IAddress,'houseNumberAdditional'|'zipcode'> & {houseNumberSuffix?: string,postalCode: string}
-    debtor: IDebtor
-    email?: {email: string}
+    address: Omit<IAddress, 'houseNumberAdditional' | 'zipcode'> & {
+        houseNumberSuffix?: string
+        postalCode: string
+    }
+    debtor: {
+        code: string
+    }
+    email?: { email: string }
     phone: IPhone
-    products?: { productLine:ICreditArticle }[]
+    products?: { productLine: ICreditArticle }[]
     invoiceNumber?: string
     applyStartRecurrent?: boolean
-    [key:string]: any
+    [key: string]: any
 }
 export type IInvoice = Invoice & ITransaction

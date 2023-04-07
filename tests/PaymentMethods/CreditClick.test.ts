@@ -1,7 +1,7 @@
 require('../BuckarooClient.test')
-import creditClick from '../../src/PaymentMethods/CreditClick/index'
+import CreditClick from '../../src/PaymentMethods/CreditClick/index'
 
-const method = creditClick()
+const method = new CreditClick()
 
 describe('Testing CreditClick methods', () => {
     test('Pay', async () => {
@@ -11,7 +11,6 @@ describe('Testing CreditClick methods', () => {
             })
             .then((response) => {
                 expect(response).toBeDefined()
-                console.log(response)
             })
     })
     test('Refund', async () => {

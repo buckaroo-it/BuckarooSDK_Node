@@ -9,5 +9,5 @@ export interface ICreate extends ITransaction {
     usageType: 1 | 2
     validFrom: string
     validUntil?: string
-    creationBalance: Number
+    creationBalance: number
 }

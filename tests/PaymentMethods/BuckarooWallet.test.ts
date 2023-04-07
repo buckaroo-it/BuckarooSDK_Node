@@ -1,7 +1,7 @@
 require('../BuckarooClient.test')
 import BuckarooWallet from '../../src/PaymentMethods/BuckarooWallet/index'
 
-const method = BuckarooWallet()
+const method = new BuckarooWallet()
 
 describe('BuckarooWallet methods', () => {
     test('Pay', async () => {
@@ -64,17 +64,33 @@ describe('BuckarooWallet methods', () => {
     test('Create Wallet', async () => {
         await method
             .create({
-                invoice: 'sdf',
-                walletId: '12',
+                additionalParameters: undefined,
+                amountCredit: 0,
+                amountDebit: 0,
+                clientIP: undefined,
+                consumerEmail: '',
+                consumerFirstName: '',
+                consumerIban: '',
+                consumerLastName: '',
+                continueOnIncomplete: '',
+                culture: '',
+                currency: '',
+                customParameters: undefined,
+                description: '',
+                invoice: '',
+                order: '',
                 originalTransactionKey: '',
-                email: '42@hotmail.com',
-                bankAccount: {
-                    iban: ''
-                },
-                customer: {
-                    firstName: '',
-                    lastName: ''
-                }
+                originalTransactionReference: '',
+                pushURL: '',
+                pushURLFailure: '',
+                returnURL: '',
+                returnURLCancel: '',
+                returnURLError: '',
+                returnURLReject: '',
+                servicesExcludedForClient: '',
+                servicesSelectableByClient: '',
+                startRecurrent: false,
+                walletId: ''
             })
             .then((data) => {
                 expect(data).toBeDefined()

@@ -1,15 +1,13 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { IPay } from './Models/Pay'
 import { ICapture, RefundPayload } from '../../Models/ITransaction'
-import { ExtraInfoModelStrategy, IExtraInfo } from './Models/ExtraInfo'
+import { IExtraInfo } from './Models/ExtraInfo'
 import { IEmandate } from './Models/Emandate'
 import { uniqid } from '../../Utils/Functions'
 
-class SEPA extends PayablePaymentMethod {
+export default class SEPA extends PayablePaymentMethod {
     protected _paymentName = 'SepaDirectDebit'
     protected _serviceVersion = 1
-    modelStrategy = new ExtraInfoModelStrategy({})
-
     pay(payload: IPay) {
         return super.pay(payload)
     }
@@ -34,11 +32,3 @@ class SEPA extends PayablePaymentMethod {
         return super.transactionRequest(payload)
     }
 }
-
-let _sepa: SEPA
-const sepa: () => SEPA = () => {
-    if (!_sepa) _sepa = new SEPA()
-    return _sepa
-}
-export default sepa
-export { SEPA as SepaClass }

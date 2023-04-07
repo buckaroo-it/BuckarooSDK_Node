@@ -1,7 +1,7 @@
 require('./BuckarooClient')
-import creditCard from '../src/PaymentMethods/CreditCard'
+import CreditCard from '../src/PaymentMethods/CreditCard'
 
-const paymentMethod = creditCard()
+const paymentMethod = new CreditCard()
 
 ;(async () => {
     try {

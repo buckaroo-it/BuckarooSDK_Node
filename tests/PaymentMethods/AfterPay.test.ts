@@ -1,25 +1,18 @@
 import Afterpay from '../../src/PaymentMethods/Afterpay/index'
-import {IPay, ServiceParameters} from '../../src/PaymentMethods/Afterpay/Model/Services'
-import {RefundPayload} from '../../src/Models/ITransaction'
-import RecipientCategory from "../../src/Constants/RecipientCategory";
-
+import { IPay } from '../../src/PaymentMethods/Afterpay/Model/Pay'
+import { RefundPayload } from '../../src/Models/ITransaction'
+import RecipientCategory from '../../src/Constants/RecipientCategory'
 require('../BuckarooClient.test')
 
-const method = new  Afterpay()
-
+const method = new Afterpay()
 describe('AfterPay methods', () => {
     test('Pay', async () => {
-
-        try {
-            await method.pay(payload).then((data) => {
-                expect(data.isSuccess()).toBeTruthy()
-            })
-        }catch (e) {
-            console.log(e)
-        }
+        await method.pay(payload).then((data) => {
+            expect(data.isSuccess()).toBeTruthy()
+        })
     })
     test('Refund', async () => {
-        await method.refund({ ...refundPayload}).then((data) => {
+        await method.refund({ ...refundPayload }).then((data) => {
             expect(data).toBeDefined()
         })
     })
@@ -39,7 +32,7 @@ describe('AfterPay methods', () => {
             .capture({
                 amountDebit: 4,
                 invoice: '123456789',
-                originalTransactionKey: '123456789',
+                originalTransactionKey: '123456789'
             })
             .then((data) => {
                 expect(data).toBeDefined()
@@ -57,74 +50,6 @@ describe('AfterPay methods', () => {
     })
 })
 
-let serviceParameters: ServiceParameters = {
-    shippingCustomer: {
-        city: "rew",
-        country: "NL",
-        street: "fsd",
-        streetNumber: "423",
-        streetNumberAdditional: "ewr",
-        postalCode: "1234AB",
-        email: "example@hotmail.com",
-        phone: "+31201234567",
-        mobilePhone: "+31612345678",
-        birthDate: "1999-11-21",
-        careOf: "",
-        category: RecipientCategory.PERSON,
-        conversationLanguage: "NL",
-        customerNumber: "a",
-        firstName: "a",
-        identificationNumber: "675",
-        lastName: "a",
-        salutation: "Mr"
-    },
-    billingCustomer: {
-        city: "rew",
-        country: "NL",
-        street: "fsd",
-        streetNumber: "423",
-        streetNumberAdditional: "ewr",
-        postalCode: "1234AB",
-        email: "example@hotmail.com",
-        phone: "+31201234567",
-        mobilePhone: "+31612345678",
-        birthDate: "1999-11-21",
-        careOf: "",
-        category: RecipientCategory.PERSON,
-        conversationLanguage: "NL",
-        customerNumber: "a",
-        firstName: "a",
-        identificationNumber: "675",
-        lastName: "a",
-        salutation: "Mr"
-    },
-    articles: [
-        {
-            article: {
-                description: "ter",
-                identifier: "423f",
-                imageUrl: "",
-                quantity: 1,
-                type: "PhysicalArticle",
-                unitCode: "",
-                url: "",
-                vatPercentage: 0,
-                grossUnitPrice: 7
-            }
-        },
-        {
-            article: {
-                description: "ter",
-                identifier: "423f",
-                unitCode: "",
-                type: "PhysicalArticle",
-                quantity: 1,
-                vatPercentage: 0,
-                grossUnitPrice: 7
-            }
-        }
-    ]
-}
 let refundPayload: RefundPayload = {
     amountCredit: 14,
     originalTransactionKey: '123456789'
@@ -133,5 +58,71 @@ let refundPayload: RefundPayload = {
 let payload: IPay = {
     amountDebit: 14,
     clientIP: '127.0.0.1',
-    ...serviceParameters
+
+    shippingCustomer: {
+        city: 'rew',
+        country: 'NL',
+        street: 'fsd',
+        streetNumber: '423',
+        streetNumberAdditional: 'ewr',
+        postalCode: '1234AB',
+        email: 'example@hotmail.com',
+        phone: '+31201234567',
+        mobilePhone: '+31612345678',
+        birthDate: '1999-11-21',
+        careOf: '',
+        category: RecipientCategory.PERSON,
+        conversationLanguage: 'NL',
+        customerNumber: 'a',
+        firstName: 'a',
+        identificationNumber: '675',
+        lastName: 'a',
+        salutation: 'Mr'
+    },
+    billingCustomer: {
+        city: 'rew',
+        country: 'NL',
+        street: 'fsd',
+        streetNumber: '423',
+        streetNumberAdditional: 'ewr',
+        postalCode: '1234AB',
+        email: 'example@hotmail.com',
+        phone: '+31201234567',
+        mobilePhone: '+31612345678',
+        birthDate: '1999-11-21',
+        careOf: '',
+        category: RecipientCategory.PERSON,
+        conversationLanguage: 'NL',
+        customerNumber: 'a',
+        firstName: 'a',
+        identificationNumber: '675',
+        lastName: 'a',
+        salutation: 'Mr'
+    },
+    articles: [
+        {
+            article: {
+                description: 'ter',
+                identifier: '423f',
+                imageUrl: '',
+                quantity: 1,
+                type: 'PhysicalArticle',
+                unitCode: '',
+                url: '',
+                vatPercentage: 0,
+                grossUnitPrice: 7
+            }
+        },
+        {
+            article: {
+                description: 'ter',
+                identifier: '423f',
+                unitCode: '',
+                type: 'PhysicalArticle',
+                quantity: 1,
+                vatPercentage: 0,
+                grossUnitPrice: 7
+            }
+        }
+    ]
 }

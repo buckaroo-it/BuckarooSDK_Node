@@ -1,7 +1,7 @@
 require('../BuckarooClient.test')
 import BuckarooVoucher from '../../src/PaymentMethods/BuckarooVoucher/index'
 
-const method = BuckarooVoucher()
+const method = new BuckarooVoucher()
 
 describe('testing methods', () => {
     test('Pay', async () => {

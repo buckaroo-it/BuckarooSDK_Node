@@ -1,13 +1,9 @@
-import RecipientCategory from '../../src/Constants/RecipientCategory'
 import Billink from '../../src/PaymentMethods/Billink/index'
-import Gender from '../../src/Constants/Gender'
-import { BuckarooError } from '../../src/Utils/BuckarooError'
 import { IPay } from '../../src/PaymentMethods/Billink/Models/Pay'
-import { country } from '../../src/PaymentMethods/Afterpay/Model/Customer'
 
 require('../BuckarooClient.test')
 
-const method = Billink()
+const method = new Billink()
 
 describe('Billink methods', () => {
     test('Specifications', async () => {
@@ -17,14 +13,9 @@ describe('Billink methods', () => {
         })
     })
     test('Pay', async () => {
-        await method
-            .pay(payload)
-            .then((data) => {
-                expect(data).toBeDefined()
-            })
-            .catch((err) => {
-                expect(err instanceof BuckarooError).toBeTruthy()
-            })
+        await method.pay(payload).then((data) => {
+            expect(data).toBeDefined()
+        })
     })
     test('Refund', async () => {
         await method
@@ -66,41 +57,31 @@ describe('Billink methods', () => {
 })
 
 let payload: IPay = {
-    amountDebit: 12,
-    articles: [
-        {
-            price: 23,
-            priceExcl: 232,
-            description: '',
-            identifier: '',
-            vatPercentage: 0,
-            quantity: 23,
-        }
-    ],
-    billing: {
-        address: {
-            city: '',
-            country: country.NL,
-            houseNumber: '',
-            houseNumberAdditional: '',
-            street: '',
-            zipcode: ''
-        },
-        email: 'em',
-        phone: {
-            mobile: '043424243234'
-        },
-        recipient: {
-            // birthDate: '',
-            careOf: '',
-            category: RecipientCategory.B2B,
-            chamberOfCommerce: '54t',
-            companyName: 'rwewr',
-            firstName: 't54',
-            gender: Gender.MALE,
-            lastName: '5t4',
-            title: '',
-            vatNumber: ''
-        }
-    }
+    VATNumber: '',
+    additionalParameters: undefined,
+    amountDebit: 0,
+    articles: [],
+    billingCustomer: undefined,
+    clientIP: undefined,
+    continueOnIncomplete: '',
+    culture: '',
+    currency: '',
+    customParameters: undefined,
+    description: '',
+    invoice: '',
+    order: '',
+    originalTransactionKey: '',
+    originalTransactionReference: '',
+    pushURL: '',
+    pushURLFailure: '',
+    returnURL: '',
+    returnURLCancel: '',
+    returnURLError: '',
+    returnURLReject: '',
+    servicesExcludedForClient: '',
+    servicesSelectableByClient: '',
+    shippingCustomer: undefined,
+    startRecurrent: false,
+    summaryImageUrl: '',
+    trackandtrace: ''
 }

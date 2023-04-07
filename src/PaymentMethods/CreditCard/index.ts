@@ -10,7 +10,7 @@ export default class Creditcard extends PayablePaymentMethod {
     refund(payload: AddName<RefundPayload>) {
         return super.refund(payload)
     }
-    payEncrypted(payload:AddName<IEncrypted>) {
+    payEncrypted(payload: AddName<IEncrypted>) {
         this.action = 'PayEncrypted'
         return super.pay(payload)
     }

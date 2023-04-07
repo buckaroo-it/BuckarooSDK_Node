@@ -1,8 +1,7 @@
 require('../BuckarooClient.test')
-import payPerEmail from '../../src/PaymentMethods/PayPerEmail/index'
-import Gender from '../../src/Constants/Gender'
+import PayPerEmail from '../../src/PaymentMethods/PayPerEmail/index'
 
-const method = payPerEmail()
+const method = new PayPerEmail()
 
 describe('PayPerEmail methods', () => {
     test('paymentInvitation', async () => {
@@ -12,7 +11,28 @@ describe('PayPerEmail methods', () => {
                 amountDebit: 10,
                 currency: 'EUR',
                 attachment: '',
-                costumer: { firstName: 'test', gender: Gender.FEMALE, lastName: 'te' },
+                additionalParameters: undefined,
+                clientIP: undefined,
+                continueOnIncomplete: '',
+                culture: '',
+                customParameters: undefined,
+                customerEmail: '',
+                customerFirstName: '',
+                customerGender: undefined,
+                customerLastName: '',
+                description: '',
+                order: '',
+                originalTransactionKey: '',
+                originalTransactionReference: '',
+                pushURL: '',
+                pushURLFailure: '',
+                returnURL: '',
+                returnURLCancel: '',
+                returnURLError: '',
+                returnURLReject: '',
+                servicesExcludedForClient: '',
+                servicesSelectableByClient: '',
+                startRecurrent: false,
                 email: 's',
                 expirationDate: '',
                 merchantSendsEmail: false,

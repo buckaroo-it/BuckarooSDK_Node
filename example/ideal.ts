@@ -2,8 +2,9 @@ require('../BuckarooClient.test')
 
 import Ideal from '../src/PaymentMethods/Ideal'
 
+const ideal = new Ideal()
 async function startIdealPayment() {
-    return await Ideal().pay({
+    return await ideal.pay({
         amountDebit: 10.1,
         issuer: 'ABNANL2A',
         clientIP: {

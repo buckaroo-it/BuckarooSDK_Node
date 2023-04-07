@@ -1,15 +1,9 @@
 import { TransactionRequest } from '../Models/Request'
 import { IConfig } from '../Utils/Types'
-import { buckarooClient } from '../BuckarooClient'
-import { ITransaction } from '../Models/ITransaction'
 import { RequestType } from '../Constants/Endpoints'
-import { TransactionResponse } from '../Models/TransactionResponse'
-import { IServiceList } from '../Models/ServiceList'
 import { IPProtocolVersion } from '../Constants/IPProtocolVersion'
-import { BuckarooError } from '../Utils/BuckarooError'
-import { ModelStrategy } from '../Utils/ModelStrategy'
-import {ServiceParameters} from "../Utils/ServiceParameters";
-import {firstUpperCase} from "../Utils/Functions";
+import { ITransaction } from '../Models/ITransaction'
+import buckarooClient from '../BuckarooClient'
 
 export default abstract class PaymentMethod {
     protected readonly _requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
@@ -21,9 +15,6 @@ export default abstract class PaymentMethod {
     protected request: TransactionRequest = new TransactionRequest()
     private _action = ''
     public combinable: boolean = false
-    protected serviceParameters: IServiceList = {}
-    protected modelStrategy: ModelStrategy<any> = new ModelStrategy({})
-
     get paymentName(): string {
         return this._paymentName
     }
@@ -39,77 +30,62 @@ export default abstract class PaymentMethod {
     protected set action(value: string) {
         this._action = value
     }
-    getRequestData() {
-        return this.request.getData()
-    }
 
-    public setRequest(data: ITransaction) {
-
+    public setRequest(data: object) {
         this.setBasicParameters(data)
 
         this.setRequiredFields()
 
-        this.setServiceList(data)
+        this.setServiceParameters(data)
     }
 
-    protected setServiceList(serviceList: object) {
-        this.serviceParameters = {
+    protected setServiceParameters(serviceParameters) {
+        this.request.service = {
             Action: this.action,
             Name: this.paymentName,
             Version: this.serviceVersion
         }
-
-        if (Object.keys(serviceList).length > 0) {
-            this.serviceParameters.Parameters = this.formatServiceParameters(serviceList)
+        if (Object.keys(serviceParameters).length > 0) {
+            this.request.serviceParameters = serviceParameters
+            this.request.service.Parameters =
+                this.request.formatServiceParameters(serviceParameters)
         }
-        this.request.addServices(this.serviceParameters)
+
+        this.request.addServices()
     }
 
     protected setRequiredFields() {
         for (const requiredField of this._requiredFields) {
-            if (!this.getRequestData()[requiredField])
-                this.request.setDataKey(requiredField, buckarooClient().getConfig()[requiredField])
+            if (!this.request.data[requiredField])
+                this.request.data[requiredField] = buckarooClient().getConfig()[requiredField]
         }
     }
-    protected transactionRequest(requestData: ITransaction) {
+    protected transactionRequest(requestData: object) {
         this.setRequest(requestData)
 
-        return buckarooClient()
-            .transactionRequest(this.getRequestData())
-            .then((response) => {
-                const transactionResponse = new TransactionResponse(response)
-                if (transactionResponse.hasError()) {
-                    throw new BuckarooError(transactionResponse)
-                }
-                return transactionResponse
-            })
+        return buckarooClient().transactionRequest(this.request.data)
     }
     protected dataRequest(requestData) {
         this.setRequest(requestData)
 
-        return buckarooClient()
-            .dataRequest(this.getRequestData())
-            .then((response) => {
-                return new TransactionResponse(response)
-            })
+        return buckarooClient().dataRequest(this.request.data)
     }
     public combine(method: PaymentMethod) {
         if (method.combinable && this.combinable) {
-            const data = method.getRequestData()
-            if (data) {
-                const services = { ...this.getRequestData().services }
-                Object.assign(this.getRequestData(), data)
-                if (services?.ServiceList) {
-                    this.request.addServices(services.ServiceList[0])
+            const data = method.request.data
+            if (Object.keys(data).length > 0) {
+                Object.assign(this.request.data, data)
+                if (this.request.service) {
+                    this.request.addServices()
                 }
             }
         }
         return this
     }
     public setClientIp() {
-        let ip = this.getRequestData().clientIP
+        let ip = this.request.data.clientIP
         if (typeof ip === 'string') {
-            this.request.setDataKey('clientIP', {
+            this.request.setRequestDataKey('clientIP', {
                 type: IPProtocolVersion.getVersion(ip),
                 address: ip
             })
@@ -119,36 +95,15 @@ export default abstract class PaymentMethod {
         return buckarooClient().specification(this.paymentName, this.serviceVersion, type)
     }
 
-    private setBasicParameters(data) {
-        let params = {}
-        Object.keys(data).forEach((key) => {
-            if (this.request.basicParameters[key]) {
-                params[key] = data[key]
+    private setBasicParameters(data: ITransaction) {
+        Object.keys(this.request.basicParameters).forEach((key) => {
+            if (data[key]) {
+                this.request.setRequestDataKey(key, data[key])
                 delete data[key]
             }
         })
-        this.request.setData(params)
-        this.request.formatParameters()
+        this.request.formatAdditionalParameters()
+        this.request.formatCustomParameters()
         this.setClientIp()
-    }
-    public formatServiceParameters(data:object,types:{GroupType?:string,GroupID?:number } = {}) {
-        return Object.keys(data).flatMap((name) => {
-            if (Array.isArray(data[name])){
-                types.GroupID = 0
-                return this.formatServiceParameters(data[name],types)
-            }
-            if (data[name] instanceof Object){
-                types.GroupType = firstUpperCase(name)
-                if (types.GroupID === parseInt(name)){
-                    types.GroupID++
-                }
-                return this.formatServiceParameters(data[name],types)
-            }
-            return {
-                Name: firstUpperCase(name),
-                Value: data[name],
-                ...types
-            }
-        })
     }
 }

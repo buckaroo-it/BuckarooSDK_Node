@@ -1,7 +1,7 @@
 require('../BuckarooClient.test')
-import paypal from '../../src/PaymentMethods/Paypal/index'
+import Paypal from '../../src/PaymentMethods/Paypal/index'
 
-const method = paypal()
+const method = new Paypal()
 
 describe('Paypal', () => {
     test('Pay', async () => {

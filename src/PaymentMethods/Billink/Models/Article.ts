@@ -1,4 +1,3 @@
-
 export interface IBillinkArticle {
     quantity: number
     description: string

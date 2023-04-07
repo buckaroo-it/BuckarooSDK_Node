@@ -1,9 +1,9 @@
-export interface IConfiguration {
+export type IConfiguration = {
     name?: string
     schemeKey?: string
     invoiceNumberPrefix?: string
     invoiceDescriptionFormat?: string
-    dueDateDays?: Number
+    dueDateDays?: number
     allowedServices?: string
     generateInvoiceSpecification?: boolean
     skipPayPerEmail?: boolean

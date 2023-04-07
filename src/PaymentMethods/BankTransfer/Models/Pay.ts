@@ -1,10 +1,10 @@
 import Gender from '../../../Constants/Gender'
-import {Payload} from "../../../Models/ITransaction";
+import { Payload } from '../../../Models/ITransaction'
 
 export type BankTransferPerson = {
     customerFirstName: string
     customerLastName: string
-    customerGender:Gender
+    customerGender: Gender
 }
 type ServiceParameters = {
     sendMail: boolean
@@ -14,5 +14,3 @@ type ServiceParameters = {
 } & BankTransferPerson
 
 export type IPay = Payload & ServiceParameters
-
-

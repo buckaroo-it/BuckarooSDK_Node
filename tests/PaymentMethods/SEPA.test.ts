@@ -1,26 +1,41 @@
 require('../BuckarooClient.test')
 import SEPA from '../../src/PaymentMethods/SEPA/index'
 
-const method = SEPA()
+const method = new SEPA()
 
 describe('SEPA', () => {
     test('Pay', async () => {
         await method
             .pay({
-                bic: '',
+                additionalParameters: undefined,
+                amountDebit: 0,
+                clientIP: undefined,
                 collectDate: '',
-                customer: {
-                    name: 'aaa'
-                },
-                iban: '423',
+                continueOnIncomplete: '',
+                culture: '',
+                currency: '',
+                customParameters: undefined,
+                customerBIC: '',
+                customerIBAN: '',
+                customeraccountname: '',
+                description: '',
+                invoice: '',
                 mandateDate: '',
                 mandateReference: '',
-                amountDebit: 50.3
+                order: '',
+                originalTransactionKey: '',
+                originalTransactionReference: '',
+                pushURL: '',
+                pushURLFailure: '',
+                returnURL: '',
+                returnURLCancel: '',
+                returnURLError: '',
+                returnURLReject: '',
+                servicesExcludedForClient: '',
+                servicesSelectableByClient: '',
+                startRecurrent: false
             })
             .then((info) => {
-                console.log(info)
-
-                console.dir(info.find('requestErrors'))
                 expect(info).toBeDefined()
             })
     })
@@ -38,15 +53,10 @@ describe('SEPA', () => {
     test('Authorize', async () => {
         await method
             .authorize({
-                bic: '',
+                amountDebit: 0,
                 collectDate: '',
-                customer: {
-                    name: ''
-                },
-                iban: '',
-                mandateDate: '',
-                mandateReference: '',
-                amountDebit: 50.3
+                customerIBAN: '',
+                customeraccountname: ''
             })
             .then((info) => {
                 console.log(info)
@@ -61,39 +71,50 @@ describe('SEPA', () => {
                 originalTransactionKey: ''
             })
             .then((info) => {
-                console.log(info)
-
-                console.dir(info.find('requestErrors'))
-                console.log(info.find('actionErrors'))
                 expect(info).toBeDefined()
             })
     })
     test('ExtraInfo', async () => {
         await method
             .extraInfo({
-                amountDebit: 10,
-                invoice: 'testinvoice 123',
-                iban: 'NL13TEST0123456789',
-                bic: 'TESTNL2A',
-                contractID: 'TEST',
-                mandateDate: '2022-07-03',
-                mandateReference: '1DCtestreference',
-                customer: {
-                    name: 'John Smith',
-                    code: '',
-                    referenceParty: {
-                        code: '',
-                        name: ''
-                    }
-                },
-                address: {
-                    street: 'Hoofdstraat',
-                    houseNumber: '13',
-                    houseNumberAdditional: 'a',
-                    zipcode: '1234AB',
-                    city: 'Heerenveen',
-                    country: 'NL'
-                }
+                additionalParameters: undefined,
+                amountDebit: 0,
+                city: '',
+                clientIP: undefined,
+                collectDate: '',
+                continueOnIncomplete: '',
+                contractID: '',
+                country: '',
+                culture: '',
+                currency: '',
+                customParameters: undefined,
+                customerBIC: '',
+                customerCode: '',
+                customerIBAN: '',
+                customerName: '',
+                customerReferencePartyCode: '',
+                customerReferencePartyName: '',
+                customeraccountname: '',
+                description: '',
+                houseNumber: '',
+                houseNumberSuffix: '',
+                invoice: '',
+                mandateDate: '',
+                mandateReference: '',
+                order: '',
+                originalTransactionKey: '',
+                originalTransactionReference: '',
+                pushURL: '',
+                pushURLFailure: '',
+                returnURL: '',
+                returnURLCancel: '',
+                returnURLError: '',
+                returnURLReject: '',
+                servicesExcludedForClient: '',
+                servicesSelectableByClient: '',
+                startRecurrent: false,
+                street: '',
+                zipcode: ''
             })
             .then((info) => {
                 console.log(info)
@@ -107,8 +128,6 @@ describe('SEPA', () => {
                 amountDebit: 50.3
             })
             .then((info) => {
-                console.log(info)
-                console.log(info.find('parameterErrors'))
                 expect(info).toBeDefined()
             })
     })

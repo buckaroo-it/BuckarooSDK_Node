@@ -1,9 +1,8 @@
-import Gender from '../../src/Constants/Gender'
 import BankTransfer from '../../src/PaymentMethods/BankTransfer'
 
 require('../BuckarooClient.test')
 
-const method = BankTransfer()
+const method = new BankTransfer()
 
 describe('Transfer methods', () => {
     test('Specification', async () => {
@@ -14,16 +13,34 @@ describe('Transfer methods', () => {
     test('Pay', async () => {
         await method
             .pay({
-                amountDebit: 32,
-                country: '',
-                customer: {
-                    firstName: '432',
-                    gender: Gender.FEMALE,
-                    lastName: '324'
-                },
+                additionalParameters: undefined,
+                amountDebit: 0,
+                clientIP: undefined,
+                continueOnIncomplete: '',
+                culture: '',
+                currency: '',
+                customParameters: undefined,
+                customerCountry: '',
+                customerEmail: '',
+                customerFirstName: '',
+                customerGender: undefined,
+                customerLastName: '',
                 dateDue: '',
-                email: '',
-                sendMail: false
+                description: '',
+                invoice: '',
+                order: '',
+                originalTransactionKey: '',
+                originalTransactionReference: '',
+                pushURL: '',
+                pushURLFailure: '',
+                returnURL: '',
+                returnURLCancel: '',
+                returnURLError: '',
+                returnURLReject: '',
+                sendMail: false,
+                servicesExcludedForClient: '',
+                servicesSelectableByClient: '',
+                startRecurrent: false
             })
             .then((res) => {
                 expect(res.isAwaitingConsumer()).toBeTruthy()

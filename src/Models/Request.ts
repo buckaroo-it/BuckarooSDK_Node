@@ -1,18 +1,39 @@
-import {AdditionalParameter, ITransaction} from './ITransaction'
+import { ITransaction } from './ITransaction'
 import { IServiceList, IServices } from './ServiceList'
-import {IParameter} from "./Parameters";
+import { IParameter } from './Parameters'
+import { firstUpperCase } from '../Utils/Functions'
+import { AdditionalParameter, ServiceParameter } from '../Utils/Types'
 
-export interface RequestData extends ITransaction {
-    services?: IServices
-}
 export class Request {
-    protected data: RequestData = {}
-
-    public getData() {
-        return this.data
+    protected _data: { [key: string]: any } = {}
+    get data(): object {
+        return this._data
     }
-    public basicParameters: Record<keyof RequestData, boolean> = {
-        services: true,
+    public get services(): IServices | undefined {
+        return this._data['services']
+    }
+    public setRequestDataKey(key, data) {
+        this._data[key] = data
+    }
+}
+
+export class TransactionRequest extends Request {
+    get data(): ITransaction {
+        return this._data
+    }
+    setData(data) {
+        this._data = data
+    }
+    customParameters?: AdditionalParameter
+    additionalParameters?: AdditionalParameter
+    service?: {
+        Name?: string
+        Action?: string
+        Version?: number
+        Parameters?: IParameter[]
+    }
+    serviceParameters?: ServiceParameter
+    public basicParameters: Record<keyof ITransaction, boolean> = {
         clientIP: true,
         currency: true,
         returnURL: true,
@@ -36,47 +57,60 @@ export class Request {
         customParameters: true,
         additionalParameters: true
     }
-}
-
-export class TransactionRequest extends Request {
-    public setData(data) {
-        this.data = data
+    public setServices(services: IServiceList) {
+        this.setRequestDataKey('services', {
+            ServiceList: [services]
+        })
     }
-    public setDataKey(key, data) {
-        this.data[key] = data
-    }
-    public setServices(serviceList: IServiceList) {
-        this.data.services = {
-            ServiceList: [serviceList]
+    public addServices() {
+        if (this.service) {
+            if (this.services) {
+                this.services.ServiceList.push(this.service)
+            } else {
+                this.setServices(this.service)
+            }
         }
     }
-    public addServices(serviceList: IServiceList) {
-        if (this.data?.services) {
-            this.data.services.ServiceList.push(serviceList)
-        } else {
-            this.setServices(serviceList)
+    formatAdditionalParameters() {
+        if (this.data.additionalParameters) {
+            this.setRequestDataKey('additionalParameters', {
+                additionalParameter: this.formatParametersMap(this.data.additionalParameters)
+            })
         }
     }
-
-    formatParameters() {
-        if(this.data.additionalParameters){
-            this.setDataKey('additionalParameters',
-                {
-                    additionalParameter: this.formatParametersMap(this.data.additionalParameters)
-                })
-        }
-        if(this.data.customParameters){
-            this.setDataKey('customParameters',
-                {
-                    list: this.formatParametersMap(this.data.customParameters)
-                })
+    formatCustomParameters() {
+        if (this.data.customParameters) {
+            this.setRequestDataKey('customParameters', {
+                list: this.formatParametersMap(this.data.customParameters)
+            })
         }
     }
-    protected formatParametersMap(value:AdditionalParameter):IParameter[] {
+    protected formatParametersMap(value: AdditionalParameter): IParameter[] {
         return Object.keys(value).map((key, value) => {
             return {
                 Name: key,
                 Value: value || ''
+            }
+        })
+    }
+
+    formatServiceParameters(data: object, types: { GroupType?: string; GroupID?: number } = {}) {
+        return Object.keys(data).flatMap((name) => {
+            if (Array.isArray(data[name])) {
+                types.GroupID = 0
+                return this.formatServiceParameters(data[name], types)
+            }
+            if (data[name] instanceof Object) {
+                types.GroupType = firstUpperCase(name)
+                if (types.GroupID === parseInt(name)) {
+                    types.GroupID++
+                }
+                return this.formatServiceParameters(data[name], types)
+            }
+            return {
+                Name: firstUpperCase(name),
+                Value: data[name],
+                ...types
             }
         })
     }

@@ -1,20 +1,41 @@
 require('../BuckarooClient.test')
 import Przelewy24 from '../../src/PaymentMethods/Przelewy24/index'
 
-const method = Przelewy24()
+const method = new Przelewy24()
 
 describe('Przelewy24', () => {
     test('Pay', async () => {
         await method
             .pay({
-                amountDebit: 50.3,
-                order: '123456',
-                costumer: { firstName: '213', lastName: '23' },
-                email: 'sad'
+                additionalParameters: undefined,
+                amountDebit: 0,
+                clientIP: undefined,
+                continueOnIncomplete: '',
+                costumer: undefined,
+                culture: '',
+                currency: '',
+                customParameters: undefined,
+                customerEmail: '',
+                customerFirstName: '',
+                description: '',
+                email: '',
+                invoice: '',
+                lastName: '',
+                order: '',
+                originalTransactionKey: '',
+                originalTransactionReference: '',
+                pushURL: '',
+                pushURLFailure: '',
+                returnURL: '',
+                returnURLCancel: '',
+                returnURLError: '',
+                returnURLReject: '',
+                servicesExcludedForClient: '',
+                servicesSelectableByClient: '',
+                startRecurrent: false
             })
             .then((info) => {
-                console.log(info)
-                console.log(info.find('parameterErrors'))
+                expect(info).toBeDefined()
             })
     })
     test('Refund', async () => {

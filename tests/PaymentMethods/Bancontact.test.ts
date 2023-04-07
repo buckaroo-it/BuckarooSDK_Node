@@ -1,9 +1,7 @@
-import { BuckarooError } from '../../src/Utils/BuckarooError'
-
 require('../BuckarooClient.test')
 import BanContact from '../../src/PaymentMethods/Bancontact/index'
 
-const method = BanContact()
+const method = new BanContact()
 
 describe('BanContact methods', () => {
     test('Pay Simple Payload', async () => {
@@ -15,9 +13,6 @@ describe('BanContact methods', () => {
             .then((data) => {
                 expect(data.isWaitingOnUserInput()).toBeTruthy()
             })
-            .catch((err) => {
-                expect(err instanceof BuckarooError).toBeTruthy()
-            })
     })
     test('Refund', async () => {
         await method
@@ -27,9 +22,6 @@ describe('BanContact methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-            })
-            .catch((err) => {
-                expect(err instanceof BuckarooError).toBeTruthy()
             })
     })
     test('Authenticate', async () => {
@@ -46,9 +38,6 @@ describe('BanContact methods', () => {
             .then((data) => {
                 expect(data).toBeDefined()
             })
-            .catch((err) => {
-                expect(err instanceof BuckarooError).toBeTruthy()
-            })
     })
     test('CompletePayment', async () => {
         await method
@@ -58,9 +47,6 @@ describe('BanContact methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-            })
-            .catch((err) => {
-                expect(err instanceof BuckarooError).toBeTruthy()
             })
     })
     test('PayEncrypted', async () => {
@@ -72,9 +58,6 @@ describe('BanContact methods', () => {
             .then((data) => {
                 expect(data).toBeDefined()
             })
-            .catch((err) => {
-                expect(err instanceof BuckarooError).toBeTruthy()
-            })
     })
     test('PayRecurring', async () => {
         await method
@@ -85,18 +68,10 @@ describe('BanContact methods', () => {
             .then((data) => {
                 expect(data).toBeDefined()
             })
-            .catch((err) => {
-                expect(err instanceof BuckarooError).toBeTruthy()
-            })
     })
     test('Specifications', async () => {
-        await method
-            .specification()
-            .then((data) => {
-                expect(data).toBeDefined()
-            })
-            .catch((err) => {
-                expect(err instanceof BuckarooError).toBeTruthy()
-            })
+        await method.specification().then((data) => {
+            expect(data).toBeDefined()
+        })
     })
 })

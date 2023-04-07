@@ -10,6 +10,7 @@ export default initializeBuckarooClient(
         currency: process.env.BPE_CURRENCY_CODE || 'EUR',
         returnURL: process.env.BPE_RETURN_URL || '',
         returnURLCancel: process.env.BPE_RETURN_URL_CANCEL || '',
-        pushURL: process.env.BPE_PUSH_URL || ''
+        pushURL: process.env.BPE_PUSH_URL || '',
+        baseUrl: process.env.BPE_BASE_URL || ''
     }
 )

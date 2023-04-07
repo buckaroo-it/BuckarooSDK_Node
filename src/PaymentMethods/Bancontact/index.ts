@@ -32,4 +32,3 @@ export default class Bancontact extends PayablePaymentMethod {
         return this.transactionInvoice(payload)
     }
 }
-

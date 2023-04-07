@@ -1,44 +1,36 @@
 require('./BuckarooClient')
-import subscriptions from '../src/PaymentMethods/Subscriptions'
-import ideal from '../src/PaymentMethods/Ideal'
+import Subscriptions from '../src/PaymentMethods/Subscriptions'
+import Ideal from '../src/PaymentMethods/Ideal'
 
-const subscription = subscriptions().createCombined({
+const subscription = new Subscriptions().createCombined({
+    address: undefined,
+    allowedServices: '',
+    b2b: '',
+    bankAccount: { accountName: '', bic: '', iban: '' },
+    billingTiming: 0,
+    company: undefined,
+    configuration: undefined,
+    configurationCode: '',
+    customerAccountName: '',
+    customerBIC: '',
+    customerIBAN: '',
+    debtor: { code: '' },
+    email: '',
     includeTransaction: false,
-    transactionVatPercentage: 5,
-    configurationCode: 'gfyh9fe4',
-    email: 'test@buckaroo.nl',
-    ratePlans: {
-        add: {
-            startDate: '2033-01-01',
-            ratePlanCode: '9863hdcj'
-        }
-    },
-    phone: {
-        mobile: '0612345678'
-    },
-    debtor: {
-        code: 'johnsmith4'
-    },
-    company: {
-        culture: 'nl-NL',
-        companyName: 'My Company Coporation',
-        vatApplicable: true,
-        chamberOfCommerce: '20091741',
-        vatNumber: '32',
-        identificationNumber: 'dsa'
-    },
-    address: {
-        street: 'Hoofdstraat',
-        houseNumber: '90',
-        houseNumberAdditional: '',
-        zipcode: '8441ER',
-        city: 'Heerenveen',
-        country: 'NL'
-    }
+    mandateReference: '',
+    person: undefined,
+    phone: undefined,
+    ratePlan: undefined,
+    ratePlanCharge: undefined,
+    subscriptionGuid: '',
+    termStartDay: 0,
+    termStartMonth: 0,
+    termStartWeek: '',
+    transactionVatPercentage: 0
 })
 
 ;(async () => {
-    const combinedPayment = await ideal().combine(subscription).pay({
+    const combinedPayment = await new Ideal().combine(subscription).pay({
         issuer: 'ABNANL2A',
         amountDebit: 10
     })

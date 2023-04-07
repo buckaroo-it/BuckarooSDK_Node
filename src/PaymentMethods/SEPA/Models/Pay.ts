@@ -1,13 +1,10 @@
 import { Payload } from '../../../Models/ITransaction'
 
-export interface Pay {
-    bic: string
-    iban: string
-    collectDate?: string
+export interface IPay extends Payload {
+    customeraccountname: string
+    customerBIC?: string
+    customerIBAN: string
+    collectDate: string
     mandateReference?: string
     mandateDate?: string
-    customer: {
-        name: string
-    }
 }
-export type IPay = Pay & Payload

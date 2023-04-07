@@ -1,15 +1,27 @@
-export interface IRatePlan {
-    add?: {
+type update = {
+    update: {
+        startDate: string
+        endDate?: string
+        ratePlanGuid: string
+    }
+}
+type disable = {
+    disable: {
+        ratePlanGuid: string
+    }
+}
+type add = {
+    add: {
         startDate: string
         ratePlanCode?: string
         endDate?: string
         ratePlanName?: string
         ratePlanDescription?: string
         currency?: string
-        billingTiming?: Number
+        billingTiming?: number
         automaticTerm?: boolean
         billingInterval?: string
-        customNumberOfDays?: Number
+        customNumberOfDays?: number
         termStartDay?: number
         termStartWeek?: number
         termStartMonth?: number
@@ -17,37 +29,31 @@ export interface IRatePlan {
         trialPeriodMonths?: number
         inheritPaymentMethod?: boolean
     }
-    update?: {
-        startDate: string
-        endDate?: string
-        ratePlanGuid: string
-    }
-    disable?: {
-        ratePlanGuid: string
-    }
 }
 
-export interface IRatePlanCharges {
+export type IRatePlan = add | update | disable
+
+export type IRatePlanCharge = {
     add?: {
         ratePlanChargeCode?: string
         ratePlanChargeName: string
-        ratePlanChargeProductId: Number | string
+        ratePlanChargeProductId: string
         ratePlanChargeDescription: string
         unitOfMeasure: string
         ratePlanChargeType: string
-        baseNumberOfUnits: Number
+        baseNumberOfUnits: number
         partialBilling: string
-        pricePerUnit: Number
+        pricePerUnit: number
         priceIncludesVat: boolean
-        vatPercentage: Number
+        vatPercentage: number
         b2B: boolean
     }
     update?: {
         ratePlanChargeCode?: string
-        vatPercentage?: Number
+        vatPercentage?: number
         ratePlanChargeGuid?: string
-        baseNumberOfUnits?: string | Number
-        pricePerUnit?: Number
+        baseNumberOfUnits?: string | number
+        pricePerUnit?: number
         priceIncludesVat?: boolean
     }
     disable?: {

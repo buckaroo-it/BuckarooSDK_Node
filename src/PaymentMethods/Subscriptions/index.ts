@@ -1,14 +1,11 @@
-import { SubscriptionsModelStrategy, ISubscription } from './Models/Services'
+import { ISubscription } from './Models/Services'
 import { IConfig } from '../../Utils/Types'
 import PaymentMethod from '../PaymentMethod'
-import { ITransaction } from '../../Models/ITransaction'
 
-class Subscriptions extends PaymentMethod {
+export default class Subscriptions extends PaymentMethod {
     protected _paymentName = 'Subscriptions'
     protected _requiredFields: Array<keyof IConfig> = ['currency']
     combinable: boolean = true
-    modelStrategy = new SubscriptionsModelStrategy({})
-
     create(payload: ISubscription): Promise<any> {
         this.action = 'CreateSubscription'
         return this.dataRequest(payload)
@@ -19,13 +16,13 @@ class Subscriptions extends PaymentMethod {
     }
     createCombined(payload: ISubscription) {
         this.action = 'CreateCombinedSubscription'
-        this.setRequest(<ITransaction>payload)
+        this.setRequest(payload)
         return this
     }
     updateCombined(payload: ISubscription) {
         this.action = 'UpdateCombinedSubscription'
-        this.request.setDataKey('startRecurrent', true)
-        this.setRequest(<ITransaction>payload)
+        this.request.data.startRecurrent = true
+        this.setRequest(payload)
         return this
     }
     stop(payload: { subscriptionGuid: string }) {
@@ -54,10 +51,3 @@ class Subscriptions extends PaymentMethod {
         return this.dataRequest(payload)
     }
 }
-let _subscriptions: Subscriptions
-const subscriptions = () => {
-    if (!_subscriptions) _subscriptions = new Subscriptions()
-    return _subscriptions
-}
-export default subscriptions
-export { Subscriptions as SubscriptionsClass }

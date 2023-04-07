@@ -1,4 +1,4 @@
-import { firstUpperCase } from '../Utils/Functions'
+import { firstLowerCase, firstUpperCase } from '../Utils/Functions'
 
 type ListItemDescription = {
     Value: string
@@ -47,7 +47,7 @@ type RequestParameter = {
     MaxOccurs: number
     Required: boolean
     Global: boolean
-    Group: string
+    Group?: string
     Description: string
     ExplanationHTML: string
     DisplayName: string
@@ -90,10 +90,32 @@ export class SpecificationResponse implements Services {
         actionName = firstUpperCase(actionName)
         let actions = this.Actions?.find((action) => action.Name === actionName)?.RequestParameters
         if (actions) {
-            actions
-                .sort((a, b) => a.Name.localeCompare(b.Name))
-                .sort((a, b) => a.Group.localeCompare(b.Group))
+            actions.sort((a, b) => a.Name.localeCompare(b.Name))
         }
         return actions
+    }
+    getServiceParameters(actionName: string) {
+        actionName = firstUpperCase(actionName)
+        let parameters = this.getActionRequestParameters(actionName)
+        let data = {}
+        if (parameters) {
+            parameters.forEach((param) => {
+                let current = data
+                param.Group = param.Group ? firstLowerCase(param.Group) : false
+                if (param.MaxOccurs === 0 && param.Group) {
+                    current = data[param.Group + 's'] = data[param.Group + 's'] || []
+                    current = current[0] = current[0] || { [param.Group]: {} }
+                    current = current[param.Group]
+                } else if (param.MaxOccurs === 0) {
+                    data[param.Name] = data[param.Name] ?? []
+                    data[param.Name].push(param.DataType)
+                    current = data[param.Name][0]
+                } else if (param.Group) {
+                    current = data[param.Group] = data[param.Group] ?? {}
+                }
+                current[firstLowerCase(param.Name)] = param.Required
+            })
+            return data
+        }
     }
 }

@@ -1,7 +1,7 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { Payload, RefundPayload } from '../../Models/ITransaction'
 
-class GiftCard extends PayablePaymentMethod {
+export default class GiftCard extends PayablePaymentMethod {
     pay(payload: Payload & { name: string }) {
         return super.pay(payload)
     }
@@ -14,12 +14,3 @@ class GiftCard extends PayablePaymentMethod {
         super.setRequest(payload)
     }
 }
-
-let _giftCard: GiftCard
-const giftCard: () => GiftCard = () => {
-    if (!_giftCard) _giftCard = new GiftCard()
-
-    return _giftCard
-}
-export default giftCard
-export { GiftCard as GiftCardClass }

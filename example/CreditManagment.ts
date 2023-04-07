@@ -1,13 +1,16 @@
 require('./BuckarooClient')
-import creditManagement from '../src/PaymentMethods/CreditManagement'
+import CreditManagement from '../src/PaymentMethods/CreditManagement'
+
+const creditManagement = new CreditManagement()
+
 ;(async () => {
     try {
-        const info = await creditManagement().invoiceInfo({
+        const info = await creditManagement.invoiceInfo({
             invoice: 'test1'
         })
         console.log(info)
 
-        const infoMultiple = await creditManagement().invoiceInfo({
+        const infoMultiple = await creditManagement.invoiceInfo({
             invoice: 'invoice1',
             invoices: [
                 {

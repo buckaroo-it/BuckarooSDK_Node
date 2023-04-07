@@ -1,4 +1,4 @@
-import { IPAddress } from '../Utils/Types'
+import { AdditionalParameter, IPAddress } from '../Utils/Types'
 
 export declare interface ITransaction {
     clientIP?: string | IPAddress
@@ -11,8 +11,8 @@ export declare interface ITransaction {
     pushURLFailure?: string
     invoice?: string
     order?: string
-    amountDebit?: Number
-    amountCredit?: Number
+    amountDebit?: number
+    amountCredit?: number
     description?: string
     originalTransactionKey?: string
     originalTransactionReference?: string
@@ -22,21 +22,8 @@ export declare interface ITransaction {
     servicesSelectableByClient?: string
     servicesExcludedForClient?: string
     customParameters?: AdditionalParameter
-    services?: object
     additionalParameters?: AdditionalParameter
 }
-
-export declare type ClientIP =
-    | string
-    | {
-          address: string
-          type: number
-      }
-
-export declare type AdditionalParameter = {
-    [name: string]: string | number | boolean
-}
-
 
 export declare interface Payload extends Omit<ITransaction, 'amountCredit'> {
     invoice?: string

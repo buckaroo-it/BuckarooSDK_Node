@@ -1,7 +1,7 @@
 require('../BuckarooClient.test')
 import Payconiq from '../../src/PaymentMethods/Payconiq/index'
 
-const payconiq = Payconiq()
+const payconiq = new Payconiq()
 
 describe('Payconiq', () => {
     test('Pay', async () => {

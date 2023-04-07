@@ -1,7 +1,7 @@
 require('../BuckarooClient.test')
 import GiroPay from '../../src/PaymentMethods/Giropay/index'
 
-const method = GiroPay()
+const method = new GiroPay()
 
 describe('Testing Giropay methods', () => {
     test('Pay', async () => {

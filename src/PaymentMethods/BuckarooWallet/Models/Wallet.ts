@@ -1,11 +1,10 @@
 import { ITransaction, Payload, RefundPayload } from '../../../Models/ITransaction'
 
-interface consumer  {
+interface consumer {
     consumerFirstName?: string
     consumerLastName?: string
     consumerEmail?: string
     consumerIban?: string
-
 }
 export interface IWallet extends ITransaction, consumer {
     invoice: string

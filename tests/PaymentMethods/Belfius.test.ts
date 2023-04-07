@@ -1,9 +1,7 @@
-import { BuckarooError } from '../../src/Utils/BuckarooError'
-
 require('../BuckarooClient.test')
 import Belfius from '../../src/PaymentMethods/Belfius/index'
 
-const method = Belfius()
+const method = new Belfius()
 
 describe('testing methods', () => {
     test('Pay Simple Payload', async () => {
@@ -14,9 +12,6 @@ describe('testing methods', () => {
             .then((data) => {
                 expect(data).toBeDefined()
             })
-            .catch((err) => {
-                expect(err instanceof BuckarooError).toBeTruthy()
-            })
     })
     test('Refund', async () => {
         await method
@@ -26,9 +21,6 @@ describe('testing methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-            })
-            .catch((err) => {
-                expect(err instanceof BuckarooError).toBeTruthy()
             })
     })
     test('Specifications', async () => {

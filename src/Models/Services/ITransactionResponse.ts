@@ -2,10 +2,13 @@ import { IServiceList } from '../ServiceList'
 
 export type AdditionalParameterResponse = {
     Name: string
-    Value: string | boolean | number
+    Value: string
 }
 export declare interface ITransactionResponse {
     Key: string
+    Name: string
+    Version: number
+    Description: string
     Status: {
         Code: {
             Code: number | string

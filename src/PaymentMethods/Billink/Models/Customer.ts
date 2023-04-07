@@ -1,6 +1,6 @@
 type Salutation = 'Male' | 'Female' | 'Unknown'
 export interface Customer {
-    chamberOfCommerce:string //
+    chamberOfCommerce: string //
     initials: string //
     salutation?: Salutation
     firstName: string

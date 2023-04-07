@@ -1,7 +1,7 @@
 require('../BuckarooClient.test')
 import KBC from '../../src/PaymentMethods/KBC'
 
-const method = KBC()
+const method = new KBC()
 
 describe('Testing KBC methods', () => {
     test('Pay', async () => {

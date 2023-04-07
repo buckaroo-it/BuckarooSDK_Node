@@ -1,67 +1,38 @@
-import subscriptions from '../../src/PaymentMethods/Subscriptions/index'
+import Subscriptions from '../../src/PaymentMethods/Subscriptions/index'
 import Ideal from '../../src/PaymentMethods/Ideal/index'
-import RecipientCategory from '../../src/Constants/RecipientCategory'
 
 require('../BuckarooClient.test')
 
-const subscription = subscriptions()
-const ideal = Ideal()
+const subscription = new Subscriptions()
+const ideal = new Ideal()
 
 test('Create', async () => {
     subscription
         .create({
-            configurationCode: 'jpu9xccp',
-            debtor: {
-                code: 'John Doe'
-            },
-            email: 'test@buckaroo.nl',
-            person: {
-                firstName: 'John',
-                lastName: 'Do',
-                gender: 1,
-                culture: 'nl-NL',
-                birthDate: '1990-01-01',
-                careOf: '',
-                category: RecipientCategory.PERSON,
-                initials: '',
-                lastNamePrefix: '',
-                name: '',
-                placeOfBirth: '',
-                title: ''
-            },
-            configuration: {
-                name: 'John'
-            },
-            ratePlans: {
-                add: {
-                    startDate: '2023-03-10',
-                    endDate: '2023-06-10',
-                    ratePlanName: 'Test',
-                    ratePlanDescription: 'Test',
-                    currency: 'EUR',
-                    billingTiming: 2,
-                    automaticTerm: true,
-                    billingInterval: 'Monthly',
-                    termStartDay: 1,
-                    trialPeriodDays: 0,
-                    trialPeriodMonths: 0
-                }
-            },
-            ratePlanCharges: {
-                add: {
-                    ratePlanChargeName: 'pay and use',
-                    ratePlanChargeProductId: '',
-                    ratePlanChargeDescription: 'asd',
-                    unitOfMeasure: '',
-                    ratePlanChargeType: 'Recurring',
-                    baseNumberOfUnits: 1,
-                    partialBilling: 'Nobilling',
-                    pricePerUnit: 20,
-                    priceIncludesVat: false,
-                    vatPercentage: 0,
-                    b2B: false
-                }
-            }
+            address: undefined,
+            allowedServices: '',
+            b2b: '',
+            bankAccount: { accountName: '', bic: '', iban: '' },
+            billingTiming: 0,
+            company: undefined,
+            configuration: undefined,
+            configurationCode: '',
+            customerAccountName: '',
+            customerBIC: '',
+            customerIBAN: '',
+            debtor: { code: '' },
+            email: '',
+            includeTransaction: false,
+            mandateReference: '',
+            person: undefined,
+            phone: undefined,
+            ratePlan: undefined,
+            ratePlanCharge: undefined,
+            subscriptionGuid: '',
+            termStartDay: 0,
+            termStartMonth: 0,
+            termStartWeek: '',
+            transactionVatPercentage: 0
         })
         .then((data) => {
             expect(data).toBeDefined()
@@ -89,46 +60,30 @@ test('Update', async () => {
 
 test('Combined Subscription', async () => {
     const combinable = subscription.createCombined({
+        address: undefined,
+        allowedServices: '',
+        b2b: '',
+        bankAccount: { accountName: '', bic: '', iban: '' },
+        billingTiming: 0,
+        company: undefined,
+        configuration: undefined,
+        configurationCode: '',
+        customerAccountName: '',
+        customerBIC: '',
+        customerIBAN: '',
+        debtor: { code: '' },
+        email: '',
         includeTransaction: false,
-        transactionVatPercentage: 5,
-        configurationCode: 'gfyh9fe4',
-        email: 'test@buckaroo.nl',
-        ratePlans: {
-            add: {
-                startDate: '2033-01-01',
-                ratePlanCode: '9863hdcj'
-            }
-        },
-        phone: {
-            mobile: '0612345678'
-        },
-        debtor: {
-            code: 'johnsmith4'
-        },
-        company: {
-            careOf: '',
-            category: RecipientCategory.COMPANY,
-            chamberOfCommerce: '',
-            companyName: '',
-            culture: 'nl-NL',
-            firstName: '',
-            gender: '',
-            initials: '',
-            lastName: '432',
-            name: '',
-            title: '',
-            vatApplicable: false,
-            vatNumber: ''
-        },
-        address: {
-            street: 'Hoofdstraat',
-            houseNumber: '90',
-            zipcode: '8441ER',
-            city: 'Heerenveen',
-            country: 'NL',
-            houseNumberAdditional: 'dsa',
-            state: 'das'
-        }
+        mandateReference: '',
+        person: undefined,
+        phone: undefined,
+        ratePlan: undefined,
+        ratePlanCharge: undefined,
+        subscriptionGuid: '',
+        termStartDay: 0,
+        termStartMonth: 0,
+        termStartWeek: '',
+        transactionVatPercentage: 0
     })
     ideal
         .combine(combinable)
@@ -174,6 +129,8 @@ test('Subscription Info', async () => {
 test('Delete Subscription Config', async () => {
     const deleteConfig = await subscription.deletePaymentConfig({
         subscriptionGuid: '515461997AD34C50881D74157E38A64D'
+    }).then((res)=>{
+        expect(res.status===200).toBeTruthy()
     })
 })
 test('Subscription Pause', async () => {

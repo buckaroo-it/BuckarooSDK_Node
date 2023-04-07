@@ -4,6 +4,7 @@ export declare interface IConfig {
     returnURL: string
     returnURLCancel: string
     pushURL: string
+    baseUrl: string
 }
 
 export declare interface ICredentials {
@@ -11,16 +12,16 @@ export declare interface ICredentials {
     secretKey: string
 }
 
-export declare interface IPAddress {
+export type IPAddress = {
     address: string
     type: number
 }
-export type Subset<K> = {
-    [attr in keyof K]?: K[attr] extends object
-        ? Subset<K[attr]>
-        : K[attr] extends object | null
-        ? Subset<K[attr]> | null
-        : K[attr] extends object | null | undefined
-        ? Subset<K[attr]> | null | undefined
-        : string
+type parameterType = string | number | boolean | undefined
+
+export declare type AdditionalParameter = {
+    [name: string]: parameterType
 }
+type serviceParams<T> = {
+    [name: string]: T | T[] | serviceParams<T>
+}
+export declare type ServiceParameter = serviceParams<parameterType>

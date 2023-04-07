@@ -1,16 +1,24 @@
-import { IKlarnaAddress } from './Address'
-import { IPerson } from './Person'
-import IPhone from '../../../Models/Services/IPhone'
-
-export declare interface IBillingRecipient {
-    recipient: IPerson
-    address: IKlarnaAddress
+export interface IBilling {
+    city: string
+    country: string
     email: string
-    phone: IPhone
+    firstName: string
+    lastName: string
+    phone?: string
+    postalCode: string
+    street: string
+    streetNumber: string
+    streetNumberAdditional?: string
 }
-export interface IShippingRecipient {
-    recipient: IPerson
-    address: IKlarnaAddress
+export interface IShipping {
+    city: string
+    country: string
     email: string
-    phone?: IPhone
+    firstName: string
+    lastName: string
+    phone?: string
+    postalCode: string
+    street: string
+    streetNumber: string
+    streetNumberAdditional?: string
 }

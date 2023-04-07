@@ -1,6 +1,6 @@
 import { Payload } from '../../../Models/ITransaction'
 import { IBillinkArticle } from './Article'
-import { Customer } from "./Customer";
+import { Customer } from './Customer'
 
 export interface ServiceParameters {
     billingCustomer: Customer

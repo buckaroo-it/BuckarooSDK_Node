@@ -1,5 +1,5 @@
 require('../BuckarooClient.test')
-import { buckarooClient } from '../../src/BuckarooClient'
+import buckarooClient from '../../src/BuckarooClient'
 import { TransactionRequest } from '../../src/Models/Request'
 
 const client = buckarooClient()
@@ -16,7 +16,7 @@ test('paymentCancelStatus', async () => {
 })
 
 test('paymentCancelInfo', async () => {
-    await client.transactionRequest(new TransactionRequest().getData()).then((data) => {
+    await client.transactionRequest(new TransactionRequest().data).then((data) => {
         expect(data).toBeDefined()
     })
 })
@@ -35,8 +35,8 @@ test('paymentInvoiceInfo', async () => {
 test('Service specifications', async () => {
     let specifications = await client.specifications([
         {
-            name: 'ideal',
-            version: 1
+            paymentName: 'ideal',
+            serviceVersion: 1
         }
     ])
     expect(specifications).toBeDefined()
