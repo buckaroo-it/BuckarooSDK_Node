@@ -39,7 +39,7 @@ describe('Testing In3 methods', () => {
                 subtotalLine: []
             })
             .then((response) => {
-                console.log(response)
+                expect(response.data).toBeDefined()
             })
     })
 })

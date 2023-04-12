@@ -1,4 +1,4 @@
-export interface IBilling {
+export type IBilling = {
     city: string
     country: string
     email: string
@@ -10,7 +10,7 @@ export interface IBilling {
     streetNumber: string
     streetNumberAdditional?: string
 }
-export interface IShipping {
+export type IShipping = {
     city: string
     country: string
     email: string

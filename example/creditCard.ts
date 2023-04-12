@@ -10,7 +10,6 @@ const paymentMethod = new CreditCard()
             amountDebit: 12,
             name: 'Visa'
         })
-        console.log(info)
     } catch (error) {
         console.warn(error)
     }

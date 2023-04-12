@@ -13,7 +13,7 @@ describe('Testing Giropay methods', () => {
             })
             .then((response) => {
                 expect(response).toBeDefined()
-                console.log(response)
+                
             })
     })
     test('Refund', async () => {
@@ -24,7 +24,7 @@ describe('Testing Giropay methods', () => {
             })
             .then((response) => {
                 expect(response).toBeDefined()
-                console.log(response)
+                
             })
     })
 })

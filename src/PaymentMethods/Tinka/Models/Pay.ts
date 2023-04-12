@@ -1,18 +1,23 @@
 import { Payload } from '../../../Models/ITransaction'
-import { AfterPayCustomer } from '../../Afterpay/Model/Customer'
 import { ITinkaArticle } from './Article'
-import IPerson from '../../../Models/Services/IPerson'
-type Pay = {
-    customer?: Pick<IPerson, 'firstName' | 'lastName' | 'initials' | 'gender'> & {
-        dateOfBirth?: string
-    }
+import {ITinkaAddress} from "./Address";
+import Gender from "../../../Constants/Gender";
+export interface IPay extends Payload {
     paymentMethod: string
-    articles: { article: ITinkaArticle }[]
-    billingCustomer: AfterPayCustomer
-    shippingCustomer?: AfterPayCustomer
     deliveryMethod: string
     deliveryDate?: string
-}
-export interface IPay extends Payload {
-    serviceParameters: Pay
+    articles: { article: ITinkaArticle }[]
+    billingCustomer: {
+        email: string,
+        phone?: string,
+        prefixLastName?: string,
+    } & ITinkaAddress
+    shippingCustomer?:{
+        externalName: false
+    } & ITinkaAddress
+    dateOfBirth?: string
+    firstName?: string
+    gender?:Gender
+    initials?: string
+    lastName?: string
 }

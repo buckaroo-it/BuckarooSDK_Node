@@ -22,7 +22,7 @@ describe('Testing CreditClick methods', () => {
                 refundReason: 'Fraudulent'
             })
             .then((response) => {
-                console.log(response)
+                expect(response).toBeDefined()
             })
     })
 })

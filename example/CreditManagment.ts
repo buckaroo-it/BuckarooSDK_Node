@@ -8,7 +8,6 @@ const creditManagement = new CreditManagement()
         const info = await creditManagement.invoiceInfo({
             invoice: 'test1'
         })
-        console.log(info)
 
         const infoMultiple = await creditManagement.invoiceInfo({
             invoice: 'invoice1',
@@ -21,7 +20,6 @@ const creditManagement = new CreditManagement()
                 }
             ]
         })
-        console.log(infoMultiple)
     } catch (error) {
         console.warn(error)
     }

@@ -1,4 +1,4 @@
-export interface IKlarnaArticle {
+export type IKlarnaArticle = {
     description: string
     grossUnitPrice: number
     identifier: string

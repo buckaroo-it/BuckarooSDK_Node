@@ -45,7 +45,7 @@ describe('Przelewy24', () => {
                 originalTransactionKey: '123456'
             })
             .then((info) => {
-                console.log(info)
+                expect(info.data).toBeDefined()
             })
     })
 })

@@ -11,7 +11,7 @@ describe('WechatPay', () => {
                 locale: 'en-US'
             })
             .then((response) => {
-                console.log(response)
+                expect(response.data).toBeDefined()
             })
     })
     test('Refund', async () => {
@@ -21,7 +21,7 @@ describe('WechatPay', () => {
                 originalTransactionKey: '1234567890'
             })
             .then((response) => {
-                console.log(response)
+                expect(response.data).toBeDefined()
             })
     })
 })

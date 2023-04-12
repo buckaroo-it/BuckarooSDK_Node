@@ -46,7 +46,7 @@ describe('SEPA', () => {
                 originalTransactionKey: ''
             })
             .then((info) => {
-                console.log(info)
+                
                 expect(info).toBeDefined()
             })
     })
@@ -59,7 +59,7 @@ describe('SEPA', () => {
                 customeraccountname: ''
             })
             .then((info) => {
-                console.log(info)
+                
                 expect(info).toBeDefined()
             })
     })
@@ -117,7 +117,7 @@ describe('SEPA', () => {
                 zipcode: ''
             })
             .then((info) => {
-                console.log(info)
+                
                 expect(info).toBeDefined()
             })
     })

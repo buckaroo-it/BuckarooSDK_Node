@@ -19,7 +19,7 @@ describe('Testing iDealQR methods', () => {
                 purchaseId: ''
             })
             .then((response) => {
-                console.log(response)
+                expect(response.data).toBeDefined()
             })
     })
 })

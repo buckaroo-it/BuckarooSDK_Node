@@ -2,22 +2,19 @@ import Endpoints, { RequestType } from '../Constants/Endpoints'
 import PaymentMethod from '../PaymentMethods/PaymentMethod'
 import { ITransaction } from '../Models/ITransaction'
 import { IConfig, ICredentials } from '../Utils/Types'
-import { SpecificationResponse } from '../Models/SpecificationResponse'
+import {SpecificationResponse, SpecificationsResponse} from '../Models/SpecificationResponse'
 import axios, { AxiosInstance } from 'axios'
 import { TransactionResponse } from '../Models/TransactionResponse'
-import RequestConfig from './Config'
-import httpMethods from '../Constants/HttpMethods'
+import RequestHeaders from './Headers'
 import HttpMethods from '../Constants/HttpMethods'
+import httpMethods from "../Constants/HttpMethods";
 
-export class Client {
+export class Client  {
     private static _credentials: ICredentials
     private static _config: IConfig
-    public axios: AxiosInstance
-    private request: RequestConfig
-    private constructor() {
-        this.axios = axios.create()
-        this.request = new RequestConfig()
-    }
+    public axios: AxiosInstance = axios.create()
+    private headers: RequestHeaders = new RequestHeaders()
+    private constructor() {}
     static initialize(credentials?: ICredentials, config?: IConfig) {
         if (!credentials || !credentials.websiteKey || !credentials.secretKey)
             throw new Error('Initialize Buckaroo Client with credentials!!')
@@ -69,44 +66,36 @@ export class Client {
                   `/Specification/${paymentName}?serviceVersion=${serviceVersion}`
               )
     }
-    get(url: string) {
-        this.request.setAuthHeader(httpMethods.METHOD_GET, url)
-        return this.axios.get(url, { ...this.request }).then((response) => {
-            if (typeof response.data === 'object') {
-                return new TransactionResponse(response, {
-                    headers: this.request.headers,
-                    url: url,
-                    method: httpMethods.METHOD_GET,
-                    data: ''
-                })
-            }
-            throw new Error(response.data)
+    call(config:{method: httpMethods, url: string, data?: object}) {
+        this.headers.setAuthHeader(config.method, config.url, config.data)
+
+        return this.axios.request({...config,headers:this.headers.headers})
+    }
+    post(url: string, data: object) {
+        return this.call({
+            method: HttpMethods.METHOD_POST,
+            url,
+            data: data
         })
     }
-    post(url: string, requestData: object) {
-        this.request.setAuthHeader(httpMethods.METHOD_POST, url, requestData)
+    get(url: string) {
+        return this.call({
+            method: HttpMethods.METHOD_GET,
+            url,
+        })
+    }
 
-        return this.axios
-            .post(url, requestData, {
-                headers: { Authorization: this.request.headers.Authorization }
-            })
-            .then((response) => {
-                if (typeof response.data === 'object') {
-                    return new TransactionResponse(response, {
-                        headers: this.request.headers,
-                        method: HttpMethods.METHOD_POST,
-                        url: url,
-                        data: requestData
-                    })
-                }
-                throw new Error(response.data)
-            })
-    }
     transactionRequest(data: ITransaction) {
-        return this.post(this.getTransactionUrl(), data)
+        data.pushURL = data.pushURL || this.getConfig().pushURL
+
+        return this.post(this.getTransactionUrl(),data).then((res)=>{
+            return new TransactionResponse(res)
+        })
     }
-    dataRequest(data: ITransaction) {
-        return this.post(this.getDataRequestUrl(), data)
+    dataRequest(data) {
+        return this.post(this.getDataRequestUrl(), data).then((res)=>{
+            return new TransactionResponse(res)
+        })
     }
     specification(paymentName: string, serviceVersion = 0, type?: RequestType) {
         const url = this.getSpecificationUrl(paymentName, serviceVersion, type)
@@ -118,12 +107,12 @@ export class Client {
         paymentMethods: PaymentMethod[] | { paymentName: string; serviceVersion: number }[],
         type: RequestType = RequestType.Transaction
     ) {
-        let data: { Services: { Name: string; Version: string | number }[] } = { Services: [] }
-
-        for (const paymentMethod of paymentMethods) {
-            data.Services.push({
-                Name: paymentMethod.paymentName,
-                Version: paymentMethod.serviceVersion
+        let data  =  {
+            Services: paymentMethods.map((paymentMethod) => {
+                return {
+                    Name: paymentMethod.paymentName,
+                    Version: paymentMethod.serviceVersion
+                }
             })
         }
 
@@ -132,7 +121,13 @@ export class Client {
                 ? this.getTransactionUrl('/Specifications')
                 : this.getDataRequestUrl('/Specifications')
 
-        return this.axios.post(url, data)
+        return this.call({
+            method: HttpMethods.METHOD_POST,
+            url,
+            data
+        }).then((response) => {
+            return new SpecificationsResponse(response.data)
+        })
     }
     status(transactionKey: string) {
         const url = this.getTransactionUrl(`/Status/${transactionKey}`)

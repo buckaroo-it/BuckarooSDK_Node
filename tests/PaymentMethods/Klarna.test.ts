@@ -25,12 +25,6 @@ describe('Testing Klarna methods', () => {
                 expect(res).toBeDefined()
             })
     })
-    test('payInInstallments', async () => {
-        // await klarna.payInInstallments().then((res) => {
-        //     expect(res).toBeDefined()
-        //     console.log(res.find('parameterErrors'))
-        // })
-    })
 })
 
 let payload:IPay = {
@@ -39,7 +33,18 @@ let payload:IPay = {
     invoice: uniqid(),
     additionalParameters: undefined,
     articles: [],
-    billingCustomer: undefined,
+    billingCustomer: {
+        city: "",
+        country: "",
+        email: "",
+        firstName: "",
+        lastName: "",
+        phone: "",
+        postalCode: "",
+        street: "",
+        streetNumber: "",
+        streetNumberAdditional: ""
+    },
     clientIP: undefined,
     continueOnIncomplete: "",
     culture: "",

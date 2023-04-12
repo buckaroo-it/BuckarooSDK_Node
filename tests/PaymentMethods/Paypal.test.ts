@@ -10,7 +10,7 @@ describe('Paypal', () => {
                 amountDebit: 50.3
             })
             .then((info) => {
-                console.log(info)
+                expect(info.data).toBeDefined()
             })
     })
     test('Refund', async () => {
@@ -20,7 +20,7 @@ describe('Paypal', () => {
                 originalTransactionKey: '123456'
             })
             .then((info) => {
-                console.log(info)
+                expect(info.data).toBeDefined()
             })
     })
     test('ExtraInfo', async () => {
@@ -41,7 +41,7 @@ describe('Paypal', () => {
                 phone: { mobile: '534' }
             })
             .then((info) => {
-                console.log(info)
+                expect(info.data).toBeDefined()
             })
     })
 })

@@ -1,27 +1,17 @@
 import AfterpayClass from '../Afterpay'
+import {Payload, RefundPayload} from "../../Models/ITransaction";
+import {IPay} from "../Afterpay/Model/Pay";
 
 export default class AfterpayDigiAccept extends AfterpayClass {
     protected _paymentName = 'afterpaydigiaccept'
     protected _serviceVersion = 2
-    pay(payload) {
-        return super.pay(payload)
+    pay(payload:Payload) {
+        return super.pay(<IPay>payload)
     }
-    refund(payload) {
+    refund(payload:RefundPayload) {
         return super.refund(payload)
     }
-    authorize(payload) {
-        return super.authorize(payload)
-    }
-    authorizeRemainder(payload) {
-        return super.authorizeRemainder(payload)
-    }
-    cancelAuthorize(payload) {
-        return super.cancelAuthorize(payload)
-    }
-    capture(payload) {
-        return super.capture(payload)
-    }
-    payRemainder(payload) {
-        return super.payRemainder(payload)
+    authorize(payload:Payload) {
+        return super.authorize(<IPay>payload)
     }
 }

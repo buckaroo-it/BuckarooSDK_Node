@@ -4,12 +4,12 @@ import CreditManagementInstallmentInterval from '../../../Constants/CreditManage
 export interface IPaymentPlan extends ITransaction {
     includedInvoiceKey: string
     dossierNumber: string
-    installmentCount: Number
-    installmentAmount: Number
-    initialAmount?: Number
+    installmentCount: number
+    installmentAmount: number
+    initialAmount?: number
     startDate: string
     interval: CreditManagementInstallmentInterval
-    paymentPlanCostAmount: Number
-    paymentPlanCostAmountVat?: Number
+    paymentPlanCostAmount: number
+    paymentPlanCostAmountVat?: number
     recipientEmail: string
 }

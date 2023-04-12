@@ -1,16 +1,11 @@
-import { AxiosRequestConfig, RawAxiosRequestHeaders } from 'axios'
+import { RawAxiosRequestHeaders } from 'axios'
 import { Hmac } from './Hmac'
-import httpMethods from '../Constants/HttpMethods'
-
-export default class RequestConfig implements AxiosRequestConfig {
-    headers: RawAxiosRequestHeaders = { ...this.defaultHeaders() }
-    method?: httpMethods
-    data?
-    url?
+export default class RequestHeaders {
+    headers: RawAxiosRequestHeaders = {}
     defaultHeaders(): RawAxiosRequestHeaders {
         return {
             'Content-type': 'application/json',
-            Accept: '/',
+            Accept: 'application/json',
             Culture: 'en-GB'
         }
     }

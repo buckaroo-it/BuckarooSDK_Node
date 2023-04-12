@@ -1,6 +1,6 @@
 import buckarooClient, { initializeBuckarooClient } from '../src/BuckarooClient'
 
-export default initializeBuckarooClient(
+initializeBuckarooClient(
     { secretKey: 'secretKey', websiteKey: 'websiteKey' },
     {
         mode: 'test',
@@ -18,6 +18,16 @@ async function getSpecificationsOfIdeal() {
             expect(res).toBeDefined()
         })
 }
-// getSpecificationsOfIdeal().then((response) => {
-//     console.log(response)
-// })
+async function startTransactionRequest() {
+    return await buckarooClient()
+        .transactionRequest({
+            currency: 'EUR',
+            amountDebit: 10,
+            servicesExcludedForClient:'ideal',
+            servicesSelectableByClient: "ideal,bancontactmrcash,paypal"
+        })
+        .then((res)=>{
+            expect(res).toBeDefined()
+        })
+}
+export default buckarooClient

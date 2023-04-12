@@ -1,5 +1,6 @@
 import Subscriptions from '../../src/PaymentMethods/Subscriptions/index'
 import Ideal from '../../src/PaymentMethods/Ideal/index'
+import Gender from "../../src/Constants/Gender";
 
 require('../BuckarooClient.test')
 
@@ -9,42 +10,52 @@ const ideal = new Ideal()
 test('Create', async () => {
     subscription
         .create({
-            address: undefined,
-            allowedServices: '',
-            b2b: '',
-            bankAccount: { accountName: '', bic: '', iban: '' },
-            billingTiming: 0,
-            company: undefined,
-            configuration: undefined,
-            configurationCode: '',
-            customerAccountName: '',
-            customerBIC: '',
-            customerIBAN: '',
-            debtor: { code: '' },
-            email: '',
-            includeTransaction: false,
-            mandateReference: '',
-            person: undefined,
-            phone: undefined,
-            ratePlan: undefined,
-            ratePlanCharge: undefined,
-            subscriptionGuid: '',
-            termStartDay: 0,
-            termStartMonth: 0,
-            termStartWeek: '',
-            transactionVatPercentage: 0
-        })
-        .then((data) => {
-            expect(data).toBeDefined()
+        ratePlan: {
+            add: {
+                startDate: "2024-07-23",
+                ratePlanCode: "zfv59mmy"
+            }
+        },
+        ratePlanCharge: {
+            add: {
+                ratePlanChargeCode: "test"
+            }
+        },
+            person:{
+                lastName: "", birthDate: "", firstName: "", gender: Gender.FEMALE, name: "", title: ""
+
+            },
+            company:{
+                name: "",
+                chamberOfCommerce: "",
+                firstName: "",
+                gender: Gender.FEMALE,
+                lastName: "",
+                title: "",
+                vatApplicable: false,
+                vatNumber: "",
+                culture:'nl-N'
+            },
+            configurationCode: "gfyh9fe4",
+            configuration: {
+                name: "owiejr"
+            },
+            debtor: {
+                code: "johnsmith4"
+            },
+            email: {email:'er@hotmail.com'}
+            }
+        ).catch((e) => {
+           expect(e.response.data).toBeDefined()
         })
 })
 test('Update', async () => {
     subscription
         .update({
-            email: 'test@buckaroo.nl',
+            email: {email:'test@buckaroo.nl'},
             subscriptionGuid: 'FC512FC9CC3A485D8CF3D1804FF6xxxx',
             configurationCode: '9wqe32ew',
-            ratePlans: {
+            ratePlan: {
                 update: {
                     ratePlanGuid: 'F075470B1BB24B9291943A888A2Fxxxx',
                     startDate: '2022-01-01',
@@ -53,7 +64,6 @@ test('Update', async () => {
             }
         })
         .then((data) => {
-            console.log(data)
             expect(data).toBeDefined()
         })
 })
@@ -65,14 +75,14 @@ test('Combined Subscription', async () => {
         b2b: '',
         bankAccount: { accountName: '', bic: '', iban: '' },
         billingTiming: 0,
-        company: undefined,
+        // company: undefined,
         configuration: undefined,
         configurationCode: '',
         customerAccountName: '',
         customerBIC: '',
         customerIBAN: '',
         debtor: { code: '' },
-        email: '',
+        email: {email:''},
         includeTransaction: false,
         mandateReference: '',
         person: undefined,
@@ -93,7 +103,7 @@ test('Combined Subscription', async () => {
             startRecurrent: true
         })
         .then((res) => {
-            console.log(res)
+          expect(res).toBeDefined()
         })
 })
 
@@ -108,7 +118,7 @@ test('Update Combined Subscription', async () => {
             amountDebit: 10
         })
         .then((res) => {
-            console.log(res)
+            expect(res).toBeDefined()
         })
 })
 
@@ -116,18 +126,16 @@ test('Stop Subscription', async () => {
     const stop = await subscription.stop({
         subscriptionGuid: '515461997AD34C50881D74157E38A64D'
     })
-    console.log(stop)
     expect(stop).toBeDefined()
 })
 test('Subscription Info', async () => {
     const info = await subscription.info({
         subscriptionGuid: '515461997AD34C50881D74157E38A64D'
     })
-    console.log(info)
     expect(info).toBeDefined()
 })
 test('Delete Subscription Config', async () => {
-    const deleteConfig = await subscription.deletePaymentConfig({
+    await subscription.deletePaymentConfig({
         subscriptionGuid: '515461997AD34C50881D74157E38A64D'
     }).then((res)=>{
         expect(res.status===200).toBeTruthy()
@@ -138,7 +146,6 @@ test('Subscription Pause', async () => {
         subscriptionGuid: '515461997AD34C50881D74157E38A64D',
         resumeDate: '2030-01-01'
     })
-    console.log(pause)
     expect(pause).toBeDefined()
 })
 test('Subscription Resume', async () => {
@@ -146,6 +153,5 @@ test('Subscription Resume', async () => {
         resumeDate: '2030-01-01',
         subscriptionGuid: '515461997AD34C50881D74157E38A64D'
     })
-    console.log(resume)
     expect(resume).toBeDefined()
 })

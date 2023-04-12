@@ -1,53 +1,25 @@
-import AfterPayDigiAccept from '../../src/PaymentMethods/AfterpayDigiAccept'
-import { IPay } from '../../src/PaymentMethods/Afterpay/Model/Pay'
-
 require('../BuckarooClient.test')
+import AfterPayDigiAccept from '../../src/PaymentMethods/AfterpayDigiAccept'
+
+
 
 const method = new AfterPayDigiAccept()
 
 describe('AfterPayDigiAccept methods', () => {
     test('Authorize', async () => {
-        await method.authorize(payload).then((data) => {
-            console.log(data)
+        await method.authorize({
+            amountDebit: 14,
+            clientIP: '127.0.0.1',
+        }).then((data) => {
             expect(data).toBeDefined()
-            // expect(data.isSuccess()).toBeTruthy()
         })
     })
     test('Pay', async () => {
-        await method.pay(payload).then((data) => {
+        await method.pay({
+            amountDebit: 14,
+            clientIP: '127.0.0.1',
+        }).then((data) => {
             expect(data.isSuccess()).toBeTruthy()
         })
     })
 })
-let payload: IPay = {
-    additionalParameters: undefined,
-    amountDebit: 0,
-    articles: [],
-    bankAccount: '',
-    bankCode: '',
-    billingCustomer: undefined,
-    clientIP: undefined,
-    continueOnIncomplete: '',
-    culture: '',
-    currency: '',
-    customParameters: undefined,
-    description: '',
-    invoice: '',
-    merchantImageUrl: '',
-    order: '',
-    originalTransactionKey: '',
-    originalTransactionReference: '',
-    ourReference: '',
-    pushURL: '',
-    pushURLFailure: '',
-    returnURL: '',
-    returnURLCancel: '',
-    returnURLError: '',
-    returnURLReject: '',
-    servicesExcludedForClient: '',
-    servicesSelectableByClient: '',
-    shippingCustomer: undefined,
-    startRecurrent: false,
-    summaryImageUrl: '',
-    yourReference: ''
-}

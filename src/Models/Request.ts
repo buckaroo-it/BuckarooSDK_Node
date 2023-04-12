@@ -2,15 +2,18 @@ import { ITransaction } from './ITransaction'
 import { IServiceList, IServices } from './ServiceList'
 import { IParameter } from './Parameters'
 import { firstUpperCase } from '../Utils/Functions'
-import { AdditionalParameter, ServiceParameter } from '../Utils/Types'
+import { AdditionalParameter } from '../Utils/Types'
 
 export class Request {
-    protected _data: { [key: string]: any } = {}
+    protected _data: {[key:string]:any} = {}
     get data(): object {
         return this._data
     }
-    public get services(): IServices | undefined {
+    public get services(): IServices {
         return this._data['services']
+    }
+    public set services(services: IServices) {
+        this._data['services'] = services
     }
     public setRequestDataKey(key, data) {
         this._data[key] = data
@@ -21,18 +24,10 @@ export class TransactionRequest extends Request {
     get data(): ITransaction {
         return this._data
     }
-    setData(data) {
+    setData(data:ITransaction) {
         this._data = data
     }
-    customParameters?: AdditionalParameter
-    additionalParameters?: AdditionalParameter
-    service?: {
-        Name?: string
-        Action?: string
-        Version?: number
-        Parameters?: IParameter[]
-    }
-    serviceParameters?: ServiceParameter
+
     public basicParameters: Record<keyof ITransaction, boolean> = {
         clientIP: true,
         currency: true,
@@ -58,17 +53,13 @@ export class TransactionRequest extends Request {
         additionalParameters: true
     }
     public setServices(services: IServiceList) {
-        this.setRequestDataKey('services', {
-            ServiceList: [services]
-        })
+        this.services = {ServiceList:[services]}
     }
-    public addServices() {
-        if (this.service) {
-            if (this.services) {
-                this.services.ServiceList.push(this.service)
-            } else {
-                this.setServices(this.service)
-            }
+    public addServices(serviceList: IServiceList) {
+        if (this.services) {
+            this.services.ServiceList.push(serviceList)
+        } else {
+            this.setServices(serviceList)
         }
     }
     formatAdditionalParameters() {
@@ -97,17 +88,22 @@ export class TransactionRequest extends Request {
     formatServiceParameters(data: object, types: { GroupType?: string; GroupID?: number } = {}) {
         return Object.keys(data).flatMap((name) => {
             if (Array.isArray(data[name])) {
-                types.GroupID = 0
-                return this.formatServiceParameters(data[name], types)
+                return this.formatServiceParameters(data[name], {
+                    ...types,
+                    GroupID: 0,
+                })
+            }
+            if (types.GroupID === parseInt(name)) {
+                types.GroupID++
             }
             if (data[name] instanceof Object) {
-                types.GroupType = firstUpperCase(name)
-                if (types.GroupID === parseInt(name)) {
-                    types.GroupID++
-                }
-                return this.formatServiceParameters(data[name], types)
+                return this.formatServiceParameters(data[name], {
+                    ...types,
+                    GroupType: firstUpperCase(name) + (types.GroupType || '')
+                })
             }
-            return {
+
+            return (typeof data[name] === 'undefined')  ? [] : {
                 Name: firstUpperCase(name),
                 Value: data[name],
                 ...types

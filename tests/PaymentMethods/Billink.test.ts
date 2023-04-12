@@ -61,7 +61,16 @@ let payload: IPay = {
     additionalParameters: undefined,
     amountDebit: 0,
     articles: [],
-    billingCustomer: undefined,
+    billingCustomer: {
+        chamberOfCommerce: "",
+        city: "",
+        firstName: "",
+        initials: "",
+        lastName: "",
+        postalCode: "",
+        street: "",
+        streetNumber: 0
+    },
     clientIP: undefined,
     continueOnIncomplete: '',
     culture: '',

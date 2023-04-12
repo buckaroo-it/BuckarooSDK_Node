@@ -8,5 +8,5 @@ export function initializeBuckarooClient(credentials: ICredentials, config?: ICo
     }
     return _client
 }
-const BuckarooClient = () => _client
+const BuckarooClient = () => _client instanceof Client ? _client : Client.initialize()
 export default BuckarooClient

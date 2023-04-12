@@ -11,7 +11,7 @@ export class Hmac {
     time: string
     method: string
     constructor(
-        method: HttpMethods,
+        method: HttpMethods | string,
         url: string = '',
         data: string | object = '',
         nonce?: string,

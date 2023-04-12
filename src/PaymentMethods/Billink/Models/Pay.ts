@@ -2,7 +2,7 @@ import { Payload } from '../../../Models/ITransaction'
 import { IBillinkArticle } from './Article'
 import { Customer } from './Customer'
 
-export interface ServiceParameters {
+export interface IPay extends Payload{
     billingCustomer: Customer
     shippingCustomer?: Customer
     articles: { article: IBillinkArticle }[]
@@ -10,4 +10,3 @@ export interface ServiceParameters {
     VATNumber?: string
     summaryImageUrl?: string
 }
-export type IPay = ServiceParameters & Payload

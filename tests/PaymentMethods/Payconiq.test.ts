@@ -11,7 +11,7 @@ describe('Payconiq', () => {
                 order: '123456'
             })
             .then((info) => {
-                console.log(info)
+                expect(info.data).toBeDefined()
             })
     })
     test('Refund', async () => {
@@ -21,7 +21,7 @@ describe('Payconiq', () => {
                 originalTransactionKey: '123456'
             })
             .then((info) => {
-                console.log(info)
+                expect(info.data).toBeDefined()
             })
     })
 })

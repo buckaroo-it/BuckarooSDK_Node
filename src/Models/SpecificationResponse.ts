@@ -101,16 +101,8 @@ export class SpecificationResponse implements Services {
         if (parameters) {
             parameters.forEach((param) => {
                 let current = data
-                param.Group = param.Group ? firstLowerCase(param.Group) : false
-                if (param.MaxOccurs === 0 && param.Group) {
-                    current = data[param.Group + 's'] = data[param.Group + 's'] || []
-                    current = current[0] = current[0] || { [param.Group]: {} }
-                    current = current[param.Group]
-                } else if (param.MaxOccurs === 0) {
-                    data[param.Name] = data[param.Name] ?? []
-                    data[param.Name].push(param.DataType)
-                    current = data[param.Name][0]
-                } else if (param.Group) {
+                param.Group = param.Group ? firstLowerCase(param.Group) : ''
+                if (param.Group) {
                     current = data[param.Group] = data[param.Group] ?? {}
                 }
                 current[firstLowerCase(param.Name)] = param.Required

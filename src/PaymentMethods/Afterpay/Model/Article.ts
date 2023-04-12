@@ -1,5 +1,5 @@
-export type IAfterPayArticle = {
-    [key in 'article']: {
+
+export type IAfterPayArticle =  {
         type?:
             | 'PhysicalArticle'
             | 'DigitalArticle'
@@ -19,5 +19,4 @@ export type IAfterPayArticle = {
         grossUnitPrice: number
         vatPercentage: number
         description: string
-    }
 }

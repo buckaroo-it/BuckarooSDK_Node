@@ -5,10 +5,11 @@ import { Response } from '../Request/Response'
 import { AxiosResponse } from 'axios'
 
 export class TransactionResponse extends Response {
-    data: ITransactionResponse
-    constructor(response: AxiosResponse, request) {
-        super(response, request)
-        this.data = response.data
+    get data(): ITransactionResponse {
+        return this._data
+    }
+    constructor(response: AxiosResponse) {
+        super(response)
     }
     getStatusCode() {
         return this.data.Status.Code.Code.toString()
@@ -68,7 +69,7 @@ export class TransactionResponse extends Response {
         if (parameters) {
             parameters.forEach((param) => {
                 let current = param
-                current.GroupType = firstLowerCase(param.GroupType)
+                current.GroupType = firstLowerCase(param.GroupType || '')
                 if (param.GroupType && param.GroupID) {
                     current = data[param.GroupType + 's'] = data[param.GroupType + 's'] || []
                     current = current[parseInt(<string>param.GroupID) - 1] = current[

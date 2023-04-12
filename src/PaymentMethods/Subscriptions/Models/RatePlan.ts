@@ -33,22 +33,25 @@ type add = {
 
 export type IRatePlan = add | update | disable
 
-export type IRatePlanCharge = {
-    add?: {
+
+type addCharge = {
+    add: {
         ratePlanChargeCode?: string
-        ratePlanChargeName: string
-        ratePlanChargeProductId: string
-        ratePlanChargeDescription: string
-        unitOfMeasure: string
-        ratePlanChargeType: string
-        baseNumberOfUnits: number
-        partialBilling: string
-        pricePerUnit: number
-        priceIncludesVat: boolean
-        vatPercentage: number
-        b2B: boolean
+        ratePlanChargeName?: string
+        ratePlanChargeProductId?: string
+        ratePlanChargeDescription?: string
+        unitOfMeasure?: string
+        ratePlanChargeType?: string
+        baseNumberOfUnits?: number
+        partialBilling?: string
+        pricePerUnit?: number
+        priceIncludesVat?: boolean
+        vatPercentage?: number
+        b2B?: boolean
     }
-    update?: {
+}
+type updateCharge = {
+    update: {
         ratePlanChargeCode?: string
         vatPercentage?: number
         ratePlanChargeGuid?: string
@@ -56,7 +59,11 @@ export type IRatePlanCharge = {
         pricePerUnit?: number
         priceIncludesVat?: boolean
     }
-    disable?: {
-        ratePlanChargeGuid: string
+}
+type disableCharge = {
+    disable: {
+        ratePlanChargeGuid?: string
     }
 }
+
+export type IRatePlanCharge = addCharge | updateCharge | disableCharge

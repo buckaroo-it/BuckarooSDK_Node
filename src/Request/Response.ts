@@ -5,36 +5,33 @@ import {
     RawAxiosResponseHeaders
 } from 'axios'
 import { Hmac } from './Hmac'
-import RequestConfig from './Config'
 
 export class Response implements AxiosResponse {
-    data: undefined | object
+    get data(): any {
+        return this._data
+    }
+    protected readonly _data: any
     config: InternalAxiosRequestConfig
     headers: RawAxiosResponseHeaders | AxiosResponseHeaders
     status: number
     statusText: string
-    private requestData?: RequestConfig
-    constructor(response: AxiosResponse, request) {
+    constructor(response: AxiosResponse) {
         this.status = response.status
         this.config = response.config
         this.statusText = response.statusText
         this.headers = response.headers
-        this.requestData = request
+        this._data = response.data
     }
-    validate(request: RequestConfig = this.requestData || new RequestConfig()) {
-        let authorization = request.headers.Authorization
-
-        if (typeof authorization === 'string' && request.method) {
-            authorization = authorization.split(':')
-            let hmac = new Hmac(
-                request.method,
-                request.url,
-                request.data,
-                authorization[2],
-                authorization[3]
-            )
-            let hash = hmac.hashData(hmac.getHashString())
-            return hash === authorization[1]
-        }
+    static validate(authorizationHeader:string,method: string, url: string, data?: object) {
+        let authorization = authorizationHeader.split(':')
+        let hmac = new Hmac(
+            method,
+            url,
+            data,
+            authorization[2],
+            authorization[3]
+        )
+        let hash = hmac.hashData(hmac.getHashString())
+        return hash === authorization[1]
     }
 }

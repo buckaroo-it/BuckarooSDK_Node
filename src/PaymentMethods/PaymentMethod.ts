@@ -4,6 +4,7 @@ import { RequestType } from '../Constants/Endpoints'
 import { IPProtocolVersion } from '../Constants/IPProtocolVersion'
 import { ITransaction } from '../Models/ITransaction'
 import buckarooClient from '../BuckarooClient'
+import {IServiceList} from "../Models/ServiceList";
 
 export default abstract class PaymentMethod {
     protected readonly _requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
@@ -31,7 +32,7 @@ export default abstract class PaymentMethod {
         this._action = value
     }
 
-    public setRequest(data: object) {
+    public setRequest(data: {[key:string]:any}) {
         this.setBasicParameters(data)
 
         this.setRequiredFields()
@@ -40,18 +41,16 @@ export default abstract class PaymentMethod {
     }
 
     protected setServiceParameters(serviceParameters) {
-        this.request.service = {
+        let serviceList:IServiceList = {
             Action: this.action,
             Name: this.paymentName,
             Version: this.serviceVersion
         }
         if (Object.keys(serviceParameters).length > 0) {
-            this.request.serviceParameters = serviceParameters
-            this.request.service.Parameters =
+            serviceList.Parameters =
                 this.request.formatServiceParameters(serviceParameters)
         }
-
-        this.request.addServices()
+        this.request.addServices(serviceList)
     }
 
     protected setRequiredFields() {
@@ -72,12 +71,13 @@ export default abstract class PaymentMethod {
     }
     public combine(method: PaymentMethod) {
         if (method.combinable && this.combinable) {
-            const data = method.request.data
-            if (Object.keys(data).length > 0) {
-                Object.assign(this.request.data, data)
-                if (this.request.service) {
-                    this.request.addServices()
+            if (Object.keys(method.request.data).length > 0) {
+                let services = this.request.services
+                if (services && method.request.services) {
+                    method.request.services.ServiceList =
+                        services.ServiceList.concat(method.request.services.ServiceList)
                 }
+                Object.assign(this.request.data, method.request.data)
             }
         }
         return this

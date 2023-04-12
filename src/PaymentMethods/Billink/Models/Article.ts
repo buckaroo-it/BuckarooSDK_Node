@@ -1,4 +1,4 @@
-export interface IBillinkArticle {
+export type IBillinkArticle = {
     quantity: number
     description: string
     identifier: string

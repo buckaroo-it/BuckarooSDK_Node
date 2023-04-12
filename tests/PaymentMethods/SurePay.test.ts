@@ -32,7 +32,7 @@ describe('Sofort', () => {
                 startRecurrent: false
             })
             .then((info) => {
-                console.log(info)
+                
                 expect(info).toBeDefined()
             })
     })

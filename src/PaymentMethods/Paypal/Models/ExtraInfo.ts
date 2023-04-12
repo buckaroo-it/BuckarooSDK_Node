@@ -1,3 +1,3 @@
-import { ServiceParameter } from '../../../Utils/Types'
+import { ServiceParameters } from '../../../Utils/Types'
 
-export interface IExtraInfo extends ServiceParameter {}
+export interface IExtraInfo extends ServiceParameters {}

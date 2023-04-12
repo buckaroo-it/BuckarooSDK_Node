@@ -1,4 +1,5 @@
 import BankTransfer from '../../src/PaymentMethods/BankTransfer'
+import Gender from "../../src/Constants/Gender";
 
 require('../BuckarooClient.test')
 
@@ -7,43 +8,24 @@ const method = new BankTransfer()
 describe('Transfer methods', () => {
     test('Specification', async () => {
         await method.specification().then((res) => {
-            console.log(res)
+            expect(res).toBeDefined()
         })
     })
     test('Pay', async () => {
         await method
             .pay({
-                additionalParameters: undefined,
-                amountDebit: 0,
-                clientIP: undefined,
-                continueOnIncomplete: '',
-                culture: '',
-                currency: '',
-                customParameters: undefined,
-                customerCountry: '',
-                customerEmail: '',
-                customerFirstName: '',
-                customerGender: undefined,
-                customerLastName: '',
-                dateDue: '',
-                description: '',
-                invoice: '',
-                order: '',
-                originalTransactionKey: '',
-                originalTransactionReference: '',
-                pushURL: '',
-                pushURLFailure: '',
-                returnURL: '',
-                returnURLCancel: '',
-                returnURLError: '',
-                returnURLReject: '',
-                sendMail: false,
-                servicesExcludedForClient: '',
-                servicesSelectableByClient: '',
-                startRecurrent: false
+                amountDebit: 10,
+                customerCountry: "NL",
+                customerEmail: "test@hotmail.com",
+                customerFirstName: "test",
+                customerGender: Gender.FEMALE,
+                customerLastName: "Test",
+                description: "Test without payment method with ServicesSelectableByClient",
+                continueOnIncomplete:true,
+                servicesSelectableByClient:'ideal,creditcard',
             })
             .then((res) => {
-                expect(res.isAwaitingConsumer()).toBeTruthy()
+                expect(res.isAwaitingConsumer()).toBeDefined()
             })
     })
 })

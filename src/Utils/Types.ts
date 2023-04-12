@@ -21,7 +21,6 @@ type parameterType = string | number | boolean | undefined
 export declare type AdditionalParameter = {
     [name: string]: parameterType
 }
-type serviceParams<T> = {
-    [name: string]: T | T[] | serviceParams<T>
+export declare interface ServiceParameters {
+    [name: string]: parameterType | parameterType[] | ServiceParameters | ServiceParameters[]
 }
-export declare type ServiceParameter = serviceParams<parameterType>

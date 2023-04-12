@@ -10,7 +10,7 @@ describe('Sofort', () => {
                 order: '123456'
             })
             .then((info) => {
-                console.log(info)
+                
                 expect(info).toBeDefined()
             })
     })
@@ -21,7 +21,7 @@ describe('Sofort', () => {
                 originalTransactionKey: '123456'
             })
             .then((info) => {
-                console.log(info)
+                
                 expect(info).toBeDefined()
             })
     })

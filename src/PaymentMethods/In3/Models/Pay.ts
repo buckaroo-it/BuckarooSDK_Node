@@ -1,9 +1,23 @@
 import { Payload } from '../../../Models/ITransaction'
-import { IArticle } from '../../../Models/Services/IArticle'
 import ICompany from '../../../Models/Services/ICompany'
 import IPerson from '../../../Models/Services/IPerson'
 import IAddress from '../../../Models/Services/IAddress'
 import { IPAddress } from '../../../Utils/Types'
+
+type IArticle = {
+    identifier: string
+    type: string
+    brand: string
+    manufacturer: string
+    unitCode: string
+    quantity: number
+    price: number
+    vatCategory: number
+    vatPercentage: number
+    description: string
+}
+
+
 
 export interface IPay extends Payload {
     description: string
@@ -15,6 +29,6 @@ export interface IPay extends Payload {
     company: Omit<ICompany, 'name'> & { name: string }
     person: IPerson
     address: Omit<IAddress, 'houseNumberAdditional'> & { houseNumberSuffix: string }
-    productLine: IArticle[]
-    subtotalLine: { name: string; value: Number }[]
+    products: {productLine: IArticle }[]
+    subtotalLine: { name: string; value: number }[]
 }
