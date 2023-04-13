@@ -1,6 +1,5 @@
 import Subscriptions from '../../src/PaymentMethods/Subscriptions/index'
 import Ideal from '../../src/PaymentMethods/Ideal/index'
-import Gender from "../../src/Constants/Gender";
 
 require('../BuckarooClient.test')
 
@@ -10,43 +9,28 @@ const ideal = new Ideal()
 test('Create', async () => {
     subscription
         .create({
-        ratePlan: {
-            add: {
-                startDate: "2024-07-23",
-                ratePlanCode: "zfv59mmy"
-            }
-        },
-        ratePlanCharge: {
-            add: {
-                ratePlanChargeCode: "test"
-            }
-        },
-            person:{
-                lastName: "", birthDate: "", firstName: "", gender: Gender.FEMALE, name: "", title: ""
-
+            ratePlan: {
+                update: {
+                    startDate: "2024-07-23",
+                    ratePlanGuid:'',
+                }
             },
-            company:{
-                name: "",
-                chamberOfCommerce: "",
-                firstName: "",
-                gender: Gender.FEMALE,
-                lastName: "",
-                title: "",
-                vatApplicable: false,
-                vatNumber: "",
-                culture:'nl-N'
+            ratePlanCharge: {
+                add: {
+                    ratePlanChargeCode: "test"
+                }
             },
             configurationCode: "gfyh9fe4",
-            configuration: {
+            addConfiguration: {
                 name: "owiejr"
             },
             debtor: {
                 code: "johnsmith4"
             },
-            email: {email:'er@hotmail.com'}
-            }
-        ).catch((e) => {
+        }).catch((e) => {
            expect(e.response.data).toBeDefined()
+        }).catch((e) => {
+            expect(e.response.data).toBeDefined()
         })
 })
 test('Update', async () => {

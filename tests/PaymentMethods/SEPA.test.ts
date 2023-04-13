@@ -121,7 +121,7 @@ describe('SEPA', () => {
                 expect(info).toBeDefined()
             })
     })
-    test('Emandate', async () => {
+    test('Emandates', async () => {
         await method
             .payWithEmandate({
                 mandateReference: '',

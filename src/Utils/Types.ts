@@ -16,11 +16,11 @@ export type IPAddress = {
     address: string
     type: number
 }
-type parameterType = string | number | boolean | undefined
+export type ParameterTypes = string | number | boolean | undefined
 
 export declare type AdditionalParameter = {
-    [name: string]: parameterType
+    [name: string]: ParameterTypes
 }
 export declare interface ServiceParameters {
-    [name: string]: parameterType | parameterType[] | ServiceParameters | ServiceParameters[]
+    [name: string]: ParameterTypes | ParameterTypes[] | ServiceParameters | ServiceParameters[]
 }

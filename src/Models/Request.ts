@@ -2,21 +2,24 @@ import { ITransaction } from './ITransaction'
 import { IServiceList, IServices } from './ServiceList'
 import { IParameter } from './Parameters'
 import { firstUpperCase } from '../Utils/Functions'
-import { AdditionalParameter } from '../Utils/Types'
+import {AdditionalParameter, ServiceParameters} from '../Utils/Types'
+import {IPProtocolVersion} from "../Constants/IPProtocolVersion";
 
 export class Request {
     protected _data: {[key:string]:any} = {}
     get data(): object {
         return this._data
     }
-    public get services(): IServices {
-        return this._data['services']
-    }
-    public set services(services: IServices) {
-        this._data['services'] = services
-    }
-    public setRequestDataKey(key, data) {
+    public setRequestDataKey(key:string, data:any) {
         this._data[key] = data
+    }
+    public filter(data: ServiceParameters) {
+        return  Object.keys(data)
+            .filter(key => this._data[key] === undefined && data[key] !== undefined)
+            .reduce((obj:ServiceParameters, key) => {
+                obj[key] = data[key];
+                return obj;
+            }, {});
     }
 }
 
@@ -24,33 +27,11 @@ export class TransactionRequest extends Request {
     get data(): ITransaction {
         return this._data
     }
-    setData(data:ITransaction) {
-        this._data = data
+    public get services(): IServices | undefined {
+        return this._data['services']
     }
-
-    public basicParameters: Record<keyof ITransaction, boolean> = {
-        clientIP: true,
-        currency: true,
-        returnURL: true,
-        returnURLError: true,
-        returnURLCancel: true,
-        returnURLReject: true,
-        pushURL: true,
-        pushURLFailure: true,
-        invoice: true,
-        order: true,
-        amountDebit: true,
-        amountCredit: true,
-        description: true,
-        originalTransactionKey: true,
-        originalTransactionReference: true,
-        culture: true,
-        startRecurrent: true,
-        continueOnIncomplete: true,
-        servicesSelectableByClient: true,
-        servicesExcludedForClient: true,
-        customParameters: true,
-        additionalParameters: true
+    public set services(services: IServices | undefined) {
+        this._data['services'] = services
     }
     public setServices(services: IServiceList) {
         this.services = {ServiceList:[services]}
@@ -62,6 +43,7 @@ export class TransactionRequest extends Request {
             this.setServices(serviceList)
         }
     }
+
     formatAdditionalParameters() {
         if (this.data.additionalParameters) {
             this.setRequestDataKey('additionalParameters', {
@@ -85,29 +67,75 @@ export class TransactionRequest extends Request {
         })
     }
 
-    formatServiceParameters(data: object, types: { GroupType?: string; GroupID?: number } = {}) {
-        return Object.keys(data).flatMap((name) => {
-            if (Array.isArray(data[name])) {
-                return this.formatServiceParameters(data[name], {
-                    ...types,
-                    GroupID: 0,
-                })
-            }
-            if (types.GroupID === parseInt(name)) {
-                types.GroupID++
-            }
-            if (data[name] instanceof Object) {
-                return this.formatServiceParameters(data[name], {
-                    ...types,
-                    GroupType: firstUpperCase(name) + (types.GroupType || '')
-                })
-            }
+    public setBasicParameters(data: ITransaction) {
+        this.data.continueOnIncomplete = data.continueOnIncomplete
+        this.data.culture = data.culture
+        this.data.currency = data.currency
+        this.data.clientIP = data.clientIP
+        this.data.returnURL = data.returnURL
+        this.data.returnURLError = data.returnURLError
+        this.data.returnURLCancel = data.returnURLCancel
+        this.data.returnURLReject = data.returnURLReject
+        this.data.pushURL = data.pushURL
+        this.data.pushURLFailure = data.pushURLFailure
+        this.data.invoice = data.invoice
+        this.data.order = data.order
+        this.data.amountDebit = data.amountDebit
+        this.data.amountCredit = data.amountCredit
+        this.data.description = data.description
+        this.data.originalTransactionKey = data.originalTransactionKey
+        this.data.originalTransactionReference = data.originalTransactionReference
+        this.data.startRecurrent = data.startRecurrent
+        this.data.servicesSelectableByClient = data.servicesSelectableByClient
+        this.data.servicesExcludedForClient = data.servicesExcludedForClient
+        this.data.customParameters = data.customParameters
+        this.data.additionalParameters = data.additionalParameters
 
-            return (typeof data[name] === 'undefined')  ? [] : {
-                Name: firstUpperCase(name),
-                Value: data[name],
-                ...types
+        this.formatAdditionalParameters()
+        this.formatCustomParameters()
+        this.setClientIp()
+    }
+
+    public setClientIp() {
+        let ip = this.data.clientIP
+        if (ip && typeof ip === 'string') {
+            this.setRequestDataKey('clientIP', {
+                type: IPProtocolVersion.getVersion(ip),
+                address: ip
+            })
+        }
+    }
+    public formatServiceParameters(data: ServiceParameters, groups: {GroupID?: number ,GroupType:string} = {GroupType:''}, parentKey:string = '',parameters: IParameter[] = []): IParameter[] {
+        for (const key in data) {
+            let value  = data[key]
+            if(typeof value !== 'undefined') {
+                let name:string | number = firstUpperCase(key)
+
+                if (groups.GroupID === parseInt(key)) {
+                    groups.GroupID++
+                    name = parseInt(key)
+                }
+                if(Array.isArray(value)) {
+                    this.formatServiceParameters(<ServiceParameters><unknown>value, {
+                        ...groups,
+                        GroupID: 0,
+                    }, key,parameters)
+                }
+                else if(value instanceof Object){
+                    this.formatServiceParameters(value, {
+                        ...groups,
+                        GroupType:  typeof name === 'string' ? name + groups.GroupType: firstUpperCase(parentKey) + groups.GroupType
+                    },key,parameters)
+                }
+                else{
+                    parameters.push({
+                        Name: typeof name === 'string' ? name : firstUpperCase(parentKey),
+                        Value: value,
+                        ...groups
+                    })
+                }
             }
-        })
+        }
+        return parameters
     }
 }

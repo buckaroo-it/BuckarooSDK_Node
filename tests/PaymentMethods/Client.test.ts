@@ -38,15 +38,16 @@ test('Service specifications', async () => {
 })
 test('Client Transaction Request', async () => {
     let specifications = await client.transactionRequest({
-        invoice:uniqid(''),
-        order:uniqid(''),
+        invoice: uniqid(''),
+        order: uniqid(''),
         currency: "EUR",
         amountDebit: 0.01,
-        pushURL : "http://testcheckout.buckaroo.nl/push",
+        pushURL: "http://testcheckout.buckaroo.nl/push",
         description: "Test without payment method with ServicesSelectableByClient",
-        continueOnIncomplete:1,
-        servicesSelectableByClient:'ideal,paypal,bancontactmrcash',
-        servicesExcludedForClient:'ideal',
+        continueOnIncomplete: 1,
+        servicesSelectableByClient: 'ideal,paypal,bancontactmrcash',
+        servicesExcludedForClient: 'ideal',
+
     })
     
     expect(specifications).toBeDefined()

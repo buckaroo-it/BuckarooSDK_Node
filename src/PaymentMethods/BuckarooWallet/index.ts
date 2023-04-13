@@ -33,14 +33,14 @@ export default class BuckarooWallet extends PayablePaymentMethod {
     }
     update() {
         this.action = 'Update'
-        return this.dataRequest({})
+        return this.dataRequest()
     }
     getInfo() {
         this.action = 'Getinfo'
-        return this.dataRequest({})
+        return this.dataRequest()
     }
     release() {
         this.action = 'Release'
-        return this.dataRequest({})
+        return this.dataRequest()
     }
 }

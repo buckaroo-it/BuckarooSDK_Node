@@ -97,7 +97,7 @@ export class SpecificationResponse implements Services {
     getServiceParameters(actionName: string) {
         actionName = firstUpperCase(actionName)
         let parameters = this.getActionRequestParameters(actionName)
-        let data = {}
+        let data:{[key:string]:any} = {}
         if (parameters) {
             parameters.forEach((param) => {
                 let current = data

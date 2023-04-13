@@ -1,16 +1,12 @@
 import { TransactionRequest } from '../Models/Request'
-import { IConfig } from '../Utils/Types'
+import {IConfig, ServiceParameters} from '../Utils/Types'
 import { RequestType } from '../Constants/Endpoints'
-import { IPProtocolVersion } from '../Constants/IPProtocolVersion'
 import { ITransaction } from '../Models/ITransaction'
 import buckarooClient from '../BuckarooClient'
 import {IServiceList} from "../Models/ServiceList";
 
 export default abstract class PaymentMethod {
     protected readonly _requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
-    get requiredFields(): Array<keyof IConfig> {
-        return this._requiredFields
-    }
     protected _paymentName = ''
     protected _serviceVersion = 0
     protected request: TransactionRequest = new TransactionRequest()
@@ -33,14 +29,14 @@ export default abstract class PaymentMethod {
     }
 
     public setRequest(data: {[key:string]:any}) {
-        this.setBasicParameters(data)
+        this.request.setBasicParameters(data)
 
         this.setRequiredFields()
 
-        this.setServiceParameters(data)
+        this.setServiceParameters(this.request.filter(data))
     }
 
-    protected setServiceParameters(serviceParameters) {
+    protected setServiceParameters(serviceParameters:ServiceParameters) {
         let serviceList:IServiceList = {
             Action: this.action,
             Name: this.paymentName,
@@ -48,7 +44,7 @@ export default abstract class PaymentMethod {
         }
         if (Object.keys(serviceParameters).length > 0) {
             serviceList.Parameters =
-                this.request.formatServiceParameters(serviceParameters)
+            this.request.formatServiceParameters(serviceParameters)
         }
         this.request.addServices(serviceList)
     }
@@ -64,7 +60,7 @@ export default abstract class PaymentMethod {
 
         return buckarooClient().transactionRequest(this.request.data)
     }
-    protected dataRequest(requestData) {
+    protected dataRequest(requestData:ITransaction = {}) {
         this.setRequest(requestData)
 
         return buckarooClient().dataRequest(this.request.data)
@@ -82,28 +78,7 @@ export default abstract class PaymentMethod {
         }
         return this
     }
-    public setClientIp() {
-        let ip = this.request.data.clientIP
-        if (typeof ip === 'string') {
-            this.request.setRequestDataKey('clientIP', {
-                type: IPProtocolVersion.getVersion(ip),
-                address: ip
-            })
-        }
-    }
     public specification(type?: RequestType) {
         return buckarooClient().specification(this.paymentName, this.serviceVersion, type)
-    }
-
-    private setBasicParameters(data: ITransaction) {
-        Object.keys(this.request.basicParameters).forEach((key) => {
-            if (data[key]) {
-                this.request.setRequestDataKey(key, data[key])
-                delete data[key]
-            }
-        })
-        this.request.formatAdditionalParameters()
-        this.request.formatCustomParameters()
-        this.setClientIp()
     }
 }

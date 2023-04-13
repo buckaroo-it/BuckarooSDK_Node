@@ -19,7 +19,7 @@ export default class RequestHeaders {
             delete this.headers[key]
         })
     }
-    setAuthHeader(method, url, data?) {
+    setAuthHeader(method:string, url:string, data?:object) {
         this.headers.Authorization = new Hmac(method, url, data).createHeader()
     }
 }

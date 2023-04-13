@@ -18,7 +18,11 @@ export declare interface ITransaction extends ServiceParameters {
     originalTransactionReference?: string
     culture?: string
     startRecurrent?: boolean
-    continueOnIncomplete?: any
+    /**
+     * 0 = No
+     * 1 = RedirectToHTML
+     */
+    continueOnIncomplete?: 0 | 1
     servicesSelectableByClient?: string
     servicesExcludedForClient?: string
     customParameters?: AdditionalParameter

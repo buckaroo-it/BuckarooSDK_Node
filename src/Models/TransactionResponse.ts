@@ -63,29 +63,184 @@ export class TransactionResponse extends Response {
     getServiceAction() {
         return this.data.Services?.[0].Action
     }
+    params(){
+        return [
+            {
+                Name: "CustomerType",
+                Value: "Company",
+                GroupType: "",
+                GroupID: ""
+            },
+            {
+                Name: "InvoiceDate",
+                Value: "22-01-2018",
+                GroupType: "",
+                GroupID: ""
+            },
+            {
+                Name: "Gender",
+                Value: "2",
+                GroupType: "Person",
+                GroupID: ""
+            },
+            {
+                Name: "Culture",
+                Value: "nl-NL",
+                GroupType: "Person",
+                GroupID: ""
+            },
+            {
+                Name: "Initials",
+                Value: "J.S.",
+                GroupType: "Person",
+                GroupID: ""
+            },
+            {
+                Name: "LastName",
+                Value: "Aflever",
+                GroupType: "Person",
+                GroupID: ""
+            },
+            {
+                Name: "BirthDate",
+                Value: "1990-01-01",
+                GroupType: "Person",
+                GroupID: ""
+            },
+            {
+                Name: "Name",
+                Value: "My Company B.V.",
+                GroupType: "Company",
+                GroupID: ""
+            },
+            {
+                Name: "ChamberOfCommerce",
+                Value: "123456",
+                GroupType: "Company",
+                GroupID: ""
+            },
+            {
+                Name: "Street",
+                Value: "Hoofdstraat",
+                GroupType: "Address",
+                GroupID: ""
+            },
+            {
+                Name: "HouseNumber",
+                Value: "2",
+                GroupType: "Address",
+                GroupID: ""
+            },
+            {
+                Name: "HouseNumberSuffix",
+                Value: "a",
+                GroupType: "Address",
+                GroupID: ""
+            },
+            {
+                Name: "ZipCode",
+                Value: "8441EE",
+                GroupType: "Address",
+                GroupID: ""
+            },
+            {
+                Name: "City",
+                Value: "Heerenveen",
+                GroupType: "Address",
+                GroupID: ""
+            },
+            {
+                Name: "Country",
+                Value: "NL",
+                GroupType: "Address",
+                GroupID: ""
+            },
+            {
+                Name: "Email",
+                Value: "test@buckaroo.nl",
+                GroupType: "Email",
+                GroupID: ""
+            },
+            {
+                Name: "Phone",
+                Value: "0612345678",
+                GroupType: "Phone",
+                GroupID: ""
+            },
+            {
+                Name: "Code",
+                Value: "64381664f2f8b",
+                GroupType: "ProductLine",
+                GroupID: 1
+            },
+            {
+                Name: "Price",
+                Value: 10,
+                GroupType: "ProductLine",
+                GroupID: 1
+            },
+            {
+                Name: "Quantity",
+                Value: 1,
+                GroupType: "ProductLine",
+                GroupID: 1
+            },
+            {
+                Name: "Name",
+                Value: "Blue Toy Car",
+                GroupType: "ProductLine",
+                GroupID: 1
+            },
+            {
+                Name: "Name",
+                Value: "Korting",
+                GroupType: "",
+                GroupID: 1
+            },
+            {
+                Name: "Value",
+                Value: -2,
+                GroupType: "",
+                GroupID: 1
+            },
+            {
+                Name: "Name",
+                Value: "Betaaltoeslag",
+                GroupType: "",
+                GroupID: 2
+            },
+            {
+                Name: "Value",
+                Value: 0.5,
+                GroupType: "",
+                GroupID: 2
+            },
+            {
+                Name: "Name",
+                Value: "Verzendkosten",
+                GroupType: "",
+                GroupID: 3
+            },
+            {
+                Name: "Value",
+                Value: 1,
+                GroupType: "",
+                GroupID: 3
+            }
+        ]
+    }
     getServiceParameters() {
-        let parameters = this.getServices()?.[0].Parameters
-        let data = {}
+        let parameters = this.params()
+        let data:{[key:string]:any} = {}
         if (parameters) {
             parameters.forEach((param) => {
                 let current = param
-                current.GroupType = firstLowerCase(param.GroupType || '')
-                if (param.GroupType && param.GroupID) {
-                    current = data[param.GroupType + 's'] = data[param.GroupType + 's'] || []
-                    current = current[parseInt(<string>param.GroupID) - 1] = current[
-                        parseInt(<string>param.GroupID) - 1
-                    ] || { [param.GroupType]: {} }
-                    current = current[param.GroupType]
 
-                    current[firstLowerCase(param.Name)] = param.Value
-                } else if (param.GroupType) {
-                    current = data[param.GroupType] = data[param.GroupType] ?? {}
-                    current[firstLowerCase(param.Name)] = param.Value
-                } else if (param.GroupID) {
-                    data[param.Name] = data[param.Name] ?? []
-                    data[param.Name].push(param.Value)
-                } else {
-                    current[firstLowerCase(param.Name)] = param.Value
+                if(param.GroupType){
+                    data[firstLowerCase(param.GroupType)] = data[firstLowerCase(param.GroupType)] || {}
+                    data[firstLowerCase(param.GroupType)][firstLowerCase(param.Name)] = param.Value
+                }else{
+                    data[firstLowerCase(current.Name)] = current.Value
                 }
             })
             return data
@@ -93,7 +248,7 @@ export class TransactionResponse extends Response {
     }
     getCustomParameters() {
         let customParameters = this.data.CustomParameters?.List
-        let data = {}
+        let data:{[key:string]:any} = {}
         if (customParameters) {
             customParameters.forEach((param) => {
                 data[param.Name] = param.Value
@@ -103,7 +258,7 @@ export class TransactionResponse extends Response {
     }
     getAdditionalParameters() {
         let additionalParameters = this.data.AdditionalParameters?.AdditionalParameter
-        let data = {}
+        let data:{[key:string]:any} = {}
         if (additionalParameters) {
             additionalParameters.forEach((param) => {
                 data[param.Name] = param.Value
@@ -130,13 +285,13 @@ export class TransactionResponse extends Response {
     }
     getErrorMessages() {
         const messages: { [errorType: string]: string } = {}
-        Object.keys(this.data.RequestErrors).forEach((key) => {
-            if (this.data.RequestErrors[key].length > 0) {
-                messages[key] = this.data.RequestErrors[key]
+        for (const [key,value] of Object.entries(this.data.RequestErrors)) {
+            if (value.length > 0) {
+                messages[key] = value
                     .map((error) => error.ErrorMessage)
                     .join('')
             }
-        })
+        }
         return Object.entries(messages)
     }
     getErrorMessage() {

@@ -1,7 +1,7 @@
 import Endpoints, { RequestType } from '../Constants/Endpoints'
 import PaymentMethod from '../PaymentMethods/PaymentMethod'
 import { ITransaction } from '../Models/ITransaction'
-import { IConfig, ICredentials } from '../Utils/Types'
+import {IConfig, ICredentials} from '../Utils/Types'
 import {SpecificationResponse, SpecificationsResponse} from '../Models/SpecificationResponse'
 import axios, { AxiosInstance } from 'axios'
 import { TransactionResponse } from '../Models/TransactionResponse'
@@ -54,8 +54,8 @@ export class Client  {
     }
 
     protected getSpecificationUrl(
-        paymentName,
-        serviceVersion,
+        paymentName: string,
+        serviceVersion:number,
         type: RequestType = RequestType.Transaction
     ) {
         return type === RequestType.Transaction
@@ -85,14 +85,14 @@ export class Client  {
         })
     }
 
-    transactionRequest(data: ITransaction) {
+    transactionRequest(data:ITransaction) {
         data.pushURL = data.pushURL || this.getConfig().pushURL
 
         return this.post(this.getTransactionUrl(),data).then((res)=>{
             return new TransactionResponse(res)
         })
     }
-    dataRequest(data) {
+    dataRequest(data:ITransaction) {
         return this.post(this.getDataRequestUrl(), data).then((res)=>{
             return new TransactionResponse(res)
         })

@@ -64,33 +64,9 @@ describe('BuckarooWallet methods', () => {
     test('Create Wallet', async () => {
         await method
             .create({
-                additionalParameters: undefined,
-                amountCredit: 0,
-                amountDebit: 0,
-                clientIP: undefined,
-                consumerEmail: '',
-                consumerFirstName: '',
-                consumerIban: '',
-                consumerLastName: '',
-                continueOnIncomplete: '',
-                culture: '',
-                currency: '',
-                customParameters: undefined,
-                description: '',
-                invoice: '',
-                order: '',
-                originalTransactionKey: '',
-                originalTransactionReference: '',
-                pushURL: '',
-                pushURLFailure: '',
-                returnURL: '',
-                returnURLCancel: '',
-                returnURLError: '',
-                returnURLReject: '',
-                servicesExcludedForClient: '',
-                servicesSelectableByClient: '',
-                startRecurrent: false,
-                walletId: ''
+                invoice: "",
+                pushURL: "",
+                walletId: ""
             })
             .then((data) => {
                 expect(data).toBeDefined()
