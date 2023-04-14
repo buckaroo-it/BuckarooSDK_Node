@@ -6,7 +6,7 @@ export interface IPay extends Payload {
     paymentMethod: string
     deliveryMethod: string
     deliveryDate?: string
-    articles: { article: ITinkaArticle }[]
+    article: ITinkaArticle[]
     billingCustomer: {
         email: string
         phone?: string

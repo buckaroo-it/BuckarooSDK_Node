@@ -60,7 +60,7 @@ let payload: IPay = {
     VATNumber: '',
     additionalParameters: undefined,
     amountDebit: 0,
-    articles: [],
+    article: [],
     billingCustomer: {
         chamberOfCommerce: '',
         city: '',

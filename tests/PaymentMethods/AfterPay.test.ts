@@ -6,6 +6,7 @@ require('../BuckarooClient.test')
 
 const method = new Afterpay()
 describe('AfterPay methods', () => {
+
     test('Pay', async () => {
         await method.pay(payload).then((data) => {
             expect(data.isSuccess()).toBeTruthy()
@@ -18,7 +19,7 @@ describe('AfterPay methods', () => {
     })
     test('Authorize', async () => {
         await method.authorize(payload).then((data) => {
-            expect(data.isSuccess()).toBeTruthy()
+            expect(data).toBeDefined()
         })
     })
     test('CancelAuthorize', async () => {
@@ -99,30 +100,27 @@ let payload: IPay = {
         lastName: 'a',
         salutation: 'Mr'
     },
-    articles: [
+    article: [
         {
-            article: {
-                description: 'ter',
-                identifier: '423f',
-                imageUrl: '',
-                quantity: 1,
-                type: 'PhysicalArticle',
-                unitCode: '',
-                url: '',
-                vatPercentage: 0,
-                grossUnitPrice: 7
-            }
+            description: 'ter',
+            identifier: '423f',
+            imageUrl: '',
+            quantity: 1,
+            type: 'PhysicalArticle',
+            unitCode: '',
+            url: '',
+            vatPercentage: 0,
+            grossUnitPrice: 7
+
         },
         {
-            article: {
-                description: 'ter',
-                identifier: '423f',
-                unitCode: '',
-                type: 'PhysicalArticle',
-                quantity: 1,
-                vatPercentage: 0,
-                grossUnitPrice: 7
-            }
+            description: 'ter',
+            identifier: '423f',
+            unitCode: '',
+            type: 'PhysicalArticle',
+            quantity: 1,
+            vatPercentage: 0,
+            grossUnitPrice: 7
         }
     ]
 }

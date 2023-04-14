@@ -10,7 +10,7 @@ describe('Testing KBC methods', () => {
                 amountDebit: 10
             })
             .then((response) => {
-                expect(response).not.toBeNull()
+                expect(response.data).toBeDefined()
             })
     })
     test('Refund', async () => {
@@ -20,7 +20,7 @@ describe('Testing KBC methods', () => {
                 originalTransactionKey: 'B5675356904444F3965C33D280591C74'
             })
             .then((response) => {
-                expect(response).not.toBeNull()
+                expect(response.data).toBeDefined()
             })
     })
 })

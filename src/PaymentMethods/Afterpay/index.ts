@@ -13,7 +13,7 @@ export default class Afterpay extends PayablePaymentMethod {
         }
         return super.pay(payload)
     }
-    refund(payload: RefundPayload & { articles?: IAfterPayArticle[] }) {
+    refund(payload: RefundPayload & { article?: IAfterPayArticle[] }) {
         return super.refund(payload)
     }
     authorize(payload: IPay) {
@@ -28,11 +28,11 @@ export default class Afterpay extends PayablePaymentMethod {
         this.action = 'Capture'
         return super.transactionRequest(payload)
     }
-    payRemainder(payload) {
+    payRemainder(payload:IPay) {
         this.action = 'PayRemainder'
         return super.transactionRequest(payload)
     }
-    authorizeRemainder(payload) {
+    authorizeRemainder(payload:IPay) {
         this.action = 'AuthorizeRemainder'
         return super.transactionRequest(payload)
     }

@@ -1,5 +1,7 @@
-require('../BuckarooClient.test')
+import Gender from "../../src/Constants/Gender";
 import PayPerEmail from '../../src/PaymentMethods/PayPerEmail/index'
+
+require('../BuckarooClient.test')
 
 const method = new PayPerEmail()
 
@@ -18,7 +20,7 @@ describe('PayPerEmail methods', () => {
                 customParameters: undefined,
                 customerEmail: '',
                 customerFirstName: '',
-                customerGender: undefined,
+                customerGender: Gender.NOT_APPLICABLE,
                 customerLastName: '',
                 description: '',
                 order: '',

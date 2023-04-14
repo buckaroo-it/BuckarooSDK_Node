@@ -14,7 +14,6 @@ describe('testing Ideal methods', () => {
             .pay({
                 amountDebit: 10.1,
                 issuer: 'ABNANL2A',
-                pushURL: 'https://buckaroo.nextto.dev/push',
                 clientIP: {
                     address: '123.456.789.123',
                     type: 0
@@ -25,7 +24,7 @@ describe('testing Ideal methods', () => {
                 }
             })
             .then((data) => {
-                expect(data.isWaitingOnUserInput()).toBeTruthy()
+                expect(data.isPendingProcessing()).toBeTruthy()
             })
     })
     test('Refund', async () => {
@@ -48,7 +47,4 @@ describe('testing Ideal methods', () => {
                 expect(data).toBeDefined()
             })
     })
-    // test('Specifications', async () => {
-    //     const idealSpecifications = await ideal.specification()
-    // })
 })

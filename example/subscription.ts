@@ -15,7 +15,9 @@ const subscription = new Subscriptions().createCombined({
     customerBIC: '',
     customerIBAN: '',
     debtor: { code: '' },
-    email: '',
+    email: {
+        email: '345345345',
+    },
     includeTransaction: false,
     mandateReference: '',
     person: undefined,
@@ -34,4 +36,5 @@ const subscription = new Subscriptions().createCombined({
         issuer: 'ABNANL2A',
         amountDebit: 10
     })
+    console.log(combinedPayment)
 })()

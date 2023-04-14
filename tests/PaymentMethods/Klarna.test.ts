@@ -29,7 +29,7 @@ let payload: IPay = {
     amountDebit: 50.3,
     invoice: uniqid(),
     additionalParameters: undefined,
-    articles: [],
+    article: [],
     billingCustomer: {
         city: '',
         country: '',

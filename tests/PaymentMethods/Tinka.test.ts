@@ -8,14 +8,12 @@ describe('Tinka', () => {
         await method
             .pay({
                 amountDebit: 3.5,
-                articles: [
+                article: [
                     {
-                        article: {
-                            description: 'ewf',
-                            quantity: 1,
-                            unitCode: '',
-                            unitGrossPrice: 3.5
-                        }
+                        description: 'ewf',
+                        quantity: 1,
+                        unitCode: '',
+                        unitGrossPrice: 3.5
                     }
                 ],
                 billingCustomer: {

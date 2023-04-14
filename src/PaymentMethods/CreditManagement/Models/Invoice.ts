@@ -41,7 +41,7 @@ export interface Invoice {
     }
     email?: { email: string }
     phone: IPhone
-    products?: { productLine: ICreditArticle }[]
+    productLine?:ICreditArticle[]
     invoiceNumber?: string
     applyStartRecurrent?: boolean
     [key: string]: any

@@ -4,15 +4,13 @@ import Klarna from '../src/PaymentMethods/Klarna'
 const klarna = new Klarna()
 
 klarna.pay({
-    articles: [
+    article: [
         {
-            article: {
                 description: '',
                 grossUnitPrice: 0,
                 identifier: '',
                 quantity: '',
                 vatPercentage: ''
-            }
         }
     ],
     amountDebit: 0,

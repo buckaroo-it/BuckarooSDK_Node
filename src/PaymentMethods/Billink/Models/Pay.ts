@@ -5,7 +5,7 @@ import { Customer } from './Customer'
 export interface IPay extends Payload {
     billingCustomer: Customer
     shippingCustomer?: Customer
-    articles: { article: IBillinkArticle }[]
+    article: IBillinkArticle[]
     trackandtrace?: string
     VATNumber?: string
     summaryImageUrl?: string

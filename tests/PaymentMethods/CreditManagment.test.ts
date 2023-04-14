@@ -57,7 +57,7 @@ describe('Testing Credit Management', () => {
         await creditManagement
             .addOrUpdateProductLines({
                 invoiceKey: 'd42',
-                articles: []
+                article: []
             })
             .then((data) => {
                 expect(data).toBeDefined()
@@ -162,24 +162,23 @@ const invoice = (append: object = {}): IInvoice => {
             state: 'Friesland',
             country: 'NL'
         },
-        products: [
+        productLine: [
             {
-                productLine: {
-                    discountPercentage: 0,
-                    productGroupName: '',
-                    productGroupOrderIndex: 0,
-                    productOrderIndex: 0,
-                    quantity: 0,
-                    totalAmount: 0,
-                    totalAmountExVat: 0,
-                    totalDiscount: 0,
-                    totalVat: 0,
-                    type: 'Regular',
-                    unitOfMeasurement: '',
-                    vatPercentage: 0,
-                    pricePerUnit: 0,
-                    productName: '324'
-                }
+                discountPercentage: 0,
+                productGroupName: '',
+                productGroupOrderIndex: 0,
+                productOrderIndex: 0,
+                quantity: 0,
+                totalAmount: 0,
+                totalAmountExVat: 0,
+                totalDiscount: 0,
+                totalVat: 0,
+                type: 'Regular',
+                unitOfMeasurement: '',
+                vatPercentage: 0,
+                pricePerUnit: 0,
+                productName: '324'
+
             }
         ],
         ...append

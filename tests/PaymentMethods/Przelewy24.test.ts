@@ -7,32 +7,12 @@ describe('Przelewy24', () => {
     test('Pay', async () => {
         await method
             .pay({
+                customerLastName: "",
                 additionalParameters: undefined,
                 amountDebit: 0,
-                clientIP: undefined,
-                continueOnIncomplete: '',
-                costumer: undefined,
-                culture: '',
-                currency: '',
-                customParameters: undefined,
-                customerEmail: '',
-                customerFirstName: '',
-                description: '',
-                email: '',
-                invoice: '',
-                lastName: '',
-                order: '',
-                originalTransactionKey: '',
-                originalTransactionReference: '',
-                pushURL: '',
-                pushURLFailure: '',
-                returnURL: '',
-                returnURLCancel: '',
-                returnURLError: '',
-                returnURLReject: '',
-                servicesExcludedForClient: '',
-                servicesSelectableByClient: '',
-                startRecurrent: false
+                customerEmail: "",
+                customerFirstName: "",
+                email: "",
             })
             .then((info) => {
                 expect(info).toBeDefined()

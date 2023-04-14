@@ -3,6 +3,6 @@ import { ITransaction } from '../../../Models/ITransaction'
 
 export interface AddOrUpdateProductLines {
     invoiceKey: string
-    articles: { article: ICreditArticle }[]
+    article: ICreditArticle[]
 }
 export type IAddOrUpdateProductLines = AddOrUpdateProductLines & ITransaction

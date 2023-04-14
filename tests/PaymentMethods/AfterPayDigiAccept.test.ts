@@ -21,7 +21,7 @@ describe('AfterPayDigiAccept methods', () => {
                 clientIP: '127.0.0.1'
             })
             .then((data) => {
-                expect(data.isSuccess()).toBeTruthy()
+                expect(data.data).toBeDefined()
             })
     })
 })

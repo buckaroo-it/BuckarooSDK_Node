@@ -4,15 +4,16 @@ import CreditCard from '../../src/PaymentMethods/CreditCard/index'
 const method = new CreditCard()
 
 describe('testing methods', () => {
-    test('Pay', async () => {
-        await method
+        test('Pay', async () => {
+          await method
             .pay({
-                amountDebit: 10,
-                name: 'Visa'
+              amountDebit: 10,
+              name: 'Visa'
             })
             .then((data) => {
-                expect(data).toBeDefined()
+              expect(data).toBeDefined()
             })
+        })
         test('Refund', async () => {
             await method
                 .refund({
@@ -111,5 +112,4 @@ describe('testing methods', () => {
                     expect(data).toBeDefined()
                 })
         })
-    })
 })
