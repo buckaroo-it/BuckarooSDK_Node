@@ -32,7 +32,6 @@ describe('Sofort', () => {
                 startRecurrent: false
             })
             .then((info) => {
-                
                 expect(info).toBeDefined()
             })
     })

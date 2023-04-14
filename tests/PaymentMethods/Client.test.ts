@@ -1,4 +1,4 @@
-import {uniqid} from "../../src/Utils/Functions";
+import { uniqid } from '../../src/Utils/Functions'
 
 require('../BuckarooClient.test')
 import buckarooClient from '../../src/BuckarooClient'
@@ -7,7 +7,6 @@ const client = buckarooClient()
 test('PaymentStatus', async () => {
     await client.status('0AA966B997CB4676B55A07E9C3BA4DB4').then((data) => {
         expect(data).toBeDefined()
-        
     })
 })
 test('paymentCancelInfo', async () => {
@@ -40,15 +39,14 @@ test('Client Transaction Request', async () => {
     let specifications = await client.transactionRequest({
         invoice: uniqid(''),
         order: uniqid(''),
-        currency: "EUR",
+        currency: 'EUR',
         amountDebit: 0.01,
-        pushURL: "http://testcheckout.buckaroo.nl/push",
-        description: "Test without payment method with ServicesSelectableByClient",
+        pushURL: 'http://testcheckout.buckaroo.nl/push',
+        description: 'Test without payment method with ServicesSelectableByClient',
         continueOnIncomplete: 1,
         servicesSelectableByClient: 'ideal,paypal,bancontactmrcash',
-        servicesExcludedForClient: 'ideal',
-
+        servicesExcludedForClient: 'ideal'
     })
-    
+
     expect(specifications).toBeDefined()
 })

@@ -43,7 +43,6 @@ describe('testing methods', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                
             })
     })
     test('DeactivateVoucher', async () => {

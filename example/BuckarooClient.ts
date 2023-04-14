@@ -14,7 +14,7 @@ initializeBuckarooClient(
 async function getSpecificationsOfIdeal() {
     return await buckarooClient()
         .specification('ideal', 1)
-        .then((res)=>{
+        .then((res) => {
             expect(res).toBeDefined()
         })
 }
@@ -23,10 +23,10 @@ async function startTransactionRequest() {
         .transactionRequest({
             currency: 'EUR',
             amountDebit: 10,
-            servicesExcludedForClient:'ideal',
-            servicesSelectableByClient: "ideal,bancontactmrcash,paypal"
+            servicesExcludedForClient: 'ideal',
+            servicesSelectableByClient: 'ideal,bancontactmrcash,paypal'
         })
-        .then((res)=>{
+        .then((res) => {
             expect(res).toBeDefined()
         })
 }

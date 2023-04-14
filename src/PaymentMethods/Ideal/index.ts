@@ -5,7 +5,7 @@ import { RefundPayload } from '../../Models/ITransaction'
 export default class Ideal extends PayablePaymentMethod {
     protected _paymentName = 'ideal'
     protected _serviceVersion = 2
-    combinable = true
+
     pay(payload: IPay) {
         return super.pay(payload)
     }

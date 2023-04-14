@@ -5,6 +5,7 @@ import { RefundPayload } from '../../Models/ITransaction'
 export default class Bancontact extends PayablePaymentMethod {
     protected _paymentName = 'bancontactmrcash'
     protected _serviceVersion = 1
+
     pay(payload: IPay) {
         return super.pay(payload)
     }

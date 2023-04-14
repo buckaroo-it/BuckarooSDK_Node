@@ -5,6 +5,7 @@ import { RefundPayload } from '../../Models/ITransaction'
 export default class Banktransfer extends PayablePaymentMethod {
     protected _paymentName = 'transfer'
     protected _serviceVersion = 1
+
     pay(payload: IPay) {
         return super.pay(payload)
     }

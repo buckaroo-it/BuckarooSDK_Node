@@ -1,7 +1,6 @@
 import Gender from '../../../Constants/Gender'
 import { Payload } from '../../../Models/ITransaction'
 
-
 export interface IPay extends Payload {
     customerFirstName: string
     customerLastName: string

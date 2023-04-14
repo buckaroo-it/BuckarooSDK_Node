@@ -12,7 +12,7 @@ import { AddOrUpdateProductLines, IAddOrUpdateProductLines } from './Models/AddO
 export default class CreditManagement extends PaymentMethod {
     protected _paymentName = 'CreditManagement3'
     protected _requiredFields: Array<keyof IConfig> = ['currency']
-    combinable = true
+
     protected _serviceVersion = 1
     createInvoice(payload: IInvoice): Promise<any> {
         this.action = 'CreateInvoice'

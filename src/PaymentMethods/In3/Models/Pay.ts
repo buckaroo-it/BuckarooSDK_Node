@@ -1,5 +1,6 @@
 import { Payload } from '../../../Models/ITransaction'
-import {IPAddress, ServiceParameters} from '../../../Utils/Types'
+import Gender from '../../../Constants/Gender'
+import RecipientCategory from '../../../Constants/RecipientCategory'
 
 type Article = {
     code: string
@@ -17,16 +18,28 @@ type Address = {
     country: string
 }
 
+type Company = {
+    name: string
+    chamberOfCommerce: string
+}
+type Person = {
+    gender: Gender
+    culture: string
+    initials: string
+    lastName: string
+    birthDate: string
+}
+
 export interface IPay extends Payload {
     description: string
-    clientIP: IPAddress | string
-    customerType: string
+    clientIP: string
+    customerType: RecipientCategory.PERSON | RecipientCategory.COMPANY
     invoiceDate: string
     email: { email: string }
     phone: { phone?: string; fax?: string }
-    company: ServiceParameters
-    person: ServiceParameters
-    address:Address
+    company: Company
+    person: Person
+    address: Address
     productLine: Article[]
     subtotalLine: { name: string; value: number }[]
 }

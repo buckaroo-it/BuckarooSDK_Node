@@ -1,15 +1,15 @@
 import Endpoints, { RequestType } from '../Constants/Endpoints'
 import PaymentMethod from '../PaymentMethods/PaymentMethod'
 import { ITransaction } from '../Models/ITransaction'
-import {IConfig, ICredentials} from '../Utils/Types'
-import {SpecificationResponse, SpecificationsResponse} from '../Models/SpecificationResponse'
+import { IConfig, ICredentials } from '../Utils/Types'
+import { SpecificationResponse, SpecificationsResponse } from '../Models/SpecificationResponse'
 import axios, { AxiosInstance } from 'axios'
 import { TransactionResponse } from '../Models/TransactionResponse'
 import RequestHeaders from './Headers'
 import HttpMethods from '../Constants/HttpMethods'
-import httpMethods from "../Constants/HttpMethods";
+import httpMethods from '../Constants/HttpMethods'
 
-export class Client  {
+export class Client {
     private static _credentials: ICredentials
     private static _config: IConfig
     public axios: AxiosInstance = axios.create()
@@ -55,7 +55,7 @@ export class Client  {
 
     protected getSpecificationUrl(
         paymentName: string,
-        serviceVersion:number,
+        serviceVersion: number,
         type: RequestType = RequestType.Transaction
     ) {
         return type === RequestType.Transaction
@@ -66,10 +66,10 @@ export class Client  {
                   `/Specification/${paymentName}?serviceVersion=${serviceVersion}`
               )
     }
-    call(config:{method: httpMethods, url: string, data?: object}) {
+    call(config: { method: httpMethods; url: string; data?: object }) {
         this.headers.setAuthHeader(config.method, config.url, config.data)
 
-        return this.axios.request({...config,headers:this.headers.headers})
+        return this.axios.request({ ...config, headers: this.headers.headers })
     }
     post(url: string, data: object) {
         return this.call({
@@ -81,19 +81,19 @@ export class Client  {
     get(url: string) {
         return this.call({
             method: HttpMethods.METHOD_GET,
-            url,
+            url
         })
     }
 
-    transactionRequest(data:ITransaction) {
+    transactionRequest(data: ITransaction) {
         data.pushURL = data.pushURL || this.getConfig().pushURL
 
-        return this.post(this.getTransactionUrl(),data).then((res)=>{
+        return this.post(this.getTransactionUrl(), data).then((res) => {
             return new TransactionResponse(res)
         })
     }
-    dataRequest(data:ITransaction) {
-        return this.post(this.getDataRequestUrl(), data).then((res)=>{
+    dataRequest(data: ITransaction) {
+        return this.post(this.getDataRequestUrl(), data).then((res) => {
             return new TransactionResponse(res)
         })
     }
@@ -107,7 +107,7 @@ export class Client  {
         paymentMethods: PaymentMethod[] | { paymentName: string; serviceVersion: number }[],
         type: RequestType = RequestType.Transaction
     ) {
-        let data  =  {
+        let data = {
             Services: paymentMethods.map((paymentMethod) => {
                 return {
                     Name: paymentMethod.paymentName,

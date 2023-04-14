@@ -6,7 +6,7 @@ export interface IPay extends Payload {
     clientIP: string | IPAddress
     billingCustomer: AfterPayCustomer
     shippingCustomer?: AfterPayCustomer
-    articles: { article:IAfterPayArticle }[]
+    articles: { article: IAfterPayArticle }[]
     bankAccount?: string
     bankCode?: string
     merchantImageUrl?: string

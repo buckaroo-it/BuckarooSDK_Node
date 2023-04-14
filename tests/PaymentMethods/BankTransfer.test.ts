@@ -1,5 +1,5 @@
 import BankTransfer from '../../src/PaymentMethods/BankTransfer'
-import Gender from "../../src/Constants/Gender";
+import Gender from '../../src/Constants/Gender'
 
 require('../BuckarooClient.test')
 
@@ -15,14 +15,14 @@ describe('Transfer methods', () => {
         await method
             .pay({
                 amountDebit: 10,
-                customerCountry: "NL",
-                customerEmail: "test@hotmail.com",
-                customerFirstName: "test",
+                customerCountry: 'NL',
+                customerEmail: 'test@hotmail.com',
+                customerFirstName: 'test',
                 customerGender: Gender.FEMALE,
-                customerLastName: "Test",
-                description: "Test without payment method with ServicesSelectableByClient",
-                continueOnIncomplete:true,
-                servicesSelectableByClient:'ideal,creditcard',
+                customerLastName: 'Test',
+                description: 'Test without payment method with ServicesSelectableByClient',
+                continueOnIncomplete: true,
+                servicesSelectableByClient: 'ideal,creditcard'
             })
             .then((res) => {
                 expect(res.isAwaitingConsumer()).toBeDefined()

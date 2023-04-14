@@ -6,6 +6,7 @@ import { IAfterPayArticle } from './Model/Article'
 export default class Afterpay extends PayablePaymentMethod {
     protected _paymentName = 'afterpay'
     protected _serviceVersion = 1
+
     pay(payload: IPay) {
         if (payload.billingCustomer) {
             payload.shippingCustomer = payload.shippingCustomer || { ...payload.billingCustomer }

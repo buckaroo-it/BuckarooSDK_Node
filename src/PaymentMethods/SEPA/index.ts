@@ -8,6 +8,7 @@ import { uniqid } from '../../Utils/Functions'
 export default class SEPA extends PayablePaymentMethod {
     protected _paymentName = 'SepaDirectDebit'
     protected _serviceVersion = 1
+
     pay(payload: IPay) {
         return super.pay(payload)
     }

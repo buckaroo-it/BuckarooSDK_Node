@@ -5,7 +5,7 @@ import PaymentMethod from '../PaymentMethod'
 export default class Subscriptions extends PaymentMethod {
     protected _paymentName = 'Subscriptions'
     protected _requiredFields: Array<keyof IConfig> = ['currency']
-    combinable: boolean = true
+
     _serviceVersion = 1
     create(payload: ISubscription): Promise<any> {
         this.action = 'CreateSubscription'

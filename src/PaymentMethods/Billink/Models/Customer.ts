@@ -1,5 +1,5 @@
 type Salutation = 'Male' | 'Female' | 'Unknown'
-export type Customer  = {
+export type Customer = {
     chamberOfCommerce: string
     initials: string
     salutation?: Salutation

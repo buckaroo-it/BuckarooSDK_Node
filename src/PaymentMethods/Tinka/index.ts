@@ -6,7 +6,7 @@ export default class Tinka extends PayablePaymentMethod {
     protected _paymentName = 'tinka'
     _serviceVersion = 1
     pay(payload: IPay) {
-        if (payload.billingCustomer){
+        if (payload.billingCustomer) {
             // @ts-ignore
             payload.shippingCustomer = payload.shippingCustomer || payload.billingCustomer
         }

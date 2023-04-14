@@ -11,32 +11,34 @@ test('Create', async () => {
         .create({
             ratePlan: {
                 update: {
-                    startDate: "2024-07-23",
-                    ratePlanGuid:'',
+                    startDate: '2024-07-23',
+                    ratePlanGuid: ''
                 }
             },
             ratePlanCharge: {
                 add: {
-                    ratePlanChargeCode: "test"
+                    ratePlanChargeCode: 'test'
                 }
             },
-            configurationCode: "gfyh9fe4",
+            configurationCode: 'gfyh9fe4',
             addConfiguration: {
-                name: "owiejr"
+                name: 'owiejr'
             },
             debtor: {
-                code: "johnsmith4"
-            },
-        }).catch((e) => {
-           expect(e.response.data).toBeDefined()
-        }).catch((e) => {
+                code: 'johnsmith4'
+            }
+        })
+        .catch((e) => {
+            expect(e.response.data).toBeDefined()
+        })
+        .catch((e) => {
             expect(e.response.data).toBeDefined()
         })
 })
 test('Update', async () => {
     subscription
         .update({
-            email: {email:'test@buckaroo.nl'},
+            email: { email: 'test@buckaroo.nl' },
             subscriptionGuid: 'FC512FC9CC3A485D8CF3D1804FF6xxxx',
             configurationCode: '9wqe32ew',
             ratePlan: {
@@ -66,7 +68,7 @@ test('Combined Subscription', async () => {
         customerBIC: '',
         customerIBAN: '',
         debtor: { code: '' },
-        email: {email:''},
+        email: { email: '' },
         includeTransaction: false,
         mandateReference: '',
         person: undefined,
@@ -87,7 +89,7 @@ test('Combined Subscription', async () => {
             startRecurrent: true
         })
         .then((res) => {
-          expect(res).toBeDefined()
+            expect(res).toBeDefined()
         })
 })
 
@@ -119,11 +121,13 @@ test('Subscription Info', async () => {
     expect(info).toBeDefined()
 })
 test('Delete Subscription Config', async () => {
-    await subscription.deletePaymentConfig({
-        subscriptionGuid: '515461997AD34C50881D74157E38A64D'
-    }).then((res)=>{
-        expect(res.status===200).toBeTruthy()
-    })
+    await subscription
+        .deletePaymentConfig({
+            subscriptionGuid: '515461997AD34C50881D74157E38A64D'
+        })
+        .then((res) => {
+            expect(res.status === 200).toBeTruthy()
+        })
 })
 test('Subscription Pause', async () => {
     const pause = await subscription.pause({

@@ -12,14 +12,12 @@ describe('Testing Credit Management', () => {
     test('CreateInvoice', async () => {
         await creditManagement.createInvoice(invoice()).then((data) => {
             expect(data).toBeDefined()
-            
         })
     })
 
     test('Pause Invoice', async () => {
         await creditManagement.pauseInvoice({ invoice: 'd42' }).then((data) => {
             expect(data).toBeDefined()
-            
         })
     })
     test('Debtor Info', async () => {
@@ -31,7 +29,6 @@ describe('Testing Credit Management', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                
             })
     })
     test('Invoice Info', async () => {
@@ -49,7 +46,6 @@ describe('Testing Credit Management', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                
             })
     })
     test('UnPause Invoice', async () => {
@@ -102,7 +98,6 @@ describe('Testing Credit Management', () => {
             })
             .then((data) => {
                 expect(data).toBeDefined()
-                
             })
     })
     test('Specifications', async () => {

@@ -1,4 +1,3 @@
-
 export enum ArticleType {
     Unknown = 0,
     Article = 1,
@@ -7,7 +6,7 @@ export enum ArticleType {
 }
 
 export type ITinkaArticle = {
-    type?:ArticleType
+    type?: ArticleType
     quantity: number
     unitCode: string
     description: string

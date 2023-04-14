@@ -47,7 +47,7 @@ export class Hmac {
         }
         return base64Data
     }
-    hashData(hashString:string) {
+    hashData(hashString: string) {
         return Base64.stringify(hmacSHA256(hashString, buckarooClient().getCredentials().secretKey))
     }
     getHashString() {

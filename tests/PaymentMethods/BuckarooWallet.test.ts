@@ -64,9 +64,9 @@ describe('BuckarooWallet methods', () => {
     test('Create Wallet', async () => {
         await method
             .create({
-                invoice: "",
-                pushURL: "",
-                walletId: ""
+                invoice: '',
+                pushURL: '',
+                walletId: ''
             })
             .then((data) => {
                 expect(data).toBeDefined()

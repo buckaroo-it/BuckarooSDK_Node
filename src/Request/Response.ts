@@ -22,15 +22,9 @@ export class Response implements AxiosResponse {
         this.headers = response.headers
         this._data = response.data
     }
-    static validate(authorizationHeader:string,method: string, url: string, data?: object) {
+    static validate(authorizationHeader: string, method: string, url: string, data?: object) {
         let authorization = authorizationHeader.split(':')
-        let hmac = new Hmac(
-            method,
-            url,
-            data,
-            authorization[2],
-            authorization[3]
-        )
+        let hmac = new Hmac(method, url, data, authorization[2], authorization[3])
         let hash = hmac.hashData(hmac.getHashString())
         return hash === authorization[1]
     }

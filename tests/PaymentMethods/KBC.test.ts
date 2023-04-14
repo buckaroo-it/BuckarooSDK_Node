@@ -10,7 +10,6 @@ describe('Testing KBC methods', () => {
                 amountDebit: 10
             })
             .then((response) => {
-                
                 expect(response).not.toBeNull()
             })
     })
@@ -21,7 +20,6 @@ describe('Testing KBC methods', () => {
                 originalTransactionKey: 'B5675356904444F3965C33D280591C74'
             })
             .then((response) => {
-                
                 expect(response).not.toBeNull()
             })
     })

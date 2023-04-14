@@ -1,7 +1,7 @@
 require('../BuckarooClient.test')
 import WechatPay from '../../src/PaymentMethods/WeChatPay/index'
 
-const method = WechatPay()
+const method = new WechatPay()
 
 describe('WechatPay', () => {
     test('Pay', async () => {

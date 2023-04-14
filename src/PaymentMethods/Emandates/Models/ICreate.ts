@@ -1,4 +1,4 @@
-import {ITransaction} from "../../../Models/ITransaction";
+import { ITransaction } from '../../../Models/ITransaction'
 
 interface Create extends ITransaction {
     debtorReference: string
@@ -9,4 +9,5 @@ interface Create extends ITransaction {
     emandateReason?: string
     maxAmount?: number
 }
-export type ICreate = Create & ({ debtorBankId: string } | Required<Pick<ITransaction,'continueOnIncomplete'>>)
+export type ICreate = Create &
+    ({ debtorBankId: string } | Required<Pick<ITransaction, 'continueOnIncomplete'>>)

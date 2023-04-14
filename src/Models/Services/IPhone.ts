@@ -1,3 +1,4 @@
+
 type IPhone = {
     landline: string
     mobile: string

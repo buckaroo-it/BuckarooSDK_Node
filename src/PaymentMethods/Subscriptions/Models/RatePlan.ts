@@ -33,7 +33,6 @@ type add = {
 
 export type IRatePlan = add | update | disable
 
-
 type addCharge = {
     add: {
         ratePlanChargeCode?: string
