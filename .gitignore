@@ -1,2 +1,12 @@
-
+node_modules/
+dist/
+*.log
+*.env
+.DS_Store
+*.lock
+*.cache
+package-lock.json
+*.js
+*.map
+*.d.ts
 .idea/

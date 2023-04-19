@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "lib": ["ES2021", "dom"],
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": false /* Skip type checking of declaration files. */,
+        "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */,
+        "declaration": true,
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "experimentalDecorators": true,
+        "moduleResolution": "node",
+        "noImplicitAny": false,
+        "typeRoots": ["./node_modules/@types"],
+        "resolveJsonModule": true,
+    },
+    "include": ["src/**/*.ts"],
+}
