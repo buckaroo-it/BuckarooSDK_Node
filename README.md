@@ -1,22 +1,25 @@
 
-<img src = "https://user-images.githubusercontent.com/105772190/233062838-c5151282-98b1-48f2-91d5-d2bea07e0032.png" width="250px">
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/105488705/233078855-473c45d4-34a6-492a-a5af-05752c803f6b.png" width="200px" position="center">
+</p>
 
-# BuckarooSDK_JavaScript
+# Node SDK
+[![Latest release](https://badgen.net/github/release/buckaroo-it/BuckarooSDK_Node)](https://github.com/buckaroo-it/BuckarooSDK_Node/releases)
 
-
-Repository containing the JavaScript SDK by Buckaroo
-
-## Installation
-
-```bash
-npm install @buckaroo/buckaroo_sdk
-```
+---
+### Index
+- [About](#about)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Example](#example)
+- [Contribute](#contribute)
+- [Versioning](#versioning)
+- [Additional information](#additional-information)
+---
 
 ### About
 
-Buckaroo is the Payment Service Provider for all your online payments with more than 15,000 companies relying on Buckaroo's platform to securely process their payments, subscriptions and unpaid invoices.
-
-Start accepting payments today with Buckaroo.
+Buckaroo is the the Payment Service Provider for all your online payments with more than 15,000 companies relying on Buckaroo's platform to securely process their payments, subscriptions and unpaid invoices. Buckaroo developed their own Node SDK. The SDK is a modern, open-source Node.js library that makes it easy to integrate your Javascript application with Buckaroo's services. Start accepting payments today with Buckaroo.
 
 ### Requirements
 
@@ -24,11 +27,16 @@ To use the Buckaroo API client, the following things are required:
 
 -   A Buckaroo account ([Dutch](https://www.buckaroo.nl/start) or [English](https://www.buckaroo.eu/solutions/request-form))
 -   Node.js >= 10.0.0
--   Your website key and secret key
+
+### Installation
+
+```bash
+npm install @buckaroo/buckaroo_sdk
+```
 
 ### Example
 
-Initiate the buckaroo client with your website key and secret key.
+Initiate the buckaroo client with your website key and secret key. The keys can be retrieved from your [Buckaroo account](https://plaza.buckaroo.nl/Login).
 
 ```javascript
 import { initializeBuckarooClient } from './BuckarooClient'
@@ -59,7 +67,7 @@ buckarooClient().refundInfo(transactionKey) // Retrieve refund info
 buckarooClient().cancelInfo(transactionKey) // Retrieve cancellation info
 ```
 
-Find our full documentation online on [dev.buckaroo.nl](https://dev.buckaroo.nl/).
+Find our full documentation online on [docs.buckaroo.io](https://docs.buckaroo.io/docs/node-sdk).
 
 ### Contribute
 
