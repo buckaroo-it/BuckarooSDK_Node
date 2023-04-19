@@ -69,6 +69,9 @@ buckarooClient().cancelInfo(transactionKey) // Retrieve cancellation info
 
 Find our full documentation online on [docs.buckaroo.io](https://docs.buckaroo.io/docs/node-sdk).
 
+#### Need more examples?
+More examples can be found in the [examples folder](https://github.com/buckaroo-it/BuckarooSDK_Node/tree/master/example)
+
 ### Contribute
 
 We really appreciate it when developers contribute to improve the Buckaroo plugins.
