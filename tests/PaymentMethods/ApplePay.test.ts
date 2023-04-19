@@ -4,18 +4,18 @@ import ApplePay from '../../src/PaymentMethods/ApplePay/index'
 const method = new ApplePay()
 
 describe('Applepay methods', () => {
-    // test('Pay Simple Payload', async () => {
-    //     await method
-    //         .pay({
-    //             amountDebit: 10,
-    //             paymentData: 'sad',
-    //             customerCardName: '87y7y8'
-    //         })
-    //         .then((data) => {
-    //             expect(data).toBeDefined()
-    //
-    //         })
-    // })
+    test('Pay Simple Payload', async () => {
+        await method
+            .pay({
+                amountDebit: 10,
+                paymentData: 'sad',
+                customerCardName: '87y7y8'
+            })
+            .then((data) => {
+                expect(data).toBeDefined()
+
+            })
+    })
     test('Refund', async () => {
         await method
             .refund({

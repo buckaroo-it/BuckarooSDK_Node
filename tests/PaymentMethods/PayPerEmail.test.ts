@@ -15,7 +15,7 @@ describe('PayPerEmail methods', () => {
                 attachment: '',
                 additionalParameters: undefined,
                 clientIP: undefined,
-                continueOnIncomplete: '',
+                continueOnIncomplete: 1,
                 culture: '',
                 customParameters: undefined,
                 customerEmail: '',

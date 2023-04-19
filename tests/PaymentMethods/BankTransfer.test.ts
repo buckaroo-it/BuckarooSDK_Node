@@ -21,7 +21,7 @@ describe('Transfer methods', () => {
                 customerGender: Gender.FEMALE,
                 customerLastName: 'Test',
                 description: 'Test without payment method with ServicesSelectableByClient',
-                continueOnIncomplete: true,
+                continueOnIncomplete: 1,
                 servicesSelectableByClient: 'ideal,creditcard'
             })
             .then((res) => {

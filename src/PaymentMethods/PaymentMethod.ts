@@ -34,7 +34,7 @@ export default abstract class PaymentMethod {
         })
     }
 
-    public setRequest(data: ServiceParameters) {
+    public setRequest(data: ITransaction  | (ITransaction & ServiceParameters) ) {
         this._request.setBasicParameters(data)
 
         this.setRequiredFields()
@@ -60,12 +60,12 @@ export default abstract class PaymentMethod {
                 this._request.data[requiredField] = buckarooClient().getConfig()[requiredField]
         }
     }
-    protected transactionRequest(requestData: ITransaction) {
+    protected transactionRequest(requestData: ITransaction | (ITransaction & ServiceParameters)  ){
         this.setRequest(requestData)
 
         return buckarooClient().transactionRequest(this._request.data)
     }
-    protected dataRequest(requestData: ITransaction = {}) {
+    protected dataRequest(requestData: ITransaction | (ITransaction & ServiceParameters) = {}) {
         this.setRequest(requestData)
 
         return buckarooClient().dataRequest(this._request.data)

@@ -5,7 +5,7 @@ Repository containing the Node.js SDK by Buckaroo
 ## Installation
 
 ```bash
-npm install buckaroo-sdk-nodejs
+npm install @buckaroo/buckaroo_sdk
 ```
 
 ### About

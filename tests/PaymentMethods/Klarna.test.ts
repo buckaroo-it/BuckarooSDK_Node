@@ -43,7 +43,6 @@ let payload: IPay = {
         streetNumberAdditional: ''
     },
     clientIP: undefined,
-    continueOnIncomplete: '',
     culture: '',
     currency: '',
     customParameters: undefined,

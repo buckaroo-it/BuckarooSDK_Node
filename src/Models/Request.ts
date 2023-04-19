@@ -13,7 +13,7 @@ export class Request {
     public setRequestDataKey(key: string, data: any) {
         this._data[key] = data
     }
-    public filter(data: ServiceParameters) {
+    public filter(data: ITransaction  | (ITransaction & ServiceParameters)) {
         return Object.keys(data)
             .filter((key) => this._data[key] === undefined && data[key] !== undefined)
             .reduce((obj: ServiceParameters, key) => {

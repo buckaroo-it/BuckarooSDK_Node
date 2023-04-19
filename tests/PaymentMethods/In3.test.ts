@@ -49,8 +49,6 @@ describe('Testing In3 methods', () => {
                         name: 'Blue Toy Car'
                     }
                 ],
-                name: 'Verzendkosten',
-                value: 1
             })
             .then((response) => {
                 expect(response.data).toBeDefined()

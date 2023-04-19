@@ -1,6 +1,6 @@
-import { AdditionalParameter, IPAddress, ServiceParameters } from '../Utils/Types'
+import { AdditionalParameter, IPAddress } from '../Utils/Types'
 
-export declare interface ITransaction extends ServiceParameters {
+export declare interface ITransaction {
     clientIP?: string | IPAddress
     currency?: string
     returnURL?: string
