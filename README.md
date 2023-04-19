@@ -1,6 +1,10 @@
-# BuckarooSDK_NodeJS
 
-Repository containing the Node.js SDK by Buckaroo
+<img src = "https://user-images.githubusercontent.com/105772190/233062838-c5151282-98b1-48f2-91d5-d2bea07e0032.png" width="250px">
+
+# BuckarooSDK_JavaScript
+
+
+Repository containing the JavaScript SDK by Buckaroo
 
 ## Installation
 
