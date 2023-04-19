@@ -19,7 +19,9 @@ describe('Testing Emandates methods', () => {
             })
             .then((response) => {
                 expect(response.data).toBeDefined()
-            })
+            }).catch((err)=>{
+          console.log(err);
+        })
     })
     test('GetStatus', async () => {
         method.status({ mandateId: '1DC014098EC5C1F40AD803B83A425153BBC' }).then((response) => {

@@ -1,5 +1,5 @@
 {
-    "name": "buckaroo_sdk_node_js",
+    "name": "@buckaroo/buckaroo_sdk",
     "version": "1.0.0",
     "description": "Buckaroo payment SDK",
     "main": "dist/BuckarooClient.js",
@@ -16,7 +16,9 @@
         "buckaroo",
         "sdk",
         "javascript",
-        "node"
+        "node",
+        "payments",
+        "api"
     ],
     "author": "Rinor Haziri",
     "license": "ISC",
@@ -42,5 +44,8 @@
     "bugs": {
         "url": "https://github.com/buckaroo-it/BuckarooSDK_NodeJS/issues"
     },
-    "homepage": "https://github.com/buckaroo-it/BuckarooSDK_NodeJS#readme"
+    "homepage": "https://github.com/buckaroo-it/BuckarooSDK_NodeJS#readme",
+    "files": [
+        "dist/**/*"
+    ]
 }

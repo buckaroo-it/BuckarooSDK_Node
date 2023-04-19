@@ -22,7 +22,7 @@ export default class Subscriptions extends PaymentMethod {
     }
     updateCombined(payload: ISubscription) {
         this.action = 'UpdateCombinedSubscription'
-        this.request.data.startRecurrent = true
+        this._request.data.startRecurrent = true
         this.setRequest(payload)
         return this
     }

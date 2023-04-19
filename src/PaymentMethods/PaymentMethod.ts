@@ -8,10 +8,13 @@ export default abstract class PaymentMethod {
     protected readonly _requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
     protected _paymentName = ''
     protected _serviceVersion = 0
-    protected request: TransactionRequest = new TransactionRequest()
+    protected _request: TransactionRequest = new TransactionRequest()
     private _action = ''
     get paymentName(): string {
         return this._paymentName
+    }
+    get request(): ITransaction {
+        return this._request.data
     }
     protected set paymentName(value: string) {
         this._paymentName = value
@@ -25,13 +28,18 @@ export default abstract class PaymentMethod {
     protected set action(value: string) {
         this._action = value
     }
+    public setRequestAction(action:string) {
+        this._request.services?.ServiceList.forEach((service) => {
+            service.Action = action
+        })
+    }
 
-    public setRequest(data: { [key: string]: any }) {
-        this.request.setBasicParameters(data)
+    public setRequest(data: ServiceParameters) {
+        this._request.setBasicParameters(data)
 
         this.setRequiredFields()
 
-        this.setServiceParameters(this.request.filter(data))
+        this.setServiceParameters(this._request.filter(data))
     }
 
     protected setServiceParameters(serviceParameters: ServiceParameters) {
@@ -41,36 +49,36 @@ export default abstract class PaymentMethod {
             Version: this.serviceVersion
         }
         if (Object.keys(serviceParameters).length > 0) {
-            serviceList.Parameters = this.request.formatServiceParameters(serviceParameters)
+            serviceList.Parameters = this._request.formatServiceParameters(serviceParameters)
         }
-        this.request.addServices(serviceList)
+        this._request.addServices(serviceList)
     }
 
     protected setRequiredFields() {
         for (const requiredField of this._requiredFields) {
-            if (!this.request.data[requiredField])
-                this.request.data[requiredField] = buckarooClient().getConfig()[requiredField]
+            if (!this._request.data[requiredField])
+                this._request.data[requiredField] = buckarooClient().getConfig()[requiredField]
         }
     }
-    protected transactionRequest(requestData: object) {
+    protected transactionRequest(requestData: ITransaction) {
         this.setRequest(requestData)
 
-        return buckarooClient().transactionRequest(this.request.data)
+        return buckarooClient().transactionRequest(this._request.data)
     }
     protected dataRequest(requestData: ITransaction = {}) {
         this.setRequest(requestData)
 
-        return buckarooClient().dataRequest(this.request.data)
+        return buckarooClient().dataRequest(this._request.data)
     }
     public combine(method: PaymentMethod) {
-        if (Object.keys(method.request.data).length > 0) {
-            let services = this.request.services
-            if (services && method.request.services) {
-                method.request.services.ServiceList = services.ServiceList.concat(
-                    method.request.services.ServiceList
+        if (Object.keys(method._request.data).length > 0) {
+            let services = this._request.services
+            if (services && method._request.services) {
+                method._request.services.ServiceList = services.ServiceList.concat(
+                    method._request.services.ServiceList
                 )
             }
-            Object.assign(this.request.data, method.request.data)
+            Object.assign(this._request.data, method._request.data)
         }
         return this
     }
