@@ -6,6 +6,10 @@
 # Node SDK
 [![Latest release](https://badgen.net/github/release/buckaroo-it/BuckarooSDK_Node)](https://github.com/buckaroo-it/BuckarooSDK_Node/releases)
 
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/7081446/233298897-30274cc8-86cc-4e6f-8200-759c801af19e.png" width="500px" position="center">
+</p>
+
 ---
 ### Index
 - [About](#about)
