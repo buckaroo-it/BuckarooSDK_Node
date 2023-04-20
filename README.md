@@ -30,7 +30,7 @@ Buckaroo is the the Payment Service Provider for all your online payments with m
 To use the Buckaroo API client, the following things are required:
 
 -   A Buckaroo account ([Dutch](https://www.buckaroo.nl/start) or [English](https://www.buckaroo.eu/solutions/request-form))
--   Node.js >= 10.0.0
+-   Node.js 6.14.× or greater
 
 ### Installation
 
