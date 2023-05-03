@@ -47,4 +47,12 @@ describe('testing Ideal methods', () => {
                 expect(data).toBeDefined()
             })
     })
+    test('InstantRefund', async () => {
+        await ideal.instantRefund({
+            amountCredit: 4.23,
+            originalTransactionKey: '97DC0A03BBDF4DAAAC694D7FEC8785E1',
+        }).then((data) => {
+            expect(data).toBeDefined()
+        })
+    })
 })
