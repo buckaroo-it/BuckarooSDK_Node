@@ -5,15 +5,23 @@ import { IExtraInfo } from './Models/ExtraInfo'
 import { IEmandate } from './Models/Emandate'
 import { uniqid } from '../../Utils/Functions'
 
+const enum SepaServiceCodes {
+    sepaDirectDebit = 'sepadirectdebit',
+    sepaDirectDebitB2B = 'sepadirectdebitb2b'
+}
 export default class SEPA extends PayablePaymentMethod {
 
-    protected _paymentName = 'sepadirectdebit'
+    protected _paymentName = SepaServiceCodes.sepaDirectDebit
     protected _serviceVersion = 1
-    protected _serviceCodes:Array<string> = ['sepadirectdebit','sepadirectdebitb2b']
 
-    constructor(type:'btc'|'b2b' = 'btc') {
+    constructor(type?:keyof typeof SepaServiceCodes) {
         super();
-        this._paymentName = type === 'b2b' ? 'sepadirectdebitb2b' : 'sepadirectdebit'
+
+        switch (type) {
+            case 'sepaDirectDebitB2B':
+                this._paymentName = SepaServiceCodes.sepaDirectDebitB2B
+                break;
+        }
     }
 
     pay(payload: IPay) {

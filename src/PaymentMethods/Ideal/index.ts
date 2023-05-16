@@ -2,10 +2,22 @@ import { IPay } from './Models/Pay'
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { RefundPayload } from '../../Models/ITransaction'
 
+const enum IdealServiceCodes {
+    ideal = 'ideal',
+    idealProcessing = 'idealprocessing'
+}
 export default class Ideal extends PayablePaymentMethod {
     protected _paymentName = 'ideal'
     protected _serviceVersion = 2
+    constructor(type?: keyof typeof IdealServiceCodes) {
+        super();
 
+        switch (type) {
+            case 'idealProcessing':
+                this._paymentName = IdealServiceCodes.idealProcessing
+                break;
+        }
+    }
     pay(payload: IPay) {
         return super.pay(payload)
     }

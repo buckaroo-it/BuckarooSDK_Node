@@ -1,7 +1,7 @@
 require('../BuckarooClient.test')
 import SEPA from '../../src/PaymentMethods/SEPA'
 
-const sepab2b = new SEPA('b2b')
+const sepab2b = new SEPA('sepaDirectDebitB2B')
 describe('SEPA', () => {
     test('Pay', async () => {
         await sepab2b
