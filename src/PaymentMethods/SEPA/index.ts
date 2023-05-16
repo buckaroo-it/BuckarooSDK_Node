@@ -6,8 +6,15 @@ import { IEmandate } from './Models/Emandate'
 import { uniqid } from '../../Utils/Functions'
 
 export default class SEPA extends PayablePaymentMethod {
-    protected _paymentName = 'SepaDirectDebit'
+
+    protected _paymentName = 'sepadirectdebit'
     protected _serviceVersion = 1
+    protected _serviceCodes:Array<string> = ['sepadirectdebit','sepadirectdebitb2b']
+
+    constructor(type:'btc'|'b2b' = 'btc') {
+        super();
+        this._paymentName = type === 'b2b' ? 'sepadirectdebitb2b' : 'sepadirectdebit'
+    }
 
     pay(payload: IPay) {
         return super.pay(payload)

@@ -6,7 +6,7 @@ export default initializeBuckarooClient(
         websiteKey: process.env.BPE_WEBSITE_KEY || ''
     },
     {
-        mode: process.env.BPE_MODE === 'live' ? 'live' : 'test',
+        mode: 'test',
         currency: process.env.BPE_CURRENCY_CODE || 'EUR',
         returnURL: process.env.BPE_RETURN_URL || '',
         returnURLCancel: process.env.BPE_RETURN_URL_CANCEL || '',
