@@ -7,4 +7,8 @@ export default class Payconiq extends PayablePaymentMethod {
     refund(payload: RefundPayload) {
         return super.refund(payload)
     }
+    instantRefund(payload: RefundPayload){
+        this.action = 'InstantRefund'
+        return super.refund(payload)
+    }
 }

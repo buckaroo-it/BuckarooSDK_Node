@@ -22,4 +22,8 @@ export default class Ideal extends PayablePaymentMethod {
                 })
         })
     }
+    instantRefund(payload: RefundPayload){
+        this.action = 'InstantRefund'
+        return super.refund(payload)
+    }
 }

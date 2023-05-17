@@ -1,5 +1,5 @@
 require('../BuckarooClient.test')
-import Sofort from '../../src/PaymentMethods/Sofort/index'
+import Sofort from '../../src/PaymentMethods/Sofort'
 const method = new Sofort()
 
 describe('Sofort', () => {
@@ -22,5 +22,14 @@ describe('Sofort', () => {
             .then((info) => {
                 expect(info).toBeDefined()
             })
+    })
+
+    test('InstantRefund', async () => {
+        await method.instantRefund({
+            amountCredit: 4.23,
+            originalTransactionKey: '97DC0A03BBDF4DAAAC694D7FEC8785E1',
+        }).then((data) => {
+            expect(data).toBeDefined()
+        })
     })
 })
