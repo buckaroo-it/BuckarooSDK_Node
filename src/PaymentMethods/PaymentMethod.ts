@@ -1,4 +1,4 @@
-import { TransactionRequest } from '../Models/Request'
+import { Request } from '../Models/Request'
 import { IConfig, ServiceParameters } from '../Utils/Types'
 import { RequestType } from '../Constants/Endpoints'
 import { ITransaction } from '../Models/ITransaction'
@@ -8,7 +8,7 @@ export default abstract class PaymentMethod {
     protected readonly _requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
     protected _paymentName = ''
     protected _serviceVersion = 0
-    protected _request: TransactionRequest = new TransactionRequest()
+    protected _request: Request = new Request()
     private _action = ''
     get paymentName(): string {
         return this._paymentName

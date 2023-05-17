@@ -2,113 +2,58 @@ import { ITransaction } from './ITransaction'
 import { IServiceList, IServices } from './ServiceList'
 import { IParameter } from './Parameters'
 import { firstUpperCase } from '../Utils/Functions'
-import { AdditionalParameter, ServiceParameters } from '../Utils/Types'
+import {AdditionalParameter, ServiceParameters} from '../Utils/Types'
 import { IPProtocolVersion } from '../Constants/IPProtocolVersion'
 
 export class Request {
-    protected _data: { [key: string]: any } = {}
-    get data(): object {
-        return this._data
-    }
-    public setRequestDataKey(key: string, data: any) {
-        this._data[key] = data
-    }
-    public filter(data: ITransaction  | (ITransaction & ServiceParameters)) {
-        return Object.keys(data)
-            .filter((key) => this._data[key] === undefined && data[key] !== undefined)
-            .reduce((obj: ServiceParameters, key) => {
-                obj[key] = data[key]
-                return obj
-            }, {})
-    }
-}
+    private readonly _data: ITransaction
 
-export class TransactionRequest extends Request {
+    constructor(data:ITransaction) {
+        this._data = data
+    }
     get data(): ITransaction {
         return this._data
     }
-    public get services(): IServices | undefined {
-        return this._data['services']
-    }
-    public set services(services: IServices | undefined) {
-        this._data['services'] = services
-    }
-    public setServices(services: IServiceList) {
-        this.services = { ServiceList: [services] }
-    }
-    public addServices(serviceList: IServiceList) {
-        if (this.services) {
-            this.services.ServiceList.push(serviceList)
-        } else {
-            this.setServices(serviceList)
+    getFormattedData():object {
+        let data:any = {}
+        if (this._data.additionalParameters) {
+            data.additionalParameters = this.formatAdditionalParameters()
         }
+        if (this._data.customParameters) {
+            data.customParameters = this.formatCustomParameters()
+        }
+        if (this._data.clientIP) {
+            data.clientIP = this.formatClientIp()
+        }
+        return data
     }
-
     formatAdditionalParameters() {
-        if (this.data.additionalParameters) {
-            this.setRequestDataKey('additionalParameters', {
-                additionalParameter: this.formatParametersMap(this.data.additionalParameters)
-            })
+         return  {
+            additionalParameter: this.formatParametersMap(this._data.additionalParameters)
         }
     }
     formatCustomParameters() {
-        if (this.data.customParameters) {
-            this.setRequestDataKey('customParameters', {
-                list: this.formatParametersMap(this.data.customParameters)
-            })
+        return {
+            list: this.formatParametersMap(this._data.customParameters)
         }
     }
-    protected formatParametersMap(value: AdditionalParameter): IParameter[] {
+    public formatClientIp() {
+        let ip = this._data.clientIP
+        if (typeof ip === 'string') {
+            ip = {
+                type: IPProtocolVersion.getVersion(ip),
+                address: ip
+            }
+        }
+        return ip
+    }
+    protected formatParametersMap(value: AdditionalParameter = {}): IParameter[] {
         return Object.keys(value).map((key, value) => {
             return {
                 Name: key,
                 Value: value || ''
             }
         })
-    }
-    public basicParameters: Record<keyof ITransaction, boolean> = {
-        clientIP: true,
-        currency: true,
-        returnURL: true,
-        returnURLError: true,
-        returnURLCancel: true,
-        returnURLReject: true,
-        pushURL: true,
-        pushURLFailure: true,
-        invoice: true,
-        order: true,
-        amountDebit: true,
-        amountCredit: true,
-        description: true,
-        originalTransactionKey: true,
-        originalTransactionReference: true,
-        culture: true,
-        startRecurrent: true,
-        continueOnIncomplete: true,
-        servicesSelectableByClient: true,
-        servicesExcludedForClient: true,
-        customParameters: true,
-        additionalParameters: true
-    }
-    public setBasicParameters(data: ITransaction) {
-        for (const key in data) {
-            if (this.basicParameters[key]) {
-                this._data[key] = data[key]
-            }
-        }
-        this.formatAdditionalParameters()
-        this.formatCustomParameters()
-        this.setClientIp()
-    }
-
-    public setClientIp() {
-        let ip = this.data.clientIP
-        if (ip && typeof ip === 'string') {
-            this.setRequestDataKey('clientIP', {
-                type: IPProtocolVersion.getVersion(ip),
-                address: ip
-            })
-        }
     }
     public formatServiceParameters(
         data: ServiceParameters,

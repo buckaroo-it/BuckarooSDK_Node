@@ -1,6 +1,6 @@
 enum Endpoints {
-    LIVE = 'https://checkout.buckaroo.nl/',
-    TEST = 'https://testcheckout.buckaroo.nl/'
+    LIVE = 'checkout.buckaroo.nl',
+    TEST = 'testcheckout.buckaroo.nl'
 }
 enum RequestType {
     Data = 1,
