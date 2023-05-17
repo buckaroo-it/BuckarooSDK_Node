@@ -1,6 +1,6 @@
 export declare interface IConfig {
-    mode: 'live' | 'test'
-    currency: string
+    mode?: 'live' | 'test'
+    currency?: string
     returnURL: string
     returnURLCancel: string
     pushURL: string

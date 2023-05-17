@@ -1,6 +1,6 @@
 import { initializeBuckarooClient } from '../src/BuckarooClient'
 require('dotenv').config()
-export default initializeBuckarooClient(
+const buckarooClientTest = initializeBuckarooClient(
     {
         secretKey: process.env.BPE_SECRET_KEY || '',
         websiteKey: process.env.BPE_WEBSITE_KEY || ''
@@ -14,3 +14,5 @@ export default initializeBuckarooClient(
         baseUrl: process.env.BPE_BASE_URL || ''
     }
 )
+
+export default buckarooClientTest
