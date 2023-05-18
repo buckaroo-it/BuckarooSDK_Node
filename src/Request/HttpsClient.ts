@@ -1,53 +1,57 @@
 import {RequestOptions} from "https";
-import RequestHeaders from "./Headers";
+import httpMethods from "../Constants/HttpMethods";
+import Headers, {RequestHeaders} from "./Headers";
+import Endpoints from "../Constants/Endpoints";
 
 const https = require('https');
+
+export type HttpsRequestOptions = RequestOptions
+    & { method: httpMethods,hostname:string,timeout:number ,headers:RequestHeaders}
 
 export default class HttpsClient {
 
     private _client = https
-    private _headers:RequestHeaders = new RequestHeaders()
-    private _options:RequestOptions = {}
 
-
+    public options:HttpsRequestOptions
+    constructor(url:URL) {
+        this.options = {
+            method: httpMethods.METHOD_GET,
+            headers: new Headers().getHeaders(),
+            hostname: url.hostname,
+            timeout: 10000,
+        }
+    }
     get client(): any {
         return this._client;
     }
-
-    get headers(): RequestHeaders {
-        return this._headers;
-    }
-
-    get options():Omit<RequestOptions,'headers'> {
-        return this._options;
-    }
-
-    request(data:string = ''): Promise<any> {
-        this._options.headers = this._headers.getHeaders()
+    request(data:object): Promise<any> {
 
         return new Promise((resolve, reject) => {
-
-            const req = https.request(this._options, res => {
-
+            const req = this._client.request(this.options, res => {
                 let responseData:Array<any> = [];
+
                 res.on('data', chunk => {
                     responseData.push(chunk);
                 });
 
                 res.on('end', () => {
-                    let returnData = ''
                     try {
-                        returnData = JSON.parse(Buffer.concat(responseData).toString());
+                        resolve(JSON.parse(Buffer.concat(responseData).toString()));
                     } catch (e) {
                         reject(e);
                     }
-                    resolve(returnData);
                 });
             }).on('error', err => {
                 reject(err.message);
-            });
-            if(data){
-                req.write(data);
+            }).on('timeout', () => {
+                req.destroy();
+                reject(new Error('Request timeout'));
+            }).on('close', () => {
+                req.destroy();
+                reject(new Error('Request closed'));
+            })
+            if(Object.keys(data).length > 0){
+                req.write(JSON.stringify(data));
             }
             req.end();
         });

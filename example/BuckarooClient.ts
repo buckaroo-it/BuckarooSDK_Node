@@ -1,4 +1,4 @@
-import buckarooClient, { initializeBuckarooClient } from '../src/BuckarooClient'
+import buckarooClient, { initializeBuckarooClient } from '../src'
 
 initializeBuckarooClient(
     { secretKey: 'secretKey', websiteKey: 'websiteKey' },

@@ -8,13 +8,9 @@ import {Request} from "../src/Models/Request";
 describe('Testing Buckaroo Client', () => {
     test('transactionRequest', async () => {
 
-        const transactionRequest = new Request({
-            amountDebit: 100,
-            invoice: 'invoice',
-            currency: 'EUR',
-            description: 'description',
-            servicesSelectableByClient: 'ideal,afterpay',
-        })
+        const transactionRequest = new Request({})
+        buckarooClientTest.request('POST', buckarooClientTest.transactionRequestUrl(), transactionRequest.data)
+
         await buckarooClientTest.transactionRequest(transactionRequest.data)
             .then((data) => {
             expect(data).toBeDefined()

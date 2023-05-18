@@ -1,44 +1,62 @@
 import { Hmac } from './Hmac'
 import HttpMethods from "../Constants/HttpMethods";
-import {ICredentials} from "../Utils/Types";
-import {RequestOptions} from "https";
+import {BuckarooClient} from "./BuckarooClient";
 
-type requestHeaders = {
-    'Content-type': string
-    Accept: string
-    Culture: string
-    Authorization: string
-}
 
-export default class RequestHeaders {
-    private readonly headers:requestHeaders;
+export type RequestHeaders = {
+    'Content-type'?: string
+    Accept?: string
+    Culture?: string
+    Authorization?: string
+    Software?: string
+} & { [key: string]: string }
+
+export default class Headers {
+    private readonly _headers:RequestHeaders = this.getDefaultHeaders();
     constructor() {
-        this.headers = {
+        this.setSoftwareHeader()
+    }
+    getHeaders():RequestHeaders {
+        return this._headers
+    }
+    getDefaultHeaders() {
+        return  {
             'Content-type': 'application/json',
             Accept: 'application/json',
             Culture: 'nl-NL',
             Authorization: ''
         }
     }
-    getHeaders():requestHeaders {
-        return this.headers
+    setSoftwareHeader(value:  {
+        PlatformName?:string,
+        PlatformVersion?:string,
+        ModuleSupplier?:string,
+        ModuleName?:string,
+        ModuleVersion?:string
+    } = {}):this {
+
+        this._headers.Software = JSON.stringify({
+            PlatformName: 'Node SDK',
+            PlatformVersion: '1.0',
+            ModuleSupplier: 'Buckaroo',
+            ModuleName: 'BuckarooPayments',
+            ModuleVersion: '1.0',
+            ...value
+        })
+        return this;
     }
-    setHeaders(headers: requestHeaders) {
+    addHeaders(headers: RequestHeaders) {
         Object.keys(headers).forEach((key) => {
-            this.headers[key] = headers[key]
+            this._headers[key] = headers[key]
         })
     }
-    removeHeaders(headers: requestHeaders) {
+    removeHeaders(headers: RequestHeaders) {
         Object.keys(headers).forEach((key) => {
-            delete this.headers[key]
+            delete this._headers[key]
         })
     }
-    setAuthHeader(options: RequestOptions, data: string, credentials: ICredentials) {
-        let method = options.method == HttpMethods.METHOD_POST? HttpMethods.METHOD_POST : HttpMethods.METHOD_GET
-        let url = options.host || ''
-        if(options.path){
-            url += options.path
-        }
-        this.headers.Authorization = new Hmac(method, url, data).createHeader(credentials.websiteKey, credentials.secretKey)
+    setAuthHeader(hmacHeader:string):this {
+        this._headers.Authorization = hmacHeader
+        return this;
     }
 }

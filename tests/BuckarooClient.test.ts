@@ -1,4 +1,4 @@
-import { initializeBuckarooClient } from '../src/BuckarooClient'
+import { initializeBuckarooClient } from '../src'
 require('dotenv').config()
 const buckarooClientTest = initializeBuckarooClient(
     {

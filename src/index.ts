@@ -1,7 +1,6 @@
 import { IConfig, ICredentials } from './Utils/Types'
-import { Client } from './Request/Client'
+import { BuckarooClient } from './Request/BuckarooClient'
 
 export function initializeBuckarooClient(credentials: ICredentials, config: IConfig) {
-
-    return Client.initialize(credentials, config)
+    return BuckarooClient.initialize(credentials, config)
 }

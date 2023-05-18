@@ -1,10 +1,10 @@
 enum Endpoints {
-    LIVE = 'checkout.buckaroo.nl',
-    TEST = 'testcheckout.buckaroo.nl'
+    LIVE = 'https://checkout.buckaroo.nl',
+    TEST = 'https://testcheckout.buckaroo.nl'
 }
-enum RequestType {
-    Data = 1,
-    Transaction = 2
+enum RequestTypePaths {
+    Data = '/json/DataRequest',
+    Transaction = '/json/Transaction'
 }
-export { RequestType }
+export { RequestTypePaths }
 export default Endpoints

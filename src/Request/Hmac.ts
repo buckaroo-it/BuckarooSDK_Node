@@ -2,17 +2,18 @@ import md5 from 'crypto-js/md5'
 import hmacSHA256 from 'crypto-js/hmac-sha256'
 import Base64 from 'crypto-js/enc-base64'
 import HttpMethods from '../Constants/HttpMethods'
+import {ICredentials} from "../Utils/Types";
 
 export class Hmac {
     data: string | object
-    url: string
+    url: URL
     nonce: string
     time: string
     method: string
     constructor(
         method: HttpMethods,
-        url: string ,
-        data: string | object,
+        url: URL,
+        data: string | object = '',
         nonce?: string,
         time?: string
     ) {
@@ -30,19 +31,20 @@ export class Hmac {
             String(Math.round(Date.parse(time.toISOString()) / 1000)):
             String(Math.round(Date.now() / 1000))
     }
-    createHeader(websiteKey:string,secretKey:string) {
+    createHmacHeader(credentials: ICredentials):string {
         this.setNonce()
         this.setTime()
-        return this.getHmacHeader(websiteKey, secretKey)
+        return this.getHmacHeader(credentials.websiteKey, credentials.secretKey)
     }
     getUrlFormat() {
-        let urlFormatted: URL | string = new URL('https://'+this.url)
-        if (this.url) {
-            urlFormatted = urlFormatted.host + urlFormatted.pathname + urlFormatted.search
-            urlFormatted = this.url.replace(/^[^:/.]*[:/]+/i, '')
+        let urlFormatted =  ''
+        if (this.url instanceof URL) {
+            urlFormatted = this.url.host + this.url.pathname + this.url.search
+            urlFormatted = urlFormatted.replace(/^[^:/.]*[:/]+/i, '')
             urlFormatted = encodeURIComponent(urlFormatted).toLowerCase() || ''
+            return urlFormatted
         }
-        return urlFormatted
+        throw new Error('Url is not a string or URL object')
     }
     getBase64Data() {
         let base64Data = this.data

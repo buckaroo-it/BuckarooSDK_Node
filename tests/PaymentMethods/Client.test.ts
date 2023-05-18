@@ -1,7 +1,7 @@
 import { uniqid } from '../../src/Utils/Functions'
 
 require('../BuckarooClient.test')
-import buckarooClient from '../../src/BuckarooClient'
+import buckarooClient from '../../src'
 
 const client = buckarooClient()
 test('PaymentStatus', async () => {

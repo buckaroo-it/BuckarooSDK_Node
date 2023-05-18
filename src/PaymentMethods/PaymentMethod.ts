@@ -2,7 +2,7 @@ import { Request } from '../Models/Request'
 import { IConfig, ServiceParameters } from '../Utils/Types'
 import { RequestType } from '../Constants/Endpoints'
 import { ITransaction } from '../Models/ITransaction'
-import buckarooClient from '../BuckarooClient'
+import buckarooClient from '../index'
 import { IServiceList } from '../Models/ServiceList'
 export default abstract class PaymentMethod {
     protected readonly _requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
