@@ -10,6 +10,7 @@ export default abstract class PaymentMethod {
     protected _serviceVersion = 0
     protected _request: TransactionRequest = new TransactionRequest()
     private _action = ''
+    protected _serviceCodes:Array<string> = []
     get paymentName(): string {
         return this._paymentName
     }
