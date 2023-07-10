@@ -73,14 +73,14 @@ export class Client {
     }
     post(url: string, data: object) {
         return this.call({
-            method: HttpMethods.METHOD_POST,
+            method: HttpMethods.POST,
             url,
             data: data
         })
     }
     get(url: string) {
         return this.call({
-            method: HttpMethods.METHOD_GET,
+            method: HttpMethods.GET,
             url
         })
     }
@@ -122,7 +122,7 @@ export class Client {
                 : this.getDataRequestUrl('/Specifications')
 
         return this.call({
-            method: HttpMethods.METHOD_POST,
+            method: HttpMethods.POST,
             url,
             data
         }).then((response) => {
