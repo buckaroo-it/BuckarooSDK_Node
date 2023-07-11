@@ -1,8 +1,6 @@
 import {
     AxiosResponse,
 } from 'axios'
-import buckarooClient from "../BuckarooClient";
-import {ReplyHandler} from "../Handlers/Reply/ReplyHandler";
 
 export class Response {
 
@@ -17,14 +15,5 @@ export class Response {
     constructor(response: AxiosResponse) {
         this._axiosResponse = response
         this._data = response.data
-    }
-    validate() {
-        const replyHandler = new ReplyHandler(buckarooClient().getCredentials(),
-            this.data,
-            this.axiosResponse.headers["authorization"],
-            this.axiosResponse.config.url
-            )
-        return replyHandler.validate().isValid
-
     }
 }

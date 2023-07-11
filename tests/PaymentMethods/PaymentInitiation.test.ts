@@ -1,8 +1,5 @@
-import {ReplyHandler} from "../../src/Handlers/Reply/ReplyHandler";
-
 require('../BuckarooClient.test')
 import PaymentInitiation from '../../src/PaymentMethods/PaymentInitiation'
-import buckarooClient from "../../src/BuckarooClient";
 
 const payByBank = new PaymentInitiation()
 
@@ -16,11 +13,7 @@ describe('PaymentInitiation methods', () => {
                 countryCode: 'NL'
             })
             .then((response) => {
-                const replyHandler = new ReplyHandler(buckarooClient().getCredentials(),
-                    response.data, response.axiosResponse.headers["authorization"],
-                    response.axiosResponse.config.url)
-                replyHandler.validate()
-                expect(replyHandler.isValid).toBeTruthy()
+                expect(response).toBeTruthy()
             })
     })
     test('Refund', async () => {

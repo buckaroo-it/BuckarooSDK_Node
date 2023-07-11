@@ -100,8 +100,8 @@ export class Client {
     }
     specification(paymentName: string, serviceVersion = 0, type?: RequestType) {
         const url = this.getSpecificationUrl(paymentName, serviceVersion, type)
-        return this.get(url).then((response) => {
-            return new DataRequestResponse(response.data)
+        return this.get(url).then((res) => {
+            return new DataRequestResponse(res)
         })
     }
     specifications(
