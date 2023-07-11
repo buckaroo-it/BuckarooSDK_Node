@@ -1,6 +1,6 @@
 import { PayablePaymentMethod } from '../PayablePaymentMethod'
 import { IPay, IPayComplete, IPayEncrypted, IPayOneClick } from './Models/Pay'
-import { RefundPayload } from '../../Models/ITransaction'
+import {ICapture, RefundPayload} from '../../Models/ITransaction'
 
 export default class Bancontact extends PayablePaymentMethod {
     protected _paymentName = 'bancontactmrcash'
@@ -13,7 +13,10 @@ export default class Bancontact extends PayablePaymentMethod {
         return super.refund(payload)
     }
     authenticate(payload: IPay) {
-        this.action = 'Authenticate'
+        return this.authorize(payload)
+    }
+    authorize(payload: IPay) {
+        this.action = 'Authorize'
         return this.payTransaction(payload)
     }
     payOneClick(payload: IPayOneClick) {
@@ -31,5 +34,13 @@ export default class Bancontact extends PayablePaymentMethod {
     payRecurring(payload: IPayOneClick) {
         this.action = 'PayRecurring'
         return this.transactionInvoice(payload)
+    }
+    capture(payload:ICapture) {
+        this.action = 'Capture'
+        return this.transactionInvoice(payload)
+    }
+    cancelAuthorize(payload) {
+        this.action = 'CancelAuthorize'
+        return this.transactionRequest(payload)
     }
 }

@@ -17,7 +17,7 @@ export class ReplyHandler {
                 this.data = JSON.parse(data)
             } catch (e){
                 let objData = {}
-                new URLSearchParams(data).forEach((value, name, searchParams)=>{
+                new URLSearchParams(data).forEach((value, name)=>{
                     objData[name] = value
                 })
                 this.data = objData
@@ -33,12 +33,14 @@ export class ReplyHandler {
         return this._isValid
     }
     validate() {
-        if(this.data["Transaction"] && this.auth_header && this.uri){
+        if(this.data["Key"] && this.auth_header && this.uri){
             this._isValid = this.validateJson(this.auth_header)
         }else if (this.data["brq_signature"]){
             this._isValid = this.validateHttp({...this.data})
+        }else {
+            throw new Error('Invalid reply data')
         }
-        throw new Error('Invalid reply data')
+        return this
     }
     private validateJson(auth_header:string){
         let header = auth_header.split(':')

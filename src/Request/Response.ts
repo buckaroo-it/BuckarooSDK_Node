@@ -1,31 +1,30 @@
 import {
     AxiosResponse,
-    AxiosResponseHeaders,
-    InternalAxiosRequestConfig,
-    RawAxiosResponseHeaders
 } from 'axios'
-import { Hmac } from './Hmac'
+import buckarooClient from "../BuckarooClient";
+import {ReplyHandler} from "../Handlers/Reply/ReplyHandler";
 
-export class Response implements AxiosResponse {
+export class Response {
+
+    protected readonly _data: any
+    protected readonly _axiosResponse: AxiosResponse
     get data(): any {
         return this._data
     }
-    protected readonly _data: any
-    config: InternalAxiosRequestConfig
-    headers: RawAxiosResponseHeaders | AxiosResponseHeaders
-    status: number
-    statusText: string
+    get axiosResponse(): AxiosResponse {
+        return this._axiosResponse
+    }
     constructor(response: AxiosResponse) {
-        this.status = response.status
-        this.config = response.config
-        this.statusText = response.statusText
-        this.headers = response.headers
+        this._axiosResponse = response
         this._data = response.data
     }
-    static validate(authorizationHeader: string, method: string, url: string, data?: object) {
-        let authorization = authorizationHeader.split(':')
-        let hmac = new Hmac(method, url, data, authorization[2], authorization[3])
-        let hash = hmac.hashData(hmac.getHashString())
-        return hash === authorization[1]
+    validate() {
+        const replyHandler = new ReplyHandler(buckarooClient().getCredentials(),
+            this.data,
+            this.axiosResponse.headers["authorization"],
+            this.axiosResponse.config.url
+            )
+        return replyHandler.validate().isValid
+
     }
 }

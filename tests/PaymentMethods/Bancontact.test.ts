@@ -24,8 +24,8 @@ describe('BanContact methods', () => {
                 expect(data).toBeDefined()
             })
     })
-    test('Authenticate', async () => {
-        await method.authenticate({ amountDebit: 10 }).then((data) => {
+    test('Authorize', async () => {
+        await method.authorize({ amountDebit: 10 }).then((data) => {
             expect(data.isWaitingOnUserInput()).toBeDefined()
         })
     })
@@ -71,6 +71,15 @@ describe('BanContact methods', () => {
     })
     test('Specifications', async () => {
         await method.specification().then((data) => {
+            expect(data).toBeDefined()
+        })
+    })
+
+    test('Capture', async () => {
+        await method.capture({
+            originalTransactionKey: 'sadas',
+            amountDebit: 10
+        }).then((data) => {
             expect(data).toBeDefined()
         })
     })

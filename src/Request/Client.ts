@@ -2,12 +2,13 @@ import Endpoints, { RequestType } from '../Constants/Endpoints'
 import PaymentMethod from '../PaymentMethods/PaymentMethod'
 import { ITransaction } from '../Models/ITransaction'
 import { IConfig, ICredentials } from '../Utils/Types'
-import { SpecificationResponse, SpecificationsResponse } from '../Models/SpecificationResponse'
+import {DataRequestResponse} from '../Models/DataRequestResponse'
 import axios, { AxiosInstance } from 'axios'
 import { TransactionResponse } from '../Models/TransactionResponse'
 import RequestHeaders from './Headers'
 import HttpMethods from '../Constants/HttpMethods'
 import httpMethods from '../Constants/HttpMethods'
+import {Response} from "./Response";
 
 export class Client {
     private static _credentials: ICredentials
@@ -94,13 +95,13 @@ export class Client {
     }
     dataRequest(data: ITransaction) {
         return this.post(this.getDataRequestUrl(), data).then((res) => {
-            return new TransactionResponse(res)
+            return new DataRequestResponse(res)
         })
     }
     specification(paymentName: string, serviceVersion = 0, type?: RequestType) {
         const url = this.getSpecificationUrl(paymentName, serviceVersion, type)
         return this.get(url).then((response) => {
-            return new SpecificationResponse(response.data)
+            return new DataRequestResponse(response.data)
         })
     }
     specifications(
@@ -126,7 +127,7 @@ export class Client {
             url,
             data
         }).then((response) => {
-            return new SpecificationsResponse(response.data)
+            return new Response(response.data)
         })
     }
     status(transactionKey: string) {
