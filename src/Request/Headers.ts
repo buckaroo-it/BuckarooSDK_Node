@@ -1,7 +1,4 @@
-import { Hmac } from './Hmac'
-import HttpMethods from "../Constants/HttpMethods";
-import {BuckarooClient} from "./BuckarooClient";
-
+import { OutgoingHttpHeaders } from 'http'
 
 export type RequestHeaders = {
     'Content-type'?: string
@@ -9,54 +6,57 @@ export type RequestHeaders = {
     Culture?: string
     Authorization?: string
     Software?: string
-} & { [key: string]: string }
+} & OutgoingHttpHeaders
 
 export default class Headers {
-    private readonly _headers:RequestHeaders = this.getDefaultHeaders();
-    constructor() {
-        this.setSoftwareHeader()
-    }
-    getHeaders():RequestHeaders {
+    private _headers: RequestHeaders = this.getDefaultHeaders()
+    get headers(): RequestHeaders {
         return this._headers
     }
-    getDefaultHeaders() {
-        return  {
-            'Content-type': 'application/json',
+    protected getDefaultHeaders() {
+        return {
+            'Content-type': 'application/json; charset=utf-8',
             Accept: 'application/json',
             Culture: 'nl-NL',
-            Authorization: ''
+            Authorization: '',
+            Channel: 'Web',
+            Software: JSON.stringify({
+                PlatformName: 'Node SDK',
+                PlatformVersion: '1.0',
+                ModuleSupplier: 'Buckaroo',
+                ModuleName: 'BuckarooPayments',
+                ModuleVersion: '1.0'
+            })
         }
     }
-    setSoftwareHeader(value:  {
-        PlatformName?:string,
-        PlatformVersion?:string,
-        ModuleSupplier?:string,
-        ModuleName?:string,
-        ModuleVersion?:string
-    } = {}):this {
-
+    setSoftwareHeader(
+        value: {
+            platformName?: string
+            platformVersion?: string
+            moduleSupplier?: string
+            moduleName?: string
+            moduleVersion?: string
+        } = {}
+    ): this {
         this._headers.Software = JSON.stringify({
-            PlatformName: 'Node SDK',
-            PlatformVersion: '1.0',
-            ModuleSupplier: 'Buckaroo',
-            ModuleName: 'BuckarooPayments',
-            ModuleVersion: '1.0',
-            ...value
+            PlatformName: value.platformName || 'Node SDK',
+            PlatformVersion: value.platformVersion || '1.0',
+            ModuleSupplier: value.moduleSupplier || 'Buckaroo',
+            ModuleName: value.moduleName || 'BuckarooPayments',
+            ModuleVersion: value.moduleVersion || '1.0'
         })
-        return this;
+        return this
     }
-    addHeaders(headers: RequestHeaders) {
+    setHeaders(headers: RequestHeaders) {
         Object.keys(headers).forEach((key) => {
             this._headers[key] = headers[key]
         })
+        return this
     }
     removeHeaders(headers: RequestHeaders) {
         Object.keys(headers).forEach((key) => {
             delete this._headers[key]
         })
-    }
-    setAuthHeader(hmacHeader:string):this {
-        this._headers.Authorization = hmacHeader
-        return this;
+        return this
     }
 }

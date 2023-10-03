@@ -1,7 +1,6 @@
-import IAddress from '../../../Models/Services/IAddress'
-import { Payload } from '../../../Models/ITransaction'
+import { IPaymentRequest } from '../../../Models/IRequest'
 
-export type ExtraInfo = {
+export interface IExtraInfo extends IPaymentRequest {
     customeraccountname: string
     customerBIC?: string
     customerIBAN: string
@@ -14,6 +13,4 @@ export type ExtraInfo = {
     customerReferencePartyName?: string
     houseNumberSuffix: string
     contractID: string
-} & Omit<IAddress, 'houseNumberAdditional' | 'state'>
-
-export type IExtraInfo = ExtraInfo & Payload
+}

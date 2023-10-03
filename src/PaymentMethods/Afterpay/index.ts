@@ -1,39 +1,34 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { IPay } from './Model/Pay'
-import { ICapture, RefundPayload } from '../../Models/ITransaction'
-import { IAfterPayArticle } from './Model/Article'
+import { IPay, Pay } from './Model/Pay'
+import { IPaymentRequest, IRefundRequest } from '../../Models/IRequest'
+import PayablePaymentMethod from '../PayablePaymentMethod'
+import { IRefund, Refund } from './Model/Refund'
 
 export default class Afterpay extends PayablePaymentMethod {
-    protected _paymentName = 'afterpay'
+    protected _paymentName = 'Afterpay'
     protected _serviceVersion = 1
-
     pay(payload: IPay) {
-        if (payload.billingCustomer) {
-            payload.shippingCustomer = payload.shippingCustomer || { ...payload.billingCustomer }
-        }
-        return super.pay(payload)
+        return super.pay(payload, new Pay(payload))
     }
-    refund(payload: RefundPayload & { article?: IAfterPayArticle[] }) {
-        return super.refund(payload)
+    refund(payload: IRefund) {
+        return super.refund(payload, new Refund(payload))
     }
     authorize(payload: IPay) {
-        this.action = 'Authorize'
-        return super.payTransaction(payload)
+        this.setServiceList('Authorize', new Pay(payload))
+        return this.transactionRequest(payload)
     }
-    cancelAuthorize(payload: RefundPayload) {
-        this.action = 'CancelAuthorize'
+    cancelAuthorize(payload: IRefundRequest) {
+        this.setServiceList('CancelAuthorize')
         return super.transactionRequest(payload)
     }
-    capture(payload: ICapture) {
-        this.action = 'Capture'
+    capture(payload: IPaymentRequest) {
+        this.setServiceList('Capture', new Pay(payload))
         return super.transactionRequest(payload)
     }
-    payRemainder(payload:IPay) {
-        this.action = 'PayRemainder'
-        return super.transactionRequest(payload)
+    payRemainder(payload: IPay) {
+        return super.payRemainder(payload, new Pay(payload))
     }
-    authorizeRemainder(payload:IPay) {
-        this.action = 'AuthorizeRemainder'
+    authorizeRemainder(payload: IPay) {
+        this.setServiceList('AuthorizeRemainder', new Pay(payload))
         return super.transactionRequest(payload)
     }
 }

@@ -1,5 +1,5 @@
 require('../BuckarooClient.test')
-import Tinka from '../../src/PaymentMethods/Tinka/index'
+import Tinka from '../../src/PaymentMethods/Tinka'
 
 const method = new Tinka()
 

@@ -1,34 +1,32 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { IPay } from './Models/IPay'
-import { ICapture, Payload, RefundPayload } from '../../Models/ITransaction'
+import PayablePaymentMethod from '../PayablePaymentMethod'
+import { IPay, Pay } from './Models/IPay'
+import IRequest from '../../Models/IRequest'
+import { IReserve, Reserve } from './Models/IReserve'
 
-export default class KlarnaKp extends PayablePaymentMethod {
-    protected _paymentName = 'KlarnaKp'
-    _serviceVersion = 1
-    pay(payload: IPay & Payload) {
-        return super.pay(payload)
+export default class KlarnaKP extends PayablePaymentMethod {
+    protected _paymentName = 'KlarnaKP'
+    protected _serviceVersion = 1
+    pay(payload: IPay) {
+        return super.pay(payload, new Pay(payload))
     }
-    refund(payload: RefundPayload) {
-        return super.refund(payload)
-    }
-    reserve(payload: IPay) {
-        this.action = 'Reserve'
+    reserve(payload: IReserve) {
+        this.setServiceList('Reserve', new Reserve(payload))
         return this.dataRequest(payload)
     }
-    cancel(payload: IPay) {
-        this.action = 'CancelReservation'
+    cancel(payload: IRequest) {
+        this.setServiceList('CancelReservation')
         return this.dataRequest(payload)
     }
-    update(payload: IPay) {
-        this.action = 'UpdateReservation'
+    update(payload: IRequest) {
+        this.setServiceList('UpdateReservation')
         return this.dataRequest(payload)
     }
-    extend(payload: IPay) {
-        this.action = 'ExtendReservation'
+    extend(payload: IRequest) {
+        this.setServiceList('ExtendReservation')
         return this.dataRequest(payload)
     }
-    addShippingInfo(payload: ICapture) {
-        this.action = 'AddShippingInfo'
+    addShippingInfo(payload: IRequest) {
+        this.setServiceList('AddShippingInfo')
         return this.dataRequest(payload)
     }
 }

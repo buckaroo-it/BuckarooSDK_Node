@@ -1,29 +1,22 @@
-import BankTransfer from '../../src/PaymentMethods/BankTransfer'
 import Gender from '../../src/Constants/Gender'
-
-require('../BuckarooClient.test')
-
-const method = new BankTransfer()
+import buckarooClientTest from '../BuckarooClient.test'
+const method = buckarooClientTest.method('transfer')
 
 describe('Transfer methods', () => {
-    test('Specification', async () => {
-        await method.specification().then((res) => {
-            expect(res).toBeDefined()
-        })
-    })
     test('Pay', async () => {
         await method
             .pay({
                 amountDebit: 10,
-                customerCountry: 'NL',
-                customerEmail: 'test@hotmail.com',
-                customerFirstName: 'test',
-                customerGender: Gender.FEMALE,
-                customerLastName: 'Test',
-                description: 'Test without payment method with ServicesSelectableByClient',
-                continueOnIncomplete: 1,
-                servicesSelectableByClient: 'ideal,creditcard'
+                customer: {
+                    firstName: 'John',
+                    lastName: 'Doe',
+                    gender: Gender.MALE
+                },
+                email: 'test@hotmail.com',
+                sendMail: true,
+                dateDue: '2024-10-10'
             })
+            .request()
             .then((res) => {
                 expect(res.isAwaitingConsumer()).toBeDefined()
             })

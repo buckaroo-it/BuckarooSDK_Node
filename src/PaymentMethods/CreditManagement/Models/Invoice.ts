@@ -1,49 +1,103 @@
-import IPhone from '../../../Models/Services/IPhone'
-import IAddress from '../../../Models/Services/IAddress'
-import { ICreditArticle } from './Article'
-import { ITransaction } from '../../../Models/ITransaction'
-import Gender from '../../../Constants/Gender'
+import IPhone from '../../../Models/Interfaces/IPhone'
+import IAddress from '../../../Models/Interfaces/IAddress'
+import { CreditArticle, ICreditArticle } from './Article'
+import IRequest from '../../../Models/IRequest'
+import { ICompany, IPerson } from '../../../Models/Interfaces/IRecipient'
+import IDebtor from '../../../Models/Interfaces/IDebtor'
+import { ServiceParameter } from '../../../Models/ServiceParameters'
+import { Address } from './Address'
 
-export interface Invoice {
+export interface IInvoice extends IRequest {
     invoiceAmount: number
     invoiceAmountVAT?: number
     invoiceDate: string
     dueDate: string
     schemeKey?: string
-    maxStepIndex?: Number
+    maxStepIndex?: number
     allowedServices?: string
     allowedServicesAfterDueDate?: string
-    code: string
-    person: {
-        culture: string
-        title: string
-        initials: string
-        firstName: string
-        lastName: string
-        lastNamePrefix: string
-        gender: Gender
-        birthDate: string
-        placeOfBirth: string
-    }
-    company: {
-        culture: string
-        name: string
-        vatApplicable: boolean
-        vatNumber: string
-        chamberOfCommerce: string
-    }
-    address: Omit<IAddress, 'houseNumberAdditional' | 'zipcode'> & {
-        houseNumberSuffix?: string
-        postalCode: string
-    }
-    debtor: {
-        code: string
-    }
-    email?: { email: string }
+    code?: string
+    person: Partial<IPerson>
+    company: Partial<ICompany>
+    address: Partial<IAddress>
+    debtor: IDebtor
+    email?: string
     phone: IPhone
-    productLine?:ICreditArticle[]
+    articles?: ICreditArticle[]
     invoiceNumber?: string
     applyStartRecurrent?: boolean
-    [key: string]: any
 }
-export type IInvoice = Invoice & ITransaction
+export class Invoice extends ServiceParameter implements IInvoice {
+    protected getGroups() {
+        return super.getGroups({
+            Articles: 'ProductLine',
+            Address: 'Address',
+            Company: 'Company',
+            Person: 'Person',
+            Debtor: 'Debtor',
+            Email: 'Email',
+            Phone: 'Phone'
+        })
+    }
+    protected getCountable() {
+        return super.getCountable(['Articles'])
+    }
+
+    set invoiceAmount(value: number) {
+        this.set('invoiceAmount', value)
+    }
+    set invoiceAmountVAT(value: number) {
+        this.set('invoiceAmountVAT', value)
+    }
+    set invoiceDate(value: string) {
+        this.set('invoiceDate', value)
+    }
+    set dueDate(value: string) {
+        this.set('dueDate', value)
+    }
+    set schemeKey(value: string) {
+        this.set('schemeKey', value)
+    }
+    set maxStepIndex(value: number) {
+        this.set('maxStepIndex', value)
+    }
+    set allowedServices(value: string) {
+        this.set('allowedServices', value)
+    }
+    set allowedServicesAfterDueDate(value: string) {
+        this.set('allowedServicesAfterDueDate', value)
+    }
+    set code(value: string) {
+        this.set('code', value)
+    }
+    set person(value: Partial<IPerson>) {
+        this.set('person', value)
+    }
+    set company(value: Partial<ICompany>) {
+        this.set('company', value)
+    }
+    set address(value: Partial<IAddress>) {
+        this.set('address', new Address(value))
+    }
+    set debtor(value: IDebtor) {
+        this.set('debtor', value)
+    }
+    set email(value: string) {
+        this.set('email', value)
+    }
+    set phone(value: IPhone) {
+        this.set('phone', value)
+    }
+    set articles(value: ICreditArticle[]) {
+        this.set(
+            'articles',
+            value.map((article) => new CreditArticle(article))
+        )
+    }
+    set invoiceNumber(value: string) {
+        this.set('invoiceNumber', value)
+    }
+    set applyStartRecurrent(value: boolean) {
+        this.set('applyStartRecurrent', value)
+    }
+}

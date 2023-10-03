@@ -1,35 +1,33 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { IPay, IPayComplete, IPayEncrypted, IPayOneClick } from './Models/Pay'
-import { RefundPayload } from '../../Models/ITransaction'
+import PayablePaymentMethod from '../PayablePaymentMethod'
+import { IPay, IPayComplete, IPayEncrypted, IPayOneClick, Pay } from './Models/Pay'
+import { IRefundRequest } from '../../Models/IRequest'
 
 export default class Bancontact extends PayablePaymentMethod {
-    protected _paymentName = 'bancontactmrcash'
-    protected _serviceVersion = 1
-
+    protected _paymentName = 'Bancontact'
     pay(payload: IPay) {
-        return super.pay(payload)
+        return super.pay(payload, new Pay(payload))
     }
-    refund(payload: RefundPayload) {
+    refund(payload: IRefundRequest) {
         return super.refund(payload)
     }
     authenticate(payload: IPay) {
-        this.action = 'Authenticate'
-        return this.payTransaction(payload)
+        this.setServiceList('Authenticate', new Pay(payload))
+        return this.transactionRequest(payload)
     }
     payOneClick(payload: IPayOneClick) {
-        this.action = 'PayOneClick'
-        return this.transactionInvoice(payload)
+        this.setServiceList('PayOneClick', new Pay(payload))
+        return this.transactionRequest(payload)
     }
     payEncrypted(payload: IPayEncrypted) {
-        this.action = 'PayEncrypted'
-        return this.transactionInvoice(payload)
+        this.setServiceList('PayEncrypted', new Pay(payload))
+        return this.transactionRequest(payload)
     }
     completePayment(payload: IPayComplete) {
-        this.action = 'CompletePayment'
+        this.setServiceList('CompletePayment', new Pay(payload))
         return this.dataRequest(payload)
     }
     payRecurring(payload: IPayOneClick) {
-        this.action = 'PayRecurring'
-        return this.transactionInvoice(payload)
+        this.setServiceList('PayRecurring', new Pay(payload))
+        return this.transactionRequest(payload)
     }
 }

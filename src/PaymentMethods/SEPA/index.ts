@@ -1,35 +1,34 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { IPay } from './Models/Pay'
-import { ICapture, RefundPayload } from '../../Models/ITransaction'
+import PayablePaymentMethod from '../PayablePaymentMethod'
+import { IPay, Pay } from './Models/Pay'
 import { IExtraInfo } from './Models/ExtraInfo'
 import { IEmandate } from './Models/Emandate'
 import { uniqid } from '../../Utils/Functions'
+import { IPaymentRequest } from '../../Models/IRequest'
 
 export default class SEPA extends PayablePaymentMethod {
-    protected _paymentName = 'SepaDirectDebit'
-    protected _serviceVersion = 1
-
+    protected _paymentName = 'SEPA'
     pay(payload: IPay) {
-        return super.pay(payload)
-    }
-    refund(payload: RefundPayload) {
-        return super.refund(payload)
+        return super.pay(payload, new Pay(payload))
     }
     authorize(payload: IPay) {
-        this.action = 'Authorize'
-        return super.transactionRequest(payload)
+        this.setPayPayload(payload)
+        this.setServiceList('Authorize', new Pay(payload))
+        return this.transactionRequest()
     }
-    payRecurrent(payload: Pick<IPay, 'collectDate'> & ICapture) {
-        this.action = 'PayRecurrent'
-        return super.transactionRequest(payload)
+    payRecurrent(payload: Pick<IPay, 'collectDate'> & IPaymentRequest) {
+        this.setPayPayload(payload)
+        this.setServiceList('PayRecurrent', new Pay(payload))
+        return this.transactionRequest()
     }
     extraInfo(payload: IExtraInfo) {
-        this.action = 'Pay,ExtraInfo'
-        return super.transactionRequest(payload)
+        this.setPayPayload(payload)
+        this.setServiceList('Pay,ExtraInfo', new Pay(payload))
+        return this.transactionRequest()
     }
     payWithEmandate(payload: IEmandate) {
-        this.action = 'PayWithEmandate'
         payload.invoice = payload.invoice || uniqid()
-        return super.transactionRequest(payload)
+        this.setPayPayload(payload)
+        this.setServiceList('PayWithEmandate', new Pay(payload))
+        return this.transactionRequest()
     }
 }

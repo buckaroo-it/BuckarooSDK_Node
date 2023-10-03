@@ -1,7 +1,6 @@
-require('../BuckarooClient.test')
-import BanContact from '../../src/PaymentMethods/Bancontact/index'
+import buckarooClientTest from '../BuckarooClient.test'
 
-const method = new BanContact()
+const method = buckarooClientTest.method('bancontactmrcash')
 
 describe('BanContact methods', () => {
     test('Pay Simple Payload', async () => {
@@ -10,6 +9,7 @@ describe('BanContact methods', () => {
                 amountDebit: 10,
                 saveToken: true
             })
+            .request()
             .then((data) => {
                 expect(data.isWaitingOnUserInput()).toBeTruthy()
             })
@@ -20,14 +20,18 @@ describe('BanContact methods', () => {
                 amountCredit: 5,
                 originalTransactionKey: 'F397DA6A251645F8BDD81547B5005B4B'
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined()
             })
     })
     test('Authenticate', async () => {
-        await method.authenticate({ amountDebit: 10 }).then((data) => {
-            expect(data.isWaitingOnUserInput()).toBeDefined()
-        })
+        await method
+            .authenticate({ amountDebit: 10 })
+            .request()
+            .then((data) => {
+                expect(data.isWaitingOnUserInput()).toBeDefined()
+            })
     })
     test('PayOneClick', async () => {
         await method
@@ -35,6 +39,7 @@ describe('BanContact methods', () => {
                 originalTransactionKey: 'dsad',
                 amountDebit: 12
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined()
             })
@@ -45,6 +50,7 @@ describe('BanContact methods', () => {
                 originalTransactionKey: 'dsad',
                 encryptedCardData: 'sUIB'
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined()
             })
@@ -55,6 +61,7 @@ describe('BanContact methods', () => {
                 amountDebit: 10,
                 encryptedCardData: 'yrtgdd'
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined()
             })
@@ -65,13 +72,17 @@ describe('BanContact methods', () => {
                 amountDebit: 10,
                 originalTransactionKey: 'sadas'
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined()
             })
     })
-    test('Specifications', async () => {
-        await method.specification().then((data) => {
-            expect(data).toBeDefined()
-        })
+    test('Specifications', () => {
+        method
+            .specification()
+            .request()
+            .then((data) => {
+                expect(data).toBeDefined()
+            })
     })
 })

@@ -25,11 +25,13 @@ describe('Sofort', () => {
     })
 
     test('InstantRefund', async () => {
-        await method.instantRefund({
-            amountCredit: 4.23,
-            originalTransactionKey: '97DC0A03BBDF4DAAAC694D7FEC8785E1',
-        }).then((data) => {
-            expect(data).toBeDefined()
-        })
+        await method
+            .instantRefund({
+                amountCredit: 4.23,
+                originalTransactionKey: '97DC0A03BBDF4DAAAC694D7FEC8785E1'
+            })
+            .then((data) => {
+                expect(data).toBeDefined()
+            })
     })
 })

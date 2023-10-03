@@ -1,16 +1,21 @@
-require('../BuckarooClient.test')
-import CreditClick from '../../src/PaymentMethods/CreditClick/index'
+import buckarooClientTest from '../BuckarooClient.test'
 
-const method = new CreditClick()
+const method = buckarooClientTest.method('creditclick')
 
 describe('Testing CreditClick methods', () => {
     test('Pay', async () => {
         await method
             .pay({
-                amountDebit: 31
+                amountDebit: 31,
+                person: {
+                    firstName: 'test',
+                    lastName: 'test'
+                },
+                email: 't.tester@test.nl'
             })
+            .request()
             .then((response) => {
-                expect(response).toBeDefined()
+                expect(response.isPendingProcessing()).toBeTruthy()
             })
     })
     test('Refund', async () => {
@@ -21,8 +26,9 @@ describe('Testing CreditClick methods', () => {
                 description: 'test',
                 refundReason: 'Fraudulent'
             })
+            .request()
             .then((response) => {
-                expect(response).toBeDefined()
+                expect(response.isFailed()).toBeTruthy()
             })
     })
 })

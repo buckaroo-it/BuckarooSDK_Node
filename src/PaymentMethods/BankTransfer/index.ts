@@ -1,15 +1,14 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { IPay } from './Models/Pay'
-import { RefundPayload } from '../../Models/ITransaction'
+import PayablePaymentMethod from '../PayablePaymentMethod'
+import { IPay, Pay } from './Models/Pay'
+import { IRefundRequest } from '../../Models/IRequest'
 
-export default class Banktransfer extends PayablePaymentMethod {
-    protected _paymentName = 'transfer'
-    protected _serviceVersion = 1
+export default class BankTransfer extends PayablePaymentMethod {
+    protected _paymentName = 'BankTransfer'
 
     pay(payload: IPay) {
-        return super.pay(payload)
+        return super.pay(payload, new Pay(payload))
     }
-    refund(payload: RefundPayload) {
+    refund(payload: IRefundRequest) {
         return super.refund(payload)
     }
 }

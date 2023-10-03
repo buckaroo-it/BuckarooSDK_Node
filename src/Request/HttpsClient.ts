@@ -1,59 +1,67 @@
-import {RequestOptions} from "https";
-import httpMethods from "../Constants/HttpMethods";
-import Headers, {RequestHeaders} from "./Headers";
-import Endpoints from "../Constants/Endpoints";
-
-const https = require('https');
-
-export type HttpsRequestOptions = RequestOptions
-    & { method: httpMethods,hostname:string,timeout:number ,headers:RequestHeaders}
-
+import { Agent, RequestOptions } from 'https'
+import { HttpResponseConstructor } from '../Models/Response/HttpClientResponse'
+import { ReplyHandler } from '../Handlers/Reply/ReplyHandler'
+import Buckaroo from '../index'
+const https = require('https')
+const defaultAgent = new https.Agent({
+    keepAlive: true,
+    keepAliveMsecs: 10000
+})
 export default class HttpsClient {
-
-    private _client = https
-
-    public options:HttpsRequestOptions
-    constructor(url:URL) {
-        this.options = {
-            method: httpMethods.METHOD_GET,
-            headers: new Headers().getHeaders(),
-            hostname: url.hostname,
-            timeout: 10000,
-        }
+    protected _options: RequestOptions = {}
+    constructor(agent?: Agent) {
+        this._options.timeout = 10000
+        this._options.agent = agent || defaultAgent
+        this._options.sessionTimeout = 30000
     }
-    get client(): any {
-        return this._client;
-    }
-    request(data:object): Promise<any> {
-
+    public sendRequest<R extends HttpResponseConstructor = HttpResponseConstructor>(
+        url: URL,
+        data: string,
+        options: RequestOptions = {},
+        responseClass: R
+    ): Promise<InstanceType<R>> {
         return new Promise((resolve, reject) => {
-            const req = this._client.request(this.options, res => {
-                let responseData:Array<any> = [];
-
-                res.on('data', chunk => {
-                    responseData.push(chunk);
-                });
-
+            const req = https.request(url, {
+                ...this._options,
+                ...options
+            })
+            req.on('error', (err) => {
+                reject(err)
+            })
+            req.on('timeout', () => {
+                req.destroy()
+            })
+            req.on('response', (res) => {
+                let response: any[] = []
+                res.on('data', (chunk) => {
+                    response.push(chunk)
+                })
                 res.on('end', () => {
                     try {
-                        resolve(JSON.parse(Buffer.concat(responseData).toString()));
+                        let data = Buffer.concat(response).toString()
+                        new ReplyHandler(
+                            Buckaroo.Client.credentials,
+                            data,
+                            res.headers['authorization'],
+                            url.toString(),
+                            options.method
+                        ).validate()
+                        resolve(new responseClass(res, data) as InstanceType<R>)
                     } catch (e) {
-                        reject(e);
+                        try {
+                            reject(Buffer.concat(response).toString())
+                        } catch (e) {
+                            reject(e)
+                        }
+                        reject(e)
                     }
-                });
-            }).on('error', err => {
-                reject(err.message);
-            }).on('timeout', () => {
-                req.destroy();
-                reject(new Error('Request timeout'));
-            }).on('close', () => {
-                req.destroy();
-                reject(new Error('Request closed'));
+                })
             })
-            if(Object.keys(data).length > 0){
-                req.write(JSON.stringify(data));
+            if (data) {
+                req.write(data)
             }
-            req.end();
-        });
+            req.end()
+            return req
+        })
     }
 }

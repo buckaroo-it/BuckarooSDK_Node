@@ -1,28 +1,40 @@
-require('../BuckarooClient.test')
-import GiftCard from '../../src/PaymentMethods/GiftCard/index'
+import buckarooClientTest from '../BuckarooClient.test'
 
-const method = new GiftCard()
+const method = buckarooClientTest.method('boekenbon')
 
 describe('GiftCard methods', () => {
     test('Pay', async () => {
-        await method
+        const responsePay = await method
             .pay({
                 amountDebit: 10,
-                name: 'GiftCard'
+                intersolveCardnumber: '0000000000000000001',
+                intersolvePIN: '500'
             })
-            .then((data) => {
-                expect(data).toBeDefined()
+            .request()
+        expect(responsePay.isSuccess()).toBeTruthy()
+        const responseRemainderPay = await buckarooClientTest
+            .method('ideal')
+            .payRemainder({
+                amountDebit: 10.1,
+                issuer: 'ABNANL2A',
+                invoice: responsePay.data.invoice,
+                originalTransactionKey:
+                    responsePay.data.relatedTransactions[0].relatedTransactionKey
             })
+            .request()
+        expect(responseRemainderPay.isPendingProcessing()).toBeTruthy()
     })
     test('Refund', async () => {
         await method
             .refund({
                 amountCredit: 5,
-                name: 'GiftCard',
-                originalTransactionKey: 'F397DA6A251645F8BDD81547B5005B4B'
+                originalTransactionKey: '9F99B530DA5449EB919D27351D28BDF2',
+                email: '',
+                lastName: ''
             })
+            .request()
             .then((data) => {
-                expect(data).toBeDefined()
+                expect(data.isFailed()).toBeTruthy()
             })
     })
 })

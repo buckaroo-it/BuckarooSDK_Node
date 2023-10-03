@@ -1,7 +1,6 @@
-require('../BuckarooClient.test')
-import BuckarooVoucher from '../../src/PaymentMethods/BuckarooVoucher/index'
+import buckarooClientTest from '../BuckarooClient.test'
 
-const method = new BuckarooVoucher()
+const method = buckarooClientTest.method('buckaroovoucher')
 
 describe('testing methods', () => {
     test('Pay', async () => {
@@ -10,6 +9,7 @@ describe('testing methods', () => {
                 amountDebit: 12,
                 voucherCode: ''
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined()
             })
@@ -20,6 +20,7 @@ describe('testing methods', () => {
                 amountCredit: 12,
                 originalTransactionKey: ''
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined()
             })
@@ -27,29 +28,32 @@ describe('testing methods', () => {
     test('GetBalance', async () => {
         await method
             .getBalance({
-                voucherCode: ''
+                voucherCode: 'WP6W-XXXX-XXXX-56T7'
             })
+            .request()
             .then((data) => {
-                expect(data).toBeDefined()
+                expect(data.isFailed()).toBeTruthy()
             })
     })
     test('CreateApplication', async () => {
         await method
-            .createApplication({
+            .create({
                 creationBalance: 12,
                 usageType: 1,
                 validFrom: '2021-01-01',
                 validUntil: '2024-01-01'
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined()
             })
     })
     test('DeactivateVoucher', async () => {
         await method
-            .deactivateVoucher({
+            .deactivate({
                 voucherCode: ''
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined()
             })

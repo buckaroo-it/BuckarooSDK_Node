@@ -1,7 +1,9 @@
-require('../BuckarooClient.test')
-import Paypal from '../../src/PaymentMethods/Paypal/index'
+import buckarooClientTest from '../BuckarooClient.test'
 
-const method = new Paypal()
+require('../BuckarooClient.test')
+import Paypal from '../../src/PaymentMethods/Paypal'
+
+const method = new Paypal('paypal')
 
 describe('Paypal', () => {
     test('Pay', async () => {
@@ -9,6 +11,7 @@ describe('Paypal', () => {
             .pay({
                 amountDebit: 50.3
             })
+            .request()
             .then((info) => {
                 expect(info.data).toBeDefined()
             })
@@ -19,27 +22,30 @@ describe('Paypal', () => {
                 amountCredit: 50.3,
                 originalTransactionKey: '123456'
             })
+            .request()
             .then((info) => {
                 expect(info.data).toBeDefined()
             })
     })
     test('ExtraInfo', async () => {
+        buckarooClientTest.method('subscriptions').createCombined({})
         await method
             .extraInfo({
                 amountDebit: 50.3,
                 address: {
-                    city: 're',
-                    country: 'rw',
-                    state: 'fsd',
-                    street: 'dsf',
-                    street2: 'dsf',
-                    zipcode: 'sdf'
+                    street: 'Hoofstraat 90',
+                    street2: 'Street 2',
+                    city: 'Heerenveen',
+                    state: 'Friesland',
+                    zipcode: '8441AB',
+                    country: 'NL'
                 },
                 addressOverride: false,
-                costumer: { name: 'ers' },
-                noShipping: 0,
-                phone: { mobile: '534' }
+                costumer: { name: 'John' },
+                noShipping: '0',
+                phone: { mobile: '0612345678' }
             })
+            .request()
             .then((info) => {
                 expect(info.data).toBeDefined()
             })

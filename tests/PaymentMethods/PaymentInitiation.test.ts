@@ -1,9 +1,9 @@
 require('../BuckarooClient.test')
-import PaymentInitiation from '../../src/PaymentMethods/PaymentInitiation'
+import PayByBank from '../../src/PaymentMethods/PayByBank'
 
-const paymentInitiation = new PaymentInitiation()
+const paymentInitiation = new PayByBank('PayByBank')
 
-describe('PaymentInitiation methods', () => {
+describe('PayByBank methods', () => {
     test('Pay', async () => {
         await paymentInitiation
             .pay({
@@ -12,6 +12,7 @@ describe('PaymentInitiation methods', () => {
                 issuer: 'INGBNL2A',
                 countryCode: 'NL'
             })
+            .request()
             .then((info) => {
                 expect(info.data).toBeDefined()
             })
@@ -22,6 +23,7 @@ describe('PaymentInitiation methods', () => {
                 amountCredit: 50.3,
                 originalTransactionKey: '123456'
             })
+            .request()
             .then((info) => {
                 expect(info.data).toBeDefined()
             })

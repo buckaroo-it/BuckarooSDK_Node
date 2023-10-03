@@ -1,7 +1,5 @@
-require('../BuckarooClient.test')
-import KBC from '../../src/PaymentMethods/KBC'
-
-const method = new KBC()
+import buckarooClientTest from '../BuckarooClient.test'
+const method = buckarooClientTest.method('KBCPaymentButton')
 
 describe('Testing KBC methods', () => {
     test('Pay', async () => {
@@ -9,18 +7,20 @@ describe('Testing KBC methods', () => {
             .pay({
                 amountDebit: 10
             })
+            .request()
             .then((response) => {
-                expect(response.data).toBeDefined()
+                expect(response.isPendingProcessing()).toBeTruthy()
             })
     })
     test('Refund', async () => {
         method
             .refund({
-                amountCredit: 0,
+                amountCredit: 10,
                 originalTransactionKey: 'B5675356904444F3965C33D280591C74'
             })
+            .request()
             .then((response) => {
-                expect(response.data).toBeDefined()
+                expect(response.isFailed()).toBeTruthy()
             })
     })
 })

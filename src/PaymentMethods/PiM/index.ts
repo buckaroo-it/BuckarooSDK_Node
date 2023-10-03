@@ -1,11 +1,9 @@
-import PaymentMethod from "../PaymentMethod";
-import { IConfig } from "../../Utils/Types";
-
+import PaymentMethod from '../PaymentMethod'
 export default class PiM extends PaymentMethod {
-  _paymentName = "pim";
-  _requiredFields:Array<keyof IConfig> = ["currency"];
-  generate(){
-    this.action = 'generate'
-    return this.dataRequest()
-  }
+    protected _paymentName = 'PiM'
+    protected _requiredFields = ['currency']
+    generate() {
+        this.setServiceList('Generate')
+        return this.dataRequest()
+    }
 }

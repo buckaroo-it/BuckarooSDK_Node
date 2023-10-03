@@ -1,5 +1,5 @@
 require('../BuckarooClient.test')
-import Trustly from '../../src/PaymentMethods/Trustly/index'
+import Trustly from '../../src/PaymentMethods/Trustly'
 
 const method = new Trustly()
 

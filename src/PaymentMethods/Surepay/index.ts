@@ -1,11 +1,13 @@
 import PaymentMethod from '../PaymentMethod'
 import { IVerify } from './Models/Verify'
-
+import { ServiceParameter } from '../../Models/ServiceParameters'
 export default class Surepay extends PaymentMethod {
-    protected _paymentName = 'surepay'
-    _requiredFields = []
+    protected _paymentName = 'Surepay'
     verify(payload: IVerify) {
-        this.action = 'verify'
+        this.setServiceList(
+            'Verify',
+            new ServiceParameter().set('customeraccountname', payload.customeraccountname)
+        )
         return this.dataRequest(payload)
     }
 }

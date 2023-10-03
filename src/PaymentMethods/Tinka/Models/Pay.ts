@@ -1,8 +1,8 @@
-import { Payload } from '../../../Models/ITransaction'
+import { IPaymentRequest } from '../../../Models/IRequest'
 import { ITinkaArticle } from './Article'
 import { ITinkaAddress } from './Address'
 import Gender from '../../../Constants/Gender'
-export interface IPay extends Payload {
+export interface IPay extends IPaymentRequest {
     paymentMethod: string
     deliveryMethod: string
     deliveryDate?: string

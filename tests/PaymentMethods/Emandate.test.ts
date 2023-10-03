@@ -1,41 +1,45 @@
-require('../BuckarooClient.test')
-import Emandates from '../../src/PaymentMethods/Emandates'
-
-const method = new Emandates()
+import buckarooClientTest from '../BuckarooClient.test'
+const method = buckarooClientTest.method('emandate')
 describe('Testing Emandates methods', () => {
     test('GetIssuerList', async () => {
-        method.issuerList().then((response) => {
-            expect(response.data).toBeDefined()
-        })
+        await method
+            .issuerList()
+            .request()
+            .then((response) => {
+                expect(response.isSuccess()).toBeTruthy()
+            })
     })
     test('CreateMandate', async () => {
         method
             .createMandate({
                 debtorReference: 'klant1234',
                 language: 'nl',
-                continueOnIncomplete: 1,
+                continueOnIncomplete: true,
                 purchaseId: 'purchaseid1234',
                 sequenceType: 0
             })
+            .request()
             .then((response) => {
-                expect(response.data).toBeDefined()
-            }).catch((err)=>{
-          console.log(err);
-        })
+                expect(response.isPendingProcessing()).toBeTruthy()
+            })
     })
     test('GetStatus', async () => {
-        method.status({ mandateId: '1DC014098EC5C1F40AD803B83A425153BBC' }).then((response) => {
-            expect(response.data).toBeDefined()
-        })
+        method
+            .status({ mandateId: '1DC014098EC5C1F40AD803B83A425153BBC' })
+            .request()
+            .then((response) => {
+                expect(response.isSuccess()).toBeTruthy()
+            })
     })
     test('ModifyMandate', async () => {
         method
             .modifyMandate({
                 originalMandateId: '1DC014098EC5C1F40AD803B83A425153BBC',
-                continueOnIncomplete: 1
+                continueOnIncomplete: true
             })
+            .request()
             .then((response) => {
-                expect(response.data).toBeDefined()
+                expect(response.isFailed()).toBeTruthy()
             })
     })
     test('CancelMandate', async () => {
@@ -44,8 +48,9 @@ describe('Testing Emandates methods', () => {
                 mandateId: '1DC014098EC5C1F40AD803B83A425153BBC',
                 purchaseId: 'purchaseid1234'
             })
+            .request()
             .then((response) => {
-                expect(response).toBeDefined()
+                expect(response.isValidationFailure()).toBeTruthy()
             })
     })
 })

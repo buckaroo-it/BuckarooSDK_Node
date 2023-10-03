@@ -1,5 +1,5 @@
-import Gender from "../../src/Constants/Gender";
-import PayPerEmail from '../../src/PaymentMethods/PayPerEmail/index'
+import Gender from '../../src/Constants/Gender'
+import PayPerEmail from '../../src/PaymentMethods/PayPerEmail'
 
 require('../BuckarooClient.test')
 

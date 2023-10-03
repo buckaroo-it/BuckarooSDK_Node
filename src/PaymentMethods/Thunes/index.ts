@@ -1,23 +1,23 @@
-import PaymentMethod from "../PaymentMethod";
-import { ICapture, ITransaction, Payload } from "../../Models/ITransaction";
+import PaymentMethod from '../PaymentMethod'
+import IRequest from '../../Models/IRequest'
 
+type key = Required<Pick<IRequest, 'originalTransactionKey'>>
 export default class Thunes extends PaymentMethod {
-    protected _paymentName = "thunes";
-
-    getStatus(payload: Required<Pick<ITransaction,'originalTransactionKey'>>) {
-      this.action = 'getStatus'
-      return this.dataRequest(payload)
+    protected _paymentName = 'Thunes'
+    getStatus(payload: key) {
+        this.setServiceList('getStatus')
+        return this.dataRequest(payload)
     }
-    capture(payload:ICapture) {
-      this.action = 'capture'
-      return this.transactionRequest(payload)
+    capture(payload: IRequest & key) {
+        this.setServiceList('Capture')
+        return this.transactionRequest(payload)
     }
-    authorize(payload:Payload) {
-      this.action = 'authorize'
-      return this.dataRequest(payload)
+    authorize(payload: IRequest) {
+        this.setServiceList('Authorize')
+        return this.dataRequest(payload)
     }
-    cancel(payload:Pick<ITransaction,'originalTransactionKey'>) {
-      this.action = 'cancel'
-      return this.dataRequest(payload)
+    cancel(payload: key) {
+        this.setServiceList('Cancel')
+        return this.dataRequest(payload)
     }
 }

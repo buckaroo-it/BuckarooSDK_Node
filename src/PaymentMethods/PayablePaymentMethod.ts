@@ -1,33 +1,34 @@
 import PaymentMethod from './PaymentMethod'
+import IRequest, { IPaymentRequest, IRefundRequest } from '../Models/IRequest'
 import { uniqid } from '../Utils/Functions'
-import { ITransaction, Payload, RefundPayload } from '../Models/ITransaction'
-import { TransactionResponse } from '../Models/TransactionResponse'
-import { IConfig } from '../Utils/Types'
+import { ServiceParameter } from '../Models/ServiceParameters'
+import { IParameter } from '../Models/IParameters'
 
-export abstract class PayablePaymentMethod extends PaymentMethod {
-    protected _requiredFields: Array<keyof IConfig> = [
+export default abstract class PayablePaymentMethod extends PaymentMethod {
+    protected _requiredFields: Array<keyof IRequest> = [
         'currency',
         'returnURL',
         'returnURLCancel',
         'pushURL'
     ]
-    protected payTransaction(payload: ITransaction): Promise<TransactionResponse> {
+    protected setPayPayload(payload: IRequest) {
         payload.invoice = payload.invoice || uniqid()
         payload.order = payload.order || uniqid()
-
-        return this.transactionRequest(payload)
+        super.setPayload(payload)
     }
-    pay(payload: Payload) {
-        this.action = 'Pay'
-        return this.payTransaction(payload)
+    pay(payload: IPaymentRequest, serviceParameters?: ServiceParameter | IParameter[]) {
+        this.setPayPayload(payload)
+        this.setServiceList('Pay', serviceParameters)
+        return this.transactionRequest()
     }
-
-    protected refund(payload: RefundPayload) {
-        this.action = 'Refund'
-        return this.payTransaction(payload)
+    payRemainder(payload: IPaymentRequest, serviceParameters?: ServiceParameter | IParameter[]) {
+        this.setPayPayload(payload)
+        this.setServiceList('PayRemainder', serviceParameters)
+        return this.transactionRequest()
     }
-    protected transactionInvoice(payload: ITransaction): Promise<TransactionResponse> {
-        payload.invoice = payload.invoice || uniqid()
-        return this.transactionRequest(payload)
+    refund(payload: IRefundRequest, serviceParameters?: ServiceParameter | IParameter[]) {
+        this.setPayload(payload)
+        this.setServiceList('Refund', serviceParameters)
+        return this.transactionRequest()
     }
 }

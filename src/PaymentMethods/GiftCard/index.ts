@@ -1,16 +1,14 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { Payload, RefundPayload } from '../../Models/ITransaction'
+import PayablePaymentMethod from '../PayablePaymentMethod'
+import IPay, { Pay } from './Models/Pay'
+import { IRefund, Refund } from './Models/Refund'
 
 export default class GiftCard extends PayablePaymentMethod {
-    pay(payload: Payload & { name: string }) {
-        return super.pay(payload)
+    protected _paymentName = 'GiftCard'
+
+    pay(payload: IPay) {
+        return super.pay(payload, new Pay(payload))
     }
-    refund(payload: RefundPayload & { name: string }) {
-        return super.refund(payload)
-    }
-    setRequest(payload: any) {
-        this.paymentName = payload.name || this._paymentName
-        delete payload.name
-        super.setRequest(payload)
+    refund(payload: IRefund) {
+        return super.refund(payload, new Refund(payload))
     }
 }

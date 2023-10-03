@@ -1,5 +1,5 @@
 require('../BuckarooClient.test')
-import WechatPay from '../../src/PaymentMethods/WeChatPay/index'
+import WechatPay from '../../src/PaymentMethods/WeChatPay'
 
 const method = new WechatPay()
 

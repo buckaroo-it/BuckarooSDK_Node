@@ -1,45 +1,48 @@
-import { Payload } from '../../../Models/ITransaction'
-import Gender from '../../../Constants/Gender'
-import RecipientCategory from '../../../Constants/RecipientCategory'
+import { ServiceParameter } from '../../../Models/ServiceParameters'
+import { IPaymentRequest } from '../../../Models/IRequest'
+import { IIn3Article, In3Article } from './Article'
+import { IIn3Recipient, In3Recipient } from './Recipient'
 
-type Article = {
-    code: string
-    name: string
-    quantity: number
-    price: number
+export interface IPay extends IPaymentRequest {
+    invoiceDate?: string
+    invoiceUrl?: string
+    billing?: IIn3Recipient
+    shipping?: Partial<IIn3Recipient>
+    articles?: Partial<IIn3Article>[]
 }
-
-type Address = {
-    street: string
-    houseNumber: number
-    houseNumberSuffix: string
-    zipCode: string
-    city: string
-    country: string
-}
-
-type Company = {
-    name: string
-    chamberOfCommerce: string
-}
-type Person = {
-    gender: Gender
-    culture: string
-    initials: string
-    lastName: string
-    birthDate: string
-}
-
-export interface IPay extends Payload {
-    description: string
-    clientIP: string
-    customerType: RecipientCategory.PERSON | RecipientCategory.COMPANY
-    invoiceDate: string
-    email: { email: string }
-    phone: { phone?: string; fax?: string }
-    company: Company
-    person: Person
-    address: Address
-    productLine: Article[]
-    subtotalLine: { name: string; value: number }[]
+export default class Pay extends ServiceParameter {
+    protected getGroups(): {} {
+        return super.getGroups({
+            Billing: 'BillingCustomer',
+            Shipping: 'ShippingCustomer',
+            Articles: 'Article'
+        })
+    }
+    protected getCountable() {
+        return super.getCountable(['Articles'])
+    }
+    set invoiceDate(value: string) {
+        this.set('invoiceDate', value)
+    }
+    set invoiceUrl(value: string) {
+        this.set('invoiceUrl', value)
+    }
+    get billing() {
+        return new In3Recipient()
+    }
+    set billing(billing: IIn3Recipient) {
+        this.set('billing', new In3Recipient(billing))
+        if (this.get('shipping') === undefined) {
+            this.shipping = billing
+        }
+    }
+    set shipping(shipping: IIn3Recipient) {
+        this.set('shipping', new In3Recipient(shipping))
+    }
+    set articles(articles: In3Article[]) {
+        this.set(
+            'articles',
+            articles.map((article) => new In3Article(article))
+        )
+    }
 }

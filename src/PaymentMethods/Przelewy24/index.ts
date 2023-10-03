@@ -1,14 +1,13 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { RefundPayload } from '../../Models/ITransaction'
-import { IPay } from './Models/Pay'
+import PayablePaymentMethod from '../PayablePaymentMethod'
+import { IRefundRequest } from '../../Models/IRequest'
+import { IPay, Pay } from './Models/Pay'
 
 export default class Przelewy24 extends PayablePaymentMethod {
     protected _paymentName = 'Przelewy24'
-
     pay(payload: IPay) {
-        return super.pay(payload)
+        return super.pay(payload, new Pay(payload))
     }
-    refund(payload: RefundPayload) {
+    refund(payload: IRefundRequest) {
         return super.refund(payload)
     }
 }

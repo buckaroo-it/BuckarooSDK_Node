@@ -1,20 +1,16 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { IPay } from './Models/Pay'
-import { IConfig } from '../../Utils/Types'
-import { RefundPayload } from '../../Models/ITransaction'
+import { IPay, Pay } from './Models/Pay'
+import PayablePaymentMethod from '../PayablePaymentMethod'
 
 export default class Klarna extends PayablePaymentMethod {
-    protected _paymentName = 'klarna'
-    protected _serviceVersion = 1
-    protected _requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
-    pay(payload: IPay) {
-        return super.pay(payload)
+    protected _paymentName = 'Klarna'
+    pay(data: IPay) {
+        return super.pay(data, new Pay(data))
     }
-    refund(payload: RefundPayload) {
-        return super.refund(payload)
+    payInInstallments(data: IPay) {
+        this.setServiceList('PayInInstallments', new Pay(data))
+        return super.pay(data)
     }
-    payInInstallments(payload: IPay) {
-        this.action = 'PayInInstallments'
-        return super.transactionRequest(payload)
+    payRemainder(payload: IPay) {
+        return super.payRemainder(payload, new Pay(payload))
     }
 }

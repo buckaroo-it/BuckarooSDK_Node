@@ -1,23 +1,22 @@
+import buckarooClientTest from '../BuckarooClient.test'
 import { IPay } from '../../src/PaymentMethods/Klarna/Models/Pay'
-
-require('../BuckarooClient.test')
-import Klarna from '../../src/PaymentMethods/Klarna/index'
 import { uniqid } from '../../src/Utils/Functions'
+import RecipientCategory from '../../src/Constants/RecipientCategory'
 
-const klarna = new Klarna()
-
+const klarna = buckarooClientTest.method('klarna')
 describe('Testing Klarna methods', () => {
     test('Pay', async () => {
-        await klarna.pay(payload).then((res) => {
-            expect(res).toBeDefined()
-        })
-    })
-    test('Refund', async () => {
         await klarna
-            .refund({
-                amountCredit: 21,
-                originalTransactionKey: ''
+            .pay(payload)
+            .request()
+            .then((res) => {
+                expect(res.isPendingProcessing()).toBeTruthy()
             })
+    })
+    test('PayInInstallments', async () => {
+        await klarna
+            .payInInstallments(payload)
+            .request()
             .then((res) => {
                 expect(res).toBeDefined()
             })
@@ -25,38 +24,62 @@ describe('Testing Klarna methods', () => {
 })
 
 let payload: IPay = {
-    order: uniqid(),
     amountDebit: 50.3,
     invoice: uniqid(),
-    additionalParameters: undefined,
-    article: [],
-    billingCustomer: {
-        city: '',
-        country: '',
-        email: '',
-        firstName: '',
-        lastName: '',
-        phone: '',
-        postalCode: '',
-        street: '',
-        streetNumber: '',
-        streetNumberAdditional: ''
+    order: uniqid(),
+    billing: {
+        recipient: {
+            category: RecipientCategory.PERSON,
+            gender: 'female',
+            firstName: 'John',
+            lastName: 'Do',
+            birthDate: '1990-01-01'
+        },
+        address: {
+            street: 'Hoofdstraat',
+            houseNumber: '13',
+            houseNumberAdditional: 'a',
+            zipcode: '1234AB',
+            city: 'Heerenveen',
+            country: 'NL'
+        },
+        phone: {
+            mobile: '0698765433'
+        },
+        email: 'test@buckaroo.nl'
     },
-    clientIP: undefined,
-    culture: '',
-    currency: '',
-    customParameters: undefined,
-    description: '',
-    originalTransactionKey: '',
-    originalTransactionReference: '',
-    pushURL: '',
-    pushURLFailure: '',
-    returnURL: '',
-    returnURLCancel: '',
-    returnURLError: '',
-    returnURLReject: '',
-    servicesExcludedForClient: '',
-    servicesSelectableByClient: '',
-    shippingCustomer: undefined,
-    startRecurrent: false
+    shipping: {
+        recipient: {
+            category: RecipientCategory.COMPANY,
+            gender: 'male',
+            firstName: 'John',
+            lastName: 'Do',
+            birthDate: '1990-01-01'
+        },
+        address: {
+            street: 'Kalverstraat',
+            houseNumber: '13',
+            houseNumberAdditional: 'b',
+            zipcode: '4321EB',
+            city: 'Amsterdam',
+            country: 'NL'
+        },
+        email: 'test@buckaroo.nl'
+    },
+    articles: [
+        {
+            identifier: 'Articlenumber1',
+            description: 'Blue Toy Car',
+            vatPercentage: 21,
+            quantity: 2,
+            price: 20.1
+        },
+        {
+            identifier: 'Articlenumber2',
+            description: 'Red Toy Car',
+            vatPercentage: 21,
+            quantity: 1,
+            price: 10.1
+        }
+    ]
 }

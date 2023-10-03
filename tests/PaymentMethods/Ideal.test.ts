@@ -1,8 +1,6 @@
-require('../BuckarooClient.test')
 import { uniqid } from '../../src/Utils/Functions'
-import Ideal from '../../src/PaymentMethods/Ideal/index'
-
-const ideal = new Ideal()
+import buckarooClientTest from '../BuckarooClient.test'
+const ideal = buckarooClientTest.method('ideal')
 describe('testing Ideal methods', () => {
     test('Issuers', async () => {
         await ideal.issuers().then((response) => {
@@ -14,15 +12,13 @@ describe('testing Ideal methods', () => {
             .pay({
                 amountDebit: 10.1,
                 issuer: 'ABNANL2A',
-                clientIP: {
-                    address: '123.456.789.123',
-                    type: 0
-                },
+                continueOnIncomplete: false,
                 additionalParameters: {
                     initiated_by_magento: 1,
                     service_action: 'something'
                 }
             })
+            .request()
             .then((data) => {
                 expect(data.isPendingProcessing()).toBeTruthy()
             })
@@ -34,25 +30,26 @@ describe('testing Ideal methods', () => {
                 invoice: uniqid(),
                 originalTransactionKey: '97DC0A03BBDF4DAAAC694D7FEC8785E1',
                 amountCredit: 4.23,
-                clientIP: {
-                    address: '123.456.789.123',
-                    type: 0
-                },
+                clientIP: '123.456.789.123',
                 additionalParameters: {
                     initiated_by_magento: '1',
                     service_action: 'something'
                 }
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined()
             })
     })
     test('InstantRefund', async () => {
-        await ideal.instantRefund({
-            amountCredit: 4.23,
-            originalTransactionKey: '97DC0A03BBDF4DAAAC694D7FEC8785E1',
-        }).then((data) => {
-            expect(data).toBeDefined()
-        })
+        await ideal
+            .instantRefund({
+                amountCredit: 4.23,
+                originalTransactionKey: '97DC0A03BBDF4DAAAC694D7FEC8785E1'
+            })
+            .request()
+            .then((data) => {
+                expect(data).toBeDefined()
+            })
     })
 })

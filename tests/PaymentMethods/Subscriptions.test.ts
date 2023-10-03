@@ -1,44 +1,47 @@
-import Subscriptions from '../../src/PaymentMethods/Subscriptions/index'
-import Ideal from '../../src/PaymentMethods/Ideal/index'
+import buckarooClientTest from '../BuckarooClient.test'
 
-require('../BuckarooClient.test')
-
-const subscription = new Subscriptions()
-const ideal = new Ideal()
+const subscription = buckarooClientTest.method('subscriptions')
 
 test('Create', async () => {
     subscription
         .create({
-            ratePlan: {
-                update: {
+            additionalParameters: {
+                signature: '123213'
+            },
+            ratePlans: {
+                add: {
                     startDate: '2024-07-23',
-                    ratePlanGuid: ''
+                    ratePlanCode: 'zfv59mmy'
                 }
             },
-            ratePlanCharge: {
+            ratePlanCharges: {
                 add: {
                     ratePlanChargeCode: 'test'
                 }
             },
             configurationCode: 'gfyh9fe4',
-            addConfiguration: {
+            configuration: {
                 name: 'owiejr'
             },
             debtor: {
                 code: 'johnsmith4'
             }
         })
-        .catch((e) => {
-            expect(e.response.data).toBeDefined()
+        .request()
+        .then((data) => {
+            expect(data.hasError()).toBeTruthy()
         })
         .catch((e) => {
-            expect(e.response.data).toBeDefined()
+            expect(e).toBeDefined()
+        })
+        .catch((e) => {
+            expect(e).toBeDefined()
         })
 })
 test('Update', async () => {
     subscription
         .update({
-            email: { email: 'test@buckaroo.nl' },
+            email: 'test@buckaroo.nl',
             subscriptionGuid: 'FC512FC9CC3A485D8CF3D1804FF6xxxx',
             configurationCode: '9wqe32ew',
             ratePlan: {
@@ -49,60 +52,70 @@ test('Update', async () => {
                 }
             }
         })
+        .request()
         .then((data) => {
             expect(data).toBeDefined()
         })
 })
 
 test('Combined Subscription', async () => {
-    const combinable = subscription.createCombined({
-        address: undefined,
-        allowedServices: '',
-        b2b: '',
-        bankAccount: { accountName: '', bic: '', iban: '' },
-        billingTiming: 0,
-        // company: undefined,
-        configuration: undefined,
-        configurationCode: '',
-        customerAccountName: '',
-        customerBIC: '',
-        customerIBAN: '',
-        debtor: { code: '' },
-        email: { email: '' },
-        includeTransaction: false,
-        mandateReference: '',
-        person: undefined,
-        phone: undefined,
-        ratePlan: undefined,
-        ratePlanCharge: undefined,
-        subscriptionGuid: '',
-        termStartDay: 0,
-        termStartMonth: 0,
-        termStartWeek: '',
-        transactionVatPercentage: 0
-    })
-    ideal
-        .combine(combinable)
+    const combinable = subscription
+        .createCombined({
+            pushURL: 'https://buckaroo.dev/push',
+            includeTransaction: false,
+            transactionVatPercentage: 5,
+            configurationCode: 'gfyh9fe4',
+            email: 'test@buckaroo.nl',
+            ratePlans: {
+                add: {
+                    startDate: '2033-01-01',
+                    ratePlanCode: '9863hdcj'
+                }
+            },
+            phone: {
+                mobile: '0612345678'
+            },
+            debtor: {
+                code: 'johnsmith4'
+            },
+            company: {
+                culture: 'nl-NL',
+                companyName: 'My Company Coporation',
+                vatApplicable: true,
+                vatNumber: 'NL140619562B01',
+                chamberOfCommerce: '20091741'
+            },
+            address: {
+                street: 'Hoofdstraat',
+                houseNumber: '90',
+                zipcode: '8441ER',
+                city: 'Heerenveen',
+                country: 'NL'
+            }
+        })
+        .combine('ideal')
         .pay({
             issuer: 'ABNANL2A',
             amountDebit: 10,
             startRecurrent: true
         })
+        .request()
         .then((res) => {
             expect(res).toBeDefined()
         })
 })
 
 test('Update Combined Subscription', async () => {
-    const combinable = subscription.updateCombined({
-        subscriptionGuid: '515461997AD34C50881D74157E38A64D'
-    })
-    ideal
-        .combine(combinable)
+    const combinable = subscription
+        .updateCombined({
+            subscriptionGuid: '515461997AD34C50881D74157E38A64D'
+        })
+        .combine('ideal')
         .pay({
             issuer: 'ABNANL2A',
             amountDebit: 10
         })
+        .request()
         .then((res) => {
             expect(res).toBeDefined()
         })
@@ -125,8 +138,9 @@ test('Delete Subscription Config', async () => {
         .deletePaymentConfig({
             subscriptionGuid: '515461997AD34C50881D74157E38A64D'
         })
+        .request()
         .then((res) => {
-            expect(res.status === 200).toBeTruthy()
+            expect(res.httpResponse.statusCode === 200).toBeTruthy()
         })
 })
 test('Subscription Pause', async () => {

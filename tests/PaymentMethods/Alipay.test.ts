@@ -1,32 +1,36 @@
-require('../BuckarooClient.test')
-import Alipay from '../../src/PaymentMethods/Alipay'
+import buckarooClientTest from '../BuckarooClient.test'
 
-const method = new Alipay()
+const alipay = buckarooClientTest.method('alipay')
 
 describe('Alipay methods', () => {
     test('Pay Simple Payload', async () => {
-        await method
+        await alipay
             .pay({
                 amountDebit: 10,
                 useMobileView: false
             })
+            .request()
             .then((data) => {
-                expect(data).toBeDefined()
+                expect(data.isPendingProcessing()).toBeTruthy()
             })
     })
     test('Refund', async () => {
-        await method
+        await alipay
             .refund({
                 amountCredit: 5,
                 originalTransactionKey: 'F397777A251645F8BDD81547B5005B4B'
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined()
             })
     })
     test('Specifications', async () => {
-        await method.specification().then((data) => {
-            expect(data).toBeDefined()
-        })
+        await alipay
+            .specification()
+            .request()
+            .then((data) => {
+                expect(data).toBeDefined()
+            })
     })
 })

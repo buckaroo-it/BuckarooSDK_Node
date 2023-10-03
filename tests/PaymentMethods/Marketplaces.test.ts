@@ -1,6 +1,6 @@
 require('../BuckarooClient.test')
-import Marketplaces from '../../src/PaymentMethods/Marketplaces/index'
-import Ideal from '../../src/PaymentMethods/Ideal/index'
+import Marketplaces from '../../src/PaymentMethods/Marketplaces'
+import Ideal from '../../src/PaymentMethods/Ideal'
 const marketplaces = new Marketplaces()
 const ideal = new Ideal()
 

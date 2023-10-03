@@ -1,29 +1,30 @@
-import { IPay } from './Models/Pay'
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { RefundPayload } from '../../Models/ITransaction'
+import { Pay, IPay } from './Models/Pay'
+import PayablePaymentMethod from '../PayablePaymentMethod'
+import { RequestTypes } from '../../Constants/Endpoints'
+import { IRefundRequest } from '../../Models/IRequest'
 
 export default class Ideal extends PayablePaymentMethod {
-    protected _paymentName = 'ideal'
+    protected _paymentName = 'Ideal'
     protected _serviceVersion = 2
-
-    pay(payload: IPay) {
-        return super.pay(payload)
+    pay(data: IPay) {
+        return super.pay(data, new Pay(data))
     }
-    refund(payload: RefundPayload) {
-        return super.refund(payload)
+    payRemainder(payload: IPay) {
+        return super.payRemainder(payload, new Pay(payload))
     }
     issuers() {
-        return this.specification().then((response) => {
-            return response
-                .getActionRequestParameters('Pay')
-                ?.find((item) => item.Name === 'issuer')
-                ?.ListItemDescriptions.map((item) => {
-                    return { [item.Value]: item.Description }
-                })
-        })
+        return this.specification(RequestTypes.Transaction)
+            .request()
+            .then((response) => {
+                return response
+                    .getActionRequestParameters('Pay')
+                    ?.find((item) => item.name === 'issuer')
+                    ?.listItemDescriptions?.map((item) => {
+                        return { [item.value]: item.description }
+                    })
+            })
     }
-    instantRefund(payload: RefundPayload){
-        this.action = 'InstantRefund'
-        return super.refund(payload)
+    instantRefund(data: IRefundRequest) {
+        return super.refund(data)
     }
 }

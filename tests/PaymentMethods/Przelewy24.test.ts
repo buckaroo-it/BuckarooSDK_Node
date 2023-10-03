@@ -1,21 +1,22 @@
 require('../BuckarooClient.test')
-import Przelewy24 from '../../src/PaymentMethods/Przelewy24/index'
+import Przelewy24 from '../../src/PaymentMethods/Przelewy24'
 
-const method = new Przelewy24()
+const method = new Przelewy24('Przelewy24')
 
 describe('Przelewy24', () => {
     test('Pay', async () => {
-        await method
+        method
             .pay({
-                customerLastName: "",
-                additionalParameters: undefined,
-                amountDebit: 0,
-                customerEmail: "",
-                customerFirstName: "",
-                email: "",
+                amountDebit: 50.3,
+                customer: {
+                    firstName: 'test',
+                    lastName: 'test'
+                },
+                email: 'test@hotmail.com'
             })
-            .then((info) => {
-                expect(info).toBeDefined()
+            .request()
+            .then((res) => {
+                expect(res.isPendingProcessing()).toBeTruthy()
             })
     })
     test('Refund', async () => {
@@ -24,6 +25,7 @@ describe('Przelewy24', () => {
                 amountCredit: 50.3,
                 originalTransactionKey: '123456'
             })
+            .request()
             .then((info) => {
                 expect(info.data).toBeDefined()
             })

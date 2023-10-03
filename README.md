@@ -1,9 +1,9 @@
-
 <p align="center">
   <img src="https://user-images.githubusercontent.com/105488705/233078855-473c45d4-34a6-492a-a5af-05752c803f6b.png" width="200px" position="center">
 </p>
 
 # Node SDK
+
 [![Latest release](https://badgen.net/github/release/buckaroo-it/BuckarooSDK_Node)](https://github.com/buckaroo-it/BuckarooSDK_Node/releases)
 
 <p align="center">
@@ -11,14 +11,17 @@
 </p>
 
 ---
+
 ### Index
-- [About](#about)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Example](#example)
-- [Contribute](#contribute)
-- [Versioning](#versioning)
-- [Additional information](#additional-information)
+
+-   [About](#about)
+-   [Requirements](#requirements)
+-   [Installation](#installation)
+-   [Example](#example)
+-   [Contribute](#contribute)
+-   [Versioning](#versioning)
+-   [Additional information](#additional-information)
+
 ---
 
 ### About
@@ -74,6 +77,7 @@ buckarooClient().cancelInfo(transactionKey) // Retrieve cancellation info
 Find our full documentation online on [docs.buckaroo.io](https://docs.buckaroo.io/docs/node-sdk).
 
 #### Need more examples?
+
 More examples can be found in the [examples folder](https://github.com/buckaroo-it/BuckarooSDK_Node/tree/master/example)
 
 ### Contribute

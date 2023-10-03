@@ -3,11 +3,10 @@ import { IInvitation } from './Models/invitation'
 import { uniqid } from '../../Utils/Functions'
 
 export default class PayPerEmail extends PaymentMethod {
-    protected _paymentName = 'payperemail'
-
+    protected _paymentName = 'PayPerEmail'
     paymentInvitation(payload: IInvitation) {
-        this.action = 'paymentInvitation'
         payload.invoice = payload.invoice || uniqid()
+        this.setServiceList('paymentInvitation')
         return super.transactionRequest(payload)
     }
 }

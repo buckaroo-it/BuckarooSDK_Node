@@ -1,6 +1,6 @@
-import { Payload } from '../../../Models/ITransaction'
+import { IPaymentRequest } from '../../../Models/IRequest'
 
-export interface IEmandate extends Payload {
+export interface IEmandate extends IPaymentRequest {
     mandateReference: string
     collectdate?: string
 }

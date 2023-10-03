@@ -1,7 +1,7 @@
-import { Payload } from '../../../Models/ITransaction'
+import IRequest from '../../../Models/IRequest'
 import gender from '../../../Constants/Gender'
 
-export interface IInvitation extends Payload {
+export interface IInvitation extends IRequest {
     customerGender: gender
     customerFirstName: string
     customerLastName: string

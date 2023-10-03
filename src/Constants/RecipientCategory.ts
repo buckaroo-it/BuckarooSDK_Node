@@ -1,7 +1,5 @@
 enum RecipientCategory {
-    PERSON = 'Person',
-    COMPANY = 'Company',
-    B2B = 'B2B',
-    B2C = 'B2C'
+    PERSON = 'PERSON',
+    COMPANY = 'COMPANY'
 }
 export default RecipientCategory

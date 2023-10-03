@@ -1,10 +1,16 @@
+import { ServiceCode } from './MethodTypes'
+
 export declare interface IConfig {
-    mode?: 'live' | 'test'
-    currency?: string
-    returnURL: string
-    returnURLCancel: string
-    pushURL: string
-    baseUrl: string
+    mode: Mode
+    currency: string
+    continueOnIncomplete?: 0 | 1
+    returnURL?: string
+    returnURLCancel?: string
+    pushURL?: string
+    returnURLError?: string
+    returnURLReject?: string
+    activePaymentMethods?: ServiceCode[]
+    disabledPaymentMethods?: ServiceCode[]
 }
 
 export declare interface ICredentials {
@@ -12,15 +18,4 @@ export declare interface ICredentials {
     secretKey: string
 }
 
-export type IPAddress = {
-    address: string
-    type: number
-}
-export type ParameterTypes = string | number | boolean | undefined
-
-export declare type AdditionalParameter = {
-    [name: string]: ParameterTypes
-}
-export declare interface ServiceParameters {
-    [name: string]: ParameterTypes | ParameterTypes[] | ServiceParameters | ServiceParameters[]
-}
+export type Mode = 'LIVE' | 'TEST'

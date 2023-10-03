@@ -1,6 +1,7 @@
-import { RefundPayload } from '../../../Models/ITransaction'
+import { IRefundRequest } from '../../../Models/IRequest'
+import { ServiceParameter } from '../../../Models/ServiceParameters'
 
-export interface Refund extends RefundPayload {
+export interface IRefund extends IRefundRequest {
     description: string
     refundReason:
         | 'Duplicate'
@@ -8,4 +9,13 @@ export interface Refund extends RefundPayload {
         | 'GoodsNotDelivered'
         | 'RequestedByCustomer'
         | 'TechnicalError'
+}
+
+export class Refund extends ServiceParameter {
+    set description(value: string) {
+        this.set('description', value)
+    }
+    set refundReason(value: IRefund['refundReason']) {
+        this.set('refundreason', value)
+    }
 }

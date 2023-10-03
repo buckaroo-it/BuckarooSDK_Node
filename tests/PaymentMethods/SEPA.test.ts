@@ -1,5 +1,5 @@
 require('../BuckarooClient.test')
-import SEPA from '../../src/PaymentMethods/SEPA/index'
+import SEPA from '../../src/PaymentMethods/SEPA'
 
 const method = new SEPA()
 

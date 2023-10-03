@@ -1,88 +1,102 @@
-import { Request } from '../Models/Request'
-import { IConfig, ServiceParameters } from '../Utils/Types'
-import { RequestType } from '../Constants/Endpoints'
-import { ITransaction } from '../Models/ITransaction'
-import buckarooClient from '../index'
-import { IServiceList } from '../Models/ServiceList'
+import { RequestTypes } from '../Constants/Endpoints'
+import IRequest from '../Models/IRequest'
+import Buckaroo from '../index'
+import Request from '../Request/Request'
+import { ServiceList } from '../Models/IServiceList'
+import { ServiceParameter } from '../Models/ServiceParameters'
+import { IParameter } from '../Models/IParameters'
+import { DataRequestData, TransactionData } from '../Request/DataModels'
+
 export default abstract class PaymentMethod {
-    protected readonly _requiredFields: Array<keyof IConfig> = ['currency', 'pushURL']
-    protected _paymentName = ''
-    protected _serviceVersion = 0
-    protected _request: Request = new Request()
-    private _action = ''
-    get paymentName(): string {
-        return this._paymentName
+    protected _paymentName: string = ''
+    protected _serviceCode?: string
+    protected _serviceVersion: number = 0
+    protected _payload: IRequest = {}
+    protected _serviceList: ServiceList = new ServiceList()
+    constructor(serviceCode?: string) {
+        this._serviceCode = serviceCode
     }
-    get request(): ITransaction {
-        return this._request.data
-    }
-    protected set paymentName(value: string) {
-        this._paymentName = value
-    }
-    get serviceVersion(): number {
+    get serviceVersion() {
         return this._serviceVersion
     }
-    protected get action(): string {
-        return this._action
+    set serviceVersion(value: number) {
+        this._serviceVersion = value
     }
-    protected set action(value: string) {
-        this._action = value
+    get serviceCode() {
+        return this._serviceCode || ''
     }
-    public setRequestAction(action:string) {
-        this._request.services?.ServiceList.forEach((service) => {
-            service.Action = action
-        })
+    get paymentName() {
+        return this._paymentName
     }
-
-    public setRequest(data: ITransaction  | (ITransaction & ServiceParameters) ) {
-        this._request.setBasicParameters(data)
-
-        this.setRequiredFields()
-
-        this.setServiceParameters(this._request.filter(data))
-    }
-
-    protected setServiceParameters(serviceParameters: ServiceParameters) {
-        let serviceList: IServiceList = {
-            Action: this.action,
-            Name: this.paymentName,
-            Version: this.serviceVersion
-        }
-        if (Object.keys(serviceParameters).length > 0) {
-            serviceList.Parameters = this._request.formatServiceParameters(serviceParameters)
-        }
-        this._request.addServices(serviceList)
-    }
-
-    protected setRequiredFields() {
-        for (const requiredField of this._requiredFields) {
-            if (!this._request.data[requiredField])
-                this._request.data[requiredField] = buckarooClient().getConfig()[requiredField]
-        }
-    }
-    protected transactionRequest(requestData: ITransaction | (ITransaction & ServiceParameters)  ){
-        this.setRequest(requestData)
-
-        return buckarooClient().transactionRequest(this._request.data)
-    }
-    protected dataRequest(requestData: ITransaction | (ITransaction & ServiceParameters) = {}) {
-        this.setRequest(requestData)
-
-        return buckarooClient().dataRequest(this._request.data)
-    }
-    public combine(method: PaymentMethod) {
-        if (Object.keys(method._request.data).length > 0) {
-            let services = this._request.services
-            if (services && method._request.services) {
-                method._request.services.ServiceList = services.ServiceList.concat(
-                    method._request.services.ServiceList
-                )
+    protected _requiredFields: Array<keyof IRequest> = []
+    protected setRequiredFields(requiredFields: Array<keyof IRequest> = this._requiredFields) {
+        for (const fieldKey of requiredFields) {
+            let field = this._payload[fieldKey] ?? Buckaroo.Client.config[fieldKey]
+            if (field === undefined) {
+                throw new Error(`Missing required config parameter ${String(fieldKey)}`)
             }
-            Object.assign(this._request.data, method._request.data)
+            this._payload[fieldKey] = field
         }
         return this
     }
-    public specification(type?: RequestType) {
-        return buckarooClient().specification(this.paymentName, this.serviceVersion, type)
+    protected setPayload(payload: IRequest) {
+        this.setRequiredFields()
+        this._payload = { ...this._payload, ...payload }
+    }
+    getPayload() {
+        return this._payload
+    }
+    protected setServiceList(
+        action: string,
+        serviceParameters?: IParameter[] | ServiceParameter,
+        serviceCode = this.serviceCode,
+        serviceVersion = this.serviceVersion
+    ) {
+        this._serviceList.addService({
+            name: serviceCode,
+            action: action,
+            version: serviceVersion,
+            parameters:
+                serviceParameters instanceof ServiceParameter
+                    ? serviceParameters.toParameterList()
+                    : serviceParameters
+        })
+    }
+    getServices() {
+        return this._serviceList.list
+    }
+    protected transactionRequest(payload?: IRequest) {
+        let data = new TransactionData({ ...(payload ?? this._payload) })
+        if (this._serviceList.list.length > 0) {
+            data.setServiceList(this._serviceList)
+        }
+        return Request.Transaction(data)
+    }
+    protected dataRequest(payload?: IRequest) {
+        let data = new DataRequestData({ ...(payload ?? this._payload) })
+        if (this._serviceList.list.length > 0) {
+            data.setServiceList(this._serviceList)
+        }
+        return Request.DataRequest(data)
+    }
+    public specification(type: RequestTypes.Transaction | RequestTypes.Data = RequestTypes.Data) {
+        return Request.Specification(type, { name: this.serviceCode, version: this.serviceVersion })
+    }
+    combine<Payload extends TransactionData>(data: Payload): this
+    combine<Method extends PaymentMethod>(method: Method): this
+    combine(data): this {
+        if (data instanceof PaymentMethod) {
+            data = data.getPayload()
+        }
+        let { services, Services, ...payload } = data
+        for (const key in payload) {
+            if (payload.hasOwnProperty(key)) {
+                this._payload[key] = payload[key]
+            }
+        }
+        for (const service of services?.serviceList) {
+            this.setServiceList(service.action, service.parameters, service.name, service.version)
+        }
+        return this
     }
 }

@@ -1,4 +1,4 @@
-import { ITransaction } from '../../../Models/ITransaction'
+import { IPaymentRequest } from '../../../Models/IRequest'
 
 type Seller = {
     accountId?: string
@@ -9,12 +9,12 @@ type Marketplace = {
     amount?: number
     description?: string
 }
-export interface ISplit extends ITransaction {
+export interface ISplit extends IPaymentRequest {
     seller?: Seller[]
     marketplace?: Marketplace
     daysUntilTransfer?: number
 }
-export interface ITransfer extends ITransaction {
+export interface ITransfer extends IPaymentRequest {
     seller?: Seller[]
     marketplace?: Marketplace
     daysUntilTransfer?: number

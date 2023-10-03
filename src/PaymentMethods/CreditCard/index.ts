@@ -1,50 +1,52 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { IEncrypted, ISecurityCodePay } from './Models/Pay'
-import { ICapture, Payload, RefundPayload } from '../../Models/ITransaction'
+import PayablePaymentMethod from '../PayablePaymentMethod'
+import IRequest, { IPaymentRequest, IRefundRequest } from '../../Models/IRequest'
+import { CardData, ICardData } from './Models/CardData'
+import { ISecurityCode, SecurityCode } from './Models/SecurityCode'
 
-export type AddName<T> = T & { name: string }
-export default class Creditcard extends PayablePaymentMethod {
-    pay(payload: AddName<Payload>) {
-        return super.pay(payload)
+export default class CreditCard extends PayablePaymentMethod {
+    protected _paymentName = 'CreditCard'
+    payEncrypted(payload: ICardData) {
+        this.setPayPayload(payload)
+        this.setServiceList('PayEncrypted', new CardData(payload))
+        return super.transactionRequest()
     }
-    refund(payload: AddName<RefundPayload>) {
-        return super.refund(payload)
+    payWithSecurityCode(payload: ISecurityCode) {
+        this.setPayPayload(payload)
+        this.setServiceList('PayWithSecurityCode', new SecurityCode(payload))
+        return super.transactionRequest()
     }
-    payEncrypted(payload: AddName<IEncrypted>) {
-        this.action = 'PayEncrypted'
-        return super.pay(payload)
+    authorize(payload: IPaymentRequest) {
+        this.setPayPayload(payload)
+        this.setServiceList('Authorize')
+        return super.transactionRequest()
     }
-    payWithSecurityCode(payload: AddName<ISecurityCodePay>) {
-        this.action = 'PayWithSecurityCode'
-        return super.pay(payload)
+    authorizeWithSecurityCode(payload: ISecurityCode) {
+        this.setPayPayload(payload)
+        this.setServiceList('AuthorizeWithSecurityCode', new SecurityCode(payload))
+        return super.transactionRequest()
     }
-    authorize(payload: AddName<Payload>) {
-        this.action = 'Authorize'
+    authorizeEncrypted(payload: ICardData) {
+        this.setPayPayload(payload)
+        this.setServiceList('AuthorizeEncrypted', new CardData(payload))
+        return super.transactionRequest()
+    }
+    cancelAuthorize(payload: IRefundRequest) {
+        this.setServiceList('CancelAuthorize')
         return super.transactionRequest(payload)
     }
-    authorizeWithSecurityCode(payload: AddName<ISecurityCodePay>) {
-        this.action = 'AuthorizeWithSecurityCode'
-        return super.transactionRequest(payload)
+    capture(payload: IRequest) {
+        this.setPayPayload(payload)
+        this.setServiceList('Capture')
+        return super.transactionRequest()
     }
-    authorizeEncrypted(payload: AddName<IEncrypted>) {
-        this.action = 'AuthorizeEncrypted'
-        return super.transactionRequest(payload)
+    payRecurrent(payload: IRequest) {
+        this.setPayPayload(payload)
+        this.setServiceList('PayRecurrent')
+        return super.transactionRequest()
     }
-    cancelAuthorize(payload: AddName<RefundPayload>) {
-        this.action = 'CancelAuthorize'
-        return super.transactionRequest(payload)
-    }
-    capture(payload: AddName<ICapture>) {
-        this.action = 'Capture'
-        return super.transactionRequest(payload)
-    }
-    payRecurrent(payload: AddName<ICapture>) {
-        this.action = 'PayRecurrent'
-        return super.transactionRequest(payload)
-    }
-    setRequest(payload: any) {
-        this.paymentName = payload.name || this._paymentName
-        delete payload.name
-        super.setRequest(payload)
+    payRemainderEncrypted(payload: ICardData) {
+        this.setPayPayload(payload)
+        this.setServiceList('PayRemainderEncrypted', new CardData(payload))
+        return super.transactionRequest()
     }
 }
