@@ -9,6 +9,7 @@ const paymentMethod = new CreditCard('nexi')
             invoice: 'test1',
             amountDebit: 12
         })
+        console.log(info)
     } catch (error) {
         console.warn(error)
     }

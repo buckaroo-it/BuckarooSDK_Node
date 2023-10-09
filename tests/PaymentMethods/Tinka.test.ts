@@ -1,42 +1,54 @@
-require('../BuckarooClient.test')
-import Tinka from '../../src/PaymentMethods/Tinka'
-
-const method = new Tinka()
-
+import Gender from "../../src/Constants/Gender";
+import buckarooClientTest from "../BuckarooClient.test";
+const method = buckarooClientTest.method('tinka')
 describe('Tinka', () => {
     test('Pay', async () => {
         await method
             .pay({
+                billing: {
+                    recipient: {
+                        lastNamePrefix: "the"
+                    },
+                    email: "billingcustomer@buckaroo.nl",
+                    phone: {
+                        mobile: "0109876543"
+                    },
+                    address: {
+                        street: "Hoofdstraat",
+                        houseNumber: "80",
+                        houseNumberAdditional: "A",
+                        zipcode: "8441EE",
+                        city: "Heerenveen",
+                        country: "NL"
+                    }
+                },
+                customer: {
+                    gender : Gender.MALE,
+                    firstName: 'Buck',
+                    lastName : 'Aroo',
+                    initials :'BA',
+                    birthDate : '1990-01-01',
+                },
                 amountDebit: 3.5,
-                article: [
+                articles: [
                     {
-                        description: 'ewf',
+                        type: '1',
+                        description: "Blue Toy Car",
+                        brand: "Ford Focus",
+                        manufacturer: "Ford",
+                        color: "Red",
+                        size: "Small",
                         quantity: 1,
-                        unitCode: '',
-                        unitGrossPrice: 3.5
+                        price: 3.5,
+                        unitCode: "test"
                     }
                 ],
-                billingCustomer: {
-                    city: 'wef',
-                    country: 'rfew',
-                    email: 'few@hotmail.com',
-                    phone: '3161234567',
-                    postalCode: '345445',
-                    prefixLastName: 'fsd',
-                    street: 'ds',
-                    streetNumber: '32',
-                    streetNumberAdditional: 'descs'
-                },
-                dateOfBirth: '',
-                deliveryDate: '',
+                deliveryDate: '09-07-2020',
                 deliveryMethod: 'CompanyStore',
-                firstName: '323',
-                initials: '',
-                lastName: '54',
                 paymentMethod: 'Credit'
-            })
-            .then((info) => {
-                expect(info.data).toBeDefined()
+            }).request()
+            .then((res) => {
+                expect(res.isPendingProcessing()).toBeTruthy()
             })
     })
     test('Refund', async () => {
@@ -44,15 +56,9 @@ describe('Tinka', () => {
             .refund({
                 amountCredit: 3.5,
                 originalTransactionKey: '1234567890'
+            }).request()
+            .then((res) => {
+                expect(res.isFailed()).toBeTruthy()
             })
-            .then((info) => {
-                expect(info).toBeDefined()
-            })
-    })
-
-    test('Specifications', async () => {
-        await method.specification().then((info) => {
-            expect(info).toBeDefined()
-        })
     })
 })

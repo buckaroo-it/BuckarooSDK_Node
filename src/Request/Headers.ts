@@ -19,18 +19,17 @@ export default class Headers {
             Accept: 'application/json',
             Culture: 'nl-NL',
             Authorization: '',
-            Channel: 'Web',
-            Software: JSON.stringify({
+            Channel:'Web',
+            Software:  JSON.stringify({
                 PlatformName: 'Node SDK',
                 PlatformVersion: '1.0',
                 ModuleSupplier: 'Buckaroo',
                 ModuleName: 'BuckarooPayments',
-                ModuleVersion: '1.0'
+                ModuleVersion: '1.0',
             })
         }
     }
-    setSoftwareHeader(
-        value: {
+    setSoftwareHeader(value: {
             platformName?: string
             platformVersion?: string
             moduleSupplier?: string

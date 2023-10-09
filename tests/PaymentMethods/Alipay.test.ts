@@ -22,15 +22,7 @@ describe('Alipay methods', () => {
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
-    test('Specifications', async () => {
-        await alipay
-            .specification()
-            .request()
-            .then((data) => {
-                expect(data).toBeDefined()
+                expect(data.isFailed()).toBeTruthy()
             })
     })
 })

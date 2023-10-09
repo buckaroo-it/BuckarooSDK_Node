@@ -1,6 +1,6 @@
 import PaymentMethod from '../PaymentMethod'
 import { ISplit, ITransfer } from './Models/ISplit'
-
+//ToDO Add the service parameter models
 export default class Marketplaces extends PaymentMethod {
     protected _paymentName = 'Marketplaces'
     split(payload: ISplit) {

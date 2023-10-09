@@ -1,11 +1,13 @@
-import { IConfig, ICredentials } from './Utils/Types'
+import {IConfig, ICredentials} from './Utils/Types'
 import HttpsClient from './Request/HttpsClient'
-import { Agent } from 'https'
-import getMethod, { MethodFromServiceCode, ServiceCode } from './Utils/MethodTypes'
+import {Agent} from 'https'
+import getMethod, {MethodFromServiceCode, ServiceCode} from './Utils/MethodTypes'
 import Request from './Request/Request'
 import NoService from './PaymentMethods/NoService'
 import TransactionService from './Services/TransactionService'
-import { Credentials } from './Handlers/Credentials'
+import {Credentials} from './Handlers/Credentials'
+import {RequestTypes} from "./Constants/Endpoints";
+
 export default class Buckaroo {
     private readonly _credentials: Credentials
     private _config: IConfig
@@ -16,15 +18,11 @@ export default class Buckaroo {
         this._config = { ...(config ?? { mode: 'TEST', currency: 'EUR' }) }
         this._httpClient = new HttpsClient(agent)
     }
-    static InitializeClient(credentials: ICredentials, config?: IConfig, agent?: Agent) {
-        this._client = new this(credentials, config, agent)
-        return this.Client
+    static InitializeClient(credentials: ICredentials, config?: IConfig, agent?: Agent):Buckaroo {
+        return this._client = new this(credentials, config, agent)
     }
     static get Client(): Buckaroo {
-        if (this._client) {
-            return this._client
-        }
-        throw new Error('Buckaroo client not initialized')
+        return this._client
     }
     get credentials(): ICredentials {
         return this._credentials
@@ -44,7 +42,10 @@ export default class Buckaroo {
     transaction(key: string) {
         return new TransactionService(key)
     }
-    get batch() {
+    batch(type:RequestTypes.BatchData | RequestTypes.BatchTransaction = RequestTypes.BatchTransaction) {
+        if (type === RequestTypes.BatchData) {
+            return Request.BatchDataRequest
+        }
         return Request.BatchTransaction
     }
     method(): NoService

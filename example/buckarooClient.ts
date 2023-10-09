@@ -1,9 +1,10 @@
-import Buckaroo from '../src'
+import Buckaroo from "@buckaroo/buckaroo_sdk";
 
 const buckaroo = Buckaroo.InitializeClient({
     secretKey: 'secret',
     websiteKey: 'website'
 })
+
 buckaroo.config = {
     mode: 'TEST',
     currency: 'EUR',

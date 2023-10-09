@@ -10,7 +10,6 @@ ideal
         description: 'Ideal Payment'
     })
     .request()
-
 //Refund
 ideal
     .refund({

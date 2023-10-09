@@ -1,7 +1,8 @@
 import Buckaroo from '../src'
+
 require('dotenv').config()
 
-const buckarooClientTest = Buckaroo.InitializeClient(
+const BuckarooClient = Buckaroo.InitializeClient(
     {
         secretKey: process.env.BPE_SECRET_KEY || '',
         websiteKey: process.env.BPE_WEBSITE_KEY || ''
@@ -14,5 +15,4 @@ const buckarooClientTest = Buckaroo.InitializeClient(
         pushURL: process.env.BPE_PUSH_URL || ''
     }
 )
-
-export default buckarooClientTest
+export default BuckarooClient

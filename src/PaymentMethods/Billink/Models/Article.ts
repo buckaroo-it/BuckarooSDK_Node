@@ -10,3 +10,4 @@ export class Article extends ArticleClass {
         this.set('grossUnitPriceIncl', price)
     }
 }
+

@@ -1,9 +1,8 @@
 import { Agent, RequestOptions } from 'https'
 import { HttpResponseConstructor } from '../Models/Response/HttpClientResponse'
-import { ReplyHandler } from '../Handlers/Reply/ReplyHandler'
-import Buckaroo from '../index'
-const https = require('https')
-const defaultAgent = new https.Agent({
+import * as https from "https";
+
+const defaultAgent = new Agent({
     keepAlive: true,
     keepAliveMsecs: 10000
 })
@@ -13,6 +12,7 @@ export default class HttpsClient {
         this._options.timeout = 10000
         this._options.agent = agent || defaultAgent
         this._options.sessionTimeout = 30000
+
     }
     public sendRequest<R extends HttpResponseConstructor = HttpResponseConstructor>(
         url: URL,
@@ -38,22 +38,13 @@ export default class HttpsClient {
                 })
                 res.on('end', () => {
                     try {
-                        let data = Buffer.concat(response).toString()
-                        new ReplyHandler(
-                            Buckaroo.Client.credentials,
-                            data,
-                            res.headers['authorization'],
-                            url.toString(),
-                            options.method
-                        ).validate()
-                        resolve(new responseClass(res, data) as InstanceType<R>)
+                        resolve(new responseClass(res, Buffer.concat(response).toString()) as InstanceType<R>)
                     } catch (e) {
                         try {
                             reject(Buffer.concat(response).toString())
                         } catch (e) {
                             reject(e)
                         }
-                        reject(e)
                     }
                 })
             })

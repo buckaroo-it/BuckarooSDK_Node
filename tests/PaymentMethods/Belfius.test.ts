@@ -10,7 +10,7 @@ describe('testing methods', () => {
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined()
+                expect(data.isPendingProcessing()).toBeTruthy()
             })
     })
     test('Refund', async () => {

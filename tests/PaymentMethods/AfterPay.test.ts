@@ -5,8 +5,8 @@ import RecipientCategory from '../../src/Constants/RecipientCategory'
 
 const method = buckarooClientTest.method('afterpay')
 describe('AfterPay methods', () => {
-    test('Pay', async () => {
-        await method
+    test('Pay',  () => {
+        return  method
             .pay(paymentPayload)
             .request()
             .then((data) => {

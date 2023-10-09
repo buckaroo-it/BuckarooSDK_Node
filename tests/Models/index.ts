@@ -1,8 +1,8 @@
 import { ICompany, IPerson } from '../../src/Models/Interfaces/IRecipient'
-import { Address } from '../../src/Models/Interfaces/IAddress'
+import IAddress from '../../src/Models/Interfaces/IAddress'
 import IArticle from '../../src/Models/Interfaces/IArticle'
-import { Phone } from '../../src/Models/Interfaces/IPhone'
-import { BankAccount } from '../../src/Models/Interfaces/IBankAccount'
+import IPhone from '../../src/Models/Interfaces/IPhone'
+import IBankAccount from '../../src/Models/Interfaces/IBankAccount'
 import RecipientCategory from '../../src/Constants/RecipientCategory'
 import { getIPAddress } from '../../src/Utils/Functions'
 
@@ -27,7 +27,7 @@ export const TestCompany: ICompany = {
     vatApplicable: false,
     vatNumber: '321'
 }
-export const TestAddress = new Address({
+export const TestAddress:IAddress = {
     city: 'city',
     country: 'NL',
     houseNumber: '2313432',
@@ -35,7 +35,7 @@ export const TestAddress = new Address({
     state: 'state',
     street: 'street',
     zipcode: '32323'
-})
+}
 export const TestArticle: IArticle = {
     description: 'test',
     identifier: 'identifier',
@@ -47,17 +47,17 @@ export const TestArticle: IArticle = {
     vatPercentage: 1
 }
 
-export const TestPhone = new Phone({
+export const TestPhone:IPhone = {
     fax: '23232',
     landline: '323123',
     mobile: '21312332'
-})
+}
 export const TestEmail = 'test@hotmail.com'
-export const TestBankAccount = new BankAccount({
+export const TestBankAccount:IBankAccount = {
     accountName: 'accountName',
     bic: 'bic',
     iban: 'iban'
-})
+}
 export const TestBilling = {
     recipient: TestPerson,
     address: TestAddress,
