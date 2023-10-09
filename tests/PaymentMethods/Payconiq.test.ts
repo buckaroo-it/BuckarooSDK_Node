@@ -1,15 +1,12 @@
-require('../BuckarooClient.test')
-import Payconiq from '../../src/PaymentMethods/Payconiq'
-
-const payconiq = new Payconiq()
-
+import buckarooClientTest from "../BuckarooClient.test";
+const payconiq = buckarooClientTest.method("payconiq");
 describe('Payconiq', () => {
     test('Pay', async () => {
         await payconiq
             .pay({
                 amountDebit: 50.3,
                 order: '123456'
-            })
+            }).request()
             .then((info) => {
                 expect(info.data).toBeDefined()
             })
@@ -19,7 +16,7 @@ describe('Payconiq', () => {
             .refund({
                 amountCredit: 50.3,
                 originalTransactionKey: '123456'
-            })
+            }).request()
             .then((info) => {
                 expect(info.data).toBeDefined()
             })
@@ -29,7 +26,7 @@ describe('Payconiq', () => {
             .instantRefund({
                 amountCredit: 4.23,
                 originalTransactionKey: '97DC0A03BBDF4DAAAC694D7FEC8785E1'
-            })
+            }).request()
             .then((data) => {
                 expect(data).toBeDefined()
             })
