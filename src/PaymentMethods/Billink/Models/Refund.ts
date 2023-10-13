@@ -1,11 +1,11 @@
-import { ServiceParameter } from '../../../Models/ServiceParameters'
-import { IRefundRequest } from '../../../Models/IRequest'
+import { ServiceParameter } from '../../../Models/ServiceParameters';
+import { IRefundRequest } from '../../../Models/IRequest';
 
 export interface IRefund extends IRefundRequest {
-    refundReason?: string
+    refundReason?: string;
 }
 export class Refund extends ServiceParameter {
     set refundReason(value: string) {
-        this.set('refundreason', value)
+        this.set('refundreason', value);
     }
 }

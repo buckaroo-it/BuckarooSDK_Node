@@ -1,5 +1,5 @@
-import PayablePaymentMethod from '../PayablePaymentMethod'
+import PayablePaymentMethod from '../PayablePaymentMethod';
 
 export default class EPS extends PayablePaymentMethod {
-    protected _paymentName = 'EPS'
+    protected _paymentName = 'EPS';
 }

@@ -1,17 +1,17 @@
-import { OutgoingHttpHeaders } from 'http'
+import { OutgoingHttpHeaders } from 'http';
 
 export type RequestHeaders = {
-    'Content-type'?: string
-    Accept?: string
-    Culture?: string
-    Authorization?: string
-    Software?: string
-} & OutgoingHttpHeaders
+    'Content-type'?: string;
+    Accept?: string;
+    Culture?: string;
+    Authorization?: string;
+    Software?: string;
+} & OutgoingHttpHeaders;
 
 export default class Headers {
-    private _headers: RequestHeaders = this.getDefaultHeaders()
+    private _headers: RequestHeaders = this.getDefaultHeaders();
     get headers(): RequestHeaders {
-        return this._headers
+        return this._headers;
     }
     protected getDefaultHeaders() {
         return {
@@ -19,22 +19,23 @@ export default class Headers {
             Accept: 'application/json',
             Culture: 'nl-NL',
             Authorization: '',
-            Channel:'Web',
-            Software:  JSON.stringify({
+            Channel: 'Web',
+            Software: JSON.stringify({
                 PlatformName: 'Node SDK',
                 PlatformVersion: '1.0',
                 ModuleSupplier: 'Buckaroo',
                 ModuleName: 'BuckarooPayments',
                 ModuleVersion: '1.0',
-            })
-        }
+            }),
+        };
     }
-    setSoftwareHeader(value: {
-            platformName?: string
-            platformVersion?: string
-            moduleSupplier?: string
-            moduleName?: string
-            moduleVersion?: string
+    setSoftwareHeader(
+        value: {
+            platformName?: string;
+            platformVersion?: string;
+            moduleSupplier?: string;
+            moduleName?: string;
+            moduleVersion?: string;
         } = {}
     ): this {
         this._headers.Software = JSON.stringify({
@@ -42,20 +43,20 @@ export default class Headers {
             PlatformVersion: value.platformVersion || '1.0',
             ModuleSupplier: value.moduleSupplier || 'Buckaroo',
             ModuleName: value.moduleName || 'BuckarooPayments',
-            ModuleVersion: value.moduleVersion || '1.0'
-        })
-        return this
+            ModuleVersion: value.moduleVersion || '1.0',
+        });
+        return this;
     }
     setHeaders(headers: RequestHeaders) {
         Object.keys(headers).forEach((key) => {
-            this._headers[key] = headers[key]
-        })
-        return this
+            this._headers[key] = headers[key];
+        });
+        return this;
     }
     removeHeaders(headers: RequestHeaders) {
         Object.keys(headers).forEach((key) => {
-            delete this._headers[key]
-        })
-        return this
+            delete this._headers[key];
+        });
+        return this;
     }
 }

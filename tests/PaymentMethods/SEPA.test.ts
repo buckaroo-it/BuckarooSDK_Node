@@ -1,7 +1,7 @@
-require('../BuckarooClient.test')
-import SEPA from '../../src/PaymentMethods/SEPA'
+require('../BuckarooClient.test');
+import SEPA from '../../src/PaymentMethods/SEPA';
 
-const method = new SEPA()
+const method = new SEPA();
 
 describe('SEPA', () => {
     test('Pay', async () => {
@@ -33,45 +33,45 @@ describe('SEPA', () => {
                 returnURLReject: '',
                 servicesExcludedForClient: '',
                 servicesSelectableByClient: '',
-                startRecurrent: false
+                startRecurrent: false,
             })
             .then((info) => {
-                expect(info).toBeDefined()
-            })
-    })
+                expect(info).toBeDefined();
+            });
+    });
     test('Refund', async () => {
         await method
             .refund({
                 amountCredit: 50.3,
-                originalTransactionKey: ''
+                originalTransactionKey: '',
             })
             .then((info) => {
-                expect(info).toBeDefined()
-            })
-    })
+                expect(info).toBeDefined();
+            });
+    });
     test('Authorize', async () => {
         await method
             .authorize({
                 amountDebit: 0,
                 collectDate: '',
                 customerIBAN: '',
-                customeraccountname: ''
+                customeraccountname: '',
             })
             .then((info) => {
-                expect(info).toBeDefined()
-            })
-    })
+                expect(info).toBeDefined();
+            });
+    });
     test('PayRecurrent', async () => {
         await method
             .payRecurrent({
                 collectDate: '',
                 amountDebit: 50.3,
-                originalTransactionKey: ''
+                originalTransactionKey: '',
             })
             .then((info) => {
-                expect(info).toBeDefined()
-            })
-    })
+                expect(info).toBeDefined();
+            });
+    });
     test('ExtraInfo', async () => {
         await method
             .extraInfo({
@@ -111,20 +111,20 @@ describe('SEPA', () => {
                 servicesSelectableByClient: '',
                 startRecurrent: false,
                 street: '',
-                zipcode: ''
+                zipcode: '',
             })
             .then((info) => {
-                expect(info).toBeDefined()
-            })
-    })
+                expect(info).toBeDefined();
+            });
+    });
     test('Emandates', async () => {
         await method
             .payWithEmandate({
                 mandateReference: '',
-                amountDebit: 50.3
+                amountDebit: 50.3,
             })
             .then((info) => {
-                expect(info).toBeDefined()
-            })
-    })
-})
+                expect(info).toBeDefined();
+            });
+    });
+});

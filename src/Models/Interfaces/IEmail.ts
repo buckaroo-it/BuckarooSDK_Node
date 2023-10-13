@@ -1,16 +1,16 @@
-import { Model } from '../Model'
+import { Model } from '../Model';
 
 export default interface IEmail {
-    email: string
+    email: string;
 }
 export class Email extends Model implements IEmail {
     constructor(data: IEmail) {
-        super(data)
+        super(data);
     }
     get email() {
-        return ''
+        return '';
     }
     set email(email: string) {
-        this.set('email', email)
+        this.set('email', email);
     }
 }

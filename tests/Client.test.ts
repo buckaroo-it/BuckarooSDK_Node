@@ -1,26 +1,25 @@
-import client from './BuckarooClient.test'
-import { TransactionData } from '../src/Request/DataModels'
-import { TransactionResponse } from '../src/Models/Response/TransactionResponse'
-import { HttpClientResponse } from '../src/Models/Response/HttpClientResponse'
-import { uniqid } from '../src/Utils/Functions'
-import { creditManagementTestInvoice } from "./PaymentMethods/CreditManagment.test";
+import client from './BuckarooClient.test';
+import { TransactionResponse } from '../src/Models/Response/TransactionResponse';
+import { HttpClientResponse } from '../src/Models/Response/HttpClientResponse';
+import { uniqid } from '../src/Utils/Functions';
+import { creditManagementTestInvoice } from './PaymentMethods/CreditManagment.test';
+import IRequest from "../src/Models/IRequest";
 
 describe('Testing Buckaroo Client', () => {
-    test('Credentials',  () => {
-        return client
-            .confirmCredentials()
-            .then((response) => {
-                expect(response).toBeTruthy()
-            })
-    })
+    test('Credentials', () => {
+        return client.confirmCredentials().then((response) => {
+            expect(response).toBeTruthy();
+        });
+    });
     test('Batch transaction', async () => {
-        const transactionData: TransactionData[] = []
+        const transactionData:IRequest[] = [];
+        const creditManagement = client.method('CreditManagement3')
+        const sepaDirectDebit = client.method('sepadirectdebit')
         for (let i = 0; i < 3; i++) {
-            let invoice = client
-                .method('CreditManagement3')
-                .createCombinedInvoice(creditManagementTestInvoice())
-                .combine('sepadirectdebit')
-                .pay({
+            creditManagement.createCombinedInvoice(creditManagementTestInvoice())
+
+            sepaDirectDebit.combine(creditManagement).pay(
+                {
                     invoice: uniqid(),
                     amountDebit: 10.1,
                     iban: 'NL13TEST0123456789',
@@ -29,48 +28,44 @@ describe('Testing Buckaroo Client', () => {
                     mandateReference: '1DCtestreference',
                     mandateDate: '2022-07-03',
                     customer: {
-                        name: 'John Smith'
-                    }
-                })
-            transactionData.push(invoice.data)
+                        name: 'John Smith',
+                    },
+                });
+            transactionData.push(sepaDirectDebit.getPayload());
         }
 
-        await client
-            .batch(transactionData)
+        await client.batch
+            .transaction(transactionData)
             .request()
             .then((response) => {
-                expect(response).toBeTruthy()
+                expect(response.data.message === '3 transactions were queued for processing.').toBeTruthy();
             })
             .catch((err) => {
-                expect(err).toBeUndefined()
-            })
-    })
+                expect(err).toBeUndefined();
+            });
+    });
     describe('Transaction', () => {
-        const transactionService = client.transaction('39F3EC520A3F4A25B0A1899D4FF0E1CB')
+        const transactionService = client.transaction('39F3EC520A3F4A25B0A1899D4FF0E1CB');
         test('transaction Status', async () => {
             await transactionService
                 .status()
                 .then((res) => {
-                    expect(res instanceof TransactionResponse).toBeTruthy()
+                    expect(res instanceof TransactionResponse).toBeTruthy();
                 })
                 .catch((err) => {
-                    expect(err).toBeUndefined()
-                })
-        })
+                    expect(err).toBeUndefined();
+                });
+        });
         test('transaction Cancel Info', async () => {
-            await transactionService
-                .cancelInfo()
-                .then((res) => {
-                    expect(res instanceof HttpClientResponse).toBeTruthy()
-                })
-        })
+            await transactionService.cancelInfo().then((res) => {
+                expect(res instanceof HttpClientResponse).toBeTruthy();
+            });
+        });
 
         test('transaction Refund Info', async () => {
-            await transactionService
-                .refundInfo()
-                .then((res) => {
-                    expect(res instanceof HttpClientResponse).toBeTruthy()
-                })
-        })
-    })
-})
+            await transactionService.refundInfo().then((res) => {
+                expect(res instanceof HttpClientResponse).toBeTruthy();
+            });
+        });
+    });
+});

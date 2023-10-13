@@ -1,34 +1,34 @@
-import { Address as AddressClass } from '../../../Models/Interfaces/IAddress'
+import { Address as AddressClass } from '../../../Models/Interfaces/IAddress';
 export class Address extends AddressClass {
     private get prefix() {
-        return ''
+        return '';
     }
     private set prefix(value: string) {
-        this.set('prefix', value)
+        this.set('prefix', value);
     }
     initialize(data?: any, prefix: string = '') {
-        this.set('prefix', prefix, true)
-        super.initialize(data)
+        this.set('prefix', prefix, true);
+        return super.initialize(data);
     }
     protected privateName(name: string): string {
-        return super.privateName(name)
+        return super.privateName(name);
     }
 
     get houseNumberAdditional() {
-        return this.get('houseNumberSuffix')
+        return this.get('houseNumberSuffix');
     }
     set houseNumberAdditional(value: string) {
-        this.set('houseNumberSuffix', value)
+        this.set('houseNumberSuffix', value);
     }
     get zipcode() {
-        return this.get('postalCode')
+        return this.get('postalCode');
     }
     set zipcode(value: string) {
-        this.set('postalCode', value)
+        this.set('postalCode', value);
     }
     set country(value: string) {
         if (this.prefix === 'Shipping' && value === 'NL') {
-            this.set('countryCode', value)
-        } else this.set('country', value)
+            this.set('countryCode', value);
+        } else this.set('country', value);
     }
 }

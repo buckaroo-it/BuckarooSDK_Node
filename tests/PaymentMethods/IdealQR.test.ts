@@ -1,6 +1,6 @@
-import buckarooClientTest from '../BuckarooClient.test'
+import buckarooClientTest from '../BuckarooClient.test';
 
-const method = buckarooClientTest.method('idealqr')
+const method = buckarooClientTest.method('idealqr');
 describe('Testing IdealQR methods', () => {
     test('Pay', async () => {
         await method
@@ -21,12 +21,12 @@ describe('Testing IdealQR methods', () => {
                 isProcessing: false,
                 additionalParameters: {
                     initiated_by_magento: '1',
-                    service_action: 'something'
-                }
+                    service_action: 'something',
+                },
             })
             .request()
             .then((response) => {
-                expect(response.isSuccess()).toBeTruthy()
-            })
-    })
-})
+                expect(response.isSuccess()).toBeTruthy();
+            });
+    });
+});

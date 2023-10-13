@@ -1,14 +1,14 @@
-import { HttpClientResponse } from './HttpClientResponse'
+import { HttpClientResponse } from './HttpClientResponse';
 
 export class BatchRequestResponse extends HttpClientResponse {
     get data(): BatchResponseData {
-        return this._data as any
+        return this._data as any;
     }
 }
 export interface BatchResponseData {
-    message: string
+    message: string;
     errors?: {
-        reference: string
-        message: string
-    }[]
+        reference: string;
+        message: string;
+    }[];
 }

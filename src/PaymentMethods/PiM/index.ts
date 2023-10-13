@@ -1,9 +1,9 @@
-import PaymentMethod from '../PaymentMethod'
+import PaymentMethod from '../PaymentMethod';
 export default class PiM extends PaymentMethod {
-    protected _paymentName = 'PiM'
-    protected _requiredFields = ['currency']
+    protected _paymentName = 'PiM';
+    protected _requiredFields = ['currency'];
     generate() {
-        this.setServiceList('Generate')
-        return this.dataRequest()
+        this.setServiceList('Generate');
+        return this.dataRequest();
     }
 }

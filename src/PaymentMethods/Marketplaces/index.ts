@@ -1,18 +1,20 @@
-import PaymentMethod from '../PaymentMethod'
-import { ISplit, ITransfer } from './Models/ISplit'
-//ToDO Add the service parameter models
+import PaymentMethod from '../PaymentMethod';
+import { ISplit, Split } from './Models/Split';
+import { ITransfer } from './Models/Transfer';
 export default class Marketplaces extends PaymentMethod {
-    protected _paymentName = 'Marketplaces'
+    get paymentName() {
+        return 'Marketplaces';
+    }
     split(payload: ISplit) {
-        this.setServiceList('Split')
-        return this.dataRequest(payload)
+        this.setServiceList('Split', new Split(payload));
+        return this.dataRequest(payload);
     }
     transfer(payload: ITransfer) {
-        this.setServiceList('Transfer')
-        return this.dataRequest(payload)
+        this.setServiceList('Transfer', new Split(payload));
+        return this.dataRequest(payload);
     }
     refundSupplementary(payload: ISplit) {
-        this.setServiceList('RefundSupplementary')
-        return this.dataRequest(payload)
+        this.setServiceList('RefundSupplementary', new Split(payload));
+        return this.dataRequest(payload);
     }
 }

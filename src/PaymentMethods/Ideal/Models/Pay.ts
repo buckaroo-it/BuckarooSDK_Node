@@ -1,10 +1,10 @@
-import { IPaymentRequest } from '../../../Models/IRequest'
-import { ServiceParameter } from '../../../Models/ServiceParameters'
+import { IPaymentRequest } from '../../../Models/IRequest';
+import { ServiceParameter } from '../../../Models/ServiceParameters';
 export interface IPay extends IPaymentRequest {
-    issuer?: string
+    issuer?: string;
 }
 export class Pay extends ServiceParameter {
     set issuer(value: string) {
-        this.set('issuer', value)
+        this.set('issuer', value);
     }
 }

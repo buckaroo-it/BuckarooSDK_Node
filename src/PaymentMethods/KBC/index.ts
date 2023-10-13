@@ -1,10 +1,10 @@
-import PayablePaymentMethod from '../PayablePaymentMethod'
-import { IRefundRequest } from '../../Models/IRequest'
+import PayablePaymentMethod from '../PayablePaymentMethod';
+import { IRefundRequest } from '../../Models/IRequest';
 
 export default class KBC extends PayablePaymentMethod {
-    protected _paymentName = 'KBC'
+    protected _paymentName = 'KBC';
 
     refund(payload: IRefundRequest) {
-        return super.refund(payload)
+        return super.refund(payload);
     }
 }

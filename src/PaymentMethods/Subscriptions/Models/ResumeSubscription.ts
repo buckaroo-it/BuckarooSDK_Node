@@ -1,7 +1,7 @@
-import { Subscription } from './ISubscription'
+import { Subscription } from './ISubscription';
 
 export class ResumeSubscription extends Subscription {
     set resumeDate(resumeDate: string) {
-        this.set('resumeDate', resumeDate)
+        this.set('resumeDate', resumeDate);
     }
 }

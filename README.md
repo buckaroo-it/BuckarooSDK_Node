@@ -26,7 +26,7 @@
 
 ### About
 
-Buckaroo is the the Payment Service Provider for all your online payments with more than 15,000 companies relying on Buckaroo's platform to securely process their payments, subscriptions and unpaid invoices. Buckaroo developed their own Node SDK. The SDK is a modern, open-source Node.js library that makes it easy to integrate your Javascript application with Buckaroo's services. Start accepting payments today with Buckaroo.
+Buckaroo is the Payment Service Provider for all your online payments with more than 15,000 companies relying on Buckaroo's platform to securely process their payments, subscriptions and unpaid invoices. Buckaroo developed their own Node SDK. The SDK is a modern, open-source Node.js library that makes it easy to integrate your Javascript application with Buckaroo's services. Start accepting payments today with Buckaroo.
 
 ### Requirements
 
@@ -46,32 +46,32 @@ npm install @buckaroo/buckaroo_sdk
 Initiate the buckaroo client with your website key and secret key. The keys can be retrieved from your [Buckaroo account](https://plaza.buckaroo.nl/Login).
 
 ```javascript
-import { initializeBuckarooClient } from './BuckarooClient'
-initializeBuckarooClient({ websiteKey: 'KEY', secretKey: 'SECRET' })
+import { initializeBuckarooClient } from './BuckarooClient';
+initializeBuckarooClient({ websiteKey: 'KEY', secretKey: 'SECRET' });
 ```
 
 Create a payment with all the available payment methods. In this example, we show how to create a credit card payment. Each payment has a slightly different payload.
 
 ```javascript
-import creditCard from './PaymentMethods/CreditCard'
+import creditCard from './PaymentMethods/CreditCard';
 
 const payment = await creditCard().pay({
     amountDebit: 10,
     name: 'Mastercard',
-    invoice: 'UNIQUE-INVOICE-NO'
-})
+    invoice: 'UNIQUE-INVOICE-NO',
+});
 ```
 
 After you create a transaction, you can retrieve several transaction information on demand.
 
 ```javascript
-const transactionKey = payment.Key
+const transactionKey = payment.Key;
 
-import { buckarooClient } from './BuckarooClient'
+import { buckarooClient } from './BuckarooClient';
 
-buckarooClient().status(transactionKey) // Retrieve transaction status
-buckarooClient().refundInfo(transactionKey) // Retrieve refund info
-buckarooClient().cancelInfo(transactionKey) // Retrieve cancellation info
+buckarooClient().status(transactionKey); // Retrieve transaction status
+buckarooClient().refundInfo(transactionKey); // Retrieve refund info
+buckarooClient().cancelInfo(transactionKey); // Retrieve cancellation info
 ```
 
 Find our full documentation online on [docs.buckaroo.io](https://docs.buckaroo.io/docs/node-sdk).

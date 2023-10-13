@@ -1,26 +1,26 @@
-import buckarooClientTest from '../BuckarooClient.test'
-const method = buckarooClientTest.method('KBCPaymentButton')
+import buckarooClientTest from '../BuckarooClient.test';
+const method = buckarooClientTest.method('KBCPaymentButton');
 
 describe('Testing KBC methods', () => {
     test('Pay', async () => {
         await method
             .pay({
-                amountDebit: 10
+                amountDebit: 10,
             })
             .request()
             .then((response) => {
-                expect(response.isPendingProcessing()).toBeTruthy()
-            })
-    })
+                expect(response.isPendingProcessing()).toBeTruthy();
+            });
+    });
     test('Refund', async () => {
         method
             .refund({
                 amountCredit: 10,
-                originalTransactionKey: 'B5675356904444F3965C33D280591C74'
+                originalTransactionKey: 'B5675356904444F3965C33D280591C74',
             })
             .request()
             .then((response) => {
-                expect(response.isFailed()).toBeTruthy()
-            })
-    })
-})
+                expect(response.isFailed()).toBeTruthy();
+            });
+    });
+});

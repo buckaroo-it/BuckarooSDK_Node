@@ -1,7 +1,7 @@
-import { Phone as PhoneClass } from '../../../Models/Interfaces/IPhone'
+import { Phone as PhoneClass } from '../../../Models/Interfaces/IPhone';
 
 export class Phone extends PhoneClass {
     set mobile(value: string) {
-        this.set('phone', value)
+        this.set('phone', value);
     }
 }

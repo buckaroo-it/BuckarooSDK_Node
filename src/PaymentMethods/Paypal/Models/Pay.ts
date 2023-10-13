@@ -1,28 +1,28 @@
-import { IPaymentRequest } from '../../../Models/IRequest'
-import { ServiceParameter } from '../../../Models/ServiceParameters'
+import { IPaymentRequest } from '../../../Models/IRequest';
+import { ServiceParameter } from '../../../Models/ServiceParameters';
 
 export interface IPay extends IPaymentRequest {
-    buyerEmail?: string
-    productName?: string
-    billingAgreementDescription?: string
-    pageStyle?: string
-    payPalOrderId?: string
+    buyerEmail?: string;
+    productName?: string;
+    billingAgreementDescription?: string;
+    pageStyle?: string;
+    payPalOrderId?: string;
 }
 
 export class Pay extends ServiceParameter {
     set buyerEmail(value: string) {
-        this.set('buyerEmail', value)
+        this.set('buyerEmail', value);
     }
     set productName(value: string) {
-        this.set('productName', value)
+        this.set('productName', value);
     }
     set billingAgreementDescription(value: string) {
-        this.set('billingAgreementDescription', value)
+        this.set('billingAgreementDescription', value);
     }
     set pageStyle(value: string) {
-        this.set('pageStyle', value)
+        this.set('pageStyle', value);
     }
     set payPalOrderId(value: string) {
-        this.set('payPalOrderId', value)
+        this.set('payPalOrderId', value);
     }
 }

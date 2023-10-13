@@ -1,24 +1,24 @@
-import { IPaymentRequest } from '../../../Models/IRequest'
-import {ITinkaArticle, TinkaArticle} from './Article'
-import {ServiceParameter} from "../../../Models/ServiceParameters";
-import {ICustomer} from "../../../Models/Interfaces/ICustomer";
-import {ITinkaPerson, TinkaPerson} from "./Person";
-import {Recipient} from "./Recipient";
+import { IPaymentRequest } from '../../../Models/IRequest';
+import { ITinkaArticle, TinkaArticle } from './Article';
+import { ServiceParameter } from '../../../Models/ServiceParameters';
+import { ICustomer } from '../../../Models/Interfaces/ICustomer';
+import { ITinkaPerson, TinkaPerson } from './Person';
+import { Recipient } from './Recipient';
 export interface IPay extends IPaymentRequest {
-    paymentMethod: string
-    deliveryMethod: string
-    deliveryDate?: string
-    articles: Partial<ITinkaArticle>[]
-    customer: ITinkaPerson
-    shipping?:ICustomer
-    billing:ICustomer
+    paymentMethod: string;
+    deliveryMethod: string;
+    deliveryDate?: string;
+    articles: Partial<ITinkaArticle>[];
+    customer: ITinkaPerson;
+    shipping?: ICustomer;
+    billing: ICustomer;
 }
 export class Pay extends ServiceParameter {
-    protected getGroups(){
+    protected getGroups() {
         return super.getGroups({
-            'Articles':'Article',
-            'Shipping':'ShippingCustomer',
-            'Billing':'BillingCustomer',
+            Articles: 'Article',
+            Shipping: 'ShippingCustomer',
+            Billing: 'BillingCustomer',
         });
     }
     protected getCountable() {
@@ -26,27 +26,30 @@ export class Pay extends ServiceParameter {
     }
 
     set paymentMethod(value: string) {
-        this.set('paymentMethod', value)
+        this.set('paymentMethod', value);
     }
     set deliveryMethod(value: string) {
-        this.set('deliveryMethod', value)
+        this.set('deliveryMethod', value);
     }
     set deliveryDate(value: string) {
-        this.set('deliveryDate', value)
+        this.set('deliveryDate', value);
     }
     set articles(value: ITinkaArticle[]) {
-        this.set('articles', value.map(article => new TinkaArticle(article)))
+        this.set(
+            'articles',
+            value.map((article) => new TinkaArticle(article))
+        );
     }
     set customer(value: ITinkaPerson) {
-        this.set('customer', new TinkaPerson(value))
+        this.set('customer', new TinkaPerson(value));
     }
     set shipping(value: ICustomer) {
-        this.set('shipping', new Recipient(value))
+        this.set('shipping', new Recipient(value));
     }
     set billing(value: ICustomer) {
-        this.set('billing', new Recipient(value))
+        this.set('billing', new Recipient(value));
         if (this.shipping === undefined) {
-            this.shipping = value
+            this.shipping = value;
         }
     }
 }

@@ -1,10 +1,10 @@
-import PayablePaymentMethod from '../PayablePaymentMethod'
-import { IRefundRequest } from '../../Models/IRequest'
+import PayablePaymentMethod from '../PayablePaymentMethod';
+import { IRefundRequest } from '../../Models/IRequest';
 
 export default class Payconiq extends PayablePaymentMethod {
-    protected _paymentName = 'Payconiq'
+    protected _paymentName = 'Payconiq';
     instantRefund(payload: IRefundRequest) {
-        this.setServiceList('InstantRefund')
-        return this.transactionRequest(payload)
+        this.setServiceList('InstantRefund');
+        return this.transactionRequest(payload);
     }
 }

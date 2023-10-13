@@ -1,5 +1,5 @@
-import PayablePaymentMethod from '../PayablePaymentMethod'
+import PayablePaymentMethod from '../PayablePaymentMethod';
 
 export default class PointOfSale extends PayablePaymentMethod {
-    protected _paymentName = 'PointOfSale'
+    protected _paymentName = 'PointOfSale';
 }

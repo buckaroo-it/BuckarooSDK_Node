@@ -1,5 +1,5 @@
 enum RecipientCategory {
     PERSON = 'PERSON',
-    COMPANY = 'COMPANY'
+    COMPANY = 'COMPANY',
 }
-export default RecipientCategory
+export default RecipientCategory;

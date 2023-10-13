@@ -8,7 +8,7 @@ enum CreditManagementInstallmentInterval {
     TWOMONTHS = 'TwoMonths',
     QUARTERYEAR = 'QuarterYear',
     HALFYEAR = 'HalfYear',
-    YEAR = 'Year'
+    YEAR = 'Year',
 }
 
-export default CreditManagementInstallmentInterval
+export default CreditManagementInstallmentInterval;

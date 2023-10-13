@@ -1,9 +1,9 @@
-import PayablePaymentMethod from '../PayablePaymentMethod'
-import { IPay, Pay } from './Models/Pay'
+import PayablePaymentMethod from '../PayablePaymentMethod';
+import { IPay, Pay } from './Models/Pay';
 
 export default class Giropay extends PayablePaymentMethod {
-    protected _paymentName = 'Giropay'
+    protected _paymentName = 'Giropay';
     pay(payload: IPay) {
-        return super.pay(payload, new Pay(payload))
+        return super.pay(payload, new Pay(payload));
     }
 }

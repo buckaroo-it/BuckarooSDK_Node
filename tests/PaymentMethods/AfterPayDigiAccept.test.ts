@@ -1,11 +1,11 @@
-import { RequestTypes } from '../../src/Constants/Endpoints'
-import { TestBilling } from '../Models'
-import buckarooClientTest from '../BuckarooClient.test'
-import { uniqid } from '../../src/Utils/Functions'
-import Gender from '../../src/Constants/Gender'
-import { IPay } from '../../src/PaymentMethods/AfterpayDigiAccept/Model/Pay'
+import { RequestTypes } from '../../src/Constants/Endpoints';
+import { TestBilling } from '../Models';
+import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src/Utils/Functions';
+import Gender from '../../src/Constants/Gender';
+import { IPay } from '../../src/PaymentMethods/AfterpayDigiAccept/Model/Pay';
 
-const method = buckarooClientTest.method('afterpaydigiaccept')
+const method = buckarooClientTest.method('afterpaydigiaccept');
 
 describe('AfterPayDigiAccept methods', () => {
     test('Authorize', async () => {
@@ -20,30 +20,30 @@ describe('AfterPayDigiAccept methods', () => {
                 merchantImageUrl: '',
                 ourReference: '',
                 summaryImageUrl: '',
-                yourReference: ''
+                yourReference: '',
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
+                expect(data).toBeDefined();
+            });
+    });
     test('Pay', async () => {
         await method
             .pay({ ...paymentPayload, clientIP: '127.0.0.1' })
             .request()
             .then((data) => {
-                expect(data.data).toBeDefined()
-            })
-    })
+                expect(data.data).toBeDefined();
+            });
+    });
     test('Specification', async () => {
         await method
             .specification(RequestTypes.Transaction)
             .request()
             .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
-})
+                expect(data).toBeDefined();
+            });
+    });
+});
 
 const paymentPayload: IPay = {
     amountDebit: 40.5,
@@ -60,7 +60,7 @@ const paymentPayload: IPay = {
             initials: 'AB',
             lastName: 'Do',
             birthDate: '1990-01-01',
-            culture: 'NL'
+            culture: 'NL',
         },
         address: {
             street: 'Hoofdstraat',
@@ -68,12 +68,12 @@ const paymentPayload: IPay = {
             houseNumberAdditional: 'a',
             zipcode: '1234AB',
             city: 'Heerenveen',
-            country: 'NL'
+            country: 'NL',
         },
         phone: {
-            mobile: '0698765433'
+            mobile: '0698765433',
         },
-        email: 'test@buckaroo.nl'
+        email: 'test@buckaroo.nl',
     },
     shipping: {
         recipient: {
@@ -84,7 +84,7 @@ const paymentPayload: IPay = {
             companyName: 'Buckaroo B.V.',
             birthDate: '1990-01-01',
             chamberOfCommerce: '12345678',
-            vatNumber: 'NL12345678'
+            vatNumber: 'NL12345678',
         },
         address: {
             street: 'Kalverstraat',
@@ -92,12 +92,12 @@ const paymentPayload: IPay = {
             houseNumberAdditional: 'b',
             zipcode: '4321EB',
             city: 'Amsterdam',
-            country: 'NL'
+            country: 'NL',
         },
         phone: {
-            mobile: '0698765433'
+            mobile: '0698765433',
         },
-        email: 'test@buckaroo.nl'
+        email: 'test@buckaroo.nl',
     },
     articles: [
         {
@@ -105,14 +105,14 @@ const paymentPayload: IPay = {
             description: 'Blue Toy Car',
             price: 10.0,
             quantity: 2,
-            vatCategory: '1'
+            vatCategory: '1',
         },
         {
             identifier: uniqid(),
             description: 'Red Toy Car',
             price: 10.0,
             quantity: 2,
-            vatCategory: '1'
-        }
-    ]
-}
+            vatCategory: '1',
+        },
+    ],
+};

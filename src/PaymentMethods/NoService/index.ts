@@ -1,5 +1,11 @@
-import PayablePaymentMethod from '../PayablePaymentMethod'
+import PayablePaymentMethod from '../PayablePaymentMethod';
 
 export default class NoService extends PayablePaymentMethod {
-    protected _paymentName = 'noserivce'
+    get paymentName() {
+        return 'NoService';
+    }
+    protected _paymentName = 'noserivce';
+    protected setServiceList(): this {
+        return this;
+    }
 }

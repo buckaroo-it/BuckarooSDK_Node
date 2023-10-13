@@ -1,13 +1,13 @@
-import PayablePaymentMethod from '../PayablePaymentMethod'
-import { IRefundRequest } from '../../Models/IRequest'
-import {IPay, Pay} from "./Models/Pay";
+import PayablePaymentMethod from '../PayablePaymentMethod';
+import { IRefundRequest } from '../../Models/IRequest';
+import { IPay, Pay } from './Models/Pay';
 
 export default class WeChatPay extends PayablePaymentMethod {
-    protected _paymentName = 'WeChatPay'
+    protected _paymentName = 'WeChatPay';
     pay(payload: IPay) {
-        return super.pay(payload,new Pay(payload))
+        return super.pay(payload, new Pay(payload));
     }
     refund(payload: IRefundRequest) {
-        return super.refund(payload)
+        return super.refund(payload);
     }
 }

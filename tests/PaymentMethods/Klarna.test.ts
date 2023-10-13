@@ -1,27 +1,27 @@
-import buckarooClientTest from '../BuckarooClient.test'
-import { IPay } from '../../src/PaymentMethods/Klarna/Models/Pay'
-import { uniqid } from '../../src/Utils/Functions'
-import RecipientCategory from '../../src/Constants/RecipientCategory'
+import buckarooClientTest from '../BuckarooClient.test';
+import { IPay } from '../../src/PaymentMethods/Klarna/Models/Pay';
+import { uniqid } from '../../src/Utils/Functions';
+import RecipientCategory from '../../src/Constants/RecipientCategory';
 
-const klarna = buckarooClientTest.method('klarna')
+const klarna = buckarooClientTest.method('klarna');
 describe('Testing Klarna methods', () => {
     test('Pay', async () => {
         await klarna
             .pay(payload)
             .request()
             .then((res) => {
-                expect(res.isPendingProcessing()).toBeTruthy()
-            })
-    })
+                expect(res.isPendingProcessing()).toBeTruthy();
+            });
+    });
     test('PayInInstallments', async () => {
         await klarna
             .payInInstallments(payload)
             .request()
             .then((res) => {
-                expect(res).toBeDefined()
-            })
-    })
-})
+                expect(res).toBeDefined();
+            });
+    });
+});
 
 let payload: IPay = {
     amountDebit: 50.3,
@@ -33,7 +33,7 @@ let payload: IPay = {
             gender: 'female',
             firstName: 'John',
             lastName: 'Do',
-            birthDate: '1990-01-01'
+            birthDate: '1990-01-01',
         },
         address: {
             street: 'Hoofdstraat',
@@ -41,12 +41,12 @@ let payload: IPay = {
             houseNumberAdditional: 'a',
             zipcode: '1234AB',
             city: 'Heerenveen',
-            country: 'NL'
+            country: 'NL',
         },
         phone: {
-            mobile: '0698765433'
+            mobile: '0698765433',
         },
-        email: 'test@buckaroo.nl'
+        email: 'test@buckaroo.nl',
     },
     shipping: {
         recipient: {
@@ -54,7 +54,7 @@ let payload: IPay = {
             gender: 'male',
             firstName: 'John',
             lastName: 'Do',
-            birthDate: '1990-01-01'
+            birthDate: '1990-01-01',
         },
         address: {
             street: 'Kalverstraat',
@@ -62,9 +62,9 @@ let payload: IPay = {
             houseNumberAdditional: 'b',
             zipcode: '4321EB',
             city: 'Amsterdam',
-            country: 'NL'
+            country: 'NL',
         },
-        email: 'test@buckaroo.nl'
+        email: 'test@buckaroo.nl',
     },
     articles: [
         {
@@ -72,14 +72,14 @@ let payload: IPay = {
             description: 'Blue Toy Car',
             vatPercentage: 21,
             quantity: 2,
-            price: 20.1
+            price: 20.1,
         },
         {
             identifier: 'Articlenumber2',
             description: 'Red Toy Car',
             vatPercentage: 21,
             quantity: 1,
-            price: 10.1
-        }
-    ]
-}
+            price: 10.1,
+        },
+    ],
+};

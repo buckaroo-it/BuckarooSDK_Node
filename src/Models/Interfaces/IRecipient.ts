@@ -1,90 +1,94 @@
-import RecipientCategory from '../../Constants/RecipientCategory'
-import { Model } from '../Model'
-import Gender from '../../Constants/Gender'
+import RecipientCategory from '../../Constants/RecipientCategory';
+import { Model } from '../Model';
+import Gender from '../../Constants/Gender';
 
 export interface IRecipient {
-    [key: string]: any
+    [key: string]: any;
 }
 export interface IPerson extends IRecipient {
-    category: RecipientCategory.PERSON
-    gender: string | Gender
-    culture: string
-    careOf?: string
-    title?: string
-    initials?: string
-    firstName: string
-    lastName?: string
-    lastNamePrefix?: string
-    birthDate: string
-    placeOfBirth: string
+    category: RecipientCategory.PERSON;
+    gender: string | Gender;
+    culture: string;
+    careOf?: string;
+    title?: string;
+    initials?: string;
+    firstName: string;
+    lastName?: string;
+    lastNamePrefix?: string;
+    birthDate: string;
+    placeOfBirth: string;
 }
 export interface ICompany extends IRecipient {
-    category: RecipientCategory.COMPANY
-    companyName: string
-    culture: string
-    vatApplicable: boolean
-    vatNumber: string
-    chamberOfCommerce: string
+    category: RecipientCategory.COMPANY;
+    companyName: string;
+    culture: string;
+    vatApplicable: boolean;
+    vatNumber: string;
+    chamberOfCommerce: string;
 }
-export class Person extends Model implements IPerson {
-    constructor(data: Partial<IPerson>) {
-        super(data)
-    }
+export class Recipient extends Model implements IRecipient {
     set birthDate(value: string) {
-        this.set('birthDate', value)
+        this.set('birthDate', value);
     }
     set careOf(value: string) {
-        this.set('careOf', value)
+        this.set('careOf', value);
     }
-    set category(value: RecipientCategory.PERSON) {
-        this.set('category', value)
+    set category(value: RecipientCategory) {
+        this.set('category', value);
     }
     set culture(value: string) {
-        this.set('culture', value)
+        this.set('culture', value);
     }
     set firstName(value: string) {
-        this.set('firstName', value)
+        this.set('firstName', value);
     }
     set gender(value: string) {
-        this.set('gender', value)
+        this.set('gender', value);
     }
     set initials(value: string) {
-        this.set('initials', value)
+        this.set('initials', value);
     }
     set lastName(value: string) {
-        this.set('lastName', value)
+        this.set('lastName', value);
     }
     set lastNamePrefix(value: string) {
-        this.set('lastNamePrefix', value)
+        this.set('lastNamePrefix', value);
     }
     set placeOfBirth(value: string) {
-        this.set('placeOfBirth', value)
+        this.set('placeOfBirth', value);
     }
     set title(value: string) {
-        this.set('title', value)
+        this.set('title', value);
     }
 }
-export class Company extends Person implements ICompany {
-    constructor(data: Partial<ICompany>) {
-        super(data as any)
+export class Person extends Recipient implements IPerson {
+    constructor(data: Partial<IPerson>) {
+        super(data);
     }
-    // @ts-ignore
+    set category(value: RecipientCategory.PERSON) {
+        this.set('category', value);
+    }
+}
+export class Company extends Recipient implements ICompany {
+    constructor(data: Partial<ICompany>) {
+        super(data as any);
+    }
     set category(value: RecipientCategory.COMPANY) {
-        this.set('category', value)
+        this.set('category', value);
     }
     set chamberOfCommerce(value: string) {
-        this.set('chamberOfCommerce', value)
+        this.set('chamberOfCommerce', value);
     }
     set companyName(value: string) {
-        this.set('companyName', value)
+        this.set('companyName', value);
     }
     set culture(value: string) {
-        this.set('culture', value)
+        this.set('culture', value);
     }
     set vatApplicable(value: boolean) {
-        this.set('vatApplicable', value)
+        this.set('vatApplicable', value);
     }
     set vatNumber(value: string) {
-        this.set('vatNumber', value)
+        this.set('vatNumber', value);
     }
 }

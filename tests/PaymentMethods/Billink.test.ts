@@ -1,10 +1,10 @@
-import { IPay } from '../../src/PaymentMethods/Billink/Models/Pay'
-import buckarooClientTest from '../BuckarooClient.test'
-import RecipientCategory from '../../src/Constants/RecipientCategory'
+import { IPay } from '../../src/PaymentMethods/Billink/Models/Pay';
+import buckarooClientTest from '../BuckarooClient.test';
+import RecipientCategory from '../../src/Constants/RecipientCategory';
 
-require('../BuckarooClient.test')
+require('../BuckarooClient.test');
 
-const method = buckarooClientTest.method('billink')
+const method = buckarooClientTest.method('billink');
 
 describe('Billink methods', () => {
     test('Pay', async () => {
@@ -12,54 +12,54 @@ describe('Billink methods', () => {
             .pay(payload)
             .request()
             .then((data) => {
-                expect(data.isSuccess()).toBeTruthy()
-            })
-    })
+                expect(data.isSuccess()).toBeTruthy();
+            });
+    });
     test('Refund', async () => {
         await method
             .refund({
                 amountCredit: 12,
-                originalTransactionKey: 'ytgty'
+                originalTransactionKey: 'ytgty',
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
+                expect(data).toBeDefined();
+            });
+    });
     test('Authorize', async () => {
         await method
             .authorize(payload)
             .request()
             .then((data) => {
-                expect(data.isSuccess()).toBeTruthy()
-            })
-    })
+                expect(data.isSuccess()).toBeTruthy();
+            });
+    });
     test('CancelAuthorize', async () => {
         await method
             .cancelAuthorize({
                 originalTransactionKey: 'ytgty',
                 amountCredit: 10,
-                invoice: 'sdsa'
+                invoice: 'sdsa',
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
+                expect(data).toBeDefined();
+            });
+    });
     test('Capture', async () => {
         await method
             .capture({
                 originalTransactionKey: 'ytgty',
                 invoice: "'dsa",
                 amountDebit: 123,
-                articles: payload.articles
+                articles: payload.articles,
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
-})
+                expect(data).toBeDefined();
+            });
+    });
+});
 
 const payload: IPay = {
     amountDebit: 50.3,
@@ -76,7 +76,7 @@ const payload: IPay = {
             firstName: 'John',
             lastName: 'Do',
             birthDate: '01-01-1990',
-            chamberOfCommerce: 'TEST'
+            chamberOfCommerce: 'TEST',
         },
         address: {
             street: 'Hoofdstraat',
@@ -84,13 +84,13 @@ const payload: IPay = {
             houseNumberAdditional: 'a',
             zipcode: '1234AB',
             city: 'Heerenveen',
-            country: 'NL'
+            country: 'NL',
         },
         phone: {
             mobile: '0698765433',
-            landline: '0109876543'
+            landline: '0109876543',
         },
-        email: 'test@buckaroo.nl'
+        email: 'test@buckaroo.nl',
     },
     shipping: {
         recipient: {
@@ -100,7 +100,7 @@ const payload: IPay = {
             initials: 'JD',
             firstName: 'John',
             lastName: 'Do',
-            birthDate: '1990-01-01'
+            birthDate: '1990-01-01',
         },
         address: {
             street: 'Kalverstraat',
@@ -108,8 +108,8 @@ const payload: IPay = {
             houseNumberAdditional: 'b',
             zipcode: '4321EB',
             city: 'Amsterdam',
-            country: 'NL'
-        }
+            country: 'NL',
+        },
     },
     articles: [
         {
@@ -118,7 +118,7 @@ const payload: IPay = {
             vatPercentage: 21,
             quantity: 2,
             price: 20.1,
-            priceExcl: 5
+            priceExcl: 5,
         },
         {
             identifier: 'Articlenumber2',
@@ -126,7 +126,7 @@ const payload: IPay = {
             vatPercentage: 21,
             quantity: 1,
             price: 10.1,
-            priceExcl: 5
-        }
-    ]
-}
+            priceExcl: 5,
+        },
+    ],
+};

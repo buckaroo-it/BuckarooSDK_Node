@@ -1,44 +1,48 @@
-import type Ideal from '../PaymentMethods/Ideal'
-import type Afterpay from '../PaymentMethods/Afterpay'
-import type AfterpayDigiAccept from '../PaymentMethods/AfterpayDigiAccept'
-import type ApplePay from '../PaymentMethods/ApplePay'
-import type Bancontact from '../PaymentMethods/Bancontact'
-import type Banktransfer from '../PaymentMethods/BankTransfer'
-import type Belfius from '../PaymentMethods/Belfius'
-import type Billink from '../PaymentMethods/Billink'
-import type BuckarooVoucher from '../PaymentMethods/BuckarooVoucher'
-import type BuckarooWallet from '../PaymentMethods/BuckarooWallet'
-import type CreditCard from '../PaymentMethods/CreditCard'
-import type CreditClick from '../PaymentMethods/CreditClick'
-import type CreditManagement from '../PaymentMethods/CreditManagement'
-import type Emandates from '../PaymentMethods/Emandates'
-import type EPS from '../PaymentMethods/EPS'
-import type GiftCard from '../PaymentMethods/GiftCard'
-import type Giropay from '../PaymentMethods/Giropay'
-import type IdealQr from '../PaymentMethods/IdealQR'
-import type Idin from '../PaymentMethods/Idin'
-import type In3Old from '../PaymentMethods/In3Old'
-import type KBC from '../PaymentMethods/KBC'
-import type Klarna from '../PaymentMethods/Klarna'
-import type KlarnaKp from '../PaymentMethods/KlarnaKP'
-import type Marketplaces from '../PaymentMethods/Marketplaces'
-import type Payconiq from '../PaymentMethods/Payconiq'
-import type PayByBank from '../PaymentMethods/PayByBank'
-import type Paypal from '../PaymentMethods/Paypal'
-import type PayPerEmail from '../PaymentMethods/PayPerEmail'
-import type PiM from '../PaymentMethods/PiM'
-import type PointOfSale from '../PaymentMethods/PointOfSale'
-import type Przelewy24 from '../PaymentMethods/Przelewy24'
-import type SEPA from '../PaymentMethods/SEPA'
-import type Sofort from '../PaymentMethods/Sofort'
-import type Subscriptions from '../PaymentMethods/Subscriptions'
-import type Surepay from '../PaymentMethods/Surepay'
-import type Thunes from '../PaymentMethods/Thunes'
-import type Tinka from '../PaymentMethods/Tinka'
-import type Alipay from '../PaymentMethods/Alipay'
-import type Trustly from '../PaymentMethods/Trustly'
-import type Wechatpay from '../PaymentMethods/WeChatPay'
-import type In3 from '../PaymentMethods/In3'
+import type Ideal from '../PaymentMethods/Ideal';
+import type Afterpay from '../PaymentMethods/Afterpay';
+import type AfterpayDigiAccept from '../PaymentMethods/AfterpayDigiAccept';
+import type ApplePay from '../PaymentMethods/ApplePay';
+import type Bancontact from '../PaymentMethods/Bancontact';
+import type Banktransfer from '../PaymentMethods/BankTransfer';
+import type Belfius from '../PaymentMethods/Belfius';
+import type Billink from '../PaymentMethods/Billink';
+import type BuckarooVoucher from '../PaymentMethods/BuckarooVoucher';
+import type BuckarooWallet from '../PaymentMethods/BuckarooWallet';
+import type CreditCard from '../PaymentMethods/CreditCard';
+import type CreditClick from '../PaymentMethods/CreditClick';
+import type CreditManagement from '../PaymentMethods/CreditManagement';
+import type Emandates from '../PaymentMethods/Emandates';
+import type EPS from '../PaymentMethods/EPS';
+import type GiftCard from '../PaymentMethods/GiftCard';
+import type Giropay from '../PaymentMethods/Giropay';
+import type IdealQr from '../PaymentMethods/IdealQR';
+import type Idin from '../PaymentMethods/Idin';
+import type In3Old from '../PaymentMethods/In3Old';
+import type KBC from '../PaymentMethods/KBC';
+import type Klarna from '../PaymentMethods/Klarna';
+import type KlarnaKp from '../PaymentMethods/KlarnaKP';
+import type Marketplaces from '../PaymentMethods/Marketplaces';
+import type Payconiq from '../PaymentMethods/Payconiq';
+import type PayByBank from '../PaymentMethods/PayByBank';
+import type Paypal from '../PaymentMethods/Paypal';
+import type PayPerEmail from '../PaymentMethods/PayPerEmail';
+import type PiM from '../PaymentMethods/PiM';
+import type PointOfSale from '../PaymentMethods/PointOfSale';
+import type Przelewy24 from '../PaymentMethods/Przelewy24';
+import type SEPA from '../PaymentMethods/SEPA';
+import type Sofort from '../PaymentMethods/Sofort';
+import type Subscriptions from '../PaymentMethods/Subscriptions';
+import type Surepay from '../PaymentMethods/Surepay';
+import type Thunes from '../PaymentMethods/Thunes';
+import type Tinka from '../PaymentMethods/Tinka';
+import type Alipay from '../PaymentMethods/Alipay';
+import type Trustly from '../PaymentMethods/Trustly';
+import type Wechatpay from '../PaymentMethods/WeChatPay';
+import type In3 from '../PaymentMethods/In3';
+import type MultiBanco from '../PaymentMethods/Multibanco';
+import type Index from "../PaymentMethods/Mbway";
+
+//toDo refactor this
 
 export type AllMethods = readonly [
     { class: Afterpay; code: MethodTypes['Afterpay'] },
@@ -81,23 +85,22 @@ export type AllMethods = readonly [
     { class: Thunes; code: MethodTypes['Thunes'] },
     { class: Tinka; code: MethodTypes['Tinka'] },
     { class: Trustly; code: MethodTypes['Trustly'] },
-    { class: Wechatpay; code: MethodTypes['WeChatPay'] }
-]
-export type ServiceCode = AllMethods[number]['code'][number]
+    { class: Wechatpay; code: MethodTypes['WeChatPay'] },
+    { class: MultiBanco; code: MethodTypes['Multibanco'] },
+    { class: Index ; code: MethodTypes['Mbway'] },
+];
+export type ServiceCode = AllMethods[number]['code'][number];
 
-export type MethodFromServiceCode<
-    Code extends ServiceCode,
-    Methods extends AllMethods[number] = AllMethods[number]
-> = {
+export type MethodFromServiceCode<Code extends ServiceCode, Methods extends AllMethods[number] = AllMethods[number]> = {
     [Key in Methods['code'][number]]: Methods extends {
-        class: infer Class
-        code: readonly (infer Codes)[]
+        class: infer Class;
+        code: readonly (infer Codes)[];
     }
         ? Extract<Codes, Code> extends never
             ? never
             : Class
-        : never
-}[Code]
+        : never;
+}[Code];
 
 export const Methods = {
     Afterpay: ['afterpay'],
@@ -110,20 +113,7 @@ export const Methods = {
     Billink: ['billink'],
     BuckarooVoucher: ['buckaroovoucher'],
     BuckarooWallet: ['BuckarooWalletCollecting'],
-    CreditCard: [
-        'creditcard',
-        'mastercard',
-        'visa',
-        'amex',
-        'vpay',
-        'maestro',
-        'visaelectron',
-        'cartebleuevisa',
-        'cartebancaire',
-        'dankort',
-        'nexi',
-        'postepay'
-    ],
+    CreditCard: ['creditcard', 'mastercard', 'visa', 'amex', 'vpay', 'maestro', 'visaelectron', 'cartebleuevisa', 'cartebancaire', 'dankort', 'nexi', 'postepay'],
     CreditClick: ['creditclick'],
     CreditManagement: ['CreditManagement3'],
     Emandates: ['emandate'],
@@ -152,7 +142,7 @@ export const Methods = {
         'wonenzo',
         'yourgift',
         'vvvgiftcard',
-        'parfumcadeaukaart'
+        'parfumcadeaukaart',
     ],
     Giropay: ['giropay'],
     IdealQR: ['idealqr'],
@@ -178,23 +168,23 @@ export const Methods = {
     Thunes: ['thunes'],
     Tinka: ['tinka'],
     Trustly: ['trustly'],
-    WeChatPay: ['wechatpay']
-} as const
+    WeChatPay: ['wechatpay'],
+    Multibanco: ['multibanco'],
+    Mbway: ['MBWay'],
+} as const;
 
-type MethodTypes = typeof Methods
-export default function getMethod<Code extends ServiceCode>(
-    code: Code
-): MethodFromServiceCode<Code> {
-    let method: string | undefined
+type MethodTypes = typeof Methods;
+export default function getMethod<Code extends ServiceCode>(code: Code): MethodFromServiceCode<Code> {
+    let method: string | undefined;
     for (const key in Methods) {
         if (Methods[key].includes(code)) {
-            method = key
-            break
+            method = key;
+            break;
         }
     }
-    if (!method) throw new Error(`Wrong payment method code has been given`)
+    if (!method) throw new Error(`Wrong payment method code has been given`);
 
-    let methodClass = require(`../PaymentMethods/${method}`).default
+    let methodClass = require(`../PaymentMethods/${method}`).default;
 
-    return new methodClass(code)
+    return new methodClass(code);
 }

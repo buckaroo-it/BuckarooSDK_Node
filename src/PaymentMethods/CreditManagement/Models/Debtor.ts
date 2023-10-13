@@ -1,30 +1,30 @@
-import { IInvoice, Invoice } from './Invoice'
+import { IInvoice, Invoice } from './Invoice';
 
 export interface IDebtor extends IInvoice {
-    addressUnreachable?: boolean
+    addressUnreachable?: boolean;
 
-    emailUnreachable?: boolean
+    emailUnreachable?: boolean;
 
-    mobileUnreachable?: boolean
+    mobileUnreachable?: boolean;
 
-    landlineUnreachable?: boolean
+    landlineUnreachable?: boolean;
 
-    faxUnreachable?: boolean
+    faxUnreachable?: boolean;
 }
 export class Debtor extends Invoice {
     set addressUnreachable(value: boolean) {
-        this.set('addressUnreachable', value)
+        this.set('addressUnreachable', value);
     }
     set emailUnreachable(value: boolean) {
-        this.set('emailUnreachable', value)
+        this.set('emailUnreachable', value);
     }
     set mobileUnreachable(value: boolean) {
-        this.set('mobileUnreachable', value)
+        this.set('mobileUnreachable', value);
     }
     set landlineUnreachable(value: boolean) {
-        this.set('landlineUnreachable', value)
+        this.set('landlineUnreachable', value);
     }
     set faxUnreachable(value: boolean) {
-        this.set('faxUnreachable', value)
+        this.set('faxUnreachable', value);
     }
 }

@@ -1,50 +1,50 @@
-import { IPaymentRequest } from '../../../Models/IRequest'
-import { Article, IBillinkArticle } from './Article'
-import { ServiceParameter } from '../../../Models/ServiceParameters'
-import { ICustomer } from '../../../Models/Interfaces/ICustomer'
-import { BillinkCustomer } from './Customer'
+import { IPaymentRequest } from '../../../Models/IRequest';
+import { Article, IBillinkArticle } from './Article';
+import { ServiceParameter } from '../../../Models/ServiceParameters';
+import { ICustomer } from '../../../Models/Interfaces/ICustomer';
+import { BillinkCustomer } from './Customer';
 
 export interface IPay extends IPaymentRequest {
-    billing: ICustomer
-    shipping?: ICustomer
-    articles: IBillinkArticle[]
-    trackandtrace?: string
-    VATNumber?: string
-    summaryImageUrl?: string
+    billing: ICustomer;
+    shipping?: ICustomer;
+    articles: IBillinkArticle[];
+    trackandtrace?: string;
+    VATNumber?: string;
+    summaryImageUrl?: string;
 }
 export class Pay extends ServiceParameter {
     protected getGroups() {
         return super.getGroups({
             Billing: 'BillingCustomer',
             Shipping: 'ShippingCustomer',
-            Articles: 'Article'
-        })
+            Articles: 'Article',
+        });
     }
     protected getCountable(countable: Capitalize<string>[] = []): Capitalize<string>[] {
-        return super.getCountable(['Articles'])
+        return super.getCountable(['Articles']);
     }
     set billing(billing: ICustomer) {
-        this.set('billing', new BillinkCustomer(billing))
+        this.set('billing', new BillinkCustomer(billing));
         if (this.get('shipping') === undefined) {
-            this.shipping = billing
+            this.shipping = billing;
         }
     }
     set shipping(shipping: ICustomer) {
-        this.set('shipping', new BillinkCustomer(shipping))
+        this.set('shipping', new BillinkCustomer(shipping));
     }
     set articles(articles: IBillinkArticle[]) {
         this.set(
             'articles',
             articles.map((article) => new Article(article))
-        )
+        );
     }
     set trackandtrace(trackandtrace: string) {
-        this.set('trackandtrace', trackandtrace)
+        this.set('trackandtrace', trackandtrace);
     }
     set VATNumber(VATNumber: string) {
-        this.set('VATNumber', VATNumber)
+        this.set('VATNumber', VATNumber);
     }
     set summaryImageUrl(summaryImageUrl: string) {
-        this.set('summaryImageUrl', summaryImageUrl)
+        this.set('summaryImageUrl', summaryImageUrl);
     }
 }
