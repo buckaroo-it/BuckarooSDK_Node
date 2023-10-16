@@ -56,3 +56,6 @@ export default class Buckaroo {
         return getMethod(name);
     }
 }
+
+
+export { Buckaroo };
