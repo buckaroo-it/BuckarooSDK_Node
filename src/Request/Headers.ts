@@ -1,19 +1,22 @@
-import { OutgoingHttpHeaders } from 'http';
+import {AxiosRequestConfig} from "axios";
 
 export type RequestHeaders = {
-    'Content-type'?: string;
+    'Content-Type'?: string;
     Accept?: string;
     Culture?: string;
     Authorization?: string;
     Software?: string;
-} & OutgoingHttpHeaders;
+    [header: string]: any;
+}
+
+export type RequestConfig = { headers: RequestHeaders } | AxiosRequestConfig
 
 export default class Headers {
     private _headers: RequestHeaders = this.getDefaultHeaders();
     get headers(): RequestHeaders {
         return this._headers;
     }
-    protected getDefaultHeaders() {
+    protected getDefaultHeaders(): RequestHeaders {
         return {
             'Content-type': 'application/json; charset=utf-8',
             Accept: 'application/json',

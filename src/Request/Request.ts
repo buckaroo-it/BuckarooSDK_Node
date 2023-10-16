@@ -1,17 +1,19 @@
-import Headers from './Headers';
-import { HttpClientResponse, HttpResponseConstructor } from '../Models/Response/HttpClientResponse';
-import { DataRequestData, SpecificationRequestData, TransactionData } from './DataModels';
-import Buckaroo from '../index';
-import Endpoints, { RequestTypes } from '../Constants/Endpoints';
-import { TransactionResponse } from '../Models/Response/TransactionResponse';
-import { SpecificationRequestResponse } from '../Models/Response/SpecificationRequestResponse';
-import { BatchRequestResponse } from '../Models/Response/BatchRequestResponse';
-import HttpMethods from '../Constants/HttpMethods';
-import { RequestOptions } from 'https';
-import { ICredentials } from '../Utils/Types';
-import { Hmac } from './Hmac';
-import { IService } from '../Models/IServiceList';
-import IRequest from '../Models/IRequest';
+import Headers from './Headers'
+import { HttpClientResponse, HttpResponseConstructor } from '../Models/Response/HttpClientResponse'
+import { DataRequestData, SpecificationRequestData, TransactionData } from './DataModels'
+import Buckaroo from '../index'
+import Endpoints, { RequestTypes } from '../Constants/Endpoints'
+import { TransactionResponse } from '../Models/Response/TransactionResponse'
+import { SpecificationRequestResponse } from '../Models/Response/SpecificationRequestResponse'
+import { BatchRequestResponse } from '../Models/Response/BatchRequestResponse'
+import HttpMethods from '../Constants/HttpMethods'
+import { RequestOptions } from 'https'
+import PaymentMethod from '../PaymentMethods/PaymentMethod'
+import { ICredentials } from '../Utils/Types'
+import { Hmac } from './Hmac'
+import { ServiceCode, AvailablePaymentMethods} from '../Utils/MethodTypes'
+import { IService } from '../Models/IServiceList'
+import IRequest from "../Models/IRequest";
 
 export default class Request<HttpResponse extends HttpResponseConstructor = HttpResponseConstructor, RequestData extends object | undefined = undefined> extends Headers {
     protected _data?: object | object[] | undefined;
@@ -79,12 +81,24 @@ export default class Request<HttpResponse extends HttpResponseConstructor = Http
             BatchRequestResponse
         );
     }
-    static BatchDataRequest(payload: IRequest[] = []) {
-        return new Request(
-            RequestTypes.BatchData,
-            HttpMethods.POST,
-            payload.map((data) => new DataRequestData(data)),
-            BatchRequestResponse
-        );
+    static BatchDataRequest(data: DataRequestData[] = []) {
+        return new Request(RequestTypes.BatchData, HttpMethods.POST, data, BatchRequestResponse)
+    }
+    combine<Method extends ServiceCode | PaymentMethod>(
+        method: Method
+    ): Method extends ServiceCode ? AvailablePaymentMethods[Method] : Method
+    combine<R extends Request>(request: R): this
+    combine(data): PaymentMethod | this {
+        if (!(data instanceof Request)) {
+            let paymentMethod: PaymentMethod =
+                data instanceof PaymentMethod ? data : Buckaroo.Client.method(data)
+            if (this.data instanceof TransactionData) {
+                paymentMethod.combine(this.data)
+            }
+            return paymentMethod
+        } else {
+            this._data = { ...this._data, ...data.data }
+        }
+        return this
     }
 }

@@ -6,16 +6,16 @@ import {IService, ServiceList} from '../Models/IServiceList';
 import { ServiceParameter } from '../Models/ServiceParameters';
 import { IParameter } from '../Models/IParameters';
 import { TransactionData } from '../Request/DataModels';
-import {MethodFromServiceCode, ServiceCode} from "../Utils/MethodTypes";
+import {PaymentMethodInstance, ServiceCode} from "../Utils/MethodTypes";
 
 export default abstract class PaymentMethod {
     protected _paymentName: string = '';
-    protected _serviceCode?: string;
+    protected _serviceCode?: ServiceCode = 'noservice';
     protected _serviceVersion: number = 0;
     protected _payload: TransactionData = new TransactionData();
     protected _requiredFields: Array<keyof IRequest> = [];
-    constructor(serviceCode?: string) {
-        this._serviceCode = serviceCode ?? this.paymentName;
+    constructor(serviceCode?: ServiceCode) {
+        this._serviceCode = serviceCode ?? this.serviceCode;
     }
     get serviceVersion() {
         return this._serviceVersion;
@@ -23,8 +23,8 @@ export default abstract class PaymentMethod {
     set serviceVersion(value: number) {
         this._serviceVersion = value;
     }
-    get serviceCode() {
-        return this._serviceCode || '';
+    get serviceCode(): ServiceCode {
+        return this._serviceCode || 'noservice';
     }
     get paymentName() {
         return this._paymentName;
@@ -75,7 +75,7 @@ export default abstract class PaymentMethod {
         return Request.Specification(type, { name: this.serviceCode, version: this.serviceVersion });
     }
 
-    combine<Name extends ServiceCode>(data: Name): MethodFromServiceCode<Name>;
+    combine<Name extends ServiceCode>(data: Name): PaymentMethodInstance<Name>;
     combine<Payload extends TransactionData>(data: Payload): this;
     combine<Method extends PaymentMethod>(method: Method): this;
     combine(data): this {

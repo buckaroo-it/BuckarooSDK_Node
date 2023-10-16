@@ -1,11 +1,12 @@
-import { IConfig, ICredentials } from './Utils/Types';
-import HttpsClient from './Request/HttpsClient';
-import { Agent } from 'https';
-import getMethod, { MethodFromServiceCode, ServiceCode } from './Utils/MethodTypes';
-import Request from './Request/Request';
-import NoService from './PaymentMethods/NoService';
-import TransactionService from './Services/TransactionService';
-import { Credentials } from './Handlers/Credentials';
+import {IConfig, ICredentials} from './Utils/Types'
+import HttpsClient from './Request/HttpsClient'
+import {Agent} from 'https'
+import {getMethod, PaymentMethodInstance, ServiceCode} from './Utils/MethodTypes'
+import Request from './Request/Request'
+import NoService from './PaymentMethods/NoService'
+import TransactionService from './Services/TransactionService'
+import {Credentials} from './Handlers/Credentials'
+import {RequestTypes} from "./Constants/Endpoints";
 
 export default class Buckaroo {
     private readonly _credentials: Credentials;
@@ -13,9 +14,9 @@ export default class Buckaroo {
     private readonly _httpClient: HttpsClient;
     private static _client: Buckaroo;
     constructor(credentials: ICredentials, config?: IConfig, agent?: Agent) {
-        this._credentials = new Credentials(credentials.secretKey, credentials.websiteKey);
-        this._config = { ...(config ?? { mode: 'TEST', currency: 'EUR' }) };
-        this._httpClient = new HttpsClient(agent);
+        this._credentials = new Credentials(credentials.secretKey, credentials.websiteKey)
+        this._config = { ...(config ?? { mode: 'TEST', currency: 'EUR' }) }
+        this._httpClient = new HttpsClient()
     }
     static InitializeClient(credentials: ICredentials, config?: IConfig, agent?: Agent): Buckaroo {
         return (this._client = new this(credentials, config, agent));
@@ -47,9 +48,9 @@ export default class Buckaroo {
             data: Request.BatchDataRequest,
         };
     }
-    method(): NoService;
-    method<Name extends ServiceCode>(name: Name): MethodFromServiceCode<Name>;
-    method(name?: ServiceCode) {
+    method(): NoService
+    method<K extends ServiceCode>(name: K): PaymentMethodInstance<K>
+    method<K extends ServiceCode>(name?: K) {
         if (!name) {
             return new NoService();
         }

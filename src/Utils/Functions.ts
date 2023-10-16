@@ -1,4 +1,11 @@
-import { IAdditionalParameters, IFormattedParameter, IParameter, IServiceParameters, ServiceParameterTypes } from '../Models/IParameters';
+import os from 'os';
+import {
+    IAdditionalParameters,
+    IFormattedParameter,
+    IParameter,
+    IServiceParameters,
+    ServiceParameterTypes
+} from '../Models/IParameters'
 
 export function uniqid(prefix: string = '', random: boolean = false) {
     const sec = Date.now() * 1000 + Math.random() * 1000;
@@ -65,15 +72,22 @@ export abstract class DataFormatter {
         }, {});
     }
 }
-export function getIPAddress() {
-    const interfaces = require('os').networkInterfaces();
-    for (const devName in interfaces) {
-        let iface = interfaces[devName];
+export const getIPAddress = (): string => {
+    const interfaces = os.networkInterfaces();
 
-        for (let i = 0; i < iface.length; i++) {
-            let alias = iface[i];
-            if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) return alias.address;
+    for (const devName in interfaces) {
+        const iface = interfaces[devName];
+
+        if (!iface) {
+            continue;
+        }
+
+        for (const alias of iface) {
+            if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
+                return alias.address;
+            }
         }
     }
+
     return '0.0.0.0';
-}
+};
