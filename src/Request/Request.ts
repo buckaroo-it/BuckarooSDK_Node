@@ -18,6 +18,9 @@ export default class Request<
     RequestData extends object | undefined = undefined
 > extends Headers {
     protected _path?: string;
+    protected _data?: object | object[] | undefined;
+    protected _httpMethod: HttpMethods;
+    protected _responseHandler?: HttpResponseConstructor;
 
     constructor(path?: string, method?: HttpMethods, data?: RequestData, responseHandler?: HttpResponse) {
         super();
@@ -27,13 +30,9 @@ export default class Request<
         this._responseHandler = responseHandler;
     }
 
-    protected _data?: object | object[] | undefined;
-
     get data(): RequestData {
         return this._data as any;
     }
-
-    protected _httpMethod: HttpMethods;
 
     get httpMethod(): HttpMethods {
         return this._httpMethod;
@@ -42,8 +41,6 @@ export default class Request<
     get url(): URL {
         return new URL(Endpoints[Buckaroo.Client.config.mode] + (this._path || ''));
     }
-
-    protected _responseHandler?: HttpResponseConstructor;
 
     protected get responseHandler(): HttpResponse {
         return (this._responseHandler || HttpClientResponse) as HttpResponse;

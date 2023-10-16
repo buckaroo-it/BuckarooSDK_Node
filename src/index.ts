@@ -11,6 +11,7 @@ export default class Buckaroo {
     private static _client: Buckaroo;
     private readonly _credentials: Credentials;
     private readonly _httpClient: HttpsClient;
+    private _config: IConfig;
 
     constructor(credentials: ICredentials, config?: IConfig, agent?: Agent) {
         this._credentials = new Credentials(credentials.secretKey, credentials.websiteKey);
@@ -21,8 +22,6 @@ export default class Buckaroo {
     static get Client(): Buckaroo {
         return this._client;
     }
-
-    private _config: IConfig;
 
     get config(): IConfig {
         return { ...this._config };

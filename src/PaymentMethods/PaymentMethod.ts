@@ -11,24 +11,21 @@ import { MethodFromServiceCode, ServiceCode } from '../Utils/MethodTypes';
 export default abstract class PaymentMethod {
     protected _payload: TransactionData = new TransactionData();
     protected _requiredFields: Array<keyof IRequest> = [];
+    protected _paymentName: string = '';
+    protected _serviceCode?: string;
+    protected _serviceVersion: number = 0;
 
     constructor(serviceCode?: string) {
         this._serviceCode = serviceCode ?? this.paymentName;
     }
 
-    protected _paymentName: string = '';
-
     get paymentName() {
         return this._paymentName;
     }
 
-    protected _serviceCode?: string;
-
     get serviceCode() {
         return this._serviceCode || '';
     }
-
-    protected _serviceVersion: number = 0;
 
     get serviceVersion() {
         return this._serviceVersion;

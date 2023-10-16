@@ -6,6 +6,10 @@ import crypto from 'crypto';
 
 export class Hmac {
     protected _data?: object;
+    protected _url?: URL;
+    protected _nonce?: string;
+    protected _time?: string;
+    protected _method?: string;
 
     get data(): string {
         return this._data ? JSON.stringify(this._data) : '';
@@ -19,8 +23,6 @@ export class Hmac {
             }
         } catch (e) {}
     }
-
-    protected _url?: URL;
 
     get url(): string | undefined {
         return this._url
@@ -37,8 +39,6 @@ export class Hmac {
         if (url) this._url = new URL(url);
     }
 
-    protected _nonce?: string;
-
     get nonce(): string {
         return this._nonce || 'nonce_' + Math.floor(Math.random() * 9999999 + 1);
     }
@@ -47,8 +47,6 @@ export class Hmac {
         this._nonce = nonce;
     }
 
-    protected _time?: string;
-
     get time(): string {
         return this._time || String(Math.round(Date.now() / 1000));
     }
@@ -56,8 +54,6 @@ export class Hmac {
     set time(time: string) {
         this._time = time;
     }
-
-    protected _method?: string;
 
     get method(): string {
         return this._method || 'POST';
