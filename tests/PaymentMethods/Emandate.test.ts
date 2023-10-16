@@ -1,4 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
+
 const method = buckarooClientTest.method('emandate');
 describe('Testing Emandates methods', () => {
     test('GetIssuerList', async () => {

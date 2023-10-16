@@ -1,9 +1,11 @@
 import { Str } from '../../Utils/Functions';
 import { HttpClientResponse } from './HttpClientResponse';
+
 export class SpecificationRequestResponse extends HttpClientResponse {
     get data(): ISpecificationRequestResponse {
         return this._data as any;
     }
+
     getActionRequestParameters(actionName: string): RequestParameter[] | undefined {
         let actions = this.data.actions?.find((action) => {
             if (Str.ciEquals(action.name, actionName)) {
@@ -52,6 +54,7 @@ export type RequestParameter = {
     inputPattern: string;
     autoCompleteType: string;
 };
+
 export interface ISpecificationRequestResponse {
     name: string;
     version: number;

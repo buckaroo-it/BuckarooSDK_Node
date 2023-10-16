@@ -1,4 +1,4 @@
-import {AxiosRequestConfig} from "axios";
+import { AxiosRequestConfig } from 'axios';
 
 export type RequestHeaders = {
     'Content-Type'?: string;
@@ -7,31 +7,16 @@ export type RequestHeaders = {
     Authorization?: string;
     Software?: string;
     [header: string]: any;
-}
+};
 
-export type RequestConfig = { headers: RequestHeaders } | AxiosRequestConfig
+export type RequestConfig = { headers: RequestHeaders } | AxiosRequestConfig;
 
 export default class Headers {
     private _headers: RequestHeaders = this.getDefaultHeaders();
     get headers(): RequestHeaders {
         return this._headers;
     }
-    protected getDefaultHeaders(): RequestHeaders {
-        return {
-            'Content-type': 'application/json; charset=utf-8',
-            Accept: 'application/json',
-            Culture: 'nl-NL',
-            Authorization: '',
-            Channel: 'Web',
-            Software: JSON.stringify({
-                PlatformName: 'Node SDK',
-                PlatformVersion: '1.0',
-                ModuleSupplier: 'Buckaroo',
-                ModuleName: 'BuckarooPayments',
-                ModuleVersion: '1.0',
-            }),
-        };
-    }
+
     setSoftwareHeader(
         value: {
             platformName?: string;
@@ -50,16 +35,35 @@ export default class Headers {
         });
         return this;
     }
+
     setHeaders(headers: RequestHeaders) {
         Object.keys(headers).forEach((key) => {
             this._headers[key] = headers[key];
         });
         return this;
     }
+
     removeHeaders(headers: RequestHeaders) {
         Object.keys(headers).forEach((key) => {
             delete this._headers[key];
         });
         return this;
+    }
+
+    protected getDefaultHeaders(): RequestHeaders {
+        return {
+            'Content-type': 'application/json; charset=utf-8',
+            Accept: 'application/json',
+            Culture: 'nl-NL',
+            Authorization: '',
+            Channel: 'Web',
+            Software: JSON.stringify({
+                PlatformName: 'Node SDK',
+                PlatformVersion: '1.0',
+                ModuleSupplier: 'Buckaroo',
+                ModuleName: 'BuckarooPayments',
+                ModuleVersion: '1.0',
+            }),
+        };
     }
 }

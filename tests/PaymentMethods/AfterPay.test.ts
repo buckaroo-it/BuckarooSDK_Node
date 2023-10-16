@@ -2,7 +2,7 @@ import buckarooClientTest from '../BuckarooClient.test';
 import { IPay } from '../../src/PaymentMethods/Afterpay/Model/Pay';
 import RecipientCategory from '../../src/Constants/RecipientCategory';
 
-const method = buckarooClientTest.method('afterpay')
+const method = buckarooClientTest.method('afterpay');
 describe('AfterPay methods', () => {
     test('Pay', () => {
         return method

@@ -1,4 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
+
 const method = buckarooClientTest.method('eps');
 describe('Testing Eps methods', () => {
     test('Pay', async () => {

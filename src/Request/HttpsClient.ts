@@ -1,10 +1,10 @@
-import axios, {AxiosInstance, AxiosRequestConfig} from 'axios';
-import {HttpResponseConstructor} from '../Models/Response/HttpClientResponse';
-import {RequestConfig, RequestHeaders} from "./Headers";
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import { HttpResponseConstructor } from '../Models/Response/HttpClientResponse';
+import { RequestConfig } from './Headers';
 
 export default class HttpsClient {
-    private _axiosInstance: AxiosInstance;
     protected _options: AxiosRequestConfig = {};
+    private _axiosInstance: AxiosInstance;
 
     constructor() {
         this._options.timeout = 10000;

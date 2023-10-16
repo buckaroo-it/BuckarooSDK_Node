@@ -14,4 +14,5 @@ enum ResponseStatus {
     BUCKAROO_AUTHORIZE_TYPE_ACCEPT = 'I013',
     BUCKAROO_AUTHORIZE_TYPE_GROUP_TRANSACTION = 'I150',
 }
+
 export default ResponseStatus;

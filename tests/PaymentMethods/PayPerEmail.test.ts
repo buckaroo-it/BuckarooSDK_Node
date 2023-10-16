@@ -1,6 +1,7 @@
 import Gender from '../../src/Constants/Gender';
 import buckarooClientTest from '../BuckarooClient.test';
 import { uniqid } from '../../src/Utils/Functions';
+
 const method = buckarooClientTest.method('payperemail');
 
 describe('PayPerEmail methods', () => {

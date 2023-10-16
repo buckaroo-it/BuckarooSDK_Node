@@ -4,15 +4,28 @@ import {
     IFormattedParameter,
     IParameter,
     IServiceParameters,
-    ServiceParameterTypes
-} from '../Models/IParameters'
+    ServiceParameterTypes,
+} from '../Models/IParameters';
 
 export function uniqid(prefix: string = '', random: boolean = false) {
     const sec = Date.now() * 1000 + Math.random() * 1000;
     const id = sec.toString(16).replace(/\./g, '').padEnd(14, '0');
     return `${prefix}${id}${random ? `.${Math.trunc(Math.random() * 100000000)}` : ''}`;
 }
+
 export class Str {
+    public static ucfirst(value: string): string {
+        return value.charAt(0).toUpperCase() + value.slice(1);
+    }
+
+    public static lcfirst(value: string): string {
+        return value.charAt(0).toLowerCase() + value.slice(1);
+    }
+
+    public static ciEquals(a: string, b: string) {
+        return a.localeCompare(b, undefined, { sensitivity: 'accent' }) === 0;
+    }
+
     private static replace(search: string[], replace: string, subject: string): string {
         let result: string = subject;
         for (let value of search) {
@@ -20,16 +33,8 @@ export class Str {
         }
         return result;
     }
-    public static ucfirst(value: string): string {
-        return value.charAt(0).toUpperCase() + value.slice(1);
-    }
-    public static lcfirst(value: string): string {
-        return value.charAt(0).toLowerCase() + value.slice(1);
-    }
-    public static ciEquals(a: string, b: string) {
-        return a.localeCompare(b, undefined, { sensitivity: 'accent' }) === 0;
-    }
 }
+
 export abstract class DataFormatter {
     static parametersMap(parameters: IAdditionalParameters, index1 = 'Name', index2 = 'Value'): IFormattedParameter[] {
         return Object.keys(parameters).map((key) => {
@@ -39,6 +44,7 @@ export abstract class DataFormatter {
             };
         }) as any;
     }
+
     static serviceParametersMap(
         parameters: IServiceParameters | ServiceParameterTypes | undefined,
         groups: { [key: string]: string } = {},
@@ -58,7 +64,13 @@ export abstract class DataFormatter {
             });
         } else if (typeof parameters === 'object') {
             for (const key of Object.keys(parameters)) {
-                this.serviceParametersMap(parameters[key], groups, countable, { ...parameter, name: key }, parametersArray);
+                this.serviceParametersMap(
+                    parameters[key],
+                    groups,
+                    countable,
+                    { ...parameter, name: key },
+                    parametersArray
+                );
             }
         } else if (parameters !== undefined) {
             parametersArray.push({ ...parameter, value: parameters });
@@ -72,6 +84,7 @@ export abstract class DataFormatter {
         }, {});
     }
 }
+
 export const getIPAddress = (): string => {
     const interfaces = os.networkInterfaces();
 

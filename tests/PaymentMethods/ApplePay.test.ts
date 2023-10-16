@@ -1,7 +1,7 @@
 import { uniqid } from '../../src/Utils/Functions';
+import ApplePay from '../../src/PaymentMethods/ApplePay';
 
 require('../BuckarooClient.test');
-import ApplePay from '../../src/PaymentMethods/ApplePay';
 
 const method = new ApplePay();
 

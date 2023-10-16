@@ -10,6 +10,7 @@ export class Refund extends ServiceParameter {
     set description(value: string) {
         this.set('description', value);
     }
+
     set refundReason(value: IRefund['refundReason']) {
         this.set('refundreason', value);
     }

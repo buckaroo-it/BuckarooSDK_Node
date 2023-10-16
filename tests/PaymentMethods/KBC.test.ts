@@ -1,4 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
+
 const method = buckarooClientTest.method('KBCPaymentButton');
 
 describe('Testing KBC methods', () => {
