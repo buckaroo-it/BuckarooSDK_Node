@@ -106,23 +106,6 @@ export default class Request<
         );
     }
 
-    combine<Method extends ServiceCode | PaymentMethod>(
-        method: Method
-    ): Method extends ServiceCode ? AvailablePaymentMethods[Method] : Method;
-    combine<R extends Request>(request: R): this;
-    combine(data): PaymentMethod | this {
-        if (!(data instanceof Request)) {
-            let paymentMethod: PaymentMethod = data instanceof PaymentMethod ? data : Buckaroo.Client.method(data);
-            if (this.data instanceof TransactionData) {
-                paymentMethod.combine(this.data);
-            }
-            return paymentMethod;
-        } else {
-            this._data = { ...this._data, ...data.data };
-        }
-        return this;
-    }
-
     protected setAuthorizationHeader(data: string, credentials: ICredentials = Buckaroo.Client.credentials): this {
         let hmac = new Hmac();
         hmac.data = data;
