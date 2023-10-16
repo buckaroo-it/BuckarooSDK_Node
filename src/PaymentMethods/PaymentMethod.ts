@@ -15,7 +15,9 @@ export default abstract class PaymentMethod {
     protected _payload: TransactionData = new TransactionData();
     protected _requiredFields: Array<keyof IRequest> = [];
 
-    constructor(serviceCode?: ServiceCode) {}
+    constructor(serviceCode?: ServiceCode) {
+        this._serviceCode = serviceCode ?? (this.paymentName as ServiceCode);
+    }
 
     get serviceVersion() {
         return this._serviceVersion;
