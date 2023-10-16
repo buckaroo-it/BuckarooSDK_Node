@@ -1,4 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
+
 const payconiq = buckarooClientTest.method('payconiq');
 describe('Payconiq', () => {
     test('Pay', async () => {

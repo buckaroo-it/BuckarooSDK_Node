@@ -10,6 +10,7 @@ export class Refund extends ServiceParameter {
     set email(value: string) {
         this.set('amount', value);
     }
+
     set lastName(value: string) {
         this.set('lastName', value);
     }

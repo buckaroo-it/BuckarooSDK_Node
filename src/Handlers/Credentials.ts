@@ -5,10 +5,12 @@ import { RequestTypes } from '../Constants/Endpoints';
 export class Credentials implements ICredentials {
     secretKey: string;
     websiteKey: string;
+
     constructor(secretKey: string, websiteKey: string) {
         this.secretKey = secretKey;
         this.websiteKey = websiteKey;
     }
+
     confirm() {
         return Request.Specification(RequestTypes.Transaction, {
             name: 'ideal',

@@ -1,10 +1,10 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import {describe} from "node:test";
+import { describe } from 'node:test';
 
 const subscription = buckarooClientTest.method('subscriptions');
 
 describe('Subscription methods', () => {
-    test('Create',  () => {
+    test('Create', () => {
         return subscription
             .create({
                 additionalParameters: {
@@ -32,7 +32,7 @@ describe('Subscription methods', () => {
             .request()
             .then((data) => {
                 expect(data.hasError()).toBeTruthy();
-            })
+            });
     });
     test('Update', async () => {
         subscription
@@ -54,62 +54,66 @@ describe('Subscription methods', () => {
             });
     });
     test('Combined Subscription', async () => {
+        subscription.createCombined({
+            pushURL: 'https://buckaroo.dev/push',
+            includeTransaction: false,
+            transactionVatPercentage: 5,
+            configurationCode: 'gfyh9fe4',
+            email: 'test@buckaroo.nl',
+            ratePlans: {
+                add: {
+                    startDate: '2033-01-01',
+                    ratePlanCode: '9863hdcj',
+                },
+            },
+            phone: {
+                mobile: '0612345678',
+            },
+            debtor: {
+                code: 'johnsmith4',
+            },
+            company: {
+                culture: 'nl-NL',
+                companyName: 'My Company Coporation',
+                vatApplicable: true,
+                vatNumber: 'NL140619562B01',
+                chamberOfCommerce: '20091741',
+            },
+            address: {
+                street: 'Hoofdstraat',
+                houseNumber: '90',
+                zipcode: '8441ER',
+                city: 'Heerenveen',
+                country: 'NL',
+            },
+        });
         subscription
-            .createCombined({
-                pushURL: 'https://buckaroo.dev/push',
-                includeTransaction: false,
-                transactionVatPercentage: 5,
-                configurationCode: 'gfyh9fe4',
-                email: 'test@buckaroo.nl',
-                ratePlans: {
-                    add: {
-                        startDate: '2033-01-01',
-                        ratePlanCode: '9863hdcj',
-                    },
-                },
-                phone: {
-                    mobile: '0612345678',
-                },
-                debtor: {
-                    code: 'johnsmith4',
-                },
-                company: {
-                    culture: 'nl-NL',
-                    companyName: 'My Company Coporation',
-                    vatApplicable: true,
-                    vatNumber: 'NL140619562B01',
-                    chamberOfCommerce: '20091741',
-                },
-                address: {
-                    street: 'Hoofdstraat',
-                    houseNumber: '90',
-                    zipcode: '8441ER',
-                    city: 'Heerenveen',
-                    country: 'NL',
-                },
-            })
-        subscription.combine('ideal')
+            .combine('ideal')
             .pay({
                 issuer: 'ABNANL2A',
                 amountDebit: 10,
                 startRecurrent: true,
-            }).request().then((data) => {
-                expect(data).toBeDefined();
             })
-    })
+            .request()
+            .then((data) => {
+                expect(data).toBeDefined();
+            });
+    });
 
     test('Update Combined Subscription', async () => {
+        subscription.updateCombined({
+            subscriptionGuid: '515461997AD34C50881D74157E38A64D',
+        });
         subscription
-            .updateCombined({
-                subscriptionGuid: '515461997AD34C50881D74157E38A64D',
-            })
-        subscription.combine('ideal')
+            .combine('ideal')
             .pay({
                 issuer: 'ABNANL2A',
                 amountDebit: 10,
-            }).request().then((data) => {
-            expect(data).toBeDefined();
-        })
+            })
+            .request()
+            .then((data) => {
+                expect(data).toBeDefined();
+            });
     });
 
     test('Stop Subscription', async () => {
@@ -148,4 +152,4 @@ describe('Subscription methods', () => {
         });
         expect(resume).toBeDefined();
     });
-})
+});

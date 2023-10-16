@@ -1,9 +1,12 @@
 import { Str } from '../Utils/Functions';
+
 export class Model {
     [key: keyof any]: any;
+
     constructor(...args: any[]) {
         this.initialize(...args);
     }
+
     initialize(data?: any) {
         if (data instanceof Object && !Array.isArray(data)) {
             if (data.constructor === this.constructor) {
@@ -12,7 +15,30 @@ export class Model {
         }
         return this;
     }
-    protected setOwnProperties(data: object = {}, properties: { [key: string]: PropertyDescriptor } = this.getAllPropertyDescriptors()) {
+
+    set(name: string, value: any, hidden: boolean = false): this {
+        this.defineProperty(name, value, hidden);
+        return this;
+    }
+
+    get(prop: string): any {
+        return this.has(prop)?.get?.call(this);
+    }
+
+    has(prop: string, model = this): PropertyDescriptor | undefined {
+        return getObjectProperty(model, prop, Model.prototype);
+    }
+
+    getData(callBack?: ((this: any, key: string, value: any) => any) | undefined): {
+        [key: string]: any;
+    } {
+        return JSON.parse(JSON.stringify(this), callBack);
+    }
+
+    protected setOwnProperties(
+        data: object = {},
+        properties: { [key: string]: PropertyDescriptor } = this.getAllPropertyDescriptors()
+    ) {
         for (const key in properties) {
             if (properties[key].set) {
                 let value = data[key] ?? properties[key].get?.call(this);
@@ -21,18 +47,22 @@ export class Model {
         }
         return this;
     }
+
     protected setDataProperties(data: object = {}) {
         for (const dataKey in data) {
             if (data.hasOwnProperty(dataKey) && data[dataKey] !== undefined) this.set(dataKey, data[dataKey]);
         }
         return this;
     }
+
     protected privateName(name: string): string {
         return Str.ucfirst(name);
     }
+
     protected publicName(name: string): string {
         return Str.lcfirst(name);
     }
+
     protected getAllPropertyDescriptors(descriptors = {}, root = Model.prototype): { [p: string]: PropertyDescriptor } {
         // Loop through the prototype chain
         let currentObj = Object.getPrototypeOf(this);
@@ -47,6 +77,7 @@ export class Model {
         }
         return descriptors;
     }
+
     protected defineProperty(name: string, value: any, hidden: boolean = false) {
         let privateName = this.privateName(name);
         Object.defineProperty(this, privateName, {
@@ -63,27 +94,13 @@ export class Model {
             configurable: true,
         });
     }
-    set(name: string, value: any, hidden: boolean = false): this {
-        this.defineProperty(name, value, hidden);
-        return this;
-    }
-    get(prop: string): any {
-        return this.has(prop)?.get?.call(this);
-    }
-    has(prop: string, model = this): PropertyDescriptor | undefined {
-        return getObjectProperty(model, prop, Model.prototype);
-    }
-    getData(callBack?: ((this: any, key: string, value: any) => any) | undefined): {
-        [key: string]: any;
-    } {
-        return JSON.parse(JSON.stringify(this), callBack);
-    }
 }
 
 export class JsonModel extends Model {
     constructor(data: object) {
         super(data);
     }
+
     initialize(data?: any) {
         return this.setDataProperties(data);
     }
@@ -95,6 +112,7 @@ export class JsonModel extends Model {
         });
         return this;
     }
+
     get(value: any) {
         if (Array.isArray(value)) {
             return value.map((v) => new JsonModel(v));
@@ -108,8 +126,12 @@ export class JsonModel extends Model {
         return value;
     }
 }
+
 export function getObjectProperty(object: object, property: string, root: any = null) {
     if (object !== root) {
-        return Object.getOwnPropertyDescriptor(object, property) ?? getObjectProperty(Object.getPrototypeOf(object), property, root);
+        return (
+            Object.getOwnPropertyDescriptor(object, property) ??
+            getObjectProperty(Object.getPrototypeOf(object), property, root)
+        );
     }
 }

@@ -1,5 +1,6 @@
 require('../BuckarooClient.test');
 import Sofort from '../../src/PaymentMethods/Sofort';
+
 const method = new Sofort();
 
 describe('Sofort', () => {

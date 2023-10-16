@@ -5,11 +5,13 @@ export interface IMultiInfoInvoice extends IRequest {
     invoice: string;
     invoices?: { invoiceNumber: string }[];
 }
+
 export class MultiInfoInvoice extends ServiceParameter {
-    protected getCountable() {
-        return super.getCountable(['Invoices']);
-    }
     set invoices(value: { invoiceNumber: string }[]) {
         this.set('invoices', value);
+    }
+
+    protected getCountable() {
+        return super.getCountable(['Invoices']);
     }
 }

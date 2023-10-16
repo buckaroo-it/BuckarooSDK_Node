@@ -28,12 +28,15 @@ export default interface IRequest {
     servicesExcludedForClient?: ServiceCode[] | string;
     customParameters?: IAdditionalParameters;
     additionalParameters?: IAdditionalParameters;
+
     [key: string]: any;
 }
+
 export declare interface IPaymentRequest extends IRequest {
     amountDebit: number;
     amountCredit?: never;
 }
+
 export declare interface IRefundRequest extends IRequest {
     amountCredit: number;
     amountDebit?: never;

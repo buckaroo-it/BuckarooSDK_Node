@@ -10,9 +10,11 @@ export class BillinkCustomer extends Customer {
     set address(address: IAddress) {
         this.set('address', new Address(address));
     }
+
     set phone(phone: IPhone) {
         this.set('phone', new Phone(phone));
     }
+
     set recipient(recipient: IPerson | ICompany) {
         if (recipient.category === recipientCategory.PERSON) {
             this.set('recipient', new BillinkPerson(recipient));
@@ -26,14 +28,17 @@ export class BillinkPerson extends Person {
     set category(category: recipientCategory.PERSON) {
         this.set('category', 'B2C');
     }
+
     set title(title: string) {
         this.set('salutation', title);
     }
 }
+
 export class BillinkCompany extends Company {
     set category(category: recipientCategory.COMPANY) {
         this.set('category', 'B2B');
     }
+
     set title(title: string) {
         this.set('salutation', title);
     }

@@ -5,6 +5,7 @@ export class BatchRequestResponse extends HttpClientResponse {
         return this._data as any;
     }
 }
+
 export interface BatchResponseData {
     message: string;
     errors?: {

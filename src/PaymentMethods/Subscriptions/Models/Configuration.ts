@@ -10,13 +10,16 @@ export type IConfiguration = {
     generateInvoiceSpecification?: boolean;
     skipPayPerEmail?: boolean;
 };
+
 export class Configuration extends Model implements IConfiguration {
     set name(value: string) {
         this.set('name', value);
     }
+
     set schemeKey(value: string) {
         this.set('schemeKey', value);
     }
+
     set invoiceNumberPrefix(value: string) {
         this.set('invoiceNumberPrefix', value);
     }

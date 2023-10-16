@@ -16,12 +16,15 @@ export default class Customer extends Model implements ICustomer {
             this.set('recipient', new AfterPayCompany(recipient));
         }
     }
+
     set address(address: IAddress) {
         this.set('address', new Address(address));
     }
+
     set email(email: string) {
         this.set('email', email);
     }
+
     set phone(phone: IPhone) {
         this.set('phone', new Phone(phone));
     }

@@ -1,6 +1,6 @@
+import * as https from 'https';
 import { Agent, RequestOptions } from 'https';
 import { HttpResponseConstructor } from '../Models/Response/HttpClientResponse';
-import * as https from 'https';
 
 const defaultAgent = new Agent({
     keepAlive: true,
@@ -8,12 +8,19 @@ const defaultAgent = new Agent({
 });
 export default class HttpsClient {
     protected _options: RequestOptions = {};
+
     constructor(agent?: Agent) {
         this._options.timeout = 10000;
         this._options.agent = agent || defaultAgent;
         this._options.sessionTimeout = 30000;
     }
-    public sendRequest<R extends HttpResponseConstructor = HttpResponseConstructor>(url: URL, data: string, options: RequestOptions = {}, responseClass: R): Promise<InstanceType<R>> {
+
+    public sendRequest<R extends HttpResponseConstructor = HttpResponseConstructor>(
+        url: URL,
+        data: string,
+        options: RequestOptions = {},
+        responseClass: R
+    ): Promise<InstanceType<R>> {
         return new Promise((resolve, reject) => {
             const req = https.request(url, {
                 ...this._options,

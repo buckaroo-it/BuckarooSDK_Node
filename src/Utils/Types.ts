@@ -18,4 +18,4 @@ export declare interface ICredentials {
     secretKey: string;
 }
 
-export type Mode = 'LIVE' | 'TEST';
+export type Mode = "LIVE" | "TEST";

@@ -9,6 +9,7 @@ export default class Alipay extends PayablePaymentMethod {
         const serviceParameters = new ServiceParameter().set('useMobileView', payload.useMobileView);
         return super.pay(payload, serviceParameters);
     }
+
     refund(payload: IRefundRequest) {
         return super.refund(payload);
     }

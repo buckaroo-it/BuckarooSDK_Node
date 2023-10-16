@@ -40,7 +40,7 @@ import type Trustly from '../PaymentMethods/Trustly';
 import type Wechatpay from '../PaymentMethods/WeChatPay';
 import type In3 from '../PaymentMethods/In3';
 import type MultiBanco from '../PaymentMethods/Multibanco';
-import type Index from "../PaymentMethods/Mbway";
+import type Index from '../PaymentMethods/Mbway';
 
 //toDo refactor this
 
@@ -87,7 +87,7 @@ export type AllMethods = readonly [
     { class: Trustly; code: MethodTypes['Trustly'] },
     { class: Wechatpay; code: MethodTypes['WeChatPay'] },
     { class: MultiBanco; code: MethodTypes['Multibanco'] },
-    { class: Index ; code: MethodTypes['Mbway'] },
+    { class: Index; code: MethodTypes['Mbway'] }
 ];
 export type ServiceCode = AllMethods[number]['code'][number];
 
@@ -113,7 +113,20 @@ export const Methods = {
     Billink: ['billink'],
     BuckarooVoucher: ['buckaroovoucher'],
     BuckarooWallet: ['BuckarooWalletCollecting'],
-    CreditCard: ['creditcard', 'mastercard', 'visa', 'amex', 'vpay', 'maestro', 'visaelectron', 'cartebleuevisa', 'cartebancaire', 'dankort', 'nexi', 'postepay'],
+    CreditCard: [
+        'creditcard',
+        'mastercard',
+        'visa',
+        'amex',
+        'vpay',
+        'maestro',
+        'visaelectron',
+        'cartebleuevisa',
+        'cartebancaire',
+        'dankort',
+        'nexi',
+        'postepay',
+    ],
     CreditClick: ['creditclick'],
     CreditManagement: ['CreditManagement3'],
     Emandates: ['emandate'],

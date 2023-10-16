@@ -11,9 +11,11 @@ export class KlarnaRecipient extends Model implements ICustomer {
     set email(email: string) {
         this.set('email', email);
     }
+
     set address(address: IAddress) {
         this.set('address', new KlarnaAddress(address));
     }
+
     set recipient(recipient: Partial<IPerson | ICompany>) {
         if (recipient.category === RecipientCategory.PERSON) {
             // @ts-ignore
@@ -23,6 +25,7 @@ export class KlarnaRecipient extends Model implements ICustomer {
             this.set('recipient', new Company({ ...recipient, category: 'B2B' }));
         }
     }
+
     set phone(phone: IPhone) {
         this.set('phone', new KlarnaPhone(phone));
     }

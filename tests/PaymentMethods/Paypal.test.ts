@@ -1,7 +1,7 @@
 import buckarooClientTest from '../BuckarooClient.test';
+import Paypal from '../../src/PaymentMethods/Paypal';
 
 require('../BuckarooClient.test');
-import Paypal from '../../src/PaymentMethods/Paypal';
 
 const method = new Paypal('paypal');
 

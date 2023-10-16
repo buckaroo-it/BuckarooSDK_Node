@@ -8,45 +8,57 @@ import TransactionService from './Services/TransactionService';
 import { Credentials } from './Handlers/Credentials';
 
 export default class Buckaroo {
-    private readonly _credentials: Credentials;
-    private _config: IConfig;
-    private readonly _httpClient: HttpsClient;
     private static _client: Buckaroo;
+    private readonly _credentials: Credentials;
+    private readonly _httpClient: HttpsClient;
+
     constructor(credentials: ICredentials, config?: IConfig, agent?: Agent) {
         this._credentials = new Credentials(credentials.secretKey, credentials.websiteKey);
         this._config = { ...(config ?? { mode: 'TEST', currency: 'EUR' }) };
         this._httpClient = new HttpsClient(agent);
     }
-    static InitializeClient(credentials: ICredentials, config?: IConfig, agent?: Agent): Buckaroo {
-        return (this._client = new this(credentials, config, agent));
-    }
+
     static get Client(): Buckaroo {
         return this._client;
     }
-    get credentials(): ICredentials {
-        return this._credentials;
-    }
-    confirmCredentials() {
-        return this._credentials.confirm();
-    }
+
+    private _config: IConfig;
+
     get config(): IConfig {
         return { ...this._config };
     }
+
     set config(value: IConfig) {
         this._config = value;
     }
+
+    get credentials(): ICredentials {
+        return this._credentials;
+    }
+
     get httpClient() {
         return this._httpClient;
     }
-    transaction(key: string) {
-        return new TransactionService(key);
-    }
+
     get batch() {
         return {
             transaction: Request.BatchTransaction,
             data: Request.BatchDataRequest,
         };
     }
+
+    static InitializeClient(credentials: ICredentials, config?: IConfig, agent?: Agent): Buckaroo {
+        return (this._client = new this(credentials, config, agent));
+    }
+
+    confirmCredentials() {
+        return this._credentials.confirm();
+    }
+
+    transaction(key: string) {
+        return new TransactionService(key);
+    }
+
     method(): NoService;
     method<Name extends ServiceCode>(name: Name): MethodFromServiceCode<Name>;
     method(name?: ServiceCode) {
