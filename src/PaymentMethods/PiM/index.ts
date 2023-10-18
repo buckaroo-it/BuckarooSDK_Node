@@ -1,4 +1,4 @@
-import PaymentMethod from '../PaymentMethod';
+import PaymentMethod from '../../Services/PaymentMethod';
 
 export default class PiM extends PaymentMethod {
     protected _paymentName = 'PiM';

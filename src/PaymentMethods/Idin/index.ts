@@ -1,4 +1,4 @@
-import PaymentMethod from '../PaymentMethod';
+import PaymentMethod from '../../Services/PaymentMethod';
 import { IPay } from '../Ideal/Models/Pay';
 
 export default class Idin extends PaymentMethod {

@@ -8,7 +8,7 @@ import { SpecificationRequestResponse } from '../Models/Response/SpecificationRe
 import { BatchRequestResponse } from '../Models/Response/BatchRequestResponse';
 import HttpMethods from '../Constants/HttpMethods';
 import { RequestOptions } from 'https';
-import PaymentMethod from '../PaymentMethods/PaymentMethod';
+import PaymentMethod from '../Services/PaymentMethod';
 import { ICredentials } from '../Utils/Types';
 import { Hmac } from './Hmac';
 import { AvailablePaymentMethods, ServiceCode } from '../Utils/MethodTypes';

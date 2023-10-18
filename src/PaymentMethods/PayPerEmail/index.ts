@@ -1,4 +1,4 @@
-import PaymentMethod from '../PaymentMethod';
+import PaymentMethod from '../../Services/PaymentMethod';
 import { IInvitation, Invitation } from './Models/Invitation';
 
 export default class PayPerEmail extends PaymentMethod {

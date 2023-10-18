@@ -1,4 +1,4 @@
-import PaymentMethod from '../PaymentMethod';
+import PaymentMethod from '../../Services/PaymentMethod';
 import IRequest from '../../Models/IRequest';
 
 type key = Required<Pick<IRequest, 'originalTransactionKey'>>;

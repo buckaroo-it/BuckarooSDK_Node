@@ -1,4 +1,4 @@
-import PaymentMethod from '../PaymentMethod';
+import PaymentMethod from '../../Services/PaymentMethod';
 import { IConfig } from '../../Utils/Types';
 import { IMandate, Mandate } from './Models/Mandate';
 

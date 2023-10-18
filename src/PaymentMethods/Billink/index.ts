@@ -1,4 +1,4 @@
-import PayablePaymentMethod from '../PayablePaymentMethod';
+import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
 import { IPay, Pay } from './Models/Pay';
 import { IRefund, Refund } from './Models/Refund';
 import { Capture, ICapture } from './Models/Capture';

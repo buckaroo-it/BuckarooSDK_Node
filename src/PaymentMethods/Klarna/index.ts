@@ -1,5 +1,5 @@
 import { IPay, Pay } from './Models/Pay';
-import PayablePaymentMethod from '../PayablePaymentMethod';
+import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
 
 export default class Klarna extends PayablePaymentMethod {
     protected _paymentName = 'Klarna';

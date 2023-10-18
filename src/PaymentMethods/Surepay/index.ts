@@ -1,4 +1,4 @@
-import PaymentMethod from '../PaymentMethod';
+import PaymentMethod from '../../Services/PaymentMethod';
 import { IVerify } from './Models/Verify';
 import { Parameter } from '../../Models/IParameters';
 
