@@ -81,4 +81,4 @@ export { default as alipay } from './Alipay';
 export { default as trustly } from './Trustly';
 export { default as wechatpay } from './WeChatPay';
 export { default as In3 } from './In3';
-export { default as noservice } from "./NoService";
+export { default as noservice } from './NoService';

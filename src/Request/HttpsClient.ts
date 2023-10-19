@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { HttpResponseConstructor } from '../Models/Response/HttpClientResponse';
 import { RequestConfig } from './Headers';
+import HttpMethods from '../Constants/HttpMethods';
 
 export default class HttpsClient {
     protected _options: AxiosRequestConfig = {};
@@ -15,17 +16,22 @@ export default class HttpsClient {
 
     public async sendRequest<R extends HttpResponseConstructor = HttpResponseConstructor>(
         url: URL,
-        data: string,
-        options: RequestConfig,
+        data: object = {},
+        options: RequestConfig = {},
         responseClass: R
     ): Promise<InstanceType<R>> {
         try {
-            const response = await this._axiosInstance.request({
+            const config = {
                 url: url.toString(),
-                data,
                 ...this._options,
                 ...options,
-            });
+            };
+
+            if (options.method !== HttpMethods.GET) {
+                config.data = data;
+            }
+
+            const response = await this._axiosInstance.request(config);
 
             return new responseClass(response, response.data) as InstanceType<R>;
         } catch (error: unknown) {

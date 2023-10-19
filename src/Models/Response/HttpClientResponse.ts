@@ -4,7 +4,7 @@ import { ICredentials } from '../../Utils/Types';
 import { AxiosResponse } from 'axios';
 
 export interface HttpResponseConstructor {
-    new (httpResponse: AxiosResponse, data: string): IHttpClientResponse;
+    new (httpResponse: AxiosResponse, data: object): IHttpClientResponse;
 }
 
 export interface IHttpClientResponse {
@@ -37,7 +37,7 @@ export class HttpClientResponse implements IHttpClientResponse {
     validateResponse(credentials: ICredentials) {
         return new ReplyHandler(
             credentials,
-            this._rawData,
+            JSON.parse(this._rawData ?? {}),
             this.httpResponse.headers['authorization'],
             this.httpResponse.request.url,
             this.httpResponse.request.method

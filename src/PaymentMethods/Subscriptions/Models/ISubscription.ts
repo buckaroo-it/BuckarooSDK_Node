@@ -115,19 +115,19 @@ export class Subscription extends ServiceParameter implements ISubscription {
     }
 
     set ratePlans(value: IRatePlans) {
-        for (const key in value) {
+        Object.entries(value).forEach(([key, val]) => {
             if (this.has(key + 'RatePlan')) {
-                this[key + 'RatePlan'] = value[key];
+                this[key + 'RatePlan'] = val;
             }
-        }
+        });
     }
 
     set ratePlanCharges(value: IRatePlanCharges) {
-        for (const key in value) {
+        Object.entries(value).forEach(([key, val]) => {
             if (this.has(key + 'RatePlanCharge')) {
-                this[key + 'RatePlanCharge'] = value[key];
+                this[key + 'RatePlanCharge'] = val;
             }
-        }
+        });
     }
 
     set customerIBAN(value: string) {

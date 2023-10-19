@@ -7,6 +7,7 @@
             "dom"
         ],
         "strict": true,
+        "noEmitOnError": true,
         "esModuleInterop": true,
         "skipLibCheck": true
         /* Skip type checking of declaration files. */,
@@ -15,7 +16,7 @@
         "declaration": true,
         "sourceMap": true,
         "moduleResolution": "node",
-        "noImplicitAny": false,
+        "noImplicitAny": true,
         "outDir": "dist",
         "resolveJsonModule": true
     },

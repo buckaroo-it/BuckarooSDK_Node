@@ -58,7 +58,7 @@ export default abstract class PaymentMethod {
 
     combine<Method extends PaymentMethod>(method: Method): this;
 
-    combine(data): this {
+    combine(data: any): this {
         if (typeof data === 'string') {
             const method: PaymentMethod = Buckaroo.Client.method(data as any);
             method.setPayload(this._payload);
@@ -70,7 +70,7 @@ export default abstract class PaymentMethod {
 
     protected setRequiredFields(requiredFields: Array<keyof IRequest> = this._requiredFields) {
         for (const fieldKey of requiredFields) {
-            let field = this._payload[fieldKey] ?? Buckaroo.Client.config[fieldKey];
+            let field = this._payload[fieldKey] ?? (Buckaroo.Client.config as IRequest)[fieldKey];
             if (field === undefined) {
                 throw new Error(`Missing required config parameter ${String(fieldKey)}`);
             }

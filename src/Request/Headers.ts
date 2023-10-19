@@ -9,7 +9,9 @@ export type RequestHeaders = {
     [header: string]: any;
 };
 
-export type RequestConfig = { headers: RequestHeaders } | AxiosRequestConfig;
+export interface RequestConfig extends AxiosRequestConfig {
+    headers?: RequestHeaders;
+}
 
 export default class Headers {
     private _headers: RequestHeaders = this.getDefaultHeaders();

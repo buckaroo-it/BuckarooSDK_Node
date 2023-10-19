@@ -43,7 +43,7 @@ export class ReplyHandler {
             this.strategy = 'JSON';
             return data;
         } catch (e) {
-            let objData = {};
+            let objData: Record<string, any> = {};
             new URLSearchParams(value).forEach((value, name) => {
                 objData[name] = value;
             });
