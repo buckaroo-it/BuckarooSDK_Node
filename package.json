@@ -10,7 +10,9 @@
     },
     "scripts": {
         "build": "yarn build:library && yarn build:declarations",
+        "dev": "yarn dev:library && yarn build:declarations",
         "build:library": "rollup --config rollup.config.js",
+        "dev:library": "rollup --config rollup.config.js -w",
         "build:declarations": "tsc --project tsconfig-declarations.json",
         "test": "jest",
         "prettier": "prettier --write ."

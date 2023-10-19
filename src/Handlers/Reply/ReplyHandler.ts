@@ -56,14 +56,11 @@ export class ReplyHandler {
         return new Hmac().validate(this.credentials, auth_header, url, data, this.method || HttpMethods.POST);
     }
 
-    private validateHttp(data: object, signature: string) {
-        let stringData = '';
-        for (const key in data) {
-            stringData += key + '=' + data[key];
-        }
-        stringData = stringData + this.credentials.websiteKey;
+    private validateHttp(data: Record<string, any>, signature: string): boolean {
+        const sortedKeys = Object.keys(data).sort();
+        const stringData = sortedKeys.map((key) => `${key}=${data[key]}`).join('') + this.credentials.secretKey;
 
-        let hash = crypto.createHash('sha1').update(stringData).digest('hex');
+        const hash = crypto.createHash('sha1').update(stringData).digest('hex');
 
         return crypto.timingSafeEqual(Buffer.from(hash), Buffer.from(signature));
     }

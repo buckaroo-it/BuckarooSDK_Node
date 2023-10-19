@@ -1,7 +1,6 @@
-import { IConfig, ICredentials } from './Utils/Types';
+import { getMethod, IConfig, ICredentials, PaymentMethodInstance, ServiceCode } from './Utils';
 import HttpsClient from './Request/HttpsClient';
 import { Agent } from 'https';
-import { getMethod, ServiceCode } from './Utils/MethodTypes';
 import Request from './Request/Request';
 import NoService from './PaymentMethods/NoService';
 import TransactionService from './Services/TransactionService';
@@ -50,6 +49,8 @@ export default class Buckaroo {
         return (this._client = new this(credentials, config, agent));
     }
 
+    method(): NoService;
+    method<Name extends ServiceCode>(name: Name): PaymentMethodInstance<Name>;
     method<K extends ServiceCode>(name?: K) {
         if (!name) {
             return new NoService();
