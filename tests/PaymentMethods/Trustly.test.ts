@@ -8,10 +8,13 @@ describe('Trustly', () => {
         await method
             .pay({
                 amountDebit: 12,
-                customerCountryCode: 'DE',
-                customerFirstName: 'da',
-                customerLastName: '34',
+                customer: {
+                    firstName: 'Test',
+                    lastName: 'Acceptatie',
+                    country: 'NL',
+                },
             })
+            .request()
             .then((response) => {
                 expect(response).toBeDefined();
             });

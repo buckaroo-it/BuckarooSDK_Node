@@ -57,9 +57,7 @@ export class ReplyHandler {
     }
 
     private validateHttp(data: Record<string, any>, signature: string): boolean {
-        const sortedKeys = Object.keys(data).sort();
-        const stringData = sortedKeys.map((key) => `${key}=${data[key]}`).join('') + this.credentials.secretKey;
-
+        const stringData = Object.keys(data).map((key) => `${key}=${data[key]}`).join('') + this.credentials.secretKey;
         const hash = crypto.createHash('sha1').update(stringData).digest('hex');
 
         return crypto.timingSafeEqual(Buffer.from(hash), Buffer.from(signature));
