@@ -13,11 +13,15 @@ import { Hmac } from './Hmac';
 import { IService } from '../Models/IServiceList';
 import IRequest from '../Models/IRequest';
 
-export default class Request<HttpResponse extends HttpResponseConstructor = HttpResponseConstructor, RequestData extends object | undefined = undefined> extends Headers {
+export default class Request<
+    HttpResponse extends HttpResponseConstructor = HttpResponseConstructor,
+    RequestData extends object | undefined = undefined
+> extends Headers {
+    protected _path?: string;
     protected _data?: object | object[] | undefined;
     protected _httpMethod: HttpMethods;
-    protected _path?: string;
     protected _responseHandler?: HttpResponseConstructor;
+
     constructor(path?: string, method?: HttpMethods, data?: RequestData, responseHandler?: HttpResponse) {
         super();
         this._path = path;
@@ -25,26 +29,71 @@ export default class Request<HttpResponse extends HttpResponseConstructor = Http
         this._httpMethod = method || HttpMethods.GET;
         this._responseHandler = responseHandler;
     }
-    get httpMethod(): HttpMethods {
-        return this._httpMethod;
-    }
+
     get data(): RequestData {
         return this._data as any;
     }
+
+    get httpMethod(): HttpMethods {
+        return this._httpMethod;
+    }
+
     get url(): URL {
         return new URL(Endpoints[Buckaroo.Client.config.mode] + (this._path || ''));
     }
+
     protected get responseHandler(): HttpResponse {
         return (this._responseHandler || HttpClientResponse) as HttpResponse;
     }
-    protected setAuthorizationHeader(data: string, credentials: ICredentials = Buckaroo.Client.credentials): this {
-        let hmac = new Hmac();
-        hmac.data = data;
-        hmac.method = this.httpMethod;
-        hmac.url = this.url.toString();
-        this.headers.Authorization = hmac.generate(credentials);
-        return this;
+
+    static Transaction(payload?: IRequest) {
+        return new Request(
+            RequestTypes.Transaction,
+            HttpMethods.POST,
+            new TransactionData(payload),
+            TransactionResponse
+        );
     }
+
+    static DataRequest(payload?: IRequest) {
+        return new Request(RequestTypes.Data, HttpMethods.POST, new DataRequestData(payload), TransactionResponse);
+    }
+
+    static Specification(type: RequestTypes.Data | RequestTypes.Transaction, data: IService[] | IService) {
+        if (Array.isArray(data)) {
+            return new Request(
+                type + `/Specifications`,
+                HttpMethods.POST,
+                new SpecificationRequestData(data),
+                SpecificationRequestResponse
+            );
+        }
+        return new Request(
+            type + `/Specification/${data?.name}?serviceVersion=${data?.version}`,
+            HttpMethods.GET,
+            undefined,
+            SpecificationRequestResponse
+        );
+    }
+
+    static BatchTransaction(payload: IRequest[] = []) {
+        return new Request(
+            RequestTypes.BatchTransaction,
+            HttpMethods.POST,
+            payload.map((data) => new TransactionData(data)),
+            BatchRequestResponse
+        );
+    }
+
+    static BatchDataRequest(payload: IRequest[] = []) {
+        return new Request(
+            RequestTypes.BatchData,
+            HttpMethods.POST,
+            payload.map((data) => new DataRequestData(data)),
+            BatchRequestResponse
+        );
+    }
+
     request(options: RequestOptions = {}) {
         let data = this._httpMethod === HttpMethods.GET ? '' : JSON.stringify(this._data);
         this.setAuthorizationHeader(data);
@@ -59,32 +108,13 @@ export default class Request<HttpResponse extends HttpResponseConstructor = Http
             this.responseHandler
         );
     }
-    static Transaction(payload?: IRequest) {
-        return new Request(RequestTypes.Transaction, HttpMethods.POST, new TransactionData(payload), TransactionResponse);
-    }
-    static DataRequest(payload?: IRequest) {
-        return new Request(RequestTypes.Data, HttpMethods.POST, new DataRequestData(payload), TransactionResponse);
-    }
-    static Specification(type: RequestTypes.Data | RequestTypes.Transaction, data: IService[] | IService) {
-        if (Array.isArray(data)) {
-            return new Request(type + `/Specifications`, HttpMethods.POST, new SpecificationRequestData(data), SpecificationRequestResponse);
-        }
-        return new Request(type + `/Specification/${data?.name}?serviceVersion=${data?.version}`, HttpMethods.GET, undefined, SpecificationRequestResponse);
-    }
-    static BatchTransaction(payload: IRequest[] = []) {
-        return new Request(
-            RequestTypes.BatchTransaction,
-            HttpMethods.POST,
-            payload.map((data) => new TransactionData(data)),
-            BatchRequestResponse
-        );
-    }
-    static BatchDataRequest(payload: IRequest[] = []) {
-        return new Request(
-            RequestTypes.BatchData,
-            HttpMethods.POST,
-            payload.map((data) => new DataRequestData(data)),
-            BatchRequestResponse
-        );
+
+    protected setAuthorizationHeader(data: string, credentials: ICredentials = Buckaroo.Client.credentials): this {
+        let hmac = new Hmac();
+        hmac.data = data;
+        hmac.method = this.httpMethod;
+        hmac.url = this.url.toString();
+        this.headers.Authorization = hmac.generate(credentials);
+        return this;
     }
 }

@@ -18,18 +18,23 @@ export class Wallet extends ServiceParameter {
     set walletId(value: string) {
         this.set('walletId', value);
     }
+
     set customer(value: Partial<IPerson>) {
         this.set('customer', new Customer(value));
     }
+
     set email(value: string) {
         this.set('consumerEmail', value);
     }
+
     set status(value: string) {
         this.set('status', value);
     }
+
     set walletMutationGuid(value: string) {
         this.set('walletMutationGuid', value);
     }
+
     set bankAccount(value: IBankAccount) {
         this.set('bankAccount', new BankAccount(value));
     }

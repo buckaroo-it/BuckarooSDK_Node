@@ -6,16 +6,16 @@ const ideal = buckarooClient.method('ideal');
 ideal
     .pay({
         amountDebit: 10.1,
-        issuer: 'ABNANL2A',
-        description: 'Ideal Payment',
+        issuer: "ABNANL2A",
+        description: "Ideal Payment",
     })
     .request();
 //Refund
 ideal
     .refund({
-        originalTransactionKey: '',
+        originalTransactionKey: "",
         amountCredit: 10.1,
-        invoice: '',
+        invoice: "",
     })
     .request();
 

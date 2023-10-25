@@ -2,7 +2,7 @@ require('../buckarooClient');
 import Subscriptions from '../../src/PaymentMethods/Subscriptions';
 import Ideal from '../../src/PaymentMethods/Ideal';
 
-const subscription = new Subscriptions()
+const subscription = new Subscriptions();
 subscription.createCombined({
     address: undefined,
     allowedServices: '',
@@ -33,6 +33,7 @@ subscription.createCombined({
             amountDebit: 1,
             currency: 'EUR',
             description: 'test',
-        }).request()
+        })
+        .request();
     console.log(combinedPayment);
 })();

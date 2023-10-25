@@ -1,4 +1,4 @@
-import { Pay, IPay } from './Models/Pay';
+import { IPay, Pay } from './Models/Pay';
 import PayablePaymentMethod from '../PayablePaymentMethod';
 import { RequestTypes } from '../../Constants/Endpoints';
 import { IRefundRequest } from '../../Models/IRequest';
@@ -6,15 +6,19 @@ import { IRefundRequest } from '../../Models/IRequest';
 export default class Ideal extends PayablePaymentMethod {
     protected _paymentName = 'Ideal';
     protected _serviceVersion = 2;
+
     constructor(serviceCode: 'ideal' | 'idealprocessing' = 'ideal') {
         super(serviceCode);
     }
+
     pay(data: IPay) {
         return super.pay(data, new Pay(data));
     }
+
     payRemainder(payload: IPay) {
         return super.payRemainder(payload, new Pay(payload));
     }
+
     issuers() {
         return this.specification(RequestTypes.Transaction)
             .request()
@@ -27,6 +31,7 @@ export default class Ideal extends PayablePaymentMethod {
                     });
             });
     }
+
     instantRefund(data: IRefundRequest) {
         return super.refund(data);
     }

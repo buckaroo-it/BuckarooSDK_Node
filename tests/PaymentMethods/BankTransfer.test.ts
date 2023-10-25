@@ -1,5 +1,6 @@
 import Gender from '../../src/Constants/Gender';
 import buckarooClientTest from '../BuckarooClient.test';
+
 const method = buckarooClientTest.method('transfer');
 
 describe('Transfer methods', () => {

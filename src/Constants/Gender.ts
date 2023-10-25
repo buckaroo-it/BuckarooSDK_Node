@@ -4,4 +4,5 @@ enum Gender {
     FEMALE = 2,
     NOT_APPLICABLE = 9,
 }
+
 export default Gender;

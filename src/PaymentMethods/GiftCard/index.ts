@@ -8,6 +8,7 @@ export default class GiftCard extends PayablePaymentMethod {
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }
+
     refund(payload: IRefund) {
         return super.refund(payload, new Refund(payload));
     }

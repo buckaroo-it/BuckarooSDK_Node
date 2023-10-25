@@ -14,26 +14,28 @@
 
 ### Index
 
--   [About](#about)
--   [Requirements](#requirements)
--   [Installation](#installation)
--   [Example](#example)
--   [Contribute](#contribute)
--   [Versioning](#versioning)
--   [Additional information](#additional-information)
+- [About](#about)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Example](#example)
+- [Contribute](#contribute)
+- [Versioning](#versioning)
+- [Additional information](#additional-information)
 
 ---
 
 ### About
 
-Buckaroo is the Payment Service Provider for all your online payments with more than 15,000 companies relying on Buckaroo's platform to securely process their payments, subscriptions and unpaid invoices. Buckaroo developed their own Node SDK. The SDK is a modern, open-source Node.js library that makes it easy to integrate your Javascript application with Buckaroo's services. Start accepting payments today with Buckaroo.
+Buckaroo is the Payment Service Provider for all your online payments with more than 15,000 companies relying on Buckaroo's platform to securely process their payments, subscriptions and unpaid
+invoices. Buckaroo developed their own Node SDK. The SDK is a modern, open-source Node.js library that makes it easy to integrate your Javascript application with Buckaroo's services. Start accepting
+payments today with Buckaroo.
 
 ### Requirements
 
 To use the Buckaroo API client, the following things are required:
 
--   A Buckaroo account ([Dutch](https://www.buckaroo.nl/start) or [English](https://www.buckaroo.eu/solutions/request-form))
--   Node.js 6.14.× or greater
+- A Buckaroo account ([Dutch](https://www.buckaroo.nl/start) or [English](https://www.buckaroo.eu/solutions/request-form))
+- Node.js 6.14.× or greater
 
 ### Installation
 
@@ -91,14 +93,14 @@ If you want to contribute as well, then please follow our [Contribution Guidelin
   <img src="https://user-images.githubusercontent.com/7081446/178474134-f4c3976d-653c-4ca1-bcd1-48bf6d489196.png" width="500px"  alt="">
 </p>
 
--   **MAJOR:** Breaking changes that require additional testing/caution
--   **MINOR:** Changes that should not have a big impact
--   **PATCHES:** Bug and hotfixes only
+- **MAJOR:** Breaking changes that require additional testing/caution
+- **MINOR:** Changes that should not have a big impact
+- **PATCHES:** Bug and hotfixes only
 
 ### Additional information
 
--   **Support:** https://support.buckaroo.eu/contact
--   **Contact:** [support@buckaroo.nl](mailto:support@buckaroo.nl) or [+31 (0)30 711 50 50](tel:+310307115050)
+- **Support:** https://support.buckaroo.eu/contact
+- **Contact:** [support@buckaroo.nl](mailto:support@buckaroo.nl) or [+31 (0)30 711 50 50](tel:+310307115050)
 
 ## License
 

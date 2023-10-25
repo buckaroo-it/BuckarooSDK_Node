@@ -1,5 +1,5 @@
-import PayablePaymentMethod from "../PayablePaymentMethod";
+import PayablePaymentMethod from '../PayablePaymentMethod';
 
 export default class Mbway extends PayablePaymentMethod {
-    protected _paymentName = 'MBWay';
+    protected _paymentName = 'MB WAY';
 }

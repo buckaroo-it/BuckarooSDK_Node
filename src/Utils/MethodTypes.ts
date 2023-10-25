@@ -87,7 +87,7 @@ export type AllMethods = readonly [
     { class: Trustly; code: MethodTypes['Trustly'] },
     { class: Wechatpay; code: MethodTypes['WeChatPay'] },
     { class: MultiBanco; code: MethodTypes['Multibanco'] },
-    { class: Mbway ; code: MethodTypes['Mbway'] },
+    { class: Mbway; code: MethodTypes['Mbway'] },
 ];
 export type ServiceCode = AllMethods[number]['code'][number];
 
@@ -113,7 +113,20 @@ export const Methods = {
     Billink: ['billink'],
     BuckarooVoucher: ['buckaroovoucher'],
     BuckarooWallet: ['BuckarooWalletCollecting'],
-    CreditCard: ['creditcard', 'mastercard', 'visa', 'amex', 'vpay', 'maestro', 'visaelectron', 'cartebleuevisa', 'cartebancaire', 'dankort', 'nexi', 'postepay'],
+    CreditCard: [
+        'creditcard',
+        'mastercard',
+        'visa',
+        'amex',
+        'vpay',
+        'maestro',
+        'visaelectron',
+        'cartebleuevisa',
+        'cartebancaire',
+        'dankort',
+        'nexi',
+        'postepay',
+    ],
     CreditClick: ['creditclick'],
     CreditManagement: ['CreditManagement3'],
     Emandates: ['emandate'],

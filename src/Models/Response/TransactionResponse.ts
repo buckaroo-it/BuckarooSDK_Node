@@ -8,70 +8,97 @@ export class TransactionResponse extends HttpClientResponse {
     get data(): ITransactionResponse {
         return this._data as any;
     }
+
     getStatusCode() {
         return this.data.status.code.code.toString();
     }
+
     getSubStatusCode() {
         return this.data.status.subCode.code.toString();
     }
+
     isSuccess() {
         return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_SUCCESS;
     }
+
     isFailed() {
         return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_FAILED;
     }
+
     isCanceled() {
-        return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_CANCELLED_BY_USER || this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_CANCELLED_BY_MERCHANT;
+        return (
+            this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_CANCELLED_BY_USER ||
+            this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_CANCELLED_BY_MERCHANT
+        );
     }
+
     isAwaitingConsumer() {
         return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_WAITING_ON_CONSUMER;
     }
+
     isPendingProcessing() {
         return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_PENDING_PROCESSING;
     }
+
     isWaitingOnUserInput() {
         return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_WAITING_ON_USER_INPUT;
     }
+
     isRejected() {
         return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_REJECTED;
     }
+
     isValidationFailure() {
         return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_VALIDATION_FAILURE;
     }
+
     hasRedirect() {
         return this.data.requiredAction?.redirectURL.length > 0 && this.data.requiredAction?.name === 'Redirect';
     }
+
     getRedirectUrl() {
         if (this.hasRedirect()) return this.data.requiredAction?.redirectURL;
         return '';
     }
+
     getServices() {
         return this.data.services;
     }
+
     getMethod() {
         return this.data.services?.[0].name;
     }
+
     getServiceAction() {
         return this.data.services?.[0].action;
     }
+
     getCustomParameters() {
         return DataFormatter.parametersReverseMap(this.data.customParameters?.list ?? []);
     }
+
     getAdditionalParameters() {
-        return DataFormatter.parametersReverseMap(this.data.additionalParameters?.additionalParameter ?? this.data.additionalParameters?.['list'] ?? []);
+        return DataFormatter.parametersReverseMap(
+            this.data.additionalParameters?.additionalParameter ?? this.data.additionalParameters?.['list'] ?? []
+        );
     }
+
     getTransactionKey() {
         return this.data.key;
     }
+
     getPaymentKey() {
         return this.data.paymentKey;
     }
+
     getAmountDebit() {
         return this.data.amountDebit;
     }
+
     getAmountCredit() {
         return this.data.amountCredit;
     }
+
     hasError() {
         return (
             this.data.requestErrors &&
@@ -83,6 +110,7 @@ export class TransactionResponse extends HttpClientResponse {
                 this.data.requestErrors.customParameterErrors.length > 0)
         );
     }
+
     getErrorMessage() {
         return this.data.status.code.description;
     }

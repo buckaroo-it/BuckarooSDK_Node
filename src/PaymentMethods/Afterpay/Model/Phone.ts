@@ -1,4 +1,5 @@
 import { Phone as IPhone } from '../../../Models/Interfaces/IPhone';
+
 export default class Phone extends IPhone {
     get mobile(): string {
         return this.get('mobilePhone');

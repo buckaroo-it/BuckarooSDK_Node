@@ -7,9 +7,11 @@ export default class Sofort extends PayablePaymentMethod {
     pay(payload: IPaymentRequest) {
         return super.pay(payload);
     }
+
     refund(payload: IRefundRequest) {
         return super.refund(payload);
     }
+
     instantRefund(payload: IRefundRequest) {
         this.setServiceList('InstantRefund');
         return this.transactionRequest(payload);

@@ -2,11 +2,16 @@
     "compilerOptions": {
         "target": "es5",
         "module": "commonjs",
-        "lib": ["ES2021", "dom"],
+        "lib": [
+            "ES2021",
+            "dom"
+        ],
         "strict": true,
         "esModuleInterop": true,
-        "skipLibCheck": true /* Skip type checking of declaration files. */,
-        "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */,
+        "skipLibCheck": true
+        /* Skip type checking of declaration files. */,
+        "forceConsistentCasingInFileNames": true
+        /* Disallow inconsistently-cased references to the same file. */,
         "declaration": true,
         "sourceMap": true,
         "moduleResolution": "node",
@@ -14,5 +19,7 @@
         "outDir": "dist",
         "resolveJsonModule": true
     },
-    "include": ["src/**/*.ts"]
+    "include": [
+        "src/**/*.ts"
+    ]
 }

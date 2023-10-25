@@ -1,4 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
+
 const marketplaces = buckarooClientTest.method('marketplaces');
 const ideal = buckarooClientTest.method('ideal');
 
