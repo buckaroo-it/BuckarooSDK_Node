@@ -40,7 +40,7 @@ import type Trustly from '../PaymentMethods/Trustly';
 import type Wechatpay from '../PaymentMethods/WeChatPay';
 import type In3 from '../PaymentMethods/In3';
 import type MultiBanco from '../PaymentMethods/Multibanco';
-import type Index from '../PaymentMethods/Mbway';
+import type Mbway from '../PaymentMethods/Mbway';
 
 //toDo refactor this
 
@@ -87,7 +87,7 @@ export type AllMethods = readonly [
     { class: Trustly; code: MethodTypes['Trustly'] },
     { class: Wechatpay; code: MethodTypes['WeChatPay'] },
     { class: MultiBanco; code: MethodTypes['Multibanco'] },
-    { class: Index; code: MethodTypes['Mbway'] }
+    { class: Mbway; code: MethodTypes['Mbway'] },
 ];
 export type ServiceCode = AllMethods[number]['code'][number];
 
@@ -183,7 +183,7 @@ export const Methods = {
     Trustly: ['trustly'],
     WeChatPay: ['wechatpay'],
     Multibanco: ['multibanco'],
-    Mbway: ['MBWay'],
+    Mbway: ['MBWay']
 } as const;
 
 type MethodTypes = typeof Methods;
