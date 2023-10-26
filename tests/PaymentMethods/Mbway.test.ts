@@ -5,7 +5,7 @@ describe('Mbway methods', () => {
     test('Pay', () => {
         return method
             .pay({
-                amountDebit: 0.1,
+                amountDebit: 100,
             })
             .request()
             .then((response) => {

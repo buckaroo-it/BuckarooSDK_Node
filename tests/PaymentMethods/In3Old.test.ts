@@ -1,6 +1,7 @@
 import buckarooClientTest from '../BuckarooClient.test';
 import Gender from '../../src/Constants/Gender';
 import RecipientCategory from '../../src/Constants/RecipientCategory';
+import { getIPAddress, uniqid } from '../../src/Utils/Functions';
 
 const capayable = buckarooClientTest.method('capayable');
 
@@ -16,8 +17,9 @@ describe('Testing capayable methods', () => {
     test('Refund', async () => {
         await capayable
             .refund({
-                amountCredit: 42,
-                originalTransactionKey: '',
+                invoice: uniqid(),
+                amountCredit: paymentPayload.amountDebit,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {
@@ -35,27 +37,27 @@ describe('Testing capayable methods', () => {
 });
 
 const paymentPayload = {
-    clientIP: '127.0.0.0',
-    description: 'fdsfsdfdsf',
-    amountDebit: 32,
+    clientIP: getIPAddress(),
+    description: 'Test',
+    amountDebit: 100,
     customerType: RecipientCategory.COMPANY,
     invoiceDate: '22-01-2018',
     customer: {
         gender: Gender.FEMALE,
         culture: 'nl-NL',
-        initials: 'J.S.',
-        lastName: 'Aflever',
+        initials: 'TA',
+        lastName: 'Acceptatie',
         birthDate: '1990-01-01',
     },
     company: {
-        companyName: 'My Company B.V.',
-        chamberOfCommerce: '123456',
+        companyName: 'Buckaroo B.V.',
+        chamberOfCommerce: 'XXXXXX41',
     },
     address: {
         street: 'Hoofdstraat',
-        houseNumber: '2',
+        houseNumber: '80',
         houseNumberSuffix: 'a',
-        zipcode: '8441EE',
+        zipcode: '8441ER',
         city: 'Heerenveen',
         country: 'NL',
     },

@@ -1,5 +1,4 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { describe } from 'node:test';
 
 const subscription = buckarooClientTest.method('subscriptions');
 
@@ -8,25 +7,25 @@ describe('Subscription methods', () => {
         return subscription
             .create({
                 additionalParameters: {
-                    signature: '123213',
+                    signature: 'XXXXXXXX',
                 },
                 ratePlans: {
                     add: {
                         startDate: '2024-07-23',
-                        ratePlanCode: 'zfv59mmy',
+                        ratePlanCode: 'XXXXXXXX',
                     },
                 },
                 ratePlanCharges: {
                     add: {
-                        ratePlanChargeCode: 'test',
+                        ratePlanChargeCode: 'XXXXXXXX',
                     },
                 },
-                configurationCode: 'gfyh9fe4',
+                configurationCode: 'XXXXXXXX',
                 configuration: {
-                    name: 'owiejr',
+                    name: 'XXXXXXXX',
                 },
                 debtor: {
-                    code: 'johnsmith4',
+                    code: 'XXXXXXXX',
                 },
             })
             .request()
@@ -38,11 +37,11 @@ describe('Subscription methods', () => {
         subscription
             .update({
                 email: 'test@buckaroo.nl',
-                subscriptionGuid: 'FC512FC9CC3A485D8CF3D1804FF6xxxx',
-                configurationCode: '9wqe32ew',
+                subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                configurationCode: 'XXXXXXXX',
                 ratePlan: {
                     update: {
-                        ratePlanGuid: 'F075470B1BB24B9291943A888A2Fxxxx',
+                        ratePlanGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                         startDate: '2022-01-01',
                         endDate: '2030-01-01',
                     },
@@ -58,30 +57,30 @@ describe('Subscription methods', () => {
             pushURL: 'https://buckaroo.dev/push',
             includeTransaction: false,
             transactionVatPercentage: 5,
-            configurationCode: 'gfyh9fe4',
+            configurationCode: 'XXXXXXXX',
             email: 'test@buckaroo.nl',
             ratePlans: {
                 add: {
                     startDate: '2033-01-01',
-                    ratePlanCode: '9863hdcj',
+                    ratePlanCode: 'XXXXXXXX',
                 },
             },
             phone: {
                 mobile: '0612345678',
             },
             debtor: {
-                code: 'johnsmith4',
+                code: 'XXXXXXXX',
             },
             company: {
                 culture: 'nl-NL',
-                companyName: 'My Company Coporation',
+                companyName: 'Buckaroo B.V.',
                 vatApplicable: true,
-                vatNumber: 'NL140619562B01',
-                chamberOfCommerce: '20091741',
+                vatNumber: 'NLXXXXXXXXXXB01',
+                chamberOfCommerce: 'XXXXXX41',
             },
             address: {
                 street: 'Hoofdstraat',
-                houseNumber: '90',
+                houseNumber: '80',
                 zipcode: '8441ER',
                 city: 'Heerenveen',
                 country: 'NL',
@@ -91,7 +90,7 @@ describe('Subscription methods', () => {
             .combine('ideal')
             .pay({
                 issuer: 'ABNANL2A',
-                amountDebit: 10,
+                amountDebit: 100,
                 startRecurrent: true,
             })
             .request()
@@ -102,13 +101,13 @@ describe('Subscription methods', () => {
 
     test('Update Combined Subscription', async () => {
         subscription.updateCombined({
-            subscriptionGuid: '515461997AD34C50881D74157E38A64D',
+            subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         });
         subscription
             .combine('ideal')
             .pay({
                 issuer: 'ABNANL2A',
-                amountDebit: 10,
+                amountDebit: 100,
             })
             .request()
             .then((data) => {
@@ -118,29 +117,29 @@ describe('Subscription methods', () => {
 
     test('Stop Subscription', async () => {
         const stop = await subscription.stop({
-            subscriptionGuid: '515461997AD34C50881D74157E38A64D',
+            subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         });
         expect(stop).toBeDefined();
     });
     test('Subscription Info', async () => {
         const info = await subscription.info({
-            subscriptionGuid: '515461997AD34C50881D74157E38A64D',
+            subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         });
         expect(info).toBeDefined();
     });
     test('Delete Subscription Config', async () => {
         await subscription
             .deletePaymentConfig({
-                subscriptionGuid: '515461997AD34C50881D74157E38A64D',
+                subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((res) => {
-                expect(res.httpResponse.statusCode === 200).toBeTruthy();
+                expect(res.httpResponse.status === 200).toBeTruthy();
             });
     });
     test('Subscription Pause', async () => {
         const pause = await subscription.pause({
-            subscriptionGuid: '515461997AD34C50881D74157E38A64D',
+            subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             resumeDate: '2030-01-01',
         });
         expect(pause).toBeDefined();
@@ -148,7 +147,7 @@ describe('Subscription methods', () => {
     test('Subscription Resume', async () => {
         const resume = await subscription.resume({
             resumeDate: '2030-01-01',
-            subscriptionGuid: '515461997AD34C50881D74157E38A64D',
+            subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         });
         expect(resume).toBeDefined();
     });

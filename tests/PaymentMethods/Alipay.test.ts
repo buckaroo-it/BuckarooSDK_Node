@@ -1,4 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src/Utils/Functions';
 
 const alipay = buckarooClientTest.method('alipay');
 
@@ -6,7 +7,7 @@ describe('Alipay methods', () => {
     test('Pay Simple Payload', async () => {
         await alipay
             .pay({
-                amountDebit: 10,
+                amountDebit: 100,
                 useMobileView: false,
             })
             .request()
@@ -17,8 +18,9 @@ describe('Alipay methods', () => {
     test('Refund', async () => {
         await alipay
             .refund({
-                amountCredit: 5,
-                originalTransactionKey: 'F397777A251645F8BDD81547B5005B4B',
+                amountCredit: 0.01,
+                invoice: uniqid(),
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {

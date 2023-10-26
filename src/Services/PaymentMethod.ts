@@ -35,6 +35,12 @@ export default abstract class PaymentMethod {
         return this._paymentName;
     }
 
+    setPaymentName(value: ServiceCode): this {
+        this._paymentName = value;
+        this._serviceCode = value;
+        return this;
+    }
+
     setPayload(payload?: IRequest) {
         this.setRequiredFields();
         this._payload.initialize(payload);

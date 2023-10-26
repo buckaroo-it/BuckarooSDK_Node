@@ -1,17 +1,16 @@
-require('../BuckarooClient.test');
-import Trustly from '../../src/PaymentMethods/Trustly';
+import buckarooClientTest from '../BuckarooClient.test';
 
-const method = new Trustly();
+const method = buckarooClientTest.method('trustly');
 
 describe('Trustly', () => {
     test('Pay', async () => {
         await method
             .pay({
-                amountDebit: 12,
+                amountDebit: 100,
                 customer: {
                     firstName: 'Test',
                     lastName: 'Acceptatie',
-                    country: 'NL',
+                    countryCode: 'NL',
                 },
             })
             .request()

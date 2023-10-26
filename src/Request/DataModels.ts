@@ -126,6 +126,10 @@ export class DataRequestData extends TransactionData {
             List: DataFormatter.parametersMap(parameters),
         });
     }
+
+    set services(data: IService[]) {
+        this.set('services', data);
+    }
 }
 
 export class SpecificationRequestData extends Model {

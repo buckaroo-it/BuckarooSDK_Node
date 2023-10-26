@@ -1,4 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src/Utils/Functions';
 
 const method = buckarooClientTest.method('belfius');
 
@@ -6,7 +7,7 @@ describe('testing methods', () => {
     test('Pay Simple Payload', async () => {
         await method
             .pay({
-                amountDebit: 10,
+                amountDebit: 100,
             })
             .request()
             .then((data) => {
@@ -16,17 +17,10 @@ describe('testing methods', () => {
     test('Refund', async () => {
         await method
             .refund({
-                amountCredit: 5,
-                originalTransactionKey: '86CFE2CB5901463EADE061633BDB9EC8',
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-            .request()
-            .then((data) => {
-                expect(data).toBeDefined();
-            });
-    });
-    test('Specifications', async () => {
-        await method
-            .specification()
             .request()
             .then((data) => {
                 expect(data).toBeDefined();

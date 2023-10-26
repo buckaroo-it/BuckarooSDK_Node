@@ -6,8 +6,8 @@ describe('Testing Giropay methods', () => {
     test('Pay', async () => {
         await method
             .pay({
-                bic: 'GENODETT488',
-                amountDebit: 10.1,
+                bic: 'XXXXXXXXX',
+                amountDebit: 100,
             })
             .request()
             .then((response) => {
@@ -17,9 +17,9 @@ describe('Testing Giropay methods', () => {
     test('Refund', async () => {
         await method
             .refund({
-                amountCredit: 10,
+                amountCredit: 0.01,
                 invoice: uniqid(),
-                originalTransactionKey: '2D04704995B74D679AACC59F87XXXXXX',
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((response) => {

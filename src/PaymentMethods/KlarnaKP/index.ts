@@ -17,7 +17,7 @@ export default class KlarnaKP extends PayablePaymentMethod {
     }
 
     cancel(payload: IRequest) {
-        this.setServiceList('CancelReservation');
+        this.setServiceList('CancelReservation', new Pay(payload));
         return this.dataRequest(payload);
     }
 

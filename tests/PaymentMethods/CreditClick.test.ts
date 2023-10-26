@@ -1,4 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src/Utils/Functions';
 
 const method = buckarooClientTest.method('creditclick');
 
@@ -6,12 +7,12 @@ describe('Testing CreditClick methods', () => {
     test('Pay', async () => {
         await method
             .pay({
-                amountDebit: 31,
+                amountDebit: 100,
                 person: {
-                    firstName: 'test',
-                    lastName: 'test',
+                    firstName: 'Test',
+                    lastName: 'Acceptatie',
                 },
-                email: 't.tester@test.nl',
+                email: 'test@buckaroo.nl',
             })
             .request()
             .then((response) => {
@@ -21,9 +22,10 @@ describe('Testing CreditClick methods', () => {
     test('Refund', async () => {
         await method
             .refund({
-                amountCredit: 31,
-                originalTransactionKey: 'C85BABFCCA2D4921B9CFBA0EBDF82C70',
-                description: 'test',
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                invoice: uniqid(),
+                description: 'refund',
                 refundReason: 'Fraudulent',
             })
             .request()

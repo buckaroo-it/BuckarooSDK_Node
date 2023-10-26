@@ -1,4 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
+import { ServiceCode } from '../../src';
 
 const method = buckarooClientTest.method('emandate');
 describe('Testing Emandates methods', () => {
@@ -13,10 +14,10 @@ describe('Testing Emandates methods', () => {
     test('CreateMandate', async () => {
         method
             .createMandate({
-                debtorReference: 'klant1234',
+                debtorReference: 'XXXXXXXXX',
                 language: 'nl',
                 continueOnIncomplete: true,
-                purchaseId: 'purchaseid1234',
+                purchaseId: 'XXXXXXXXXXXXXX',
                 sequenceType: 0,
             })
             .request()
@@ -26,7 +27,7 @@ describe('Testing Emandates methods', () => {
     });
     test('GetStatus', async () => {
         method
-            .status({ mandateId: '1DC014098EC5C1F40AD803B83A425153BBC' })
+            .status({ mandateId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' })
             .request()
             .then((response) => {
                 expect(response.isSuccess()).toBeTruthy();
@@ -35,7 +36,7 @@ describe('Testing Emandates methods', () => {
     test('ModifyMandate', async () => {
         method
             .modifyMandate({
-                originalMandateId: '1DC014098EC5C1F40AD803B83A425153BBC',
+                originalMandateId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 continueOnIncomplete: true,
             })
             .request()
@@ -45,9 +46,10 @@ describe('Testing Emandates methods', () => {
     });
     test('CancelMandate', async () => {
         method
+            .setPaymentName('emandateb2b' as ServiceCode)
             .cancelMandate({
-                mandateId: '1DC014098EC5C1F40AD803B83A425153BBC',
-                purchaseId: 'purchaseid1234',
+                mandateId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                purchaseId: 'XXXXXXXXXXXXXX',
             })
             .request()
             .then((response) => {

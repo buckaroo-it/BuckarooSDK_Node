@@ -1,35 +1,26 @@
-import { IInvoice, Invoice } from './Invoice';
+import { ServiceParameter } from '../../../Models/ServiceParameters';
+import { IDebtorInfo } from './DebtorInfo';
 
-export interface IDebtor extends IInvoice {
-    addressUnreachable?: boolean;
-
-    emailUnreachable?: boolean;
-
-    mobileUnreachable?: boolean;
-
-    landlineUnreachable?: boolean;
-
-    faxUnreachable?: boolean;
+export interface IDebtor extends IDebtorInfo {
+    person: {
+        culture: string;
+        lastName: string;
+    };
 }
 
-export class Debtor extends Invoice {
-    set addressUnreachable(value: boolean) {
-        this.set('addressUnreachable', value);
+export class Debtor extends ServiceParameter {
+    set debtor(value: string) {
+        this.set('debtor', value);
     }
 
-    set emailUnreachable(value: boolean) {
-        this.set('emailUnreachable', value);
+    set person(value: string) {
+        this.set('person', value);
     }
 
-    set mobileUnreachable(value: boolean) {
-        this.set('mobileUnreachable', value);
-    }
-
-    set landlineUnreachable(value: boolean) {
-        this.set('landlineUnreachable', value);
-    }
-
-    set faxUnreachable(value: boolean) {
-        this.set('faxUnreachable', value);
+    protected getGroups() {
+        return super.getGroups({
+            Debtor: 'Debtor',
+            Person: 'Person',
+        });
     }
 }

@@ -1,12 +1,15 @@
 import { IPay } from '../../src/PaymentMethods/Billink/Models/Pay';
 import buckarooClientTest from '../BuckarooClient.test';
 import RecipientCategory from '../../src/Constants/RecipientCategory';
+import { uniqid } from '../../src/Utils/Functions';
 
 require('../BuckarooClient.test');
 
 const method = buckarooClientTest.method('billink');
 
 describe('Billink methods', () => {
+    const invoiceId = uniqid();
+
     test('Pay', async () => {
         await method
             .pay(payload)
@@ -18,8 +21,9 @@ describe('Billink methods', () => {
     test('Refund', async () => {
         await method
             .refund({
-                amountCredit: 12,
-                originalTransactionKey: 'ytgty',
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {
@@ -28,7 +32,7 @@ describe('Billink methods', () => {
     });
     test('Authorize', async () => {
         await method
-            .authorize(payload)
+            .authorize({ ...payload, invoice: invoiceId })
             .request()
             .then((data) => {
                 expect(data.isSuccess()).toBeTruthy();
@@ -37,9 +41,9 @@ describe('Billink methods', () => {
     test('CancelAuthorize', async () => {
         await method
             .cancelAuthorize({
-                originalTransactionKey: 'ytgty',
-                amountCredit: 10,
-                invoice: 'sdsa',
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                amountCredit: payload.amountDebit,
+                invoice: invoiceId,
             })
             .request()
             .then((data) => {
@@ -49,9 +53,9 @@ describe('Billink methods', () => {
     test('Capture', async () => {
         await method
             .capture({
-                originalTransactionKey: 'ytgty',
-                invoice: "'dsa",
-                amountDebit: 123,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                invoice: invoiceId,
+                amountDebit: payload.amountDebit,
                 articles: payload.articles,
             })
             .request()
@@ -62,52 +66,50 @@ describe('Billink methods', () => {
 });
 
 const payload: IPay = {
-    amountDebit: 50.3,
-    order: '',
-    invoice: '',
-    trackAndTrace: 'TR0F123456789',
-    vATNumber: '2',
+    amountDebit: 100,
+    trackAndTrace: 'XXXXXXXXXXXXX',
+    vatNumber: 'NLXXXXXXXXXXB01',
     billing: {
         recipient: {
             category: RecipientCategory.PERSON,
-            careOf: 'John Smith',
+            careOf: 'Test Acceptatie',
             title: 'Female',
-            initials: 'JD',
-            firstName: 'John',
-            lastName: 'Do',
+            initials: 'TA',
+            firstName: 'Test',
+            lastName: 'Acceptatie',
             birthDate: '01-01-1990',
-            chamberOfCommerce: 'TEST',
+            chamberOfCommerce: 'XXXXXX41',
         },
         address: {
             street: 'Hoofdstraat',
-            houseNumber: '13',
+            houseNumber: '80',
             houseNumberAdditional: 'a',
-            zipcode: '1234AB',
+            zipcode: '8441ER',
             city: 'Heerenveen',
             country: 'NL',
         },
         phone: {
-            mobile: '0698765433',
-            landline: '0109876543',
+            mobile: '0612345678',
+            landline: '0201234567',
         },
         email: 'test@buckaroo.nl',
     },
     shipping: {
         recipient: {
             category: RecipientCategory.PERSON,
-            careOf: 'John Smith',
+            careOf: 'Test Acceptatie',
             title: 'Male',
-            initials: 'JD',
-            firstName: 'John',
-            lastName: 'Do',
+            initials: 'TA',
+            firstName: 'Test',
+            lastName: 'Acceptatie',
             birthDate: '1990-01-01',
         },
         address: {
-            street: 'Kalverstraat',
-            houseNumber: '13',
-            houseNumberAdditional: 'b',
-            zipcode: '4321EB',
-            city: 'Amsterdam',
+            street: 'Hoofdstraat',
+            houseNumber: '80',
+            houseNumberAdditional: 'a',
+            zipcode: '8441ER',
+            city: 'Heerenveen',
             country: 'NL',
         },
     },

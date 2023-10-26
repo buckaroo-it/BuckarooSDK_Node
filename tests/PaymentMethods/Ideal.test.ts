@@ -11,7 +11,7 @@ describe('testing Ideal methods', () => {
     test('Pay Simple Payload', () => {
         return ideal
             .pay({
-                amountDebit: 10.1,
+                amountDebit: 100,
                 issuer: 'ABNANL2A',
                 continueOnIncomplete: false,
                 additionalParameters: {
@@ -29,8 +29,8 @@ describe('testing Ideal methods', () => {
             .refund({
                 order: uniqid(),
                 invoice: uniqid(),
-                originalTransactionKey: '97DC0A03BBDF4DAAAC694D7FEC8785E1',
-                amountCredit: 4.23,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                amountCredit: 0.01,
                 clientIP: getIPAddress(),
                 additionalParameters: {
                     initiated_by_magento: '1',
@@ -45,8 +45,9 @@ describe('testing Ideal methods', () => {
     test('InstantRefund', () => {
         return ideal
             .instantRefund({
-                amountCredit: 4.23,
-                originalTransactionKey: '97DC0A03BBDF4DAAAC694D7FEC8785E1',
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {

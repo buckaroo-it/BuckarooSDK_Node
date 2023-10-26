@@ -5,7 +5,7 @@ describe('Multibanco methods', () => {
         await buckarooClientTest
             .method('multibanco')
             .pay({
-                amountDebit: 50.3,
+                amountDebit: 100,
             })
             .request()
             .then((info) => {

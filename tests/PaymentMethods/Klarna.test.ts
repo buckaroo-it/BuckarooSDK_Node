@@ -14,8 +14,11 @@ describe('Testing Klarna methods', () => {
             });
     });
     test('PayInInstallments', async () => {
+        const clonedPayload = JSON.parse(JSON.stringify(payload));
+        clonedPayload.currency = 'GBP';
+        clonedPayload.billing.address.country = 'GB';
         await klarna
-            .payInInstallments(payload)
+            .payInInstallments(clonedPayload)
             .request()
             .then((res) => {
                 expect(res).toBeDefined();
@@ -24,27 +27,27 @@ describe('Testing Klarna methods', () => {
 });
 
 let payload: IPay = {
-    amountDebit: 50.3,
+    amountDebit: 100,
     invoice: uniqid(),
     order: uniqid(),
     billing: {
         recipient: {
             category: RecipientCategory.PERSON,
             gender: 'female',
-            firstName: 'John',
-            lastName: 'Do',
+            firstName: 'Test',
+            lastName: 'Acceptatie',
             birthDate: '1990-01-01',
         },
         address: {
             street: 'Hoofdstraat',
-            houseNumber: '13',
+            houseNumber: '80',
             houseNumberAdditional: 'a',
-            zipcode: '1234AB',
+            zipcode: '8441ER',
             city: 'Heerenveen',
             country: 'NL',
         },
         phone: {
-            mobile: '0698765433',
+            mobile: '0612345678',
         },
         email: 'test@buckaroo.nl',
     },
@@ -52,16 +55,16 @@ let payload: IPay = {
         recipient: {
             category: RecipientCategory.COMPANY,
             gender: 'male',
-            firstName: 'John',
-            lastName: 'Do',
+            firstName: 'Test',
+            lastName: 'Acceptatie',
             birthDate: '1990-01-01',
         },
         address: {
-            street: 'Kalverstraat',
-            houseNumber: '13',
-            houseNumberAdditional: 'b',
-            zipcode: '4321EB',
-            city: 'Amsterdam',
+            street: 'Hoofdstraat',
+            houseNumber: '80',
+            houseNumberAdditional: 'a',
+            zipcode: '8441ER',
+            city: 'Heerenveen',
             country: 'NL',
         },
         email: 'test@buckaroo.nl',

@@ -2,7 +2,7 @@ import { IRefundRequest } from '../../../Models/IRequest';
 import { ServiceParameter } from '../../../Models/ServiceParameters';
 
 export interface IRefund extends IRefundRequest {
-    description: string;
+    description?: string;
     refundReason: 'Duplicate' | 'Fraudulent' | 'GoodsNotDelivered' | 'RequestedByCustomer' | 'TechnicalError';
 }
 

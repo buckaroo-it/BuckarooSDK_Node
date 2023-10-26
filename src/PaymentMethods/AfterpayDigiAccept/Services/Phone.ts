@@ -1,7 +1,11 @@
-import { Phone as PhoneClass } from '../../../Models/Interfaces/IPhone';
+import { Model } from '../../../Models/Model';
 
-export class Phone extends PhoneClass {
+export class Phone extends Model {
+    set prefix(value: string) {
+        this.set('prefix', value, true);
+    }
+
     set mobile(value: string) {
-        this.set('phoneNumber', value);
+        this.set(`${this.get('prefix')}PhoneNumber`, value);
     }
 }

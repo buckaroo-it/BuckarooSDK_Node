@@ -2,34 +2,26 @@ import { Address } from '../Services/Address';
 import { Model } from '../../../Models/Model';
 import { Phone } from '../Services/Phone';
 import { ICustomer } from '../../../Models/Interfaces/ICustomer';
+import { Recipient } from './Recipient';
 
 export class Customer extends Model implements ICustomer {
-    constructor(data?: ICustomer, prefix?: string) {
-        super(data, prefix);
-    }
-
-    get prefix() {
-        return '';
+    set prefix(value: string) {
+        this.set('prefix', value, true);
     }
 
     set recipient(recipient: ICustomer['recipient']) {
-        this.set('recipient', recipient);
+        this.set('recipient', new Recipient({ prefix: this.get('prefix'), ...recipient }));
     }
 
     set address(address: ICustomer['address']) {
-        this.set('address', new Address(address, this.prefix));
+        this.set('address', new Address({ prefix: this.get('prefix'), ...address }));
     }
 
     set email(email: ICustomer['email']) {
-        this.set(this.prefix + 'Email', email);
+        this.set(`${this.get('prefix')}Email`, email);
     }
 
     set phone(phone: ICustomer['phone']) {
-        this.set('phone', new Phone(phone));
-    }
-
-    initialize(data?: any, prefix: string = '') {
-        this.set('prefix', prefix, true);
-        return super.initialize(data);
+        this.set('phone', new Phone({ prefix: this.get('prefix'), ...phone }));
     }
 }

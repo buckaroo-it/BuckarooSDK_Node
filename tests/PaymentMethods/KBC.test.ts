@@ -1,4 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src/Utils/Functions';
 
 const method = buckarooClientTest.method('KBCPaymentButton');
 
@@ -6,7 +7,7 @@ describe('Testing KBC methods', () => {
     test('Pay', async () => {
         await method
             .pay({
-                amountDebit: 10,
+                amountDebit: 100,
             })
             .request()
             .then((response) => {
@@ -16,8 +17,9 @@ describe('Testing KBC methods', () => {
     test('Refund', async () => {
         method
             .refund({
-                amountCredit: 10,
-                originalTransactionKey: 'B5675356904444F3965C33D280591C74',
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((response) => {

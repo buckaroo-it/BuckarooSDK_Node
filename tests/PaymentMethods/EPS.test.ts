@@ -1,11 +1,12 @@
 import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src/Utils/Functions';
 
 const method = buckarooClientTest.method('eps');
 describe('Testing Eps methods', () => {
     test('Pay', async () => {
         await method
             .pay({
-                amountDebit: 10.1,
+                amountDebit: 100,
             })
             .request()
             .then((response) => {
@@ -15,8 +16,9 @@ describe('Testing Eps methods', () => {
     test('Refund', async () => {
         method
             .refund({
-                amountCredit: 10.1,
-                originalTransactionKey: '1234567890',
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((response) => {

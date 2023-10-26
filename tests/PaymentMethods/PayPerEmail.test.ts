@@ -8,18 +8,19 @@ describe('PayPerEmail methods', () => {
     test('paymentInvitation', async () => {
         await method
             .paymentInvitation({
-                amountDebit: 10,
+                currency: 'EUR',
+                amountDebit: 100,
                 order: uniqid(),
                 invoice: uniqid(),
                 merchantSendsEmail: false,
-                email: 'johnsmith@gmail.com',
+                email: 'test@buckaroo.nl',
                 expirationDate: '2030-01-01',
                 paymentMethodsAllowed: 'ideal,mastercard,paypal',
                 attachment: '',
                 customer: {
                     gender: Gender.FEMALE,
-                    firstName: 'John',
-                    lastName: 'Smith',
+                    firstName: 'Test',
+                    lastName: 'Acceptatie',
                 },
             })
             .request()

@@ -1,5 +1,6 @@
 import buckarooClientTest from '../BuckarooClient.test';
 import Paypal from '../../src/PaymentMethods/Paypal';
+import { uniqid } from '../../src/Utils/Functions';
 
 require('../BuckarooClient.test');
 
@@ -9,7 +10,7 @@ describe('Paypal', () => {
     test('Pay', async () => {
         await method
             .pay({
-                amountDebit: 50.3,
+                amountDebit: 100,
             })
             .request()
             .then((info) => {
@@ -19,8 +20,9 @@ describe('Paypal', () => {
     test('Refund', async () => {
         await method
             .refund({
-                amountCredit: 50.3,
-                originalTransactionKey: '123456',
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((info) => {
@@ -31,17 +33,17 @@ describe('Paypal', () => {
         buckarooClientTest.method('subscriptions').createCombined({});
         await method
             .extraInfo({
-                amountDebit: 50.3,
+                amountDebit: 100,
                 address: {
-                    street: 'Hoofstraat 90',
+                    street: 'Hoofdstraat',
                     street2: 'Street 2',
                     city: 'Heerenveen',
                     state: 'Friesland',
-                    zipcode: '8441AB',
+                    zipcode: '8441ER',
                     country: 'NL',
                 },
                 addressOverride: false,
-                costumer: { name: 'John' },
+                customer: { name: 'Test Acceptatie' },
                 noShipping: '0',
                 phone: { mobile: '0612345678' },
             })

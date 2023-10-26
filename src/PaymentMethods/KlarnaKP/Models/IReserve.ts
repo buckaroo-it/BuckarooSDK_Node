@@ -3,6 +3,8 @@ import IRequest from '../../../Models/IRequest';
 import { ICustomer } from '../../../Models/Interfaces/ICustomer';
 import IArticle from '../../../Models/Interfaces/IArticle';
 import { ServiceParameter } from '../../../Models/ServiceParameters';
+import { Customer } from './Customer';
+import Article from './Article';
 
 export interface IReserve extends IRequest {
     gender?: Gender.MALE | Gender.FEMALE;
@@ -33,15 +35,27 @@ export class Reserve extends ServiceParameter implements IReserve {
     }
 
     set billing(value: ICustomer) {
-        this.set('billing', value);
+        const customer = new Customer({ prefix: 'billing', ...value });
+        this.set('billing', customer);
     }
 
     set shipping(value: ICustomer) {
-        this.set('shipping', value);
+        this.set('shipping', new Customer({ prefix: 'shipping', ...value }));
     }
 
     set articles(value: IArticle[]) {
-        this.set('articles', value);
+        this.set(
+            'articles',
+            value.map((article) => new Article(article))
+        );
+    }
+
+    protected getGroups(): {} {
+        return super.getGroups({
+            Billing: 'BillingCustomer',
+            Shipping: 'ShippingCustomer',
+            Articles: 'Article',
+        });
     }
 
     protected getCountable() {

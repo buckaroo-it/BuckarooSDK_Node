@@ -19,15 +19,15 @@ describe('Testing Credit Management', () => {
         await creditManagement
             .createInvoice(
                 creditManagementTestInvoice({
-                    invoice: 'Billingtest101',
+                    invoice: uniqid(),
                     description: 'buckaroo_schema_test_PDF',
                     invoiceAmount: 217.8,
                     invoiceDate: '2022-01-01',
-                    dueDate: '1990-01-01',
-                    schemeKey: '2amq34',
-                    poNumber: 'PO-12345',
+                    dueDate: '2024-01-01',
+                    schemeKey: 'XXXXXXX',
+                    poNumber: 'XX-XXXXX',
                     debtor: {
-                        code: 'johnsmith4',
+                        code: 'XXXXXXXX',
                     },
                     articles: [
                         {
@@ -74,7 +74,7 @@ describe('Testing Credit Management', () => {
     });
     test('Pause Invoice', async () => {
         await creditManagement
-            .pauseInvoice({ invoice: 'Testinvoice184915' })
+            .pauseInvoice({ invoice: uniqid() })
             .request()
             .then((data) => {
                 expect(data.isValidationFailure()).toBeTruthy();
@@ -82,7 +82,7 @@ describe('Testing Credit Management', () => {
     });
     test('UnPause Invoice', async () => {
         await creditManagement
-            .unpauseInvoice({ invoice: 'Testinvoice184915' })
+            .unpauseInvoice({ invoice: uniqid() })
             .request()
             .then((data) => {
                 expect(data.isValidationFailure()).toBeTruthy();
@@ -91,7 +91,7 @@ describe('Testing Credit Management', () => {
     test('Invoice Info', async () => {
         await creditManagement
             .invoiceInfo({
-                invoice: 'INV001',
+                invoice: uniqid(),
                 invoices: [{ invoiceNumber: 'INV002' }, { invoiceNumber: 'INV003' }],
             })
             .request()
@@ -103,7 +103,7 @@ describe('Testing Credit Management', () => {
         await creditManagement
             .debtorInfo({
                 debtor: {
-                    code: 'TestDebtor123123',
+                    code: 'XXXXXXXX',
                 },
             })
             .request()
@@ -114,7 +114,7 @@ describe('Testing Credit Management', () => {
     test('AddOrUpdateProductLines', async () => {
         await creditManagement
             .addOrUpdateProductLines({
-                invoiceKey: 'd42',
+                invoiceKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 articles: [
                     {
                         type: 'Regular',
@@ -161,13 +161,15 @@ describe('Testing Credit Management', () => {
     });
     test('addOrUpdateDebtor', async () => {
         await creditManagement
-            .addOrUpdateDebtor(
-                creditManagementTestInvoice({
-                    addressUnreachable: false,
-                    emailUnreachable: false,
-                    mobileUnreachable: false,
-                })
-            )
+            .addOrUpdateDebtor({
+                debtor: {
+                    code: 'XXXXXXXX',
+                },
+                person: {
+                    culture: 'nl-NL',
+                    lastName: 'Acceptatie',
+                },
+            })
             .request()
             .then((data) => {
                 expect(data.isSuccess()).toBeTruthy();
@@ -179,14 +181,14 @@ describe('Testing Credit Management', () => {
             .method('sepadirectdebit')
             .combine(combinedInvoice.data)
             .pay({
-                iban: 'NL39RABO0300065264',
-                bic: 'RABONL2U',
-                mandateReference: 'TestMandateReference',
+                iban: 'NLXXTESTXXXXXXXXXX',
+                bic: 'XXXXXXXXX',
+                mandateReference: 'XXXXXXXXXXXXXXX',
                 mandateDate: '2020-01-01',
                 collectDate: '2020-07-03',
-                amountDebit: 10.1,
+                amountDebit: 100,
                 customer: {
-                    name: 'John Smith',
+                    name: 'Test Acceptatie',
                 },
                 invoice: uniqid('TestInvoice'),
             })
@@ -199,15 +201,15 @@ describe('Testing Credit Management', () => {
         await creditManagement
             .createPaymentPlan({
                 description: 'Payment in two intstallments',
-                includedInvoiceKey: '20D09973FB5C4DBC9A33DB0F4F707xxx',
-                dossierNumber: 'PaymentplanJohnsmith123',
+                includedInvoiceKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                dossierNumber: 'XXXXXXXXXXXXXXXXXXXXXX',
                 installmentCount: 2,
                 initialAmount: 100,
                 startDate: '2030-01-01',
                 interval: CreditManagementInstallmentInterval.MONTH,
                 paymentPlanCostAmount: 3.5,
                 paymentPlanCostAmountVat: 1.2,
-                recipientEmail: 'test@buckaroo.nl',
+                recipientemail: 'test@buckaroo.nl',
             })
             .request()
             .then((data) => {
@@ -217,7 +219,7 @@ describe('Testing Credit Management', () => {
     test('pauseInvoice', async () => {
         await creditManagement
             .pauseInvoice({
-                invoice: 'd42',
+                invoice: uniqid(),
             })
             .request()
             .then((data) => {
@@ -227,20 +229,21 @@ describe('Testing Credit Management', () => {
 });
 export const creditManagementTestInvoice = (append: object = {}): IInvoice => {
     return {
+        invoice: uniqid(),
         applyStartRecurrent: false,
         invoiceAmount: 10,
         invoiceAmountVAT: 1,
         invoiceDate: '2022-01-01',
         dueDate: '2030-01-01',
-        schemeKey: '2amq34',
+        schemeKey: 'XXXXXX',
         maxStepIndex: 1,
         allowedServices: 'ideal,mastercard',
         debtor: {
-            code: 'johnsmith4',
+            code: 'XXXXXXXX',
         },
-        email: 'youremail@example.nl',
+        email: 'test@buckaroo.nl',
         phone: {
-            mobile: '06198765432',
+            mobile: '0612345678',
         },
         person: {
             culture: 'nl-NL',
@@ -248,20 +251,20 @@ export const creditManagementTestInvoice = (append: object = {}): IInvoice => {
             initials: 'JS',
             firstName: 'Test',
             lastNamePrefix: 'Jones',
-            lastName: 'Aflever',
+            lastName: 'Acceptatie',
             gender: Gender.MALE,
         },
         company: {
             culture: 'nl-NL',
-            name: 'My Company Corporation',
+            name: 'Buckaroo B.V.',
             vatApplicable: true,
-            vatNumber: 'NL140619562B01',
-            chamberOfCommerce: '20091741',
+            vatNumber: 'NLXXXXXXXXXXB01',
+            chamberOfCommerce: 'XXXXXX41',
         },
         address: {
-            street: 'Hoofdtraat',
-            houseNumber: '90',
-            houseNumberAdditional: 'A',
+            street: 'Hoofdstraat',
+            houseNumber: '80',
+            houseNumberAdditional: 'a',
             zipcode: '8441ER',
             city: 'Heerenveen',
             state: 'Friesland',

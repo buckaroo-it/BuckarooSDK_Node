@@ -3,6 +3,7 @@ import { IPaymentRequest, IRefundRequest } from '../../Models/IRequest';
 
 export default class Sofort extends PayablePaymentMethod {
     protected _paymentName = 'Sofort';
+    protected _serviceVersion = 1;
 
     pay(payload: IPaymentRequest) {
         return super.pay(payload);
