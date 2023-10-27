@@ -3,8 +3,6 @@ import buckarooClientTest from '../BuckarooClient.test';
 import RecipientCategory from '../../src/Constants/RecipientCategory';
 import { uniqid } from '../../src/Utils/Functions';
 
-require('../BuckarooClient.test');
-
 const method = buckarooClientTest.method('billink');
 
 describe('Billink methods', () => {

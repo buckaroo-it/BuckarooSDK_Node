@@ -117,7 +117,7 @@ export class Subscription extends ServiceParameter implements ISubscription {
     set ratePlans(value: IRatePlans) {
         Object.entries(value).forEach(([key, val]) => {
             if (this.has(key + 'RatePlan')) {
-                this[key + 'RatePlan'] = val;
+                this.set(key + 'RatePlan', val);
             }
         });
     }
@@ -125,7 +125,7 @@ export class Subscription extends ServiceParameter implements ISubscription {
     set ratePlanCharges(value: IRatePlanCharges) {
         Object.entries(value).forEach(([key, val]) => {
             if (this.has(key + 'RatePlanCharge')) {
-                this[key + 'RatePlanCharge'] = val;
+                this.set(key + 'RatePlanCharge', val);
             }
         });
     }

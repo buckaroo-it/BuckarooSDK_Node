@@ -1,8 +1,6 @@
 import buckarooClientTest from '../BuckarooClient.test';
 import { uniqid } from '../../src/Utils/Functions';
 
-require('../BuckarooClient.test');
-
 const method = buckarooClientTest.method('PayByBank');
 
 describe('PaymentInitiation methods', () => {

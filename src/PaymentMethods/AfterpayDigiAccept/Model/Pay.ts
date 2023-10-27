@@ -70,8 +70,6 @@ export class Pay extends ServiceParameter implements Omit<IPay, keyof IPaymentRe
 
     protected getGroups() {
         return super.getGroups({
-            Billing: 'BillingCustomer',
-            Shipping: 'ShippingCustomer',
             Articles: 'Article',
         });
     }

@@ -9,8 +9,9 @@ export default class Klarna extends PayablePaymentMethod {
     }
 
     payInInstallments(data: IPay) {
+        this.setPayPayload(data);
         this.setServiceList('PayInInstallments', new Pay(data));
-        return super.transactionRequest(data);
+        return super.transactionRequest();
     }
 
     payRemainder(payload: IPay) {

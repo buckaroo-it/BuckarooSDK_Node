@@ -15,7 +15,7 @@ describe('Trustly', () => {
             })
             .request()
             .then((response) => {
-                expect(response).toBeDefined();
+                expect(response.isPendingProcessing()).toBeTruthy();
             });
     });
 });

@@ -2,8 +2,6 @@ import buckarooClientTest from '../BuckarooClient.test';
 import Paypal from '../../src/PaymentMethods/Paypal';
 import { uniqid } from '../../src/Utils/Functions';
 
-require('../BuckarooClient.test');
-
 const method = new Paypal('paypal');
 
 describe('Paypal', () => {

@@ -35,8 +35,7 @@ export class Reserve extends ServiceParameter implements IReserve {
     }
 
     set billing(value: ICustomer) {
-        const customer = new Customer({ prefix: 'billing', ...value });
-        this.set('billing', customer);
+        this.set('billing', new Customer({ prefix: 'billing', ...value }));
     }
 
     set shipping(value: ICustomer) {
