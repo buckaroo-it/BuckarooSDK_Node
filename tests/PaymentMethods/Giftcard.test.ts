@@ -5,12 +5,11 @@ const method = buckarooClientTest.method('boekenbon');
 
 describe('GiftCard methods', () => {
     test('Pay', async () => {
-        const responsePay = await method
-            .pay({
-                amountDebit: 100,
-                intersolveCardnumber: '0000000000000000001',
-                intersolvePIN: '1000',
-            });
+        const responsePay = await method.pay({
+            amountDebit: 100,
+            intersolveCardnumber: '0000000000000000001',
+            intersolvePIN: '1000',
+        });
         expect(responsePay.isSuccess()).toBeTruthy();
         const responseRemainderPay = await buckarooClientTest.method('ideal').payRemainder({
             amountDebit: 100,

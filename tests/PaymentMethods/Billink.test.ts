@@ -9,9 +9,13 @@ describe('Billink methods', () => {
     const invoiceId = uniqid();
 
     test('Pay', async () => {
-        await method.manually().pay(payload).request().then((data) => {
-            expect(data.isSuccess()).toBeTruthy();
-        });
+        await method
+            .manually()
+            .pay(payload)
+            .request()
+            .then((data) => {
+                expect(data.isSuccess()).toBeTruthy();
+            });
     });
     test('Refund', async () => {
         await method
