@@ -4,8 +4,7 @@ import { IPerson } from '../../../Models/Interfaces/IRecipient';
 import { Customer } from './Customer';
 
 export interface IPay extends IPaymentRequest {
-    customer: Partial<IPerson>;
-    country?: 'DE' | 'DK' | 'EE' | 'ES' | 'FI' | 'NL' | 'NO' | 'PL' | 'SE' | 'GB';
+    customer: Partial<IPerson> & { country?: 'DE' | 'DK' | 'EE' | 'ES' | 'FI' | 'NL' | 'NO' | 'PL' | 'SE' | 'GB' };
 }
 
 export class Pay extends ServiceParameter {

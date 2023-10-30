@@ -1,6 +1,6 @@
 import { IPay, Pay } from './Model/Pay';
 import { IPaymentRequest, IRefundRequest } from '../../Models/IRequest';
-import PayablePaymentMethod from '../PayablePaymentMethod';
+import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
 import { IRefund, Refund } from './Model/Refund';
 
 export default class Afterpay extends PayablePaymentMethod {

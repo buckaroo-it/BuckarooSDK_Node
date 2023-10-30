@@ -36,7 +36,7 @@ export class Model {
     }
 
     protected setOwnProperties(
-        data: object = {},
+        data: Record<string, any> = {},
         properties: { [key: string]: PropertyDescriptor } = this.getAllPropertyDescriptors()
     ) {
         for (const key in properties) {
@@ -48,7 +48,7 @@ export class Model {
         return this;
     }
 
-    protected setDataProperties(data: object = {}) {
+    protected setDataProperties(data: Record<string, any> = {}) {
         for (const dataKey in data) {
             if (data.hasOwnProperty(dataKey) && data[dataKey] !== undefined) this.set(dataKey, data[dataKey]);
         }
@@ -127,7 +127,7 @@ export class JsonModel extends Model {
     }
 }
 
-export function getObjectProperty(object: object, property: string, root: any = null) {
+export function getObjectProperty(object: object, property: string, root: any = null): PropertyDescriptor | undefined {
     if (object !== root) {
         return (
             Object.getOwnPropertyDescriptor(object, property) ??

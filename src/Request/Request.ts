@@ -1,4 +1,4 @@
-import Headers from './Headers';
+import Headers, { RequestConfig, RequestHeaders } from './Headers';
 import { HttpClientResponse, HttpResponseConstructor } from '../Models/Response/HttpClientResponse';
 import { DataRequestData, SpecificationRequestData, TransactionData } from './DataModels';
 import Buckaroo from '../index';
@@ -7,7 +7,6 @@ import { TransactionResponse } from '../Models/Response/TransactionResponse';
 import { SpecificationRequestResponse } from '../Models/Response/SpecificationRequestResponse';
 import { BatchRequestResponse } from '../Models/Response/BatchRequestResponse';
 import HttpMethods from '../Constants/HttpMethods';
-import { RequestOptions } from 'https';
 import { ICredentials } from '../Utils/Types';
 import { Hmac } from './Hmac';
 import { IService } from '../Models/IServiceList';
@@ -85,33 +84,28 @@ export default class Request<
         );
     }
 
-    static BatchDataRequest(payload: IRequest[] = []) {
-        return new Request(
-            RequestTypes.BatchData,
-            HttpMethods.POST,
-            payload.map((data) => new DataRequestData(data)),
-            BatchRequestResponse
-        );
+    static BatchDataRequest(data: DataRequestData[] = []) {
+        return new Request(RequestTypes.BatchData, HttpMethods.POST, data, BatchRequestResponse);
     }
 
-    request(options: RequestOptions = {}) {
-        let data = this._httpMethod === HttpMethods.GET ? '' : JSON.stringify(this._data);
+    request(options: RequestConfig = {}) {
+        let data = (this._httpMethod === HttpMethods.GET ? {} : this._data) ?? {};
         this.setAuthorizationHeader(data);
         return Buckaroo.Client.httpClient.sendRequest(
             this.url,
             data,
             {
                 method: this._httpMethod,
-                headers: this.headers,
+                headers: this.headers as RequestHeaders,
                 ...options,
             },
             this.responseHandler
         );
     }
 
-    protected setAuthorizationHeader(data: string, credentials: ICredentials = Buckaroo.Client.credentials): this {
+    protected setAuthorizationHeader(data?: object, credentials: ICredentials = Buckaroo.Client.credentials): this {
         let hmac = new Hmac();
-        hmac.data = data;
+        hmac.data = JSON.stringify(data);
         hmac.method = this.httpMethod;
         hmac.url = this.url.toString();
         this.headers.Authorization = hmac.generate(credentials);

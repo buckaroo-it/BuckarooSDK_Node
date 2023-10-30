@@ -1,5 +1,5 @@
 import { IPay, Pay } from './Models/Pay';
-import PayablePaymentMethod from '../PayablePaymentMethod';
+import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
 import { RequestTypes } from '../../Constants/Endpoints';
 import { IRefundRequest } from '../../Models/IRequest';
 

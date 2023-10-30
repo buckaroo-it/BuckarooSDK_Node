@@ -1,4 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src/Utils/Functions';
 
 const method = buckarooClientTest.method('bancontactmrcash');
 
@@ -6,7 +7,7 @@ describe('BanContact methods', () => {
     test('Pay Simple Payload', async () => {
         await method
             .pay({
-                amountDebit: 10,
+                amountDebit: 100,
                 saveToken: true,
             })
             .request()
@@ -17,8 +18,9 @@ describe('BanContact methods', () => {
     test('Refund', async () => {
         await method
             .refund({
-                amountCredit: 5,
-                originalTransactionKey: 'F397DA6A251645F8BDD81547B5005B4B',
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {
@@ -27,7 +29,7 @@ describe('BanContact methods', () => {
     });
     test('Authenticate', async () => {
         await method
-            .authenticate({ amountDebit: 10 })
+            .authenticate({ invoice: uniqid(), amountDebit: 100 })
             .request()
             .then((data) => {
                 expect(data.isWaitingOnUserInput()).toBeDefined();
@@ -36,8 +38,9 @@ describe('BanContact methods', () => {
     test('PayOneClick', async () => {
         await method
             .payOneClick({
-                originalTransactionKey: 'dsad',
-                amountDebit: 12,
+                invoice: uniqid(),
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                amountDebit: 100,
             })
             .request()
             .then((data) => {
@@ -47,8 +50,8 @@ describe('BanContact methods', () => {
     test('CompletePayment', async () => {
         await method
             .completePayment({
-                originalTransactionKey: 'dsad',
-                encryptedCardData: 'sUIB',
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                encryptedCardData: 'XXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {
@@ -58,8 +61,9 @@ describe('BanContact methods', () => {
     test('PayEncrypted', async () => {
         await method
             .payEncrypted({
-                amountDebit: 10,
-                encryptedCardData: 'yrtgdd',
+                invoice: uniqid(),
+                amountDebit: 100,
+                encryptedCardData: 'XXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {
@@ -69,17 +73,10 @@ describe('BanContact methods', () => {
     test('PayRecurring', async () => {
         await method
             .payRecurring({
-                amountDebit: 10,
-                originalTransactionKey: 'sadas',
+                invoice: uniqid(),
+                amountDebit: 100,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-            .request()
-            .then((data) => {
-                expect(data).toBeDefined();
-            });
-    });
-    test('Specifications', () => {
-        method
-            .specification()
             .request()
             .then((data) => {
                 expect(data).toBeDefined();

@@ -1,4 +1,4 @@
-import PayablePaymentMethod from '../PayablePaymentMethod';
+import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
 import { IPay, Pay } from './Models/IPay';
 import IRequest from '../../Models/IRequest';
 import { IReserve, Reserve } from './Models/IReserve';
@@ -17,7 +17,7 @@ export default class KlarnaKP extends PayablePaymentMethod {
     }
 
     cancel(payload: IRequest) {
-        this.setServiceList('CancelReservation');
+        this.setServiceList('CancelReservation', new Pay(payload));
         return this.dataRequest(payload);
     }
 

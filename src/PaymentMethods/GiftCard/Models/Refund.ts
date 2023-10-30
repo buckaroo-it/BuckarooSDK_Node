@@ -8,7 +8,7 @@ export interface IRefund extends IRefundRequest {
 
 export class Refund extends ServiceParameter {
     set email(value: string) {
-        this.set('amount', value);
+        this.set('email', value);
     }
 
     set lastName(value: string) {

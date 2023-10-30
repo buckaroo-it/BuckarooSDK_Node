@@ -1,11 +1,12 @@
 import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src/Utils/Functions';
 
 const method = buckarooClientTest.method('wechatpay');
 describe('WechatPay', () => {
     test('Pay', async () => {
         await method
             .pay({
-                amountDebit: 3.5,
+                amountDebit: 100,
                 locale: 'en-US',
             })
             .request()
@@ -16,8 +17,9 @@ describe('WechatPay', () => {
     test('Refund', async () => {
         await method
             .refund({
-                amountCredit: 3.5,
-                originalTransactionKey: '1234567890',
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((response) => {

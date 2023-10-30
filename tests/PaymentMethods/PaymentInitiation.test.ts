@@ -1,15 +1,16 @@
-require('../BuckarooClient.test');
-import PayByBank from '../../src/PaymentMethods/PayByBank';
+import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src/Utils/Functions';
 
-const paymentInitiation = new PayByBank('PayByBank');
+const method = buckarooClientTest.method('PayByBank');
 
-describe('PayByBank methods', () => {
+describe('PaymentInitiation methods', () => {
     test('Pay', async () => {
-        await paymentInitiation
+        await method
             .pay({
-                amountDebit: 50.3,
-                order: '123456',
-                issuer: 'INGBNL2A',
+                issuer: 'RABONL2U',
+                amountDebit: 100,
+                order: uniqid(),
+                invoice: uniqid(),
                 countryCode: 'NL',
             })
             .request()
@@ -18,10 +19,11 @@ describe('PayByBank methods', () => {
             });
     });
     test('Refund', async () => {
-        await paymentInitiation
+        await method
             .refund({
-                amountCredit: 50.3,
-                originalTransactionKey: '123456',
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((info) => {

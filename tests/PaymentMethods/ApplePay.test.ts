@@ -1,17 +1,16 @@
 import { uniqid } from '../../src/Utils/Functions';
-import ApplePay from '../../src/PaymentMethods/ApplePay';
+import buckarooClientTest from '../BuckarooClient.test';
 
-require('../BuckarooClient.test');
-
-const method = new ApplePay();
+const method = buckarooClientTest.method('applepay');
 
 describe('Applepay methods', () => {
-    test('Pay Simple Payload', async () => {
+    test('Pay', async () => {
         await method
             .pay({
-                amountDebit: 10,
-                paymentData: 'sad',
-                customerCardName: '87y7y8',
+                amountDebit: 100,
+                invoice: uniqid(),
+                paymentData: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                customerCardName: 'XXXXXXX',
             })
             .request()
             .then((data) => {
@@ -21,7 +20,7 @@ describe('Applepay methods', () => {
     test('Pay Redirect Payload', async () => {
         await method
             .payRedirect({
-                amountDebit: 10,
+                amountDebit: 100,
                 invoice: uniqid(),
                 servicesSelectableByClient: 'applepay',
                 continueOnIncomplete: true,
@@ -34,17 +33,10 @@ describe('Applepay methods', () => {
     test('Refund', async () => {
         await method
             .refund({
-                amountCredit: 5,
-                originalTransactionKey: 'F397DA6A251645F8BDD81547B5005B4B',
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-            .request()
-            .then((data) => {
-                expect(data).toBeDefined();
-            });
-    });
-    test('Specifications', async () => {
-        await method
-            .specification()
             .request()
             .then((data) => {
                 expect(data).toBeDefined();

@@ -43,7 +43,7 @@ export class ReplyHandler {
             this.strategy = 'JSON';
             return data;
         } catch (e) {
-            let objData = {};
+            let objData: Record<string, any> = {};
             new URLSearchParams(value).forEach((value, name) => {
                 objData[name] = value;
             });
@@ -56,14 +56,12 @@ export class ReplyHandler {
         return new Hmac().validate(this.credentials, auth_header, url, data, this.method || HttpMethods.POST);
     }
 
-    private validateHttp(data: object, signature: string) {
-        let stringData = '';
-        for (const key in data) {
-            stringData += key + '=' + data[key];
-        }
-        stringData = stringData + this.credentials.websiteKey;
-
-        let hash = crypto.createHash('sha1').update(stringData).digest('hex');
+    private validateHttp(data: Record<string, any>, signature: string): boolean {
+        const stringData =
+            Object.keys(data)
+                .map((key) => `${key}=${data[key]}`)
+                .join('') + this.credentials.secretKey;
+        const hash = crypto.createHash('sha1').update(stringData).digest('hex');
 
         return crypto.timingSafeEqual(Buffer.from(hash), Buffer.from(signature));
     }

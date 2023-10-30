@@ -6,25 +6,17 @@ import { IService, ServiceList } from '../Models/IServiceList';
 import { ServiceParameter } from '../Models/ServiceParameters';
 import { IParameter } from '../Models/IParameters';
 import { TransactionData } from '../Request/DataModels';
-import { MethodFromServiceCode, ServiceCode } from '../Utils/MethodTypes';
+import { PaymentMethodInstance, ServiceCode } from '../Utils/MethodTypes';
 
 export default abstract class PaymentMethod {
+    protected _paymentName: string = '';
+    protected _serviceCode?: ServiceCode;
+    protected _serviceVersion: number = 0;
     protected _payload: TransactionData = new TransactionData();
     protected _requiredFields: Array<keyof IRequest> = [];
-    protected _paymentName: string = '';
-    protected _serviceCode?: string;
-    protected _serviceVersion: number = 0;
 
-    constructor(serviceCode?: string) {
-        this._serviceCode = serviceCode ?? this.paymentName;
-    }
-
-    get paymentName() {
-        return this._paymentName;
-    }
-
-    get serviceCode() {
-        return this._serviceCode || '';
+    constructor(serviceCode?: ServiceCode) {
+        this._serviceCode = serviceCode ?? (this.paymentName as ServiceCode);
     }
 
     get serviceVersion() {
@@ -33,6 +25,20 @@ export default abstract class PaymentMethod {
 
     set serviceVersion(value: number) {
         this._serviceVersion = value;
+    }
+
+    get serviceCode(): ServiceCode {
+        return this._serviceCode || 'noservice';
+    }
+
+    get paymentName() {
+        return this._paymentName;
+    }
+
+    setPaymentName(value: ServiceCode): this {
+        this._paymentName = value;
+        this._serviceCode = value;
+        return this;
     }
 
     setPayload(payload?: IRequest) {
@@ -52,13 +58,13 @@ export default abstract class PaymentMethod {
         return Request.Specification(type, { name: this.serviceCode, version: this.serviceVersion });
     }
 
-    combine<Name extends ServiceCode>(data: Name): MethodFromServiceCode<Name>;
+    combine<Name extends ServiceCode>(data: Name): PaymentMethodInstance<Name>;
 
     combine<Payload extends TransactionData>(data: Payload): this;
 
     combine<Method extends PaymentMethod>(method: Method): this;
 
-    combine(data): this {
+    combine(data: any): this {
         if (typeof data === 'string') {
             const method: PaymentMethod = Buckaroo.Client.method(data as any);
             method.setPayload(this._payload);
@@ -70,7 +76,7 @@ export default abstract class PaymentMethod {
 
     protected setRequiredFields(requiredFields: Array<keyof IRequest> = this._requiredFields) {
         for (const fieldKey of requiredFields) {
-            let field = this._payload[fieldKey] ?? Buckaroo.Client.config[fieldKey];
+            let field = this._payload[fieldKey] ?? (Buckaroo.Client.config as IRequest)[fieldKey];
             if (field === undefined) {
                 throw new Error(`Missing required config parameter ${String(fieldKey)}`);
             }

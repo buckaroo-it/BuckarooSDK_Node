@@ -1,4 +1,4 @@
-import PayablePaymentMethod from '../PayablePaymentMethod';
+import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
 import IRequest, { IPaymentRequest, IRefundRequest } from '../../Models/IRequest';
 import { CardData, ICardData } from './Models/CardData';
 import { ISecurityCode, SecurityCode } from './Models/SecurityCode';

@@ -7,13 +7,13 @@ describe('Transfer methods', () => {
     test('Pay', async () => {
         await method
             .pay({
-                amountDebit: 10,
+                amountDebit: 100,
                 customer: {
-                    firstName: 'John',
-                    lastName: 'Doe',
+                    firstName: 'Test',
+                    lastName: 'Acceptatie',
                     gender: Gender.MALE,
                 },
-                email: 'test@hotmail.com',
+                email: 'test@buckaroo.nl',
                 sendMail: true,
                 dateDue: '2024-10-10',
             })

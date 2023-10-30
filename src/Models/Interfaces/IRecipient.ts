@@ -80,6 +80,10 @@ export class Person extends Recipient implements IPerson {
         super(data);
     }
 
+    set name(value: string) {
+        this.set('name', value);
+    }
+
     set category(value: RecipientCategory.PERSON) {
         this.set('category', value);
     }

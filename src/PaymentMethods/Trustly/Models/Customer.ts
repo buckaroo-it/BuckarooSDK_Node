@@ -8,4 +8,8 @@ export class Customer extends Model {
     set lastName(value: string) {
         this.set('customerLastName', value);
     }
+
+    set countryCode(value: string) {
+        this.set('customerCountryCode', value);
+    }
 }

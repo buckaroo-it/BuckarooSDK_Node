@@ -1,4 +1,4 @@
-import PayablePaymentMethod from '../PayablePaymentMethod';
+import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
 import { IRefundRequest } from '../../Models/IRequest';
 
 export default class Payconiq extends PayablePaymentMethod {

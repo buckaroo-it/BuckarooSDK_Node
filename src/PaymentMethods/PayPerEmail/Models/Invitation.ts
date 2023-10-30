@@ -4,6 +4,7 @@ import { Attachments, IAttachments } from './Attachments';
 import { IPerson, Person } from '../../../Models/Interfaces/IRecipient';
 
 export interface IInvitation extends IRequest {
+    currency: string;
     customer: Partial<IPerson>;
     email: string;
     merchantSendsEmail?: boolean;

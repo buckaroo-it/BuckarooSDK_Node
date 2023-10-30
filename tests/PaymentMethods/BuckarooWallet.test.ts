@@ -7,9 +7,9 @@ describe('BuckarooWallet methods', () => {
     test('Pay', async () => {
         await method
             .pay({
-                invoice: 'string',
-                amountDebit: 12,
-                walletId: '2',
+                invoice: uniqid(),
+                amountDebit: 100,
+                walletId: 'XXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {
@@ -19,9 +19,9 @@ describe('BuckarooWallet methods', () => {
     test('Refund', async () => {
         await method
             .refund({
-                invoice: 'string',
-                amountCredit: 12,
-                originalTransactionKey: '46FB241693914AA4AE7A8B6DB33DE',
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {
@@ -31,10 +31,10 @@ describe('BuckarooWallet methods', () => {
     test('CancelReservation', async () => {
         await method
             .cancel({
-                invoice: 'BuckarooWalletInvoiceId',
-                originalTransactionKey: '46FB241693914AA4AE7A8B6DB33DE',
-                amountDebit: 1,
-                walletMutationGuid: '49B018248ECE4346AC20B902',
+                invoice: uniqid(),
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                amountDebit: 100,
+                walletMutationGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {
@@ -44,10 +44,10 @@ describe('BuckarooWallet methods', () => {
     test('deposit', async () => {
         await method
             .deposit({
-                invoice: 'string',
-                walletId: '',
-                amountCredit: 12,
-                originalTransactionKey: '',
+                invoice: uniqid(),
+                walletId: 'XXXXXXXXXXXXXXXXXXXXX',
+                amountCredit: 100,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {
@@ -57,15 +57,15 @@ describe('BuckarooWallet methods', () => {
     test('Update', async () => {
         await method
             .update({
-                walletId: '10',
+                walletId: 'XXXXXXXXXXXXXXXXXXXXX',
                 status: 'Disabled',
                 email: 'test@buckaroo.nl',
                 customer: {
-                    firstName: 'John',
-                    lastName: 'string',
+                    firstName: 'Test',
+                    lastName: 'Acceptatie',
                 },
                 bankAccount: {
-                    iban: 'NL13TEST0123456789',
+                    iban: 'NLXXTESTXXXXXXXXXX',
                 },
             })
             .request()
@@ -76,10 +76,10 @@ describe('BuckarooWallet methods', () => {
     test('Withdrawal', async () => {
         await method
             .withdrawal({
-                invoice: 'BuckarooWalletInvoiceId',
-                walletId: '10',
-                amountDebit: 10,
-                originalTransactionKey: '46FB241693914AA4AE7A8B6DB33DE',
+                invoice: uniqid(),
+                walletId: 'XXXXXXXXXXXXXXXXXXXXX',
+                amountDebit: 100,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {
@@ -89,14 +89,14 @@ describe('BuckarooWallet methods', () => {
     test('Create Wallet', async () => {
         await method
             .create({
-                walletId: uniqid(),
+                walletId: 'XXXXXXXXXXXXXXXXXXXXX',
                 email: 'test@buckaroo.nl',
                 customer: {
-                    firstName: 'John',
-                    lastName: 'string',
+                    firstName: 'Test',
+                    lastName: 'Acceptatie',
                 },
                 bankAccount: {
-                    iban: 'NL13TEST0123456789',
+                    iban: 'NLXXTESTXXXXXXXXXX',
                 },
             })
             .request()
@@ -107,7 +107,7 @@ describe('BuckarooWallet methods', () => {
     test('GetInfo', async () => {
         await method
             .getInfo({
-                walletId: '10',
+                walletId: 'XXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {

@@ -1,18 +1,18 @@
-require('../BuckarooClient.test');
-import Przelewy24 from '../../src/PaymentMethods/Przelewy24';
+import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src/Utils/Functions';
 
-const method = new Przelewy24('Przelewy24');
+const method = buckarooClientTest.method('przelewy24');
 
 describe('Przelewy24', () => {
     test('Pay', async () => {
         method
             .pay({
-                amountDebit: 50.3,
+                amountDebit: 100,
                 customer: {
-                    firstName: 'test',
-                    lastName: 'test',
+                    firstName: 'Test',
+                    lastName: 'Acceptatie',
                 },
-                email: 'test@hotmail.com',
+                email: 'test@buckaroo.nl',
             })
             .request()
             .then((res) => {
@@ -22,8 +22,9 @@ describe('Przelewy24', () => {
     test('Refund', async () => {
         await method
             .refund({
-                amountCredit: 50.3,
-                originalTransactionKey: '123456',
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((info) => {

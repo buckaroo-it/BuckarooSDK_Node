@@ -18,7 +18,7 @@ export class Credentials implements ICredentials {
         })
             .request()
             .then((response) => {
-                return response.httpResponse.statusCode === 200;
+                return response.httpResponse.status === 200;
             })
             .catch(() => {
                 return false;

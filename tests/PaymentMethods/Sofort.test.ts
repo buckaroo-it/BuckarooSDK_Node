@@ -1,15 +1,16 @@
-require('../BuckarooClient.test');
-import Sofort from '../../src/PaymentMethods/Sofort';
+import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src/Utils/Functions';
 
-const method = new Sofort();
+const method = buckarooClientTest.method('sofortueberweisung');
 
 describe('Sofort', () => {
     test('Pay', async () => {
-        await method
+        return await method
             .pay({
-                amountDebit: 50.3,
-                order: '123456',
+                amountDebit: 100,
+                order: uniqid(),
             })
+            .request()
             .then((info) => {
                 expect(info).toBeDefined();
             });
@@ -17,9 +18,11 @@ describe('Sofort', () => {
     test('Refund', async () => {
         await method
             .refund({
-                amountCredit: 50.3,
-                originalTransactionKey: '123456',
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((info) => {
                 expect(info).toBeDefined();
             });
@@ -28,9 +31,11 @@ describe('Sofort', () => {
     test('InstantRefund', async () => {
         await method
             .instantRefund({
-                amountCredit: 4.23,
-                originalTransactionKey: '97DC0A03BBDF4DAAAC694D7FEC8785E1',
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });

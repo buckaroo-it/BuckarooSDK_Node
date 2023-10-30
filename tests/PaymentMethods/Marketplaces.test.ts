@@ -1,4 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src/Utils/Functions';
 
 const marketplaces = buckarooClientTest.method('marketplaces');
 const ideal = buckarooClientTest.method('ideal');
@@ -14,22 +15,22 @@ describe('Testing Marketplaces methods', () => {
             },
             sellers: [
                 {
-                    accountId: '789C60F316D24B088ACD471',
+                    accountId: 'XXXXXXXXXXXXXXXXXXXXXXXX',
                     amount: 50,
                     description: '',
                 },
                 {
-                    accountId: '369C60F316D24B088ACD238',
+                    accountId: 'XXXXXXXXXXXXXXXXXXXXXXXX',
                     amount: 45,
                     description: '',
                 },
             ],
         });
         return ideal
-            .combine(marketplaces.getPayload())
+            .combine(marketplaces)
             .pay({
                 issuer: 'ABNANL2A',
-                amountDebit: 95,
+                amountDebit: 100,
             })
             .request()
             .then((response) => {
@@ -39,14 +40,14 @@ describe('Testing Marketplaces methods', () => {
     test('transfer', async () => {
         marketplaces
             .transfer({
-                originalTransactionKey: 'D3732474ED0',
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 marketplace: {
                     amount: 10,
                     description: 'INV0001 Commission Marketplace',
                 },
                 sellers: [
                     {
-                        accountId: '789C60F316D24B088ACD471',
+                        accountId: 'XXXXXXXXXXXXXXXXXXXXXXXX',
                         amount: 50,
                         description: 'INV001 Payout Make-Up Products BV',
                     },
@@ -61,14 +62,18 @@ describe('Testing Marketplaces methods', () => {
         marketplaces.refundSupplementary({
             sellers: [
                 {
-                    accountId: '789C60F316D24B088ACD471',
+                    accountId: 'XXXXXXXXXXXXXXXXXXXXXXXX',
                     description: 'INV001 Payout Make-Up Products BV',
                 },
             ],
         });
         ideal
             .combine(marketplaces)
-            .refund({ originalTransactionKey: 'dasda', amountCredit: 10 })
+            .refund({
+                invoice: uniqid(),
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                amountCredit: 0.01,
+            })
             .request()
             .then((response) => {
                 expect(response.isValidationFailure()).toBeTruthy();

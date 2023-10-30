@@ -1,5 +1,5 @@
 import { IPay, Pay } from './Models/Pay';
-import PayablePaymentMethod from '../PayablePaymentMethod';
+import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
 
 export default class Klarna extends PayablePaymentMethod {
     protected _paymentName = 'Klarna';
@@ -9,8 +9,9 @@ export default class Klarna extends PayablePaymentMethod {
     }
 
     payInInstallments(data: IPay) {
+        this.setPayPayload(data);
         this.setServiceList('PayInInstallments', new Pay(data));
-        return super.pay(data);
+        return super.transactionRequest();
     }
 
     payRemainder(payload: IPay) {

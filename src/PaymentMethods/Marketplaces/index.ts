@@ -1,4 +1,4 @@
-import PaymentMethod from '../PaymentMethod';
+import PaymentMethod from '../../Services/PaymentMethod';
 import { ISplit, Split } from './Models/Split';
 import { ITransfer } from './Models/Transfer';
 

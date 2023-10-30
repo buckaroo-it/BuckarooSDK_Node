@@ -37,15 +37,15 @@ export class Pay extends ServiceParameter implements Omit<IPay, keyof IPaymentRe
     }
 
     set billing(billing: ICustomer) {
-        this.set('billing', new Customer(billing, 'Billing'));
+        this.set('billing', new Customer({ prefix: 'billing', ...billing }));
         if (this.get('shipping') === undefined) {
-            this.shipping = billing;
+            this.shipping = new Customer({ prefix: 'shipping', ...billing });
         }
     }
 
     set shipping(shipping: ICustomer) {
         this.addressesDiffer = true;
-        this.set('shipping', new Customer(shipping, 'Shipping'));
+        this.set('shipping', new Customer({ prefix: 'shipping', ...shipping }));
     }
 
     set costCentre(value: string) {

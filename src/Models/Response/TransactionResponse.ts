@@ -79,7 +79,9 @@ export class TransactionResponse extends HttpClientResponse {
 
     getAdditionalParameters() {
         return DataFormatter.parametersReverseMap(
-            this.data.additionalParameters?.additionalParameter ?? this.data.additionalParameters?.['list'] ?? []
+            this.data.additionalParameters?.additionalParameter ??
+                (this.data.additionalParameters as Record<string, any>)?.['list'] ??
+                []
         );
     }
 

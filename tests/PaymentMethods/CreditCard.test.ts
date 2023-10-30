@@ -1,4 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src/Utils/Functions';
 
 const method = buckarooClientTest.method('visa');
 
@@ -6,7 +7,7 @@ describe('testing methods', () => {
     test('Pay', async () => {
         await method
             .pay({
-                amountDebit: 10,
+                amountDebit: 100,
             })
             .request()
             .then((data) => {
@@ -16,8 +17,9 @@ describe('testing methods', () => {
     test('Refund', async () => {
         await method
             .refund({
-                amountCredit: 5,
-                originalTransactionKey: 'F397DA6A251645F8BDD81547B5005B4B',
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {
@@ -27,7 +29,7 @@ describe('testing methods', () => {
     test('Authorize', async () => {
         await method
             .authorize({
-                amountDebit: 10,
+                amountDebit: 100,
             })
             .request()
             .then((data) => {
@@ -37,9 +39,9 @@ describe('testing methods', () => {
     test('PayEncrypted', async () => {
         await method
             .payEncrypted({
-                amountDebit: 10,
+                amountDebit: 100,
                 name: 'Visa',
-                encryptedCardData: '',
+                encryptedCardData: 'XXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {
@@ -49,8 +51,8 @@ describe('testing methods', () => {
     test('PayWithSecurityCode', async () => {
         await method
             .payWithSecurityCode({
-                amountDebit: 10,
-                encryptedSecurityCode: 'sad',
+                amountDebit: 100,
+                encryptedSecurityCode: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 name: 'Visa',
             })
             .request()
@@ -61,8 +63,8 @@ describe('testing methods', () => {
     test('AuthorizeWithSecurityCode', async () => {
         await method
             .authorizeWithSecurityCode({
-                amountDebit: 10,
-                encryptedSecurityCode: 'sad',
+                amountDebit: 100,
+                encryptedSecurityCode: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 name: 'Visa',
             })
             .request()
@@ -73,8 +75,8 @@ describe('testing methods', () => {
     test('AuthorizeEncrypted', async () => {
         await method
             .authorizeEncrypted({
-                amountDebit: 10,
-                encryptedCardData: 'sad',
+                amountDebit: 100,
+                encryptedCardData: 'XXXXXXXXXXXXXXXXXXXXXXXX',
                 name: 'Visa',
             })
             .request()
@@ -85,8 +87,8 @@ describe('testing methods', () => {
     test('CancelAuthorize', async () => {
         await method
             .cancelAuthorize({
-                originalTransactionKey: 'sad',
-                amountCredit: 10,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                amountCredit: 100,
                 name: 'Visa',
             })
             .request()
@@ -97,8 +99,8 @@ describe('testing methods', () => {
     test('Capture', async () => {
         await method
             .capture({
-                originalTransactionKey: 'sad',
-                amountDebit: 10,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                amountDebit: 100,
                 name: 'Visa',
             })
             .request()
@@ -109,8 +111,8 @@ describe('testing methods', () => {
     test('PayRecurrent', async () => {
         await method
             .payRecurrent({
-                originalTransactionKey: 'sad',
-                amountDebit: 10,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                amountDebit: 100,
                 name: 'Visa',
             })
             .request()

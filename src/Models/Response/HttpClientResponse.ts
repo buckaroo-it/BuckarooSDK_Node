@@ -1,29 +1,28 @@
-import { IncomingMessage } from 'http';
 import { JsonModel } from '../Model';
 import { ReplyHandler } from '../../Handlers/Reply/ReplyHandler';
 import { ICredentials } from '../../Utils/Types';
+import { AxiosResponse } from 'axios';
 
 export interface HttpResponseConstructor {
-    new (httpResponse: IncomingMessage, data: string): IHttpClientResponse;
+    new (httpResponse: AxiosResponse, data: object): IHttpClientResponse;
 }
 
 export interface IHttpClientResponse {
-    httpResponse: IncomingMessage;
-    data: object;
+    httpResponse: AxiosResponse;
 }
 
 export class HttpClientResponse implements IHttpClientResponse {
-    protected readonly _httpResponse: IncomingMessage;
+    protected readonly _httpResponse: AxiosResponse;
     protected readonly _data: object;
     protected readonly _rawData: string;
 
-    constructor(httpResponse: IncomingMessage, data: string) {
+    constructor(httpResponse: AxiosResponse) {
         this._httpResponse = httpResponse;
-        this._rawData = data;
-        this._data = new JsonModel(JSON.parse(data));
+        this._rawData = httpResponse.data;
+        this._data = new JsonModel(httpResponse.data);
     }
 
-    get httpResponse(): IncomingMessage {
+    get httpResponse(): AxiosResponse {
         return this._httpResponse;
     }
 
@@ -38,10 +37,10 @@ export class HttpClientResponse implements IHttpClientResponse {
     validateResponse(credentials: ICredentials) {
         return new ReplyHandler(
             credentials,
-            this._rawData,
+            JSON.parse(this._rawData ?? {}),
             this.httpResponse.headers['authorization'],
-            this.httpResponse.url,
-            this.httpResponse.method
+            this.httpResponse.request.url,
+            this.httpResponse.request.method
         )
             .validate()
             .isValid();

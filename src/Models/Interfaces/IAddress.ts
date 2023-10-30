@@ -8,6 +8,8 @@ export default interface IAddress {
     city: string;
     state?: string;
     country: string;
+
+    [key: string]: any;
 }
 
 export class Address extends Model implements IAddress {

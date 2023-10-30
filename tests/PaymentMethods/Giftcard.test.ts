@@ -1,4 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src/Utils/Functions';
 
 const method = buckarooClientTest.method('boekenbon');
 
@@ -6,8 +7,8 @@ describe('GiftCard methods', () => {
     test('Pay', async () => {
         const responsePay = await method
             .pay({
-                amountDebit: 10,
-                intersolveCardnumber: '0000000000000000001',
+                amountDebit: 100,
+                intersolveCardnumber: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 intersolvePIN: '500',
             })
             .request();
@@ -15,7 +16,7 @@ describe('GiftCard methods', () => {
         const responseRemainderPay = await buckarooClientTest
             .method('ideal')
             .payRemainder({
-                amountDebit: 10.1,
+                amountDebit: 100,
                 issuer: 'ABNANL2A',
                 invoice: responsePay.data.invoice,
                 originalTransactionKey: responsePay.data.relatedTransactions[0].relatedTransactionKey,
@@ -26,10 +27,11 @@ describe('GiftCard methods', () => {
     test('Refund', async () => {
         await method
             .refund({
-                amountCredit: 5,
-                originalTransactionKey: '9F99B530DA5449EB919D27351D28BDF2',
-                email: '',
-                lastName: '',
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                email: 'test@buckaroo.nl',
+                lastName: 'Acceptatie',
             })
             .request()
             .then((data) => {

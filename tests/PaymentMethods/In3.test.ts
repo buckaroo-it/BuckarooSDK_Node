@@ -1,5 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { uniqid } from '../../src/Utils/Functions';
+import { getIPAddress, uniqid } from '../../src/Utils/Functions';
 import { IPay } from '../../src/PaymentMethods/In3/Models/Pay';
 import RecipientCategory from '../../src/Constants/RecipientCategory';
 
@@ -17,11 +17,9 @@ describe('Testing In3 methods', () => {
     test('Refund', async () => {
         await in3
             .refund({
-                amountCredit: 42,
-                originalTransactionKey: '',
-                merchantImageUrl: '',
-                summaryImageUrl: '',
-                articles: [],
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {
@@ -31,32 +29,32 @@ describe('Testing In3 methods', () => {
 });
 
 const payload: IPay = {
-    amountDebit: 52.3,
+    amountDebit: 100,
     description: 'in3 pay',
     order: uniqid(),
     invoice: uniqid(),
-    clientIP: '127.0.0.1',
+    clientIP: getIPAddress(),
     billing: {
         recipient: {
             category: RecipientCategory.PERSON,
-            initials: 'J',
-            firstName: 'John',
-            lastName: 'Dona',
+            initials: 'TA',
+            firstName: 'Test',
+            lastName: 'Acceptatie',
             birthDate: '1990-01-01',
-            customerNumber: '12345',
-            companyName: 'Buckaroo',
-            chamberOfCommerce: '123456',
+            customerNumber: 'XXXXX',
+            companyName: 'Buckaroo B.V.',
+            chamberOfCommerce: 'XXXXXX41',
         },
         address: {
             street: 'Hoofdstraat',
-            houseNumber: '13',
+            houseNumber: '80',
             houseNumberAdditional: 'a',
-            zipcode: '1234AB',
+            zipcode: '8441ER',
             city: 'Heerenveen',
             country: 'NL',
         },
         phone: {
-            mobile: '0698765433',
+            mobile: '0612345678',
         },
         email: 'test@buckaroo.nl',
     },
@@ -64,16 +62,16 @@ const payload: IPay = {
         recipient: {
             category: RecipientCategory.PERSON,
             careOf: 'J',
-            firstName: 'John',
-            lastName: 'Dona',
-            chamberOfCommerce: '123456',
+            firstName: 'Test',
+            lastName: 'Acceptatie',
+            chamberOfCommerce: 'XXXXXX41',
         },
         address: {
-            street: 'Kalverstraat',
-            houseNumber: '13',
-            houseNumberAdditional: 'b',
-            zipcode: '4321EB',
-            city: 'Amsterdam',
+            street: 'Hoofdstraat',
+            houseNumber: '80',
+            houseNumberAdditional: 'a',
+            zipcode: '8441ER',
+            city: 'Heerenveen',
             country: 'NL',
         },
     },

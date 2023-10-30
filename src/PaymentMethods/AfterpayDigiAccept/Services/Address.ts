@@ -1,42 +1,33 @@
-import { Address as AddressClass } from '../../../Models/Interfaces/IAddress';
+import { Model } from '../../../Models/Model';
 
-export class Address extends AddressClass {
-    get houseNumberAdditional() {
-        return this.get('houseNumberSuffix');
+export class Address extends Model {
+    set prefix(value: string) {
+        this.set('prefix', value, true);
+    }
+
+    set street(value: string) {
+        this.set(`${this.get('prefix')}Street`, value);
+    }
+
+    set houseNumber(value: string) {
+        this.set(`${this.get('prefix')}HouseNumber`, value);
+    }
+
+    set city(value: string) {
+        this.set(`${this.get('prefix')}City`, value);
     }
 
     set houseNumberAdditional(value: string) {
-        this.set('houseNumberSuffix', value);
-    }
-
-    get zipcode() {
-        return this.get('postalCode');
+        this.set(`${this.get('prefix')}HouseNumberSuffix`, value);
     }
 
     set zipcode(value: string) {
-        this.set('postalCode', value);
+        this.set(`${this.get('prefix')}PostalCode`, value);
     }
 
     set country(value: string) {
-        if (this.prefix === 'Shipping' && value === 'NL') {
-            this.set('countryCode', value);
-        } else this.set('country', value);
-    }
-
-    private get prefix() {
-        return '';
-    }
-
-    private set prefix(value: string) {
-        this.set('prefix', value);
-    }
-
-    initialize(data?: any, prefix: string = '') {
-        this.set('prefix', prefix, true);
-        return super.initialize(data);
-    }
-
-    protected privateName(name: string): string {
-        return super.privateName(name);
+        if (this.get('prefix') === 'shipping' && value === 'NL') {
+            this.set(`${this.get('prefix')}CountryCode`, value);
+        } else this.set(`${this.get('prefix')}Country`, value);
     }
 }

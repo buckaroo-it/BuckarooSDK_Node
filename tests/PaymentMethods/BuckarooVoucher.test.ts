@@ -1,4 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src/Utils/Functions';
 
 const method = buckarooClientTest.method('buckaroovoucher');
 
@@ -6,8 +7,8 @@ describe('testing methods', () => {
     test('Pay', async () => {
         await method
             .pay({
-                amountDebit: 12,
-                voucherCode: '',
+                amountDebit: 100,
+                voucherCode: 'XXXXXXX',
             })
             .request()
             .then((data) => {
@@ -17,8 +18,9 @@ describe('testing methods', () => {
     test('Refund', async () => {
         await method
             .refund({
-                amountCredit: 12,
-                originalTransactionKey: '',
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {
@@ -28,7 +30,7 @@ describe('testing methods', () => {
     test('GetBalance', async () => {
         await method
             .getBalance({
-                voucherCode: 'WP6W-XXXX-XXXX-56T7',
+                voucherCode: 'XXXXXXX',
             })
             .request()
             .then((data) => {
@@ -51,7 +53,7 @@ describe('testing methods', () => {
     test('DeactivateVoucher', async () => {
         await method
             .deactivate({
-                voucherCode: '',
+                voucherCode: 'XXXXXXX',
             })
             .request()
             .then((data) => {

@@ -1,59 +1,44 @@
-import * as https from 'https';
-import { Agent, RequestOptions } from 'https';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { HttpResponseConstructor } from '../Models/Response/HttpClientResponse';
+import { RequestConfig } from './Headers';
+import HttpMethods from '../Constants/HttpMethods';
 
-const defaultAgent = new Agent({
-    keepAlive: true,
-    keepAliveMsecs: 10000,
-});
 export default class HttpsClient {
-    protected _options: RequestOptions = {};
+    protected _options: AxiosRequestConfig = {};
+    private _axiosInstance: AxiosInstance;
 
-    constructor(agent?: Agent) {
+    constructor() {
         this._options.timeout = 10000;
-        this._options.agent = agent || defaultAgent;
-        this._options.sessionTimeout = 30000;
+        this._options.maxRedirects = 10;
+        this._options.withCredentials = true;
+        this._axiosInstance = axios.create(this._options);
     }
 
-    public sendRequest<R extends HttpResponseConstructor = HttpResponseConstructor>(
+    public async sendRequest<R extends HttpResponseConstructor = HttpResponseConstructor>(
         url: URL,
-        data: string,
-        options: RequestOptions = {},
+        data: object = {},
+        options: RequestConfig = {},
         responseClass: R
     ): Promise<InstanceType<R>> {
-        return new Promise((resolve, reject) => {
-            const req = https.request(url, {
+        try {
+            const config = {
+                url: url.toString(),
                 ...this._options,
                 ...options,
-            });
-            req.on('error', (err) => {
-                reject(err);
-            });
-            req.on('timeout', () => {
-                req.destroy();
-            });
-            req.on('response', (res) => {
-                let response: any[] = [];
-                res.on('data', (chunk) => {
-                    response.push(chunk);
-                });
-                res.on('end', () => {
-                    try {
-                        resolve(new responseClass(res, Buffer.concat(response).toString()) as InstanceType<R>);
-                    } catch (e) {
-                        try {
-                            reject(Buffer.concat(response).toString());
-                        } catch (e) {
-                            reject(e);
-                        }
-                    }
-                });
-            });
-            if (data) {
-                req.write(data);
+            };
+
+            if (options.method !== HttpMethods.GET) {
+                config.data = data;
             }
-            req.end();
-            return req;
-        });
+
+            const response = await this._axiosInstance.request(config);
+
+            return new responseClass(response, response.data) as InstanceType<R>;
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+                throw error.response?.data ?? error;
+            }
+            throw error;
+        }
     }
 }

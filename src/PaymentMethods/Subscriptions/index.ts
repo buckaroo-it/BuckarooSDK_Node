@@ -1,5 +1,5 @@
 import { ISubscription, Subscription } from './Models/ISubscription';
-import PaymentMethod from '../PaymentMethod';
+import PaymentMethod from '../../Services/PaymentMethod';
 import IRequest from '../../Models/IRequest';
 import { ResumeSubscription } from './Models/ResumeSubscription';
 

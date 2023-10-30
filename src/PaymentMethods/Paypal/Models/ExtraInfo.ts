@@ -7,7 +7,7 @@ import { IPaymentRequest } from '../../../Models/IRequest';
 
 export interface IExtraInfo extends IPaymentRequest {
     address?: IAddress;
-    customer?: IPerson;
+    customer?: Partial<IPerson>;
     phone?: IPhone;
     noShipping?: string;
     addressOverride?: boolean;

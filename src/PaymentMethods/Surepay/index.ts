@@ -1,13 +1,11 @@
-import PaymentMethod from '../PaymentMethod';
-import { IVerify } from './Models/Verify';
-import { Parameter } from '../../Models/IParameters';
+import PaymentMethod from '../../Services/PaymentMethod';
+import { IVerify, Verify } from './Models/Verify';
 
 export default class Surepay extends PaymentMethod {
     protected _paymentName = 'Surepay';
 
     verify(payload: IVerify) {
-        const serviceParameter = new Parameter({ name: 'customeraccountname', value: payload.customeraccountname });
-        this.setServiceList('Verify', [serviceParameter]);
-        return this.dataRequest(payload);
+        this.setServiceList('Verify', new Verify(payload));
+        return super.dataRequest(payload);
     }
 }

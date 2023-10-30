@@ -1,4 +1,4 @@
-import PaymentMethod from '../PaymentMethod';
+import PaymentMethod from '../../Services/PaymentMethod';
 import { IInvoice, Invoice } from './Models/Invoice';
 import { CreditNote, ICreditNote } from './Models/CreditNote';
 import { Debtor, IDebtor } from './Models/Debtor';

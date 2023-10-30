@@ -4,7 +4,8 @@ import IArticle from '../../src/Models/Interfaces/IArticle';
 import IPhone from '../../src/Models/Interfaces/IPhone';
 import IBankAccount from '../../src/Models/Interfaces/IBankAccount';
 import RecipientCategory from '../../src/Constants/RecipientCategory';
-import { getIPAddress } from '../../src/Utils/Functions';
+import { getIPAddress, uniqid } from '../../src/Utils/Functions';
+import Gender from '../../src/Constants/Gender';
 
 export const TestPerson: IPerson = {
     birthDate: '1990-01-01',
@@ -64,4 +65,15 @@ export const TestBilling = {
     phone: TestPhone,
     email: TestEmail,
 };
+
+export const TestCustomer = {
+    identificationNumber: uniqid(),
+    gender: Gender.FEMALE,
+    culture: TestPerson.culture,
+    initials: TestPerson.initials,
+    lastName: TestPerson.lastName,
+    firstName: TestPerson.firstName,
+    birthDate: '1990-01-01',
+};
+
 export const TestIp = getIPAddress();
