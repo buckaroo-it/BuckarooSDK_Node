@@ -2,7 +2,10 @@ import PaymentMethod from '../../Services/PaymentMethod';
 import IRequest from '../../Models/IRequest';
 
 type key = Required<Pick<IRequest, 'originalTransactionKey'>>;
-export default class Thunes extends PaymentMethod {
+export default class Thunes<Code extends 'thunes', Manually extends boolean = false> extends PaymentMethod<
+    Code,
+    Manually
+> {
     protected _paymentName = 'Thunes';
 
     getStatus(payload: key) {

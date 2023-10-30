@@ -6,23 +6,17 @@ import RecipientCategory from '../../src/Constants/RecipientCategory';
 const klarna = buckarooClientTest.method('klarna');
 describe('Testing Klarna methods', () => {
     test('Pay', async () => {
-        await klarna
-            .pay(payload)
-            .request()
-            .then((res) => {
-                expect(res.isPendingProcessing()).toBeTruthy();
-            });
+        await klarna.pay(payload).then((res) => {
+            expect(res.isPendingProcessing()).toBeTruthy();
+        });
     });
     test('PayInInstallments', async () => {
         const clonedPayload = JSON.parse(JSON.stringify(payload));
         clonedPayload.currency = 'GBP';
         clonedPayload.billing.address.country = 'GB';
-        await klarna
-            .payInInstallments(clonedPayload)
-            .request()
-            .then((res) => {
-                expect(res).toBeDefined();
-            });
+        await klarna.payInInstallments(clonedPayload).then((res) => {
+            expect(res).toBeDefined();
+        });
     });
 });
 
@@ -74,15 +68,15 @@ let payload: IPay = {
             identifier: 'Articlenumber1',
             description: 'Blue Toy Car',
             vatPercentage: 21,
-            quantity: 2,
-            price: 20.1,
+            quantity: 1,
+            price: 50,
         },
         {
             identifier: 'Articlenumber2',
             description: 'Red Toy Car',
             vatPercentage: 21,
             quantity: 1,
-            price: 10.1,
+            price: 50,
         },
     ],
 };

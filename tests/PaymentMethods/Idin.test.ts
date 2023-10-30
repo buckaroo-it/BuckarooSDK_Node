@@ -8,7 +8,6 @@ describe('Idin methods', () => {
             .verify({
                 issuer: 'BANKNL2Y',
             })
-            .request()
             .then((data) => {
                 expect(data.isPendingProcessing()).toBeTruthy();
             });
@@ -19,7 +18,6 @@ describe('Idin methods', () => {
             .identify({
                 issuer: 'BANKNL2Y',
             })
-            .request()
             .then((data) => {
                 expect(data.isPendingProcessing()).toBeTruthy();
             });
@@ -30,7 +28,6 @@ describe('Idin methods', () => {
             .login({
                 issuer: 'BANKNL2Y',
             })
-            .request()
             .then((data) => {
                 expect(data.isPendingProcessing()).toBeTruthy();
             });

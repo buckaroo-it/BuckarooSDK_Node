@@ -12,7 +12,6 @@ describe('SurePay methods', () => {
                     accountName: 'Test Acceptatie',
                 },
             })
-            .request()
             .then((info) => {
                 expect(info).toBeDefined();
             });

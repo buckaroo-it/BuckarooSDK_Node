@@ -2,11 +2,10 @@ import PaymentMethod from '../../Services/PaymentMethod';
 import { ISplit, Split } from './Models/Split';
 import { ITransfer } from './Models/Transfer';
 
-export default class Marketplaces extends PaymentMethod {
-    get paymentName() {
-        return 'Marketplaces';
-    }
-
+export default class Marketplaces<Code extends 'marketplaces', Manually extends boolean = false> extends PaymentMethod<
+    Code,
+    Manually
+> {
     split(payload: ISplit) {
         this.setServiceList('Split', new Split(payload));
         return this.dataRequest(payload);

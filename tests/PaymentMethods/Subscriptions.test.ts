@@ -28,7 +28,6 @@ describe('Subscription methods', () => {
                     code: 'XXXXXXXX',
                 },
             })
-            .request()
             .then((data) => {
                 expect(data.hasError()).toBeTruthy();
             });
@@ -47,7 +46,6 @@ describe('Subscription methods', () => {
                     },
                 },
             })
-            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });
@@ -93,7 +91,6 @@ describe('Subscription methods', () => {
                 amountDebit: 100,
                 startRecurrent: true,
             })
-            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });
@@ -109,7 +106,6 @@ describe('Subscription methods', () => {
                 issuer: 'ABNANL2A',
                 amountDebit: 100,
             })
-            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });
@@ -132,7 +128,6 @@ describe('Subscription methods', () => {
             .deletePaymentConfig({
                 subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-            .request()
             .then((res) => {
                 expect(res.httpResponse.status === 200).toBeTruthy();
             });

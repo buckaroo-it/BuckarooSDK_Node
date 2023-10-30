@@ -3,7 +3,10 @@ import IRequest, { IPaymentRequest, IRefundRequest } from '../../Models/IRequest
 import { CardData, ICardData } from './Models/CardData';
 import { ISecurityCode, SecurityCode } from './Models/SecurityCode';
 
-export default class CreditCard extends PayablePaymentMethod {
+export default class CreditCard<
+    Code extends 'CreditCard',
+    Manually extends boolean = false
+> extends PayablePaymentMethod<Code, Manually> {
     protected _paymentName = 'CreditCard';
 
     payEncrypted(payload: ICardData) {

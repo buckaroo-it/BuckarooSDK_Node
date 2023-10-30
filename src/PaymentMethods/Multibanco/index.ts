@@ -1,5 +1,8 @@
 import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
 
-export default class MultiBanco extends PayablePaymentMethod {
+export default class MultiBanco<
+    Code extends 'multibanco',
+    Manually extends boolean = false
+> extends PayablePaymentMethod<Code, Manually> {
     protected _paymentName = 'MultiBanco';
 }

@@ -7,7 +7,6 @@ describe('Mbway methods', () => {
             .pay({
                 amountDebit: 100,
             })
-            .request()
             .then((response) => {
                 expect(response.isValidationFailure()).toBeTruthy();
             });

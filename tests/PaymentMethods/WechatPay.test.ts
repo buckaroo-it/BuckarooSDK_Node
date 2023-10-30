@@ -9,7 +9,6 @@ describe('WechatPay', () => {
                 amountDebit: 100,
                 locale: 'en-US',
             })
-            .request()
             .then((response) => {
                 expect(response.isPendingProcessing()).toBeDefined();
             });
@@ -21,7 +20,6 @@ describe('WechatPay', () => {
                 amountCredit: 0.01,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-            .request()
             .then((response) => {
                 expect(response.data).toBeDefined();
             });

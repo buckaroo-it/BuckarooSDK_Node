@@ -6,7 +6,7 @@ const ideal = buckarooClientTest.method('ideal');
 
 describe('Testing Marketplaces methods', () => {
     test('Split', async () => {
-        marketplaces.split({
+        const marketplacesResponse = marketplaces.manually().split({
             description: 'INV0001',
             daysUntilTransfer: 2,
             marketplace: {
@@ -27,12 +27,11 @@ describe('Testing Marketplaces methods', () => {
             ],
         });
         return ideal
-            .combine(marketplaces)
+            .combine(marketplacesResponse.data)
             .pay({
                 issuer: 'ABNANL2A',
                 amountDebit: 100,
             })
-            .request()
             .then((response) => {
                 expect(response.isValidationFailure()).toBeTruthy();
             });
@@ -53,13 +52,12 @@ describe('Testing Marketplaces methods', () => {
                     },
                 ],
             })
-            .request()
             .then((response) => {
                 expect(response.isValidationFailure()).toBeTruthy();
             });
     });
     test('refundSupplementary', async () => {
-        marketplaces.refundSupplementary({
+        const marketplacesResponse = marketplaces.manually().refundSupplementary({
             sellers: [
                 {
                     accountId: 'XXXXXXXXXXXXXXXXXXXXXXXX',
@@ -68,13 +66,12 @@ describe('Testing Marketplaces methods', () => {
             ],
         });
         ideal
-            .combine(marketplaces)
+            .combine(marketplacesResponse.data)
             .refund({
                 invoice: uniqid(),
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 amountCredit: 0.01,
             })
-            .request()
             .then((response) => {
                 expect(response.isValidationFailure()).toBeTruthy();
             });

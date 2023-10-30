@@ -58,21 +58,26 @@ export default class Request<
         return new Request(RequestTypes.Data, HttpMethods.POST, new DataRequestData(payload), TransactionResponse);
     }
 
-    static Specification(type: RequestTypes.Data | RequestTypes.Transaction, data: IService[] | IService) {
+    static Specification<T extends IService[] | IService>(
+        type: RequestTypes.Data | RequestTypes.Transaction,
+        data: T
+    ): T extends IService[]
+        ? Request<typeof SpecificationRequestResponse, SpecificationRequestData>
+        : Request<typeof SpecificationRequestResponse, undefined> {
         if (Array.isArray(data)) {
             return new Request(
                 type + `/Specifications`,
                 HttpMethods.POST,
                 new SpecificationRequestData(data),
                 SpecificationRequestResponse
-            );
+            ) as any;
         }
         return new Request(
             type + `/Specification/${data?.name}?serviceVersion=${data?.version}`,
             HttpMethods.GET,
             undefined,
             SpecificationRequestResponse
-        );
+        ) as any;
     }
 
     static BatchTransaction(payload: IRequest[] = []) {

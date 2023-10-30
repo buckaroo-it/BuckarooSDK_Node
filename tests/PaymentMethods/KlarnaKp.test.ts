@@ -10,7 +10,6 @@ describe('KlarnaKp', () => {
                 amountDebit: 100,
                 reservationNumber: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-            .request()
             .then((info) => {
                 expect(info.isFailed()).toBeTruthy();
             });
@@ -54,7 +53,6 @@ describe('KlarnaKp', () => {
                     },
                 ],
             })
-            .request()
             .then((info) => {
                 expect(info.isPendingProcessing()).toBeTruthy();
             });
@@ -64,7 +62,6 @@ describe('KlarnaKp', () => {
             .cancel({
                 reservationNumber: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-            .request()
             .then((info) => {
                 expect(info).toBeDefined();
             });

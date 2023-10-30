@@ -24,7 +24,6 @@ describe('Thunes methods', () => {
                     },
                 ],
             })
-            .request()
             .then((res) => {
                 expect(res.data).toBeDefined();
             });
@@ -32,25 +31,18 @@ describe('Thunes methods', () => {
     test('capture', async () => {
         await method
             .capture({ amountDebit: 100, originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' })
-            .request()
             .then((res) => {
                 expect(res.data).toBeDefined();
             });
     });
     test('getStatus', async () => {
-        await method
-            .getStatus({ originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' })
-            .request()
-            .then((res) => {
-                expect(res.data).toBeDefined();
-            });
+        await method.getStatus({ originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' }).then((res) => {
+            expect(res.data).toBeDefined();
+        });
     });
     test('cancel', async () => {
-        await method
-            .cancel({ originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' })
-            .request()
-            .then((res) => {
-                expect(res.data).toBeDefined();
-            });
+        await method.cancel({ originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' }).then((res) => {
+            expect(res.data).toBeDefined();
+        });
     });
 });

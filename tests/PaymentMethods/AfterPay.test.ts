@@ -41,12 +41,9 @@ const paymentPayload: IPay = {
 const method = buckarooClientTest.method('afterpay');
 describe('AfterPay methods', () => {
     test('Pay', () => {
-        return method
-            .pay(paymentPayload)
-            .request()
-            .then((data) => {
-                expect(data.isSuccess()).toBeTruthy();
-            });
+        return method.pay(paymentPayload).then((data) => {
+            expect(data.isSuccess()).toBeTruthy();
+        });
     });
     test('Refund', async () => {
         await method
@@ -55,18 +52,14 @@ describe('AfterPay methods', () => {
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', //Set transaction key of the transaction to refund
                 amountCredit: paymentPayload.amountDebit,
             })
-            .request()
             .then((data) => {
                 expect(data.isFailed()).toBeDefined();
             });
     });
     test('Authorize', async () => {
-        await method
-            .authorize(paymentPayload)
-            .request()
-            .then((data) => {
-                expect(data).toBeDefined();
-            });
+        await method.authorize(paymentPayload).then((data) => {
+            expect(data).toBeDefined();
+        });
     });
     test('CancelAuthorize', async () => {
         await method
@@ -75,7 +68,6 @@ describe('AfterPay methods', () => {
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 amountCredit: 100,
             })
-            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });
@@ -87,7 +79,6 @@ describe('AfterPay methods', () => {
                 ...paymentPayload,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });

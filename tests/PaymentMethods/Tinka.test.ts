@@ -38,7 +38,7 @@ describe('Tinka', () => {
                         color: 'Red',
                         size: 'Small',
                         quantity: 1,
-                        price: 3.5,
+                        price: 100,
                         unitCode: 'test',
                     },
                 ],
@@ -46,7 +46,6 @@ describe('Tinka', () => {
                 deliveryMethod: 'CompanyStore',
                 paymentMethod: 'Credit',
             })
-            .request()
             .then((res) => {
                 expect(res.isPendingProcessing()).toBeTruthy();
             });
@@ -58,7 +57,6 @@ describe('Tinka', () => {
                 amountCredit: 0.01,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-            .request()
             .then((res) => {
                 expect(res.isFailed()).toBeTruthy();
             });

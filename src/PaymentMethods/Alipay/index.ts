@@ -2,7 +2,10 @@ import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
 import { IPaymentRequest, IRefundRequest } from '../../Models/IRequest';
 import { ServiceParameter } from '../../Models/ServiceParameters';
 
-export default class Alipay extends PayablePaymentMethod {
+export default class Alipay<Code extends 'alipay', Manually extends boolean = false> extends PayablePaymentMethod<
+    Code,
+    Manually
+> {
     protected _paymentName = 'Alipay';
 
     pay(payload: { useMobileView?: boolean } & IPaymentRequest) {

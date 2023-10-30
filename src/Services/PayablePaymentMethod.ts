@@ -3,8 +3,12 @@ import IRequest, { IPaymentRequest, IRefundRequest } from '../Models/IRequest';
 import { uniqid } from '../Utils/Functions';
 import { ServiceParameter } from '../Models/ServiceParameters';
 import { IParameter } from '../Models/IParameters';
+import { ServiceCode } from '../Utils';
 
-export default abstract class PayablePaymentMethod extends PaymentMethod {
+export default abstract class PayablePaymentMethod<
+    Code extends ServiceCode,
+    Manually extends boolean = false
+> extends PaymentMethod<Code, Manually> {
     protected _requiredFields: Array<keyof IRequest> = ['currency', 'returnURL', 'returnURLCancel', 'pushURL'];
 
     pay(payload: IPaymentRequest, serviceParameters?: ServiceParameter | IParameter[]) {

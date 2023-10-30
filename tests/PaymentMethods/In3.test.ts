@@ -9,7 +9,6 @@ describe('Testing In3 methods', () => {
     test('Pay', async () => {
         await in3
             .pay(payload)
-            .request()
             .then((data) => {
                 expect(data.isPendingProcessing()).toBeTruthy();
             });
@@ -21,7 +20,6 @@ describe('Testing In3 methods', () => {
                 amountCredit: 0.01,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-            .request()
             .then((data) => {
                 expect(data.isSuccess()).toBeFalsy();
             });
@@ -83,7 +81,7 @@ const payload: IPay = {
             category: 'test product',
             vatPercentage: 21,
             quantity: 2,
-            price: 20.1,
+            price: 25,
         },
         {
             identifier: 'Articlenumber2',
@@ -92,7 +90,7 @@ const payload: IPay = {
             category: 'test product',
             vatPercentage: 21,
             quantity: 1,
-            price: 10.1,
+            price: 25,
         },
         {
             identifier: 'USPShippingID',
@@ -101,7 +99,7 @@ const payload: IPay = {
             category: 'test product',
             vatPercentage: 21,
             quantity: 1,
-            price: 2,
+            price: 25,
         },
     ],
 };

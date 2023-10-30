@@ -81,27 +81,18 @@ const paymentPayload: IPay = {
 };
 describe('AfterPayDigiAccept methods', () => {
     test('Authorize', async () => {
-        await method
-            .authorize(paymentPayload)
-            .request()
-            .then((data) => {
-                expect(data).toBeDefined();
-            });
+        await method.authorize(paymentPayload).then((data) => {
+            expect(data).toBeDefined();
+        });
     });
     test('Pay', async () => {
-        await method
-            .pay(paymentPayload)
-            .request()
-            .then((data) => {
-                expect(data.data).toBeDefined();
-            });
+        await method.pay(paymentPayload).then((data) => {
+            expect(data.data).toBeDefined();
+        });
     });
     test('Specification', async () => {
-        await method
-            .specification(RequestTypes.Transaction)
-            .request()
-            .then((data) => {
-                expect(data).toBeDefined();
-            });
+        await method.specification(RequestTypes.Transaction).then((data) => {
+            expect(data).toBeDefined();
+        });
     });
 });

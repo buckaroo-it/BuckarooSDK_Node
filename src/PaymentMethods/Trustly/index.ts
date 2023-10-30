@@ -2,7 +2,10 @@ import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
 import { IRefundRequest } from '../../Models/IRequest';
 import { IPay, Pay } from './Models/Pay';
 
-export default class Trustly extends PayablePaymentMethod {
+export default class Trustly<Code extends 'trustly', Manually extends boolean = false> extends PayablePaymentMethod<
+    Code,
+    Manually
+> {
     protected _paymentName = 'Trustly';
 
     pay(payload: IPay) {

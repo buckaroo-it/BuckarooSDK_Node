@@ -2,7 +2,10 @@ import PaymentMethod from '../../Services/PaymentMethod';
 import { IConfig } from '../../Utils/Types';
 import { IMandate, Mandate } from './Models/Mandate';
 
-export default class Emandates extends PaymentMethod {
+export default class Emandates<Code extends 'emandate', Manually extends boolean = false> extends PaymentMethod<
+    Code,
+    Manually
+> {
     _requiredFields: Array<keyof IConfig> = ['currency'];
     protected _paymentName = 'Emandates';
 

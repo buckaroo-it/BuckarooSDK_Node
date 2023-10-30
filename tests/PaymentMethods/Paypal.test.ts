@@ -10,7 +10,6 @@ describe('Paypal', () => {
             .pay({
                 amountDebit: 100,
             })
-            .request()
             .then((info) => {
                 expect(info.data).toBeDefined();
             });
@@ -22,7 +21,6 @@ describe('Paypal', () => {
                 amountCredit: 0.01,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-            .request()
             .then((info) => {
                 expect(info.data).toBeDefined();
             });
@@ -45,7 +43,6 @@ describe('Paypal', () => {
                 noShipping: '0',
                 phone: { mobile: '0612345678' },
             })
-            .request()
             .then((info) => {
                 expect(info.data).toBeDefined();
             });

@@ -19,7 +19,6 @@ describe('testing Ideal methods', () => {
                     service_action: 'something',
                 },
             })
-            .request()
             .then((data) => {
                 expect(data.isPendingProcessing()).toBeTruthy();
             });
@@ -37,7 +36,6 @@ describe('testing Ideal methods', () => {
                     service_action: 'something',
                 },
             })
-            .request()
             .then((data) => {
                 expect(data.isFailed()).toBeTruthy();
             });
@@ -49,7 +47,6 @@ describe('testing Ideal methods', () => {
                 amountCredit: 0.01,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-            .request()
             .then((data) => {
                 expect(data.isFailed()).toBeTruthy();
             });

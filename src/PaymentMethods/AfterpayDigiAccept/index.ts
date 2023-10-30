@@ -2,7 +2,10 @@ import IRequest, { IRefundRequest } from '../../Models/IRequest';
 import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
 import { IPay, Pay } from './Model/Pay';
 
-export default class AfterpayDigiAccept extends PayablePaymentMethod {
+export default class AfterpayDigiAccept<
+    Code extends 'afterpaydigiaccept',
+    Manually extends boolean = false
+> extends PayablePaymentMethod<Code, Manually> {
     protected _paymentName = 'AfterpayDigiAccept';
     protected _serviceVersion = 2;
 

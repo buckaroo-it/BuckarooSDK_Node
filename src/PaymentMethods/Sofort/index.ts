@@ -1,7 +1,10 @@
 import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
 import { IPaymentRequest, IRefundRequest } from '../../Models/IRequest';
 
-export default class Sofort extends PayablePaymentMethod {
+export default class Sofort<
+    Code extends 'sofortueberweisung',
+    Manually extends boolean = false
+> extends PayablePaymentMethod<Code, Manually> {
     protected _paymentName = 'Sofort';
     protected _serviceVersion = 1;
 

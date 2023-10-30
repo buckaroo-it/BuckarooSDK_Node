@@ -2,7 +2,10 @@ import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
 import { IPaymentRequest, IRefundRequest } from '../../Models/IRequest';
 import Pay from './Models/Pay';
 
-export default class In3 extends PayablePaymentMethod {
+export default class In3<Code extends 'In3', Manually extends boolean = false> extends PayablePaymentMethod<
+    Code,
+    Manually
+> {
     protected _paymentName = 'In3';
 
     pay(payload: IPaymentRequest) {

@@ -23,7 +23,6 @@ describe('PayPerEmail methods', () => {
                     lastName: 'Acceptatie',
                 },
             })
-            .request()
             .then((response) => {
                 expect(response).toBeDefined();
             });

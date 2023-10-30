@@ -8,12 +8,9 @@ const creditManagement = buckarooClientTest.method('CreditManagement3');
 
 describe('Testing Credit Management', () => {
     test('CreateInvoice', async () => {
-        await creditManagement
-            .createInvoice(creditManagementTestInvoice())
-            .request()
-            .then((data) => {
-                expect(data.isValidationFailure()).toBeTruthy();
-            });
+        await creditManagement.createInvoice(creditManagementTestInvoice()).then((data) => {
+            expect(data.isValidationFailure()).toBeTruthy();
+        });
     });
     test('CreateInvoice With Articles', async () => {
         await creditManagement
@@ -67,26 +64,19 @@ describe('Testing Credit Management', () => {
                     ],
                 })
             )
-            .request()
             .then((data) => {
                 expect(data.isValidationFailure()).toBeTruthy();
             });
     });
     test('Pause Invoice', async () => {
-        await creditManagement
-            .pauseInvoice({ invoice: uniqid() })
-            .request()
-            .then((data) => {
-                expect(data.isValidationFailure()).toBeTruthy();
-            });
+        await creditManagement.pauseInvoice({ invoice: uniqid() }).then((data) => {
+            expect(data.isValidationFailure()).toBeTruthy();
+        });
     });
     test('UnPause Invoice', async () => {
-        await creditManagement
-            .unpauseInvoice({ invoice: uniqid() })
-            .request()
-            .then((data) => {
-                expect(data.isValidationFailure()).toBeTruthy();
-            });
+        await creditManagement.unpauseInvoice({ invoice: uniqid() }).then((data) => {
+            expect(data.isValidationFailure()).toBeTruthy();
+        });
     });
     test('Invoice Info', async () => {
         await creditManagement
@@ -94,7 +84,6 @@ describe('Testing Credit Management', () => {
                 invoice: uniqid(),
                 invoices: [{ invoiceNumber: 'INV002' }, { invoiceNumber: 'INV003' }],
             })
-            .request()
             .then((data) => {
                 expect(data.isFailed()).toBeTruthy();
             });
@@ -106,7 +95,6 @@ describe('Testing Credit Management', () => {
                     code: 'XXXXXXXX',
                 },
             })
-            .request()
             .then((data) => {
                 expect(data.isFailed()).toBeTruthy();
             });
@@ -138,26 +126,19 @@ describe('Testing Credit Management', () => {
                     },
                 ],
             })
-            .request()
             .then((data) => {
                 expect(data.isValidationFailure()).toBeTruthy();
             });
     });
     test('resumeDebtorFile', async () => {
-        await creditManagement
-            .resumeDebtorFile({ debtorFileGuid: 'd42' })
-            .request()
-            .then((data) => {
-                expect(data.isValidationFailure()).toBeTruthy();
-            });
+        await creditManagement.resumeDebtorFile({ debtorFileGuid: 'd42' }).then((data) => {
+            expect(data.isValidationFailure()).toBeTruthy();
+        });
     });
     test('pauseDebtorFile', async () => {
-        await creditManagement
-            .pauseDebtorFile({ debtorFileGuid: 'd42' })
-            .request()
-            .then((data) => {
-                expect(data.isValidationFailure()).toBeTruthy();
-            });
+        await creditManagement.pauseDebtorFile({ debtorFileGuid: 'd42' }).then((data) => {
+            expect(data.isValidationFailure()).toBeTruthy();
+        });
     });
     test('addOrUpdateDebtor', async () => {
         await creditManagement
@@ -170,15 +151,15 @@ describe('Testing Credit Management', () => {
                     lastName: 'Acceptatie',
                 },
             })
-            .request()
             .then((data) => {
                 expect(data.isSuccess()).toBeTruthy();
             });
     });
     test('CreateCombinedInvoice', async () => {
-        const combinedInvoice = creditManagement.createCombinedInvoice(creditManagementTestInvoice());
+        const combinedInvoice = creditManagement.manually().createCombinedInvoice(creditManagementTestInvoice());
         buckarooClientTest
             .method('sepadirectdebit')
+            .manually()
             .combine(combinedInvoice.data)
             .pay({
                 iban: 'NLXXTESTXXXXXXXXXX',
@@ -211,7 +192,6 @@ describe('Testing Credit Management', () => {
                 paymentPlanCostAmountVat: 1.2,
                 recipientemail: 'test@buckaroo.nl',
             })
-            .request()
             .then((data) => {
                 expect(data.isValidationFailure()).toBeTruthy();
             });
@@ -221,7 +201,6 @@ describe('Testing Credit Management', () => {
             .pauseInvoice({
                 invoice: uniqid(),
             })
-            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });

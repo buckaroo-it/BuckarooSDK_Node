@@ -9,7 +9,10 @@ import IRequest from '../../Models/IRequest';
 import { DebtorInfo, IDebtorInfo } from './Models/DebtorInfo';
 import { ServiceParameter } from '../../Models/ServiceParameters';
 
-export default class CreditManagement extends PaymentMethod {
+export default class CreditManagement<
+    Code extends 'CreditManagement3',
+    Manually extends boolean = false
+> extends PaymentMethod<Code, Manually> {
     protected _paymentName = 'CreditManagement';
     protected _serviceVersion = 1;
     protected _requiredFields = ['currency'];

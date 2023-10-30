@@ -9,7 +9,6 @@ describe('Payconiq', () => {
                 amountDebit: 100,
                 order: uniqid(),
             })
-            .request()
             .then((info) => {
                 expect(info.data).toBeDefined();
             });
@@ -21,7 +20,6 @@ describe('Payconiq', () => {
                 amountCredit: 0.01,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-            .request()
             .then((info) => {
                 expect(info.data).toBeDefined();
             });
@@ -33,7 +31,6 @@ describe('Payconiq', () => {
                 amountCredit: 0.01,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });

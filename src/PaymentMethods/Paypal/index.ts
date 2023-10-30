@@ -3,7 +3,10 @@ import { IPaymentRequest, IRefundRequest } from '../../Models/IRequest';
 import { IPay, Pay } from './Models/Pay';
 import { ExtraInfo, IExtraInfo } from './Models/ExtraInfo';
 
-export default class Paypal extends PayablePaymentMethod {
+export default class Paypal<
+    Code extends 'paypal',
+    Manually extends boolean = false
+> extends PayablePaymentMethod<Code, Manually> {
     protected _paymentName = 'Paypal';
 
     pay(payload: IPay) {

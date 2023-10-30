@@ -10,7 +10,6 @@ describe('Sofort', () => {
                 amountDebit: 100,
                 order: uniqid(),
             })
-            .request()
             .then((info) => {
                 expect(info).toBeDefined();
             });
@@ -22,7 +21,6 @@ describe('Sofort', () => {
                 amountCredit: 0.01,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-            .request()
             .then((info) => {
                 expect(info).toBeDefined();
             });
@@ -35,7 +33,6 @@ describe('Sofort', () => {
                 amountCredit: 0.01,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });

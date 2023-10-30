@@ -24,7 +24,6 @@ describe('Testing IdealQR methods', () => {
                     service_action: 'something',
                 },
             })
-            .request()
             .then((response) => {
                 expect(response.isSuccess()).toBeTruthy();
             });

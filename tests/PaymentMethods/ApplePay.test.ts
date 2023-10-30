@@ -12,7 +12,6 @@ describe('Applepay methods', () => {
                 paymentData: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 customerCardName: 'XXXXXXX',
             })
-            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });
@@ -25,7 +24,6 @@ describe('Applepay methods', () => {
                 servicesSelectableByClient: 'applepay',
                 continueOnIncomplete: true,
             })
-            .request()
             .then((data) => {
                 expect(data.isWaitingOnUserInput()).toBeTruthy();
             });
@@ -37,7 +35,6 @@ describe('Applepay methods', () => {
                 amountCredit: 0.01,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });

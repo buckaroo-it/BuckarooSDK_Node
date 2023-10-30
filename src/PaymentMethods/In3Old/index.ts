@@ -1,7 +1,10 @@
 import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
 import { IPay, Pay } from './Models/Pay';
 
-export default class In3Old extends PayablePaymentMethod {
+export default class In3Old<Code extends 'capayable', Manually extends boolean = false> extends PayablePaymentMethod<
+    Code,
+    Manually
+> {
     protected _paymentName = 'In3Old';
 
     pay(payload: IPay) {

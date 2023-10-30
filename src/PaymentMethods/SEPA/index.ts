@@ -5,7 +5,10 @@ import { IEmandate } from './Models/Emandate';
 import { uniqid } from '../../Utils/Functions';
 import { IPaymentRequest } from '../../Models/IRequest';
 
-export default class SEPA extends PayablePaymentMethod {
+export default class SEPA<
+    Code extends 'sepadirectdebit',
+    Manually extends boolean = false
+> extends PayablePaymentMethod<Code, Manually> {
     protected _paymentName = 'SEPA';
 
     pay(payload: IPay) {

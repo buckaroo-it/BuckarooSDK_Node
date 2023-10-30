@@ -7,12 +7,9 @@ const capayable = buckarooClientTest.method('capayable');
 
 describe('Testing capayable methods', () => {
     test('Pay', async () => {
-        await capayable
-            .pay(paymentPayload)
-            .request()
-            .then((data) => {
-                expect(data.isSuccess()).toBeTruthy();
-            });
+        await capayable.pay(paymentPayload).then((data) => {
+            expect(data.isSuccess()).toBeTruthy();
+        });
     });
     test('Refund', async () => {
         await capayable
@@ -21,18 +18,14 @@ describe('Testing capayable methods', () => {
                 amountCredit: paymentPayload.amountDebit,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-            .request()
             .then((data) => {
                 expect(data.isFailed()).toBeTruthy();
             });
     });
     test('PayInInstallments', async () => {
-        await capayable
-            .payInInstallments(paymentPayload)
-            .request()
-            .then((response) => {
-                expect(response.isPendingProcessing()).toBeTruthy();
-            });
+        await capayable.payInInstallments(paymentPayload).then((response) => {
+            expect(response.isPendingProcessing()).toBeTruthy();
+        });
     });
 });
 

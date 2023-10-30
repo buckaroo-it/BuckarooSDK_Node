@@ -2,7 +2,10 @@ import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
 import { IPay, Pay } from './Models/Pay';
 import { IRefund, Refund } from './Models/Refund';
 
-export default class CreditClick extends PayablePaymentMethod {
+export default class CreditClick<
+    Code extends 'creditclick',
+    Manually extends boolean = false
+> extends PayablePaymentMethod<Code, Manually> {
     protected _paymentName = 'CreditClick';
 
     pay(payload: IPay) {

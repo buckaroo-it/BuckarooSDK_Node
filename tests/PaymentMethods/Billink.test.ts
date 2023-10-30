@@ -9,12 +9,9 @@ describe('Billink methods', () => {
     const invoiceId = uniqid();
 
     test('Pay', async () => {
-        await method
-            .pay(payload)
-            .request()
-            .then((data) => {
-                expect(data.isSuccess()).toBeTruthy();
-            });
+        await method.manually().pay(payload).request().then((data) => {
+            expect(data.isSuccess()).toBeTruthy();
+        });
     });
     test('Refund', async () => {
         await method
@@ -23,18 +20,14 @@ describe('Billink methods', () => {
                 amountCredit: 0.01,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });
     });
     test('Authorize', async () => {
-        await method
-            .authorize({ ...payload, invoice: invoiceId })
-            .request()
-            .then((data) => {
-                expect(data.isSuccess()).toBeTruthy();
-            });
+        await method.authorize({ ...payload, invoice: invoiceId }).then((data) => {
+            expect(data.isSuccess()).toBeTruthy();
+        });
     });
     test('CancelAuthorize', async () => {
         await method
@@ -43,7 +36,6 @@ describe('Billink methods', () => {
                 amountCredit: payload.amountDebit,
                 invoice: invoiceId,
             })
-            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });
@@ -56,7 +48,6 @@ describe('Billink methods', () => {
                 amountDebit: payload.amountDebit,
                 articles: payload.articles,
             })
-            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });

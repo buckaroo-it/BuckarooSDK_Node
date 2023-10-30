@@ -3,7 +3,10 @@ import { IPay, Pay } from './Models/Pay';
 import { IRefund, Refund } from './Models/Refund';
 import { Capture, ICapture } from './Models/Capture';
 
-export default class Billink extends PayablePaymentMethod {
+export default class Billink<Code extends 'billink', Manually extends boolean = false> extends PayablePaymentMethod<
+    Code,
+    Manually
+> {
     protected _paymentName = 'Billink';
 
     pay(payload: IPay) {

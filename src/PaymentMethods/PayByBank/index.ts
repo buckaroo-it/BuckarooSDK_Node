@@ -2,7 +2,10 @@ import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
 import { IRefundRequest } from '../../Models/IRequest';
 import IPay, { Pay } from './Models/IPay';
 
-export default class PayByBank extends PayablePaymentMethod {
+export default class PayByBank<Code extends 'PayByBank', Manually extends boolean = false> extends PayablePaymentMethod<
+    Code,
+    Manually
+> {
     protected _paymentName = 'PayByBank';
 
     pay(payload: IPay) {
@@ -15,7 +18,6 @@ export default class PayByBank extends PayablePaymentMethod {
 
     issuers() {
         return this.specification()
-            .request()
             .then((response) => {
                 return response
                     .getActionRequestParameters('Pay')

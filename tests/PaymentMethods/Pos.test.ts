@@ -11,7 +11,6 @@ describe('POS methods', () => {
                 invoice: uniqid(),
                 terminalId: '50000001',
             })
-            .request()
             .then((data) => {
                 expect(data.isPendingProcessing()).toBeTruthy();
             });

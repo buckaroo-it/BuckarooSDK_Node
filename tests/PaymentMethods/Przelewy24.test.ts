@@ -14,7 +14,6 @@ describe('Przelewy24', () => {
                 },
                 email: 'test@buckaroo.nl',
             })
-            .request()
             .then((res) => {
                 expect(res.isPendingProcessing()).toBeTruthy();
             });
@@ -26,7 +25,6 @@ describe('Przelewy24', () => {
                 amountCredit: 0.01,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-            .request()
             .then((info) => {
                 expect(info.data).toBeDefined();
             });

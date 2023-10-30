@@ -3,7 +3,10 @@ import { IPaymentRequest, IRefundRequest } from '../../Models/IRequest';
 import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
 import { IRefund, Refund } from './Model/Refund';
 
-export default class Afterpay extends PayablePaymentMethod {
+export default class Afterpay<Code extends 'afterpay', Manually extends boolean = false> extends PayablePaymentMethod<
+    Code,
+    Manually
+> {
     protected _paymentName = 'Afterpay';
     protected _serviceVersion = 1;
 
