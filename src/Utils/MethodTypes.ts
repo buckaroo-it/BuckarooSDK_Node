@@ -22,5 +22,5 @@ export function getMethod<Code extends ServiceCode, Manually extends boolean>(co
         throw new Error(`Invalid payment method code: ${code}`);
     }
 
-    return new methodClass(code) as PaymentMethodInstanceType<Code, B>;
+    return new methodClass(code) as PaymentMethodInstanceType<Code, Manually>;
 }
