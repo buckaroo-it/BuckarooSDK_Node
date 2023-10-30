@@ -16,9 +16,9 @@ describe('Testing Buckaroo Client', () => {
         const creditManagement = client.method('CreditManagement3');
         const sepaDirectDebit = client.method('sepadirectdebit');
         for (let i = 0; i < 3; i++) {
-            const combinedInvoice = creditManagement.createCombinedInvoice(creditManagementTestInvoice());
+            const combinedInvoice = creditManagement.manually().createCombinedInvoice(creditManagementTestInvoice());
 
-            const sepaRequest = sepaDirectDebit.combine(combinedInvoice.data).pay({
+            const sepaRequest = sepaDirectDebit.manually().combine(combinedInvoice.data).pay({
                 iban: 'NL39RABO0300065264',
                 bic: 'RABONL2U',
                 mandateReference: '1DCtestreference',
