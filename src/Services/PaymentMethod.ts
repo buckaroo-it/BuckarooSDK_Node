@@ -38,8 +38,14 @@ export default abstract class PaymentMethod<Code extends ServiceCode, Manually e
         return this._paymentName;
     }
 
-    public manually(): PaymentMethodRegistryType<Code, true> {
-        this._isManually = true as Manually;
+    public manually(value?: true): PaymentMethodRegistryType<Code, true>;
+    public manually(value: false): PaymentMethodRegistryType<Code, false>;
+    public manually(value?: boolean): PaymentMethodRegistryType<Code, boolean> {
+        if (value === undefined) {
+            this._isManually = true as Manually;
+        } else {
+            this._isManually = value as Manually;
+        }
         return this as any;
     }
 
