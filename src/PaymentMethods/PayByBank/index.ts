@@ -6,8 +6,6 @@ export default class PayByBank<Code extends 'PayByBank', Manually extends boolea
     Code,
     Manually
 > {
-    protected _paymentName = 'PayByBank';
-
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

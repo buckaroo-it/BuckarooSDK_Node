@@ -6,7 +6,6 @@ export default class BuckarooWallet<
     Code extends 'BuckarooWalletCollecting',
     Manually extends boolean = false
 > extends PayablePaymentMethod<Code, Manually> {
-    protected _paymentName = 'BuckarooWallet';
 
     pay(payload: IWallet & IPaymentRequest) {
         return super.pay(payload, new Wallet(payload));

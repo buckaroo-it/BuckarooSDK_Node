@@ -6,8 +6,6 @@ export default class WeChatPay<Code extends 'wechatpay', Manually extends boolea
     Code,
     Manually
 > {
-    protected _paymentName = 'WeChatPay';
-
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

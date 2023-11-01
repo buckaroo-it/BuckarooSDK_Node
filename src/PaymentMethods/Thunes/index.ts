@@ -6,8 +6,6 @@ export default class Thunes<Code extends 'thunes', Manually extends boolean = fa
     Code,
     Manually
 > {
-    protected _paymentName = 'Thunes';
-
     getStatus(payload: key) {
         this.setServiceList('getStatus');
         return this.dataRequest(payload);

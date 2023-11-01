@@ -6,7 +6,6 @@ export default class Bancontact<
     Code extends 'bancontactmrcash',
     Manually extends boolean = false
 > extends PayablePaymentMethod<Code, Manually> {
-    protected _paymentName = 'Bancontact';
 
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));

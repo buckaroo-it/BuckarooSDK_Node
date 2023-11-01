@@ -12,14 +12,13 @@ import { SpecificationRequestResponse } from '../Models/Response/SpecificationRe
 
 export default abstract class PaymentMethod<Code extends ServiceCode, Manually extends boolean = false> {
     public _isManually: Manually = false as Manually;
-    protected _paymentName: string = '';
     protected _serviceCode?: Code;
     protected _serviceVersion: number = 0;
     protected _payload: TransactionData = new TransactionData();
     protected _requiredFields: Array<keyof IRequest> = [];
 
     constructor(serviceCode?: Code) {
-        this._serviceCode = (serviceCode ?? this.paymentName) as Code;
+        this._serviceCode = serviceCode ?? this._serviceCode as Code;
     }
 
     get serviceVersion() {
@@ -32,10 +31,6 @@ export default abstract class PaymentMethod<Code extends ServiceCode, Manually e
 
     get serviceCode(): Code {
         return (this._serviceCode || 'noservice') as Code;
-    }
-
-    get paymentName() {
-        return this._paymentName;
     }
 
     public manually(value?: true): PaymentMethodRegistryType<Code, true>;

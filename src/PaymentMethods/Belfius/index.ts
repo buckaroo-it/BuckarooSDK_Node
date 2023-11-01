@@ -5,7 +5,6 @@ export default class Belfius<Code extends 'belfius', Manually extends boolean = 
     Code,
     Manually
 > {
-    protected _paymentName = 'Belfius';
 
     pay(payload: IPaymentRequest) {
         return super.pay(payload);

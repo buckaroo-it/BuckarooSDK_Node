@@ -7,7 +7,6 @@ export default class Subscriptions<
     Code extends 'subscriptions',
     Manually extends boolean = false
 > extends PaymentMethod<Code, Manually> {
-    protected _paymentName = 'Subscriptions';
     protected _serviceVersion = 1;
     protected _requiredFields: Array<keyof IRequest> = ['currency'];
 

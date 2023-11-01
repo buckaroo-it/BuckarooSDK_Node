@@ -13,7 +13,6 @@ export default class CreditManagement<
     Code extends 'CreditManagement3',
     Manually extends boolean = false
 > extends PaymentMethod<Code, Manually> {
-    protected _paymentName = 'CreditManagement';
     protected _serviceVersion = 1;
     protected _requiredFields = ['currency'];
 

@@ -6,8 +6,6 @@ export default class Trustly<Code extends 'trustly', Manually extends boolean = 
     Code,
     Manually
 > {
-    protected _paymentName = 'Trustly';
-
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

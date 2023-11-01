@@ -5,8 +5,6 @@ export default class IdealQR<Code extends 'idealqr', Manually extends boolean = 
     Code,
     Manually
 > {
-    protected _paymentName = 'IdealQR';
-
     generate(payload: IGenerate) {
         this.setServiceList('Generate', new Generate(payload));
         return this.dataRequest();

@@ -6,7 +6,6 @@ export default class ApplePay<Code extends 'applepay', Manually extends boolean 
     Code,
     Manually
 > {
-    protected _paymentName = 'ApplePay';
 
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));

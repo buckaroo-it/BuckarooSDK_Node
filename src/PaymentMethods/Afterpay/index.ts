@@ -7,7 +7,6 @@ export default class Afterpay<Code extends 'afterpay', Manually extends boolean 
     Code,
     Manually
 > {
-    protected _paymentName = 'Afterpay';
     protected _serviceVersion = 1;
 
     pay(payload: IPay) {

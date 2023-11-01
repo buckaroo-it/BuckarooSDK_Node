@@ -6,8 +6,6 @@ export default class In3<Code extends 'In3', Manually extends boolean = false> e
     Code,
     Manually
 > {
-    protected _paymentName = 'In3';
-
     pay(payload: IPaymentRequest) {
         return super.pay(payload, new Pay(payload));
     }

@@ -6,8 +6,6 @@ export default class Tinka<Code extends 'tinka', Manually extends boolean = fals
     Code,
     Manually
 > {
-    protected _paymentName = 'Tinka';
-
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

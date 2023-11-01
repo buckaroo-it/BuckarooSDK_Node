@@ -7,8 +7,6 @@ export default class Billink<Code extends 'billink', Manually extends boolean = 
     Code,
     Manually
 > {
-    protected _paymentName = 'Billink';
-
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

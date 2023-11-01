@@ -6,8 +6,6 @@ export default class CreditClick<
     Code extends 'creditclick',
     Manually extends boolean = false
 > extends PayablePaymentMethod<Code, Manually> {
-    protected _paymentName = 'CreditClick';
-
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

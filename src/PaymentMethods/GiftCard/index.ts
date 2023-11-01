@@ -6,8 +6,6 @@ export default class GiftCard<Code extends 'giftcard', Manually extends boolean 
     Code,
     Manually
 > {
-    protected _paymentName = 'GiftCard';
-
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

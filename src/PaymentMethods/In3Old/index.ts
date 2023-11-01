@@ -5,8 +5,6 @@ export default class In3Old<Code extends 'capayable', Manually extends boolean =
     Code,
     Manually
 > {
-    protected _paymentName = 'In3Old';
-
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

@@ -6,7 +6,6 @@ export default class Alipay<Code extends 'alipay', Manually extends boolean = fa
     Code,
     Manually
 > {
-    protected _paymentName = 'Alipay';
 
     pay(payload: { useMobileView?: boolean } & IPaymentRequest) {
         const serviceParameters = new ServiceParameter().set('useMobileView', payload.useMobileView);

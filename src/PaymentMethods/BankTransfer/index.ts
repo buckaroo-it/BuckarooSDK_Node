@@ -6,7 +6,6 @@ export default class BankTransfer<
     Code extends 'transfer',
     Manually extends boolean = false
 > extends PayablePaymentMethod<Code, Manually> {
-    protected _paymentName = 'BankTransfer';
 
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));

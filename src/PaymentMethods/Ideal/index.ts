@@ -7,7 +7,6 @@ export default class Ideal<Code extends 'ideal', Manually extends boolean = fals
     Code,
     Manually
 > {
-    protected _paymentName = 'Ideal';
     protected _serviceVersion = 2;
 
     constructor(serviceCode: 'ideal' | 'idealprocessing' = 'ideal') {

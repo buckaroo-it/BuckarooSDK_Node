@@ -7,8 +7,6 @@ export default class Paypal<Code extends 'paypal', Manually extends boolean = fa
     Code,
     Manually
 > {
-    protected _paymentName = 'Paypal';
-
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

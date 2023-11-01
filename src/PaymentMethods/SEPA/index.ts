@@ -9,8 +9,6 @@ export default class SEPA<
     Code extends 'sepadirectdebit',
     Manually extends boolean = false
 > extends PayablePaymentMethod<Code, Manually> {
-    protected _paymentName = 'SEPA';
-
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

@@ -6,7 +6,6 @@ export default class AfterpayDigiAccept<
     Code extends 'afterpaydigiaccept',
     Manually extends boolean = false
 > extends PayablePaymentMethod<Code, Manually> {
-    protected _paymentName = 'AfterpayDigiAccept';
     protected _serviceVersion = 2;
 
     pay(payload: IPay) {

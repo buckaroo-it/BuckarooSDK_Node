@@ -4,12 +4,6 @@ export default class NoService<Code extends 'noservice', Manually extends boolea
     Code,
     Manually
 > {
-    protected _paymentName = 'noserivce';
-
-    get paymentName() {
-        return 'NoService';
-    }
-
     protected setServiceList(): this {
         return this;
     }

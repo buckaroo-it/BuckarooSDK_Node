@@ -4,5 +4,4 @@ export default class EPS<Code extends 'eps', Manually extends boolean = false> e
     Code,
     Manually
 > {
-    protected _paymentName = 'EPS';
 }

@@ -5,8 +5,6 @@ export default class Klarna<Code extends 'klarna', Manually extends boolean = fa
     Code,
     Manually
 > {
-    protected _paymentName = 'Klarna';
-
     pay(data: IPay) {
         return super.pay(data, new Pay(data));
     }

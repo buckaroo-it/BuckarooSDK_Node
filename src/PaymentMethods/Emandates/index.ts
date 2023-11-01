@@ -7,7 +7,6 @@ export default class Emandates<Code extends 'emandate', Manually extends boolean
     Manually
 > {
     _requiredFields: Array<keyof IConfig> = ['currency'];
-    protected _paymentName = 'Emandates';
 
     issuerList() {
         this.setServiceList('GetIssuerList');

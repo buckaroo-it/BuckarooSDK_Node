@@ -5,8 +5,6 @@ export default class Payconiq<Code extends 'payconiq', Manually extends boolean 
     Code,
     Manually
 > {
-    protected _paymentName = 'Payconiq';
-
     instantRefund(payload: IRefundRequest) {
         this.setServiceList('InstantRefund');
         return this.transactionRequest(payload);

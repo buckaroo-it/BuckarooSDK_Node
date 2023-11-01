@@ -7,7 +7,6 @@ export default class BuckarooVoucher<
     Code extends 'buckaroovoucher',
     Manually extends boolean = false
 > extends PayablePaymentMethod<Code, Manually> {
-    protected _paymentName = 'BuckarooVoucher';
 
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));

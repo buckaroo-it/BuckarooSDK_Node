@@ -5,8 +5,6 @@ export default class PayPerEmail<Code extends 'payperemail', Manually extends bo
     Code,
     Manually
 > {
-    protected _paymentName = 'PayPerEmail';
-
     paymentInvitation(payload: IInvitation) {
         this.setServiceList('paymentInvitation', new Invitation(payload));
         return super.transactionRequest(payload);

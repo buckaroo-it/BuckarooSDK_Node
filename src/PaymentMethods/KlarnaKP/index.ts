@@ -7,7 +7,6 @@ export default class KlarnaKP<Code extends 'klarnakp', Manually extends boolean 
     Code,
     Manually
 > {
-    protected _paymentName = 'KlarnaKP';
     protected _serviceVersion = 1;
 
     pay(payload: IPay) {

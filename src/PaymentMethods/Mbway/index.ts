@@ -4,5 +4,4 @@ export default class Mbway<Code extends 'MBWay', Manually extends boolean = fals
     Code,
     Manually
 > {
-    protected _paymentName = 'MB WAY';
 }

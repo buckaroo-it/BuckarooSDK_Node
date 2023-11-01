@@ -7,7 +7,6 @@ export default class CreditCard<
     Code extends 'CreditCard',
     Manually extends boolean = false
 > extends PayablePaymentMethod<Code, Manually> {
-    protected _paymentName = 'CreditCard';
 
     payEncrypted(payload: ICardData) {
         this.setPayPayload(payload);

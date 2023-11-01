@@ -5,8 +5,6 @@ export default class Giropay<Code extends 'giropay', Manually extends boolean = 
     Code,
     Manually
 > {
-    protected _paymentName = 'Giropay';
-
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

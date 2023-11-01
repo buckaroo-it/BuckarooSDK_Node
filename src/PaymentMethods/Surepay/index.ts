@@ -5,8 +5,6 @@ export default class Surepay<Code extends 'surepay', Manually extends boolean = 
     Code,
     Manually
 > {
-    protected _paymentName = 'Surepay';
-
     verify(payload: IVerify) {
         this.setServiceList('Verify', new Verify(payload));
         return super.dataRequest(payload);
