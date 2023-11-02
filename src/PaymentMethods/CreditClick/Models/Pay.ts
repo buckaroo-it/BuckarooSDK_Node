@@ -1,6 +1,4 @@
-import { IPaymentRequest } from '../../../Models/IRequest';
-import { IPerson } from '../../../Models/Interfaces/IRecipient';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
+import { IPaymentRequest, IPerson, ServiceParameter } from '../../../Models';
 
 export interface IPay extends IPaymentRequest {
     person: Partial<IPerson>;

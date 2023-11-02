@@ -1,5 +1,5 @@
-import { Person } from '../../../Models/Interfaces/IRecipient';
-import RecipientCategory from '../../../Constants/RecipientCategory';
+import { Person } from '../../../Models';
+import { RecipientCategory } from '../../../Constants';
 
 export class Customer extends Person {
     set category(value: RecipientCategory.PERSON) {}

@@ -1,4 +1,4 @@
-import IAddressGlobal, { Address as AddressClass } from '../../../Models/Interfaces/IAddress';
+import { Address as AddressClass, IAddress as IAddressGlobal } from '../../../Models';
 
 export interface IAddress extends Partial<IAddressGlobal> {
     street: string;

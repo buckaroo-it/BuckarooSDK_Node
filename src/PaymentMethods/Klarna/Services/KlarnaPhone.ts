@@ -1,4 +1,4 @@
-import { Phone } from '../../../Models/Interfaces/IPhone';
+import { Phone } from '../../../Models';
 
 export class KlarnaPhone extends Phone {
     get mobile(): string {

@@ -1,6 +1,4 @@
-import { IPaymentRequest } from '../../../Models/IRequest';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
-import { Person } from '../../../Models/Interfaces/IRecipient';
+import { IPaymentRequest, Person, ServiceParameter } from '../../../Models';
 
 export interface IPay extends IPaymentRequest {
     reservationNumber?: string;

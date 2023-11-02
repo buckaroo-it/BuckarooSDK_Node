@@ -1,4 +1,4 @@
-import { Phone } from '../../../Models/Interfaces/IPhone';
+import { Phone } from '../../../Models';
 
 export class TinkaPhone extends Phone {
     set mobile(value: string) {

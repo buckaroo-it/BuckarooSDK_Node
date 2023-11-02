@@ -1,4 +1,4 @@
-import { Str } from '../../Utils/Functions';
+import { Str } from '../../Utils';
 import { HttpClientResponse } from './HttpClientResponse';
 
 export class SpecificationRequestResponse extends HttpClientResponse {

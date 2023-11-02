@@ -1,7 +1,6 @@
 import buckarooClientTest from '../BuckarooClient.test';
 import { IPay } from '../../src/PaymentMethods/Klarna/Models/Pay';
-import { uniqid } from '../../src/Utils/Functions';
-import RecipientCategory from '../../src/Constants/RecipientCategory';
+import { RecipientCategory, uniqid } from '../../src';
 
 const klarna = buckarooClientTest.method('klarna');
 describe('Testing Klarna methods', () => {

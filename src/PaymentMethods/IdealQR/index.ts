@@ -1,5 +1,5 @@
 import { Generate, IGenerate } from './Models/IGenerate';
-import PaymentMethod from '../../Services/PaymentMethod';
+import { PaymentMethod } from '../../Services';
 
 export default class IdealQR<Code extends 'idealqr', Manually extends boolean = false> extends PaymentMethod<
     Code,

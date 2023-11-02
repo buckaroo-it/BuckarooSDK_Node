@@ -1,4 +1,4 @@
-import { Article } from '../../../Models/Interfaces/IArticle';
+import { Article } from '../../../Models';
 
 export class In3OldArticle extends Article {
     set identifier(identifier: string) {

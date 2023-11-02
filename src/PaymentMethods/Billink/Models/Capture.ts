@@ -1,6 +1,5 @@
-import { ServiceParameter } from '../../../Models/ServiceParameters';
 import { Article, IBillinkArticle } from './Article';
-import { IPaymentRequest } from '../../../Models/IRequest';
+import { IPaymentRequest, ServiceParameter } from '../../../Models';
 
 export interface ICapture extends IPaymentRequest {
     articles?: IBillinkArticle[];

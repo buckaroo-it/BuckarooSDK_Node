@@ -1,5 +1,5 @@
-import PaymentMethod from '../../Services/PaymentMethod';
-import IRequest from '../../Models/IRequest';
+import { PaymentMethod } from '../../Services';
+import { IRequest } from '../../Models';
 
 type key = Required<Pick<IRequest, 'originalTransactionKey'>>;
 export default class Thunes<Code extends 'thunes', Manually extends boolean = false> extends PaymentMethod<

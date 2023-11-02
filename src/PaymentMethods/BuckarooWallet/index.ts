@@ -1,12 +1,11 @@
-import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
+import { PayablePaymentMethod } from '../../Services';
 import { IWallet, Wallet } from './Models/Wallet';
-import IRequest, { IPaymentRequest, IRefundRequest } from '../../Models/IRequest';
+import { IPaymentRequest, IRefundRequest, IRequest } from '../../Models';
 
 export default class BuckarooWallet<
     Code extends 'BuckarooWalletCollecting',
     Manually extends boolean = false
 > extends PayablePaymentMethod<Code, Manually> {
-
     pay(payload: IWallet & IPaymentRequest) {
         return super.pay(payload, new Wallet(payload));
     }

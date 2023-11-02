@@ -1,7 +1,6 @@
-import Request from '../Request/Request';
-import HttpMethods from '../Constants/HttpMethods';
-import { TransactionResponse } from '../Models/Response/TransactionResponse';
-import { RequestTypes } from '../Constants/Endpoints';
+import { Request } from '../Request';
+import { HttpMethods, RequestTypes } from '../Constants';
+import { TransactionResponse } from '../Models';
 
 export default class TransactionService {
     private readonly _key: string;

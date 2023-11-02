@@ -1,5 +1,4 @@
-import { IPaymentRequest } from '../../../Models/IRequest';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
+import { IPaymentRequest, ServiceParameter } from '../../../Models';
 
 export interface IPay extends IPaymentRequest {
     buyerEmail?: string;

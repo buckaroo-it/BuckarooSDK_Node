@@ -1,5 +1,5 @@
-import ResponseStatus from '../../Constants/ResponseStatus';
-import { DataFormatter } from '../../Utils/Functions';
+import { ResponseStatus } from '../../Constants';
+import { DataFormatter } from '../../Utils';
 import { HttpClientResponse } from './HttpClientResponse';
 
 import { IFormattedParameter } from '../IParameters';

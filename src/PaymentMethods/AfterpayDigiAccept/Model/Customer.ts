@@ -1,7 +1,6 @@
 import { Address } from '../Services/Address';
-import { Model } from '../../../Models/Model';
+import { ICustomer, Model } from '../../../Models';
 import { Phone } from '../Services/Phone';
-import { ICustomer } from '../../../Models/Interfaces/ICustomer';
 import { Recipient } from './Recipient';
 
 export class Customer extends Model implements ICustomer {

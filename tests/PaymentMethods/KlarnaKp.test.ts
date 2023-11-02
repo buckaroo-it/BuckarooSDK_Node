@@ -1,5 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import Gender from '../../src/Constants/Gender';
+import { Gender } from '../../src';
 
 const klarnaKp = buckarooClientTest.method('klarnakp');
 

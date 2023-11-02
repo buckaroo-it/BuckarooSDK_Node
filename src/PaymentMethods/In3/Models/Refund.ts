@@ -1,5 +1,5 @@
 import { IIn3Article } from './Article';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
+import { ServiceParameter } from '../../../Models';
 
 export class Refund extends ServiceParameter {
     set merchantImageUrl(value: string) {

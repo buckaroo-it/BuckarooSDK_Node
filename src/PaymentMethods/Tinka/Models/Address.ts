@@ -1,4 +1,4 @@
-import { Address } from '../../../Models/Interfaces/IAddress';
+import { Address } from '../../../Models';
 
 export class TinkaAddress extends Address {
     set houseNumber(value: string) {
