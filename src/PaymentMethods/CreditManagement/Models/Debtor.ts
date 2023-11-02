@@ -1,4 +1,4 @@
-import { ServiceParameter } from '../../../Models/ServiceParameters';
+import { ServiceParameter } from '../../../Models';
 import { IDebtorInfo } from './DebtorInfo';
 
 export interface IDebtor extends IDebtorInfo {

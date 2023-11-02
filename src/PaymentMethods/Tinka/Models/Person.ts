@@ -1,5 +1,5 @@
-import { Person } from '../../../Models/Interfaces/IRecipient';
-import Gender from '../../../Constants/Gender';
+import { Person } from '../../../Models';
+import { Gender } from '../../../Constants';
 
 export interface ITinkaPerson {
     gender: Gender;

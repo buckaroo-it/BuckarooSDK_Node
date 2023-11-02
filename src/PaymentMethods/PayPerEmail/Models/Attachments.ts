@@ -1,4 +1,4 @@
-import { Model } from '../../../Models/Model';
+import { Model } from '../../../Models';
 
 export interface IAttachments {
     name: string;

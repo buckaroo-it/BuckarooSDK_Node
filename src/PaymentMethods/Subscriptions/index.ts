@@ -1,13 +1,12 @@
 import { ISubscription, Subscription } from './Models/ISubscription';
-import PaymentMethod from '../../Services/PaymentMethod';
-import IRequest from '../../Models/IRequest';
+import { PaymentMethod } from '../../Services';
+import { IRequest } from '../../Models';
 import { ResumeSubscription } from './Models/ResumeSubscription';
 
 export default class Subscriptions<
     Code extends 'subscriptions',
     Manually extends boolean = false
 > extends PaymentMethod<Code, Manually> {
-    protected _paymentName = 'Subscriptions';
     protected _serviceVersion = 1;
     protected _requiredFields: Array<keyof IRequest> = ['currency'];
 

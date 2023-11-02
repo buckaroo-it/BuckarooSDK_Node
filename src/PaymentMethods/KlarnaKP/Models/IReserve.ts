@@ -1,8 +1,5 @@
-import Gender from '../../../Constants/Gender';
-import IRequest from '../../../Models/IRequest';
-import { ICustomer } from '../../../Models/Interfaces/ICustomer';
-import IArticle from '../../../Models/Interfaces/IArticle';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
+import { Gender } from '../../../Constants';
+import { IArticle, ICustomer, IRequest, ServiceParameter } from '../../../Models';
 import { Customer } from './Customer';
 import Article from './Article';
 

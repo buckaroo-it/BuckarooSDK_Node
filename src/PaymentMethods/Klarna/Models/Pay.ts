@@ -1,9 +1,6 @@
 import { KlarnaRecipient } from './Recipient';
-import IArticle, { Article } from '../../../Models/Interfaces/IArticle';
-import { IPaymentRequest } from '../../../Models/IRequest';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
+import { Article, IArticle, ICustomer, IPaymentRequest, ServiceParameter } from '../../../Models';
 import { KlarnaArticle } from './Article';
-import { ICustomer } from '../../../Models/Interfaces/ICustomer';
 
 export interface IPay extends IPaymentRequest {
     billing: ICustomer;

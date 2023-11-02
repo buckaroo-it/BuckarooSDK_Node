@@ -1,7 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import Gender from '../../src/Constants/Gender';
-import RecipientCategory from '../../src/Constants/RecipientCategory';
-import { getIPAddress, uniqid } from '../../src/Utils/Functions';
+import { Gender, getIPAddress, RecipientCategory, uniqid } from '../../src';
 
 const capayable = buckarooClientTest.method('capayable');
 

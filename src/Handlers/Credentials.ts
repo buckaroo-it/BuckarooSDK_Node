@@ -1,6 +1,6 @@
-import { ICredentials } from '../Utils/Types';
-import Request from '../Request/Request';
-import { RequestTypes } from '../Constants/Endpoints';
+import { ICredentials } from '../Utils';
+import { Request } from '../Request';
+import { RequestTypes } from '../Constants';
 
 export class Credentials implements ICredentials {
     secretKey: string;

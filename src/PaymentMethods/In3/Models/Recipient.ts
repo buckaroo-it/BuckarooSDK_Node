@@ -1,10 +1,6 @@
-import { Company, ICompany, IPerson, Person } from '../../../Models/Interfaces/IRecipient';
-import IAddress, { Address } from '../../../Models/Interfaces/IAddress';
-import IPhone from '../../../Models/Interfaces/IPhone';
+import { Address, Company, IAddress, ICompany, ICustomer, IPerson, IPhone, Model, Person } from '../../../Models';
 import { In3Phone } from './Phone';
-import RecipientCategory from '../../../Constants/RecipientCategory';
-import { Model } from '../../../Models/Model';
-import { ICustomer } from '../../../Models/Interfaces/ICustomer';
+import { RecipientCategory } from '../../../Constants';
 
 export interface IIn3Recipient extends ICustomer {
     recipient: Partial<IIn3Company | IIn3Person>;

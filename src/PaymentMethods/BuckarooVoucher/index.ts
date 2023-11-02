@@ -1,14 +1,12 @@
-import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
+import { PayablePaymentMethod } from '../../Services';
 import { IPay, Pay } from './Models/Pay';
-import IRequest from '../../Models/IRequest';
+import { IRequest } from '../../Models';
 import { Create, ICreate } from './Models/Create';
 
 export default class BuckarooVoucher<
     Code extends 'buckaroovoucher',
     Manually extends boolean = false
 > extends PayablePaymentMethod<Code, Manually> {
-    protected _paymentName = 'BuckarooVoucher';
-
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

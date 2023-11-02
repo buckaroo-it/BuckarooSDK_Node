@@ -1,13 +1,12 @@
-import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
+import { PayablePaymentMethod } from '../../Services';
 import { IPay, Pay } from './Models/IPay';
-import IRequest from '../../Models/IRequest';
+import { IRequest } from '../../Models';
 import { IReserve, Reserve } from './Models/IReserve';
 
 export default class KlarnaKP<Code extends 'klarnakp', Manually extends boolean = false> extends PayablePaymentMethod<
     Code,
     Manually
 > {
-    protected _paymentName = 'KlarnaKP';
     protected _serviceVersion = 1;
 
     pay(payload: IPay) {

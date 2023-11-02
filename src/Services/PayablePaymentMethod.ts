@@ -1,9 +1,6 @@
 import PaymentMethod from './PaymentMethod';
-import IRequest, { IPaymentRequest, IRefundRequest } from '../Models/IRequest';
-import { uniqid } from '../Utils/Functions';
-import { ServiceParameter } from '../Models/ServiceParameters';
-import { IParameter } from '../Models/IParameters';
-import { ServiceCode } from '../Utils';
+import { IParameter, IPaymentRequest, IRefundRequest, IRequest, ServiceParameter } from '../Models';
+import { ServiceCode, uniqid } from '../Utils';
 
 export default abstract class PayablePaymentMethod<
     Code extends ServiceCode,

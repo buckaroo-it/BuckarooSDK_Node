@@ -1,12 +1,11 @@
-import IRequest, { IRefundRequest } from '../../Models/IRequest';
-import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
+import { IRefundRequest, IRequest } from '../../Models';
+import { PayablePaymentMethod } from '../../Services';
 import { IPay, Pay } from './Model/Pay';
 
 export default class AfterpayDigiAccept<
     Code extends 'afterpaydigiaccept',
     Manually extends boolean = false
 > extends PayablePaymentMethod<Code, Manually> {
-    protected _paymentName = 'AfterpayDigiAccept';
     protected _serviceVersion = 2;
 
     pay(payload: IPay) {

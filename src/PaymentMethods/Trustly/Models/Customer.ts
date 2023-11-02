@@ -1,4 +1,4 @@
-import { Model } from '../../../Models/Model';
+import { Model } from '../../../Models';
 
 export class Customer extends Model {
     set firstName(value: string) {

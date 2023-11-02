@@ -1,4 +1,4 @@
-import { Model } from '../../../Models/Model';
+import { Model } from '../../../Models';
 
 export class Recipient extends Model {
     set prefix(value: string) {

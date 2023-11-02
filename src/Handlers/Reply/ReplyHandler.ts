@@ -1,7 +1,7 @@
 import crypto from 'crypto';
-import { ICredentials } from '../../Utils/Types';
-import { Hmac } from '../../Request/Hmac';
-import HttpMethods from '../../Constants/HttpMethods';
+import { ICredentials } from '../../Utils';
+import { Hmac } from '../../Request';
+import { HttpMethods } from '../../Constants';
 
 export class ReplyHandler {
     private readonly _data: object;

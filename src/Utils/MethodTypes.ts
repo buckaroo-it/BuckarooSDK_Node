@@ -1,4 +1,4 @@
-import * as AllRegisteredPaymentMethods from '../PaymentMethods/PaymentMethods';
+import * as AllRegisteredPaymentMethods from '../PaymentMethods';
 
 type InstanceWithManualFlag<Method, Manually extends boolean> = Manually extends true
     ? Method & {

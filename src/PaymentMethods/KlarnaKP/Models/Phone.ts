@@ -1,4 +1,4 @@
-import { Person } from '../../../Models/Interfaces/IRecipient';
+import { Person } from '../../../Models';
 
 export class Phone extends Person {
     set prefix(value: string) {

@@ -1,16 +1,14 @@
-import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
+import { PayablePaymentMethod } from '../../Services';
 import { IPay, Pay } from './Models/Pay';
 import { IExtraInfo } from './Models/ExtraInfo';
 import { IEmandate } from './Models/Emandate';
-import { uniqid } from '../../Utils/Functions';
-import { IPaymentRequest } from '../../Models/IRequest';
+import { uniqid } from '../../Utils';
+import { IPaymentRequest } from '../../Models';
 
 export default class SEPA<
     Code extends 'sepadirectdebit',
     Manually extends boolean = false
 > extends PayablePaymentMethod<Code, Manually> {
-    protected _paymentName = 'SEPA';
-
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

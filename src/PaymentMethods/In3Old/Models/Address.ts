@@ -1,4 +1,4 @@
-import { Address } from '../../../Models/Interfaces/IAddress';
+import { Address } from '../../../Models';
 
 export class In3OldAddress extends Address {
     set houseNumberAddition(houseNumberAddition: string) {

@@ -1,19 +1,17 @@
-import PaymentMethod from '../../Services/PaymentMethod';
+import { PaymentMethod } from '../../Services';
 import { IInvoice, Invoice } from './Models/Invoice';
 import { CreditNote, ICreditNote } from './Models/CreditNote';
 import { Debtor, IDebtor } from './Models/Debtor';
 import { IPaymentPlan, PaymentPlan } from './Models/PaymentPlan';
 import { IMultiInfoInvoice, MultiInfoInvoice } from './Models/multiInfoInvoice';
 import { AddOrUpdateProductLines, IAddOrUpdateProductLines } from './Models/AddOrUpdateProductLines';
-import IRequest from '../../Models/IRequest';
+import { IRequest, ServiceParameter } from '../../Models';
 import { DebtorInfo, IDebtorInfo } from './Models/DebtorInfo';
-import { ServiceParameter } from '../../Models/ServiceParameters';
 
 export default class CreditManagement<
     Code extends 'CreditManagement3',
     Manually extends boolean = false
 > extends PaymentMethod<Code, Manually> {
-    protected _paymentName = 'CreditManagement';
     protected _serviceVersion = 1;
     protected _requiredFields = ['currency'];
 

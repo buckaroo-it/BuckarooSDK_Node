@@ -1,6 +1,4 @@
-import { IPaymentRequest } from '../../../Models/IRequest';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
-import { IPerson } from '../../../Models/Interfaces/IRecipient';
+import { IPaymentRequest, IPerson, ServiceParameter } from '../../../Models';
 
 export interface IGenerate extends IPaymentRequest {
     description: string;

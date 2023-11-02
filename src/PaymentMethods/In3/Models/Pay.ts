@@ -1,5 +1,4 @@
-import { ServiceParameter } from '../../../Models/ServiceParameters';
-import { IPaymentRequest } from '../../../Models/IRequest';
+import { IPaymentRequest, ServiceParameter } from '../../../Models';
 import { IIn3Article, In3Article } from './Article';
 import { IIn3Recipient, In3Recipient } from './Recipient';
 

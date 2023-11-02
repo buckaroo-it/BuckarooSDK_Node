@@ -1,4 +1,4 @@
-import { Model } from '../../../Models/Model';
+import { Model } from '../../../Models';
 
 export class Phone extends Model {
     set prefix(value: string) {

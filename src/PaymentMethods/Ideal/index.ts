@@ -1,13 +1,12 @@
 import { IPay, Pay } from './Models/Pay';
-import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
-import { RequestTypes } from '../../Constants/Endpoints';
-import { IRefundRequest } from '../../Models/IRequest';
+import { PayablePaymentMethod } from '../../Services';
+import { RequestTypes } from '../../Constants';
+import { IRefundRequest } from '../../Models';
 
 export default class Ideal<Code extends 'ideal', Manually extends boolean = false> extends PayablePaymentMethod<
     Code,
     Manually
 > {
-    protected _paymentName = 'Ideal';
     protected _serviceVersion = 2;
 
     constructor(serviceCode: 'ideal' | 'idealprocessing' = 'ideal') {

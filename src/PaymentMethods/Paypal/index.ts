@@ -1,5 +1,5 @@
-import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
-import { IPaymentRequest, IRefundRequest } from '../../Models/IRequest';
+import { PayablePaymentMethod } from '../../Services';
+import { IPaymentRequest, IRefundRequest } from '../../Models';
 import { IPay, Pay } from './Models/Pay';
 import { ExtraInfo, IExtraInfo } from './Models/ExtraInfo';
 
@@ -7,8 +7,6 @@ export default class Paypal<Code extends 'paypal', Manually extends boolean = fa
     Code,
     Manually
 > {
-    protected _paymentName = 'Paypal';
-
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

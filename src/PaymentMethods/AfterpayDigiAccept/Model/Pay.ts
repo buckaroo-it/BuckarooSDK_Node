@@ -1,9 +1,6 @@
-import { IPaymentRequest } from '../../../Models/IRequest';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
+import { IArticle, ICustomer, IPaymentRequest, ServiceParameter } from '../../../Models';
 import Article from './Article';
-import IArticle from '../../../Models/Interfaces/IArticle';
 import { Customer } from './Customer';
-import { ICustomer } from '../../../Models/Interfaces/ICustomer';
 
 export interface IPay extends IPaymentRequest {
     b2b: boolean;

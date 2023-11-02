@@ -1,5 +1,4 @@
-import { IPaymentRequest } from '../../../Models/IRequest';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
+import { IPaymentRequest, ServiceParameter } from '../../../Models';
 import { BankAccount, IBankAccount } from './BankAccount';
 
 export interface IVerify extends IPaymentRequest {

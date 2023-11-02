@@ -1,7 +1,5 @@
-import { IPaymentRequest } from '../../../Models/IRequest';
+import { ICustomer, IPaymentRequest, ServiceParameter } from '../../../Models';
 import { ITinkaArticle, TinkaArticle } from './Article';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
-import { ICustomer } from '../../../Models/Interfaces/ICustomer';
 import { ITinkaPerson, TinkaPerson } from './Person';
 import { Recipient } from './Recipient';
 

@@ -1,9 +1,6 @@
 import { AfterPayArticle, IAfterPayArticle } from './Article';
 import Customer from './Customer';
-import { IPaymentRequest } from '../../../Models/IRequest';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
-
-import { ICustomer } from '../../../Models/Interfaces/ICustomer';
+import { ICustomer, IPaymentRequest, ServiceParameter } from '../../../Models';
 
 export interface IPay extends IPaymentRequest {
     clientIP: string;

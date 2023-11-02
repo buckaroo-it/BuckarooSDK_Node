@@ -1,4 +1,4 @@
-import { ServiceCode } from '../Utils/MethodTypes';
+import { ServiceCode } from '../Utils';
 import { IAdditionalParameters } from './IParameters';
 
 export default interface IRequest {

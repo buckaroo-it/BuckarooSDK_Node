@@ -1,10 +1,6 @@
-import IRequest from '../Models/IRequest';
-import { Model } from '../Models/Model';
-import { ClientIP } from '../Constants/IPProtocolVersion';
-import { DataFormatter } from '../Utils/Functions';
-import { ServiceCode } from '../Utils/MethodTypes';
-import { IService, ServiceList } from '../Models/IServiceList';
-import { IAdditionalParameters } from '../Models/IParameters';
+import { IAdditionalParameters, IRequest, IService, Model, ServiceList } from '../Models';
+import { ClientIP } from '../Constants';
+import { DataFormatter, ServiceCode } from '../Utils';
 
 export class TransactionData extends Model implements IRequest {
     constructor(data?: IRequest) {

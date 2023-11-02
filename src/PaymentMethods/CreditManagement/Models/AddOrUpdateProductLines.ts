@@ -1,6 +1,5 @@
 import { CreditArticle, ICreditArticle } from './Article';
-import IRequest from '../../../Models/IRequest';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
+import { IRequest, ServiceParameter } from '../../../Models';
 
 export interface IAddOrUpdateProductLines extends IRequest {
     invoiceKey: string;

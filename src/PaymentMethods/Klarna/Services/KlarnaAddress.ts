@@ -1,4 +1,4 @@
-import IAddress, { Address } from '../../../Models/Interfaces/IAddress';
+import { Address, IAddress } from '../../../Models';
 
 export class KlarnaAddress extends Address implements IAddress {
     get houseNumber(): string {

@@ -1,11 +1,7 @@
-import IAddress from '../../../Models/Interfaces/IAddress';
-import IPhone from '../../../Models/Interfaces/IPhone';
-import { Model } from '../../../Models/Model';
+import { Company, IAddress, ICompany, ICustomer, IPerson, IPhone, Model, Person } from '../../../Models';
 import { KlarnaAddress } from '../Services/KlarnaAddress';
-import { Company, ICompany, IPerson, Person } from '../../../Models/Interfaces/IRecipient';
 import { KlarnaPhone } from '../Services/KlarnaPhone';
-import RecipientCategory from '../../../Constants/RecipientCategory';
-import { ICustomer } from '../../../Models/Interfaces/ICustomer';
+import { RecipientCategory } from '../../../Constants';
 
 export class KlarnaRecipient extends Model implements ICustomer {
     set email(email: string) {
