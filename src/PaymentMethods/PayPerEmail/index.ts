@@ -1,4 +1,4 @@
-import PaymentMethod from '../../Services/PaymentMethod';
+import { PaymentMethod } from '../../Services';
 import { IInvitation, Invitation } from './Models/Invitation';
 
 export default class PayPerEmail<Code extends 'payperemail', Manually extends boolean = false> extends PaymentMethod<

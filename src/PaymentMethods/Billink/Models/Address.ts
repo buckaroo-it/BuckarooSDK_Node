@@ -1,4 +1,4 @@
-import { Address as AddressClass } from '../../../Models/Interfaces/IAddress';
+import { Address as AddressClass } from '../../../Models';
 
 export class Address extends AddressClass {
     set houseNumber(houseNumber: string) {

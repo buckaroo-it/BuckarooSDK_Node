@@ -1,4 +1,4 @@
-import IArticle, { Article } from '../../../Models/Interfaces/IArticle';
+import { Article, IArticle } from '../../../Models';
 
 export interface IAfterPayArticle extends Partial<IArticle> {
     type?: string;

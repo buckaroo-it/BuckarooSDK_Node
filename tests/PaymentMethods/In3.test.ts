@@ -1,7 +1,6 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { getIPAddress, uniqid } from '../../src/Utils/Functions';
+import { getIPAddress, RecipientCategory, uniqid } from '../../src';
 import { IPay } from '../../src/PaymentMethods/In3/Models/Pay';
-import RecipientCategory from '../../src/Constants/RecipientCategory';
 
 const in3 = buckarooClientTest.method('In3');
 

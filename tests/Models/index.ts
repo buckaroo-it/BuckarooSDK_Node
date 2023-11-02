@@ -1,11 +1,15 @@
-import { ICompany, IPerson } from '../../src/Models/Interfaces/IRecipient';
-import IAddress from '../../src/Models/Interfaces/IAddress';
-import IArticle from '../../src/Models/Interfaces/IArticle';
-import IPhone from '../../src/Models/Interfaces/IPhone';
-import IBankAccount from '../../src/Models/Interfaces/IBankAccount';
-import RecipientCategory from '../../src/Constants/RecipientCategory';
-import { getIPAddress, uniqid } from '../../src/Utils/Functions';
-import Gender from '../../src/Constants/Gender';
+import {
+    Gender,
+    getIPAddress,
+    IAddress,
+    IArticle,
+    IBankAccount,
+    ICompany,
+    IPerson,
+    IPhone,
+    RecipientCategory,
+    uniqid,
+} from '../../src';
 
 export const TestPerson: IPerson = {
     birthDate: '1990-01-01',

@@ -1,5 +1,5 @@
-import PaymentMethod from '../../Services/PaymentMethod';
-import { IConfig } from '../../Utils/Types';
+import { PaymentMethod } from '../../Services';
+import { IConfig } from '../../Utils';
 import { IMandate, Mandate } from './Models/Mandate';
 
 export default class Emandates<Code extends 'emandate', Manually extends boolean = false> extends PaymentMethod<

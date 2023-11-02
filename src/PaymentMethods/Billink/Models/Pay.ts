@@ -1,7 +1,5 @@
-import { IPaymentRequest } from '../../../Models/IRequest';
+import { ICustomer, IPaymentRequest, ServiceParameter } from '../../../Models';
 import { Article, IBillinkArticle } from './Article';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
-import { ICustomer } from '../../../Models/Interfaces/ICustomer';
 import { BillinkCustomer } from './Customer';
 
 export interface IPay extends IPaymentRequest {

@@ -1,5 +1,5 @@
-import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
-import { IRefundRequest } from '../../Models/IRequest';
+import { PayablePaymentMethod } from '../../Services';
+import { IRefundRequest } from '../../Models';
 import IPay, { Pay } from './Models/IPay';
 
 export default class PayByBank<Code extends 'PayByBank', Manually extends boolean = false> extends PayablePaymentMethod<

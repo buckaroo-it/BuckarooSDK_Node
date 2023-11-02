@@ -1,4 +1,4 @@
-import Gender from '../../src/Constants/Gender';
+import { Gender } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
 
 const method = buckarooClientTest.method('transfer');

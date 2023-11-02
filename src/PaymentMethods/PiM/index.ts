@@ -1,4 +1,4 @@
-import PaymentMethod from '../../Services/PaymentMethod';
+import { PaymentMethod } from '../../Services';
 import { Generate, IGenerate } from './Models/Generate';
 
 export default class PiM<Code extends 'pim', Manually extends boolean = false> extends PaymentMethod<Code, Manually> {

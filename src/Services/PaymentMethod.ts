@@ -1,14 +1,16 @@
-import { RequestTypes } from '../Constants/Endpoints';
-import IRequest from '../Models/IRequest';
+import { RequestTypes } from '../Constants';
+import {
+    IParameter,
+    IRequest,
+    IService,
+    ServiceList,
+    ServiceParameter,
+    SpecificationRequestResponse,
+    TransactionResponse,
+} from '../Models';
 import Buckaroo from '../index';
-import Request from '../Request/Request';
-import { IService, ServiceList } from '../Models/IServiceList';
-import { ServiceParameter } from '../Models/ServiceParameters';
-import { IParameter } from '../Models/IParameters';
-import { DataRequestData, TransactionData } from '../Request/DataModels';
-import { PaymentMethodInstanceType, PaymentMethodRegistryType, ServiceCode } from '../Utils/MethodTypes';
-import { TransactionResponse } from '../Models/Response/TransactionResponse';
-import { SpecificationRequestResponse } from '../Models/Response/SpecificationRequestResponse';
+import { DataRequestData, Request, TransactionData } from '../Request';
+import { PaymentMethodInstanceType, PaymentMethodRegistryType, ServiceCode } from '../Utils';
 
 export default abstract class PaymentMethod<Code extends ServiceCode, Manually extends boolean = false> {
     public _isManually: Manually = false as Manually;

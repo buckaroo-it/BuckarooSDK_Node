@@ -1,4 +1,4 @@
-import { Article } from '../../../Models/Interfaces/IArticle';
+import { Article } from '../../../Models';
 
 export class KlarnaArticle extends Article {
     get price() {

@@ -1,7 +1,5 @@
-import { Model } from '../../../Models/Model';
-import IAddress from '../../../Models/Interfaces/IAddress';
+import { IAddress, IRecipient, Model } from '../../../Models';
 import { Address } from './Address';
-import { IRecipient } from '../../../Models/Interfaces/IRecipient';
 import { Recipient } from './Recipient';
 
 export class Customer extends Model {

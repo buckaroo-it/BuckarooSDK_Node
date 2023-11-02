@@ -1,6 +1,6 @@
 import { JsonModel } from '../Model';
-import { ReplyHandler } from '../../Handlers/Reply/ReplyHandler';
-import { ICredentials } from '../../Utils/Types';
+import { ReplyHandler } from '../../Handlers';
+import { ICredentials } from '../../Utils';
 import { AxiosResponse } from 'axios';
 
 export interface HttpResponseConstructor {

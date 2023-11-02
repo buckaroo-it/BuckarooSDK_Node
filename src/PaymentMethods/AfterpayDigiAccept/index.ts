@@ -1,5 +1,5 @@
-import IRequest, { IRefundRequest } from '../../Models/IRequest';
-import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
+import { IRefundRequest, IRequest } from '../../Models';
+import { PayablePaymentMethod } from '../../Services';
 import { IPay, Pay } from './Model/Pay';
 
 export default class AfterpayDigiAccept<

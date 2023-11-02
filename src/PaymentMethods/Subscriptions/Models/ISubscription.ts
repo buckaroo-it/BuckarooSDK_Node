@@ -1,14 +1,21 @@
-import IPhone, { Phone } from '../../../Models/Interfaces/IPhone';
-import IAddress, { Address } from '../../../Models/Interfaces/IAddress';
+import {
+    Address,
+    BankAccount,
+    IAddress,
+    IBankAccount,
+    ICompany,
+    IDebtor,
+    IPerson,
+    IPhone,
+    IRequest,
+    Person,
+    Phone,
+    ServiceParameter,
+} from '../../../Models';
 import { IRatePlan, IRatePlans, RatePlan } from './RatePlan';
 import { IRatePlanCharge, IRatePlanCharges, RatePlanCharge } from './RatePlanCharge';
 import { Configuration, IConfiguration } from './Configuration';
-import IRequest from '../../../Models/IRequest';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
-import { ICompany, IPerson, Person } from '../../../Models/Interfaces/IRecipient';
 import Company from './Company';
-import IDebtor from '../../../Models/Interfaces/IDebtor';
-import IBankAccount, { BankAccount } from '../../../Models/Interfaces/IBankAccount';
 
 export interface ISubscription extends IRequest {
     address?: Partial<IAddress>;

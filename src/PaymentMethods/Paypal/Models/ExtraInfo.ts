@@ -1,9 +1,6 @@
-import IPhone from '../../../Models/Interfaces/IPhone';
-import { IPerson, Person } from '../../../Models/Interfaces/IRecipient';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
+import { IPaymentRequest, IPerson, IPhone, Person, ServiceParameter } from '../../../Models';
 import { Phone } from './Phone';
 import { Address, IAddress } from './Address';
-import { IPaymentRequest } from '../../../Models/IRequest';
 
 export interface IExtraInfo extends IPaymentRequest {
     address?: IAddress;

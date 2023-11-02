@@ -1,7 +1,5 @@
-import IRequest from '../../../Models/IRequest';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
+import { IPerson, IRequest, Person, ServiceParameter } from '../../../Models';
 import { Attachments, IAttachments } from './Attachments';
-import { IPerson, Person } from '../../../Models/Interfaces/IRecipient';
 
 export interface IInvitation extends IRequest {
     currency: string;

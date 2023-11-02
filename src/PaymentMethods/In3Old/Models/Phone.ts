@@ -1,4 +1,4 @@
-import { Phone } from '../../../Models/Interfaces/IPhone';
+import { Phone } from '../../../Models';
 
 export class In3OldPhone extends Phone {
     set mobile(number: string) {

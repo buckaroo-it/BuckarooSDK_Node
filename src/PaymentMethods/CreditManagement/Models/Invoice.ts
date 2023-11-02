@@ -1,10 +1,5 @@
-import IPhone from '../../../Models/Interfaces/IPhone';
-import IAddress from '../../../Models/Interfaces/IAddress';
+import { IAddress, ICompany, IDebtor, IPerson, IPhone, IRequest, ServiceParameter } from '../../../Models';
 import { CreditArticle, ICreditArticle } from './Article';
-import IRequest from '../../../Models/IRequest';
-import { ICompany, IPerson } from '../../../Models/Interfaces/IRecipient';
-import IDebtor from '../../../Models/Interfaces/IDebtor';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
 import { Address } from './Address';
 
 export interface IInvoice extends IRequest {

@@ -1,16 +1,18 @@
 import Headers, { RequestConfig, RequestHeaders } from './Headers';
-import { HttpClientResponse, HttpResponseConstructor } from '../Models/Response/HttpClientResponse';
+import {
+    BatchRequestResponse,
+    HttpClientResponse,
+    HttpResponseConstructor,
+    IRequest,
+    IService,
+    SpecificationRequestResponse,
+    TransactionResponse,
+} from '../Models';
 import { DataRequestData, SpecificationRequestData, TransactionData } from './DataModels';
 import Buckaroo from '../index';
-import Endpoints, { RequestTypes } from '../Constants/Endpoints';
-import { TransactionResponse } from '../Models/Response/TransactionResponse';
-import { SpecificationRequestResponse } from '../Models/Response/SpecificationRequestResponse';
-import { BatchRequestResponse } from '../Models/Response/BatchRequestResponse';
-import HttpMethods from '../Constants/HttpMethods';
-import { ICredentials } from '../Utils/Types';
+import { Endpoints, HttpMethods, RequestTypes } from '../Constants';
+import { ICredentials } from '../Utils';
 import { Hmac } from './Hmac';
-import { IService } from '../Models/IServiceList';
-import IRequest from '../Models/IRequest';
 
 export default class Request<
     HttpResponse extends HttpResponseConstructor = HttpResponseConstructor,

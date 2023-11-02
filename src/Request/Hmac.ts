@@ -1,4 +1,4 @@
-import { ICredentials } from '../Utils/Types';
+import { ICredentials } from '../Utils';
 import md5 from 'crypto-js/md5';
 import hmacSHA256 from 'crypto-js/hmac-sha256';
 import Base64 from 'crypto-js/enc-base64';

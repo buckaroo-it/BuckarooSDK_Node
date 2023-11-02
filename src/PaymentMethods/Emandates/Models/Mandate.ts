@@ -1,5 +1,4 @@
-import { ServiceParameter } from '../../../Models/ServiceParameters';
-import IRequest from '../../../Models/IRequest';
+import { IRequest, ServiceParameter } from '../../../Models';
 
 export interface IMandate extends IRequest {
     mandateId?: string;

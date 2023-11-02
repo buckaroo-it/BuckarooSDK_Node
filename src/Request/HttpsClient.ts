@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { HttpResponseConstructor } from '../Models/Response/HttpClientResponse';
+import { HttpResponseConstructor } from '../Models';
 import { RequestConfig } from './Headers';
-import HttpMethods from '../Constants/HttpMethods';
+import { HttpMethods } from '../Constants';
 
 export default class HttpsClient {
     protected _options: AxiosRequestConfig = {};

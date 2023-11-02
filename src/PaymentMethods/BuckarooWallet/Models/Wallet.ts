@@ -1,8 +1,5 @@
-import IRequest from '../../../Models/IRequest';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
-import { IPerson } from '../../../Models/Interfaces/IRecipient';
+import { IBankAccount, IPerson, IRequest, ServiceParameter } from '../../../Models';
 import { Customer } from './Customer';
-import IBankAccount from '../../../Models/Interfaces/IBankAccount';
 import { BankAccount } from './BankAccount';
 
 export interface IWallet extends IRequest {

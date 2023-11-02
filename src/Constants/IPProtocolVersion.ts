@@ -1,6 +1,6 @@
 import * as IpAddress from 'ip-address';
 
-import { getIPAddress } from '../Utils/Functions';
+import { getIPAddress } from '../Utils';
 
 export class IPProtocolVersion {
     public static readonly IPV4: number = 0;

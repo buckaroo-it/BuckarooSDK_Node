@@ -1,4 +1,4 @@
-import { BankAccount as BankAccountClass } from '../../../Models/Interfaces/IBankAccount';
+import { BankAccount as BankAccountClass } from '../../../Models';
 
 export class BankAccount extends BankAccountClass {
     set iban(value: string) {

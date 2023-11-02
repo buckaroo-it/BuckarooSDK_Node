@@ -1,4 +1,4 @@
-import IRequest from '../../../Models/IRequest';
+import { IRequest } from '../../../Models';
 import { ISeller } from './Seller';
 import { IMarketplace } from './Marketplace';
 
