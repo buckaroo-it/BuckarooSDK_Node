@@ -2,8 +2,10 @@ import { IPay, Pay } from './Models/Pay';
 import { PayablePaymentMethod } from '../../Services';
 import { RequestTypes } from '../../Constants';
 import { IRefundRequest } from '../../Models';
+import { ServiceCode } from '../../Utils';
 
 export default class Ideal extends PayablePaymentMethod {
+    protected _serviceCode: ServiceCode = 'ideal';
     protected _serviceVersion = 2;
 
     constructor(serviceCode: 'ideal' | 'idealprocessing' = 'ideal') {

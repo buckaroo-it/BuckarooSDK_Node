@@ -1,9 +1,10 @@
 import { PaymentMethod } from '../../Services';
-import { IConfig } from '../../Utils';
+import { IConfig, ServiceCode } from '../../Utils';
 import { IMandate, Mandate } from './Models/Mandate';
 
 export default class Emandates extends PaymentMethod {
     _requiredFields: Array<keyof IConfig> = ['currency'];
+    protected _serviceCode: ServiceCode = 'emandate';
 
     issuerList() {
         this.setServiceList('GetIssuerList');

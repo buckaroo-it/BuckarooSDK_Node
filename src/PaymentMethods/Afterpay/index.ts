@@ -2,8 +2,10 @@ import { IPay, Pay } from './Model/Pay';
 import { IRefund, Refund } from './Model/Refund';
 import { IPaymentRequest, IRefundRequest } from '../../Models';
 import { PayablePaymentMethod } from '../../Services';
+import { ServiceCode } from '../../Utils';
 
 export default class Afterpay extends PayablePaymentMethod {
+    protected _serviceCode: ServiceCode = 'afterpay';
     protected _serviceVersion = 1;
 
     pay(payload: IPay) {

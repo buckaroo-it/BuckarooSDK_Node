@@ -1,8 +1,11 @@
 import { PaymentMethod } from '../../Services';
 import { ISplit, Split } from './Models/Split';
 import { ITransfer } from './Models/Transfer';
+import { ServiceCode } from '../../Utils';
 
 export default class Marketplaces extends PaymentMethod {
+    protected _serviceCode: ServiceCode = 'marketplaces';
+
     split(payload: ISplit) {
         this.setServiceList('Split', new Split(payload));
         return this.dataRequest(payload);

@@ -2,10 +2,12 @@ import { PayablePaymentMethod } from '../../Services';
 import { IPay, Pay } from './Models/Pay';
 import { IExtraInfo } from './Models/ExtraInfo';
 import { IEmandate } from './Models/Emandate';
-import { uniqid } from '../../Utils';
+import { ServiceCode, uniqid } from '../../Utils';
 import { IPaymentRequest } from '../../Models';
 
 export default class SEPA extends PayablePaymentMethod {
+    protected _serviceCode: ServiceCode = 'sepadirectdebit';
+
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

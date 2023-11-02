@@ -2,8 +2,11 @@ import { PayablePaymentMethod } from '../../Services';
 import { IPaymentRequest, IRefundRequest, IRequest } from '../../Models';
 import { CardData, ICardData } from './Models/CardData';
 import { ISecurityCode, SecurityCode } from './Models/SecurityCode';
+import { ServiceCode } from '../../Utils';
 
 export default class CreditCard extends PayablePaymentMethod {
+    protected _serviceCode: ServiceCode = 'CreditCard';
+
     payEncrypted(payload: ICardData) {
         this.setPayPayload(payload);
         this.setServiceList('PayEncrypted', new CardData(payload));

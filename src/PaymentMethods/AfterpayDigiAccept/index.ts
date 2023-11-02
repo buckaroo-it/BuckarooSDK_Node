@@ -1,8 +1,10 @@
 import { IRefundRequest, IRequest } from '../../Models';
 import { PayablePaymentMethod } from '../../Services';
 import { IPay, Pay } from './Model/Pay';
+import { ServiceCode } from '../../Utils';
 
 export default class AfterpayDigiAccept extends PayablePaymentMethod {
+    protected _serviceCode: ServiceCode = 'afterpaydigiaccept';
     protected _serviceVersion = 2;
 
     pay(payload: IPay) {

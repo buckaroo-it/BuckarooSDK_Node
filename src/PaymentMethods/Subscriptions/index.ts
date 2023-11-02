@@ -2,8 +2,10 @@ import { ISubscription, Subscription } from './Models/ISubscription';
 import { PaymentMethod } from '../../Services';
 import { IRequest } from '../../Models';
 import { ResumeSubscription } from './Models/ResumeSubscription';
+import { ServiceCode } from '../../Utils';
 
 export default class Subscriptions extends PaymentMethod {
+    protected _serviceCode: ServiceCode = 'subscriptions';
     protected _serviceVersion = 1;
     protected _requiredFields: Array<keyof IRequest> = ['currency'];
 

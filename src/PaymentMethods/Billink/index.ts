@@ -2,8 +2,11 @@ import { PayablePaymentMethod } from '../../Services';
 import { IPay, Pay } from './Models/Pay';
 import { IRefund, Refund } from './Models/Refund';
 import { Capture, ICapture } from './Models/Capture';
+import { ServiceCode } from '../../Utils';
 
 export default class Billink extends PayablePaymentMethod {
+    protected _serviceCode: ServiceCode = 'billink';
+
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

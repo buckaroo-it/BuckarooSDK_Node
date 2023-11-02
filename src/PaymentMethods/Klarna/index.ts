@@ -1,7 +1,10 @@
 import { IPay, Pay } from './Models/Pay';
 import { PayablePaymentMethod } from '../../Services';
+import { ServiceCode } from '../../Utils';
 
 export default class Klarna extends PayablePaymentMethod {
+    protected _serviceCode: ServiceCode = 'klarna';
+
     pay(data: IPay) {
         return super.pay(data, new Pay(data));
     }

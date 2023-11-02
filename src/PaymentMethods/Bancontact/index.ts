@@ -1,8 +1,11 @@
 import { PayablePaymentMethod } from '../../Services';
 import { IPay, IPayComplete, IPayEncrypted, IPayOneClick, Pay } from './Models/Pay';
 import { IRefundRequest } from '../../Models';
+import { ServiceCode } from '../../Utils';
 
 export default class Bancontact extends PayablePaymentMethod {
+    protected _serviceCode: ServiceCode = 'bancontactmrcash';
+
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

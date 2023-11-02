@@ -7,8 +7,10 @@ import { IMultiInfoInvoice, MultiInfoInvoice } from './Models/multiInfoInvoice';
 import { AddOrUpdateProductLines, IAddOrUpdateProductLines } from './Models/AddOrUpdateProductLines';
 import { IRequest, ServiceParameter } from '../../Models';
 import { DebtorInfo, IDebtorInfo } from './Models/DebtorInfo';
+import { ServiceCode } from '../../Utils';
 
 export default class CreditManagement extends PaymentMethod {
+    protected _serviceCode: ServiceCode = 'CreditManagement3';
     protected _serviceVersion = 1;
     protected _requiredFields = ['currency'];
 
