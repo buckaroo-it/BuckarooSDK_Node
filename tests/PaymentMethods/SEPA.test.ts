@@ -19,9 +19,12 @@ const paymentPayload: IPay = {
 
 describe('SEPA methods', () => {
     test('Pay', async () => {
-        await method.pay(paymentPayload).then((info) => {
-            expect(info).toBeDefined();
-        });
+        await method
+            .pay(paymentPayload)
+            .request()
+            .then((info) => {
+                expect(info).toBeDefined();
+            });
     });
     test('Refund', async () => {
         await method
@@ -29,14 +32,18 @@ describe('SEPA methods', () => {
                 amountCredit: 0.01,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((info) => {
                 expect(info).toBeDefined();
             });
     });
     test('Authorize', async () => {
-        await method.authorize(paymentPayload).then((info) => {
-            expect(info).toBeDefined();
-        });
+        await method
+            .authorize(paymentPayload)
+            .request()
+            .then((info) => {
+                expect(info).toBeDefined();
+            });
     });
     test('PayRecurrent', async () => {
         await method
@@ -46,6 +53,7 @@ describe('SEPA methods', () => {
                 amountDebit: 100,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((info) => {
                 expect(info).toBeDefined();
             });
@@ -72,6 +80,7 @@ describe('SEPA methods', () => {
                     country: 'NL',
                 },
             })
+            .request()
             .then((info) => {
                 expect(info).toBeDefined();
             });
@@ -84,6 +93,7 @@ describe('SEPA methods', () => {
                 mandateReference: 'XXXXXXXXXXXXXXX',
                 amountDebit: 100,
             })
+            .request()
             .then((info) => {
                 expect(info).toBeDefined();
             });

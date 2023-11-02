@@ -9,6 +9,7 @@ describe('Testing KBC methods', () => {
             .pay({
                 amountDebit: 100,
             })
+            .request()
             .then((response) => {
                 expect(response.isPendingProcessing()).toBeTruthy();
             });
@@ -20,6 +21,7 @@ describe('Testing KBC methods', () => {
                 amountCredit: 0.01,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((response) => {
                 expect(response.isFailed()).toBeTruthy();
             });

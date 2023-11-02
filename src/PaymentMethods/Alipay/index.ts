@@ -1,10 +1,7 @@
 import { PayablePaymentMethod } from '../../Services';
 import { IPaymentRequest, IRefundRequest, ServiceParameter } from '../../Models';
 
-export default class Alipay<Code extends 'alipay', Manually extends boolean = false> extends PayablePaymentMethod<
-    Code,
-    Manually
-> {
+export default class Alipay extends PayablePaymentMethod {
     pay(payload: { useMobileView?: boolean } & IPaymentRequest) {
         const serviceParameters = new ServiceParameter().set('useMobileView', payload.useMobileView);
         return super.pay(payload, serviceParameters);

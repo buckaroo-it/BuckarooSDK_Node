@@ -2,10 +2,7 @@ import { PayablePaymentMethod } from '../../Services';
 import { IPay, IPayComplete, IPayEncrypted, IPayOneClick, Pay } from './Models/Pay';
 import { IRefundRequest } from '../../Models';
 
-export default class Bancontact<
-    Code extends 'bancontactmrcash',
-    Manually extends boolean = false
-> extends PayablePaymentMethod<Code, Manually> {
+export default class Bancontact extends PayablePaymentMethod {
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

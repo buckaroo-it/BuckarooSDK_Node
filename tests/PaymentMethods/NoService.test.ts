@@ -13,6 +13,7 @@ describe('NoService methods', () => {
                 servicesExcludedForClient: 'ideal',
                 continueOnIncomplete: true,
             })
+            .request()
             .then((data) => {
                 expect(data.isPendingProcessing()).toBeTruthy();
             });

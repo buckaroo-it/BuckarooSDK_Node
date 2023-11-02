@@ -5,10 +5,7 @@ import { IEmandate } from './Models/Emandate';
 import { uniqid } from '../../Utils';
 import { IPaymentRequest } from '../../Models';
 
-export default class SEPA<
-    Code extends 'sepadirectdebit',
-    Manually extends boolean = false
-> extends PayablePaymentMethod<Code, Manually> {
+export default class SEPA extends PayablePaymentMethod {
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

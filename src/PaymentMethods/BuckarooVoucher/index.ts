@@ -3,10 +3,7 @@ import { IPay, Pay } from './Models/Pay';
 import { IRequest } from '../../Models';
 import { Create, ICreate } from './Models/Create';
 
-export default class BuckarooVoucher<
-    Code extends 'buckaroovoucher',
-    Manually extends boolean = false
-> extends PayablePaymentMethod<Code, Manually> {
+export default class BuckarooVoucher extends PayablePaymentMethod {
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

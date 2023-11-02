@@ -1,32 +1,14 @@
-import * as AllRegisteredPaymentMethods from '../PaymentMethods';
+import * as AllPaymentMethods from '../PaymentMethods';
 
-type InstanceWithManualFlag<Method, Manually extends boolean> = Manually extends true
-    ? Method & {
-          _isManually: Manually;
-      }
-    : Method;
+export type AvailablePaymentMethods = typeof AllPaymentMethods;
+export type ServiceCode = keyof AvailablePaymentMethods;
+export type PaymentMethodInstance<Code extends ServiceCode> = InstanceType<AvailablePaymentMethods[Code]>;
 
-export type PaymentMethodTypeDictionary = typeof AllRegisteredPaymentMethods;
-export type ServiceCode = keyof PaymentMethodTypeDictionary;
-
-export type PaymentMethodInstanceType<
-    Code extends ServiceCode,
-    Manually extends boolean = false
-> = InstanceWithManualFlag<InstanceType<PaymentMethodTypeDictionary[Code]>, Manually>;
-
-export type PaymentMethodRegistryType<K extends ServiceCode, Manually extends boolean> = {
-    [K in keyof PaymentMethodTypeDictionary]: PaymentMethodInstanceType<K, Manually>;
-}[K];
-
-export function getMethod<Code extends ServiceCode, Manually extends boolean>(
-    code: Code
-): PaymentMethodInstanceType<Code, Manually> {
-    const methodClass = AllRegisteredPaymentMethods[code] as {
-        new (code: Code): PaymentMethodInstanceType<Code, Manually>;
-    };
+export function getMethod<Code extends ServiceCode>(code: Code): PaymentMethodInstance<Code> {
+    const methodClass = AllPaymentMethods[code];
     if (!methodClass) {
         throw new Error(`Invalid payment method code: ${code}`);
     }
 
-    return new methodClass(code) as PaymentMethodInstanceType<Code, Manually>;
+    return new methodClass(code as any) as PaymentMethodInstance<Code>;
 }

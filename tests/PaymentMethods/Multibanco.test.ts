@@ -7,6 +7,7 @@ describe('Multibanco methods', () => {
             .pay({
                 amountDebit: 100,
             })
+            .request()
             .then((info) => {
                 expect(info.isValidationFailure()).toBeTruthy();
             });

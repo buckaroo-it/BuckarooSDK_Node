@@ -17,6 +17,7 @@ describe('Transfer methods', () => {
                 sendMail: true,
                 dateDue: '2024-10-10',
             })
+            .request()
             .then((res) => {
                 expect(res.isAwaitingConsumer()).toBeDefined();
             });

@@ -9,6 +9,7 @@ describe('Testing Giropay methods', () => {
                 bic: 'XXXXXXXXX',
                 amountDebit: 100,
             })
+            .request()
             .then((response) => {
                 expect(response.isPendingProcessing()).toBeTruthy();
             });
@@ -20,6 +21,7 @@ describe('Testing Giropay methods', () => {
                 invoice: uniqid(),
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((response) => {
                 expect(response.isFailed()).toBeTruthy();
             });

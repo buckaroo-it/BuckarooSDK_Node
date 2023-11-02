@@ -3,10 +3,7 @@ import { PaymentMethod } from '../../Services';
 import { IRequest } from '../../Models';
 import { ResumeSubscription } from './Models/ResumeSubscription';
 
-export default class Subscriptions<
-    Code extends 'subscriptions',
-    Manually extends boolean = false
-> extends PaymentMethod<Code, Manually> {
+export default class Subscriptions extends PaymentMethod {
     protected _serviceVersion = 1;
     protected _requiredFields: Array<keyof IRequest> = ['currency'];
 

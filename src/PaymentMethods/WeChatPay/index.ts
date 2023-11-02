@@ -2,10 +2,7 @@ import { PayablePaymentMethod } from '../../Services';
 import { IRefundRequest } from '../../Models';
 import { IPay, Pay } from './Models/Pay';
 
-export default class WeChatPay<Code extends 'wechatpay', Manually extends boolean = false> extends PayablePaymentMethod<
-    Code,
-    Manually
-> {
+export default class WeChatPay extends PayablePaymentMethod {
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

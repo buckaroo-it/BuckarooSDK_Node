@@ -6,9 +6,12 @@ const in3 = buckarooClientTest.method('In3');
 
 describe('Testing In3 methods', () => {
     test('Pay', async () => {
-        await in3.pay(payload).then((data) => {
-            expect(data.isPendingProcessing()).toBeTruthy();
-        });
+        await in3
+            .pay(payload)
+            .request()
+            .then((data) => {
+                expect(data.isPendingProcessing()).toBeTruthy();
+            });
     });
     test('Refund', async () => {
         await in3
@@ -17,6 +20,7 @@ describe('Testing In3 methods', () => {
                 amountCredit: 0.01,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((data) => {
                 expect(data.isSuccess()).toBeFalsy();
             });

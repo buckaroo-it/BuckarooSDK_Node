@@ -10,6 +10,7 @@ describe('Alipay methods', () => {
                 amountDebit: 100,
                 useMobileView: false,
             })
+            .request()
             .then((data) => {
                 expect(data.isPendingProcessing()).toBeTruthy();
             });
@@ -21,6 +22,7 @@ describe('Alipay methods', () => {
                 invoice: uniqid(),
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((data) => {
                 expect(data.isFailed()).toBeTruthy();
             });

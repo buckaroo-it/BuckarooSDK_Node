@@ -1,25 +1,16 @@
 import { RequestTypes } from '../Constants';
-import {
-    IParameter,
-    IRequest,
-    IService,
-    ServiceList,
-    ServiceParameter,
-    SpecificationRequestResponse,
-    TransactionResponse,
-} from '../Models';
-import Buckaroo from '../index';
-import { DataRequestData, Request, TransactionData } from '../Request';
-import { PaymentMethodInstanceType, PaymentMethodRegistryType, ServiceCode } from '../Utils';
+import { IParameter, IRequest, IService, ServiceList, ServiceParameter } from '../Models';
+import Buckaroo, { PaymentMethodInstance } from '../index';
+import { Request, TransactionData } from '../Request';
+import { ServiceCode } from '../Utils';
 
-export default abstract class PaymentMethod<Code extends ServiceCode, Manually extends boolean = false> {
-    public _isManually: Manually = false as Manually;
-    protected _serviceCode?: Code;
+export default abstract class PaymentMethod {
+    protected _serviceCode?: ServiceCode;
     protected _serviceVersion: number = 0;
     protected _payload: TransactionData = new TransactionData();
     protected _requiredFields: Array<keyof IRequest> = [];
 
-    constructor(serviceCode?: Code) {
+    constructor(serviceCode?: ServiceCode) {
         this._serviceCode = serviceCode;
     }
 
@@ -31,23 +22,12 @@ export default abstract class PaymentMethod<Code extends ServiceCode, Manually e
         this._serviceVersion = value;
     }
 
-    get serviceCode(): Code {
-        return (this._serviceCode || 'noservice') as Code;
-    }
-
-    public manually(value?: true): PaymentMethodRegistryType<Code, true>;
-    public manually(value: false): PaymentMethodRegistryType<Code, false>;
-    public manually(value?: boolean): PaymentMethodRegistryType<Code, boolean> {
-        if (value === undefined) {
-            this._isManually = true as Manually;
-        } else {
-            this._isManually = value as Manually;
-        }
-        return this as any;
+    get serviceCode(): ServiceCode {
+        return this._serviceCode || 'noservice';
     }
 
     setServiceCode(value: ServiceCode): this {
-        this._serviceCode = value as Code;
+        this._serviceCode = value;
         return this;
     }
 
@@ -64,15 +44,15 @@ export default abstract class PaymentMethod<Code extends ServiceCode, Manually e
         return this._payload.getServiceList();
     }
 
-    combine<Name extends ServiceCode>(data: Name): PaymentMethodInstanceType<Name>;
+    combine<Name extends ServiceCode>(data: Name): PaymentMethodInstance<Name>;
 
     combine<Payload extends TransactionData>(data: Payload): this;
 
-    combine<Method extends PaymentMethod<Code>>(method: Method): this;
+    combine<Method extends PaymentMethod>(method: Method): this;
 
     combine(data: any): this {
         if (typeof data === 'string') {
-            const method: PaymentMethod<Code> = Buckaroo.Client.method(data as any);
+            const method: PaymentMethod = Buckaroo.Client.method(data as any);
             method.setPayload(this._payload);
             return method as any;
         }
@@ -80,16 +60,8 @@ export default abstract class PaymentMethod<Code extends ServiceCode, Manually e
         return this;
     }
 
-    public specification(
-        type: RequestTypes.Transaction | RequestTypes.Data = RequestTypes.Data
-    ): this['_isManually'] extends true ? any : Promise<SpecificationRequestResponse> {
-        const request = Request.Specification(type, { name: this.serviceCode, version: this.serviceVersion });
-
-        if (this._isManually) {
-            return request as any;
-        }
-
-        return request.request() as any;
+    public specification(type: RequestTypes.Transaction | RequestTypes.Data = RequestTypes.Data) {
+        return Request.Specification(type, { name: this.serviceCode, version: this.serviceVersion });
     }
 
     protected setRequiredFields(requiredFields: Array<keyof IRequest> = this._requiredFields) {
@@ -124,33 +96,13 @@ export default abstract class PaymentMethod<Code extends ServiceCode, Manually e
         return this;
     }
 
-    protected transactionRequest(
-        payload?: IRequest
-    ): this['_isManually'] extends true
-        ? Request<typeof TransactionResponse, TransactionData>
-        : Promise<TransactionResponse> {
+    protected transactionRequest(payload?: IRequest) {
         this.setPayload(payload);
-        const request = Request.Transaction(this._payload);
-
-        if (this._isManually) {
-            return request as any;
-        }
-
-        return request.request() as any;
+        return Request.Transaction(this._payload);
     }
 
-    protected dataRequest(
-        payload?: IRequest
-    ): this['_isManually'] extends true
-        ? Request<typeof TransactionResponse, DataRequestData>
-        : Promise<TransactionResponse> {
+    protected dataRequest(payload?: IRequest) {
         this.setPayload(payload);
-        const request = Request.DataRequest(this._payload);
-
-        if (this._isManually) {
-            return request as any;
-        }
-
-        return request.request() as any;
+        return Request.DataRequest(this._payload);
     }
 }

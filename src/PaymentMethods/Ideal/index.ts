@@ -3,14 +3,11 @@ import { PayablePaymentMethod } from '../../Services';
 import { RequestTypes } from '../../Constants';
 import { IRefundRequest } from '../../Models';
 
-export default class Ideal<Code extends 'ideal', Manually extends boolean = false> extends PayablePaymentMethod<
-    Code,
-    Manually
-> {
+export default class Ideal extends PayablePaymentMethod {
     protected _serviceVersion = 2;
 
     constructor(serviceCode: 'ideal' | 'idealprocessing' = 'ideal') {
-        super(serviceCode as Code);
+        super(serviceCode);
     }
 
     pay(data: IPay) {
@@ -22,14 +19,16 @@ export default class Ideal<Code extends 'ideal', Manually extends boolean = fals
     }
 
     issuers() {
-        return this.specification(RequestTypes.Transaction).then((response) => {
-            return response
-                .getActionRequestParameters('Pay')
-                ?.find((item) => item.name === 'issuer')
-                ?.listItemDescriptions?.map((item) => {
-                    return { [item.value]: item.description };
-                });
-        });
+        return this.specification(RequestTypes.Transaction)
+            .request()
+            .then((response) => {
+                return response
+                    .getActionRequestParameters('Pay')
+                    ?.find((item) => item.name === 'issuer')
+                    ?.listItemDescriptions?.map((item) => {
+                        return { [item.value]: item.description };
+                    });
+            });
     }
 
     instantRefund(data: IRefundRequest) {

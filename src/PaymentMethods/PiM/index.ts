@@ -1,7 +1,7 @@
 import { PaymentMethod } from '../../Services';
 import { Generate, IGenerate } from './Models/Generate';
 
-export default class PiM<Code extends 'pim', Manually extends boolean = false> extends PaymentMethod<Code, Manually> {
+export default class PiM extends PaymentMethod {
     protected _requiredFields = ['currency'];
 
     generate(payload: IGenerate) {

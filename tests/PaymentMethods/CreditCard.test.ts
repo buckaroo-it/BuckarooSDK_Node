@@ -9,6 +9,7 @@ describe('testing methods', () => {
             .pay({
                 amountDebit: 100,
             })
+            .request()
             .then((data) => {
                 expect(data.isWaitingOnUserInput()).toBeTruthy();
             });
@@ -20,6 +21,7 @@ describe('testing methods', () => {
                 amountCredit: 0.01,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });
@@ -29,6 +31,7 @@ describe('testing methods', () => {
             .authorize({
                 amountDebit: 100,
             })
+            .request()
             .then((data) => {
                 expect(data.isWaitingOnUserInput()).toBeTruthy();
             });
@@ -40,6 +43,7 @@ describe('testing methods', () => {
                 name: 'Visa',
                 encryptedCardData: 'XXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((data) => {
                 expect(data.isValidationFailure()).toBeTruthy();
             });
@@ -51,6 +55,7 @@ describe('testing methods', () => {
                 encryptedSecurityCode: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 name: 'Visa',
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });
@@ -62,6 +67,7 @@ describe('testing methods', () => {
                 encryptedSecurityCode: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 name: 'Visa',
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });
@@ -73,6 +79,7 @@ describe('testing methods', () => {
                 encryptedCardData: 'XXXXXXXXXXXXXXXXXXXXXXXX',
                 name: 'Visa',
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });
@@ -84,6 +91,7 @@ describe('testing methods', () => {
                 amountCredit: 100,
                 name: 'Visa',
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });
@@ -95,6 +103,7 @@ describe('testing methods', () => {
                 amountDebit: 100,
                 name: 'Visa',
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });
@@ -106,6 +115,7 @@ describe('testing methods', () => {
                 amountDebit: 100,
                 name: 'Visa',
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });

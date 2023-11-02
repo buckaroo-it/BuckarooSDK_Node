@@ -14,6 +14,7 @@ describe('Testing CreditClick methods', () => {
                 },
                 email: 'test@buckaroo.nl',
             })
+            .request()
             .then((response) => {
                 expect(response.isPendingProcessing()).toBeTruthy();
             });
@@ -27,6 +28,7 @@ describe('Testing CreditClick methods', () => {
                 description: 'refund',
                 refundReason: 'Fraudulent',
             })
+            .request()
             .then((response) => {
                 expect(response.isFailed()).toBeTruthy();
             });

@@ -1,7 +1,7 @@
 import { PaymentMethod } from '../../Services';
 import { IPay, Pay } from './Models/Pay';
 
-export default class Idin<Code extends 'idin', Manually extends boolean = false> extends PaymentMethod<Code, Manually> {
+export default class Idin extends PaymentMethod {
     identify(payload: IPay) {
         this.setServiceList('Identify', new Pay(payload));
         return this.dataRequest(payload);

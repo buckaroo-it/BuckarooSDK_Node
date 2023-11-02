@@ -5,17 +5,23 @@ import { RecipientCategory, uniqid } from '../../src';
 const klarna = buckarooClientTest.method('klarna');
 describe('Testing Klarna methods', () => {
     test('Pay', async () => {
-        await klarna.pay(payload).then((res) => {
-            expect(res.isPendingProcessing()).toBeTruthy();
-        });
+        await klarna
+            .pay(payload)
+            .request()
+            .then((res) => {
+                expect(res.isPendingProcessing()).toBeTruthy();
+            });
     });
     test('PayInInstallments', async () => {
         const clonedPayload = JSON.parse(JSON.stringify(payload));
         clonedPayload.currency = 'GBP';
         clonedPayload.billing.address.country = 'GB';
-        await klarna.payInInstallments(clonedPayload).then((res) => {
-            expect(res).toBeDefined();
-        });
+        await klarna
+            .payInInstallments(clonedPayload)
+            .request()
+            .then((res) => {
+                expect(res).toBeDefined();
+            });
     });
 });
 

@@ -8,10 +8,7 @@ import { AddOrUpdateProductLines, IAddOrUpdateProductLines } from './Models/AddO
 import { IRequest, ServiceParameter } from '../../Models';
 import { DebtorInfo, IDebtorInfo } from './Models/DebtorInfo';
 
-export default class CreditManagement<
-    Code extends 'CreditManagement3',
-    Manually extends boolean = false
-> extends PaymentMethod<Code, Manually> {
+export default class CreditManagement extends PaymentMethod {
     protected _serviceVersion = 1;
     protected _requiredFields = ['currency'];
 

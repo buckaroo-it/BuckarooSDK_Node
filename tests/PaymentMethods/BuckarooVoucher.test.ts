@@ -10,6 +10,7 @@ describe('testing methods', () => {
                 amountDebit: 100,
                 voucherCode: 'XXXXXXX',
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });
@@ -21,6 +22,7 @@ describe('testing methods', () => {
                 amountCredit: 0.01,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });
@@ -30,6 +32,7 @@ describe('testing methods', () => {
             .getBalance({
                 voucherCode: 'XXXXXXX',
             })
+            .request()
             .then((data) => {
                 expect(data.isFailed()).toBeTruthy();
             });
@@ -42,6 +45,7 @@ describe('testing methods', () => {
                 validFrom: '2021-01-01',
                 validUntil: '2024-01-01',
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });
@@ -51,6 +55,7 @@ describe('testing methods', () => {
             .deactivate({
                 voucherCode: 'XXXXXXX',
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });

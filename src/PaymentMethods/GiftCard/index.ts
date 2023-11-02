@@ -2,10 +2,7 @@ import { PayablePaymentMethod } from '../../Services';
 import IPay, { Pay } from './Models/Pay';
 import { IRefund, Refund } from './Models/Refund';
 
-export default class GiftCard<Code extends 'giftcard', Manually extends boolean = false> extends PayablePaymentMethod<
-    Code,
-    Manually
-> {
+export default class GiftCard extends PayablePaymentMethod {
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

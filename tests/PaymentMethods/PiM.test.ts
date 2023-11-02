@@ -24,6 +24,7 @@ describe('PiM', () => {
                     text: 'bedankt',
                 },
             })
+            .request()
             .then((info) => {
                 expect(info).toBeDefined();
             });

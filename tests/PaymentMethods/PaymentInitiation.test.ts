@@ -13,6 +13,7 @@ describe('PaymentInitiation methods', () => {
                 invoice: uniqid(),
                 countryCode: 'NL',
             })
+            .request()
             .then((info) => {
                 expect(info.data).toBeDefined();
             });
@@ -24,6 +25,7 @@ describe('PaymentInitiation methods', () => {
                 amountCredit: 0.01,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((info) => {
                 expect(info.data).toBeDefined();
             });

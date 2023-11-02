@@ -3,10 +3,7 @@ import { IPaymentRequest, IRefundRequest } from '../../Models';
 import { IPay, Pay } from './Models/Pay';
 import { ExtraInfo, IExtraInfo } from './Models/ExtraInfo';
 
-export default class Paypal<Code extends 'paypal', Manually extends boolean = false> extends PayablePaymentMethod<
-    Code,
-    Manually
-> {
+export default class Paypal extends PayablePaymentMethod {
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
     }

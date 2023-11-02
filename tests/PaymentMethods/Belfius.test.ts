@@ -6,7 +6,6 @@ const method = buckarooClientTest.method('belfius');
 describe('testing methods', () => {
     test('Pay Simple Payload', async () => {
         await method
-            .manually()
             .pay({
                 amountDebit: 100,
             })
@@ -17,7 +16,6 @@ describe('testing methods', () => {
     });
     test('Refund', async () => {
         await method
-            .manually()
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,

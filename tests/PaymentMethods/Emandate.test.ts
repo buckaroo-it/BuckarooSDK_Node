@@ -4,9 +4,12 @@ import { ServiceCode } from '../../src';
 const method = buckarooClientTest.method('emandate');
 describe('Testing Emandates methods', () => {
     test('GetIssuerList', async () => {
-        await method.issuerList().then((response) => {
-            expect(response.isSuccess()).toBeTruthy();
-        });
+        await method
+            .issuerList()
+            .request()
+            .then((response) => {
+                expect(response.isSuccess()).toBeTruthy();
+            });
     });
     test('CreateMandate', async () => {
         method
@@ -17,14 +20,18 @@ describe('Testing Emandates methods', () => {
                 purchaseId: 'XXXXXXXXXXXXXX',
                 sequenceType: 0,
             })
+            .request()
             .then((response) => {
                 expect(response.isPendingProcessing()).toBeTruthy();
             });
     });
     test('GetStatus', async () => {
-        method.status({ mandateId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' }).then((response) => {
-            expect(response.isSuccess()).toBeTruthy();
-        });
+        method
+            .status({ mandateId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' })
+            .request()
+            .then((response) => {
+                expect(response.isSuccess()).toBeTruthy();
+            });
     });
     test('ModifyMandate', async () => {
         method
@@ -32,6 +39,7 @@ describe('Testing Emandates methods', () => {
                 originalMandateId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 continueOnIncomplete: true,
             })
+            .request()
             .then((response) => {
                 expect(response.isFailed()).toBeTruthy();
             });
@@ -43,6 +51,7 @@ describe('Testing Emandates methods', () => {
                 mandateId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 purchaseId: 'XXXXXXXXXXXXXX',
             })
+            .request()
             .then((response) => {
                 expect(response.isValidationFailure()).toBeTruthy();
             });

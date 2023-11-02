@@ -1,11 +1,8 @@
 import PaymentMethod from './PaymentMethod';
 import { IParameter, IPaymentRequest, IRefundRequest, IRequest, ServiceParameter } from '../Models';
-import { ServiceCode, uniqid } from '../Utils';
+import { uniqid } from '../Utils';
 
-export default abstract class PayablePaymentMethod<
-    Code extends ServiceCode,
-    Manually extends boolean = false
-> extends PaymentMethod<Code, Manually> {
+export default abstract class PayablePaymentMethod extends PaymentMethod {
     protected _requiredFields: Array<keyof IRequest> = ['currency', 'returnURL', 'returnURLCancel', 'pushURL'];
 
     pay(payload: IPaymentRequest, serviceParameters?: ServiceParameter | IParameter[]) {

@@ -13,6 +13,7 @@ describe('Trustly', () => {
                     countryCode: 'NL',
                 },
             })
+            .request()
             .then((response) => {
                 expect(response.isPendingProcessing()).toBeTruthy();
             });

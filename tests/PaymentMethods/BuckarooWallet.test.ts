@@ -11,6 +11,7 @@ describe('BuckarooWallet methods', () => {
                 amountDebit: 100,
                 walletId: 'XXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((data) => {
                 expect(data.isValidationFailure()).toBeTruthy();
             });
@@ -22,6 +23,7 @@ describe('BuckarooWallet methods', () => {
                 amountCredit: 0.01,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((data) => {
                 expect(data.isFailed()).toBeTruthy();
             });
@@ -34,6 +36,7 @@ describe('BuckarooWallet methods', () => {
                 amountDebit: 100,
                 walletMutationGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((data) => {
                 expect(data.isValidationFailure()).toBeTruthy();
             });
@@ -46,6 +49,7 @@ describe('BuckarooWallet methods', () => {
                 amountCredit: 100,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((data) => {
                 expect(data).toBeDefined();
             });
@@ -64,6 +68,7 @@ describe('BuckarooWallet methods', () => {
                     iban: 'NLXXTESTXXXXXXXXXX',
                 },
             })
+            .request()
             .then((data) => {
                 expect(data.isSuccess()).toBeTruthy();
             });
@@ -76,6 +81,7 @@ describe('BuckarooWallet methods', () => {
                 amountDebit: 100,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((data) => {
                 expect(data.isValidationFailure()).toBeTruthy();
             });
@@ -93,6 +99,7 @@ describe('BuckarooWallet methods', () => {
                     iban: 'NLXXTESTXXXXXXXXXX',
                 },
             })
+            .request()
             .then((data) => {
                 expect(data.isSuccess()).toBeTruthy();
             });
@@ -102,6 +109,7 @@ describe('BuckarooWallet methods', () => {
             .getInfo({
                 walletId: 'XXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((data) => {
                 expect(data.isSuccess()).toBeTruthy();
             });
