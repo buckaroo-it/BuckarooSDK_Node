@@ -1,5 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { uniqid } from '../../src/Utils/Functions';
+import { uniqid } from '../../src';
 
 const method = buckarooClientTest.method('boekenbon');
 
@@ -8,8 +8,8 @@ describe('GiftCard methods', () => {
         const responsePay = await method
             .pay({
                 amountDebit: 100,
-                intersolveCardnumber: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-                intersolvePIN: '500',
+                intersolveCardnumber: '0000000000000000001',
+                intersolvePIN: '1000',
             })
             .request();
         expect(responsePay.isSuccess()).toBeTruthy();

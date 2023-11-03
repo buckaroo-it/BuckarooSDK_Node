@@ -1,8 +1,6 @@
 import { IInvoice } from '../../src/PaymentMethods/CreditManagement/Models/Invoice';
-import Gender from '../../src/Constants/Gender';
-import CreditManagementInstallmentInterval from '../../src/Constants/CreditManagementInstallmentInterval';
+import { CreditManagementInstallmentInterval, Gender, uniqid } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
-import { uniqid } from '../../src/Utils/Functions';
 
 const creditManagement = buckarooClientTest.method('CreditManagement3');
 

@@ -1,10 +1,7 @@
-import IPhone from '../../../Models/Interfaces/IPhone';
 import { Phone } from './Phone';
-import IAddress from '../../../Models/Interfaces/IAddress';
 import { Address } from './Address';
-import { Customer } from '../../../Models/Interfaces/ICustomer';
-import { Company, ICompany, IPerson, Person } from '../../../Models/Interfaces/IRecipient';
-import recipientCategory from '../../../Constants/RecipientCategory';
+import { Company, Customer, IAddress, ICompany, IPerson, IPhone, Person } from '../../../Models';
+import { RecipientCategory } from '../../../Constants';
 
 export class BillinkCustomer extends Customer {
     set address(address: IAddress) {
@@ -16,16 +13,16 @@ export class BillinkCustomer extends Customer {
     }
 
     set recipient(recipient: IPerson | ICompany) {
-        if (recipient.category === recipientCategory.PERSON) {
+        if (recipient.category === RecipientCategory.PERSON) {
             this.set('recipient', new BillinkPerson(recipient));
-        } else if (recipient.category === recipientCategory.COMPANY) {
+        } else if (recipient.category === RecipientCategory.COMPANY) {
             this.set('recipient', new BillinkCompany(recipient));
         } else throw new Error('Invalid recipient category');
     }
 }
 
 export class BillinkPerson extends Person {
-    set category(category: recipientCategory.PERSON) {
+    set category(category: RecipientCategory.PERSON) {
         this.set('category', 'B2C');
     }
 
@@ -35,7 +32,7 @@ export class BillinkPerson extends Person {
 }
 
 export class BillinkCompany extends Company {
-    set category(category: recipientCategory.COMPANY) {
+    set category(category: RecipientCategory.COMPANY) {
         this.set('category', 'B2B');
     }
 

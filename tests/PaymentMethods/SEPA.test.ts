@@ -1,5 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { uniqid } from '../../src/Utils/Functions';
+import { uniqid } from '../../src';
 import { IPay } from '../../src/PaymentMethods/SEPA/Models/Pay';
 
 const method = buckarooClientTest.method('sepadirectdebit');

@@ -1,10 +1,7 @@
-import { Customer } from '../../../Models/Interfaces/ICustomer';
-import IAddress from '../../../Models/Interfaces/IAddress';
+import { Customer, IAddress, IPerson, IPhone } from '../../../Models';
 import { TinkaAddress } from './Address';
-import IPhone from '../../../Models/Interfaces/IPhone';
 import { TinkaPhone } from './Phone';
 import { TinkaPerson } from './Person';
-import { IPerson } from '../../../Models/Interfaces/IRecipient';
 
 export class Recipient extends Customer {
     set address(value: IAddress) {

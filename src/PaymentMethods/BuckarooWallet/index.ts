@@ -1,9 +1,12 @@
-import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
+import { PayablePaymentMethod } from '../../Services';
 import { IWallet, Wallet } from './Models/Wallet';
-import IRequest, { IPaymentRequest, IRefundRequest } from '../../Models/IRequest';
+import { IPaymentRequest, IRefundRequest, IRequest } from '../../Models';
+import { ServiceCode } from '../../Utils';
 
 export default class BuckarooWallet extends PayablePaymentMethod {
-    protected _paymentName = 'BuckarooWallet';
+    public defaultServiceCode(): ServiceCode {
+        return 'BuckarooWalletCollecting';
+    }
 
     pay(payload: IWallet & IPaymentRequest) {
         return super.pay(payload, new Wallet(payload));
@@ -40,7 +43,7 @@ export default class BuckarooWallet extends PayablePaymentMethod {
 
     cancel(payload: IPaymentRequest & { walletMutationGuid: string }) {
         this.setPayPayload(payload);
-        this.setServiceList('Withdrawal', new Wallet(payload));
+        this.setServiceList('Cancel', new Wallet(payload));
         return super.transactionRequest();
     }
 

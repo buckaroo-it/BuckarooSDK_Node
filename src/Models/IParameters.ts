@@ -1,5 +1,5 @@
 import { Model } from './Model';
-import { Str } from '../Utils/Functions';
+import { Str } from '../Utils';
 
 export interface IParameter {
     name: string;

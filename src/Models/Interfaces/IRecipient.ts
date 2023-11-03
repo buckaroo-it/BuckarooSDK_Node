@@ -1,6 +1,5 @@
-import RecipientCategory from '../../Constants/RecipientCategory';
+import { Gender, RecipientCategory } from '../../Constants';
 import { Model } from '../Model';
-import Gender from '../../Constants/Gender';
 
 export interface IRecipient {
     [key: string]: any;

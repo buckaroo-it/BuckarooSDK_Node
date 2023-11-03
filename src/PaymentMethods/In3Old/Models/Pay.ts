@@ -1,11 +1,15 @@
-import { IPaymentRequest } from '../../../Models/IRequest';
-import RecipientCategory from '../../../Constants/RecipientCategory';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
-import IArticle from '../../../Models/Interfaces/IArticle';
+import {
+    IAddress,
+    IArticle,
+    ICompany,
+    IPaymentRequest,
+    IPerson,
+    IPhone,
+    Person,
+    ServiceParameter,
+} from '../../../Models';
+import { RecipientCategory } from '../../../Constants';
 import { In3OldArticle } from './Article';
-import { ICompany, IPerson, Person } from '../../../Models/Interfaces/IRecipient';
-import IAddress from '../../../Models/Interfaces/IAddress';
-import IPhone from '../../../Models/Interfaces/IPhone';
 import { ISubtotal, Subtotal } from './Subtotal';
 import { In3OldCompany } from './Company';
 import { In3OldAddress } from './Address';

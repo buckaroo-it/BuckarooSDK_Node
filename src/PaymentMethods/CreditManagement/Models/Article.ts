@@ -1,4 +1,4 @@
-import IArticle, { Article } from '../../../Models/Interfaces/IArticle';
+import { Article, IArticle } from '../../../Models';
 
 export interface ICreditArticle extends Partial<IArticle> {
     totalVat: number;

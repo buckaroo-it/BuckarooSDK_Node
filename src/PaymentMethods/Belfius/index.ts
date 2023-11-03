@@ -1,8 +1,11 @@
-import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
-import { IPaymentRequest, IRefundRequest } from '../../Models/IRequest';
+import { PayablePaymentMethod } from '../../Services';
+import { IPaymentRequest, IRefundRequest } from '../../Models';
+import { ServiceCode } from '../../Utils';
 
 export default class Belfius extends PayablePaymentMethod {
-    protected _paymentName = 'Belfius';
+    public defaultServiceCode(): ServiceCode {
+        return 'belfius';
+    }
 
     pay(payload: IPaymentRequest) {
         return super.pay(payload);

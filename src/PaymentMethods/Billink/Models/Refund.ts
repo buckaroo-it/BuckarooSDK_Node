@@ -1,5 +1,4 @@
-import { ServiceParameter } from '../../../Models/ServiceParameters';
-import { IRefundRequest } from '../../../Models/IRequest';
+import { IRefundRequest, ServiceParameter } from '../../../Models';
 
 export interface IRefund extends IRefundRequest {
     refundReason?: string;

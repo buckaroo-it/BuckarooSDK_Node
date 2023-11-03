@@ -1,4 +1,4 @@
-import { ServiceParameter } from '../../../Models/ServiceParameters';
+import { ServiceParameter } from '../../../Models';
 
 export interface IPay {
     issuer?: string;

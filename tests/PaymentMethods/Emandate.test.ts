@@ -46,7 +46,7 @@ describe('Testing Emandates methods', () => {
     });
     test('CancelMandate', async () => {
         method
-            .setPaymentName('emandateb2b' as ServiceCode)
+            .setServiceCode('emandateb2b' as ServiceCode)
             .cancelMandate({
                 mandateId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 purchaseId: 'XXXXXXXXXXXXXX',

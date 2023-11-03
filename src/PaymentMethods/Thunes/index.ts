@@ -1,9 +1,13 @@
-import PaymentMethod from '../../Services/PaymentMethod';
-import IRequest from '../../Models/IRequest';
+import { PaymentMethod } from '../../Services';
+import { IRequest } from '../../Models';
+import { ServiceCode } from '../../Utils';
 
 type key = Required<Pick<IRequest, 'originalTransactionKey'>>;
+
 export default class Thunes extends PaymentMethod {
-    protected _paymentName = 'Thunes';
+    public defaultServiceCode(): ServiceCode {
+        return 'thunes';
+    }
 
     getStatus(payload: key) {
         this.setServiceList('getStatus');

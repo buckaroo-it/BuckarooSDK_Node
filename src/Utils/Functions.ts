@@ -5,7 +5,7 @@ import {
     IParameter,
     IServiceParameters,
     ServiceParameterTypes,
-} from '../Models/IParameters';
+} from '../Models';
 
 export function uniqid(prefix: string = '', random: boolean = false) {
     const sec = Date.now() * 1000 + Math.random() * 1000;

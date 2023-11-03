@@ -1,8 +1,6 @@
 import PaymentMethod from './PaymentMethod';
-import IRequest, { IPaymentRequest, IRefundRequest } from '../Models/IRequest';
-import { uniqid } from '../Utils/Functions';
-import { ServiceParameter } from '../Models/ServiceParameters';
-import { IParameter } from '../Models/IParameters';
+import { IParameter, IPaymentRequest, IRefundRequest, IRequest, ServiceParameter } from '../Models';
+import { uniqid } from '../Utils';
 
 export default abstract class PayablePaymentMethod extends PaymentMethod {
     protected _requiredFields: Array<keyof IRequest> = ['currency', 'returnURL', 'returnURLCancel', 'pushURL'];

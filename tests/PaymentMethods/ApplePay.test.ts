@@ -1,4 +1,4 @@
-import { uniqid } from '../../src/Utils/Functions';
+import { uniqid } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
 
 const method = buckarooClientTest.method('applepay');

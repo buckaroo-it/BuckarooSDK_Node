@@ -1,7 +1,6 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { getIPAddress, uniqid } from '../../src/Utils/Functions';
+import { getIPAddress, RecipientCategory, uniqid } from '../../src';
 import { IPay } from '../../src/PaymentMethods/In3/Models/Pay';
-import RecipientCategory from '../../src/Constants/RecipientCategory';
 
 const in3 = buckarooClientTest.method('In3');
 
@@ -83,7 +82,7 @@ const payload: IPay = {
             category: 'test product',
             vatPercentage: 21,
             quantity: 2,
-            price: 20.1,
+            price: 25,
         },
         {
             identifier: 'Articlenumber2',
@@ -92,7 +91,7 @@ const payload: IPay = {
             category: 'test product',
             vatPercentage: 21,
             quantity: 1,
-            price: 10.1,
+            price: 25,
         },
         {
             identifier: 'USPShippingID',
@@ -101,7 +100,7 @@ const payload: IPay = {
             category: 'test product',
             vatPercentage: 21,
             quantity: 1,
-            price: 2,
+            price: 25,
         },
     ],
 };

@@ -1,12 +1,12 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { uniqid } from '../../src/Utils/Functions';
+import { uniqid } from '../../src';
 
 const marketplaces = buckarooClientTest.method('marketplaces');
 const ideal = buckarooClientTest.method('ideal');
 
 describe('Testing Marketplaces methods', () => {
     test('Split', async () => {
-        marketplaces.split({
+        const marketplacesResponse = marketplaces.split({
             description: 'INV0001',
             daysUntilTransfer: 2,
             marketplace: {
@@ -27,7 +27,7 @@ describe('Testing Marketplaces methods', () => {
             ],
         });
         return ideal
-            .combine(marketplaces)
+            .combine(marketplacesResponse.data)
             .pay({
                 issuer: 'ABNANL2A',
                 amountDebit: 100,
@@ -59,7 +59,7 @@ describe('Testing Marketplaces methods', () => {
             });
     });
     test('refundSupplementary', async () => {
-        marketplaces.refundSupplementary({
+        const marketplacesResponse = marketplaces.refundSupplementary({
             sellers: [
                 {
                     accountId: 'XXXXXXXXXXXXXXXXXXXXXXXX',
@@ -68,7 +68,7 @@ describe('Testing Marketplaces methods', () => {
             ],
         });
         ideal
-            .combine(marketplaces)
+            .combine(marketplacesResponse.data)
             .refund({
                 invoice: uniqid(),
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',

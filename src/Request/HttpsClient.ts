@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { HttpResponseConstructor } from '../Models/Response/HttpClientResponse';
+import { HttpResponseConstructor } from '../Models';
 import { RequestConfig } from './Headers';
-import HttpMethods from '../Constants/HttpMethods';
+import { HttpMethods } from '../Constants';
 
 export default class HttpsClient {
     protected _options: AxiosRequestConfig = {};
@@ -16,8 +16,8 @@ export default class HttpsClient {
 
     public async sendRequest<R extends HttpResponseConstructor = HttpResponseConstructor>(
         url: URL,
-        data: object = {},
-        options: RequestConfig = {},
+        data: object,
+        options: RequestConfig,
         responseClass: R
     ): Promise<InstanceType<R>> {
         try {

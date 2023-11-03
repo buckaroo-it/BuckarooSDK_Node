@@ -1,12 +1,8 @@
-import { ICompany, IPerson } from '../../../Models/Interfaces/IRecipient';
-import IAddress from '../../../Models/Interfaces/IAddress';
-import IPhone from '../../../Models/Interfaces/IPhone';
-import { Model } from '../../../Models/Model';
-import RecipientCategory from '../../../Constants/RecipientCategory';
+import { IAddress, ICompany, ICustomer, IPerson, IPhone, Model } from '../../../Models';
+import { RecipientCategory } from '../../../Constants';
 import Phone from './Phone';
 import Address from './Address';
 import { AfterPayCompany, AfterPayPerson } from './Recipient';
-import { ICustomer } from '../../../Models/Interfaces/ICustomer';
 
 export default class Customer extends Model implements ICustomer {
     set recipient(recipient: IPerson | ICompany) {

@@ -1,4 +1,4 @@
-import * as AllPaymentMethods from '../PaymentMethods/PaymentMethods';
+import * as AllPaymentMethods from '../PaymentMethods';
 
 export type AvailablePaymentMethods = typeof AllPaymentMethods;
 export type ServiceCode = keyof AvailablePaymentMethods;

@@ -1,4 +1,4 @@
-import { Article as ArticleClass } from '../../../Models/Interfaces/IArticle';
+import { Article as ArticleClass } from '../../../Models';
 
 export default class Article extends ArticleClass {
     get identifier(): string {

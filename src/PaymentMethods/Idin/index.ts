@@ -1,8 +1,11 @@
-import PaymentMethod from '../../Services/PaymentMethod';
+import { PaymentMethod } from '../../Services';
 import { IPay, Pay } from './Models/Pay';
+import { ServiceCode } from '../../Utils';
 
 export default class Idin extends PaymentMethod {
-    protected _paymentName = 'Idin';
+    public defaultServiceCode(): ServiceCode {
+        return 'idin';
+    }
 
     identify(payload: IPay) {
         this.setServiceList('Identify', new Pay(payload));

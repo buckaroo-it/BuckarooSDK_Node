@@ -1,9 +1,12 @@
-import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
-import { IRefundRequest } from '../../Models/IRequest';
+import { PayablePaymentMethod } from '../../Services';
+import { IRefundRequest } from '../../Models';
 import { IPay, Pay } from './Models/Pay';
+import { ServiceCode } from '../../Utils';
 
 export default class Trustly extends PayablePaymentMethod {
-    protected _paymentName = 'Trustly';
+    public defaultServiceCode(): ServiceCode {
+        return 'trustly';
+    }
 
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));

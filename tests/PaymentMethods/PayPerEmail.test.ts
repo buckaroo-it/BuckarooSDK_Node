@@ -1,6 +1,5 @@
-import Gender from '../../src/Constants/Gender';
+import { Gender, uniqid } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
-import { uniqid } from '../../src/Utils/Functions';
 
 const method = buckarooClientTest.method('payperemail');
 

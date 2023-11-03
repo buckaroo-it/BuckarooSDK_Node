@@ -1,8 +1,7 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import Paypal from '../../src/PaymentMethods/Paypal';
-import { uniqid } from '../../src/Utils/Functions';
+import { uniqid } from '../../src';
 
-const method = new Paypal('paypal');
+const method = buckarooClientTest.method('paypal');
 
 describe('Paypal', () => {
     test('Pay', async () => {

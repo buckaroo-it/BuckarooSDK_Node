@@ -1,9 +1,12 @@
-import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
+import { PayablePaymentMethod } from '../../Services';
 import { IPay, Pay } from './Models/Pay';
-import { IRefundRequest } from '../../Models/IRequest';
+import { IRefundRequest } from '../../Models';
+import { ServiceCode } from '../../Utils';
 
 export default class BankTransfer extends PayablePaymentMethod {
-    protected _paymentName = 'BankTransfer';
+    public defaultServiceCode(): ServiceCode {
+        return 'transfer';
+    }
 
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));

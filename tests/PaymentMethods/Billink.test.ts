@@ -1,7 +1,6 @@
 import { IPay } from '../../src/PaymentMethods/Billink/Models/Pay';
 import buckarooClientTest from '../BuckarooClient.test';
-import RecipientCategory from '../../src/Constants/RecipientCategory';
-import { uniqid } from '../../src/Utils/Functions';
+import { RecipientCategory, uniqid } from '../../src';
 
 const method = buckarooClientTest.method('billink');
 

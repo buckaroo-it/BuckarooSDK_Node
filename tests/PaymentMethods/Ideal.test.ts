@@ -1,4 +1,4 @@
-import { getIPAddress, uniqid } from '../../src/Utils/Functions';
+import { getIPAddress, uniqid } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
 
 const ideal = buckarooClientTest.method('ideal');

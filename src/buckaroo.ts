@@ -1,10 +1,9 @@
 import { getMethod, IConfig, ICredentials, PaymentMethodInstance, ServiceCode } from './Utils';
-import HttpsClient from './Request/HttpsClient';
+import { HttpsClient, Request } from './Request';
 import { Agent } from 'https';
-import Request from './Request/Request';
 import NoService from './PaymentMethods/NoService';
-import TransactionService from './Services/TransactionService';
-import { Credentials } from './Handlers/Credentials';
+import { TransactionService } from './Services';
+import { Credentials } from './Handlers';
 
 export default class Buckaroo {
     private static _client: Buckaroo;

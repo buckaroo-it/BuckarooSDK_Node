@@ -1,5 +1,8 @@
-import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
+import { PayablePaymentMethod } from '../../Services';
+import { ServiceCode } from '../../Utils';
 
 export default class MultiBanco extends PayablePaymentMethod {
-    protected _paymentName = 'MultiBanco';
+    public defaultServiceCode(): ServiceCode {
+        return 'multibanco';
+    }
 }

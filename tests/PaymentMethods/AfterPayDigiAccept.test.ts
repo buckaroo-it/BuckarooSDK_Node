@@ -1,8 +1,6 @@
-import { RequestTypes } from '../../src/Constants/Endpoints';
+import { Gender, getIPAddress, RequestTypes, uniqid } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
-import { getIPAddress, uniqid } from '../../src/Utils/Functions';
 import { IPay } from '../../src/PaymentMethods/AfterpayDigiAccept/Model/Pay';
-import Gender from '../../src/Constants/Gender';
 
 const method = buckarooClientTest.method('afterpaydigiaccept');
 

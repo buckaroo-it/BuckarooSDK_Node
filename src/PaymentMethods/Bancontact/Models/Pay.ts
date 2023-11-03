@@ -1,5 +1,4 @@
-import IRequest, { IPaymentRequest } from '../../../Models/IRequest';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
+import { IPaymentRequest, IRequest, ServiceParameter } from '../../../Models';
 
 export interface IPay extends IPaymentRequest {
     saveToken?: boolean;

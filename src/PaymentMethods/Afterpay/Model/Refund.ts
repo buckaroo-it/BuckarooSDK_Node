@@ -1,6 +1,5 @@
-import { IRefundRequest } from '../../../Models/IRequest';
+import { IRefundRequest, ServiceParameter } from '../../../Models';
 import { AfterPayArticle, IAfterPayArticle } from './Article';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
 
 export interface IRefund extends IRefundRequest {
     articles?: IAfterPayArticle[];

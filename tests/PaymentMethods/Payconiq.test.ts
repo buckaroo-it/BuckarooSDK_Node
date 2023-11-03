@@ -1,5 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { uniqid } from '../../src/Utils/Functions';
+import { uniqid } from '../../src';
 
 const payconiq = buckarooClientTest.method('payconiq');
 describe('Payconiq', () => {

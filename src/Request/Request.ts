@@ -1,16 +1,18 @@
-import Headers, { RequestConfig, RequestHeaders } from './Headers';
-import { HttpClientResponse, HttpResponseConstructor } from '../Models/Response/HttpClientResponse';
+import Headers, { RequestConfig } from './Headers';
+import {
+    BatchRequestResponse,
+    HttpClientResponse,
+    HttpResponseConstructor,
+    IRequest,
+    IService,
+    SpecificationRequestResponse,
+    TransactionResponse,
+} from '../Models';
 import { DataRequestData, SpecificationRequestData, TransactionData } from './DataModels';
 import Buckaroo from '../index';
-import Endpoints, { RequestTypes } from '../Constants/Endpoints';
-import { TransactionResponse } from '../Models/Response/TransactionResponse';
-import { SpecificationRequestResponse } from '../Models/Response/SpecificationRequestResponse';
-import { BatchRequestResponse } from '../Models/Response/BatchRequestResponse';
-import HttpMethods from '../Constants/HttpMethods';
-import { ICredentials } from '../Utils/Types';
+import { Endpoints, HttpMethods, RequestTypes } from '../Constants';
+import { ICredentials } from '../Utils';
 import { Hmac } from './Hmac';
-import { IService } from '../Models/IServiceList';
-import IRequest from '../Models/IRequest';
 
 export default class Request<
     HttpResponse extends HttpResponseConstructor = HttpResponseConstructor,
@@ -58,21 +60,26 @@ export default class Request<
         return new Request(RequestTypes.Data, HttpMethods.POST, new DataRequestData(payload), TransactionResponse);
     }
 
-    static Specification(type: RequestTypes.Data | RequestTypes.Transaction, data: IService[] | IService) {
+    static Specification<T extends IService[] | IService>(
+        type: RequestTypes.Data | RequestTypes.Transaction,
+        data: T
+    ): T extends IService[]
+        ? Request<typeof SpecificationRequestResponse, SpecificationRequestData>
+        : Request<typeof SpecificationRequestResponse, undefined> {
         if (Array.isArray(data)) {
             return new Request(
                 type + `/Specifications`,
                 HttpMethods.POST,
                 new SpecificationRequestData(data),
                 SpecificationRequestResponse
-            );
+            ) as any;
         }
         return new Request(
             type + `/Specification/${data?.name}?serviceVersion=${data?.version}`,
             HttpMethods.GET,
             undefined,
             SpecificationRequestResponse
-        );
+        ) as any;
     }
 
     static BatchTransaction(payload: IRequest[] = []) {
@@ -96,7 +103,7 @@ export default class Request<
             data,
             {
                 method: this._httpMethod,
-                headers: this.headers as RequestHeaders,
+                headers: this.headers,
                 ...options,
             },
             this.responseHandler

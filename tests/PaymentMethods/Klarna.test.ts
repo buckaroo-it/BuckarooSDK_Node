@@ -1,7 +1,6 @@
 import buckarooClientTest from '../BuckarooClient.test';
 import { IPay } from '../../src/PaymentMethods/Klarna/Models/Pay';
-import { uniqid } from '../../src/Utils/Functions';
-import RecipientCategory from '../../src/Constants/RecipientCategory';
+import { RecipientCategory, uniqid } from '../../src';
 
 const klarna = buckarooClientTest.method('klarna');
 describe('Testing Klarna methods', () => {
@@ -74,15 +73,15 @@ let payload: IPay = {
             identifier: 'Articlenumber1',
             description: 'Blue Toy Car',
             vatPercentage: 21,
-            quantity: 2,
-            price: 20.1,
+            quantity: 1,
+            price: 50,
         },
         {
             identifier: 'Articlenumber2',
             description: 'Red Toy Car',
             vatPercentage: 21,
             quantity: 1,
-            price: 10.1,
+            price: 50,
         },
     ],
 };

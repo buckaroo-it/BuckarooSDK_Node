@@ -1,4 +1,4 @@
-import { Str } from '../../Utils/Functions';
+import { Str } from '../../Utils';
 import { HttpClientResponse } from './HttpClientResponse';
 
 export class SpecificationRequestResponse extends HttpClientResponse {
@@ -61,9 +61,5 @@ export interface ISpecificationRequestResponse {
     description: string;
     actions?: Action[];
     supportedCurrencies?: SupportedCurrency[];
-    customParameters?: {
-        description: string;
-        dataType: number;
-        name: string;
-    }[];
+    customParameters?: Record<string, any>;
 }

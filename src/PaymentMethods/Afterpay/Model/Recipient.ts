@@ -1,4 +1,4 @@
-import { Company, IPerson, Person } from '../../../Models/Interfaces/IRecipient';
+import { Company, IPerson, Person } from '../../../Models';
 
 export class AfterPayCompany extends Company {
     set title(title: string) {

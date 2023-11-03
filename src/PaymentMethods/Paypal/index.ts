@@ -1,10 +1,13 @@
-import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
-import { IPaymentRequest, IRefundRequest } from '../../Models/IRequest';
+import { PayablePaymentMethod } from '../../Services';
+import { IPaymentRequest, IRefundRequest } from '../../Models';
 import { IPay, Pay } from './Models/Pay';
 import { ExtraInfo, IExtraInfo } from './Models/ExtraInfo';
+import { ServiceCode } from '../../Utils';
 
 export default class Paypal extends PayablePaymentMethod {
-    protected _paymentName = 'Paypal';
+    public defaultServiceCode(): ServiceCode {
+        return 'paypal';
+    }
 
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));

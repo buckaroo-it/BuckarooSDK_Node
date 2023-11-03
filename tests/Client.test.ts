@@ -1,9 +1,6 @@
 import client from './BuckarooClient.test';
-import { TransactionResponse } from '../src/Models/Response/TransactionResponse';
-import { HttpClientResponse } from '../src/Models/Response/HttpClientResponse';
-import { uniqid } from '../src/Utils/Functions';
+import { HttpClientResponse, IRequest, TransactionResponse, uniqid } from '../src';
 import { creditManagementTestInvoice } from './PaymentMethods/CreditManagment.test';
-import IRequest from '../src/Models/IRequest';
 
 describe('Testing Buckaroo Client', () => {
     test('Credentials', () => {

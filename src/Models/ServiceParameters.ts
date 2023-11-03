@@ -1,5 +1,5 @@
 import { Model } from './Model';
-import { DataFormatter } from '../Utils/Functions';
+import { DataFormatter } from '../Utils';
 import { IParameter } from './IParameters';
 
 export class ServiceParameter extends Model {

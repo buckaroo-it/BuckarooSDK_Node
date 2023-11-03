@@ -1,9 +1,12 @@
-import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
+import { PayablePaymentMethod } from '../../Services';
 import IPay, { Pay } from './Models/Pay';
 import { IRefund, Refund } from './Models/Refund';
+import { ServiceCode } from '../../Utils';
 
 export default class GiftCard extends PayablePaymentMethod {
-    protected _paymentName = 'GiftCard';
+    public defaultServiceCode(): ServiceCode {
+        return 'giftcard';
+    }
 
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));

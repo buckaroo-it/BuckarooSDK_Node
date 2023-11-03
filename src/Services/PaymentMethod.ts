@@ -1,22 +1,17 @@
-import { RequestTypes } from '../Constants/Endpoints';
-import IRequest from '../Models/IRequest';
-import Buckaroo from '../index';
-import Request from '../Request/Request';
-import { IService, ServiceList } from '../Models/IServiceList';
-import { ServiceParameter } from '../Models/ServiceParameters';
-import { IParameter } from '../Models/IParameters';
-import { TransactionData } from '../Request/DataModels';
-import { PaymentMethodInstance, ServiceCode } from '../Utils/MethodTypes';
+import { RequestTypes } from '../Constants';
+import { IParameter, IRequest, IService, ServiceList, ServiceParameter } from '../Models';
+import Buckaroo, { PaymentMethodInstance } from '../index';
+import { Request, TransactionData } from '../Request';
+import { ServiceCode } from '../Utils';
 
 export default abstract class PaymentMethod {
-    protected _paymentName: string = '';
     protected _serviceCode?: ServiceCode;
     protected _serviceVersion: number = 0;
     protected _payload: TransactionData = new TransactionData();
     protected _requiredFields: Array<keyof IRequest> = [];
 
     constructor(serviceCode?: ServiceCode) {
-        this._serviceCode = serviceCode ?? (this.paymentName as ServiceCode);
+        this.setServiceCode((serviceCode ?? this._serviceCode) as ServiceCode);
     }
 
     get serviceVersion() {
@@ -28,15 +23,12 @@ export default abstract class PaymentMethod {
     }
 
     get serviceCode(): ServiceCode {
-        return this._serviceCode || 'noservice';
+        return this._serviceCode ?? 'noservice';
     }
 
-    get paymentName() {
-        return this._paymentName;
-    }
+    public abstract defaultServiceCode(): ServiceCode;
 
-    setPaymentName(value: ServiceCode): this {
-        this._paymentName = value;
+    setServiceCode(value: ServiceCode): this {
         this._serviceCode = value;
         return this;
     }
@@ -54,10 +46,6 @@ export default abstract class PaymentMethod {
         return this._payload.getServiceList();
     }
 
-    public specification(type: RequestTypes.Transaction | RequestTypes.Data = RequestTypes.Data) {
-        return Request.Specification(type, { name: this.serviceCode, version: this.serviceVersion });
-    }
-
     combine<Name extends ServiceCode>(data: Name): PaymentMethodInstance<Name>;
 
     combine<Payload extends TransactionData>(data: Payload): this;
@@ -72,6 +60,10 @@ export default abstract class PaymentMethod {
         }
         this.setPayload(data instanceof PaymentMethod ? data.getPayload() : data);
         return this;
+    }
+
+    public specification(type: RequestTypes.Transaction | RequestTypes.Data = RequestTypes.Data) {
+        return Request.Specification(type, { name: this.serviceCode, version: this.serviceVersion });
     }
 
     protected setRequiredFields(requiredFields: Array<keyof IRequest> = this._requiredFields) {

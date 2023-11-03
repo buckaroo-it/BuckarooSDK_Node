@@ -1,6 +1,5 @@
-import Gender from '../../src/Constants/Gender';
+import { Gender, uniqid } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
-import { uniqid } from '../../src/Utils/Functions';
 
 const method = buckarooClientTest.method('tinka');
 describe('Tinka', () => {
@@ -38,7 +37,7 @@ describe('Tinka', () => {
                         color: 'Red',
                         size: 'Small',
                         quantity: 1,
-                        price: 3.5,
+                        price: 100,
                         unitCode: 'test',
                     },
                 ],

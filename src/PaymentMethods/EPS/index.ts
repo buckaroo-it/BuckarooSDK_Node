@@ -1,5 +1,8 @@
-import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
+import { PayablePaymentMethod } from '../../Services';
+import { ServiceCode } from '../../Utils';
 
 export default class EPS extends PayablePaymentMethod {
-    protected _paymentName = 'EPS';
+    public defaultServiceCode(): ServiceCode {
+        return 'eps';
+    }
 }

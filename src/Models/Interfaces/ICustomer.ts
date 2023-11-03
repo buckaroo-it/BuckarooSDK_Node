@@ -1,8 +1,5 @@
-import IAddress, { Address } from './IAddress';
-import IPhone, { Phone } from './IPhone';
-import { Company, ICompany, IPerson, Person } from './IRecipient';
-import { Model } from '../Model';
-import recipientCategory from '../../Constants/RecipientCategory';
+import { Address, Company, IAddress, ICompany, IPerson, IPhone, Model, Person, Phone } from './../';
+import { RecipientCategory } from '../../Constants';
 
 export interface ICustomer {
     phone?: Partial<IPhone>;
@@ -25,10 +22,9 @@ export class Customer extends Model {
     }
 
     set recipient(recipient: IPerson | ICompany) {
-        if (recipient.category === recipientCategory.PERSON) {
-            this.set('recipient', new Person(recipient));
-        } else if (recipient.category === recipientCategory.COMPANY) {
-            this.set('recipient', new Company(recipient));
-        }
+        this.set(
+            'recipient',
+            recipient.category === RecipientCategory.COMPANY ? new Company(recipient) : new Person(recipient)
+        );
     }
 }

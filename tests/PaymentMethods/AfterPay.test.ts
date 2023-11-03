@@ -1,7 +1,6 @@
 import buckarooClientTest from '../BuckarooClient.test';
 import { IPay } from '../../src/PaymentMethods/Afterpay/Model/Pay';
-import RecipientCategory from '../../src/Constants/RecipientCategory';
-import { getIPAddress, uniqid } from '../../src/Utils/Functions';
+import { getIPAddress, RecipientCategory, uniqid } from '../../src';
 
 const paymentPayload: IPay = {
     invoice: uniqid(),

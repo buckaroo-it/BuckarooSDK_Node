@@ -1,4 +1,4 @@
-import IArticle, { Article as ArticleClass } from '../../../Models/Interfaces/IArticle';
+import { Article as ArticleClass, IArticle } from '../../../Models';
 
 export interface IBillinkArticle extends Partial<IArticle> {
     priceExcl: number;

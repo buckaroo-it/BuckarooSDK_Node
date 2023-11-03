@@ -1,6 +1,5 @@
-import IRequest from '../../../Models/IRequest';
-import CreditManagementInstallmentInterval from '../../../Constants/CreditManagementInstallmentInterval';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
+import { CreditManagementInstallmentInterval } from '../../../Constants';
+import { IRequest, ServiceParameter } from '../../../Models';
 
 export interface IPaymentPlan extends IRequest {
     includedInvoiceKey?: string;

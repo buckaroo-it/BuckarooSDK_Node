@@ -1,6 +1,4 @@
-import { ServiceParameter } from '../../../Models/ServiceParameters';
-import IDebtor, { Debtor as DebtorClass } from '../../../Models/Interfaces/IDebtor';
-import IRequest from '../../../Models/IRequest';
+import { Debtor as DebtorClass, IDebtor, IRequest, ServiceParameter } from '../../../Models';
 
 export interface IDebtorInfo extends IRequest {
     debtor: IDebtor;

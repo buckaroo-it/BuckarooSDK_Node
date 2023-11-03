@@ -1,11 +1,15 @@
 import { IPay, Pay } from './Model/Pay';
-import { IPaymentRequest, IRefundRequest } from '../../Models/IRequest';
-import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
 import { IRefund, Refund } from './Model/Refund';
+import { IPaymentRequest, IRefundRequest } from '../../Models';
+import { PayablePaymentMethod } from '../../Services';
+import { ServiceCode } from '../../Utils';
 
 export default class Afterpay extends PayablePaymentMethod {
-    protected _paymentName = 'Afterpay';
     protected _serviceVersion = 1;
+
+    public defaultServiceCode(): ServiceCode {
+        return 'afterpay';
+    }
 
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));

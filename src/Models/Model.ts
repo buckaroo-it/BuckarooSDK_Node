@@ -1,4 +1,4 @@
-import { Str } from '../Utils/Functions';
+import { Str } from '../Utils';
 
 export class Model {
     [key: keyof any]: any;

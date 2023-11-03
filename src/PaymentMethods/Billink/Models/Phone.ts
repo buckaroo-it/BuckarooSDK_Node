@@ -1,4 +1,4 @@
-import { Phone as PhoneClass } from '../../../Models/Interfaces/IPhone';
+import { Phone as PhoneClass } from '../../../Models';
 
 export class Phone extends PhoneClass {
     set fax(fax: string) {

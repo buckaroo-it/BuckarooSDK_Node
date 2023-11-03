@@ -1,10 +1,9 @@
-import PayablePaymentMethod from '../../Services/PayablePaymentMethod';
+import { PayablePaymentMethod } from '../../Services';
+import { ServiceCode } from '../../Utils';
 
 export default class NoService extends PayablePaymentMethod {
-    protected _paymentName = 'noserivce';
-
-    get paymentName() {
-        return 'NoService';
+    public defaultServiceCode(): ServiceCode {
+        return 'noservice';
     }
 
     protected setServiceList(): this {

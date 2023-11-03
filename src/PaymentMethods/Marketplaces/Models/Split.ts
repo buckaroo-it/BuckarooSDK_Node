@@ -1,5 +1,4 @@
-import IRequest from '../../../Models/IRequest';
-import { ServiceParameter } from '../../../Models/ServiceParameters';
+import { IRequest, ServiceParameter } from '../../../Models';
 import { IMarketplace, Marketplace } from './Marketplace';
 import { ISeller, Seller } from './Seller';
 
