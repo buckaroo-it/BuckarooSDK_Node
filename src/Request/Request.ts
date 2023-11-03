@@ -1,4 +1,4 @@
-import Headers, { RequestConfig, RequestHeaders } from './Headers';
+import Headers, { RequestConfig } from './Headers';
 import {
     BatchRequestResponse,
     HttpClientResponse,
