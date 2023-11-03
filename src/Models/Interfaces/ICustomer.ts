@@ -22,10 +22,9 @@ export class Customer extends Model {
     }
 
     set recipient(recipient: IPerson | ICompany) {
-        if (recipient.category === RecipientCategory.PERSON) {
-            this.set('recipient', new Person(recipient));
-        } else if (recipient.category === RecipientCategory.COMPANY) {
-            this.set('recipient', new Company(recipient));
-        }
+        this.set(
+            'recipient',
+            recipient.category === RecipientCategory.COMPANY ? new Company(recipient) : new Person(recipient)
+        );
     }
 }

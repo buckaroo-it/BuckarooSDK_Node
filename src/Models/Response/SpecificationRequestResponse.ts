@@ -61,9 +61,5 @@ export interface ISpecificationRequestResponse {
     description: string;
     actions?: Action[];
     supportedCurrencies?: SupportedCurrency[];
-    customParameters?: {
-        description: string;
-        dataType: number;
-        name: string;
-    }[];
+    customParameters?: Record<string, any>;
 }
