@@ -16,8 +16,8 @@ export default class HttpsClient {
 
     public async sendRequest<R extends HttpResponseConstructor = HttpResponseConstructor>(
         url: URL,
-        data: object = {},
-        options: RequestConfig = {},
+        data: object,
+        options: RequestConfig,
         responseClass: R
     ): Promise<InstanceType<R>> {
         try {

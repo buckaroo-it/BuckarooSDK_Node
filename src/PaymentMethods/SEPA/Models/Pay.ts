@@ -1,5 +1,4 @@
 import { IPaymentRequest, IPerson, Person, ServiceParameter } from '../../../Models';
-import { RecipientCategory } from '../../../Constants';
 
 export interface IPay extends IPaymentRequest {
     customer?: Partial<IPerson>;
@@ -45,8 +44,6 @@ export class Pay extends ServiceParameter {
 }
 
 export class Customer extends Person {
-    set category(value: RecipientCategory.PERSON) {}
-
     get name(): string {
         return this.get('customeraccountname');
     }

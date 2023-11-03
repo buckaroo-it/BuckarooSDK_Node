@@ -103,7 +103,7 @@ export default class Request<
             data,
             {
                 method: this._httpMethod,
-                headers: this.headers as RequestHeaders,
+                headers: this.headers,
                 ...options,
             },
             this.responseHandler

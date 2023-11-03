@@ -43,7 +43,7 @@ export default class BuckarooWallet extends PayablePaymentMethod {
 
     cancel(payload: IPaymentRequest & { walletMutationGuid: string }) {
         this.setPayPayload(payload);
-        this.setServiceList('Withdrawal', new Wallet(payload));
+        this.setServiceList('Cancel', new Wallet(payload));
         return super.transactionRequest();
     }
 
