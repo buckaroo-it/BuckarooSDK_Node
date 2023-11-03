@@ -4,7 +4,9 @@ import { IPaymentRequest, IRefundRequest, IRequest } from '../../Models';
 import { ServiceCode } from '../../Utils';
 
 export default class BuckarooWallet extends PayablePaymentMethod {
-    protected _serviceCode: ServiceCode = 'BuckarooWalletCollecting';
+    public defaultServiceCode(): ServiceCode {
+        return 'BuckarooWalletCollecting';
+    }
 
     pay(payload: IWallet & IPaymentRequest) {
         return super.pay(payload, new Wallet(payload));

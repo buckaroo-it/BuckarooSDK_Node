@@ -10,9 +10,12 @@ import { DebtorInfo, IDebtorInfo } from './Models/DebtorInfo';
 import { ServiceCode } from '../../Utils';
 
 export default class CreditManagement extends PaymentMethod {
-    protected _serviceCode: ServiceCode = 'CreditManagement3';
     protected _serviceVersion = 1;
     protected _requiredFields = ['currency'];
+
+    public defaultServiceCode(): ServiceCode {
+        return 'CreditManagement3';
+    }
 
     createInvoice(payload: IInvoice) {
         this.setServiceList('CreateInvoice', new Invoice(payload));

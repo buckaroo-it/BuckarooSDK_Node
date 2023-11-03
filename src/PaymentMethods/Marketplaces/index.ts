@@ -4,7 +4,9 @@ import { ITransfer } from './Models/Transfer';
 import { ServiceCode } from '../../Utils';
 
 export default class Marketplaces extends PaymentMethod {
-    protected _serviceCode: ServiceCode = 'marketplaces';
+    public defaultServiceCode(): ServiceCode {
+        return 'marketplaces';
+    }
 
     split(payload: ISplit) {
         this.setServiceList('Split', new Split(payload));

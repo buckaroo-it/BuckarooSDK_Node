@@ -3,7 +3,9 @@ import { PaymentMethod } from '../../Services';
 import { ServiceCode } from '../../Utils';
 
 export default class IdealQR extends PaymentMethod {
-    protected _serviceCode: ServiceCode = 'idealqr';
+    public defaultServiceCode(): ServiceCode {
+        return 'idealqr';
+    }
 
     generate(payload: IGenerate) {
         this.setServiceList('Generate', new Generate(payload));

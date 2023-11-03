@@ -3,7 +3,9 @@ import { IInvitation, Invitation } from './Models/Invitation';
 import { ServiceCode } from '../../Utils';
 
 export default class PayPerEmail extends PaymentMethod {
-    protected _serviceCode: ServiceCode = 'payperemail';
+    public defaultServiceCode(): ServiceCode {
+        return 'payperemail';
+    }
 
     paymentInvitation(payload: IInvitation) {
         this.setServiceList('paymentInvitation', new Invitation(payload));

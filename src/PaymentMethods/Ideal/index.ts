@@ -5,11 +5,14 @@ import { IRefundRequest } from '../../Models';
 import { ServiceCode } from '../../Utils';
 
 export default class Ideal extends PayablePaymentMethod {
-    protected _serviceCode: ServiceCode = 'ideal';
     protected _serviceVersion = 2;
 
     constructor(serviceCode: 'ideal' | 'idealprocessing' = 'ideal') {
         super(serviceCode);
+    }
+
+    public defaultServiceCode(): ServiceCode {
+        return 'ideal';
     }
 
     pay(data: IPay) {

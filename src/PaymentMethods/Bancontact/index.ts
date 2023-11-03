@@ -4,7 +4,9 @@ import { IRefundRequest } from '../../Models';
 import { ServiceCode } from '../../Utils';
 
 export default class Bancontact extends PayablePaymentMethod {
-    protected _serviceCode: ServiceCode = 'bancontactmrcash';
+    public defaultServiceCode(): ServiceCode {
+        return 'bancontactmrcash';
+    }
 
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));

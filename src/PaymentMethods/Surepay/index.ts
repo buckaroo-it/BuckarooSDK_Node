@@ -3,7 +3,9 @@ import { IVerify, Verify } from './Models/Verify';
 import { ServiceCode } from '../../Utils';
 
 export default class Surepay extends PaymentMethod {
-    protected _serviceCode: ServiceCode = 'surepay';
+    public defaultServiceCode(): ServiceCode {
+        return 'surepay';
+    }
 
     verify(payload: IVerify) {
         this.setServiceList('Verify', new Verify(payload));

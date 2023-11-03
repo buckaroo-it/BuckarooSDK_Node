@@ -5,7 +5,9 @@ import { ExtraInfo, IExtraInfo } from './Models/ExtraInfo';
 import { ServiceCode } from '../../Utils';
 
 export default class Paypal extends PayablePaymentMethod {
-    protected _serviceCode: ServiceCode = 'paypal';
+    public defaultServiceCode(): ServiceCode {
+        return 'paypal';
+    }
 
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));

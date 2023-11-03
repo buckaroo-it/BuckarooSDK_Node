@@ -5,7 +5,9 @@ import { Capture, ICapture } from './Models/Capture';
 import { ServiceCode } from '../../Utils';
 
 export default class Billink extends PayablePaymentMethod {
-    protected _serviceCode: ServiceCode = 'billink';
+    public defaultServiceCode(): ServiceCode {
+        return 'billink';
+    }
 
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));

@@ -4,7 +4,9 @@ import { IRefund, Refund } from './Models/Refund';
 import { ServiceCode } from '../../Utils';
 
 export default class GiftCard extends PayablePaymentMethod {
-    protected _serviceCode: ServiceCode = 'giftcard';
+    public defaultServiceCode(): ServiceCode {
+        return 'giftcard';
+    }
 
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));

@@ -5,7 +5,9 @@ import { ServiceCode } from '../../Utils';
 type key = Required<Pick<IRequest, 'originalTransactionKey'>>;
 
 export default class Thunes extends PaymentMethod {
-    protected _serviceCode: ServiceCode = 'thunes';
+    public defaultServiceCode(): ServiceCode {
+        return 'thunes';
+    }
 
     getStatus(payload: key) {
         this.setServiceList('getStatus');

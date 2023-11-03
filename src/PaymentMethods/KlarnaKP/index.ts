@@ -5,8 +5,11 @@ import { IReserve, Reserve } from './Models/IReserve';
 import { ServiceCode } from '../../Utils';
 
 export default class KlarnaKP extends PayablePaymentMethod {
-    protected _serviceCode: ServiceCode = 'klarnakp';
     protected _serviceVersion = 1;
+
+    public defaultServiceCode(): ServiceCode {
+        return 'klarnakp';
+    }
 
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));

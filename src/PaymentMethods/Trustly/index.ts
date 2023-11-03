@@ -4,7 +4,9 @@ import { IPay, Pay } from './Models/Pay';
 import { ServiceCode } from '../../Utils';
 
 export default class Trustly extends PayablePaymentMethod {
-    protected _serviceCode: ServiceCode = 'trustly';
+    public defaultServiceCode(): ServiceCode {
+        return 'trustly';
+    }
 
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));

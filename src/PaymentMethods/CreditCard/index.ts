@@ -5,7 +5,9 @@ import { ISecurityCode, SecurityCode } from './Models/SecurityCode';
 import { ServiceCode } from '../../Utils';
 
 export default class CreditCard extends PayablePaymentMethod {
-    protected _serviceCode: ServiceCode = 'CreditCard';
+    public defaultServiceCode(): ServiceCode {
+        return 'CreditCard';
+    }
 
     payEncrypted(payload: ICardData) {
         this.setPayPayload(payload);

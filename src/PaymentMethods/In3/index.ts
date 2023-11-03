@@ -4,7 +4,9 @@ import Pay from './Models/Pay';
 import { ServiceCode } from '../../Utils';
 
 export default class In3 extends PayablePaymentMethod {
-    protected _serviceCode: ServiceCode = 'In3';
+    public defaultServiceCode(): ServiceCode {
+        return 'In3';
+    }
 
     pay(payload: IPaymentRequest) {
         return super.pay(payload, new Pay(payload));

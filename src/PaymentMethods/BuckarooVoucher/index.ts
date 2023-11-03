@@ -5,7 +5,9 @@ import { Create, ICreate } from './Models/Create';
 import { ServiceCode } from '../../Utils';
 
 export default class BuckarooVoucher extends PayablePaymentMethod {
-    protected _serviceCode: ServiceCode = 'buckaroovoucher';
+    public defaultServiceCode(): ServiceCode {
+        return 'buckaroovoucher';
+    }
 
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));

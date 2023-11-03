@@ -4,7 +4,9 @@ import { IPay, Pay } from './Models/Pay';
 import { ServiceCode } from '../../Utils';
 
 export default class WeChatPay extends PayablePaymentMethod {
-    protected _serviceCode: ServiceCode = 'wechatpay';
+    public defaultServiceCode(): ServiceCode {
+        return 'wechatpay';
+    }
 
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));

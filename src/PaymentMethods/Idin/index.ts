@@ -3,7 +3,9 @@ import { IPay, Pay } from './Models/Pay';
 import { ServiceCode } from '../../Utils';
 
 export default class Idin extends PaymentMethod {
-    protected _serviceCode: ServiceCode = 'idin';
+    public defaultServiceCode(): ServiceCode {
+        return 'idin';
+    }
 
     identify(payload: IPay) {
         this.setServiceList('Identify', new Pay(payload));

@@ -4,7 +4,9 @@ import { IRefund, Refund } from './Models/Refund';
 import { ServiceCode } from '../../Utils';
 
 export default class CreditClick extends PayablePaymentMethod {
-    protected _serviceCode: ServiceCode = 'creditclick';
+    public defaultServiceCode(): ServiceCode {
+        return 'creditclick';
+    }
 
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));

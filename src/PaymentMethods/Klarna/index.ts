@@ -3,7 +3,9 @@ import { PayablePaymentMethod } from '../../Services';
 import { ServiceCode } from '../../Utils';
 
 export default class Klarna extends PayablePaymentMethod {
-    protected _serviceCode: ServiceCode = 'klarna';
+    public defaultServiceCode(): ServiceCode {
+        return 'klarna';
+    }
 
     pay(data: IPay) {
         return super.pay(data, new Pay(data));

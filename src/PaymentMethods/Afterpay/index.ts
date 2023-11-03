@@ -5,8 +5,11 @@ import { PayablePaymentMethod } from '../../Services';
 import { ServiceCode } from '../../Utils';
 
 export default class Afterpay extends PayablePaymentMethod {
-    protected _serviceCode: ServiceCode = 'afterpay';
     protected _serviceVersion = 1;
+
+    public defaultServiceCode(): ServiceCode {
+        return 'afterpay';
+    }
 
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));

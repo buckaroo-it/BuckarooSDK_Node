@@ -6,7 +6,9 @@ import { ServiceCode, uniqid } from '../../Utils';
 import { IPaymentRequest } from '../../Models';
 
 export default class SEPA extends PayablePaymentMethod {
-    protected _serviceCode: ServiceCode = 'sepadirectdebit';
+    public defaultServiceCode(): ServiceCode {
+        return 'sepadirectdebit';
+    }
 
     pay(payload: IPay) {
         return super.pay(payload, new Pay(payload));
