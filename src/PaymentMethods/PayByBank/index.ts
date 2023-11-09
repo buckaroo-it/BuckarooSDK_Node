@@ -2,6 +2,7 @@ import { PayablePaymentMethod } from '../../Services';
 import { IRefundRequest } from '../../Models';
 import IPay, { Pay } from './Models/IPay';
 import { ServiceCode } from '../../Utils';
+import { RequestTypes } from '../../Constants';
 
 export default class PayByBank extends PayablePaymentMethod {
     public defaultServiceCode(): ServiceCode {
@@ -17,12 +18,12 @@ export default class PayByBank extends PayablePaymentMethod {
     }
 
     issuers() {
-        return this.specification()
+        return this.specification(RequestTypes.Transaction, 1)
             .request()
             .then((response) => {
                 return response
                     .getActionRequestParameters('Pay')
-                    ?.find((item) => item.name === 'issuer')
+                    ?.find((item) => item.name === 'Issuer')
                     ?.listItemDescriptions!.map((item) => {
                         return { [item.value]: item.description };
                     });

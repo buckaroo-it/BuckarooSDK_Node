@@ -62,8 +62,11 @@ export default abstract class PaymentMethod {
         return this;
     }
 
-    public specification(type: RequestTypes.Transaction | RequestTypes.Data = RequestTypes.Data) {
-        return Request.Specification(type, { name: this.serviceCode, version: this.serviceVersion });
+    public specification(
+        type: RequestTypes.Transaction | RequestTypes.Data = RequestTypes.Data,
+        serviceVersion: number = this.serviceVersion
+    ) {
+        return Request.Specification(type, { name: this.serviceCode, version: serviceVersion });
     }
 
     protected setRequiredFields(requiredFields: Array<keyof IRequest> = this._requiredFields) {

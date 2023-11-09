@@ -4,6 +4,13 @@ import { uniqid } from '../../src';
 const method = buckarooClientTest.method('PayByBank');
 
 describe('PaymentInitiation methods', () => {
+    test('Issuers', async () => {
+        await method
+            .issuers()
+            .then((response) => {
+                expect(Array.isArray(response)).toBeTruthy();
+            });
+    });
     test('Pay', async () => {
         await method
             .pay({
