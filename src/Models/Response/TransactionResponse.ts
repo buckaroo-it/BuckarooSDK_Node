@@ -18,38 +18,38 @@ export class TransactionResponse extends HttpClientResponse {
     }
 
     isSuccess() {
-        return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_SUCCESS;
+        return this.getStatusCode() === ResponseStatus.STATUSCODE_SUCCESS;
     }
 
     isFailed() {
-        return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_FAILED;
+        return this.getStatusCode() === ResponseStatus.STATUSCODE_FAILED;
     }
 
     isCanceled() {
         return (
-            this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_CANCELLED_BY_USER ||
-            this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_CANCELLED_BY_MERCHANT
+            this.getStatusCode() === ResponseStatus.STATUSCODE_CANCELLED_BY_USER ||
+            this.getStatusCode() === ResponseStatus.STATUSCODE_CANCELLED_BY_MERCHANT
         );
     }
 
     isAwaitingConsumer() {
-        return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_WAITING_ON_CONSUMER;
+        return this.getStatusCode() === ResponseStatus.STATUSCODE_WAITING_ON_CONSUMER;
     }
 
     isPendingProcessing() {
-        return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_PENDING_PROCESSING;
+        return this.getStatusCode() === ResponseStatus.STATUSCODE_PENDING_PROCESSING;
     }
 
     isWaitingOnUserInput() {
-        return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_WAITING_ON_USER_INPUT;
+        return this.getStatusCode() === ResponseStatus.STATUSCODE_WAITING_ON_USER_INPUT;
     }
 
     isRejected() {
-        return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_REJECTED;
+        return this.getStatusCode() === ResponseStatus.STATUSCODE_REJECTED;
     }
 
     isValidationFailure() {
-        return this.getStatusCode() === ResponseStatus.BUCKAROO_STATUSCODE_VALIDATION_FAILURE;
+        return this.getStatusCode() === ResponseStatus.STATUSCODE_VALIDATION_FAILURE;
     }
 
     hasRedirect() {
