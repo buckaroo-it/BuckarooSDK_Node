@@ -6,11 +6,12 @@ import { AfterPayCompany, AfterPayPerson } from './Recipient';
 
 export default class Customer extends Model implements ICustomer {
     set recipient(recipient: IPerson | ICompany) {
-        if (recipient.category === RecipientCategory.PERSON) {
-            this.set('recipient', new AfterPayPerson(recipient));
-        } else if (recipient.category === RecipientCategory.COMPANY) {
-            this.set('recipient', new AfterPayCompany(recipient));
-        }
+        this.set(
+            'recipient',
+            recipient.category === RecipientCategory.COMPANY
+                ? new AfterPayCompany(recipient)
+                : new AfterPayPerson(recipient)
+        );
     }
 
     set address(address: IAddress) {
