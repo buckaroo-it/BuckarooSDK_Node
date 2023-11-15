@@ -151,7 +151,7 @@ export declare interface ITransactionResponse {
         name: string;
         typeDeprecated: number;
     };
-    services: {
+    services?: {
         action: string;
         name: string;
         value: string;
@@ -164,33 +164,33 @@ export declare interface ITransactionResponse {
     additionalParameters?: {
         additionalParameter: IFormattedParameter[];
     };
-    requestErrors: {
-        channelErrors: {
+    requestErrors?: {
+        channelErrors?: {
             service: string;
             action: string;
             name: string;
             error: string;
             errorMessage: string;
         }[];
-        serviceErrors: {
+        serviceErrors?: {
             name: string;
             error: string;
             errorMessage: string;
         }[];
-        actionErrors: {
+        actionErrors?: {
             service: string;
             name: string;
             error: string;
             errorMessage: string;
         }[];
-        parameterErrors: {
+        parameterErrors?: {
             service: string;
             action: string;
             name: string;
             error: string;
             errorMessage: string;
         }[];
-        customParameterErrors: {
+        customParameterErrors?: {
             name: string;
             error: string;
             errorMessage: string;
@@ -204,11 +204,11 @@ export declare interface ITransactionResponse {
     amountCredit: number;
     transactionType: string;
     mutationType: number;
-    relatedTransactions: {
+    relatedTransactions?: {
         relationType: string;
         relatedTransactionKey: string;
     }[];
-    consumerMessage: {
+    consumerMessage?: {
         mustRead: boolean;
         cultureName: string;
         title: string;
