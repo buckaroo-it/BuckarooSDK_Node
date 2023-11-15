@@ -105,11 +105,11 @@ export class TransactionResponse extends HttpClientResponse {
         return (
             this.data.requestErrors &&
             Object.keys(this.data.requestErrors).length > 0 &&
-            (this.data.requestErrors.channelErrors.length > 0 ||
-                this.data.requestErrors.serviceErrors.length > 0 ||
-                this.data.requestErrors.actionErrors.length > 0 ||
-                this.data.requestErrors.parameterErrors.length > 0 ||
-                this.data.requestErrors.customParameterErrors.length > 0)
+            ((this.data.requestErrors.channelErrors?.length ?? 0) > 0 ||
+                (this.data.requestErrors.serviceErrors?.length ?? 0) > 0 ||
+                (this.data.requestErrors.actionErrors?.length ?? 0) > 0 ||
+                (this.data.requestErrors.parameterErrors?.length ?? 0) > 0 ||
+                (this.data.requestErrors.customParameterErrors?.length ?? 0) > 0)
         );
     }
 
