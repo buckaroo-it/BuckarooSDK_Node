@@ -2,15 +2,21 @@ import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { HttpResponseConstructor } from '../Models';
 import { RequestConfig } from './Headers';
 import { HttpMethods } from '../Constants';
+import { Agent } from 'https';
 
 export default class HttpsClient {
     protected _options: AxiosRequestConfig = {};
     private _axiosInstance: AxiosInstance;
 
-    constructor() {
+    constructor(agent?: Agent) {
         this._options.timeout = 10000;
         this._options.maxRedirects = 10;
         this._options.withCredentials = true;
+
+        if (agent) {
+            this._options.httpsAgent = agent;
+        }
+
         this._axiosInstance = axios.create(this._options);
     }
 
