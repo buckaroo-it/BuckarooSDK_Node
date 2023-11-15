@@ -1,8 +1,7 @@
-require('../buckarooClient');
-import Subscriptions from '../../src/PaymentMethods/Subscriptions';
-import Ideal from '../../src/PaymentMethods/Ideal';
+import buckaroo from '../buckarooClient';
 
-const subscription = new Subscriptions();
+const subscription = buckaroo.method('CreditManagement3');
+
 subscription.createCombined({
     address: undefined,
     allowedServices: '',
@@ -26,14 +25,12 @@ subscription.createCombined({
     transactionVatPercentage: 0,
 });
 
-(async () => {
-    const combinedPayment = await new Ideal()
-        .combine(subscription)
-        .pay({
-            amountDebit: 1,
-            currency: 'EUR',
-            description: 'test',
-        })
-        .request();
-    console.log(combinedPayment);
-})();
+buckaroo
+    .method('ideal')
+    .combine(subscription)
+    .pay({
+        amountDebit: 1,
+        currency: 'EUR',
+        description: 'test',
+    })
+    .request();

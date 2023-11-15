@@ -49,8 +49,8 @@ const invoice = creditManagement.createCombinedInvoice({
     },
 });
 
-const sepadirectdebit = buckaroo.method('sepadirectdebit');
-sepadirectdebit
+buckaroo
+    .method('sepadirectdebit')
     .combine(invoice.data)
     .pay({
         invoice: '',

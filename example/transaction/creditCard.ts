@@ -1,16 +1,6 @@
-require('../buckarooClient');
-import CreditCard from '../../src/PaymentMethods/CreditCard';
+import buckaroo from '../buckarooClient';
 
-const paymentMethod = new CreditCard('nexi');
-
-(async () => {
-    try {
-        const info = await paymentMethod.pay({
-            invoice: 'test1',
-            amountDebit: 12,
-        });
-        console.log(info);
-    } catch (error) {
-        console.warn(error);
-    }
-})();
+buckaroo.method('nexi').pay({
+    invoice: 'test1',
+    amountDebit: 12,
+});
