@@ -1,7 +1,8 @@
 const { join } = require('path');
-const json = require('rollup-plugin-json');
-const resolve = require('rollup-plugin-node-resolve');
-const babel = require('rollup-plugin-babel');
+const json = require('@rollup/plugin-json');
+const resolve = require('@rollup/plugin-node-resolve');
+const babel = require('@rollup/plugin-babel');
+const typescript = require('@rollup/plugin-typescript');
 
 module.exports = {
     input: join('src', 'index.ts'),
@@ -20,12 +21,11 @@ module.exports = {
         { file: join('dist', 'buckaroo.esm.js'), format: 'es' },
     ],
     plugins: [
+        typescript(),
         json(),
         resolve({
             extensions: ['.ts'],
-            customResolveOptions: {
-                moduleDirectory: 'src',
-            },
+            moduleDirectories: ['src'],
             preferBuiltins: true,
         }),
         babel({
