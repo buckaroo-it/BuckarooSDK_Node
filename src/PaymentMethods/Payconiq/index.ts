@@ -1,10 +1,14 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { RefundPayload } from '../../Models/ITransaction'
+import { PayablePaymentMethod } from '../../Services';
+import { IRefundRequest } from '../../Models';
+import { ServiceCode } from '../../Utils';
 
 export default class Payconiq extends PayablePaymentMethod {
-    protected _paymentName = 'payconiq'
+    public defaultServiceCode(): ServiceCode {
+        return 'payconiq';
+    }
 
-    refund(payload: RefundPayload) {
-        return super.refund(payload)
+    instantRefund(payload: IRefundRequest) {
+        this.setServiceList('InstantRefund');
+        return this.transactionRequest(payload);
     }
 }

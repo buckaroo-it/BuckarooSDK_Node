@@ -1,16 +1,20 @@
-require('../BuckarooClient.test')
-import SurePay from '../../src/PaymentMethods/Surepay/index'
+import buckarooClientTest from '../BuckarooClient.test';
 
-const method = new SurePay()
+const method = buckarooClientTest.method('surepay');
 
-describe('Sofort', () => {
+describe('SurePay methods', () => {
     test('Verify', async () => {
         await method
             .verify({
-                customeraccountname: "string"
+                amountDebit: 100,
+                bankAccount: {
+                    iban: 'NLXXTESTXXXXXXXXXX',
+                    accountName: 'Test Acceptatie',
+                },
             })
+            .request()
             .then((info) => {
-                expect(info).toBeDefined()
-            })
-    })
-})
+                expect(info).toBeDefined();
+            });
+    });
+});

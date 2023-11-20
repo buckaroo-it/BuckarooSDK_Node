@@ -1,14 +1,18 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { Pay } from './Models/Pay'
-import { Refund } from './Models/Refund'
+import { PayablePaymentMethod } from '../../Services';
+import { IPay, Pay } from './Models/Pay';
+import { IRefund, Refund } from './Models/Refund';
+import { ServiceCode } from '../../Utils';
 
 export default class CreditClick extends PayablePaymentMethod {
-    protected _paymentName = 'creditclick'
-
-    pay(payload: Pay) {
-        return super.pay(payload)
+    public defaultServiceCode(): ServiceCode {
+        return 'creditclick';
     }
-    refund(payload: Refund) {
-        return super.refund(payload)
+
+    pay(payload: IPay) {
+        return super.pay(payload, new Pay(payload));
+    }
+
+    refund(payload: IRefund) {
+        return super.refund(payload, new Refund(payload));
     }
 }

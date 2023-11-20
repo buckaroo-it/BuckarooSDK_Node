@@ -1,10 +1,8 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { RefundPayload } from '../../Models/ITransaction'
+import { PayablePaymentMethod } from '../../Services';
+import { ServiceCode } from '../../Utils';
 
 export default class EPS extends PayablePaymentMethod {
-    protected _paymentName = 'eps'
-
-    refund(payload: RefundPayload) {
-        return super.refund(payload)
+    public defaultServiceCode(): ServiceCode {
+        return 'eps';
     }
 }

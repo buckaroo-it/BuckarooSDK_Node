@@ -1,31 +1,29 @@
-require('../BuckarooClient.test')
-import Belfius from '../../src/PaymentMethods/Belfius/index'
+import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src';
 
-const method = new Belfius()
+const method = buckarooClientTest.method('belfius');
 
 describe('testing methods', () => {
     test('Pay Simple Payload', async () => {
         await method
             .pay({
-                amountDebit: 10
+                amountDebit: 100,
             })
+            .request()
             .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
+                expect(data.isPendingProcessing()).toBeTruthy();
+            });
+    });
     test('Refund', async () => {
         await method
             .refund({
-                amountCredit: 5,
-                originalTransactionKey: '86CFE2CB5901463EADE061633BDB9EC8'
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
-    test('Specifications', async () => {
-        await method.specification().then((data) => {
-            expect(data).toBeDefined()
-        })
-    })
-})
+                expect(data).toBeDefined();
+            });
+    });
+});

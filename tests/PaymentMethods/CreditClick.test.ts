@@ -1,28 +1,36 @@
-require('../BuckarooClient.test')
-import CreditClick from '../../src/PaymentMethods/CreditClick/index'
+import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src';
 
-const method = new CreditClick()
+const method = buckarooClientTest.method('creditclick');
 
 describe('Testing CreditClick methods', () => {
     test('Pay', async () => {
         await method
             .pay({
-                amountDebit: 31
+                amountDebit: 100,
+                person: {
+                    firstName: 'Test',
+                    lastName: 'Acceptatie',
+                },
+                email: 'test@buckaroo.nl',
             })
+            .request()
             .then((response) => {
-                expect(response).toBeDefined()
-            })
-    })
+                expect(response.isPendingProcessing()).toBeTruthy();
+            });
+    });
     test('Refund', async () => {
         await method
             .refund({
-                amountCredit: 31,
-                originalTransactionKey: 'C85BABFCCA2D4921B9CFBA0EBDF82C70',
-                description: 'test',
-                refundReason: 'Fraudulent'
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                invoice: uniqid(),
+                description: 'refund',
+                refundReason: 'Fraudulent',
             })
+            .request()
             .then((response) => {
-                expect(response).toBeDefined()
-            })
-    })
-})
+                expect(response.isFailed()).toBeTruthy();
+            });
+    });
+});

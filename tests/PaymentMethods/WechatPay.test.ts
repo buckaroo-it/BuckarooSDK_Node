@@ -1,27 +1,29 @@
-require('../BuckarooClient.test')
-import WechatPay from '../../src/PaymentMethods/WeChatPay/index'
+import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src';
 
-const method = new WechatPay()
-
+const method = buckarooClientTest.method('wechatpay');
 describe('WechatPay', () => {
     test('Pay', async () => {
         await method
             .pay({
-                amountDebit: 3.5,
-                locale: 'en-US'
+                amountDebit: 100,
+                locale: 'en-US',
             })
+            .request()
             .then((response) => {
-                expect(response.data).toBeDefined()
-            })
-    })
+                expect(response.isPendingProcessing()).toBeDefined();
+            });
+    });
     test('Refund', async () => {
         await method
             .refund({
-                amountCredit: 3.5,
-                originalTransactionKey: '1234567890'
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((response) => {
-                expect(response.data).toBeDefined()
-            })
-    })
-})
+                expect(response.data).toBeDefined();
+            });
+    });
+});

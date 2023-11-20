@@ -1,11 +1,13 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { RefundPayload } from '../../Models/ITransaction'
+import { PayablePaymentMethod } from '../../Services';
+import { IRefundRequest } from '../../Models';
+import { ServiceCode } from '../../Utils';
 
 export default class KBC extends PayablePaymentMethod {
-    protected _paymentName = 'kbcpaymentbutton'
-    protected _serviceVersion = 1
+    public defaultServiceCode(): ServiceCode {
+        return 'KBCPaymentButton';
+    }
 
-    refund(payload: RefundPayload) {
-        return super.refund(payload)
+    refund(payload: IRefundRequest) {
+        return super.refund(payload);
     }
 }

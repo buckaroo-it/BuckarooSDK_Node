@@ -1,13 +1,14 @@
-import PaymentMethod from '../PaymentMethod'
-import { IInvitation } from './Models/invitation'
-import { uniqid } from '../../Utils/Functions'
+import { PaymentMethod } from '../../Services';
+import { IInvitation, Invitation } from './Models/Invitation';
+import { ServiceCode } from '../../Utils';
 
 export default class PayPerEmail extends PaymentMethod {
-    protected _paymentName = 'payperemail'
+    public defaultServiceCode(): ServiceCode {
+        return 'payperemail';
+    }
 
     paymentInvitation(payload: IInvitation) {
-        this.action = 'paymentInvitation'
-        payload.invoice = payload.invoice || uniqid()
-        return super.transactionRequest(payload)
+        this.setServiceList('paymentInvitation', new Invitation(payload));
+        return super.transactionRequest(payload);
     }
 }

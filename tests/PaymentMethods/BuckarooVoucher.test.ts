@@ -1,57 +1,63 @@
-require('../BuckarooClient.test')
-import BuckarooVoucher from '../../src/PaymentMethods/BuckarooVoucher/index'
+import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src';
 
-const method = new BuckarooVoucher()
+const method = buckarooClientTest.method('buckaroovoucher');
 
 describe('testing methods', () => {
     test('Pay', async () => {
         await method
             .pay({
-                amountDebit: 12,
-                voucherCode: ''
+                amountDebit: 100,
+                voucherCode: 'XXXXXXX',
             })
+            .request()
             .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
+                expect(data).toBeDefined();
+            });
+    });
     test('Refund', async () => {
         await method
             .refund({
-                amountCredit: 12,
-                originalTransactionKey: ''
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
+                expect(data).toBeDefined();
+            });
+    });
     test('GetBalance', async () => {
         await method
             .getBalance({
-                voucherCode: ''
+                voucherCode: 'XXXXXXX',
             })
+            .request()
             .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
+                expect(data.isFailed()).toBeTruthy();
+            });
+    });
     test('CreateApplication', async () => {
         await method
-            .createApplication({
+            .create({
                 creationBalance: 12,
                 usageType: 1,
                 validFrom: '2021-01-01',
-                validUntil: '2024-01-01'
+                validUntil: '2024-01-01',
             })
+            .request()
             .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
+                expect(data).toBeDefined();
+            });
+    });
     test('DeactivateVoucher', async () => {
         await method
-            .deactivateVoucher({
-                voucherCode: ''
+            .deactivate({
+                voucherCode: 'XXXXXXX',
             })
+            .request()
             .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
-})
+                expect(data).toBeDefined();
+            });
+    });
+});

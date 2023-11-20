@@ -1,49 +1,28 @@
-import RecipientCategory from '../../../Constants/RecipientCategory'
+import { IAddress, ICompany, ICustomer, IPerson, IPhone, Model } from '../../../Models';
+import { RecipientCategory } from '../../../Constants';
+import Phone from './Phone';
+import Address from './Address';
+import { AfterPayCompany, AfterPayPerson } from './Recipient';
 
-type Salutation = 'Mr' | 'Mrs' | 'Miss'
-type Customer = {
-    companyName?: string
-    firstName: string
-    lastName: string
-    birthDate?: string
-    street: string
-    streetNumber?: string
-    streetNumberAdditional?: string
-    postalCode?: string
-    city: string
-    country: string
-    email: string
-    careOf?: string
-    conversationLanguage?: 'NL' | 'FR' | 'DE' | 'FI'
-    identificationNumber?: string
-    customerNumber?: string
-    mobilePhone?: string
-    phone?: string
-    salutation?: Salutation
-}
-type Person = {
-    category: RecipientCategory.PERSON
-}
-type Company = {
-    category: RecipientCategory.COMPANY
-    companyName: string
-    identificationNumber: string
-}
-type countryNLBE = {
-    country: 'NL' | 'BE'
-    salutation: Salutation
-    birthDate: string
-    streetNumber: string
-    phone: string
-}
+export default class Customer extends Model implements ICustomer {
+    set recipient(recipient: IPerson | ICompany) {
+        this.set(
+            'recipient',
+            recipient.category === RecipientCategory.COMPANY
+                ? new AfterPayCompany(recipient)
+                : new AfterPayPerson(recipient)
+        );
+    }
 
-type countryFI = {
-    country: 'FI'
-    identificationNumber: string
-}
-type countryDE = {
-    country: 'DE'
-}
+    set address(address: IAddress) {
+        this.set('address', new Address(address));
+    }
 
-export type AfterPayCustomer = Customer &
-    ((Person | Company) & (countryNLBE | countryFI | countryDE))
+    set email(email: string) {
+        this.set('email', email);
+    }
+
+    set phone(phone: IPhone) {
+        this.set('phone', new Phone(phone));
+    }
+}

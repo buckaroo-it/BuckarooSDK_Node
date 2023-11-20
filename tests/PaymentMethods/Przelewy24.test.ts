@@ -1,31 +1,34 @@
-require('../BuckarooClient.test')
-import Przelewy24 from '../../src/PaymentMethods/Przelewy24/index'
+import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src';
 
-const method = new Przelewy24()
+const method = buckarooClientTest.method('przelewy24');
 
 describe('Przelewy24', () => {
     test('Pay', async () => {
-        await method
+        method
             .pay({
-                customerLastName: "",
-                additionalParameters: undefined,
-                amountDebit: 0,
-                customerEmail: "",
-                customerFirstName: "",
-                email: "",
+                amountDebit: 100,
+                customer: {
+                    firstName: 'Test',
+                    lastName: 'Acceptatie',
+                },
+                email: 'test@buckaroo.nl',
             })
-            .then((info) => {
-                expect(info).toBeDefined()
-            })
-    })
+            .request()
+            .then((res) => {
+                expect(res.isPendingProcessing()).toBeTruthy();
+            });
+    });
     test('Refund', async () => {
         await method
             .refund({
-                amountCredit: 50.3,
-                originalTransactionKey: '123456'
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((info) => {
-                expect(info.data).toBeDefined()
-            })
-    })
-})
+                expect(info.data).toBeDefined();
+            });
+    });
+});

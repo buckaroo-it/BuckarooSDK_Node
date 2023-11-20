@@ -1,22 +1,31 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { ICapture, RefundPayload } from '../../Models/ITransaction'
-import { IPay } from './Models/Pay'
-import { IExtraInfo } from './Models/ExtraInfo'
+import { PayablePaymentMethod } from '../../Services';
+import { IPaymentRequest, IRefundRequest } from '../../Models';
+import { IPay, Pay } from './Models/Pay';
+import { ExtraInfo, IExtraInfo } from './Models/ExtraInfo';
+import { ServiceCode } from '../../Utils';
 
 export default class Paypal extends PayablePaymentMethod {
-    protected _paymentName = 'paypal'
+    public defaultServiceCode(): ServiceCode {
+        return 'paypal';
+    }
+
     pay(payload: IPay) {
-        return super.pay(payload)
+        return super.pay(payload, new Pay(payload));
     }
-    refund(payload: RefundPayload) {
-        return super.refund(payload)
+
+    refund(payload: IRefundRequest) {
+        return super.refund(payload);
     }
-    payRecurring(payload: ICapture) {
-        this.action = 'PayRecurring'
-        return super.transactionRequest(payload)
+
+    payRecurrent(payload: IPaymentRequest) {
+        this.setPayPayload(payload);
+        this.setServiceList('PayRecurring');
+        return super.transactionRequest(payload);
     }
+
     extraInfo(payload: IExtraInfo) {
-        this.action = 'Pay,ExtraInfo'
-        return super.transactionRequest(payload)
+        this.setPayPayload(payload);
+        this.setServiceList('Pay,ExtraInfo', new ExtraInfo(payload));
+        return super.transactionRequest(payload);
     }
 }

@@ -1,47 +1,30 @@
-import Gender from "../../src/Constants/Gender";
-import PayPerEmail from '../../src/PaymentMethods/PayPerEmail/index'
+import { Gender, uniqid } from '../../src';
+import buckarooClientTest from '../BuckarooClient.test';
 
-require('../BuckarooClient.test')
-
-const method = new PayPerEmail()
+const method = buckarooClientTest.method('payperemail');
 
 describe('PayPerEmail methods', () => {
     test('paymentInvitation', async () => {
         await method
             .paymentInvitation({
-                invoice: '123456',
-                amountDebit: 10,
                 currency: 'EUR',
-                attachment: '',
-                additionalParameters: undefined,
-                clientIP: undefined,
-                continueOnIncomplete: 1,
-                culture: '',
-                customParameters: undefined,
-                customerEmail: '',
-                customerFirstName: '',
-                customerGender: Gender.NOT_APPLICABLE,
-                customerLastName: '',
-                description: '',
-                order: '',
-                originalTransactionKey: '',
-                originalTransactionReference: '',
-                pushURL: '',
-                pushURLFailure: '',
-                returnURL: '',
-                returnURLCancel: '',
-                returnURLError: '',
-                returnURLReject: '',
-                servicesExcludedForClient: '',
-                servicesSelectableByClient: '',
-                startRecurrent: false,
-                email: 's',
-                expirationDate: '',
+                amountDebit: 100,
+                order: uniqid(),
+                invoice: uniqid(),
                 merchantSendsEmail: false,
-                paymentMethodsAllowed: 'ideal'
+                email: 'test@buckaroo.nl',
+                expirationDate: '2030-01-01',
+                paymentMethodsAllowed: 'ideal,mastercard,paypal',
+                attachment: '',
+                customer: {
+                    gender: Gender.FEMALE,
+                    firstName: 'Test',
+                    lastName: 'Acceptatie',
+                },
             })
+            .request()
             .then((response) => {
-                expect(response).toBeDefined()
-            })
-    })
-})
+                expect(response).toBeDefined();
+            });
+    });
+});

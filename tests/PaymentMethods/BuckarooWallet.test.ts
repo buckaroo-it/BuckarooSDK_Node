@@ -1,75 +1,117 @@
-require('../BuckarooClient.test')
-import BuckarooWallet from '../../src/PaymentMethods/BuckarooWallet/index'
+import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src';
 
-const method = new BuckarooWallet()
+const method = buckarooClientTest.method('BuckarooWalletCollecting');
 
 describe('BuckarooWallet methods', () => {
     test('Pay', async () => {
         await method
             .pay({
-                invoice: 'string',
-                amountDebit: 12,
-                walletId: '2'
+                invoice: uniqid(),
+                amountDebit: 100,
+                walletId: 'XXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
+                expect(data.isValidationFailure()).toBeTruthy();
+            });
+    });
     test('Refund', async () => {
         await method
             .refund({
-                invoice: 'string',
-                walletId: '2',
-                amountCredit: 12,
-                originalTransactionKey: ''
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
+                expect(data.isFailed()).toBeTruthy();
+            });
+    });
     test('CancelReservation', async () => {
         await method
             .cancel({
-                invoice: 'dsadsadsa',
-                walletMutationGuid: '2'
+                invoice: uniqid(),
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                amountDebit: 100,
+                walletMutationGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
+                expect(data.isValidationFailure()).toBeTruthy();
+            });
+    });
     test('deposit', async () => {
         await method
             .deposit({
-                invoice: 'string',
-                walletId: '',
-                amountCredit: 12,
-                originalTransactionKey: ''
+                invoice: uniqid(),
+                walletId: 'XXXXXXXXXXXXXXXXXXXXX',
+                amountCredit: 100,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((data) => {
-                expect(data).toBeDefined()
+                expect(data).toBeDefined();
+            });
+    });
+    test('Update', async () => {
+        await method
+            .update({
+                walletId: 'XXXXXXXXXXXXXXXXXXXXX',
+                status: 'Disabled',
+                email: 'test@buckaroo.nl',
+                customer: {
+                    firstName: 'Test',
+                    lastName: 'Acceptatie',
+                },
+                bankAccount: {
+                    iban: 'NLXXTESTXXXXXXXXXX',
+                },
             })
-    })
+            .request()
+            .then((data) => {
+                expect(data.isSuccess()).toBeTruthy();
+            });
+    });
     test('Withdrawal', async () => {
         await method
             .withdrawal({
-                invoice: 'dasd',
-                walletId: '654dfcvb',
-                amountDebit: 10,
-                originalTransactionKey: ''
+                invoice: uniqid(),
+                walletId: 'XXXXXXXXXXXXXXXXXXXXX',
+                amountDebit: 100,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
+                expect(data.isValidationFailure()).toBeTruthy();
+            });
+    });
     test('Create Wallet', async () => {
         await method
             .create({
-                invoice: '',
-                pushURL: '',
-                walletId: ''
+                walletId: 'XXXXXXXXXXXXXXXXXXXXX',
+                email: 'test@buckaroo.nl',
+                customer: {
+                    firstName: 'Test',
+                    lastName: 'Acceptatie',
+                },
+                bankAccount: {
+                    iban: 'NLXXTESTXXXXXXXXXX',
+                },
             })
+            .request()
             .then((data) => {
-                expect(data).toBeDefined()
+                expect(data.isSuccess()).toBeTruthy();
+            });
+    });
+    test('GetInfo', async () => {
+        await method
+            .getInfo({
+                walletId: 'XXXXXXXXXXXXXXXXXXXXX',
             })
-    })
-})
+            .request()
+            .then((data) => {
+                expect(data.isSuccess()).toBeTruthy();
+            });
+    });
+});

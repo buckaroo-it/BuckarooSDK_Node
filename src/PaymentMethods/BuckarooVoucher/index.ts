@@ -1,27 +1,30 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { IPay } from './Models/Pay'
-import { RefundPayload } from '../../Models/ITransaction'
-import { ICreate } from './Models/Create'
+import { PayablePaymentMethod } from '../../Services';
+import { IPay, Pay } from './Models/Pay';
+import { IRequest } from '../../Models';
+import { Create, ICreate } from './Models/Create';
+import { ServiceCode } from '../../Utils';
 
-export default class Buckaroovoucher extends PayablePaymentMethod {
-    protected _paymentName = 'buckaroovoucher'
+export default class BuckarooVoucher extends PayablePaymentMethod {
+    public defaultServiceCode(): ServiceCode {
+        return 'buckaroovoucher';
+    }
 
     pay(payload: IPay) {
-        return super.pay(payload)
+        return super.pay(payload, new Pay(payload));
     }
-    refund(payload: RefundPayload) {
-        return super.refund(payload)
+
+    getBalance(payload: IRequest & Pick<IPay, 'voucherCode'>) {
+        this.setServiceList('GetBalance', new Pay(payload));
+        return this.dataRequest(payload);
     }
-    getBalance(payload: Pick<IPay, 'voucherCode'>) {
-        this.action = 'GetBalance'
-        return this.dataRequest(payload)
+
+    create(payload: IRequest & ICreate) {
+        this.setServiceList('CreateApplication', new Create(payload));
+        return this.dataRequest(payload);
     }
-    createApplication(payload: ICreate) {
-        this.action = 'CreateApplication'
-        return this.dataRequest(payload)
-    }
-    deactivateVoucher(payload: Pick<IPay, 'voucherCode'>) {
-        this.action = 'DeactivateVoucher'
-        return this.dataRequest(payload)
+
+    deactivate(payload: IRequest & Pick<IPay, 'voucherCode'>) {
+        this.setServiceList('DeactivateVoucher', new Pay(payload));
+        return this.dataRequest(payload);
     }
 }

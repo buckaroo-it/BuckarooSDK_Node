@@ -1,28 +1,29 @@
-require('../BuckarooClient.test')
-import GiroPay from '../../src/PaymentMethods/Giropay/index'
+import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src';
 
-const method = new GiroPay()
-
+const method = buckarooClientTest.method('giropay');
 describe('Testing Giropay methods', () => {
     test('Pay', async () => {
         await method
             .pay({
-                bic: '',
-                costumerIBAN: '',
-                amountDebit: 0
+                bic: 'XXXXXXXXX',
+                amountDebit: 100,
             })
+            .request()
             .then((response) => {
-                expect(response).toBeDefined()
-            })
-    })
+                expect(response.isPendingProcessing()).toBeTruthy();
+            });
+    });
     test('Refund', async () => {
         await method
             .refund({
-                amountCredit: 0,
-                originalTransactionKey: ''
+                amountCredit: 0.01,
+                invoice: uniqid(),
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((response) => {
-                expect(response).toBeDefined()
-            })
-    })
-})
+                expect(response.isFailed()).toBeTruthy();
+            });
+    });
+});

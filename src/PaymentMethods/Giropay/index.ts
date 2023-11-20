@@ -1,15 +1,13 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { Pay } from './Models/Pay'
-import { RefundPayload } from '../../Models/ITransaction'
+import { PayablePaymentMethod } from '../../Services';
+import { IPay, Pay } from './Models/Pay';
+import { ServiceCode } from '../../Utils';
 
 export default class Giropay extends PayablePaymentMethod {
-    protected _paymentName = 'giropay'
-    protected _serviceVersion = 1
-
-    pay(payload: Pay) {
-        return super.pay(payload)
+    public defaultServiceCode(): ServiceCode {
+        return 'giropay';
     }
-    refund(payload: RefundPayload) {
-        return super.refund(payload)
+
+    pay(payload: IPay) {
+        return super.pay(payload, new Pay(payload));
     }
 }

@@ -1,17 +1,29 @@
-import { ITransaction, Payload } from '../../../Models/ITransaction'
+import { IPaymentRequest, IRequest, ServiceParameter } from '../../../Models';
 
-export interface IPay extends Payload {
-    saveToken?: boolean
-}
-export interface IPayEncrypted extends Payload {
-    encryptedCardData: string
-}
-export interface IPayComplete extends ITransaction {
-    encryptedCardData: string
-    originalTransactionKey: string
+export interface IPay extends IPaymentRequest {
+    saveToken?: boolean;
 }
 
-export interface IPayOneClick extends ITransaction {
-    originalTransactionKey: string
-    amountDebit: number
+export interface IPayEncrypted extends IPaymentRequest {
+    encryptedCardData: string;
+}
+
+export interface IPayComplete extends IRequest {
+    encryptedCardData: string;
+    originalTransactionKey: string;
+}
+
+export interface IPayOneClick extends IRequest {
+    originalTransactionKey: string;
+    amountDebit: number;
+}
+
+export class Pay extends ServiceParameter {
+    set encryptedCardData(value: string) {
+        this.set('encryptedCardData', value);
+    }
+
+    set saveToken(value: boolean) {
+        this.set('saveToken', value);
+    }
 }

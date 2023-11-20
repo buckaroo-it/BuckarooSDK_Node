@@ -1,96 +1,131 @@
-import Billink from '../../src/PaymentMethods/Billink/index'
-import { IPay } from '../../src/PaymentMethods/Billink/Models/Pay'
+import { IPay } from '../../src/PaymentMethods/Billink/Models/Pay';
+import buckarooClientTest from '../BuckarooClient.test';
+import { RecipientCategory, uniqid } from '../../src';
 
-require('../BuckarooClient.test')
-
-const method = new Billink()
+const method = buckarooClientTest.method('billink');
 
 describe('Billink methods', () => {
-    test('Specifications', async () => {
-        await method.specification().then((data) => {
-            data.getActionRequestParameters('Pay')
-            expect(data).toBeDefined()
-        })
-    })
+    const invoiceId = uniqid();
+
     test('Pay', async () => {
-        await method.pay(payload).then((data) => {
-            expect(data).toBeDefined()
-        })
-    })
+        await method
+            .pay(payload)
+            .request()
+            .then((data) => {
+                expect(data.isSuccess()).toBeTruthy();
+            });
+    });
     test('Refund', async () => {
         await method
             .refund({
-                amountCredit: 12,
-                originalTransactionKey: 'ytgty'
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
+                expect(data).toBeDefined();
+            });
+    });
     test('Authorize', async () => {
-        await method.authorize(payload).then((data) => {
-            expect(data).toBeDefined()
-        })
-    })
+        await method
+            .authorize({ ...payload, invoice: invoiceId })
+            .request()
+            .then((data) => {
+                expect(data.isSuccess()).toBeTruthy();
+            });
+    });
     test('CancelAuthorize', async () => {
         await method
             .cancelAuthorize({
-                originalTransactionKey: 'ytgty',
-                amountCredit: 10,
-                invoice: 'sdsa'
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                amountCredit: payload.amountDebit,
+                invoice: invoiceId,
             })
+            .request()
             .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
+                expect(data).toBeDefined();
+            });
+    });
     test('Capture', async () => {
         await method
             .capture({
-                originalTransactionKey: 'ytgty',
-                invoice: "'dsa",
-                amountDebit: 123
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                invoice: invoiceId,
+                amountDebit: payload.amountDebit,
+                articles: payload.articles,
             })
+            .request()
             .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
-})
+                expect(data).toBeDefined();
+            });
+    });
+});
 
-let payload: IPay = {
-    VATNumber: '',
-    additionalParameters: undefined,
-    amountDebit: 0,
-    article: [],
-    billingCustomer: {
-        chamberOfCommerce: '',
-        city: '',
-        firstName: '',
-        initials: '',
-        lastName: '',
-        postalCode: '',
-        street: '',
-        streetNumber: 0
+const payload: IPay = {
+    amountDebit: 100,
+    trackAndTrace: 'XXXXXXXXXXXXX',
+    vatNumber: 'NLXXXXXXXXXXB01',
+    billing: {
+        recipient: {
+            category: RecipientCategory.PERSON,
+            careOf: 'Test Acceptatie',
+            title: 'Female',
+            initials: 'TA',
+            firstName: 'Test',
+            lastName: 'Acceptatie',
+            birthDate: '01-01-1990',
+            chamberOfCommerce: 'XXXXXX41',
+        },
+        address: {
+            street: 'Hoofdstraat',
+            houseNumber: '80',
+            houseNumberAdditional: 'a',
+            zipcode: '8441ER',
+            city: 'Heerenveen',
+            country: 'NL',
+        },
+        phone: {
+            mobile: '0612345678',
+            landline: '0201234567',
+        },
+        email: 'test@buckaroo.nl',
     },
-    clientIP: undefined,
-    continueOnIncomplete: 1,
-    culture: '',
-    currency: '',
-    customParameters: undefined,
-    description: '',
-    invoice: '',
-    order: '',
-    originalTransactionKey: '',
-    originalTransactionReference: '',
-    pushURL: '',
-    pushURLFailure: '',
-    returnURL: '',
-    returnURLCancel: '',
-    returnURLError: '',
-    returnURLReject: '',
-    servicesExcludedForClient: '',
-    servicesSelectableByClient: '',
-    shippingCustomer: undefined,
-    startRecurrent: false,
-    summaryImageUrl: '',
-    trackandtrace: ''
-}
+    shipping: {
+        recipient: {
+            category: RecipientCategory.PERSON,
+            careOf: 'Test Acceptatie',
+            title: 'Male',
+            initials: 'TA',
+            firstName: 'Test',
+            lastName: 'Acceptatie',
+            birthDate: '1990-01-01',
+        },
+        address: {
+            street: 'Hoofdstraat',
+            houseNumber: '80',
+            houseNumberAdditional: 'a',
+            zipcode: '8441ER',
+            city: 'Heerenveen',
+            country: 'NL',
+        },
+    },
+    articles: [
+        {
+            identifier: 'Articlenumber1',
+            description: 'Blue Toy Car',
+            vatPercentage: 21,
+            quantity: 2,
+            price: 20.1,
+            priceExcl: 5,
+        },
+        {
+            identifier: 'Articlenumber2',
+            description: 'Red Toy Car',
+            vatPercentage: 21,
+            quantity: 1,
+            price: 10.1,
+            priceExcl: 5,
+        },
+    ],
+};

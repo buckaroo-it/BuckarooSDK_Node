@@ -1,7 +1,16 @@
-import { Payload } from '../../../Models/ITransaction'
+import { IPaymentRequest, IPerson, ServiceParameter } from '../../../Models';
 
-export interface Pay extends Payload {
-    firstName?: string
-    lastName?: string
-    email?: string
+export interface IPay extends IPaymentRequest {
+    person: Partial<IPerson>;
+    email?: string;
+}
+
+export class Pay extends ServiceParameter {
+    set person(value: Partial<IPerson>) {
+        this.set('person', value);
+    }
+
+    set email(value: string) {
+        this.set('email', value);
+    }
 }
