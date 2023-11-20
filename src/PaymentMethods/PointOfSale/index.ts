@@ -1,13 +1,13 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
+import { PayablePaymentMethod } from '../../Services';
+import { IPay, Pay } from './Models/Pay';
+import { ServiceCode } from '../../Utils';
 
-class Pointofsale extends PayablePaymentMethod {
-    protected _paymentName = 'pospayment'
-}
+export default class PointOfSale extends PayablePaymentMethod {
+    public defaultServiceCode(): ServiceCode {
+        return 'pospayment';
+    }
 
-let _pointofsale: Pointofsale
-const pointofsale: () => Pointofsale = () => {
-    if (!_pointofsale) _pointofsale = new Pointofsale()
-    return _pointofsale
+    pay(payload: IPay) {
+        return super.pay(payload, new Pay(payload));
+    }
 }
-export default pointofsale
-export { Pointofsale as PointofsaleClass }

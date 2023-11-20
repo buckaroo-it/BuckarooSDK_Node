@@ -1,14 +1,18 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { RefundPayload } from '../../Models/ITransaction'
-import { IPay } from './Models/Pay'
+import { PayablePaymentMethod } from '../../Services';
+import { IRefundRequest } from '../../Models';
+import { IPay, Pay } from './Models/Pay';
+import { ServiceCode } from '../../Utils';
 
 export default class Przelewy24 extends PayablePaymentMethod {
-    protected _paymentName = 'Przelewy24'
+    public defaultServiceCode(): ServiceCode {
+        return 'przelewy24';
+    }
 
     pay(payload: IPay) {
-        return super.pay(payload)
+        return super.pay(payload, new Pay(payload));
     }
-    refund(payload: RefundPayload) {
-        return super.refund(payload)
+
+    refund(payload: IRefundRequest) {
+        return super.refund(payload);
     }
 }

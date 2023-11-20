@@ -1,17 +1,18 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { IPay } from './Models/Pay'
-import { RefundPayload } from '../../Models/ITransaction'
+import { PayablePaymentMethod } from '../../Services';
+import { IPaymentRequest, IRefundRequest } from '../../Models';
+import Pay from './Models/Pay';
+import { ServiceCode } from '../../Utils';
 
 export default class In3 extends PayablePaymentMethod {
-    protected _paymentName = 'capayable'
-    pay(payload: IPay) {
-        return super.pay(payload)
+    public defaultServiceCode(): ServiceCode {
+        return 'In3';
     }
-    payInInstallments(payload: IPay) {
-        this.action = 'PayInInstallments'
-        return super.payTransaction(payload)
+
+    pay(payload: IPaymentRequest) {
+        return super.pay(payload, new Pay(payload));
     }
-    refund(payload: RefundPayload) {
-        return super.refund(payload)
+
+    refund(payload: IRefundRequest) {
+        return super.refund(payload);
     }
 }

@@ -1,58 +1,65 @@
-require('../BuckarooClient.test')
-import Tinka from '../../src/PaymentMethods/Tinka/index'
+import { Gender, uniqid } from '../../src';
+import buckarooClientTest from '../BuckarooClient.test';
 
-const method = new Tinka()
-
+const method = buckarooClientTest.method('tinka');
 describe('Tinka', () => {
     test('Pay', async () => {
         await method
             .pay({
-                amountDebit: 3.5,
-                article: [
-                    {
-                        description: 'ewf',
-                        quantity: 1,
-                        unitCode: '',
-                        unitGrossPrice: 3.5
-                    }
-                ],
-                billingCustomer: {
-                    city: 'wef',
-                    country: 'rfew',
-                    email: 'few@hotmail.com',
-                    phone: '3161234567',
-                    postalCode: '345445',
-                    prefixLastName: 'fsd',
-                    street: 'ds',
-                    streetNumber: '32',
-                    streetNumberAdditional: 'descs'
+                billing: {
+                    email: 'test@buckaroo.nl',
+                    phone: {
+                        mobile: '0612345678',
+                    },
+                    address: {
+                        street: 'Hoofdstraat',
+                        houseNumber: '80',
+                        houseNumberAdditional: 'a',
+                        zipcode: '8441ER',
+                        city: 'Heerenveen',
+                        country: 'NL',
+                    },
                 },
-                dateOfBirth: '',
-                deliveryDate: '',
+                customer: {
+                    gender: Gender.MALE,
+                    firstName: 'Test',
+                    lastName: 'Acceptatie',
+                    initials: 'BA',
+                    birthDate: '1990-01-01',
+                },
+                amountDebit: 100,
+                articles: [
+                    {
+                        type: '1',
+                        description: 'Blue Toy Car',
+                        brand: 'Ford Focus',
+                        manufacturer: 'Ford',
+                        color: 'Red',
+                        size: 'Small',
+                        quantity: 1,
+                        price: 100,
+                        unitCode: 'test',
+                    },
+                ],
+                deliveryDate: '09-07-2020',
                 deliveryMethod: 'CompanyStore',
-                firstName: '323',
-                initials: '',
-                lastName: '54',
-                paymentMethod: 'Credit'
+                paymentMethod: 'Credit',
             })
-            .then((info) => {
-                expect(info.data).toBeDefined()
-            })
-    })
+            .request()
+            .then((res) => {
+                expect(res.isPendingProcessing()).toBeTruthy();
+            });
+    });
     test('Refund', async () => {
         await method
             .refund({
-                amountCredit: 3.5,
-                originalTransactionKey: '1234567890'
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-            .then((info) => {
-                expect(info).toBeDefined()
-            })
-    })
-
-    test('Specifications', async () => {
-        await method.specification().then((info) => {
-            expect(info).toBeDefined()
-        })
-    })
-})
+            .request()
+            .then((res) => {
+                expect(res.isFailed()).toBeTruthy();
+            });
+    });
+});

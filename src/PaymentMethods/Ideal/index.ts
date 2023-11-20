@@ -1,34 +1,42 @@
-import { IPay } from './Models/Pay'
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { RefundPayload } from '../../Models/ITransaction'
+import { IPay, Pay } from './Models/Pay';
+import { PayablePaymentMethod } from '../../Services';
+import { RequestTypes } from '../../Constants';
+import { IRefundRequest } from '../../Models';
+import { ServiceCode } from '../../Utils';
 
 export default class Ideal extends PayablePaymentMethod {
-    protected _paymentName = 'ideal'
-    protected _serviceVersion = 2
-    constructor(type?:'processing') {
-        super();
-        if(type){
-            this._paymentName = 'idealprocessing'
-        }
+    protected _serviceVersion = 2;
+
+    constructor(serviceCode: 'ideal' | 'idealprocessing' = 'ideal') {
+        super(serviceCode);
     }
-    pay(payload: IPay) {
-        return super.pay(payload)
+
+    public defaultServiceCode(): ServiceCode {
+        return 'ideal';
     }
-    refund(payload: RefundPayload) {
-        return super.refund(payload)
+
+    pay(data: IPay) {
+        return super.pay(data, new Pay(data));
     }
+
+    payRemainder(payload: IPay) {
+        return super.payRemainder(payload, new Pay(payload));
+    }
+
     issuers() {
-        return this.specification().then((response) => {
-            return response
-                .getActionRequestParameters('Pay')
-                ?.find((item) => item.Name === 'issuer')
-                ?.ListItemDescriptions.map((item) => {
-                    return { [item.Value]: item.Description }
-                })
-        })
+        return this.specification(RequestTypes.Transaction)
+            .request()
+            .then((response) => {
+                return response
+                    .getActionRequestParameters('Pay')
+                    ?.find((item) => item.name === 'issuer')
+                    ?.listItemDescriptions?.map((item) => {
+                        return { [item.value]: item.description };
+                    });
+            });
     }
-    instantRefund(payload: RefundPayload){
-        this.action = 'InstantRefund'
-        return super.refund(payload)
+
+    instantRefund(data: IRefundRequest) {
+        return super.refund(data);
     }
 }

@@ -1,18 +1,18 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { RefundPayload } from '../../Models/ITransaction'
-import { IPay } from './Models/Pay'
+import { PayablePaymentMethod } from '../../Services';
+import { IRefundRequest } from '../../Models';
+import { IPay, Pay } from './Models/Pay';
+import { ServiceCode } from '../../Utils';
 
 export default class Tinka extends PayablePaymentMethod {
-    protected _paymentName = 'tinka'
-    _serviceVersion = 1
-    pay(payload: IPay) {
-        if (payload.billingCustomer) {
-            // @ts-ignore
-            payload.shippingCustomer = payload.shippingCustomer || payload.billingCustomer
-        }
-        return super.pay(payload)
+    public defaultServiceCode(): ServiceCode {
+        return 'tinka';
     }
-    refund(payload: RefundPayload) {
-        return super.refund(payload)
+
+    pay(payload: IPay) {
+        return super.pay(payload, new Pay(payload));
+    }
+
+    refund(payload: IRefundRequest) {
+        return super.refund(payload);
     }
 }

@@ -1,68 +1,68 @@
-import crypto from "crypto";
-import HttpMethods from "../../Constants/HttpMethods";
-import {ICredentials} from "../../Utils/Types";
-import {Hmac} from "../../Request/Hmac";
-import buckarooClient from "../../BuckarooClient";
+import crypto from 'crypto';
+import { ICredentials } from '../../Utils';
+import { Hmac } from '../../Request';
+import { HttpMethods } from '../../Constants';
 
 export class ReplyHandler {
-    private readonly data: object
-    private readonly uri?: string
-    private readonly auth_header?: string
-    private credentials: ICredentials;
-    private _isValid: boolean = false
+    private readonly _data: object;
+    private readonly uri?: string;
+    private readonly auth_header?: string;
+    private readonly credentials: ICredentials;
+    private _isValid: boolean = false;
+    private strategy: 'JSON' | 'HTTP' = 'JSON';
+    private method?: string;
 
-    constructor(credentials: ICredentials, data: string,auth_header?: string, uri?: string) {
-        try {
-            this.data = JSON.parse(data)
-        } catch (e){
-            let objData = {}
-            new URLSearchParams(data).forEach((value, name)=>{
-                objData[name] = value
-            })
-            this.data = objData
-        }
-        this.credentials = credentials
-        this.uri = uri
-        this.auth_header = auth_header
+    constructor(credentials: ICredentials, data: string, auth_header?: string, uri?: string, httpMethod?: string) {
+        this._data = this.formatStringData(data);
+        this.credentials = credentials;
+        this.uri = uri;
+        this.auth_header = auth_header;
+        this.method = httpMethod;
     }
-    get isValid(){
-        return this._isValid
+
+    isValid(): boolean {
+        return this._isValid;
     }
+
     validate() {
-        if(this.data["Key"] && this.auth_header && this.uri) {
-            this._isValid = this.validateJson(this.auth_header)
-            return this
+        if (this.strategy === 'HTTP') {
+            let { brq_signature, BRQ_SIGNATURE, ...data } = this._data as any;
+            this._isValid = this.validateHttp(data, brq_signature || BRQ_SIGNATURE);
+            return this;
         }
-
-        if (this.data["brq_signature"] || this.data["BRQ_SIGNATURE"]){
-            let  { brq_signature , BRQ_SIGNATURE, ...data} = this.data as any
-            this._isValid = this.validateHttp(data,brq_signature || BRQ_SIGNATURE)
-            return this
+        if (this.strategy === 'JSON' && this.auth_header && this.uri) {
+            this._isValid = this.validateJson(this.auth_header, this.uri, JSON.stringify(this._data));
+            return this;
         }
-
-        throw new Error('Invalid reply data')
+        throw new Error('Invalid response data');
     }
-    private validateJson(auth_header:string){
-        let header = auth_header.split(':')
-        let providedHash = header[1]
 
-        let nonce = header[2]
-        let time = header[3]
-        let hmac = new Hmac(HttpMethods.POST,this.uri,this.data,nonce,time)
-
-        let hash = hmac.hashData(hmac.getHashString())
-
-        return crypto.timingSafeEqual(Buffer.from(hash),Buffer.from(providedHash))
-    }
-    private validateHttp(data:object,signature:string){
-        let stringData = ''
-        for (const key in data ) {
-            stringData+= key + '=' + data[key]
+    private formatStringData(value: string) {
+        try {
+            let data = JSON.parse(value);
+            this.strategy = 'JSON';
+            return data;
+        } catch (e) {
+            let objData: Record<string, any> = {};
+            new URLSearchParams(value).forEach((value, name) => {
+                objData[name] = value;
+            });
+            this.strategy = 'HTTP';
+            return objData;
         }
-        stringData = stringData + buckarooClient().getCredentials().websiteKey
+    }
 
-        let hash = crypto.createHash('sha1').update(stringData).digest('hex')
+    private validateJson(auth_header: string, url: string, data: string) {
+        return new Hmac().validate(this.credentials, auth_header, url, data, this.method || HttpMethods.POST);
+    }
 
-        return crypto.timingSafeEqual(Buffer.from(hash),Buffer.from(signature))
+    private validateHttp(data: Record<string, any>, signature: string): boolean {
+        const stringData =
+            Object.keys(data)
+                .map((key) => `${key}=${data[key]}`)
+                .join('') + this.credentials.secretKey;
+        const hash = crypto.createHash('sha1').update(stringData).digest('hex');
+
+        return crypto.timingSafeEqual(Buffer.from(hash), Buffer.from(signature));
     }
 }

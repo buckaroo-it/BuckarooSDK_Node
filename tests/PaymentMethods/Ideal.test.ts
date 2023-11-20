@@ -1,58 +1,57 @@
-require('../BuckarooClient.test')
-import { uniqid } from '../../src/Utils/Functions'
-import Ideal from '../../src/PaymentMethods/Ideal/index'
+import { getIPAddress, uniqid } from '../../src';
+import buckarooClientTest from '../BuckarooClient.test';
 
-const ideal = new Ideal()
+const ideal = buckarooClientTest.method('ideal');
 describe('testing Ideal methods', () => {
-    test('Issuers', async () => {
-        await ideal.issuers().then((response) => {
-            expect(Array.isArray(response)).toBeTruthy()
-        })
-    })
-    test('Pay Simple Payload', async () => {
-        await ideal
+    test('Issuers', () => {
+        return ideal.issuers().then((response) => {
+            expect(Array.isArray(response)).toBeTruthy();
+        });
+    });
+    test('Pay Simple Payload', () => {
+        return ideal
             .pay({
-                amountDebit: 10.1,
+                amountDebit: 100,
                 issuer: 'ABNANL2A',
-                clientIP: {
-                    address: '123.456.789.123',
-                    type: 0
-                },
+                continueOnIncomplete: false,
                 additionalParameters: {
                     initiated_by_magento: 1,
-                    service_action: 'something'
-                }
+                    service_action: 'something',
+                },
             })
+            .request()
             .then((data) => {
-                expect(data.isPendingProcessing()).toBeTruthy()
-            })
-    })
-    test('Refund', async () => {
-        await ideal
+                expect(data.isPendingProcessing()).toBeTruthy();
+            });
+    });
+    test('Refund', () => {
+        return ideal
             .refund({
                 order: uniqid(),
                 invoice: uniqid(),
-                originalTransactionKey: '97DC0A03BBDF4DAAAC694D7FEC8785E1',
-                amountCredit: 4.23,
-                clientIP: {
-                    address: '123.456.789.123',
-                    type: 0
-                },
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                amountCredit: 0.01,
+                clientIP: getIPAddress(),
                 additionalParameters: {
                     initiated_by_magento: '1',
-                    service_action: 'something'
-                }
+                    service_action: 'something',
+                },
             })
+            .request()
             .then((data) => {
-                expect(data).toBeDefined()
+                expect(data.isFailed()).toBeTruthy();
+            });
+    });
+    test('InstantRefund', () => {
+        return ideal
+            .instantRefund({
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-    })
-    test('InstantRefund', async () => {
-        await ideal.instantRefund({
-            amountCredit: 4.23,
-            originalTransactionKey: '97DC0A03BBDF4DAAAC694D7FEC8785E1',
-        }).then((data) => {
-            expect(data).toBeDefined()
-        })
-    })
-})
+            .request()
+            .then((data) => {
+                expect(data.isFailed()).toBeTruthy();
+            });
+    });
+});

@@ -1,46 +1,43 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { IPay, IPayComplete, IPayEncrypted, IPayOneClick } from './Models/Pay'
-import {ICapture, RefundPayload} from '../../Models/ITransaction'
+import { PayablePaymentMethod } from '../../Services';
+import { IPay, IPayComplete, IPayEncrypted, IPayOneClick, Pay } from './Models/Pay';
+import { IRefundRequest } from '../../Models';
+import { ServiceCode } from '../../Utils';
 
 export default class Bancontact extends PayablePaymentMethod {
-    protected _paymentName = 'bancontactmrcash'
-    protected _serviceVersion = 1
+    public defaultServiceCode(): ServiceCode {
+        return 'bancontactmrcash';
+    }
 
     pay(payload: IPay) {
-        return super.pay(payload)
+        return super.pay(payload, new Pay(payload));
     }
-    refund(payload: RefundPayload) {
-        return super.refund(payload)
+
+    refund(payload: IRefundRequest) {
+        return super.refund(payload);
     }
+
     authenticate(payload: IPay) {
-        return this.authorize(payload)
+        this.setServiceList('Authenticate', new Pay(payload));
+        return this.transactionRequest(payload);
     }
-    authorize(payload: IPay) {
-        this.action = 'Authorize'
-        return this.payTransaction(payload)
-    }
+
     payOneClick(payload: IPayOneClick) {
-        this.action = 'PayOneClick'
-        return this.transactionInvoice(payload)
+        this.setServiceList('PayOneClick', new Pay(payload));
+        return this.transactionRequest(payload);
     }
+
     payEncrypted(payload: IPayEncrypted) {
-        this.action = 'PayEncrypted'
-        return this.transactionInvoice(payload)
+        this.setServiceList('PayEncrypted', new Pay(payload));
+        return this.transactionRequest(payload);
     }
+
     completePayment(payload: IPayComplete) {
-        this.action = 'CompletePayment'
-        return this.dataRequest(payload)
+        this.setServiceList('CompletePayment', new Pay(payload));
+        return this.dataRequest(payload);
     }
+
     payRecurring(payload: IPayOneClick) {
-        this.action = 'PayRecurring'
-        return this.transactionInvoice(payload)
-    }
-    capture(payload:ICapture) {
-        this.action = 'Capture'
-        return this.transactionInvoice(payload)
-    }
-    cancelAuthorize(payload) {
-        this.action = 'CancelAuthorize'
-        return this.transactionRequest(payload)
+        this.setServiceList('PayRecurring', new Pay(payload));
+        return this.transactionRequest(payload);
     }
 }

@@ -1,34 +1,42 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { IPay } from './Models/IPay'
-import { ICapture, Payload, RefundPayload } from '../../Models/ITransaction'
+import { PayablePaymentMethod } from '../../Services';
+import { IPay, Pay } from './Models/IPay';
+import { IRequest } from '../../Models';
+import { IReserve, Reserve } from './Models/IReserve';
+import { ServiceCode } from '../../Utils';
 
-export default class KlarnaKp extends PayablePaymentMethod {
-    protected _paymentName = 'KlarnaKp'
-    _serviceVersion = 1
-    pay(payload: IPay & Payload) {
-        return super.pay(payload)
+export default class KlarnaKP extends PayablePaymentMethod {
+    protected _serviceVersion = 1;
+
+    public defaultServiceCode(): ServiceCode {
+        return 'klarnakp';
     }
-    refund(payload: RefundPayload) {
-        return super.refund(payload)
+
+    pay(payload: IPay) {
+        return super.pay(payload, new Pay(payload));
     }
-    reserve(payload: IPay) {
-        this.action = 'Reserve'
-        return this.dataRequest(payload)
+
+    reserve(payload: IReserve) {
+        this.setServiceList('Reserve', new Reserve(payload));
+        return this.dataRequest(payload);
     }
-    cancel(payload: IPay) {
-        this.action = 'CancelReservation'
-        return this.dataRequest(payload)
+
+    cancel(payload: IRequest) {
+        this.setServiceList('CancelReservation', new Pay(payload));
+        return this.dataRequest(payload);
     }
-    update(payload: IPay) {
-        this.action = 'UpdateReservation'
-        return this.dataRequest(payload)
+
+    update(payload: IRequest) {
+        this.setServiceList('UpdateReservation');
+        return this.dataRequest(payload);
     }
-    extend(payload: IPay) {
-        this.action = 'ExtendReservation'
-        return this.dataRequest(payload)
+
+    extend(payload: IRequest) {
+        this.setServiceList('ExtendReservation');
+        return this.dataRequest(payload);
     }
-    addShippingInfo(payload: ICapture) {
-        this.action = 'AddShippingInfo'
-        return this.dataRequest(payload)
+
+    addShippingInfo(payload: IRequest) {
+        this.setServiceList('AddShippingInfo');
+        return this.dataRequest(payload);
     }
 }

@@ -1,126 +1,94 @@
-import Afterpay from '../../src/PaymentMethods/Afterpay/index'
-import { IPay } from '../../src/PaymentMethods/Afterpay/Model/Pay'
-import { RefundPayload } from '../../src/Models/ITransaction'
-import RecipientCategory from '../../src/Constants/RecipientCategory'
-require('../BuckarooClient.test')
+import buckarooClientTest from '../BuckarooClient.test';
+import { IPay } from '../../src/PaymentMethods/Afterpay/Model/Pay';
+import { getIPAddress, RecipientCategory, uniqid } from '../../src';
 
-const method = new Afterpay()
+const paymentPayload: IPay = {
+    invoice: uniqid(),
+    clientIP: getIPAddress(),
+    amountDebit: 100,
+    billing: {
+        recipient: {
+            category: RecipientCategory.PERSON,
+            firstName: 'Test',
+            lastName: 'Acceptatie',
+            birthDate: '01-01-1990',
+        },
+        address: {
+            street: 'Hoofdstraat',
+            houseNumber: '80',
+            zipcode: '8441ER',
+            city: 'Heerenveen',
+            country: 'NL',
+        },
+        email: 'test@buckaroo.nl',
+        phone: {
+            mobile: '0612345678',
+            landline: '0201234567',
+        },
+    },
+    articles: [
+        {
+            vatPercentage: 21,
+            price: 10,
+            description: 'Test',
+            quantity: 4,
+            identifier: 'test',
+        },
+    ],
+};
+
+const method = buckarooClientTest.method('afterpay');
 describe('AfterPay methods', () => {
-
-    test('Pay', async () => {
-        await method.pay(payload).then((data) => {
-            expect(data.isSuccess()).toBeTruthy()
-        })
-    })
+    test('Pay', () => {
+        return method
+            .pay(paymentPayload)
+            .request()
+            .then((data) => {
+                expect(data.isSuccess()).toBeTruthy();
+            });
+    });
     test('Refund', async () => {
-        await method.refund({ ...refundPayload }).then((data) => {
-            expect(data).toBeDefined()
-        })
-    })
+        await method
+            .refund({
+                invoice: paymentPayload.invoice, //Set invoice number of the transaction to refund
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', //Set transaction key of the transaction to refund
+                amountCredit: paymentPayload.amountDebit,
+            })
+            .request()
+            .then((data) => {
+                expect(data.isFailed()).toBeDefined();
+            });
+    });
     test('Authorize', async () => {
-        await method.authorize(payload).then((data) => {
-            expect(data).toBeDefined()
-        })
-    })
+        await method
+            .authorize(paymentPayload)
+            .request()
+            .then((data) => {
+                expect(data).toBeDefined();
+            });
+    });
     test('CancelAuthorize', async () => {
-        await method.cancelAuthorize(refundPayload).then((data) => {
-            expect(data).toBeDefined()
-        })
-    })
+        await method
+            .cancelAuthorize({
+                invoice: paymentPayload.invoice,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                amountCredit: 100,
+            })
+            .request()
+            .then((data) => {
+                expect(data).toBeDefined();
+            });
+    });
 
     test('Capture', async () => {
         await method
             .capture({
-                amountDebit: 4,
-                invoice: '123456789',
-                originalTransactionKey: '123456789'
+                ...paymentPayload,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
+            .request()
             .then((data) => {
-                expect(data).toBeDefined()
-            })
-    })
-    test('PayRemainder', async () => {
-        await method.payRemainder(payload).then((data) => {
-            expect(data).toBeDefined()
-        })
-    })
-    test('AuthorizeRemainder', async () => {
-        await method.authorizeRemainder(payload).then((data) => {
-            expect(data).toBeDefined()
-        })
-    })
-})
-
-let refundPayload: RefundPayload = {
-    amountCredit: 14,
-    originalTransactionKey: '123456789'
-}
-
-let payload: IPay = {
-    amountDebit: 14,
-    clientIP: '127.0.0.1',
-
-    shippingCustomer: {
-        city: 'rew',
-        country: 'NL',
-        street: 'fsd',
-        streetNumber: '423',
-        streetNumberAdditional: 'ewr',
-        postalCode: '1234AB',
-        email: 'example@hotmail.com',
-        phone: '+31201234567',
-        mobilePhone: '+31612345678',
-        birthDate: '1999-11-21',
-        careOf: '',
-        category: RecipientCategory.PERSON,
-        conversationLanguage: 'NL',
-        customerNumber: 'a',
-        firstName: 'a',
-        identificationNumber: '675',
-        lastName: 'a',
-        salutation: 'Mr'
-    },
-    billingCustomer: {
-        city: 'rew',
-        country: 'NL',
-        street: 'fsd',
-        streetNumber: '423',
-        streetNumberAdditional: 'ewr',
-        postalCode: '1234AB',
-        email: 'example@hotmail.com',
-        phone: '+31201234567',
-        mobilePhone: '+31612345678',
-        birthDate: '1999-11-21',
-        careOf: '',
-        category: RecipientCategory.PERSON,
-        conversationLanguage: 'NL',
-        customerNumber: 'a',
-        firstName: 'a',
-        identificationNumber: '675',
-        lastName: 'a',
-        salutation: 'Mr'
-    },
-    article: [
-        {
-            description: 'ter',
-            identifier: '423f',
-            imageUrl: '',
-            quantity: 1,
-            type: 'PhysicalArticle',
-            unitCode: '',
-            url: '',
-            vatPercentage: 0,
-            grossUnitPrice: 7
-
-        },
-        {
-            description: 'ter',
-            identifier: '423f',
-            unitCode: '',
-            type: 'PhysicalArticle',
-            quantity: 1,
-            vatPercentage: 0,
-            grossUnitPrice: 7
-        }
-    ]
-}
+                expect(data).toBeDefined();
+            });
+    });
+});

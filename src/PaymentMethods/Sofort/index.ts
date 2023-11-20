@@ -1,18 +1,24 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { Payload, RefundPayload } from '../../Models/ITransaction'
+import { PayablePaymentMethod } from '../../Services';
+import { IPaymentRequest, IRefundRequest } from '../../Models';
+import { ServiceCode } from '../../Utils';
 
 export default class Sofort extends PayablePaymentMethod {
-    protected _paymentName = 'sofortueberweisung'
-    protected _serviceVersion = 1
+    protected _serviceVersion = 1;
 
-    pay(payload: Payload) {
-        return super.pay(payload)
+    public defaultServiceCode(): ServiceCode {
+        return 'sofortueberweisung';
     }
-    refund(payload: RefundPayload) {
-        return super.refund(payload)
+
+    pay(payload: IPaymentRequest) {
+        return super.pay(payload);
     }
-    instantRefund(payload: RefundPayload){
-        this.action = 'InstantRefund'
-        return super.refund(payload)
+
+    refund(payload: IRefundRequest) {
+        return super.refund(payload);
+    }
+
+    instantRefund(payload: IRefundRequest) {
+        this.setServiceList('InstantRefund');
+        return this.transactionRequest(payload);
     }
 }

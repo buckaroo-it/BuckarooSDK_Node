@@ -1,14 +1,26 @@
-import { IInvoice } from './Invoice'
+import { ServiceParameter } from '../../../Models';
+import { IDebtorInfo } from './DebtorInfo';
 
-export interface Debtor {
-    addressUnreachable?: boolean
-
-    emailUnreachable?: boolean
-
-    mobileUnreachable?: boolean
-
-    landlineUnreachable?: boolean
-
-    faxUnreachable?: boolean
+export interface IDebtor extends IDebtorInfo {
+    person: {
+        culture: string;
+        lastName: string;
+    };
 }
-export type IDebtor = Debtor & IInvoice
+
+export class Debtor extends ServiceParameter {
+    set debtor(value: string) {
+        this.set('debtor', value);
+    }
+
+    set person(value: string) {
+        this.set('person', value);
+    }
+
+    protected getGroups() {
+        return super.getGroups({
+            Debtor: 'Debtor',
+            Person: 'Person',
+        });
+    }
+}

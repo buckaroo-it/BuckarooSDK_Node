@@ -1,29 +1,40 @@
-require('../BuckarooClient.test')
-import PaymentInitiation from '../../src/PaymentMethods/PaymentInitiation'
+import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src';
 
-const payByBank = new PaymentInitiation()
+const method = buckarooClientTest.method('PayByBank');
 
 describe('PaymentInitiation methods', () => {
-    test('Pay', async () => {
-        await payByBank
-            .pay({
-                amountDebit: 50.3,
-                order: '123456',
-                issuer: 'INGBNL2A',
-                countryCode: 'NL'
-            })
+    test('Issuers', async () => {
+        await method
+            .issuers()
             .then((response) => {
-                expect(response).toBeTruthy()
+                expect(Array.isArray(response)).toBeTruthy();
+            });
+    });
+    test('Pay', async () => {
+        await method
+            .pay({
+                issuer: 'RABONL2U',
+                amountDebit: 100,
+                order: uniqid(),
+                invoice: uniqid(),
+                countryCode: 'NL',
             })
-    })
-    test('Refund', async () => {
-        await payByBank
-            .refund({
-                amountCredit: 50.3,
-                originalTransactionKey: '123456'
-            })
+            .request()
             .then((info) => {
-                expect(info.data).toBeDefined()
+                expect(info.data).toBeDefined();
+            });
+    });
+    test('Refund', async () => {
+        await method
+            .refund({
+                invoice: uniqid(),
+                amountCredit: 0.01,
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
-    })
-})
+            .request()
+            .then((info) => {
+                expect(info.data).toBeDefined();
+            });
+    });
+});

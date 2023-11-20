@@ -1,43 +1,41 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { IPay } from './Models/Pay'
-import { ICapture, RefundPayload } from '../../Models/ITransaction'
-import { IExtraInfo } from './Models/ExtraInfo'
-import { IEmandate } from './Models/Emandate'
-import { uniqid } from '../../Utils/Functions'
+import { PayablePaymentMethod } from '../../Services';
+import { IPay, Pay } from './Models/Pay';
+import { IExtraInfo } from './Models/ExtraInfo';
+import { IEmandate } from './Models/Emandate';
+import { ServiceCode, uniqid } from '../../Utils';
+import { IPaymentRequest } from '../../Models';
 
 export default class SEPA extends PayablePaymentMethod {
-
-    protected _paymentName = 'sepadirectdebit'
-    protected _serviceVersion = 1
-
-    constructor(type?:'B2B') {
-        super();
-        if(type){
-            this._paymentName = 'sepadirectdebitb2b'
-        }
+    public defaultServiceCode(): ServiceCode {
+        return 'sepadirectdebit';
     }
 
     pay(payload: IPay) {
-        return super.pay(payload)
+        return super.pay(payload, new Pay(payload));
     }
-    refund(payload: RefundPayload) {
-        return super.refund(payload)
-    }
+
     authorize(payload: IPay) {
-        this.action = 'Authorize'
-        return super.transactionRequest(payload)
+        this.setPayPayload(payload);
+        this.setServiceList('Authorize', new Pay(payload));
+        return this.transactionRequest();
     }
-    payRecurrent(payload: Pick<IPay, 'collectDate'> & ICapture) {
-        this.action = 'PayRecurrent'
-        return super.transactionRequest(payload)
+
+    payRecurrent(payload: Pick<IPay, 'collectDate'> & IPaymentRequest) {
+        this.setPayPayload(payload);
+        this.setServiceList('PayRecurrent', new Pay(payload));
+        return this.transactionRequest();
     }
+
     extraInfo(payload: IExtraInfo) {
-        this.action = 'Pay,ExtraInfo'
-        return super.transactionRequest(payload)
+        this.setPayPayload(payload);
+        this.setServiceList('Pay,ExtraInfo', new Pay(payload));
+        return this.transactionRequest();
     }
+
     payWithEmandate(payload: IEmandate) {
-        this.action = 'PayWithEmandate'
-        payload.invoice = payload.invoice || uniqid()
-        return super.transactionRequest(payload)
+        payload.invoice = payload.invoice || uniqid();
+        this.setPayPayload(payload);
+        this.setServiceList('PayWithEmandate', new Pay(payload));
+        return this.transactionRequest();
     }
 }

@@ -1,31 +1,36 @@
-import PaymentMethod from '../PaymentMethod'
-import { IConfig } from '../../Utils/Types'
-import { ICreate } from './Models/ICreate'
-import { IModify } from './Models/IModify'
+import { PaymentMethod } from '../../Services';
+import { IConfig, ServiceCode } from '../../Utils';
+import { IMandate, Mandate } from './Models/Mandate';
 
 export default class Emandates extends PaymentMethod {
-    protected _paymentName = 'emandate'
+    _requiredFields: Array<keyof IConfig> = ['currency'];
 
-    _requiredFields: Array<keyof IConfig> = ['currency']
+    public defaultServiceCode(): ServiceCode {
+        return 'emandate';
+    }
 
     issuerList() {
-        this.action = 'GetIssuerList'
-        return this.dataRequest()
+        this.setServiceList('GetIssuerList');
+        return this.dataRequest();
     }
-    createMandate(payload: ICreate) {
-        this.action = 'CreateMandate'
-        return this.dataRequest(payload)
+
+    createMandate(payload: IMandate) {
+        this.setServiceList('CreateMandate', new Mandate(payload));
+        return this.dataRequest(payload);
     }
-    status(payload: { mandateId: string }) {
-        this.action = 'GetStatus'
-        return this.dataRequest(payload)
+
+    status(payload: IMandate) {
+        this.setServiceList('GetStatus', new Mandate(payload));
+        return this.dataRequest(payload);
     }
-    modifyMandate(payload: IModify) {
-        this.action = 'ModifyMandate'
-        return this.dataRequest(payload)
+
+    modifyMandate(payload: IMandate) {
+        this.setServiceList('ModifyMandate', new Mandate(payload));
+        return this.dataRequest(payload);
     }
-    cancelMandate(payload: { mandateId: string; purchaseId: string }) {
-        this.action = 'CancelMandate'
-        return this.dataRequest(payload)
+
+    cancelMandate(payload: IMandate) {
+        this.setServiceList('CancelMandate', new Mandate(payload));
+        return this.dataRequest(payload);
     }
 }

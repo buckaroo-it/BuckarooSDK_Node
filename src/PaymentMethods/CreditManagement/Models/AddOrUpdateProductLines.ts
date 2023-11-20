@@ -1,8 +1,30 @@
-import { ICreditArticle } from './Article'
-import { ITransaction } from '../../../Models/ITransaction'
+import { CreditArticle, ICreditArticle } from './Article';
+import { IRequest, ServiceParameter } from '../../../Models';
 
-export interface AddOrUpdateProductLines {
-    invoiceKey: string
-    article: ICreditArticle[]
+export interface IAddOrUpdateProductLines extends IRequest {
+    invoiceKey: string;
+    articles: ICreditArticle[];
 }
-export type IAddOrUpdateProductLines = AddOrUpdateProductLines & ITransaction
+
+export class AddOrUpdateProductLines extends ServiceParameter {
+    set invoiceKey(value: string) {
+        this.set('invoiceKey', value);
+    }
+
+    set articles(value: ICreditArticle[]) {
+        this.set(
+            'articles',
+            value.map((article) => new CreditArticle(article))
+        );
+    }
+
+    protected getGroups() {
+        return super.getGroups({
+            Articles: 'ProductLine',
+        });
+    }
+
+    protected getCountable() {
+        return super.getCountable(['Articles']);
+    }
+}

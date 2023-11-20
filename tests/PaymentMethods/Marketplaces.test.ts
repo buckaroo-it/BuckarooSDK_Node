@@ -1,52 +1,82 @@
-require('../BuckarooClient.test')
-import Marketplaces from '../../src/PaymentMethods/Marketplaces/index'
-import Ideal from '../../src/PaymentMethods/Ideal/index'
-const marketplaces = new Marketplaces()
-const ideal = new Ideal()
+import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src';
+
+const marketplaces = buckarooClientTest.method('marketplaces');
+const ideal = buckarooClientTest.method('ideal');
 
 describe('Testing Marketplaces methods', () => {
     test('Split', async () => {
-        marketplaces.split({
+        const marketplacesResponse = marketplaces.split({
+            description: 'INV0001',
             daysUntilTransfer: 2,
             marketplace: {
                 amount: 10,
-                description: ''
+                description: '',
             },
-            seller: [
+            sellers: [
                 {
-                    accountId: '789C60F316D24B088ACD471',
+                    accountId: 'XXXXXXXXXXXXXXXXXXXXXXXX',
                     amount: 50,
-                    description: ''
+                    description: '',
                 },
                 {
-                    accountId: '369C60F316D24B088ACD238',
-                    amount: 35,
-                    description: ''
-                }
-            ]
-        })
-        ideal
-            .combine(marketplaces)
+                    accountId: 'XXXXXXXXXXXXXXXXXXXXXXXX',
+                    amount: 45,
+                    description: '',
+                },
+            ],
+        });
+        return ideal
+            .combine(marketplacesResponse.data)
             .pay({
                 issuer: 'ABNANL2A',
-                amountDebit: 95.0
+                amountDebit: 100,
             })
+            .request()
             .then((response) => {
-                expect(response.data).toBeDefined()
-            })
-    })
+                expect(response.isValidationFailure()).toBeTruthy();
+            });
+    });
     test('transfer', async () => {
-        marketplaces.transfer({ originalTransactionKey: 'fwcafgdhgf' }).then((response) => {
-            expect(response.data).toBeDefined()
-        })
-    })
-    test('refundSupplementary', async () => {
-        const market = marketplaces.refundSupplementary()
-        ideal
-            .combine(market)
-            .refund({ originalTransactionKey: 'dasda', amountCredit: 10 })
-            .then((response) => {
-                expect(response.data).toBeDefined()
+        marketplaces
+            .transfer({
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                marketplace: {
+                    amount: 10,
+                    description: 'INV0001 Commission Marketplace',
+                },
+                sellers: [
+                    {
+                        accountId: 'XXXXXXXXXXXXXXXXXXXXXXXX',
+                        amount: 50,
+                        description: 'INV001 Payout Make-Up Products BV',
+                    },
+                ],
             })
-    })
-})
+            .request()
+            .then((response) => {
+                expect(response.isValidationFailure()).toBeTruthy();
+            });
+    });
+    test('refundSupplementary', async () => {
+        const marketplacesResponse = marketplaces.refundSupplementary({
+            sellers: [
+                {
+                    accountId: 'XXXXXXXXXXXXXXXXXXXXXXXX',
+                    description: 'INV001 Payout Make-Up Products BV',
+                },
+            ],
+        });
+        ideal
+            .combine(marketplacesResponse.data)
+            .refund({
+                invoice: uniqid(),
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                amountCredit: 0.01,
+            })
+            .request()
+            .then((response) => {
+                expect(response.isValidationFailure()).toBeTruthy();
+            });
+    });
+});

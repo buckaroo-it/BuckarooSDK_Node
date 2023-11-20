@@ -1,15 +1,23 @@
-import { PayablePaymentMethod } from '../PayablePaymentMethod'
-import { IPay } from './Models/Pay'
-import { RefundPayload } from '../../Models/ITransaction'
+import { PayablePaymentMethod } from '../../Services';
+import { IPay, Pay } from './Models/Pay';
+import { IPaymentRequest, IRefundRequest } from '../../Models';
+import { ServiceCode } from '../../Utils';
 
 export default class ApplePay extends PayablePaymentMethod {
-    protected _paymentName = 'applepay'
-    protected _serviceVersion = 1
+    public defaultServiceCode(): ServiceCode {
+        return 'applepay';
+    }
 
     pay(payload: IPay) {
-        return super.pay(payload)
+        return super.pay(payload, new Pay(payload));
     }
-    refund(payload: RefundPayload) {
-        return super.refund(payload)
+
+    refund(payload: IRefundRequest) {
+        return super.refund(payload);
+    }
+
+    payRedirect(payload: IPaymentRequest) {
+        this.setPayPayload(payload);
+        return this.transactionRequest();
     }
 }
