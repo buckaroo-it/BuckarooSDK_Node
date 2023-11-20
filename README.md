@@ -87,6 +87,12 @@ await transaction.cancelInfo(); // Retrieve cancellation info
 
 Find our full documentation online on [docs.buckaroo.io](https://docs.buckaroo.io/docs/node-sdk).
 
+#### Need more examples?
+
+More examples can be found in the [examples folder](https://github.com/buckaroo-it/BuckarooSDK_Node/tree/master/example)
+
+***
+
 ### Regarding Usage Outside of Node.js
 This library is written in JavaScript, a versatile programming language with broad applicability. While it's technically possible to integrate this library into a website or mobile application, it's strongly advised against doing so.
 
@@ -94,14 +100,14 @@ In the standard configuration, you make requests to the Buckaroo API using one o
 
 However, if you incorporate this library directly into a website or app, your secret key will be exposed to users. This could enable users to take actions on your behalf using that key.
 
-#### Need more examples?
-
-More examples can be found in the [examples folder](https://github.com/buckaroo-it/BuckarooSDK_Node/tree/master/example)
+***
 
 ### Contribute
 
 We really appreciate it when developers contribute to improve the Buckaroo plugins.
 If you want to contribute as well, then please follow our [Contribution Guidelines](CONTRIBUTING.md).
+
+***
 
 ### Versioning
 
@@ -112,6 +118,8 @@ If you want to contribute as well, then please follow our [Contribution Guidelin
 - **MAJOR:** Breaking changes that require additional testing/caution
 - **MINOR:** Changes that should not have a big impact
 - **PATCHES:** Bug and hotfixes only
+
+***
 
 ### Additional information
 
