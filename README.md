@@ -48,32 +48,41 @@ npm install @buckaroo/buckaroo_sdk
 Initiate the buckaroo client with your website key and secret key. The keys can be retrieved from your [Buckaroo account](https://plaza.buckaroo.nl/Login).
 
 ```javascript
-import { initializeBuckarooClient } from './BuckarooClient';
-initializeBuckarooClient({ websiteKey: 'KEY', secretKey: 'SECRET' });
+import Buckaroo from '@buckaroo/buckaroo_sdk';
+
+const buckarooClient = Buckaroo.InitializeClient(
+    {
+        secretKey: 'KEY',
+        websiteKey: 'SECRET',
+    },
+    {
+        mode: 'TEST', // OR 'LIVE'
+        currency: 'EUR',
+        returnURL: 'RETURN_URL',
+        pushURL: 'PUSH_URL',
+    }
+)
 ```
 
 Create a payment with all the available payment methods. In this example, we show how to create a credit card payment. Each payment has a slightly different payload.
 
 ```javascript
-import creditCard from './PaymentMethods/CreditCard';
-
-const payment = await creditCard().pay({
-    amountDebit: 10,
-    name: 'Mastercard',
-    invoice: 'UNIQUE-INVOICE-NO',
-});
+const payment = await buckarooClient
+    .method('mastercard')
+    .pay({
+        amountDebit: 100,
+    })
+    .request();
 ```
 
 After you create a transaction, you can retrieve several transaction information on demand.
 
 ```javascript
-const transactionKey = payment.Key;
+const transaction = buckarooClient.transaction(payment.getTransactionKey());
 
-import { buckarooClient } from './BuckarooClient';
-
-buckarooClient().status(transactionKey); // Retrieve transaction status
-buckarooClient().refundInfo(transactionKey); // Retrieve refund info
-buckarooClient().cancelInfo(transactionKey); // Retrieve cancellation info
+await transaction.status(); // Retrieve transaction status
+await transaction.refundInfo(); // Retrieve refund info
+await transaction.cancelInfo(); // Retrieve cancellation info
 ```
 
 Find our full documentation online on [docs.buckaroo.io](https://docs.buckaroo.io/docs/node-sdk).
