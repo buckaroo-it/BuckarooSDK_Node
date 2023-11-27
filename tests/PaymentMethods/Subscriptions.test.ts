@@ -3,38 +3,37 @@ import buckarooClientTest from '../BuckarooClient.test';
 const subscription = buckarooClientTest.method('subscriptions');
 
 describe('Subscription methods', () => {
-    test('Create', () => {
+    test('Create', async () => {
         return subscription
             .create({
                 additionalParameters: {
-                    signature: 'XXXXXXXX',
+                    signature: 'XXXXXXXX'
                 },
                 ratePlans: {
                     add: {
                         startDate: '2024-07-23',
-                        ratePlanCode: 'XXXXXXXX',
-                    },
+                        ratePlanCode: 'XXXXXXXX'
+                    }
                 },
                 ratePlanCharges: {
                     add: {
-                        ratePlanChargeCode: 'XXXXXXXX',
-                    },
+                        ratePlanChargeCode: 'XXXXXXXX'
+                    }
                 },
                 configurationCode: 'XXXXXXXX',
                 configuration: {
-                    name: 'XXXXXXXX',
+                    name: 'XXXXXXXX'
                 },
                 debtor: {
-                    code: 'XXXXXXXX',
-                },
+                    code: 'XXXXXXXX'
+                }
             })
-            .request()
-            .then((data) => {
+            .request().then((data) => {
                 expect(data.hasError()).toBeTruthy();
             });
     });
     test('Update', async () => {
-        subscription
+        return subscription
             .update({
                 email: 'test@buckaroo.nl',
                 subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
@@ -86,7 +85,7 @@ describe('Subscription methods', () => {
                 country: 'NL',
             },
         });
-        subscription
+        return subscription
             .combine('ideal')
             .pay({
                 issuer: 'ABNANL2A',
@@ -98,12 +97,11 @@ describe('Subscription methods', () => {
                 expect(data).toBeDefined();
             });
     });
-
     test('Update Combined Subscription', async () => {
         subscription.updateCombined({
             subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         });
-        subscription
+        return subscription
             .combine('ideal')
             .pay({
                 issuer: 'ABNANL2A',
@@ -114,21 +112,22 @@ describe('Subscription methods', () => {
                 expect(data).toBeDefined();
             });
     });
-
     test('Stop Subscription', async () => {
-        const stop = await subscription.stop({
+        return subscription.stop({
             subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        }).request().then((res) => {
+            expect(res.httpResponse.status === 200).toBeTruthy();
         });
-        expect(stop).toBeDefined();
     });
     test('Subscription Info', async () => {
-        const info = await subscription.info({
+        return await subscription.info({
             subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        }).request().then((res) => {
+            expect(res.httpResponse.status === 200).toBeTruthy();
         });
-        expect(info).toBeDefined();
     });
     test('Delete Subscription Config', async () => {
-        await subscription
+        return  subscription
             .deletePaymentConfig({
                 subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
@@ -138,17 +137,24 @@ describe('Subscription methods', () => {
             });
     });
     test('Subscription Pause', async () => {
-        const pause = await subscription.pause({
+        return subscription.pause({
             subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             resumeDate: '2030-01-01',
-        });
-        expect(pause).toBeDefined();
+        }).request().then((res) => {
+            expect(res.httpResponse.status === 200).toBeTruthy();
+        })
     });
     test('Subscription Resume', async () => {
-        const resume = await subscription.resume({
+        return  subscription.resume({
             resumeDate: '2030-01-01',
             subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        }).request().then((res) => {
+            expect(res.httpResponse.status === 200).toBeTruthy();
         });
-        expect(resume).toBeDefined();
+    });
+    test('Get All Active Subscriptions', async () => {
+        return subscription.getActiveSubscriptions().request().then((res) => {
+            expect(res.httpResponse.status === 200).toBeTruthy();
+        });
     });
 });
