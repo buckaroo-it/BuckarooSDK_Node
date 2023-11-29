@@ -60,8 +60,4 @@ export default class Subscriptions extends PaymentMethod {
         this.setServiceList('ResumeSubscription', new ResumeSubscription(payload));
         return this.dataRequest();
     }
-    getActiveSubscriptions() {
-        this.setServiceList('GetActiveSubscriptions',[],'GetActiveSubscriptions')
-        return this.dataRequest();
-    }
 }

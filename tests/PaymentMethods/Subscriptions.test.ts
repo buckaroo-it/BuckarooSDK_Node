@@ -152,9 +152,4 @@ describe('Subscription methods', () => {
             expect(res.httpResponse.status === 200).toBeTruthy();
         });
     });
-    test('Get All Active Subscriptions', async () => {
-        return subscription.getActiveSubscriptions().request().then((res) => {
-            expect(res.httpResponse.status === 200).toBeTruthy();
-        });
-    });
 });

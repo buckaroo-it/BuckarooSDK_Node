@@ -22,7 +22,7 @@ export default abstract class PaymentMethod {
         this._serviceVersion = value;
     }
 
-    get serviceCode(): ServiceCode | string {
+    get serviceCode(): ServiceCode {
         return this._serviceCode ?? 'noservice';
     }
 
