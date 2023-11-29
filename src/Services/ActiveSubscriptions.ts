@@ -24,7 +24,7 @@ export default class ActiveSubscriptions {
             let parseString = require('xml2js').parseString;
 
             parseString(xmlData,function (err:any, result:any) {
-                activeSubscriptions = result['ServiceCurrencies'].map((service:any) => {
+                activeSubscriptions = result['ArrayOfServiceCurrencies']['ServiceCurrencies'].map((service:any) => {
                     return {
                         serviceCode: service['ServiceCode'][0],
                         currencies: service['Currencies'][0]['string']
