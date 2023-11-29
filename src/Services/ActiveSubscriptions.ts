@@ -20,9 +20,9 @@ export default class ActiveSubscriptions {
     private format(data:ITransactionResponse){
         let activeSubscriptions:IActiveSubscription[] = []
         const xmlData =  data.services?.[0].parameters[0].value;
-        let parseString = require('xml2js').parseString;
-
         if(typeof xmlData === 'string'){
+            let parseString = require('xml2js').parseString;
+
             parseString(xmlData,function (err:any, result:any) {
                 activeSubscriptions = result['ServiceCurrencies'].map((service:any) => {
                     return {
