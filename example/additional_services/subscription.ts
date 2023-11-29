@@ -26,4 +26,3 @@ subscription
             code: 'XXXXXXXX'
         }
     })
-const getActiveSubscriptions = subscription.getActiveSubscriptions()
