@@ -1,36 +1,27 @@
 import buckaroo from '../buckarooClient';
 
-const subscription = buckaroo.method('CreditManagement3');
+const subscription = buckaroo.method('subscriptions');
 
-subscription.createCombined({
-    address: undefined,
-    allowedServices: '',
-    b2b: '',
-    bankAccount: { accountName: '', bic: '', iban: '' },
-    billingTiming: 0,
-    company: undefined,
-    configuration: undefined,
-    configurationCode: '',
-    customerAccountName: '',
-    customerBIC: '',
-    customerIBAN: '',
-    debtor: { code: '' },
-    email: '345345345',
-    includeTransaction: false,
-    mandateReference: '',
-    subscriptionGuid: '',
-    termStartDay: 0,
-    termStartMonth: 0,
-    termStartWeek: '',
-    transactionVatPercentage: 0,
+subscription.create({
+    additionalParameters: {
+        signature: 'XXXXXXXX',
+    },
+    ratePlans: {
+        add: {
+            startDate: '2024-07-23',
+            ratePlanCode: 'XXXXXXXX',
+        },
+    },
+    ratePlanCharges: {
+        add: {
+            ratePlanChargeCode: 'XXXXXXXX',
+        },
+    },
+    configurationCode: 'XXXXXXXX',
+    configuration: {
+        name: 'XXXXXXXX',
+    },
+    debtor: {
+        code: 'XXXXXXXX',
+    },
 });
-
-buckaroo
-    .method('ideal')
-    .combine(subscription)
-    .pay({
-        amountDebit: 1,
-        currency: 'EUR',
-        description: 'test',
-    })
-    .request();

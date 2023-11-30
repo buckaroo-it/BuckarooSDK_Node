@@ -98,7 +98,6 @@ describe('Subscription methods', () => {
                 expect(data).toBeDefined();
             });
     });
-
     test('Update Combined Subscription', async () => {
         subscription.updateCombined({
             subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
@@ -114,21 +113,28 @@ describe('Subscription methods', () => {
                 expect(data).toBeDefined();
             });
     });
-
     test('Stop Subscription', async () => {
-        const stop = await subscription.stop({
-            subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-        });
-        expect(stop).toBeDefined();
+        subscription
+            .stop({
+                subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+            })
+            .request()
+            .then((res) => {
+                expect(res.httpResponse.status === 200).toBeTruthy();
+            });
     });
     test('Subscription Info', async () => {
-        const info = await subscription.info({
-            subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-        });
-        expect(info).toBeDefined();
+        await subscription
+            .info({
+                subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+            })
+            .request()
+            .then((res) => {
+                expect(res.httpResponse.status === 200).toBeTruthy();
+            });
     });
     test('Delete Subscription Config', async () => {
-        await subscription
+        subscription
             .deletePaymentConfig({
                 subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
@@ -138,17 +144,25 @@ describe('Subscription methods', () => {
             });
     });
     test('Subscription Pause', async () => {
-        const pause = await subscription.pause({
-            subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-            resumeDate: '2030-01-01',
-        });
-        expect(pause).toBeDefined();
+        subscription
+            .pause({
+                subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                resumeDate: '2030-01-01',
+            })
+            .request()
+            .then((res) => {
+                expect(res.httpResponse.status === 200).toBeTruthy();
+            });
     });
     test('Subscription Resume', async () => {
-        const resume = await subscription.resume({
-            resumeDate: '2030-01-01',
-            subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-        });
-        expect(resume).toBeDefined();
+        subscription
+            .resume({
+                resumeDate: '2030-01-01',
+                subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+            })
+            .request()
+            .then((res) => {
+                expect(res.httpResponse.status === 200).toBeTruthy();
+            });
     });
 });
