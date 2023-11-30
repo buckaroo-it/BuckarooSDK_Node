@@ -1,6 +1,6 @@
 {
     "name": "@buckaroo/buckaroo_sdk",
-    "version": "1.0.0",
+    "version": "1.0.5",
     "description": "Buckaroo payment SDK",
     "main": "dist/buckaroo.cjs.js",
     "module": "dist/buckaroo.esm.js",
@@ -45,6 +45,7 @@
         "typescript": "^4.9.4"
     },
     "dependencies": {
+        "axios": "^1.6.2",
         "crypto-js": "^4.1.1",
         "ip-address": "^8.1.0"
     },
