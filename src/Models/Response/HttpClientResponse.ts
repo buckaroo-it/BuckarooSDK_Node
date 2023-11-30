@@ -9,6 +9,10 @@ export interface HttpResponseConstructor {
 
 export interface IHttpClientResponse {
     httpResponse: AxiosResponse;
+    data: object;
+    rawData: string;
+
+    validateResponse(credentials: ICredentials): boolean;
 }
 
 export class HttpClientResponse implements IHttpClientResponse {
