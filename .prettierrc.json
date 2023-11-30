@@ -6,5 +6,5 @@
     "singleQuote": true,
     "singleAttributePerLine": true,
     "htmlWhitespaceSensitivity": "ignore",
-    "bracketSameLine": false,
+    "bracketSameLine": false
 }
