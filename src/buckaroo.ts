@@ -2,9 +2,8 @@ import { getMethod, IConfig, ICredentials, PaymentMethodInstance, ServiceCode } 
 import { HttpsClient, Request } from './Request';
 import { Agent } from 'https';
 import NoService from './PaymentMethods/NoService';
-import { TransactionService } from './Services';
+import { ActiveSubscriptions, TransactionService } from './Services';
 import { Credentials } from './Handlers';
-import ActiveSubscriptions from "./Services/ActiveSubscriptions";
 
 export default class Buckaroo {
     private static _client: Buckaroo;
@@ -65,6 +64,7 @@ export default class Buckaroo {
     transaction(key: string) {
         return new TransactionService(key);
     }
+
     getActiveSubscriptions() {
         return new ActiveSubscriptions().get();
     }

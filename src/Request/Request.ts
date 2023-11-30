@@ -16,7 +16,7 @@ import { Hmac } from './Hmac';
 
 export default class Request<
     HttpResponse extends HttpResponseConstructor = HttpResponseConstructor,
-    RequestData extends object | undefined = undefined
+    RequestData extends object | undefined = object | undefined
 > extends Headers {
     protected _path?: string;
     protected _data?: object | object[] | undefined;
@@ -96,7 +96,7 @@ export default class Request<
     }
 
     request(options: RequestConfig = {}) {
-        let data = (this._httpMethod === HttpMethods.GET ? {} : this._data) ?? {};
+        let data = (this._httpMethod === HttpMethods.GET ? {} : this.data) ?? {};
         this.setAuthorizationHeader(data);
         return Buckaroo.Client.httpClient.sendRequest(
             this.url,

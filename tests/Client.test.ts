@@ -42,7 +42,7 @@ describe('Testing Buckaroo Client', () => {
             });
     });
     describe('Transaction', () => {
-        const transactionService = client.transaction('39F3EC520A3F4A25B0A1899D4FF0E1CB');
+        const transactionService = client.transaction('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
         test('transaction Status', async () => {
             await transactionService
                 .status()
@@ -62,6 +62,14 @@ describe('Testing Buckaroo Client', () => {
         test('transaction Refund Info', async () => {
             await transactionService.refundInfo().then((res) => {
                 expect(res instanceof HttpClientResponse).toBeTruthy();
+            });
+        });
+    });
+
+    describe('Active Subscription', () => {
+        test('Get', async () => {
+            await client.getActiveSubscriptions().then((response) => {
+                expect(response).toBeDefined();
             });
         });
     });
