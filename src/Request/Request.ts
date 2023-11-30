@@ -16,7 +16,7 @@ import { Hmac } from './Hmac';
 
 export default class Request<
     HttpResponse extends HttpResponseConstructor = HttpResponseConstructor,
-    RequestData extends object | undefined = object | undefined
+    RequestData extends object | undefined = undefined
 > extends Headers {
     protected _path?: string;
     protected _data?: object | object[] | undefined;
@@ -65,7 +65,7 @@ export default class Request<
         data: T
     ): T extends IService[]
         ? Request<typeof SpecificationRequestResponse, SpecificationRequestData>
-        : Request<typeof SpecificationRequestResponse, undefined> {
+        : Request<typeof SpecificationRequestResponse> {
         if (Array.isArray(data)) {
             return new Request(
                 type + `/Specifications`,

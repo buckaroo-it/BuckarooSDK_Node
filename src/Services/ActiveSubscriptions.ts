@@ -7,29 +7,24 @@ export interface IActiveSubscription {
     currencies: string[];
 }
 
-export default class ActiveSubscriptions extends Request {
+export default class ActiveSubscriptions extends Request<typeof TransactionResponse, DataRequestData> {
     private readonly _serviceCode: string = 'GetActiveSubscriptions';
 
     constructor() {
-        super(RequestTypes.Data, HttpMethods.POST, undefined, TransactionResponse);
+        super(RequestTypes.Data, HttpMethods.POST, new DataRequestData(), TransactionResponse);
     }
-
-    get data() {
-        return new DataRequestData().setServiceList(
+    async get() {
+        this.data.setServiceList(
             new ServiceList({
                 name: this._serviceCode,
                 version: 1,
                 action: this._serviceCode,
             })
         );
-    }
-
-    async get() {
         return this.request().then((response) => {
-            return this.format(response.data as ITransactionResponse);
+            return this.format(response.data);
         });
     }
-
     private format(data: ITransactionResponse) {
         let activeSubscriptions: IActiveSubscription[] = [];
         const xmlData = data.services?.[0].parameters[0].value;
