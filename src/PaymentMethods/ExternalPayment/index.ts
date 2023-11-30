@@ -11,7 +11,7 @@ export default class ExternalPayment extends PayablePaymentMethod {
         return 'externalpayment';
     }
 
-    setChannel(channel: 'BACKOFFICE' | 'POINT-OF-SALE') {
+    public setChannel(channel: 'BACKOFFICE' | 'POINT-OF-SALE') {
         this.channel = channel;
         return this;
     }
