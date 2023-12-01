@@ -5,7 +5,7 @@ const method = buckarooClientTest.method('thunes');
 
 describe('Thunes methods', () => {
     test('authorize', async () => {
-        await method
+        return method
             .authorize({
                 amountDebit: 100,
                 order: uniqid(),
@@ -26,31 +26,31 @@ describe('Thunes methods', () => {
             })
             .request()
             .then((res) => {
-                expect(res.data).toBeDefined();
+                expect(res.httpResponse.status).toEqual(200)
             });
     });
     test('capture', async () => {
-        await method
+        return method
             .capture({ amountDebit: 100, originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' })
             .request()
             .then((res) => {
-                expect(res.data).toBeDefined();
+                expect(res.httpResponse.status).toEqual(200)
             });
     });
     test('getStatus', async () => {
-        await method
+        return method
             .getStatus({ originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' })
             .request()
             .then((res) => {
-                expect(res.data).toBeDefined();
+                expect(res.httpResponse.status).toEqual(200)
             });
     });
     test('cancel', async () => {
-        await method
+        return method
             .cancel({ originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' })
             .request()
             .then((res) => {
-                expect(res.data).toBeDefined();
+                expect(res.httpResponse.status).toEqual(200)
             });
     });
 });

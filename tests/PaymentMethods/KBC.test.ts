@@ -5,7 +5,7 @@ const method = buckarooClientTest.method('KBCPaymentButton');
 
 describe('Testing KBC methods', () => {
     test('Pay', async () => {
-        await method
+        return method
             .pay({
                 amountDebit: 100,
             })
@@ -15,7 +15,7 @@ describe('Testing KBC methods', () => {
             });
     });
     test('Refund', async () => {
-        method
+        return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,

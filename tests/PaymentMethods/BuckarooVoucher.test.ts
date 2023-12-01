@@ -5,18 +5,18 @@ const method = buckarooClientTest.method('buckaroovoucher');
 
 describe('testing methods', () => {
     test('Pay', async () => {
-        await method
+        return method
             .pay({
                 amountDebit: 100,
                 voucherCode: 'XXXXXXX',
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
     test('Refund', async () => {
-        await method
+        return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
@@ -24,11 +24,11 @@ describe('testing methods', () => {
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
     test('GetBalance', async () => {
-        await method
+        return method
             .getBalance({
                 voucherCode: 'XXXXXXX',
             })
@@ -38,7 +38,7 @@ describe('testing methods', () => {
             });
     });
     test('CreateApplication', async () => {
-        await method
+        return method
             .create({
                 creationBalance: 12,
                 usageType: 1,
@@ -47,17 +47,17 @@ describe('testing methods', () => {
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
     test('DeactivateVoucher', async () => {
-        await method
+        return method
             .deactivate({
                 voucherCode: 'XXXXXXX',
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
 });

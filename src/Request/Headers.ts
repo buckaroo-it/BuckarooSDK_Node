@@ -6,6 +6,7 @@ export type RequestHeaders = {
     Culture?: string;
     Authorization?: string;
     Software?: string;
+    Channel?: string;
     [header: string]: any;
 };
 

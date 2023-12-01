@@ -25,7 +25,7 @@ describe('GiftCard methods', () => {
         expect(responseRemainderPay.isPendingProcessing()).toBeTruthy();
     });
     test('Refund', async () => {
-        await method
+        return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,

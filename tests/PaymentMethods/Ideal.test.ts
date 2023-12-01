@@ -3,12 +3,12 @@ import buckarooClientTest from '../BuckarooClient.test';
 
 const ideal = buckarooClientTest.method('ideal');
 describe('testing Ideal methods', () => {
-    test('Issuers', () => {
+    test('Issuers', async () => {
         return ideal.issuers().then((response) => {
             expect(Array.isArray(response)).toBeTruthy();
         });
     });
-    test('Pay Simple Payload', () => {
+    test('Pay Simple Payload', async () => {
         return ideal
             .pay({
                 amountDebit: 100,
@@ -24,7 +24,7 @@ describe('testing Ideal methods', () => {
                 expect(data.isPendingProcessing()).toBeTruthy();
             });
     });
-    test('Refund', () => {
+    test('Refund', async () => {
         return ideal
             .refund({
                 order: uniqid(),
@@ -42,7 +42,7 @@ describe('testing Ideal methods', () => {
                 expect(data.isFailed()).toBeTruthy();
             });
     });
-    test('InstantRefund', () => {
+    test('InstantRefund', async () => {
         return ideal
             .instantRefund({
                 invoice: uniqid(),

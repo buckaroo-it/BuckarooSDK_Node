@@ -6,7 +6,7 @@ const creditManagement = buckarooClientTest.method('CreditManagement3');
 
 describe('Testing Credit Management', () => {
     test('CreateInvoice', async () => {
-        await creditManagement
+        return creditManagement
             .createInvoice(creditManagementTestInvoice())
             .request()
             .then((data) => {
@@ -14,7 +14,7 @@ describe('Testing Credit Management', () => {
             });
     });
     test('CreateInvoice With Articles', async () => {
-        await creditManagement
+        return creditManagement
             .createInvoice(
                 creditManagementTestInvoice({
                     invoice: uniqid(),
@@ -71,7 +71,7 @@ describe('Testing Credit Management', () => {
             });
     });
     test('Pause Invoice', async () => {
-        await creditManagement
+        return creditManagement
             .pauseInvoice({ invoice: uniqid() })
             .request()
             .then((data) => {
@@ -79,7 +79,7 @@ describe('Testing Credit Management', () => {
             });
     });
     test('UnPause Invoice', async () => {
-        await creditManagement
+        return creditManagement
             .unpauseInvoice({ invoice: uniqid() })
             .request()
             .then((data) => {
@@ -87,7 +87,7 @@ describe('Testing Credit Management', () => {
             });
     });
     test('Invoice Info', async () => {
-        await creditManagement
+        return creditManagement
             .invoiceInfo({
                 invoice: uniqid(),
                 invoices: [{ invoiceNumber: 'INV002' }, { invoiceNumber: 'INV003' }],
@@ -98,7 +98,7 @@ describe('Testing Credit Management', () => {
             });
     });
     test('Debtor Info', async () => {
-        await creditManagement
+        return creditManagement
             .debtorInfo({
                 debtor: {
                     code: 'XXXXXXXX',
@@ -110,7 +110,7 @@ describe('Testing Credit Management', () => {
             });
     });
     test('AddOrUpdateProductLines', async () => {
-        await creditManagement
+        return creditManagement
             .addOrUpdateProductLines({
                 invoiceKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 articles: [
@@ -142,23 +142,23 @@ describe('Testing Credit Management', () => {
             });
     });
     test('resumeDebtorFile', async () => {
-        await creditManagement
-            .resumeDebtorFile({ debtorFileGuid: 'd42' })
+        return creditManagement
+            .resumeDebtorFile({ debtorFileGuid: 'xxx' })
             .request()
             .then((data) => {
                 expect(data.isValidationFailure()).toBeTruthy();
             });
     });
     test('pauseDebtorFile', async () => {
-        await creditManagement
-            .pauseDebtorFile({ debtorFileGuid: 'd42' })
+        return creditManagement
+            .pauseDebtorFile({ debtorFileGuid: 'xxx' })
             .request()
             .then((data) => {
                 expect(data.isValidationFailure()).toBeTruthy();
             });
     });
     test('addOrUpdateDebtor', async () => {
-        await creditManagement
+        return creditManagement
             .addOrUpdateDebtor({
                 debtor: {
                     code: 'XXXXXXXX',
@@ -175,7 +175,7 @@ describe('Testing Credit Management', () => {
     });
     test('CreateCombinedInvoice', async () => {
         const combinedInvoice = creditManagement.createCombinedInvoice(creditManagementTestInvoice());
-        buckarooClientTest
+        return buckarooClientTest
             .method('sepadirectdebit')
             .combine(combinedInvoice.data)
             .pay({
@@ -196,7 +196,7 @@ describe('Testing Credit Management', () => {
             });
     });
     test('CreatePaymentPlan', async () => {
-        await creditManagement
+        return creditManagement
             .createPaymentPlan({
                 description: 'Payment in two intstallments',
                 includedInvoiceKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
@@ -215,7 +215,7 @@ describe('Testing Credit Management', () => {
             });
     });
     test('pauseInvoice', async () => {
-        await creditManagement
+        return creditManagement
             .pauseInvoice({
                 invoice: uniqid(),
             })

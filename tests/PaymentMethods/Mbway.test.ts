@@ -2,7 +2,7 @@ import buckarooClientTest from '../BuckarooClient.test';
 
 const method = buckarooClientTest.method('MBWay');
 describe('Mbway methods', () => {
-    test('Pay', () => {
+    test('Pay', async () => {
         return method
             .pay({
                 amountDebit: 100,

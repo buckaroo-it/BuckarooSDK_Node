@@ -5,7 +5,7 @@ const method = buckarooClientTest.method('pim');
 
 describe('PiM', () => {
     test('generate', async () => {
-        await method
+        return method
             .generate({
                 amountDebit: 100,
                 description: 'Omschrijving',
@@ -26,7 +26,7 @@ describe('PiM', () => {
             })
             .request()
             .then((info) => {
-                expect(info).toBeDefined();
+                expect(info.httpResponse.status).toEqual(200)
             });
     });
 });

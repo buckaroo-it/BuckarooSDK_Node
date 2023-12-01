@@ -4,7 +4,7 @@ const method = buckarooClientTest.method('trustly');
 
 describe('Trustly', () => {
     test('Pay', async () => {
-        await method
+        return method
             .pay({
                 amountDebit: 100,
                 customer: {

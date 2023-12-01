@@ -5,7 +5,7 @@ import { RecipientCategory, uniqid } from '../../src';
 const klarna = buckarooClientTest.method('klarna');
 describe('Testing Klarna methods', () => {
     test('Pay', async () => {
-        await klarna
+        return klarna
             .pay(payload)
             .request()
             .then((res) => {
@@ -16,7 +16,7 @@ describe('Testing Klarna methods', () => {
         const clonedPayload = JSON.parse(JSON.stringify(payload));
         clonedPayload.currency = 'GBP';
         clonedPayload.billing.address.country = 'GB';
-        await klarna
+        return klarna
             .payInInstallments(clonedPayload)
             .request()
             .then((res) => {

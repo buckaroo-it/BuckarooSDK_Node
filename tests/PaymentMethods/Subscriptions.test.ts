@@ -124,7 +124,7 @@ describe('Subscription methods', () => {
             });
     });
     test('Subscription Info', async () => {
-        return await subscription
+        return subscription
             .info({
                 subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })

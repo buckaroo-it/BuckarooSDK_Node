@@ -5,7 +5,7 @@ const method = buckarooClientTest.method('transfer');
 
 describe('Transfer methods', () => {
     test('Pay', async () => {
-        await method
+        return method
             .pay({
                 amountDebit: 100,
                 customer: {
