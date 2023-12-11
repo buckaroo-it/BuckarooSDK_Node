@@ -4,7 +4,7 @@ import { ServiceCode } from '../../src';
 const method = buckarooClientTest.method('emandate');
 describe('Testing Emandates methods', () => {
     test('GetIssuerList', async () => {
-        await method
+        return method
             .issuerList()
             .request()
             .then((response) => {
@@ -12,7 +12,7 @@ describe('Testing Emandates methods', () => {
             });
     });
     test('CreateMandate', async () => {
-        method
+        return method
             .createMandate({
                 debtorReference: 'XXXXXXXXX',
                 language: 'nl',
@@ -26,7 +26,7 @@ describe('Testing Emandates methods', () => {
             });
     });
     test('GetStatus', async () => {
-        method
+        return method
             .status({ mandateId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' })
             .request()
             .then((response) => {
@@ -34,7 +34,7 @@ describe('Testing Emandates methods', () => {
             });
     });
     test('ModifyMandate', async () => {
-        method
+        return method
             .modifyMandate({
                 originalMandateId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 continueOnIncomplete: true,
@@ -45,7 +45,7 @@ describe('Testing Emandates methods', () => {
             });
     });
     test('CancelMandate', async () => {
-        method
+        return method
             .setServiceCode('emandateb2b' as ServiceCode)
             .cancelMandate({
                 mandateId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',

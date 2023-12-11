@@ -5,7 +5,7 @@ const method = buckarooClientTest.method('przelewy24');
 
 describe('Przelewy24', () => {
     test('Pay', async () => {
-        method
+        return method
             .pay({
                 amountDebit: 100,
                 customer: {
@@ -20,7 +20,7 @@ describe('Przelewy24', () => {
             });
     });
     test('Refund', async () => {
-        await method
+        return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
@@ -28,7 +28,7 @@ describe('Przelewy24', () => {
             })
             .request()
             .then((info) => {
-                expect(info.data).toBeDefined();
+                expect(info.httpResponse.status).toEqual(200)
             });
     });
 });

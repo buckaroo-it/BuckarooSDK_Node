@@ -4,7 +4,7 @@ import { uniqid } from '../../src';
 const method = buckarooClientTest.method('eps');
 describe('Testing Eps methods', () => {
     test('Pay', async () => {
-        await method
+        return method
             .pay({
                 amountDebit: 100,
             })
@@ -14,7 +14,7 @@ describe('Testing Eps methods', () => {
             });
     });
     test('Refund', async () => {
-        method
+        return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,

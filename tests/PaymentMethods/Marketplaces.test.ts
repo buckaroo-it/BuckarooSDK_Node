@@ -38,7 +38,7 @@ describe('Testing Marketplaces methods', () => {
             });
     });
     test('transfer', async () => {
-        marketplaces
+        return marketplaces
             .transfer({
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 marketplace: {
@@ -67,7 +67,7 @@ describe('Testing Marketplaces methods', () => {
                 },
             ],
         });
-        ideal
+        return ideal
             .combine(marketplacesResponse.data)
             .refund({
                 invoice: uniqid(),

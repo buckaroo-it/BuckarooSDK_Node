@@ -5,7 +5,7 @@ const method = buckarooClientTest.method('visa');
 
 describe('testing methods', () => {
     test('Pay', async () => {
-        await method
+        return method
             .pay({
                 amountDebit: 100,
             })
@@ -15,7 +15,7 @@ describe('testing methods', () => {
             });
     });
     test('Refund', async () => {
-        await method
+        return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
@@ -27,7 +27,7 @@ describe('testing methods', () => {
             });
     });
     test('Authorize', async () => {
-        await method
+        return method
             .authorize({
                 amountDebit: 100,
             })
@@ -37,7 +37,7 @@ describe('testing methods', () => {
             });
     });
     test('PayEncrypted', async () => {
-        await method
+        return method
             .payEncrypted({
                 amountDebit: 100,
                 name: 'Visa',
@@ -49,7 +49,7 @@ describe('testing methods', () => {
             });
     });
     test('PayWithSecurityCode', async () => {
-        await method
+        return method
             .payWithSecurityCode({
                 amountDebit: 100,
                 encryptedSecurityCode: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
@@ -61,7 +61,7 @@ describe('testing methods', () => {
             });
     });
     test('AuthorizeWithSecurityCode', async () => {
-        await method
+        return method
             .authorizeWithSecurityCode({
                 amountDebit: 100,
                 encryptedSecurityCode: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
@@ -69,11 +69,11 @@ describe('testing methods', () => {
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
     test('AuthorizeEncrypted', async () => {
-        await method
+        return method
             .authorizeEncrypted({
                 amountDebit: 100,
                 encryptedCardData: 'XXXXXXXXXXXXXXXXXXXXXXXX',
@@ -81,11 +81,11 @@ describe('testing methods', () => {
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
     test('CancelAuthorize', async () => {
-        await method
+        return method
             .cancelAuthorize({
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 amountCredit: 100,
@@ -93,11 +93,11 @@ describe('testing methods', () => {
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
     test('Capture', async () => {
-        await method
+        return method
             .capture({
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 amountDebit: 100,
@@ -105,11 +105,11 @@ describe('testing methods', () => {
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
     test('PayRecurrent', async () => {
-        await method
+        return method
             .payRecurrent({
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 amountDebit: 100,
@@ -117,7 +117,7 @@ describe('testing methods', () => {
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
 });

@@ -5,18 +5,18 @@ const method = buckarooClientTest.method('sofortueberweisung');
 
 describe('Sofort', () => {
     test('Pay', async () => {
-        return await method
+        return method
             .pay({
                 amountDebit: 100,
                 order: uniqid(),
             })
             .request()
             .then((info) => {
-                expect(info).toBeDefined();
+                expect(info.httpResponse.status).toEqual(200)
             });
     });
     test('Refund', async () => {
-        await method
+        return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
@@ -24,12 +24,12 @@ describe('Sofort', () => {
             })
             .request()
             .then((info) => {
-                expect(info).toBeDefined();
+                expect(info.httpResponse.status).toEqual(200)
             });
     });
 
     test('InstantRefund', async () => {
-        await method
+        return method
             .instantRefund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
@@ -37,7 +37,7 @@ describe('Sofort', () => {
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200)
             });
     });
 });

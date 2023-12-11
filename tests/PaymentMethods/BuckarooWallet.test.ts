@@ -5,7 +5,7 @@ const method = buckarooClientTest.method('BuckarooWalletCollecting');
 
 describe('BuckarooWallet methods', () => {
     test('Pay', async () => {
-        await method
+        return method
             .pay({
                 invoice: uniqid(),
                 amountDebit: 100,
@@ -17,7 +17,7 @@ describe('BuckarooWallet methods', () => {
             });
     });
     test('Refund', async () => {
-        await method
+        return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
@@ -29,7 +29,7 @@ describe('BuckarooWallet methods', () => {
             });
     });
     test('CancelReservation', async () => {
-        await method
+        return method
             .cancel({
                 invoice: uniqid(),
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
@@ -42,7 +42,7 @@ describe('BuckarooWallet methods', () => {
             });
     });
     test('deposit', async () => {
-        await method
+        return method
             .deposit({
                 invoice: uniqid(),
                 walletId: 'XXXXXXXXXXXXXXXXXXXXX',
@@ -51,11 +51,11 @@ describe('BuckarooWallet methods', () => {
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
     test('Update', async () => {
-        await method
+        return method
             .update({
                 walletId: 'XXXXXXXXXXXXXXXXXXXXX',
                 status: 'Disabled',
@@ -74,7 +74,7 @@ describe('BuckarooWallet methods', () => {
             });
     });
     test('Withdrawal', async () => {
-        await method
+        return method
             .withdrawal({
                 invoice: uniqid(),
                 walletId: 'XXXXXXXXXXXXXXXXXXXXX',
@@ -87,7 +87,7 @@ describe('BuckarooWallet methods', () => {
             });
     });
     test('Create Wallet', async () => {
-        await method
+        return method
             .create({
                 walletId: 'XXXXXXXXXXXXXXXXXXXXX',
                 email: 'test@buckaroo.nl',
@@ -105,7 +105,7 @@ describe('BuckarooWallet methods', () => {
             });
     });
     test('GetInfo', async () => {
-        await method
+        return method
             .getInfo({
                 walletId: 'XXXXXXXXXXXXXXXXXXXXX',
             })

@@ -4,7 +4,7 @@ import { uniqid } from '../../src';
 const method = buckarooClientTest.method('externalpayment');
 describe('Testing ExternalPayment methods', () => {
     test('Pay', async () => {
-        await method
+        return method
             .pay({
                 amountDebit: 100,
             })
@@ -14,7 +14,7 @@ describe('Testing ExternalPayment methods', () => {
             });
     });
     test('Refund', async () => {
-        method
+        return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,

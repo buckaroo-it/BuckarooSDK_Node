@@ -4,7 +4,7 @@ import { uniqid } from '../../src';
 const method = buckarooClientTest.method('wechatpay');
 describe('WechatPay', () => {
     test('Pay', async () => {
-        await method
+        return method
             .pay({
                 amountDebit: 100,
                 locale: 'en-US',
@@ -15,7 +15,7 @@ describe('WechatPay', () => {
             });
     });
     test('Refund', async () => {
-        await method
+        return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
@@ -23,7 +23,7 @@ describe('WechatPay', () => {
             })
             .request()
             .then((response) => {
-                expect(response.data).toBeDefined();
+                expect(response.httpResponse.status).toEqual(200)
             });
     });
 });

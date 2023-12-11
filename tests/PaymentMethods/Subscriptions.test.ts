@@ -3,7 +3,7 @@ import buckarooClientTest from '../BuckarooClient.test';
 const subscription = buckarooClientTest.method('subscriptions');
 
 describe('Subscription methods', () => {
-    test('Create', () => {
+    test('Create', async () => {
         return subscription
             .create({
                 additionalParameters: {
@@ -34,7 +34,7 @@ describe('Subscription methods', () => {
             });
     });
     test('Update', async () => {
-        subscription
+        return subscription
             .update({
                 email: 'test@buckaroo.nl',
                 subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
@@ -86,7 +86,7 @@ describe('Subscription methods', () => {
                 country: 'NL',
             },
         });
-        subscription
+        return subscription
             .combine('ideal')
             .pay({
                 issuer: 'ABNANL2A',
@@ -102,7 +102,7 @@ describe('Subscription methods', () => {
         subscription.updateCombined({
             subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         });
-        subscription
+        return subscription
             .combine('ideal')
             .pay({
                 issuer: 'ABNANL2A',
@@ -114,7 +114,7 @@ describe('Subscription methods', () => {
             });
     });
     test('Stop Subscription', async () => {
-        subscription
+        return subscription
             .stop({
                 subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
@@ -124,7 +124,7 @@ describe('Subscription methods', () => {
             });
     });
     test('Subscription Info', async () => {
-        await subscription
+        return subscription
             .info({
                 subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
@@ -134,7 +134,7 @@ describe('Subscription methods', () => {
             });
     });
     test('Delete Subscription Config', async () => {
-        subscription
+        return subscription
             .deletePaymentConfig({
                 subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
@@ -144,7 +144,7 @@ describe('Subscription methods', () => {
             });
     });
     test('Subscription Pause', async () => {
-        subscription
+        return subscription
             .pause({
                 subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 resumeDate: '2030-01-01',
@@ -155,7 +155,7 @@ describe('Subscription methods', () => {
             });
     });
     test('Subscription Resume', async () => {
-        subscription
+        return subscription
             .resume({
                 resumeDate: '2030-01-01',
                 subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',

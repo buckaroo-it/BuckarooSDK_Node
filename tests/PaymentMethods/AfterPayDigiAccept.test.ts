@@ -79,27 +79,27 @@ const paymentPayload: IPay = {
 };
 describe('AfterPayDigiAccept methods', () => {
     test('Authorize', async () => {
-        await method
+        return method
             .authorize(paymentPayload)
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
     test('Pay', async () => {
-        await method
+        return method
             .pay(paymentPayload)
             .request()
             .then((data) => {
-                expect(data.data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
     test('Specification', async () => {
-        await method
+        return method
             .specification(RequestTypes.Transaction)
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
 });

@@ -4,7 +4,7 @@ import buckarooClientTest from '../BuckarooClient.test';
 const method = buckarooClientTest.method('tinka');
 describe('Tinka', () => {
     test('Pay', async () => {
-        await method
+        return method
             .pay({
                 billing: {
                     email: 'test@buckaroo.nl',
@@ -51,7 +51,7 @@ describe('Tinka', () => {
             });
     });
     test('Refund', async () => {
-        await method
+        return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,

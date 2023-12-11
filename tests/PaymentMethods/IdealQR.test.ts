@@ -3,7 +3,7 @@ import buckarooClientTest from '../BuckarooClient.test';
 const method = buckarooClientTest.method('idealqr');
 describe('Testing IdealQR methods', () => {
     test('Pay', async () => {
-        await method
+        return method
             .generate({
                 description: 'Test purchase',
                 returnURL: 'https://buckaroo.dev/return',

@@ -4,7 +4,7 @@ import { uniqid } from '../../src';
 const method = buckarooClientTest.method('giropay');
 describe('Testing Giropay methods', () => {
     test('Pay', async () => {
-        await method
+        return method
             .pay({
                 bic: 'XXXXXXXXX',
                 amountDebit: 100,
@@ -15,7 +15,7 @@ describe('Testing Giropay methods', () => {
             });
     });
     test('Refund', async () => {
-        await method
+        return method
             .refund({
                 amountCredit: 0.01,
                 invoice: uniqid(),

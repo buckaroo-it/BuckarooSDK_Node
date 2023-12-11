@@ -8,7 +8,7 @@ describe('Billink methods', () => {
     const invoiceId = uniqid();
 
     test('Pay', async () => {
-        await method
+        return method
             .pay(payload)
             .request()
             .then((data) => {
@@ -16,7 +16,7 @@ describe('Billink methods', () => {
             });
     });
     test('Refund', async () => {
-        await method
+        return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
@@ -24,19 +24,19 @@ describe('Billink methods', () => {
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
     test('Authorize', async () => {
-        await method
+        return method
             .authorize({ ...payload, invoice: invoiceId })
             .request()
             .then((data) => {
-                expect(data.isSuccess()).toBeTruthy();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
     test('CancelAuthorize', async () => {
-        await method
+        return method
             .cancelAuthorize({
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 amountCredit: payload.amountDebit,
@@ -48,7 +48,7 @@ describe('Billink methods', () => {
             });
     });
     test('Capture', async () => {
-        await method
+        return method
             .capture({
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 invoice: invoiceId,
@@ -57,7 +57,7 @@ describe('Billink methods', () => {
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
 });

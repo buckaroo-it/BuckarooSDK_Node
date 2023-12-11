@@ -5,7 +5,7 @@ const method = buckarooClientTest.method('creditclick');
 
 describe('Testing CreditClick methods', () => {
     test('Pay', async () => {
-        await method
+        return method
             .pay({
                 amountDebit: 100,
                 person: {
@@ -20,7 +20,7 @@ describe('Testing CreditClick methods', () => {
             });
     });
     test('Refund', async () => {
-        await method
+        return method
             .refund({
                 amountCredit: 0.01,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',

@@ -4,7 +4,7 @@ const method = buckarooClientTest.method('idin');
 
 describe('Idin methods', () => {
     test('Verify', async () => {
-        await method
+        return method
             .verify({
                 issuer: 'BANKNL2Y',
             })
@@ -15,7 +15,7 @@ describe('Idin methods', () => {
     });
 
     test('Identify', async () => {
-        await method
+        return method
             .identify({
                 issuer: 'BANKNL2Y',
             })
@@ -26,7 +26,7 @@ describe('Idin methods', () => {
     });
 
     test('Login', async () => {
-        await method
+        return method
             .login({
                 issuer: 'BANKNL2Y',
             })

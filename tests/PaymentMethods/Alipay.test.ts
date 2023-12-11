@@ -5,7 +5,7 @@ const alipay = buckarooClientTest.method('alipay');
 
 describe('Alipay methods', () => {
     test('Pay Simple Payload', async () => {
-        await alipay
+        return alipay
             .pay({
                 amountDebit: 100,
                 useMobileView: false,
@@ -16,7 +16,7 @@ describe('Alipay methods', () => {
             });
     });
     test('Refund', async () => {
-        await alipay
+        return alipay
             .refund({
                 amountCredit: 0.01,
                 invoice: uniqid(),

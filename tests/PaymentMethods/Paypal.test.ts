@@ -5,17 +5,17 @@ const method = buckarooClientTest.method('paypal');
 
 describe('Paypal', () => {
     test('Pay', async () => {
-        await method
+        return method
             .pay({
                 amountDebit: 100,
             })
             .request()
             .then((info) => {
-                expect(info.data).toBeDefined();
+                expect(info.httpResponse.status).toEqual(200)
             });
     });
     test('Refund', async () => {
-        await method
+        return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
@@ -23,12 +23,12 @@ describe('Paypal', () => {
             })
             .request()
             .then((info) => {
-                expect(info.data).toBeDefined();
+                expect(info.httpResponse.status).toEqual(200)
             });
     });
     test('ExtraInfo', async () => {
         buckarooClientTest.method('subscriptions').createCombined({});
-        await method
+        return method
             .extraInfo({
                 amountDebit: 100,
                 address: {
@@ -46,7 +46,7 @@ describe('Paypal', () => {
             })
             .request()
             .then((info) => {
-                expect(info.data).toBeDefined();
+                expect(info.httpResponse.status).toEqual(200)
             });
     });
 });
