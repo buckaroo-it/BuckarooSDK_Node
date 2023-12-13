@@ -42,7 +42,7 @@ export default class Subscriptions extends PaymentMethod {
     }
 
     info(payload: { subscriptionGuid: string }) {
-        this.setServiceList('StopSubscription', new Subscription(payload));
+        this.setServiceList('SubscriptionInfo', new Subscription(payload));
         return this.dataRequest();
     }
 
