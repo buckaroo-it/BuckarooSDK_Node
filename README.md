@@ -14,13 +14,13 @@
 
 ### Index
 
-- [About](#about)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Example](#example)
-- [Contribute](#contribute)
-- [Versioning](#versioning)
-- [Additional information](#additional-information)
+-   [About](#about)
+-   [Requirements](#requirements)
+-   [Installation](#installation)
+-   [Example](#example)
+-   [Contribute](#contribute)
+-   [Versioning](#versioning)
+-   [Additional information](#additional-information)
 
 ---
 
@@ -34,8 +34,8 @@ payments today with Buckaroo.
 
 To use the Buckaroo API client, the following things are required:
 
-- A Buckaroo account ([Dutch](https://www.buckaroo.nl/start) or [English](https://www.buckaroo.eu/solutions/request-form))
-- Node.js 6.14.× or greater
+-   A Buckaroo account ([Dutch](https://www.buckaroo.nl/start) or [English](https://www.buckaroo.eu/solutions/request-form))
+-   Node.js 6.14.× or greater
 
 ### Installation
 
@@ -61,7 +61,7 @@ const buckarooClient = Buckaroo.InitializeClient(
         returnURL: 'RETURN_URL',
         pushURL: 'PUSH_URL',
     }
-)
+);
 ```
 
 Create a payment with all the available payment methods. In this example, we show how to create a credit card payment. Each payment has a slightly different payload.
@@ -87,21 +87,28 @@ await transaction.cancelInfo(); // Retrieve cancellation info
 
 Find our full documentation online on [docs.buckaroo.io](https://docs.buckaroo.io/docs/node-sdk).
 
+#### Need more examples?
+
+More examples can be found in the [examples folder](https://github.com/buckaroo-it/BuckarooSDK_Node/tree/master/example)
+
+---
+
 ### Regarding Usage Outside of Node.js
+
 This library is written in JavaScript, a versatile programming language with broad applicability. While it's technically possible to integrate this library into a website or mobile application, it's strongly advised against doing so.
 
 In the standard configuration, you make requests to the Buckaroo API using one of our provided libraries, typically from your server (such as a Node.js server). Your secret key is securely stored on this server, inaccessible to external entities.
 
 However, if you incorporate this library directly into a website or app, your secret key will be exposed to users. This could enable users to take actions on your behalf using that key.
 
-#### Need more examples?
-
-More examples can be found in the [examples folder](https://github.com/buckaroo-it/BuckarooSDK_Node/tree/master/example)
+---
 
 ### Contribute
 
 We really appreciate it when developers contribute to improve the Buckaroo plugins.
 If you want to contribute as well, then please follow our [Contribution Guidelines](CONTRIBUTING.md).
+
+---
 
 ### Versioning
 
@@ -109,14 +116,16 @@ If you want to contribute as well, then please follow our [Contribution Guidelin
   <img src="https://user-images.githubusercontent.com/7081446/178474134-f4c3976d-653c-4ca1-bcd1-48bf6d489196.png" width="500px"  alt="">
 </p>
 
-- **MAJOR:** Breaking changes that require additional testing/caution
-- **MINOR:** Changes that should not have a big impact
-- **PATCHES:** Bug and hotfixes only
+-   **MAJOR:** Breaking changes that require additional testing/caution
+-   **MINOR:** Changes that should not have a big impact
+-   **PATCHES:** Bug and hotfixes only
+
+---
 
 ### Additional information
 
-- **Support:** https://support.buckaroo.eu/contact
-- **Contact:** [support@buckaroo.nl](mailto:support@buckaroo.nl) or [+31 (0)30 711 50 50](tel:+310307115050)
+-   **Support:** https://support.buckaroo.eu/contact
+-   **Contact:** [support@buckaroo.nl](mailto:support@buckaroo.nl) or [+31 (0)30 711 50 50](tel:+310307115050)
 
 ## License
 

@@ -5,7 +5,7 @@ const capayable = buckarooClientTest.method('capayable');
 
 describe('Testing capayable methods', () => {
     test('Pay', async () => {
-        await capayable
+        return capayable
             .pay(paymentPayload)
             .request()
             .then((data) => {
@@ -13,7 +13,7 @@ describe('Testing capayable methods', () => {
             });
     });
     test('Refund', async () => {
-        await capayable
+        return capayable
             .refund({
                 invoice: uniqid(),
                 amountCredit: paymentPayload.amountDebit,
@@ -25,7 +25,7 @@ describe('Testing capayable methods', () => {
             });
     });
     test('PayInInstallments', async () => {
-        await capayable
+        return capayable
             .payInInstallments(paymentPayload)
             .request()
             .then((response) => {

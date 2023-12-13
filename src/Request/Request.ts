@@ -65,7 +65,7 @@ export default class Request<
         data: T
     ): T extends IService[]
         ? Request<typeof SpecificationRequestResponse, SpecificationRequestData>
-        : Request<typeof SpecificationRequestResponse, undefined> {
+        : Request<typeof SpecificationRequestResponse> {
         if (Array.isArray(data)) {
             return new Request(
                 type + `/Specifications`,
@@ -96,7 +96,7 @@ export default class Request<
     }
 
     request(options: RequestConfig = {}) {
-        let data = (this._httpMethod === HttpMethods.GET ? {} : this._data) ?? {};
+        let data = (this._httpMethod === HttpMethods.GET ? {} : this.data) ?? {};
         this.setAuthorizationHeader(data);
         return Buckaroo.Client.httpClient.sendRequest(
             this.url,

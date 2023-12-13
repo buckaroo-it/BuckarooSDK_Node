@@ -2,7 +2,7 @@ import buckarooClientTest from '../BuckarooClient.test';
 
 describe('Multibanco methods', () => {
     test('Pay', async () => {
-        await buckarooClientTest
+        return buckarooClientTest
             .method('multibanco')
             .pay({
                 amountDebit: 100,

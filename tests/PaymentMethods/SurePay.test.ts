@@ -4,7 +4,7 @@ const method = buckarooClientTest.method('surepay');
 
 describe('SurePay methods', () => {
     test('Verify', async () => {
-        await method
+        return method
             .verify({
                 amountDebit: 100,
                 bankAccount: {
@@ -14,7 +14,7 @@ describe('SurePay methods', () => {
             })
             .request()
             .then((info) => {
-                expect(info).toBeDefined();
+                expect(info.httpResponse.status).toEqual(200)
             });
     });
 });

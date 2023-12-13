@@ -3,7 +3,7 @@ import buckarooClientTest from '../BuckarooClient.test';
 const subscription = buckarooClientTest.method('subscriptions');
 
 describe('Subscription methods', () => {
-    test('Create', () => {
+    test('Create', async () => {
         return subscription
             .create({
                 additionalParameters: {
@@ -34,7 +34,7 @@ describe('Subscription methods', () => {
             });
     });
     test('Update', async () => {
-        subscription
+        return subscription
             .update({
                 email: 'test@buckaroo.nl',
                 subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
@@ -86,7 +86,7 @@ describe('Subscription methods', () => {
                 country: 'NL',
             },
         });
-        subscription
+        return subscription
             .combine('ideal')
             .pay({
                 issuer: 'ABNANL2A',
@@ -98,12 +98,11 @@ describe('Subscription methods', () => {
                 expect(data).toBeDefined();
             });
     });
-
     test('Update Combined Subscription', async () => {
         subscription.updateCombined({
             subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         });
-        subscription
+        return subscription
             .combine('ideal')
             .pay({
                 issuer: 'ABNANL2A',
@@ -114,21 +113,28 @@ describe('Subscription methods', () => {
                 expect(data).toBeDefined();
             });
     });
-
     test('Stop Subscription', async () => {
-        const stop = await subscription.stop({
-            subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-        });
-        expect(stop).toBeDefined();
+        return subscription
+            .stop({
+                subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+            })
+            .request()
+            .then((res) => {
+                expect(res.httpResponse.status === 200).toBeTruthy();
+            });
     });
     test('Subscription Info', async () => {
-        const info = await subscription.info({
-            subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-        });
-        expect(info).toBeDefined();
+        return subscription
+            .info({
+                subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+            })
+            .request()
+            .then((res) => {
+                expect(res.httpResponse.status === 200).toBeTruthy();
+            });
     });
     test('Delete Subscription Config', async () => {
-        await subscription
+        return subscription
             .deletePaymentConfig({
                 subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
@@ -138,17 +144,25 @@ describe('Subscription methods', () => {
             });
     });
     test('Subscription Pause', async () => {
-        const pause = await subscription.pause({
-            subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-            resumeDate: '2030-01-01',
-        });
-        expect(pause).toBeDefined();
+        return subscription
+            .pause({
+                subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                resumeDate: '2030-01-01',
+            })
+            .request()
+            .then((res) => {
+                expect(res.httpResponse.status === 200).toBeTruthy();
+            });
     });
     test('Subscription Resume', async () => {
-        const resume = await subscription.resume({
-            resumeDate: '2030-01-01',
-            subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-        });
-        expect(resume).toBeDefined();
+        return subscription
+            .resume({
+                resumeDate: '2030-01-01',
+                subscriptionGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+            })
+            .request()
+            .then((res) => {
+                expect(res.httpResponse.status === 200).toBeTruthy();
+            });
     });
 });

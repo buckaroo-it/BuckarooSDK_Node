@@ -47,7 +47,8 @@
     "dependencies": {
         "axios": "^1.6.2",
         "crypto-js": "^4.1.1",
-        "ip-address": "^8.1.0"
+        "ip-address": "^8.1.0",
+        "xml2js": "^0.6.2"
     },
     "repository": {
         "type": "git",

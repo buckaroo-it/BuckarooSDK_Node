@@ -42,4 +42,3 @@ export class Generate extends ServiceParameter {
         this.set('resultText', value.text);
     }
 }
-

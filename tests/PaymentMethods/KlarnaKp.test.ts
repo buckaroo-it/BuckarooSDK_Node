@@ -5,7 +5,7 @@ const klarnaKp = buckarooClientTest.method('klarnakp');
 
 describe('KlarnaKp', () => {
     test('Pay', async () => {
-        await klarnaKp
+        return klarnaKp
             .pay({
                 amountDebit: 100,
                 reservationNumber: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX',
@@ -16,7 +16,7 @@ describe('KlarnaKp', () => {
             });
     });
     test('Reserve', async () => {
-        await klarnaKp
+        return klarnaKp
             .reserve({
                 gender: Gender.MALE,
                 operatingCountry: 'NL',
@@ -60,7 +60,7 @@ describe('KlarnaKp', () => {
             });
     });
     test('Cancel', async () => {
-        await klarnaKp
+        return klarnaKp
             .cancel({
                 reservationNumber: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })

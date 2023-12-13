@@ -5,7 +5,7 @@ const method = buckarooClientTest.method('bancontactmrcash');
 
 describe('BanContact methods', () => {
     test('Pay Simple Payload', async () => {
-        await method
+        return method
             .pay({
                 amountDebit: 100,
                 saveToken: true,
@@ -16,7 +16,7 @@ describe('BanContact methods', () => {
             });
     });
     test('Refund', async () => {
-        await method
+        return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
@@ -24,11 +24,11 @@ describe('BanContact methods', () => {
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
     test('Authenticate', async () => {
-        await method
+        return method
             .authenticate({ invoice: uniqid(), amountDebit: 100 })
             .request()
             .then((data) => {
@@ -36,7 +36,7 @@ describe('BanContact methods', () => {
             });
     });
     test('PayOneClick', async () => {
-        await method
+        return method
             .payOneClick({
                 invoice: uniqid(),
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
@@ -44,22 +44,22 @@ describe('BanContact methods', () => {
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
     test('CompletePayment', async () => {
-        await method
+        return method
             .completePayment({
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 encryptedCardData: 'XXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
     test('PayEncrypted', async () => {
-        await method
+        return method
             .payEncrypted({
                 invoice: uniqid(),
                 amountDebit: 100,
@@ -67,11 +67,11 @@ describe('BanContact methods', () => {
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
     test('PayRecurring', async () => {
-        await method
+        return method
             .payRecurring({
                 invoice: uniqid(),
                 amountDebit: 100,
@@ -79,7 +79,7 @@ describe('BanContact methods', () => {
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
 });

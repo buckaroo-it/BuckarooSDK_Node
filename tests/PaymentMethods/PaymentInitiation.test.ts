@@ -5,14 +5,12 @@ const method = buckarooClientTest.method('PayByBank');
 
 describe('PaymentInitiation methods', () => {
     test('Issuers', async () => {
-        await method
-            .issuers()
-            .then((response) => {
-                expect(Array.isArray(response)).toBeTruthy();
-            });
+        return method.issuers().then((response) => {
+            expect(Array.isArray(response)).toBeTruthy();
+        });
     });
     test('Pay', async () => {
-        await method
+        return method
             .pay({
                 issuer: 'RABONL2U',
                 amountDebit: 100,
@@ -22,11 +20,11 @@ describe('PaymentInitiation methods', () => {
             })
             .request()
             .then((info) => {
-                expect(info.data).toBeDefined();
+                expect(info.httpResponse.status).toEqual(200)
             });
     });
     test('Refund', async () => {
-        await method
+        return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
@@ -34,7 +32,7 @@ describe('PaymentInitiation methods', () => {
             })
             .request()
             .then((info) => {
-                expect(info.data).toBeDefined();
+                expect(info.httpResponse.status).toEqual(200)
             });
     });
 });

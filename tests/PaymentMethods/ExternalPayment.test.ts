@@ -1,8 +1,8 @@
 import buckarooClientTest from '../BuckarooClient.test';
 import { uniqid } from '../../src';
 
-const method = buckarooClientTest.method('eps');
-describe('Testing Eps methods', () => {
+const method = buckarooClientTest.method('externalpayment');
+describe('Testing ExternalPayment methods', () => {
     test('Pay', async () => {
         return method
             .pay({

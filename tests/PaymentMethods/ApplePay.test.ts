@@ -5,7 +5,7 @@ const method = buckarooClientTest.method('applepay');
 
 describe('Applepay methods', () => {
     test('Pay', async () => {
-        await method
+        return method
             .pay({
                 amountDebit: 100,
                 invoice: uniqid(),
@@ -14,11 +14,11 @@ describe('Applepay methods', () => {
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
     test('Pay Redirect Payload', async () => {
-        await method
+        return method
             .payRedirect({
                 amountDebit: 100,
                 invoice: uniqid(),
@@ -31,7 +31,7 @@ describe('Applepay methods', () => {
             });
     });
     test('Refund', async () => {
-        await method
+        return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
@@ -39,7 +39,7 @@ describe('Applepay methods', () => {
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
 });

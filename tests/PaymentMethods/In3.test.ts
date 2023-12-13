@@ -6,7 +6,7 @@ const in3 = buckarooClientTest.method('In3');
 
 describe('Testing In3 methods', () => {
     test('Pay', async () => {
-        await in3
+        return in3
             .pay(payload)
             .request()
             .then((data) => {
@@ -14,7 +14,7 @@ describe('Testing In3 methods', () => {
             });
     });
     test('Refund', async () => {
-        await in3
+        return in3
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,

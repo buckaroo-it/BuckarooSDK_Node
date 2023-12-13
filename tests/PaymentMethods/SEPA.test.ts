@@ -19,34 +19,34 @@ const paymentPayload: IPay = {
 
 describe('SEPA methods', () => {
     test('Pay', async () => {
-        await method
+        return method
             .pay(paymentPayload)
             .request()
             .then((info) => {
-                expect(info).toBeDefined();
+                expect(info.httpResponse.status).toEqual(200)
             });
     });
     test('Refund', async () => {
-        await method
+        return method
             .refund({
                 amountCredit: 0.01,
                 originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((info) => {
-                expect(info).toBeDefined();
+                expect(info.httpResponse.status).toEqual(200)
             });
     });
     test('Authorize', async () => {
-        await method
+        return method
             .authorize(paymentPayload)
             .request()
             .then((info) => {
-                expect(info).toBeDefined();
+                expect(info.httpResponse.status).toEqual(200)
             });
     });
     test('PayRecurrent', async () => {
-        await method
+        return method
             .payRecurrent({
                 invoice: uniqid(),
                 collectDate: '2030-07-03',
@@ -55,11 +55,11 @@ describe('SEPA methods', () => {
             })
             .request()
             .then((info) => {
-                expect(info).toBeDefined();
+                expect(info.httpResponse.status).toEqual(200)
             });
     });
     test('ExtraInfo', async () => {
-        await method
+        return method
             .extraInfo({
                 amountDebit: 100,
                 invoice: uniqid(),
@@ -82,11 +82,11 @@ describe('SEPA methods', () => {
             })
             .request()
             .then((info) => {
-                expect(info).toBeDefined();
+                expect(info.httpResponse.status).toEqual(200)
             });
     });
     test('Emandates', async () => {
-        await method
+        return method
             .payWithEmandate({
                 order: uniqid(),
                 invoice: uniqid(),
@@ -95,7 +95,7 @@ describe('SEPA methods', () => {
             })
             .request()
             .then((info) => {
-                expect(info).toBeDefined();
+                expect(info.httpResponse.status).toEqual(200)
             });
     });
 });

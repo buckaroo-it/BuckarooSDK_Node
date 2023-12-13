@@ -4,18 +4,18 @@ import { uniqid } from '../../src';
 const payconiq = buckarooClientTest.method('payconiq');
 describe('Payconiq', () => {
     test('Pay', async () => {
-        await payconiq
+        return payconiq
             .pay({
                 amountDebit: 100,
                 order: uniqid(),
             })
             .request()
             .then((info) => {
-                expect(info.data).toBeDefined();
+                expect(info.httpResponse.status).toEqual(200)
             });
     });
     test('Refund', async () => {
-        await payconiq
+        return payconiq
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
@@ -23,11 +23,11 @@ describe('Payconiq', () => {
             })
             .request()
             .then((info) => {
-                expect(info.data).toBeDefined();
+                expect(info.httpResponse.status).toEqual(200)
             });
     });
     test('InstantRefund', async () => {
-        await payconiq
+        return payconiq
             .instantRefund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
@@ -35,7 +35,7 @@ describe('Payconiq', () => {
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200)
             });
     });
 });

@@ -5,7 +5,7 @@ const method = buckarooClientTest.method('payperemail');
 
 describe('PayPerEmail methods', () => {
     test('paymentInvitation', async () => {
-        await method
+        return method
             .paymentInvitation({
                 currency: 'EUR',
                 amountDebit: 100,
@@ -23,8 +23,8 @@ describe('PayPerEmail methods', () => {
                 },
             })
             .request()
-            .then((response) => {
-                expect(response).toBeDefined();
+            .then((res) => {
+                expect(res.httpResponse.status).toEqual(200)
             });
     });
 });

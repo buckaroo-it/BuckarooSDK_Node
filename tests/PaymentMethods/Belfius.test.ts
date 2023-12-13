@@ -5,7 +5,7 @@ const method = buckarooClientTest.method('belfius');
 
 describe('testing methods', () => {
     test('Pay Simple Payload', async () => {
-        await method
+        return method
             .pay({
                 amountDebit: 100,
             })
@@ -15,7 +15,7 @@ describe('testing methods', () => {
             });
     });
     test('Refund', async () => {
-        await method
+        return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
@@ -23,7 +23,7 @@ describe('testing methods', () => {
             })
             .request()
             .then((data) => {
-                expect(data).toBeDefined();
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
 });

@@ -3,7 +3,7 @@ import { HttpClientResponse, IRequest, TransactionResponse, uniqid } from '../sr
 import { creditManagementTestInvoice } from './PaymentMethods/CreditManagment.test';
 
 describe('Testing Buckaroo Client', () => {
-    test('Credentials', () => {
+    test('Credentials', async () => {
         return client.confirmCredentials().then((response) => {
             expect(response).toBeTruthy();
         });
@@ -42,9 +42,9 @@ describe('Testing Buckaroo Client', () => {
             });
     });
     describe('Transaction', () => {
-        const transactionService = client.transaction('39F3EC520A3F4A25B0A1899D4FF0E1CB');
+        const transactionService = client.transaction('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
         test('transaction Status', async () => {
-            await transactionService
+            return transactionService
                 .status()
                 .then((res) => {
                     expect(res instanceof TransactionResponse).toBeTruthy();
@@ -54,14 +54,22 @@ describe('Testing Buckaroo Client', () => {
                 });
         });
         test('transaction Cancel Info', async () => {
-            await transactionService.cancelInfo().then((res) => {
+            return transactionService.cancelInfo().then((res) => {
                 expect(res instanceof HttpClientResponse).toBeTruthy();
             });
         });
 
         test('transaction Refund Info', async () => {
-            await transactionService.refundInfo().then((res) => {
+            return transactionService.refundInfo().then((res) => {
                 expect(res instanceof HttpClientResponse).toBeTruthy();
+            });
+        });
+    });
+
+    describe('Active Subscription', () => {
+        test('Get', async () => {
+            await client.getActiveSubscriptions().then((response) => {
+                expect(Array.isArray(response)).toBeDefined();
             });
         });
     });

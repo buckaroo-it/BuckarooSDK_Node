@@ -5,7 +5,7 @@ const method = buckarooClientTest.method('pospayment');
 
 describe('POS methods', () => {
     test('Pay', async () => {
-        await method
+        return method
             .pay({
                 amountDebit: 100,
                 invoice: uniqid(),
