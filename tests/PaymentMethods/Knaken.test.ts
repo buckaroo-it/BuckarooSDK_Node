@@ -20,7 +20,7 @@ describe('Knaken', () => {
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
-                originalTransactionKey: '28867CFF1CBB4251B282D3EA84EF91AE',
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {

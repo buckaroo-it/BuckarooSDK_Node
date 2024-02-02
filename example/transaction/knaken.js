@@ -10,7 +10,7 @@ knaken
 //Refund
 knaken
     .refund({
-        originalTransactionKey: '',
+        originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         amountCredit: 10.1,
         invoice: ''
     })
