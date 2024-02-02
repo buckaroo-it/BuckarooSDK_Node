@@ -63,6 +63,7 @@ export { default as capayable } from './In3Old';
 export { default as KBCPaymentButton } from './KBC';
 export { default as klarna } from './Klarna';
 export { default as klarnakp } from './KlarnaKP';
+export { default as knaken } from './Knaken';
 export { default as marketplaces } from './Marketplaces';
 export { default as MBWay } from './Mbway';
 export { default as multibanco } from './Multibanco';
