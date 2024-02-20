@@ -1,23 +1,20 @@
 import buckarooClient from '../buckarooClient';
 
-const ideal = buckarooClient.method('ideal');
+const sofort = buckarooClient.method('sofortueberweisung');
 
 //Pay
-ideal
+sofort
     .pay({
         amountDebit: 10.1,
-        issuer: 'ABNANL2A',
-        description: 'Ideal Payment',
+        description: 'Sofort Payment',
+        invoice: 'testinvoicesofort',
     })
     .request();
 //Refund
-ideal
+sofort
     .refund({
         originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         amountCredit: 10.1,
-        invoice: 'Ideal Refund',
+        invoice: 'Sofort Refund',
     })
     .request();
-
-//Issuers
-ideal.issuers();

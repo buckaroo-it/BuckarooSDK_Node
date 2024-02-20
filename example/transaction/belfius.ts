@@ -1,23 +1,19 @@
 import buckarooClient from '../buckarooClient';
 
-const ideal = buckarooClient.method('ideal');
+const belfius = buckarooClient.method('belfius');
 
 //Pay
-ideal
+belfius
     .pay({
         amountDebit: 10.1,
-        issuer: 'ABNANL2A',
-        description: 'Ideal Payment',
+        description: 'Belfius Payment',
     })
     .request();
 //Refund
-ideal
+belfius
     .refund({
         originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         amountCredit: 10.1,
-        invoice: 'Ideal Refund',
+        invoice: 'Belfius Refund',
     })
     .request();
-
-//Issuers
-ideal.issuers();

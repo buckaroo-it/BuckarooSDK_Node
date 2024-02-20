@@ -1,23 +1,19 @@
 import buckarooClient from '../buckarooClient';
 
-const ideal = buckarooClient.method('ideal');
+const paypal = buckarooClient.method('paypal');
 
 //Pay
-ideal
+paypal
     .pay({
         amountDebit: 10.1,
-        issuer: 'ABNANL2A',
-        description: 'Ideal Payment',
+        description: 'Paypal Payment',
     })
     .request();
 //Refund
-ideal
+paypal
     .refund({
         originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         amountCredit: 10.1,
-        invoice: 'Ideal Refund',
+        invoice: 'Paypal Refund',
     })
     .request();
-
-//Issuers
-ideal.issuers();

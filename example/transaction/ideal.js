@@ -11,9 +11,9 @@ ideal
 //Refund
 ideal
     .refund({
-    originalTransactionKey: '',
+    originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     amountCredit: 10.1,
-    invoice: ''
+    invoice: 'Ideal Refund'
 })
     .request();
 //Issuers

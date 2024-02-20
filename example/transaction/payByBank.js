@@ -1,23 +1,25 @@
 import buckarooClient from '../buckarooClient';
 
-const ideal = buckarooClient.method('ideal');
+const paybybank = buckarooClient.method('PayByBank');
 
 //Pay
-ideal
+paybybank
     .pay({
         amountDebit: 10.1,
         issuer: 'ABNANL2A',
-        description: 'Ideal Payment',
+        description: 'PayByBank Payment',
+        countryCode: 'NL',
+
     })
     .request();
 //Refund
-ideal
+paybybank
     .refund({
         originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         amountCredit: 10.1,
-        invoice: 'Ideal Refund',
+        invoice: 'PayByBank Refund',
     })
     .request();
 
 //Issuers
-ideal.issuers();
+paybybank.issuers();
