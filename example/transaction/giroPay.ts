@@ -1,23 +1,20 @@
 import buckarooClient from '../buckarooClient';
 
-const ideal = buckarooClient.method('ideal');
+const giropay = buckarooClient.method('giropay');
 
 //Pay
-ideal
+giropay
     .pay({
         amountDebit: 10.1,
-        issuer: 'ABNANL2A',
-        description: 'Ideal Payment',
+        bic: 'XXXXXXXXX',
+        description: 'Giropay Payment',
     })
     .request();
 //Refund
-ideal
+giropay
     .refund({
         originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         amountCredit: 10.1,
-        invoice: 'Ideal Refund',
+        invoice: 'Giropay Refund',
     })
     .request();
-
-//Issuers
-ideal.issuers();

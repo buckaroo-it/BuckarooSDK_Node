@@ -1,23 +1,19 @@
 import buckarooClient from '../buckarooClient';
 
-const ideal = buckarooClient.method('ideal');
+const mbway = buckarooClient.method('MBWay');
 
 //Pay
-ideal
+mbway
     .pay({
         amountDebit: 10.1,
-        issuer: 'ABNANL2A',
-        description: 'Ideal Payment',
+        description: 'MBWay Payment',
     })
     .request();
 //Refund
-ideal
+mbway
     .refund({
         originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         amountCredit: 10.1,
-        invoice: 'Ideal Refund',
+        invoice: 'MBWay Refund',
     })
     .request();
-
-//Issuers
-ideal.issuers();

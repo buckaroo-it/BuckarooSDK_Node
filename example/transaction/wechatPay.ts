@@ -1,23 +1,21 @@
 import buckarooClient from '../buckarooClient';
 
-const ideal = buckarooClient.method('ideal');
+const wechatpay = buckarooClient.method('wechatpay');
 
 //Pay
-ideal
+wechatpay
     .pay({
         amountDebit: 10.1,
         issuer: 'ABNANL2A',
-        description: 'Ideal Payment',
+        description: 'WeChatPay Payment',
+        locale: 'en-US',
     })
     .request();
 //Refund
-ideal
+wechatpay
     .refund({
         originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         amountCredit: 10.1,
-        invoice: 'Ideal Refund',
+        invoice: 'WeChatPay Refund',
     })
     .request();
-
-//Issuers
-ideal.issuers();

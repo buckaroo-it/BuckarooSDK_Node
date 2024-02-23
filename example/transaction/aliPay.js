@@ -1,23 +1,18 @@
 import buckarooClient from '../buckarooClient';
-
-const ideal = buckarooClient.method('ideal');
-
+const alipay = buckarooClient.method('alipay');
 //Pay
-ideal
+alipay
     .pay({
         amountDebit: 10.1,
-        issuer: 'ABNANL2A',
-        description: 'Ideal Payment',
+        description: 'Alipay Payment',
+        useMobileView: false,
     })
     .request();
 //Refund
-ideal
+alipay
     .refund({
         originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         amountCredit: 10.1,
-        invoice: 'Ideal Refund',
+        invoice: 'Alipay Refund'
     })
     .request();
-
-//Issuers
-ideal.issuers();

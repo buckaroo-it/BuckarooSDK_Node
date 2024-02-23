@@ -1,23 +1,19 @@
 import buckarooClient from '../buckarooClient';
-
-const ideal = buckarooClient.method('ideal');
-
+const applepay = buckarooClient.method('applepay');
 //Pay
-ideal
+applepay
     .pay({
         amountDebit: 10.1,
-        issuer: 'ABNANL2A',
-        description: 'Ideal Payment',
+        description: 'ApplePay Payment'
+        paymentData: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        customerCardName: 'XXXXXXX',
     })
     .request();
 //Refund
-ideal
+applepay
     .refund({
         originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         amountCredit: 10.1,
-        invoice: 'Ideal Refund',
+        invoice: 'ApplePay Refund'
     })
     .request();
-
-//Issuers
-ideal.issuers();

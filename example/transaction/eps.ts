@@ -1,23 +1,19 @@
 import buckarooClient from '../buckarooClient';
 
-const ideal = buckarooClient.method('ideal');
+const eps = buckarooClient.method('eps');
 
 //Pay
-ideal
+eps
     .pay({
         amountDebit: 10.1,
-        issuer: 'ABNANL2A',
-        description: 'Ideal Payment',
+        description: 'EPS Payment',
     })
     .request();
 //Refund
-ideal
+eps
     .refund({
         originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         amountCredit: 10.1,
-        invoice: 'Ideal Refund',
+        invoice: 'EPS Refund',
     })
     .request();
-
-//Issuers
-ideal.issuers();
