@@ -79,7 +79,6 @@ export { default as sofortueberweisung } from './Sofort';
 export { default as subscriptions } from './Subscriptions';
 export { default as surepay } from './Surepay';
 export { default as thunes } from './Thunes';
-export { default as tinka } from './Tinka';
 export { default as alipay } from './Alipay';
 export { default as trustly } from './Trustly';
 export { default as wechatpay } from './WeChatPay';
