@@ -47,6 +47,15 @@ describe('AfterPay methods', () => {
                 expect(data.isSuccess()).toBeTruthy();
             });
     });
+    test('Pay with Different Version', async () => {
+        return method
+            .setServiceVersion(2)
+            .pay(paymentPayload)
+            .request()
+            .then((data) => {
+                expect(data.isSuccess()).toBeTruthy();
+            });
+    });
     test('Refund', async () => {
         return method
             .refund({
