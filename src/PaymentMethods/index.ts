@@ -1,5 +1,5 @@
 export { default as ideal } from './Ideal';
-export { default as idealprocessing } from './Ideal';
+export { default as idealprocessing } from './IdealProcessing';
 export { default as afterpay } from './Afterpay';
 export { default as afterpaydigiaccept } from './AfterpayDigiAccept';
 export { default as applepay } from './ApplePay';
