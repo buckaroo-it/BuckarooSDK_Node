@@ -1,6 +1,6 @@
 {
     "name": "@buckaroo/buckaroo_sdk",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "Buckaroo payment SDK",
     "main": "dist/buckaroo.cjs.js",
     "module": "dist/buckaroo.esm.js",
