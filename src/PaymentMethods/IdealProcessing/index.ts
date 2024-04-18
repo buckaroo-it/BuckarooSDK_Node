@@ -1,14 +1,13 @@
 import { IPay, Pay } from './Models/Pay';
 import { PayablePaymentMethod } from '../../Services';
 import { RequestTypes } from '../../Constants';
-import { IRefundRequest } from '../../Models';
 import { ServiceCode } from '../../Utils';
 
-export default class Ideal extends PayablePaymentMethod {
+export default class IdealProcessing extends PayablePaymentMethod {
     protected _serviceVersion = 2;
 
     public defaultServiceCode(): ServiceCode {
-        return 'ideal';
+        return 'idealprocessing';
     }
 
     pay(data: IPay) {
@@ -30,9 +29,5 @@ export default class Ideal extends PayablePaymentMethod {
                         return { [item.value]: item.description };
                     });
             });
-    }
-
-    instantRefund(data: IRefundRequest) {
-        return super.refund(data);
     }
 }
