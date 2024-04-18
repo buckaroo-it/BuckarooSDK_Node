@@ -1,10 +1,10 @@
-import { PayablePaymentMethod } from "../../Services";
-import { IPaymentRequest, IRefundRequest } from "../../Models";
-import { ServiceCode } from "../../Utils";
+import { PayablePaymentMethod } from '../../Services';
+import { IPaymentRequest, IRefundRequest } from '../../Models';
+import { ServiceCode } from '../../Utils';
 
 export default class Belfius extends PayablePaymentMethod {
     public defaultServiceCode(): ServiceCode {
-        return "belfius";
+        return 'belfius';
     }
 
     pay(payload: IPaymentRequest) {

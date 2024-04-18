@@ -1,4 +1,4 @@
-import { Model } from "../Model";
+import { Model } from '../Model';
 
 export default interface IBankAccount {
     iban: string;
@@ -8,14 +8,14 @@ export default interface IBankAccount {
 
 export class BankAccount extends Model implements IBankAccount {
     set accountName(accountName: string) {
-        this.set("accountName", accountName);
+        this.set('accountName', accountName);
     }
 
     set bic(bic: string) {
-        this.set("bic", bic);
+        this.set('bic', bic);
     }
 
     set iban(iban: string) {
-        this.set("iban", iban);
+        this.set('iban', iban);
     }
 }

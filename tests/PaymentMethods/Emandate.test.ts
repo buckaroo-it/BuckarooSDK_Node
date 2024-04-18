@@ -1,9 +1,9 @@
-import buckarooClientTest from "../BuckarooClient.test";
-import { ServiceCode } from "../../src";
+import buckarooClientTest from '../BuckarooClient.test';
+import { ServiceCode } from '../../src';
 
-const method = buckarooClientTest.method("emandate");
-describe("Testing Emandates methods", () => {
-    test("GetIssuerList", async () => {
+const method = buckarooClientTest.method('emandate');
+describe('Testing Emandates methods', () => {
+    test('GetIssuerList', async () => {
         return method
             .issuerList()
             .request()
@@ -11,13 +11,13 @@ describe("Testing Emandates methods", () => {
                 expect(response.isSuccess()).toBeTruthy();
             });
     });
-    test("CreateMandate", async () => {
+    test('CreateMandate', async () => {
         return method
             .createMandate({
-                debtorReference: "XXXXXXXXX",
-                language: "nl",
+                debtorReference: 'XXXXXXXXX',
+                language: 'nl',
                 continueOnIncomplete: true,
-                purchaseId: "XXXXXXXXXXXXXX",
+                purchaseId: 'XXXXXXXXXXXXXX',
                 sequenceType: 0,
             })
             .request()
@@ -25,18 +25,18 @@ describe("Testing Emandates methods", () => {
                 expect(response.isPendingProcessing()).toBeTruthy();
             });
     });
-    test("GetStatus", async () => {
+    test('GetStatus', async () => {
         return method
-            .status({ mandateId: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" })
+            .status({ mandateId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' })
             .request()
             .then((response) => {
                 expect(response.isSuccess()).toBeTruthy();
             });
     });
-    test("ModifyMandate", async () => {
+    test('ModifyMandate', async () => {
         return method
             .modifyMandate({
-                originalMandateId: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+                originalMandateId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 continueOnIncomplete: true,
             })
             .request()
@@ -44,12 +44,12 @@ describe("Testing Emandates methods", () => {
                 expect(response.isFailed()).toBeTruthy();
             });
     });
-    test("CancelMandate", async () => {
+    test('CancelMandate', async () => {
         return method
-            .setServiceCode("emandateb2b" as ServiceCode)
+            .setServiceCode('emandateb2b' as ServiceCode)
             .cancelMandate({
-                mandateId: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-                purchaseId: "XXXXXXXXXXXXXX",
+                mandateId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                purchaseId: 'XXXXXXXXXXXXXX',
             })
             .request()
             .then((response) => {

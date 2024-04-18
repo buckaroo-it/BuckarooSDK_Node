@@ -1,4 +1,4 @@
-import { IPaymentRequest, Person, ServiceParameter } from "../../../Models";
+import { IPaymentRequest, Person, ServiceParameter } from '../../../Models';
 
 export interface IPay extends IPaymentRequest {
     reservationNumber?: string;
@@ -6,16 +6,16 @@ export interface IPay extends IPaymentRequest {
 
 export class Pay extends ServiceParameter {
     set reservationNumber(value: string) {
-        this.set("reservationNumber", value);
+        this.set('reservationNumber', value);
     }
 }
 
 export class Customer extends Person {
     set firstName(email: string) {
-        this.set("customerFirstName", email);
+        this.set('customerFirstName', email);
     }
 
     set lastName(email: string) {
-        this.set("customerLastName", email);
+        this.set('customerLastName', email);
     }
 }

@@ -1,71 +1,71 @@
-import buckarooClientTest from "../BuckarooClient.test";
-import { uniqid } from "../../src";
+import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src';
 
-const method = buckarooClientTest.method("BuckarooWalletCollecting");
+const method = buckarooClientTest.method('BuckarooWalletCollecting');
 
-describe("BuckarooWallet methods", () => {
-    test("Pay", async () => {
+describe('BuckarooWallet methods', () => {
+    test('Pay', async () => {
         return method
             .pay({
                 invoice: uniqid(),
                 amountDebit: 100,
-                walletId: "XXXXXXXXXXXXXXXXXXXXX",
+                walletId: 'XXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {
                 expect(data.isValidationFailure()).toBeTruthy();
             });
     });
-    test("Refund", async () => {
+    test('Refund', async () => {
         return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
-                originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {
                 expect(data.isFailed()).toBeTruthy();
             });
     });
-    test("CancelReservation", async () => {
+    test('CancelReservation', async () => {
         return method
             .cancel({
                 invoice: uniqid(),
-                originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                 amountDebit: 100,
-                walletMutationGuid: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+                walletMutationGuid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {
                 expect(data.isValidationFailure()).toBeTruthy();
             });
     });
-    test("deposit", async () => {
+    test('deposit', async () => {
         return method
             .deposit({
                 invoice: uniqid(),
-                walletId: "XXXXXXXXXXXXXXXXXXXXX",
+                walletId: 'XXXXXXXXXXXXXXXXXXXXX',
                 amountCredit: 100,
-                originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {
                 expect(data.httpResponse.status).toEqual(200);
             });
     });
-    test("Update", async () => {
+    test('Update', async () => {
         return method
             .update({
-                walletId: "XXXXXXXXXXXXXXXXXXXXX",
-                status: "Disabled",
-                email: "test@buckaroo.nl",
+                walletId: 'XXXXXXXXXXXXXXXXXXXXX',
+                status: 'Disabled',
+                email: 'test@buckaroo.nl',
                 customer: {
-                    firstName: "Test",
-                    lastName: "Acceptatie",
+                    firstName: 'Test',
+                    lastName: 'Acceptatie',
                 },
                 bankAccount: {
-                    iban: "NLXXTESTXXXXXXXXXX",
+                    iban: 'NLXXTESTXXXXXXXXXX',
                 },
             })
             .request()
@@ -73,30 +73,30 @@ describe("BuckarooWallet methods", () => {
                 expect(data.isSuccess()).toBeTruthy();
             });
     });
-    test("Withdrawal", async () => {
+    test('Withdrawal', async () => {
         return method
             .withdrawal({
                 invoice: uniqid(),
-                walletId: "XXXXXXXXXXXXXXXXXXXXX",
+                walletId: 'XXXXXXXXXXXXXXXXXXXXX',
                 amountDebit: 100,
-                originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {
                 expect(data.isValidationFailure()).toBeTruthy();
             });
     });
-    test("Create Wallet", async () => {
+    test('Create Wallet', async () => {
         return method
             .create({
-                walletId: "XXXXXXXXXXXXXXXXXXXXX",
-                email: "test@buckaroo.nl",
+                walletId: 'XXXXXXXXXXXXXXXXXXXXX',
+                email: 'test@buckaroo.nl',
                 customer: {
-                    firstName: "Test",
-                    lastName: "Acceptatie",
+                    firstName: 'Test',
+                    lastName: 'Acceptatie',
                 },
                 bankAccount: {
-                    iban: "NLXXTESTXXXXXXXXXX",
+                    iban: 'NLXXTESTXXXXXXXXXX',
                 },
             })
             .request()
@@ -104,10 +104,10 @@ describe("BuckarooWallet methods", () => {
                 expect(data.isSuccess()).toBeTruthy();
             });
     });
-    test("GetInfo", async () => {
+    test('GetInfo', async () => {
         return method
             .getInfo({
-                walletId: "XXXXXXXXXXXXXXXXXXXXX",
+                walletId: 'XXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {

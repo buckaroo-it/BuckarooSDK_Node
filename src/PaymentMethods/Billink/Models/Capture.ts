@@ -1,5 +1,5 @@
-import { Article, IBillinkArticle } from "./Article";
-import { IPaymentRequest, ServiceParameter } from "../../../Models";
+import { Article, IBillinkArticle } from './Article';
+import { IPaymentRequest, ServiceParameter } from '../../../Models';
 
 export interface ICapture extends IPaymentRequest {
     articles?: IBillinkArticle[];
@@ -8,14 +8,14 @@ export interface ICapture extends IPaymentRequest {
 export class Capture extends ServiceParameter {
     set articles(articels: IBillinkArticle[]) {
         this.set(
-            "articles",
+            'articles',
             articels.map((article) => new Article(article))
         );
     }
 
     protected getGroups() {
         return super.getGroups({
-            Articles: "Article",
+            Articles: 'Article',
         });
     }
 }

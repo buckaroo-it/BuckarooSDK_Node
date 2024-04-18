@@ -1,9 +1,9 @@
-import { getMethod, IConfig, ICredentials, PaymentMethodInstance, ServiceCode } from "./Utils";
-import { HttpsClient, Request } from "./Request";
-import { Agent } from "https";
-import NoService from "./PaymentMethods/NoService";
-import { ActiveSubscriptions, TransactionService } from "./Services";
-import { Credentials } from "./Handlers";
+import { getMethod, IConfig, ICredentials, PaymentMethodInstance, ServiceCode } from './Utils';
+import { HttpsClient, Request } from './Request';
+import { Agent } from 'https';
+import NoService from './PaymentMethods/NoService';
+import { ActiveSubscriptions, TransactionService } from './Services';
+import { Credentials } from './Handlers';
 
 export default class Buckaroo {
     private static _client: Buckaroo;
@@ -13,7 +13,7 @@ export default class Buckaroo {
 
     constructor(credentials: ICredentials, config?: IConfig, agent?: Agent) {
         this._credentials = new Credentials(credentials.secretKey, credentials.websiteKey);
-        this._config = { ...(config ?? { mode: "TEST", currency: "EUR" }) };
+        this._config = { ...(config ?? { mode: 'TEST', currency: 'EUR' }) };
         this._httpClient = new HttpsClient(agent);
     }
 

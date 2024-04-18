@@ -1,21 +1,21 @@
-import { Gender } from "../../src";
-import buckarooClientTest from "../BuckarooClient.test";
+import { Gender } from '../../src';
+import buckarooClientTest from '../BuckarooClient.test';
 
-const method = buckarooClientTest.method("transfer");
+const method = buckarooClientTest.method('transfer');
 
-describe("Transfer methods", () => {
-    test("Pay", async () => {
+describe('Transfer methods', () => {
+    test('Pay', async () => {
         return method
             .pay({
                 amountDebit: 100,
                 customer: {
-                    firstName: "Test",
-                    lastName: "Acceptatie",
+                    firstName: 'Test',
+                    lastName: 'Acceptatie',
                     gender: Gender.MALE,
                 },
-                email: "test@buckaroo.nl",
+                email: 'test@buckaroo.nl',
                 sendMail: true,
-                dateDue: "2024-10-10",
+                dateDue: '2024-10-10',
             })
             .request()
             .then((res) => {

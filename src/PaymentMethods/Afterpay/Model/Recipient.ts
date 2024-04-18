@@ -1,12 +1,12 @@
-import { Company, IPerson, Person } from "../../../Models";
+import { Company, IPerson, Person } from '../../../Models';
 
 export class AfterPayCompany extends Company {
     set title(title: string) {
-        this.set("salutation", title);
+        this.set('salutation', title);
     }
 
     set chamberOfCommerce(chamberOfCommerce: string) {
-        this.set("identificationNumber", chamberOfCommerce);
+        this.set('identificationNumber', chamberOfCommerce);
     }
 }
 
@@ -22,14 +22,14 @@ export class AfterPayPerson extends Person {
     }
 
     set customerNumber(customerNumber: string) {
-        this.set("customerNumber", customerNumber);
+        this.set('customerNumber', customerNumber);
     }
 
     set identificationNumber(identificationNumber: string) {
-        this.set("identificationNumber", identificationNumber);
+        this.set('identificationNumber', identificationNumber);
     }
 
     set conversationLanguage(conversationLanguage: string) {
-        this.set("conversationLanguage", conversationLanguage);
+        this.set('conversationLanguage', conversationLanguage);
     }
 }

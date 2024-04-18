@@ -1,6 +1,6 @@
-import { ICustomer, IPaymentRequest, ServiceParameter } from "../../../Models";
-import { Article, IBillinkArticle } from "./Article";
-import { BillinkCustomer } from "./Customer";
+import { ICustomer, IPaymentRequest, ServiceParameter } from '../../../Models';
+import { Article, IBillinkArticle } from './Article';
+import { BillinkCustomer } from './Customer';
 
 export interface IPay extends IPaymentRequest {
     billing: ICustomer;
@@ -13,44 +13,44 @@ export interface IPay extends IPaymentRequest {
 
 export class Pay extends ServiceParameter {
     set billing(billing: ICustomer) {
-        this.set("billing", new BillinkCustomer(billing));
-        if (this.get("shipping") === undefined) {
+        this.set('billing', new BillinkCustomer(billing));
+        if (this.get('shipping') === undefined) {
             this.shipping = billing;
         }
     }
 
     set shipping(shipping: ICustomer) {
-        this.set("shipping", new BillinkCustomer(shipping));
+        this.set('shipping', new BillinkCustomer(shipping));
     }
 
     set articles(articles: IBillinkArticle[]) {
         this.set(
-            "articles",
+            'articles',
             articles.map((article) => new Article(article))
         );
     }
 
     set trackandtrace(trackandtrace: string) {
-        this.set("trackandtrace", trackandtrace);
+        this.set('trackandtrace', trackandtrace);
     }
 
     set VATNumber(VATNumber: string) {
-        this.set("VATNumber", VATNumber);
+        this.set('VATNumber', VATNumber);
     }
 
     set summaryImageUrl(summaryImageUrl: string) {
-        this.set("summaryImageUrl", summaryImageUrl);
+        this.set('summaryImageUrl', summaryImageUrl);
     }
 
     protected getGroups() {
         return super.getGroups({
-            Billing: "BillingCustomer",
-            Shipping: "ShippingCustomer",
-            Articles: "Article",
+            Billing: 'BillingCustomer',
+            Shipping: 'ShippingCustomer',
+            Articles: 'Article',
         });
     }
 
     protected getCountable(countable: Capitalize<string>[] = []): Capitalize<string>[] {
-        return super.getCountable(["Articles"]);
+        return super.getCountable(['Articles']);
     }
 }

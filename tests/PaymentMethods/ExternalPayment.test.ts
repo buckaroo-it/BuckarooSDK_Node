@@ -1,9 +1,9 @@
-import buckarooClientTest from "../BuckarooClient.test";
-import { uniqid } from "../../src";
+import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src';
 
-const method = buckarooClientTest.method("externalpayment");
-describe("Testing ExternalPayment methods", () => {
-    test("Pay", async () => {
+const method = buckarooClientTest.method('externalpayment');
+describe('Testing ExternalPayment methods', () => {
+    test('Pay', async () => {
         return method
             .pay({
                 amountDebit: 100,
@@ -13,12 +13,12 @@ describe("Testing ExternalPayment methods", () => {
                 expect(response.isSuccess()).toBeTruthy();
             });
     });
-    test("Refund", async () => {
+    test('Refund', async () => {
         return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
-                originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((response) => {

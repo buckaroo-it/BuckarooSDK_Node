@@ -1,4 +1,4 @@
-import { IRequest, ServiceParameter } from "../../../Models";
+import { IRequest, ServiceParameter } from '../../../Models';
 
 export interface IMandate extends IRequest {
     mandateId?: string;
@@ -14,38 +14,38 @@ export interface IMandate extends IRequest {
 
 export class Mandate extends ServiceParameter {
     set debtorBankId(value: string) {
-        this.set("debtorBankId", value);
+        this.set('debtorBankId', value);
     }
 
     set debtorReference(value: string) {
-        this.set("debtorReference", value);
+        this.set('debtorReference', value);
     }
 
     set sequenceType(value: number) {
-        this.set("sequenceType", value);
+        this.set('sequenceType', value);
     }
 
     set purchaseId(value: string) {
-        this.set("purchaseId", value);
+        this.set('purchaseId', value);
     }
 
     set mandateId(value: string) {
-        this.set("mandateId", value);
+        this.set('mandateId', value);
     }
 
     set language(value: string) {
-        this.set("language", value);
+        this.set('language', value);
     }
 
     set emandateReason(value: string) {
-        this.set("emandateReason", value);
+        this.set('emandateReason', value);
     }
 
     set maxAmount(value: number) {
-        this.set("maxAmount", value);
+        this.set('maxAmount', value);
     }
 
     set originalMandateId(value: string) {
-        this.set("originalMandateId", value);
+        this.set('originalMandateId', value);
     }
 }

@@ -1,28 +1,28 @@
-import { uniqid } from "../../src";
-import buckarooClientTest from "../BuckarooClient.test";
+import { uniqid } from '../../src';
+import buckarooClientTest from '../BuckarooClient.test';
 
-const method = buckarooClientTest.method("applepay");
+const method = buckarooClientTest.method('applepay');
 
-describe("Applepay methods", () => {
-    test("Pay", async () => {
+describe('Applepay methods', () => {
+    test('Pay', async () => {
         return method
             .pay({
                 amountDebit: 100,
                 invoice: uniqid(),
-                paymentData: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-                customerCardName: "XXXXXXX",
+                paymentData: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                customerCardName: 'XXXXXXX',
             })
             .request()
             .then((data) => {
                 expect(data.httpResponse.status).toEqual(200);
             });
     });
-    test("Pay Redirect Payload", async () => {
+    test('Pay Redirect Payload', async () => {
         return method
             .payRedirect({
                 amountDebit: 100,
                 invoice: uniqid(),
-                servicesSelectableByClient: "applepay",
+                servicesSelectableByClient: 'applepay',
                 continueOnIncomplete: true,
             })
             .request()
@@ -30,12 +30,12 @@ describe("Applepay methods", () => {
                 expect(data.isWaitingOnUserInput()).toBeTruthy();
             });
     });
-    test("Refund", async () => {
+    test('Refund', async () => {
         return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
-                originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {

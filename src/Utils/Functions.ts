@@ -1,10 +1,16 @@
-import os from "os";
-import { IAdditionalParameters, IFormattedParameter, IParameter, IServiceParameters, ServiceParameterTypes } from "../Models";
+import os from 'os';
+import {
+    IAdditionalParameters,
+    IFormattedParameter,
+    IParameter,
+    IServiceParameters,
+    ServiceParameterTypes,
+} from '../Models';
 
-export function uniqid(prefix: string = "", random: boolean = false) {
+export function uniqid(prefix: string = '', random: boolean = false) {
     const sec = Date.now() * 1000 + Math.random() * 1000;
-    const id = sec.toString(16).replace(/\./g, "").padEnd(14, "0");
-    return `${prefix}${id}${random ? `.${Math.trunc(Math.random() * 100000000)}` : ""}`;
+    const id = sec.toString(16).replace(/\./g, '').padEnd(14, '0');
+    return `${prefix}${id}${random ? `.${Math.trunc(Math.random() * 100000000)}` : ''}`;
 }
 
 export class Str {
@@ -17,7 +23,7 @@ export class Str {
     }
 
     public static ciEquals(a: string, b: string) {
-        return a.localeCompare(b, undefined, { sensitivity: "accent" }) === 0;
+        return a.localeCompare(b, undefined, { sensitivity: 'accent' }) === 0;
     }
 
     private static replace(search: string[], replace: string, subject: string): string {
@@ -30,7 +36,7 @@ export class Str {
 }
 
 export abstract class DataFormatter {
-    static parametersMap(parameters: IAdditionalParameters, index1 = "Name", index2 = "Value"): IFormattedParameter[] {
+    static parametersMap(parameters: IAdditionalParameters, index1 = 'Name', index2 = 'Value'): IFormattedParameter[] {
         return Object.keys(parameters).map((key) => {
             return {
                 [index1]: Str.ucfirst(key),
@@ -43,7 +49,7 @@ export abstract class DataFormatter {
         parameters: IServiceParameters | ServiceParameterTypes | undefined,
         groups: { [key: string]: string } = {},
         countable: string[] = [],
-        parameter: IParameter = { name: "", value: "" },
+        parameter: IParameter = { name: '', value: '' },
         parametersArray: IParameter[] = []
     ): IParameter[] {
         if (groups[parameter.name]) {
@@ -56,9 +62,15 @@ export abstract class DataFormatter {
                 }
                 this.serviceParametersMap(element, groups, countable, { ...parameter }, parametersArray);
             });
-        } else if (typeof parameters === "object") {
+        } else if (typeof parameters === 'object') {
             for (const key of Object.keys(parameters)) {
-                this.serviceParametersMap(parameters[key], groups, countable, { ...parameter, name: key }, parametersArray);
+                this.serviceParametersMap(
+                    parameters[key],
+                    groups,
+                    countable,
+                    { ...parameter, name: key },
+                    parametersArray
+                );
             }
         } else if (parameters !== undefined) {
             parametersArray.push({ ...parameter, value: parameters });
@@ -84,11 +96,11 @@ export const getIPAddress = (): string => {
         }
 
         for (const alias of iface) {
-            if (alias.family === "IPv4" && alias.address !== "127.0.0.1" && !alias.internal) {
+            if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
                 return alias.address;
             }
         }
     }
 
-    return "0.0.0.0";
+    return '0.0.0.0';
 };

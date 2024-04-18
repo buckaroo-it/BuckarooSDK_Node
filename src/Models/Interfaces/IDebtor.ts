@@ -1,4 +1,4 @@
-import { Model } from "../Model";
+import { Model } from '../Model';
 
 export default interface IDebtor {
     code: string;
@@ -6,6 +6,6 @@ export default interface IDebtor {
 
 export class Debtor extends Model {
     set code(value: string) {
-        this.set("code", value);
+        this.set('code', value);
     }
 }

@@ -1,5 +1,5 @@
-import { ServiceParameter } from "../../../Models";
-import { IDebtorInfo } from "./DebtorInfo";
+import { ServiceParameter } from '../../../Models';
+import { IDebtorInfo } from './DebtorInfo';
 
 export interface IDebtor extends IDebtorInfo {
     person: {
@@ -10,17 +10,17 @@ export interface IDebtor extends IDebtorInfo {
 
 export class Debtor extends ServiceParameter {
     set debtor(value: string) {
-        this.set("debtor", value);
+        this.set('debtor', value);
     }
 
     set person(value: string) {
-        this.set("person", value);
+        this.set('person', value);
     }
 
     protected getGroups() {
         return super.getGroups({
-            Debtor: "Debtor",
-            Person: "Person",
+            Debtor: 'Debtor',
+            Person: 'Person',
         });
     }
 }

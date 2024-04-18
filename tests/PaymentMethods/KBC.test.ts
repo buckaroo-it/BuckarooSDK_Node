@@ -1,10 +1,10 @@
-import buckarooClientTest from "../BuckarooClient.test";
-import { uniqid } from "../../src";
+import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src';
 
-const method = buckarooClientTest.method("KBCPaymentButton");
+const method = buckarooClientTest.method('KBCPaymentButton');
 
-describe("Testing KBC methods", () => {
-    test("Pay", async () => {
+describe('Testing KBC methods', () => {
+    test('Pay', async () => {
         return method
             .pay({
                 amountDebit: 100,
@@ -14,12 +14,12 @@ describe("Testing KBC methods", () => {
                 expect(response.isPendingProcessing()).toBeTruthy();
             });
     });
-    test("Refund", async () => {
+    test('Refund', async () => {
         return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
-                originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((response) => {

@@ -1,19 +1,19 @@
-import buckarooClient from "../buckarooClient";
+import buckarooClient from '../buckarooClient';
 
-const payconiq = buckarooClient.method("payconiq");
+const payconiq = buckarooClient.method('payconiq');
 
 //Pay
 payconiq
     .pay({
         amountDebit: 10.1,
-        description: "Payconiq Payment",
+        description: 'Payconiq Payment',
     })
     .request();
 //Refund
 payconiq
     .refund({
-        originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+        originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         amountCredit: 10.1,
-        invoice: "Payconiq Refund",
+        invoice: 'Payconiq Refund',
     })
     .request();

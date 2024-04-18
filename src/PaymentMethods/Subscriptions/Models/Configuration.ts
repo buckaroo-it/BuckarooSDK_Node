@@ -1,4 +1,4 @@
-import { Model } from "../../../Models";
+import { Model } from '../../../Models';
 
 export type IConfiguration = {
     name?: string;
@@ -13,34 +13,34 @@ export type IConfiguration = {
 
 export class Configuration extends Model implements IConfiguration {
     set name(value: string) {
-        this.set("name", value);
+        this.set('name', value);
     }
 
     set schemeKey(value: string) {
-        this.set("schemeKey", value);
+        this.set('schemeKey', value);
     }
 
     set invoiceNumberPrefix(value: string) {
-        this.set("invoiceNumberPrefix", value);
+        this.set('invoiceNumberPrefix', value);
     }
 
     set invoiceDescriptionFormat(value: string) {
-        this.set("invoiceDescriptionFormat", value);
+        this.set('invoiceDescriptionFormat', value);
     }
 
     set dueDateDays(value: number) {
-        this.set("dueDateDays", value);
+        this.set('dueDateDays', value);
     }
 
     set allowedServices(value: string) {
-        this.set("allowedServices", value);
+        this.set('allowedServices', value);
     }
 
     set generateInvoiceSpecification(value: boolean) {
-        this.set("generateInvoiceSpecification", value);
+        this.set('generateInvoiceSpecification', value);
     }
 
     set skipPayPerEmail(value: boolean) {
-        this.set("skipPayPerEmail", value);
+        this.set('skipPayPerEmail', value);
     }
 }

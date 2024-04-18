@@ -48,18 +48,18 @@ npm install @buckaroo/buckaroo_sdk
 Initiate the buckaroo client with your website key and secret key. The keys can be retrieved from your [Buckaroo account](https://plaza.buckaroo.nl/Login).
 
 ```javascript
-import Buckaroo from "@buckaroo/buckaroo_sdk";
+import Buckaroo from '@buckaroo/buckaroo_sdk';
 
 const buckarooClient = Buckaroo.InitializeClient(
     {
-        secretKey: "KEY",
-        websiteKey: "SECRET",
+        secretKey: 'KEY',
+        websiteKey: 'SECRET',
     },
     {
-        mode: "TEST", // OR 'LIVE'
-        currency: "EUR",
-        returnURL: "RETURN_URL",
-        pushURL: "PUSH_URL",
+        mode: 'TEST', // OR 'LIVE'
+        currency: 'EUR',
+        returnURL: 'RETURN_URL',
+        pushURL: 'PUSH_URL',
     }
 );
 ```
@@ -68,7 +68,7 @@ Create a payment with all the available payment methods. In this example, we sho
 
 ```javascript
 const payment = await buckarooClient
-    .method("mastercard")
+    .method('mastercard')
     .pay({
         amountDebit: 100,
     })

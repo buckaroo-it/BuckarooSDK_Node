@@ -1,10 +1,10 @@
-import buckarooClientTest from "../BuckarooClient.test";
-import { Gender, getIPAddress, RecipientCategory, uniqid } from "../../src";
+import buckarooClientTest from '../BuckarooClient.test';
+import { Gender, getIPAddress, RecipientCategory, uniqid } from '../../src';
 
-const capayable = buckarooClientTest.method("capayable");
+const capayable = buckarooClientTest.method('capayable');
 
-describe("Testing capayable methods", () => {
-    test("Pay", async () => {
+describe('Testing capayable methods', () => {
+    test('Pay', async () => {
         return capayable
             .pay(paymentPayload)
             .request()
@@ -12,19 +12,19 @@ describe("Testing capayable methods", () => {
                 expect(data.isSuccess()).toBeTruthy();
             });
     });
-    test("Refund", async () => {
+    test('Refund', async () => {
         return capayable
             .refund({
                 invoice: uniqid(),
                 amountCredit: paymentPayload.amountDebit,
-                originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {
                 expect(data.isFailed()).toBeTruthy();
             });
     });
-    test("PayInInstallments", async () => {
+    test('PayInInstallments', async () => {
         return capayable
             .payInInstallments(paymentPayload)
             .request()
@@ -36,44 +36,44 @@ describe("Testing capayable methods", () => {
 
 const paymentPayload = {
     clientIP: getIPAddress(),
-    description: "Test",
+    description: 'Test',
     amountDebit: 100,
     customerType: RecipientCategory.COMPANY,
-    invoiceDate: "22-01-2018",
+    invoiceDate: '22-01-2018',
     customer: {
         gender: Gender.FEMALE,
-        culture: "nl-NL",
-        initials: "TA",
-        lastName: "Acceptatie",
-        birthDate: "1990-01-01",
+        culture: 'nl-NL',
+        initials: 'TA',
+        lastName: 'Acceptatie',
+        birthDate: '1990-01-01',
     },
     company: {
-        companyName: "Buckaroo B.V.",
-        chamberOfCommerce: "XXXXXX41",
+        companyName: 'Buckaroo B.V.',
+        chamberOfCommerce: 'XXXXXX41',
     },
     address: {
-        street: "Hoofdstraat",
-        houseNumber: "80",
-        houseNumberSuffix: "a",
-        zipcode: "8441ER",
-        city: "Heerenveen",
-        country: "NL",
+        street: 'Hoofdstraat',
+        houseNumber: '80',
+        houseNumberSuffix: 'a',
+        zipcode: '8441ER',
+        city: 'Heerenveen',
+        country: 'NL',
     },
-    email: "test@buckaroo.nl",
+    email: 'test@buckaroo.nl',
     phone: {
-        mobile: "0612345678",
+        mobile: '0612345678',
     },
     articles: [
         {
-            identifier: "64381664f2f8b",
+            identifier: '64381664f2f8b',
             price: 10,
             quantity: 1,
-            description: "Blue Toy Car",
+            description: 'Blue Toy Car',
         },
     ],
     subtotals: [
         {
-            name: "Verzendkosten",
+            name: 'Verzendkosten',
             value: 2,
         },
     ],

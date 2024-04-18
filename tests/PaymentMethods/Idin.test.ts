@@ -1,12 +1,12 @@
-import buckarooClientTest from "../BuckarooClient.test";
+import buckarooClientTest from '../BuckarooClient.test';
 
-const method = buckarooClientTest.method("idin");
+const method = buckarooClientTest.method('idin');
 
-describe("Idin methods", () => {
-    test("Verify", async () => {
+describe('Idin methods', () => {
+    test('Verify', async () => {
         return method
             .verify({
-                issuer: "BANKNL2Y",
+                issuer: 'BANKNL2Y',
             })
             .request()
             .then((data) => {
@@ -14,10 +14,10 @@ describe("Idin methods", () => {
             });
     });
 
-    test("Identify", async () => {
+    test('Identify', async () => {
         return method
             .identify({
-                issuer: "BANKNL2Y",
+                issuer: 'BANKNL2Y',
             })
             .request()
             .then((data) => {
@@ -25,10 +25,10 @@ describe("Idin methods", () => {
             });
     });
 
-    test("Login", async () => {
+    test('Login', async () => {
         return method
             .login({
-                issuer: "BANKNL2Y",
+                issuer: 'BANKNL2Y',
             })
             .request()
             .then((data) => {

@@ -1,4 +1,4 @@
-import { IPaymentRequest, IRequest, ServiceParameter } from "../../../Models";
+import { IPaymentRequest, IRequest, ServiceParameter } from '../../../Models';
 
 export interface IPay extends IPaymentRequest {
     saveToken?: boolean;
@@ -20,10 +20,10 @@ export interface IPayOneClick extends IRequest {
 
 export class Pay extends ServiceParameter {
     set encryptedCardData(value: string) {
-        this.set("encryptedCardData", value);
+        this.set('encryptedCardData', value);
     }
 
     set saveToken(value: boolean) {
-        this.set("saveToken", value);
+        this.set('saveToken', value);
     }
 }

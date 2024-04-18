@@ -1,8 +1,8 @@
-import { ICredentials } from "../Utils";
-import md5 from "crypto-js/md5";
-import hmacSHA256 from "crypto-js/hmac-sha256";
-import Base64 from "crypto-js/enc-base64";
-import crypto from "crypto";
+import { ICredentials } from '../Utils';
+import md5 from 'crypto-js/md5';
+import hmacSHA256 from 'crypto-js/hmac-sha256';
+import Base64 from 'crypto-js/enc-base64';
+import crypto from 'crypto';
 
 export class Hmac {
     protected _data?: object;
@@ -12,7 +12,7 @@ export class Hmac {
     protected _method?: string;
 
     get data(): string {
-        return this._data ? JSON.stringify(this._data) : "";
+        return this._data ? JSON.stringify(this._data) : '';
     }
 
     set data(data: string) {
@@ -28,9 +28,9 @@ export class Hmac {
         return this._url
             ? encodeURIComponent(
                   this._url.href
-                      .replace(this._url.protocol, "")
-                      .replace(/^[^:/.]*[:/]+/i, "")
-                      .replace(/(^\w+:|^)\/\//, "")
+                      .replace(this._url.protocol, '')
+                      .replace(/^[^:/.]*[:/]+/i, '')
+                      .replace(/(^\w+:|^)\/\//, '')
               ).toLowerCase()
             : undefined;
     }
@@ -40,7 +40,7 @@ export class Hmac {
     }
 
     get nonce(): string {
-        return this._nonce || "nonce_" + Math.floor(Math.random() * 9999999 + 1);
+        return this._nonce || 'nonce_' + Math.floor(Math.random() * 9999999 + 1);
     }
 
     set nonce(nonce: string) {
@@ -56,7 +56,7 @@ export class Hmac {
     }
 
     get method(): string {
-        return this._method || "POST";
+        return this._method || 'POST';
     }
 
     set method(method: string) {
@@ -67,7 +67,7 @@ export class Hmac {
         if (this._data) {
             return Base64.stringify(md5(this.data));
         }
-        return "";
+        return '';
     }
 
     generate(credentials: ICredentials, nonce?: string, time?: string): string {
@@ -79,7 +79,7 @@ export class Hmac {
     }
 
     validate(credentials: ICredentials, authHeader: string, url: string, data: string, method: string): boolean {
-        let header = authHeader.split(":");
+        let header = authHeader.split(':');
         let providedHash = header[1];
         this.nonce = header[2];
         this.time = header[3];

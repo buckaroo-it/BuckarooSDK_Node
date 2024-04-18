@@ -1,3 +1,3 @@
-export * from "./MethodTypes";
-export * from "./Types";
-export * from "./Functions";
+export * from './MethodTypes';
+export * from './Types';
+export * from './Functions';

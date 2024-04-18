@@ -1,19 +1,19 @@
-import buckarooClient from "../buckarooClient";
+import buckarooClient from '../buckarooClient';
 
-const mbway = buckarooClient.method("MBWay");
+const mbway = buckarooClient.method('MBWay');
 
 //Pay
 mbway
     .pay({
         amountDebit: 10.1,
-        description: "MBWay Payment",
+        description: 'MBWay Payment',
     })
     .request();
 //Refund
 mbway
     .refund({
-        originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+        originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         amountCredit: 10.1,
-        invoice: "MBWay Refund",
+        invoice: 'MBWay Refund',
     })
     .request();

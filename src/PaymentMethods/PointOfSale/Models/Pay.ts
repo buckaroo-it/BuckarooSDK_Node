@@ -1,4 +1,4 @@
-import { IPaymentRequest, ServiceParameter } from "../../../Models";
+import { IPaymentRequest, ServiceParameter } from '../../../Models';
 
 export interface IPay extends IPaymentRequest {
     terminalId: string;
@@ -6,6 +6,6 @@ export interface IPay extends IPaymentRequest {
 
 export class Pay extends ServiceParameter {
     set terminalId(value: string) {
-        this.set("terminalID", value);
+        this.set('terminalID', value);
     }
 }

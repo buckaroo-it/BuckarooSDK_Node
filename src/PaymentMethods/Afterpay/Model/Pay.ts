@@ -1,6 +1,6 @@
-import { AfterPayArticle, IAfterPayArticle } from "./Article";
-import Customer from "./Customer";
-import { ICustomer, IPaymentRequest, ServiceParameter } from "../../../Models";
+import { AfterPayArticle, IAfterPayArticle } from './Article';
+import Customer from './Customer';
+import { ICustomer, IPaymentRequest, ServiceParameter } from '../../../Models';
 
 export interface IPay extends IPaymentRequest {
     clientIP: string;
@@ -17,52 +17,52 @@ export interface IPay extends IPaymentRequest {
 
 export class Pay extends ServiceParameter {
     set shipping(shipping: ICustomer) {
-        this.set("shipping", new Customer(shipping));
+        this.set('shipping', new Customer(shipping));
     }
 
     set billing(billing: ICustomer) {
-        this.set("billing", new Customer(billing));
-        if (this.get("shipping") === undefined) {
+        this.set('billing', new Customer(billing));
+        if (this.get('shipping') === undefined) {
             this.shipping = billing;
         }
     }
 
     set articles(articles: IAfterPayArticle[]) {
         this.set(
-            "articles",
+            'articles',
             articles.map((article) => new AfterPayArticle(article))
         );
     }
 
     set bankAccount(bankAccount: string) {
-        this.set("bankAccount", bankAccount);
+        this.set('bankAccount', bankAccount);
     }
 
     set bankCode(bankCode: string) {
-        this.set("bankCode", bankCode);
+        this.set('bankCode', bankCode);
     }
 
     set merchantImageUrl(merchantImageUrl: string) {
-        this.set("merchantImageUrl", merchantImageUrl);
+        this.set('merchantImageUrl', merchantImageUrl);
     }
 
     set summaryImageUrl(summaryImageUrl: string) {
-        this.set("summaryImageUrl", summaryImageUrl);
+        this.set('summaryImageUrl', summaryImageUrl);
     }
 
     set ourReference(ourReference: string) {
-        this.set("ourReference", ourReference);
+        this.set('ourReference', ourReference);
     }
 
     protected getGroups() {
         return super.getGroups({
-            Billing: "BillingCustomer",
-            Shipping: "ShippingCustomer",
-            Articles: "Article",
+            Billing: 'BillingCustomer',
+            Shipping: 'ShippingCustomer',
+            Articles: 'Article',
         });
     }
 
     protected getCountable() {
-        return super.getCountable(["Articles"]);
+        return super.getCountable(['Articles']);
     }
 }

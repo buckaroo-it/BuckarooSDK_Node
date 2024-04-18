@@ -1,12 +1,12 @@
-import { PayablePaymentMethod } from "../../Services";
-import { IPaymentRequest, IRefundRequest } from "../../Models";
-import { ServiceCode } from "../../Utils";
+import { PayablePaymentMethod } from '../../Services';
+import { IPaymentRequest, IRefundRequest } from '../../Models';
+import { ServiceCode } from '../../Utils';
 
 export default class Sofort extends PayablePaymentMethod {
     protected _serviceVersion = 1;
 
     public defaultServiceCode(): ServiceCode {
-        return "sofortueberweisung";
+        return 'sofortueberweisung';
     }
 
     pay(payload: IPaymentRequest) {
@@ -18,7 +18,7 @@ export default class Sofort extends PayablePaymentMethod {
     }
 
     instantRefund(payload: IRefundRequest) {
-        this.setServiceList("InstantRefund");
+        this.setServiceList('InstantRefund');
         return this.transactionRequest(payload);
     }
 }

@@ -1,7 +1,7 @@
-import { JsonModel } from "../Model";
-import { ReplyHandler } from "../../Handlers";
-import { ICredentials } from "../../Utils";
-import { AxiosResponse } from "axios";
+import { JsonModel } from '../Model';
+import { ReplyHandler } from '../../Handlers';
+import { ICredentials } from '../../Utils';
+import { AxiosResponse } from 'axios';
 
 export interface HttpResponseConstructor {
     new (httpResponse: AxiosResponse, data: object): IHttpClientResponse;
@@ -39,7 +39,13 @@ export class HttpClientResponse implements IHttpClientResponse {
     }
 
     validateResponse(credentials: ICredentials) {
-        return new ReplyHandler(credentials, JSON.parse(this._rawData ?? {}), this.httpResponse.headers["authorization"], this.httpResponse.request.url, this.httpResponse.request.method)
+        return new ReplyHandler(
+            credentials,
+            JSON.parse(this._rawData ?? {}),
+            this.httpResponse.headers['authorization'],
+            this.httpResponse.request.url,
+            this.httpResponse.request.method
+        )
             .validate()
             .isValid();
     }

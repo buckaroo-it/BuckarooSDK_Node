@@ -1,14 +1,14 @@
-import { IPay, Pay } from "./Models/Pay";
-import { PayablePaymentMethod } from "../../Services";
-import { RequestTypes } from "../../Constants";
-import { IRefundRequest } from "../../Models";
-import { ServiceCode } from "../../Utils";
+import { IPay, Pay } from './Models/Pay';
+import { PayablePaymentMethod } from '../../Services';
+import { RequestTypes } from '../../Constants';
+import { IRefundRequest } from '../../Models';
+import { ServiceCode } from '../../Utils';
 
 export default class Ideal extends PayablePaymentMethod {
     protected _serviceVersion = 2;
 
     public defaultServiceCode(): ServiceCode {
-        return "ideal";
+        return 'ideal';
     }
 
     pay(data: IPay) {
@@ -24,8 +24,8 @@ export default class Ideal extends PayablePaymentMethod {
             .request()
             .then((response) => {
                 return response
-                    .getActionRequestParameters("Pay")
-                    ?.find((item) => item.name === "issuer")
+                    .getActionRequestParameters('Pay')
+                    ?.find((item) => item.name === 'issuer')
                     ?.listItemDescriptions?.map((item) => {
                         return { [item.value]: item.description };
                     });

@@ -1,4 +1,4 @@
-import { Model } from "../../../Models";
+import { Model } from '../../../Models';
 
 export interface IBankAccount {
     iban: string;
@@ -7,10 +7,10 @@ export interface IBankAccount {
 
 export class BankAccount extends Model implements IBankAccount {
     set accountName(value: string) {
-        this.set("customeraccountname", value);
+        this.set('customeraccountname', value);
     }
 
     set iban(iban: string) {
-        this.set("iban", iban);
+        this.set('iban', iban);
     }
 }

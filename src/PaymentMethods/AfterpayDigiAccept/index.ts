@@ -1,13 +1,13 @@
-import { IRefundRequest, IRequest } from "../../Models";
-import { PayablePaymentMethod } from "../../Services";
-import { IPay, Pay } from "./Model/Pay";
-import { ServiceCode } from "../../Utils";
+import { IRefundRequest, IRequest } from '../../Models';
+import { PayablePaymentMethod } from '../../Services';
+import { IPay, Pay } from './Model/Pay';
+import { ServiceCode } from '../../Utils';
 
 export default class AfterpayDigiAccept extends PayablePaymentMethod {
     protected _serviceVersion = 2;
 
     public defaultServiceCode(): ServiceCode {
-        return "afterpaydigiaccept";
+        return 'afterpaydigiaccept';
     }
 
     pay(payload: IPay) {
@@ -19,27 +19,27 @@ export default class AfterpayDigiAccept extends PayablePaymentMethod {
     }
 
     authorize(payload: IPay) {
-        this.setServiceList("Authorize", new Pay(payload));
+        this.setServiceList('Authorize', new Pay(payload));
         return super.transactionRequest(payload);
     }
 
     cancelAuthorize(payload: IRefundRequest) {
-        this.setServiceList("CancelAuthorize");
+        this.setServiceList('CancelAuthorize');
         return super.transactionRequest(payload);
     }
 
     capture(payload: IRequest) {
-        this.setServiceList("Capture");
+        this.setServiceList('Capture');
         return super.transactionRequest(payload);
     }
 
     payRemainder(payload: IPay) {
-        this.setServiceList("PayRemainder");
+        this.setServiceList('PayRemainder');
         return super.transactionRequest(payload);
     }
 
     authorizeRemainder(payload: IPay) {
-        this.setServiceList("AuthorizeRemainder");
+        this.setServiceList('AuthorizeRemainder');
         return super.transactionRequest(payload);
     }
 }

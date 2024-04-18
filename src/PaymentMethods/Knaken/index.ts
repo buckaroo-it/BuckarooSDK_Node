@@ -1,12 +1,12 @@
-import { PayablePaymentMethod } from "../../Services";
-import { IPaymentRequest, IRefundRequest } from "../../Models";
-import { ServiceCode } from "../../Utils";
+import { PayablePaymentMethod } from '../../Services';
+import { IPaymentRequest, IRefundRequest } from '../../Models';
+import { ServiceCode } from '../../Utils';
 
 export default class Knaken extends PayablePaymentMethod {
     protected _serviceVersion = 1;
 
     public defaultServiceCode(): ServiceCode {
-        return "knaken";
+        return 'knaken';
     }
 
     pay(payload: IPaymentRequest) {

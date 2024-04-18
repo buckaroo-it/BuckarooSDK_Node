@@ -1,4 +1,4 @@
-import { IPaymentRequest, ServiceParameter } from "../../../Models";
+import { IPaymentRequest, ServiceParameter } from '../../../Models';
 
 export interface IPay extends IPaymentRequest {
     voucherCode: string;
@@ -6,6 +6,6 @@ export interface IPay extends IPaymentRequest {
 
 export class Pay extends ServiceParameter {
     set voucherCode(voucherCode: string) {
-        this.set("voucherCode", voucherCode);
+        this.set('voucherCode', voucherCode);
     }
 }

@@ -1,8 +1,8 @@
-import buckarooClientTest from "../BuckarooClient.test";
+import buckarooClientTest from '../BuckarooClient.test';
 
-const method = buckarooClientTest.method("MBWay");
-describe("Mbway methods", () => {
-    test("Pay", async () => {
+const method = buckarooClientTest.method('MBWay');
+describe('Mbway methods', () => {
+    test('Pay', async () => {
         return method
             .pay({
                 amountDebit: 100,

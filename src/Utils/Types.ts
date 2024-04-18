@@ -1,4 +1,4 @@
-import { ServiceCode } from "./MethodTypes";
+import { ServiceCode } from './MethodTypes';
 
 export declare interface IConfig {
     mode: Mode;
@@ -18,4 +18,4 @@ export declare interface ICredentials {
     secretKey: string;
 }
 
-export type Mode = "LIVE" | "TEST";
+export type Mode = 'LIVE' | 'TEST';

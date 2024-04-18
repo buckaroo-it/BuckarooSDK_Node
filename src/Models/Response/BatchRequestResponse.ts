@@ -1,4 +1,4 @@
-import { HttpClientResponse } from "./HttpClientResponse";
+import { HttpClientResponse } from './HttpClientResponse';
 
 export class BatchRequestResponse extends HttpClientResponse {
     get data(): BatchResponseData {

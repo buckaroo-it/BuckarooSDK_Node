@@ -1,31 +1,31 @@
-import client from "./BuckarooClient.test";
-import { HttpClientResponse, IRequest, TransactionResponse, uniqid } from "../src";
-import { creditManagementTestInvoice } from "./PaymentMethods/CreditManagment.test";
+import client from './BuckarooClient.test';
+import { HttpClientResponse, IRequest, TransactionResponse, uniqid } from '../src';
+import { creditManagementTestInvoice } from './PaymentMethods/CreditManagment.test';
 
-describe("Testing Buckaroo Client", () => {
-    test("Credentials", async () => {
+describe('Testing Buckaroo Client', () => {
+    test('Credentials', async () => {
         return client.confirmCredentials().then((response) => {
             expect(response).toBeTruthy();
         });
     });
-    test("Batch transaction", async () => {
+    test('Batch transaction', async () => {
         const transactionData: IRequest[] = [];
-        const creditManagement = client.method("CreditManagement3");
-        const sepaDirectDebit = client.method("sepadirectdebit");
+        const creditManagement = client.method('CreditManagement3');
+        const sepaDirectDebit = client.method('sepadirectdebit');
         for (let i = 0; i < 3; i++) {
             const combinedInvoice = creditManagement.createCombinedInvoice(creditManagementTestInvoice());
 
             const sepaRequest = sepaDirectDebit.combine(combinedInvoice.data).pay({
-                iban: "NL39RABO0300065264",
-                bic: "RABONL2U",
-                mandateReference: "1DCtestreference",
-                mandateDate: "2022-07-03",
-                collectDate: "2020-07-03",
+                iban: 'NL39RABO0300065264',
+                bic: 'RABONL2U',
+                mandateReference: '1DCtestreference',
+                mandateDate: '2022-07-03',
+                collectDate: '2020-07-03',
                 amountDebit: 10.1,
                 customer: {
-                    name: "John Smith",
+                    name: 'John Smith',
                 },
-                invoice: uniqid("TestInvoice"),
+                invoice: uniqid('TestInvoice'),
             });
 
             transactionData.push(sepaRequest.data);
@@ -35,15 +35,15 @@ describe("Testing Buckaroo Client", () => {
             .transaction(transactionData)
             .request()
             .then((response) => {
-                expect(response.data.message === "3 transactions were queued for processing.").toBeTruthy();
+                expect(response.data.message === '3 transactions were queued for processing.').toBeTruthy();
             })
             .catch((err) => {
                 expect(err).toBeUndefined();
             });
     });
-    describe("Transaction", () => {
-        const transactionService = client.transaction("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-        test("transaction Status", async () => {
+    describe('Transaction', () => {
+        const transactionService = client.transaction('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+        test('transaction Status', async () => {
             return transactionService
                 .status()
                 .then((res) => {
@@ -53,21 +53,21 @@ describe("Testing Buckaroo Client", () => {
                     expect(err).toBeUndefined();
                 });
         });
-        test("transaction Cancel Info", async () => {
+        test('transaction Cancel Info', async () => {
             return transactionService.cancelInfo().then((res) => {
                 expect(res instanceof HttpClientResponse).toBeTruthy();
             });
         });
 
-        test("transaction Refund Info", async () => {
+        test('transaction Refund Info', async () => {
             return transactionService.refundInfo().then((res) => {
                 expect(res instanceof HttpClientResponse).toBeTruthy();
             });
         });
     });
 
-    describe("Active Subscription", () => {
-        test("Get", async () => {
+    describe('Active Subscription', () => {
+        test('Get', async () => {
             await client.getActiveSubscriptions().then((response) => {
                 expect(Array.isArray(response)).toBeDefined();
             });

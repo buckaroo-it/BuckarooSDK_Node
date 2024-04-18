@@ -1,4 +1,4 @@
-import { IRefundRequest, ServiceParameter } from "../../../Models";
+import { IRefundRequest, ServiceParameter } from '../../../Models';
 
 export interface IRefund extends IRefundRequest {
     email?: string;
@@ -7,10 +7,10 @@ export interface IRefund extends IRefundRequest {
 
 export class Refund extends ServiceParameter {
     set email(value: string) {
-        this.set("email", value);
+        this.set('email', value);
     }
 
     set lastName(value: string) {
-        this.set("lastName", value);
+        this.set('lastName', value);
     }
 }

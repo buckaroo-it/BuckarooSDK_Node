@@ -1,9 +1,9 @@
-import { PayablePaymentMethod } from "../../Services";
-import { ServiceCode } from "../../Utils";
+import { PayablePaymentMethod } from '../../Services';
+import { ServiceCode } from '../../Utils';
 
 export default class NoService extends PayablePaymentMethod {
     public defaultServiceCode(): ServiceCode {
-        return "noservice";
+        return 'noservice';
     }
 
     protected setServiceList(): this {

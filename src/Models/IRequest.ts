@@ -1,5 +1,5 @@
-import { ServiceCode } from "../Utils";
-import { IAdditionalParameters } from "./IParameters";
+import { ServiceCode } from '../Utils';
+import { IAdditionalParameters } from './IParameters';
 
 export default interface IRequest {
     clientIP?: string;

@@ -1,19 +1,19 @@
-import buckarooClient from "../buckarooClient";
+import buckarooClient from '../buckarooClient';
 
-const belfius = buckarooClient.method("belfius");
+const belfius = buckarooClient.method('belfius');
 
 //Pay
 belfius
     .pay({
         amountDebit: 10.1,
-        description: "Belfius Payment",
+        description: 'Belfius Payment',
     })
     .request();
 //Refund
 belfius
     .refund({
-        originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+        originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         amountCredit: 10.1,
-        invoice: "Belfius Refund",
+        invoice: 'Belfius Refund',
     })
     .request();

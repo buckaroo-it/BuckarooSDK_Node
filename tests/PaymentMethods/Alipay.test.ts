@@ -1,10 +1,10 @@
-import buckarooClientTest from "../BuckarooClient.test";
-import { uniqid } from "../../src";
+import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src';
 
-const alipay = buckarooClientTest.method("alipay");
+const alipay = buckarooClientTest.method('alipay');
 
-describe("Alipay methods", () => {
-    test("Pay Simple Payload", async () => {
+describe('Alipay methods', () => {
+    test('Pay Simple Payload', async () => {
         return alipay
             .pay({
                 amountDebit: 100,
@@ -15,12 +15,12 @@ describe("Alipay methods", () => {
                 expect(data.isPendingProcessing()).toBeTruthy();
             });
     });
-    test("Refund", async () => {
+    test('Refund', async () => {
         return alipay
             .refund({
                 amountCredit: 0.01,
                 invoice: uniqid(),
-                originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {

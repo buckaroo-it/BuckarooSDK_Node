@@ -1,12 +1,23 @@
-import Headers, { RequestConfig } from "./Headers";
-import { BatchRequestResponse, HttpClientResponse, HttpResponseConstructor, IRequest, IService, SpecificationRequestResponse, TransactionResponse } from "../Models";
-import { DataRequestData, SpecificationRequestData, TransactionData } from "./DataModels";
-import Buckaroo from "../index";
-import { Endpoints, HttpMethods, RequestTypes } from "../Constants";
-import { ICredentials } from "../Utils";
-import { Hmac } from "./Hmac";
+import Headers, { RequestConfig } from './Headers';
+import {
+    BatchRequestResponse,
+    HttpClientResponse,
+    HttpResponseConstructor,
+    IRequest,
+    IService,
+    SpecificationRequestResponse,
+    TransactionResponse,
+} from '../Models';
+import { DataRequestData, SpecificationRequestData, TransactionData } from './DataModels';
+import Buckaroo from '../index';
+import { Endpoints, HttpMethods, RequestTypes } from '../Constants';
+import { ICredentials } from '../Utils';
+import { Hmac } from './Hmac';
 
-export default class Request<HttpResponse extends HttpResponseConstructor = HttpResponseConstructor, RequestData extends object | undefined = undefined> extends Headers {
+export default class Request<
+    HttpResponse extends HttpResponseConstructor = HttpResponseConstructor,
+    RequestData extends object | undefined = undefined
+> extends Headers {
     protected _path?: string;
     protected _data?: object | object[] | undefined;
     protected _httpMethod: HttpMethods;
@@ -29,7 +40,7 @@ export default class Request<HttpResponse extends HttpResponseConstructor = Http
     }
 
     get url(): URL {
-        return new URL(Endpoints[Buckaroo.Client.config.mode] + (this._path || ""));
+        return new URL(Endpoints[Buckaroo.Client.config.mode] + (this._path || ''));
     }
 
     protected get responseHandler(): HttpResponse {
@@ -37,7 +48,12 @@ export default class Request<HttpResponse extends HttpResponseConstructor = Http
     }
 
     static Transaction(payload?: IRequest) {
-        return new Request(RequestTypes.Transaction, HttpMethods.POST, new TransactionData(payload), TransactionResponse);
+        return new Request(
+            RequestTypes.Transaction,
+            HttpMethods.POST,
+            new TransactionData(payload),
+            TransactionResponse
+        );
     }
 
     static DataRequest(payload?: IRequest) {
@@ -47,11 +63,23 @@ export default class Request<HttpResponse extends HttpResponseConstructor = Http
     static Specification<T extends IService[] | IService>(
         type: RequestTypes.Data | RequestTypes.Transaction,
         data: T
-    ): T extends IService[] ? Request<typeof SpecificationRequestResponse, SpecificationRequestData> : Request<typeof SpecificationRequestResponse> {
+    ): T extends IService[]
+        ? Request<typeof SpecificationRequestResponse, SpecificationRequestData>
+        : Request<typeof SpecificationRequestResponse> {
         if (Array.isArray(data)) {
-            return new Request(type + `/Specifications`, HttpMethods.POST, new SpecificationRequestData(data), SpecificationRequestResponse) as any;
+            return new Request(
+                type + `/Specifications`,
+                HttpMethods.POST,
+                new SpecificationRequestData(data),
+                SpecificationRequestResponse
+            ) as any;
         }
-        return new Request(type + `/Specification/${data?.name}?serviceVersion=${data?.version}`, HttpMethods.GET, undefined, SpecificationRequestResponse) as any;
+        return new Request(
+            type + `/Specification/${data?.name}?serviceVersion=${data?.version}`,
+            HttpMethods.GET,
+            undefined,
+            SpecificationRequestResponse
+        ) as any;
     }
 
     static BatchTransaction(payload: IRequest[] = []) {

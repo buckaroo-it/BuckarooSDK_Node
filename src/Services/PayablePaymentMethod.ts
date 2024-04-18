@@ -1,25 +1,25 @@
-import PaymentMethod from "./PaymentMethod";
-import { IParameter, IPaymentRequest, IRefundRequest, IRequest, ServiceParameter } from "../Models";
-import { uniqid } from "../Utils";
+import PaymentMethod from './PaymentMethod';
+import { IParameter, IPaymentRequest, IRefundRequest, IRequest, ServiceParameter } from '../Models';
+import { uniqid } from '../Utils';
 
 export default abstract class PayablePaymentMethod extends PaymentMethod {
-    protected _requiredFields: Array<keyof IRequest> = ["currency", "returnURL", "returnURLCancel", "pushURL"];
+    protected _requiredFields: Array<keyof IRequest> = ['currency', 'returnURL', 'returnURLCancel', 'pushURL'];
 
     pay(payload: IPaymentRequest, serviceParameters?: ServiceParameter | IParameter[]) {
         this.setPayPayload(payload);
-        this.setServiceList("Pay", serviceParameters);
+        this.setServiceList('Pay', serviceParameters);
         return this.transactionRequest();
     }
 
     payRemainder(payload: IPaymentRequest, serviceParameters?: ServiceParameter | IParameter[]) {
         this.setPayPayload(payload);
-        this.setServiceList("PayRemainder", serviceParameters);
+        this.setServiceList('PayRemainder', serviceParameters);
         return this.transactionRequest();
     }
 
     refund(payload: IRefundRequest, serviceParameters?: ServiceParameter | IParameter[]) {
         this.setPayload(payload);
-        this.setServiceList("Refund", serviceParameters);
+        this.setServiceList('Refund', serviceParameters);
         return this.transactionRequest();
     }
 

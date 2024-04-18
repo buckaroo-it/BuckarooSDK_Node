@@ -1,70 +1,70 @@
-import buckarooClient from "../buckarooClient";
-import { RecipientCategory } from "../../src";
+import buckarooClient from '../buckarooClient';
+import { RecipientCategory } from '../../src';
 
-const billink = buckarooClient.method("billink");
+const billink = buckarooClient.method('billink');
 
 //Pay
 billink
     .pay({
         amountDebit: 100,
-        trackAndTrace: "XXXXXXXXXXXXX",
-        vatNumber: "NLXXXXXXXXXXB01",
+        trackAndTrace: 'XXXXXXXXXXXXX',
+        vatNumber: 'NLXXXXXXXXXXB01',
         billing: {
             recipient: {
                 category: RecipientCategory.PERSON,
-                careOf: "Test Acceptatie",
-                title: "Female",
-                initials: "TA",
-                firstName: "Test",
-                lastName: "Acceptatie",
-                birthDate: "01-01-1990",
-                chamberOfCommerce: "XXXXXX41",
+                careOf: 'Test Acceptatie',
+                title: 'Female',
+                initials: 'TA',
+                firstName: 'Test',
+                lastName: 'Acceptatie',
+                birthDate: '01-01-1990',
+                chamberOfCommerce: 'XXXXXX41',
             },
             address: {
-                street: "Hoofdstraat",
-                houseNumber: "80",
-                houseNumberAdditional: "a",
-                zipcode: "8441ER",
-                city: "Heerenveen",
-                country: "NL",
+                street: 'Hoofdstraat',
+                houseNumber: '80',
+                houseNumberAdditional: 'a',
+                zipcode: '8441ER',
+                city: 'Heerenveen',
+                country: 'NL',
             },
             phone: {
-                mobile: "0612345678",
-                landline: "0201234567",
+                mobile: '0612345678',
+                landline: '0201234567',
             },
-            email: "test@buckaroo.nl",
+            email: 'test@buckaroo.nl',
         },
         shipping: {
             recipient: {
                 category: RecipientCategory.PERSON,
-                careOf: "Test Acceptatie",
-                title: "Male",
-                initials: "TA",
-                firstName: "Test",
-                lastName: "Acceptatie",
-                birthDate: "1990-01-01",
+                careOf: 'Test Acceptatie',
+                title: 'Male',
+                initials: 'TA',
+                firstName: 'Test',
+                lastName: 'Acceptatie',
+                birthDate: '1990-01-01',
             },
             address: {
-                street: "Hoofdstraat",
-                houseNumber: "80",
-                houseNumberAdditional: "a",
-                zipcode: "8441ER",
-                city: "Heerenveen",
-                country: "NL",
+                street: 'Hoofdstraat',
+                houseNumber: '80',
+                houseNumberAdditional: 'a',
+                zipcode: '8441ER',
+                city: 'Heerenveen',
+                country: 'NL',
             },
         },
         articles: [
             {
-                identifier: "Articlenumber1",
-                description: "Blue Toy Car",
+                identifier: 'Articlenumber1',
+                description: 'Blue Toy Car',
                 vatPercentage: 21,
                 quantity: 2,
                 price: 20.1,
                 priceExcl: 5,
             },
             {
-                identifier: "Articlenumber2",
-                description: "Red Toy Car",
+                identifier: 'Articlenumber2',
+                description: 'Red Toy Car',
                 vatPercentage: 21,
                 quantity: 1,
                 price: 10.1,
@@ -76,9 +76,9 @@ billink
 //Refund
 billink
     .refund({
-        originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+        originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         amountCredit: 10.1,
-        invoice: "Billink Refund",
+        invoice: 'Billink Refund',
     })
     .request();
 billink;
@@ -87,64 +87,64 @@ billink;
 billink
     .authorize({
         amountDebit: 100,
-        trackAndTrace: "XXXXXXXXXXXXX",
-        vatNumber: "NLXXXXXXXXXXB01",
+        trackAndTrace: 'XXXXXXXXXXXXX',
+        vatNumber: 'NLXXXXXXXXXXB01',
         billing: {
             recipient: {
                 category: RecipientCategory.PERSON,
-                careOf: "Test Acceptatie",
-                title: "Female",
-                initials: "TA",
-                firstName: "Test",
-                lastName: "Acceptatie",
-                birthDate: "01-01-1990",
-                chamberOfCommerce: "XXXXXX41",
+                careOf: 'Test Acceptatie',
+                title: 'Female',
+                initials: 'TA',
+                firstName: 'Test',
+                lastName: 'Acceptatie',
+                birthDate: '01-01-1990',
+                chamberOfCommerce: 'XXXXXX41',
             },
             address: {
-                street: "Hoofdstraat",
-                houseNumber: "80",
-                houseNumberAdditional: "a",
-                zipcode: "8441ER",
-                city: "Heerenveen",
-                country: "NL",
+                street: 'Hoofdstraat',
+                houseNumber: '80',
+                houseNumberAdditional: 'a',
+                zipcode: '8441ER',
+                city: 'Heerenveen',
+                country: 'NL',
             },
             phone: {
-                mobile: "0612345678",
-                landline: "0201234567",
+                mobile: '0612345678',
+                landline: '0201234567',
             },
-            email: "test@buckaroo.nl",
+            email: 'test@buckaroo.nl',
         },
         shipping: {
             recipient: {
                 category: RecipientCategory.PERSON,
-                careOf: "Test Acceptatie",
-                title: "Male",
-                initials: "TA",
-                firstName: "Test",
-                lastName: "Acceptatie",
-                birthDate: "1990-01-01",
+                careOf: 'Test Acceptatie',
+                title: 'Male',
+                initials: 'TA',
+                firstName: 'Test',
+                lastName: 'Acceptatie',
+                birthDate: '1990-01-01',
             },
             address: {
-                street: "Hoofdstraat",
-                houseNumber: "80",
-                houseNumberAdditional: "a",
-                zipcode: "8441ER",
-                city: "Heerenveen",
-                country: "NL",
+                street: 'Hoofdstraat',
+                houseNumber: '80',
+                houseNumberAdditional: 'a',
+                zipcode: '8441ER',
+                city: 'Heerenveen',
+                country: 'NL',
             },
         },
         articles: [
             {
-                identifier: "Articlenumber1",
-                description: "Blue Toy Car",
+                identifier: 'Articlenumber1',
+                description: 'Blue Toy Car',
                 vatPercentage: 21,
                 quantity: 2,
                 price: 20.1,
                 priceExcl: 5,
             },
             {
-                identifier: "Articlenumber2",
-                description: "Red Toy Car",
+                identifier: 'Articlenumber2',
+                description: 'Red Toy Car',
                 vatPercentage: 21,
                 quantity: 1,
                 price: 10.1,
@@ -157,17 +157,17 @@ billink
 //Capture
 billink
     .pay({
-        originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+        originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         amountDebit: 10.1,
-        invoice: "Billink Capture",
+        invoice: 'Billink Capture',
     })
     .request();
 
 //CancelAuthorize
 billink
     .cancelAuthorize({
-        originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+        originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         amountCredit: 10.1,
-        invoice: "Billink CancelAuthorize",
+        invoice: 'Billink CancelAuthorize',
     })
     .request();

@@ -1,15 +1,15 @@
-import buckarooClientTest from "../BuckarooClient.test";
+import buckarooClientTest from '../BuckarooClient.test';
 
-const method = buckarooClientTest.method("surepay");
+const method = buckarooClientTest.method('surepay');
 
-describe("SurePay methods", () => {
-    test("Verify", async () => {
+describe('SurePay methods', () => {
+    test('Verify', async () => {
         return method
             .verify({
                 amountDebit: 100,
                 bankAccount: {
-                    iban: "NLXXTESTXXXXXXXXXX",
-                    accountName: "Test Acceptatie",
+                    iban: 'NLXXTESTXXXXXXXXXX',
+                    accountName: 'Test Acceptatie',
                 },
             })
             .request()

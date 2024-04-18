@@ -1,9 +1,9 @@
-import buckarooClientTest from "../BuckarooClient.test";
-import { uniqid } from "../../src";
+import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src';
 
-const payconiq = buckarooClientTest.method("payconiq");
-describe("Payconiq", () => {
-    test("Pay", async () => {
+const payconiq = buckarooClientTest.method('payconiq');
+describe('Payconiq', () => {
+    test('Pay', async () => {
         return payconiq
             .pay({
                 amountDebit: 100,
@@ -14,24 +14,24 @@ describe("Payconiq", () => {
                 expect(info.httpResponse.status).toEqual(200);
             });
     });
-    test("Refund", async () => {
+    test('Refund', async () => {
         return payconiq
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
-                originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((info) => {
                 expect(info.httpResponse.status).toEqual(200);
             });
     });
-    test("InstantRefund", async () => {
+    test('InstantRefund', async () => {
         return payconiq
             .instantRefund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
-                originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {

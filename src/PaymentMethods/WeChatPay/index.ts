@@ -1,11 +1,11 @@
-import { PayablePaymentMethod } from "../../Services";
-import { IRefundRequest } from "../../Models";
-import { IPay, Pay } from "./Models/Pay";
-import { ServiceCode } from "../../Utils";
+import { PayablePaymentMethod } from '../../Services';
+import { IRefundRequest } from '../../Models';
+import { IPay, Pay } from './Models/Pay';
+import { ServiceCode } from '../../Utils';
 
 export default class WeChatPay extends PayablePaymentMethod {
     public defaultServiceCode(): ServiceCode {
-        return "wechatpay";
+        return 'wechatpay';
     }
 
     pay(payload: IPay) {

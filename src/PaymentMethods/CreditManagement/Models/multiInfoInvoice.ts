@@ -1,4 +1,4 @@
-import { IRequest, ServiceParameter } from "../../../Models";
+import { IRequest, ServiceParameter } from '../../../Models';
 
 export interface IMultiInfoInvoice extends IRequest {
     invoice: string;
@@ -7,10 +7,10 @@ export interface IMultiInfoInvoice extends IRequest {
 
 export class MultiInfoInvoice extends ServiceParameter {
     set invoices(value: { invoiceNumber: string }[]) {
-        this.set("invoices", value);
+        this.set('invoices', value);
     }
 
     protected getCountable() {
-        return super.getCountable(["Invoices"]);
+        return super.getCountable(['Invoices']);
     }
 }

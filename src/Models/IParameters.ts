@@ -1,5 +1,5 @@
-import { Model } from "./Model";
-import { Str } from "../Utils";
+import { Model } from './Model';
+import { Str } from '../Utils';
 
 export interface IParameter {
     name: string;
@@ -10,19 +10,19 @@ export interface IParameter {
 
 export class Parameter extends Model implements IParameter {
     set name(value: string) {
-        this.set("name", Str.ucfirst(value));
+        this.set('name', Str.ucfirst(value));
     }
 
     set value(value: ParameterTypes) {
-        this.set("value", value);
+        this.set('value', value);
     }
 
     set groupType(value: string) {
-        this.set("groupType", value);
+        this.set('groupType', value);
     }
 
     set groupID(value: number) {
-        this.set("groupID", value);
+        this.set('groupID', value);
     }
 }
 

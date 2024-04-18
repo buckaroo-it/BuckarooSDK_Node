@@ -1,16 +1,16 @@
-import buckarooClientTest from "../BuckarooClient.test";
+import buckarooClientTest from '../BuckarooClient.test';
 
-const method = buckarooClientTest.method("trustly");
+const method = buckarooClientTest.method('trustly');
 
-describe("Trustly", () => {
-    test("Pay", async () => {
+describe('Trustly', () => {
+    test('Pay', async () => {
         return method
             .pay({
                 amountDebit: 100,
                 customer: {
-                    firstName: "Test",
-                    lastName: "Acceptatie",
-                    countryCode: "NL",
+                    firstName: 'Test',
+                    lastName: 'Acceptatie',
+                    countryCode: 'NL',
                 },
             })
             .request()

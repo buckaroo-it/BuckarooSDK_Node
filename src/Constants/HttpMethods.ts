@@ -1,6 +1,6 @@
 enum HttpMethods {
-    GET = "GET",
-    POST = "POST",
+    GET = 'GET',
+    POST = 'POST',
 }
 
 export default HttpMethods;

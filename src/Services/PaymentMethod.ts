@@ -1,8 +1,8 @@
-import { RequestTypes } from "../Constants";
-import { IParameter, IRequest, IService, ServiceList, ServiceParameter } from "../Models";
-import Buckaroo, { PaymentMethodInstance } from "../index";
-import { Request, TransactionData } from "../Request";
-import { ServiceCode } from "../Utils";
+import { RequestTypes } from '../Constants';
+import { IParameter, IRequest, IService, ServiceList, ServiceParameter } from '../Models';
+import Buckaroo, { PaymentMethodInstance } from '../index';
+import { Request, TransactionData } from '../Request';
+import { ServiceCode } from '../Utils';
 
 export default abstract class PaymentMethod {
     protected _serviceCode?: ServiceCode;
@@ -23,7 +23,7 @@ export default abstract class PaymentMethod {
     }
 
     get serviceCode(): ServiceCode {
-        return this._serviceCode ?? "noservice";
+        return this._serviceCode ?? 'noservice';
     }
 
     public abstract defaultServiceCode(): ServiceCode;
@@ -58,7 +58,7 @@ export default abstract class PaymentMethod {
     combine<Method extends PaymentMethod>(method: Method): this;
 
     combine(data: any): this {
-        if (typeof data === "string") {
+        if (typeof data === 'string') {
             const method: PaymentMethod = Buckaroo.Client.method(data as any);
             method.setPayload(this._payload);
             return method as any;
@@ -67,7 +67,10 @@ export default abstract class PaymentMethod {
         return this;
     }
 
-    public specification(type: RequestTypes.Transaction | RequestTypes.Data = RequestTypes.Data, serviceVersion: number = this.serviceVersion) {
+    public specification(
+        type: RequestTypes.Transaction | RequestTypes.Data = RequestTypes.Data,
+        serviceVersion: number = this.serviceVersion
+    ) {
         return Request.Specification(type, { name: this.serviceCode, version: serviceVersion });
     }
 
@@ -82,12 +85,18 @@ export default abstract class PaymentMethod {
         return this;
     }
 
-    protected setServiceList(action: string, serviceParameters?: IParameter[] | ServiceParameter, serviceCode = this.serviceCode, serviceVersion = this.serviceVersion) {
+    protected setServiceList(
+        action: string,
+        serviceParameters?: IParameter[] | ServiceParameter,
+        serviceCode = this.serviceCode,
+        serviceVersion = this.serviceVersion
+    ) {
         const service: IService = {
             name: serviceCode,
             action: action,
             version: serviceVersion,
-            parameters: serviceParameters instanceof ServiceParameter ? serviceParameters.toParameterList() : serviceParameters,
+            parameters:
+                serviceParameters instanceof ServiceParameter ? serviceParameters.toParameterList() : serviceParameters,
         };
         if (this.getServiceList() instanceof ServiceList) {
             this.getServiceList()!.addService(service);

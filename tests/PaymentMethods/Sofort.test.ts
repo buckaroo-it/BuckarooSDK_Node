@@ -1,10 +1,10 @@
-import buckarooClientTest from "../BuckarooClient.test";
-import { uniqid } from "../../src";
+import buckarooClientTest from '../BuckarooClient.test';
+import { uniqid } from '../../src';
 
-const method = buckarooClientTest.method("sofortueberweisung");
+const method = buckarooClientTest.method('sofortueberweisung');
 
-describe("Sofort", () => {
-    test("Pay", async () => {
+describe('Sofort', () => {
+    test('Pay', async () => {
         return method
             .pay({
                 amountDebit: 100,
@@ -15,12 +15,12 @@ describe("Sofort", () => {
                 expect(info.httpResponse.status).toEqual(200);
             });
     });
-    test("Refund", async () => {
+    test('Refund', async () => {
         return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
-                originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((info) => {
@@ -28,12 +28,12 @@ describe("Sofort", () => {
             });
     });
 
-    test("InstantRefund", async () => {
+    test('InstantRefund', async () => {
         return method
             .instantRefund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
-                originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })
             .request()
             .then((data) => {

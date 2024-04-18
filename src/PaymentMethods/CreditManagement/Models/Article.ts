@@ -1,4 +1,4 @@
-import { Article, IArticle } from "../../../Models";
+import { Article, IArticle } from '../../../Models';
 
 export interface ICreditArticle extends Partial<IArticle> {
     totalVat: number;
@@ -15,54 +15,54 @@ export interface ICreditArticle extends Partial<IArticle> {
 
 export class CreditArticle extends Article implements ICreditArticle {
     set identifier(value: string) {
-        this.set("productId", value);
+        this.set('productId', value);
     }
 
     set description(value: string) {
-        this.set("productName", value);
+        this.set('productName', value);
     }
 
     set price(value: number) {
-        this.set("pricePerUnit", value);
+        this.set('pricePerUnit', value);
     }
 
     set productLine(value: string) {
-        this.set("productLine", value);
+        this.set('productLine', value);
     }
 
     set productGroupName(value: string) {
-        this.set("productGroupName", value);
+        this.set('productGroupName', value);
     }
 
     set productGroupOrderIndex(value: number) {
-        this.set("productGroupOrderIndex", value);
+        this.set('productGroupOrderIndex', value);
     }
 
     set productOrderIndex(value: number) {
-        this.set("productOrderIndex", value);
+        this.set('productOrderIndex', value);
     }
 
     set unitOfMeasurement(value: string) {
-        this.set("unitOfMeasurement", value);
+        this.set('unitOfMeasurement', value);
     }
 
     set discountPercentage(value: number) {
-        this.set("discountPercentage", value);
+        this.set('discountPercentage', value);
     }
 
     set totalDiscount(value: number) {
-        this.set("totalDiscount", value);
+        this.set('totalDiscount', value);
     }
 
     set totalVat(value: number) {
-        this.set("totalVat", value);
+        this.set('totalVat', value);
     }
 
     set totalAmountExVat(value: number) {
-        this.set("totalAmountExVat", value);
+        this.set('totalAmountExVat', value);
     }
 
     set totalAmount(value: number) {
-        this.set("totalAmount", value);
+        this.set('totalAmount', value);
     }
 }

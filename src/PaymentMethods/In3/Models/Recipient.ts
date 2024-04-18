@@ -1,6 +1,6 @@
-import { Address, Company, IAddress, ICompany, ICustomer, IPerson, IPhone, Model, Person } from "../../../Models";
-import { In3Phone } from "./Phone";
-import { RecipientCategory } from "../../../Constants";
+import { Address, Company, IAddress, ICompany, ICustomer, IPerson, IPhone, Model, Person } from '../../../Models';
+import { In3Phone } from './Phone';
+import { RecipientCategory } from '../../../Constants';
 
 export interface IIn3Recipient extends ICustomer {
     recipient: Partial<IIn3Company | IIn3Person>;
@@ -14,10 +14,10 @@ export class In3Recipient extends Model implements In3Recipient {
 
     set recipient(value: In3Company | IIn3Person) {
         if (value.category === RecipientCategory.COMPANY) {
-            this.set("recipient", new In3Company(value));
+            this.set('recipient', new In3Company(value));
         } else if (value.category === RecipientCategory.PERSON) {
-            this.set("recipient", new In3Person(value));
-        } else throw new Error("Invalid recipient category");
+            this.set('recipient', new In3Person(value));
+        } else throw new Error('Invalid recipient category');
     }
 
     get address(): IAddress {
@@ -25,15 +25,15 @@ export class In3Recipient extends Model implements In3Recipient {
     }
 
     set address(value: IAddress) {
-        this.set("address", new In3Address(value));
+        this.set('address', new In3Address(value));
     }
 
     get email(): string {
-        return "";
+        return '';
     }
 
     set email(value: string) {
-        this.set("email", value);
+        this.set('email', value);
     }
 
     get phone(): IPhone {
@@ -41,7 +41,7 @@ export class In3Recipient extends Model implements In3Recipient {
     }
 
     set phone(value: IPhone) {
-        this.set("phone", new In3Phone(value));
+        this.set('phone', new In3Phone(value));
     }
 }
 
@@ -58,78 +58,78 @@ export interface IIn3Company extends ICompany {
 
 export class In3Person extends Person implements IIn3Person {
     set category(value: RecipientCategory.PERSON) {
-        this.set("category", "B2C");
+        this.set('category', 'B2C');
     }
 
     set customerNumber(value: string) {
-        this.set("customerNumber", value);
+        this.set('customerNumber', value);
     }
 
     set identificationNumber(value: string) {
-        this.set("identificationNumber", value);
+        this.set('identificationNumber', value);
     }
 
     set conversationLanguage(value: string) {
-        this.set("conversationLanguage", value);
+        this.set('conversationLanguage', value);
     }
 }
 
 export class In3Company extends Company implements IIn3Company {
     set category(value: RecipientCategory.COMPANY) {
-        this.set("category", "B2B");
+        this.set('category', 'B2B');
     }
 
     set customerNumber(value: string) {
-        this.set("customerNumber", value);
+        this.set('customerNumber', value);
     }
 
     get title() {
-        return this.get("salutation");
+        return this.get('salutation');
     }
 
     set title(value: string) {
-        this.set("salutation", value);
+        this.set('salutation', value);
     }
 
     get chamberOfCommerce() {
-        return this.get("cocNumber");
+        return this.get('cocNumber');
     }
 
     set chamberOfCommerce(value: string) {
-        this.set("cocNumber", value);
+        this.set('cocNumber', value);
     }
 }
 
 export class In3Address extends Address {
     get houseNumber() {
-        return this.get("streetNumber");
+        return this.get('streetNumber');
     }
 
     set houseNumber(value: string) {
-        this.set("streetNumber", value);
+        this.set('streetNumber', value);
     }
 
     get houseNumberAdditional() {
-        return this.get("streetNumberSuffix");
+        return this.get('streetNumberSuffix');
     }
 
     set houseNumberAdditional(value: string) {
-        this.set("streetNumberSuffix", value);
+        this.set('streetNumberSuffix', value);
     }
 
     get zipcode() {
-        return this.get("postalCode");
+        return this.get('postalCode');
     }
 
     set zipcode(value: string) {
-        this.set("postalCode", value);
+        this.set('postalCode', value);
     }
 
     get country() {
-        return this.get("countryCode");
+        return this.get('countryCode');
     }
 
     set country(value: string) {
-        this.set("countryCode", value);
+        this.set('countryCode', value);
     }
 }

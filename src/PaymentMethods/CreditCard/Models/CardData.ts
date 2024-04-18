@@ -1,4 +1,4 @@
-import { IPaymentRequest, ServiceParameter } from "../../../Models";
+import { IPaymentRequest, ServiceParameter } from '../../../Models';
 
 export interface ICardData extends IPaymentRequest {
     encryptedCardData: string;
@@ -6,6 +6,6 @@ export interface ICardData extends IPaymentRequest {
 
 export class CardData extends ServiceParameter {
     set encryptedCardData(value: string) {
-        this.set("encryptedCardData", value);
+        this.set('encryptedCardData', value);
     }
 }

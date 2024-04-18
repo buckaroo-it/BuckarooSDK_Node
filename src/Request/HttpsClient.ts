@@ -1,8 +1,8 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { HttpResponseConstructor } from "../Models";
-import { RequestConfig } from "./Headers";
-import { HttpMethods } from "../Constants";
-import { Agent } from "https";
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import { HttpResponseConstructor } from '../Models';
+import { RequestConfig } from './Headers';
+import { HttpMethods } from '../Constants';
+import { Agent } from 'https';
 
 export default class HttpsClient {
     protected _options: AxiosRequestConfig = {};
@@ -20,7 +20,12 @@ export default class HttpsClient {
         this._axiosInstance = axios.create(this._options);
     }
 
-    public async sendRequest<R extends HttpResponseConstructor = HttpResponseConstructor>(url: URL, data: object, options: RequestConfig, responseClass: R): Promise<InstanceType<R>> {
+    public async sendRequest<R extends HttpResponseConstructor = HttpResponseConstructor>(
+        url: URL,
+        data: object,
+        options: RequestConfig,
+        responseClass: R
+    ): Promise<InstanceType<R>> {
         try {
             const config = {
                 url: url.toString(),
