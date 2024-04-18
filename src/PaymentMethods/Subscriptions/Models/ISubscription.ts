@@ -1,21 +1,8 @@
-import {
-    Address,
-    BankAccount,
-    IAddress,
-    IBankAccount,
-    ICompany,
-    IDebtor,
-    IPerson,
-    IPhone,
-    IRequest,
-    Person,
-    Phone,
-    ServiceParameter,
-} from '../../../Models';
-import { IRatePlan, IRatePlans, RatePlan } from './RatePlan';
-import { IRatePlanCharge, IRatePlanCharges, RatePlanCharge } from './RatePlanCharge';
-import { Configuration, IConfiguration } from './Configuration';
-import Company from './Company';
+import { Address, BankAccount, IAddress, IBankAccount, ICompany, IDebtor, IPerson, IPhone, IRequest, Person, Phone, ServiceParameter } from "../../../Models";
+import { IRatePlan, IRatePlans, RatePlan } from "./RatePlan";
+import { IRatePlanCharge, IRatePlanCharges, RatePlanCharge } from "./RatePlanCharge";
+import { Configuration, IConfiguration } from "./Configuration";
+import Company from "./Company";
 
 export interface ISubscription extends IRequest {
     address?: Partial<IAddress>;
@@ -46,138 +33,138 @@ export interface ISubscription extends IRequest {
 
 export class Subscription extends ServiceParameter implements ISubscription {
     set configurationCode(configurationCode: string) {
-        this.set('configurationCode', configurationCode);
+        this.set("configurationCode", configurationCode);
     }
 
     set includeTransaction(includeTransaction: boolean) {
-        this.set('includeTransaction', includeTransaction);
+        this.set("includeTransaction", includeTransaction);
     }
 
     set transactionVatPercentage(transactionVatPercentage: number) {
-        this.set('transactionVatPercentage', transactionVatPercentage);
+        this.set("transactionVatPercentage", transactionVatPercentage);
     }
 
     set subscriptionGuid(value: string) {
-        this.set('subscriptionGuid', value);
+        this.set("subscriptionGuid", value);
     }
 
     set termStartDay(value: number) {
-        this.set('termStartDay', value);
+        this.set("termStartDay", value);
     }
 
     set termStartMonth(value: number) {
-        this.set('termStartMonth', value);
+        this.set("termStartMonth", value);
     }
 
     set billingTiming(value: number) {
-        this.set('billingTiming', value);
+        this.set("billingTiming", value);
     }
 
     set termStartWeek(value: string) {
-        this.set('termStartWeek', value);
+        this.set("termStartWeek", value);
     }
 
     set b2b(value: string) {
-        this.set('b2b', value);
+        this.set("b2b", value);
     }
 
     set mandateReference(value: string) {
-        this.set('mandateReference', value);
+        this.set("mandateReference", value);
     }
 
     set allowedServices(value: string) {
-        this.set('allowedServices', value);
+        this.set("allowedServices", value);
     }
 
     set debtor(value: IDebtor) {
-        this.set('debtor', value);
+        this.set("debtor", value);
     }
 
     set bankAccount(value: IBankAccount) {
-        this.set('bankAccount', new BankAccount(value));
+        this.set("bankAccount", new BankAccount(value));
     }
 
     set email(value: string) {
-        this.set('email', value);
+        this.set("email", value);
     }
 
     set phone(value: IPhone) {
-        this.set('phone', new Phone(value));
+        this.set("phone", new Phone(value));
     }
 
     set address(value: IAddress) {
-        this.set('address', new Address(value));
+        this.set("address", new Address(value));
     }
 
     set person(value: IPerson) {
-        this.set('person', new Person(value));
+        this.set("person", new Person(value));
     }
 
     set company(value: ICompany) {
-        this.set('company', new Company(value));
+        this.set("company", new Company(value));
     }
 
     set configuration(value: Configuration) {
-        this.set('configuration', new Configuration(value));
+        this.set("configuration", new Configuration(value));
     }
 
     set ratePlans(value: IRatePlans) {
         Object.entries(value).forEach(([key, val]) => {
-            if (this.has(key + 'RatePlan')) {
-                this.set(key + 'RatePlan', val);
+            if (this.has(key + "RatePlan")) {
+                this.set(key + "RatePlan", val);
             }
         });
     }
 
     set ratePlanCharges(value: IRatePlanCharges) {
         Object.entries(value).forEach(([key, val]) => {
-            if (this.has(key + 'RatePlanCharge')) {
-                this.set(key + 'RatePlanCharge', val);
+            if (this.has(key + "RatePlanCharge")) {
+                this.set(key + "RatePlanCharge", val);
             }
         });
     }
 
     set customerIBAN(value: string) {
-        this.set('customerIBAN', value);
+        this.set("customerIBAN", value);
     }
 
     set customerAccountName(value: string) {
-        this.set('customerAccountName', value);
+        this.set("customerAccountName", value);
     }
 
     set customerBIC(value: string) {
-        this.set('customerBIC', value);
+        this.set("customerBIC", value);
     }
 
     protected set addRatePlan(value: IRatePlan) {
-        this.set('addRatePlan', new RatePlan(value));
+        this.set("addRatePlan", new RatePlan(value));
     }
 
     protected set updateRatePlan(value: IRatePlan) {
-        this.set('updateRatePlan', new RatePlan(value));
+        this.set("updateRatePlan", new RatePlan(value));
     }
 
     protected set disableRatePlan(value: IRatePlan) {
-        this.set('disableRatePlan', new RatePlan(value));
+        this.set("disableRatePlan", new RatePlan(value));
     }
 
     protected set addRatePlanCharge(value: IRatePlanCharge) {
-        this.set('addRatePlanCharge', new RatePlanCharge(value));
+        this.set("addRatePlanCharge", new RatePlanCharge(value));
     }
 
     getGroups() {
         return super.getGroups({
-            Debtor: 'Debtor',
-            Person: 'Person',
-            Email: 'Email',
-            Address: 'Address',
-            AddRatePlan: 'AddRatePlan',
-            Configuration: 'AddConfiguration',
-            UpdateRatePlan: 'UpdateRatePlan',
-            DisableRatePlan: 'DisableRatePlan',
-            AddRatePlanCharge: 'AddRatePlanCharge',
-            UpdateRatePlanCharge: 'UpdateRatePlanCharge',
-            DisableRatePlanCharge: 'DisableRatePlanCharge',
+            Debtor: "Debtor",
+            Person: "Person",
+            Email: "Email",
+            Address: "Address",
+            AddRatePlan: "AddRatePlan",
+            Configuration: "AddConfiguration",
+            UpdateRatePlan: "UpdateRatePlan",
+            DisableRatePlan: "DisableRatePlan",
+            AddRatePlanCharge: "AddRatePlanCharge",
+            UpdateRatePlanCharge: "UpdateRatePlanCharge",
+            DisableRatePlanCharge: "DisableRatePlanCharge",
         });
     }
 }

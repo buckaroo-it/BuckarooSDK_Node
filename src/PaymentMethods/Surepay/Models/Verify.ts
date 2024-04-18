@@ -1,5 +1,5 @@
-import { IPaymentRequest, ServiceParameter } from '../../../Models';
-import { BankAccount, IBankAccount } from './BankAccount';
+import { IPaymentRequest, ServiceParameter } from "../../../Models";
+import { BankAccount, IBankAccount } from "./BankAccount";
 
 export interface IVerify extends IPaymentRequest {
     bankAccount: Partial<IBankAccount>;
@@ -7,6 +7,6 @@ export interface IVerify extends IPaymentRequest {
 
 export class Verify extends ServiceParameter {
     set bankAccount(value: IBankAccount) {
-        this.set('bankAccount', new BankAccount(value));
+        this.set("bankAccount", new BankAccount(value));
     }
 }

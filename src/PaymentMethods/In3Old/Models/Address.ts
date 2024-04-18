@@ -1,7 +1,7 @@
-import { Address } from '../../../Models';
+import { Address } from "../../../Models";
 
 export class In3OldAddress extends Address {
     set houseNumberAddition(houseNumberAddition: string) {
-        this.set('houseNumberSuffix', houseNumberAddition);
+        this.set("houseNumberSuffix", houseNumberAddition);
     }
 }

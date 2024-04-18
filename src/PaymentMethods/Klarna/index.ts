@@ -1,10 +1,10 @@
-import { IPay, Pay } from './Models/Pay';
-import { PayablePaymentMethod } from '../../Services';
-import { ServiceCode } from '../../Utils';
+import { IPay, Pay } from "./Models/Pay";
+import { PayablePaymentMethod } from "../../Services";
+import { ServiceCode } from "../../Utils";
 
 export default class Klarna extends PayablePaymentMethod {
     public defaultServiceCode(): ServiceCode {
-        return 'klarna';
+        return "klarna";
     }
 
     pay(data: IPay) {
@@ -13,7 +13,7 @@ export default class Klarna extends PayablePaymentMethod {
 
     payInInstallments(data: IPay) {
         this.setPayPayload(data);
-        this.setServiceList('PayInInstallments', new Pay(data));
+        this.setServiceList("PayInInstallments", new Pay(data));
         return super.transactionRequest();
     }
 

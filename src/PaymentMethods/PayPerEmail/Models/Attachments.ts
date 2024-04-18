@@ -1,4 +1,4 @@
-import { Model } from '../../../Models';
+import { Model } from "../../../Models";
 
 export interface IAttachments {
     name: string;
@@ -6,6 +6,6 @@ export interface IAttachments {
 
 export class Attachments extends Model implements IAttachments {
     set name(value: string) {
-        this.set('attachment', value);
+        this.set("attachment", value);
     }
 }

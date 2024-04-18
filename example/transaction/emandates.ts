@@ -1,22 +1,22 @@
-import buckarooClient from '../buckarooClient';
+import buckarooClient from "../buckarooClient";
 
-const emandate = buckarooClient.method('emandate');
+const emandate = buckarooClient.method("emandate");
 
 //CreateMandate
 emandate
     .createMandate({
-        debtorReference: 'XXXXXXXXX',
-        language: 'nl',
+        debtorReference: "XXXXXXXXX",
+        language: "nl",
         continueOnIncomplete: true,
-        purchaseId: 'XXXXXXXXXXXXXX',
+        purchaseId: "XXXXXXXXXXXXXX",
         sequenceType: 0,
     })
     .request();
 //ModifyMandate
 emandate
     .modifyMandate({
-        originalmandateid: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-        debtorbankid: 'ABNANL2A',
+        originalmandateid: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+        debtorbankid: "ABNANL2A",
     })
     .request();
 
@@ -26,7 +26,7 @@ emandate.issuerList();
 //CancelMandate
 emandate
     .modifyMandate({
-        mandateId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-        purchaseId: 'XXXXXXXXXXXXXX',
+        mandateId: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+        purchaseId: "XXXXXXXXXXXXXX",
     })
     .request();

@@ -1,5 +1,5 @@
-import { Address, Company, IAddress, ICompany, IPerson, IPhone, Model, Person, Phone } from './../';
-import { RecipientCategory } from '../../Constants';
+import { Address, Company, IAddress, ICompany, IPerson, IPhone, Model, Person, Phone } from "./../";
+import { RecipientCategory } from "../../Constants";
 
 export interface ICustomer {
     phone?: Partial<IPhone>;
@@ -10,21 +10,18 @@ export interface ICustomer {
 
 export class Customer extends Model {
     set address(address: Partial<IAddress>) {
-        this.set('address', new Address(address));
+        this.set("address", new Address(address));
     }
 
     set email(email: string) {
-        this.set('email', email);
+        this.set("email", email);
     }
 
     set phone(phone: Partial<IPhone>) {
-        this.set('phone', new Phone(phone));
+        this.set("phone", new Phone(phone));
     }
 
     set recipient(recipient: IPerson | ICompany) {
-        this.set(
-            'recipient',
-            recipient.category === RecipientCategory.COMPANY ? new Company(recipient) : new Person(recipient)
-        );
+        this.set("recipient", recipient.category === RecipientCategory.COMPANY ? new Company(recipient) : new Person(recipient));
     }
 }

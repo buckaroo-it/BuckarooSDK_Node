@@ -1,19 +1,19 @@
-import buckarooClient from '../buckarooClient';
+import buckarooClient from "../buckarooClient";
 
-const multibanco = buckarooClient.method('multibanco');
+const multibanco = buckarooClient.method("multibanco");
 
 //Pay
 multibanco
     .pay({
         amountDebit: 10.1,
-        description: 'Multibanco Payment',
+        description: "Multibanco Payment",
     })
     .request();
 //Refund
 multibanco
     .refund({
-        originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
         amountCredit: 10.1,
-        invoice: 'Multibanco Refund',
+        invoice: "Multibanco Refund",
     })
     .request();

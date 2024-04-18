@@ -1,19 +1,19 @@
-import buckarooClient from '../buckarooClient';
+import buckarooClient from "../buckarooClient";
 
-const external = buckarooClient.method('externalpayment');
+const external = buckarooClient.method("externalpayment");
 
 //Pay
 external
     .pay({
         amountDebit: 10.1,
-        description: 'External Payment',
+        description: "External Payment",
     })
     .request();
 //Refund
 external
     .refund({
-        originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
         amountCredit: 10.1,
-        invoice: 'Ideal Refund',
+        invoice: "Ideal Refund",
     })
     .request();

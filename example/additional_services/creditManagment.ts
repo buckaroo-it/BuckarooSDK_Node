@@ -1,67 +1,67 @@
-import buckaroo from '../buckarooClient';
+import buckaroo from "../buckarooClient";
 
-const creditManagement = buckaroo.method('CreditManagement3');
+const creditManagement = buckaroo.method("CreditManagement3");
 
 // Sometimes we need to combine multiple payments.
 // By calling "combine" it will combine the payload of the method with the next method or a given payload.
 
 const invoice = creditManagement.createCombinedInvoice({
-    invoice: '',
+    invoice: "",
     applyStartRecurrent: false,
     invoiceAmount: 10,
     invoiceAmountVAT: 1,
-    invoiceDate: '',
-    dueDate: '',
-    schemeKey: '2amq34',
+    invoiceDate: "",
+    dueDate: "",
+    schemeKey: "2amq34",
     maxStepIndex: 1,
-    allowedServices: 'ideal,mastercard',
+    allowedServices: "ideal,mastercard",
     debtor: {
-        code: 'johnsmith4',
+        code: "johnsmith4",
     },
-    email: 'youremail@example.nl',
+    email: "youremail@example.nl",
     phone: {
-        mobile: '06198765432',
+        mobile: "06198765432",
     },
     person: {
-        culture: 'nl-NL',
-        title: 'Msc',
-        initials: 'JS',
-        firstName: 'Test',
-        lastNamePrefix: 'Jones',
-        lastName: 'Aflever',
-        gender: 'male',
+        culture: "nl-NL",
+        title: "Msc",
+        initials: "JS",
+        firstName: "Test",
+        lastNamePrefix: "Jones",
+        lastName: "Aflever",
+        gender: "male",
     },
     company: {
-        culture: 'nl-NL',
-        name: 'My Company Corporation',
+        culture: "nl-NL",
+        name: "My Company Corporation",
         vatApplicable: true,
-        vatNumber: 'NL140619562B01',
-        chamberOfCommerce: '20091741',
+        vatNumber: "NL140619562B01",
+        chamberOfCommerce: "20091741",
     },
     address: {
-        street: 'Hoofdtraat',
-        houseNumber: '90',
-        houseNumberAdditional: 'A',
-        zipcode: '8441ER',
-        city: 'Heerenveen',
-        state: 'Friesland',
-        country: 'NL',
+        street: "Hoofdtraat",
+        houseNumber: "90",
+        houseNumberAdditional: "A",
+        zipcode: "8441ER",
+        city: "Heerenveen",
+        state: "Friesland",
+        country: "NL",
     },
 });
 
 buckaroo
-    .method('sepadirectdebit')
+    .method("sepadirectdebit")
     .combine(invoice.data)
     .pay({
-        invoice: '',
+        invoice: "",
         amountDebit: 10.1,
-        iban: 'NL13TEST0123456789',
-        bic: 'TESTNL2A',
-        collectdate: '2022-06-03',
-        mandateReference: '1DCtestreference',
-        mandateDate: '2022-07-03',
+        iban: "NL13TEST0123456789",
+        bic: "TESTNL2A",
+        collectdate: "2022-06-03",
+        mandateReference: "1DCtestreference",
+        mandateDate: "2022-07-03",
         customer: {
-            name: 'John Smith',
+            name: "John Smith",
         },
     })
     .request();

@@ -1,19 +1,19 @@
-import buckarooClient from '../buckarooClient';
+import buckarooClient from "../buckarooClient";
 
-const knaken = buckarooClient.method('knaken');
+const knaken = buckarooClient.method("knaken");
 
 //Pay
 knaken
     .pay({
         amountDebit: 10.1,
-        description: 'Knaken Payment',
+        description: "Knaken Payment",
     })
     .request();
 //Refund
 knaken
     .refund({
-        originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
         amountCredit: 10.1,
-        invoice: '',
+        invoice: "",
     })
     .request();

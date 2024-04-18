@@ -1,12 +1,12 @@
-import * as IpAddress from 'ip-address';
+import * as IpAddress from "ip-address";
 
-import { getIPAddress } from '../Utils';
+import { getIPAddress } from "../Utils";
 
 export class IPProtocolVersion {
     public static readonly IPV4: number = 0;
     public static readonly IPV6: number = 1;
 
-    public static getVersion(ipAddress: string = '0.0.0.0'): number {
+    public static getVersion(ipAddress: string = "0.0.0.0"): number {
         if (IpAddress.Address4.isValid(ipAddress)) {
             return IPProtocolVersion.IPV4;
         }

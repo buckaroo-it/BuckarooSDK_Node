@@ -1,4 +1,4 @@
-import { Str } from '../Utils';
+import { Str } from "../Utils";
 
 export class Model {
     [key: keyof any]: any;
@@ -35,10 +35,7 @@ export class Model {
         return JSON.parse(JSON.stringify(this), callBack);
     }
 
-    protected setOwnProperties(
-        data: Record<string, any> = {},
-        properties: { [key: string]: PropertyDescriptor } = this.getAllPropertyDescriptors()
-    ) {
+    protected setOwnProperties(data: Record<string, any> = {}, properties: { [key: string]: PropertyDescriptor } = this.getAllPropertyDescriptors()) {
         for (const key in properties) {
             if (properties[key].set) {
                 let value = data[key] ?? properties[key].get?.call(this);
@@ -129,9 +126,6 @@ export class JsonModel extends Model {
 
 export function getObjectProperty(object: object, property: string, root: any = null): PropertyDescriptor | undefined {
     if (object !== root) {
-        return (
-            Object.getOwnPropertyDescriptor(object, property) ??
-            getObjectProperty(Object.getPrototypeOf(object), property, root)
-        );
+        return Object.getOwnPropertyDescriptor(object, property) ?? getObjectProperty(Object.getPrototypeOf(object), property, root);
     }
 }

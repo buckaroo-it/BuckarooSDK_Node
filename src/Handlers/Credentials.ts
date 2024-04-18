@@ -1,6 +1,6 @@
-import { ICredentials } from '../Utils';
-import { Request } from '../Request';
-import { RequestTypes } from '../Constants';
+import { ICredentials } from "../Utils";
+import { Request } from "../Request";
+import { RequestTypes } from "../Constants";
 
 export class Credentials implements ICredentials {
     secretKey: string;
@@ -13,7 +13,7 @@ export class Credentials implements ICredentials {
 
     confirm() {
         return Request.Specification(RequestTypes.Transaction, {
-            name: 'ideal',
+            name: "ideal",
             version: 2,
         })
             .request()

@@ -1,4 +1,4 @@
-import { ServiceParameter } from '../../../Models';
+import { ServiceParameter } from "../../../Models";
 
 export interface IPay {
     issuer?: string;
@@ -6,6 +6,6 @@ export interface IPay {
 
 export class Pay extends ServiceParameter {
     set issuer(value: string) {
-        this.set('issuerID', value);
+        this.set("issuerID", value);
     }
 }

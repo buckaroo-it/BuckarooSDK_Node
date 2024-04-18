@@ -1,27 +1,27 @@
-import { Address as IAddress } from '../../../Models';
+import { Address as IAddress } from "../../../Models";
 
 export default class Address extends IAddress {
     get houseNumber(): string {
-        return this.get('streetNumber');
+        return this.get("streetNumber");
     }
 
     set houseNumber(phone: string) {
-        this.set('streetNumber', phone);
+        this.set("streetNumber", phone);
     }
 
     get houseNumberAdditional(): string {
-        return this.get('streetNumberAdditional');
+        return this.get("streetNumberAdditional");
     }
 
     set houseNumberAdditional(phone: string) {
-        this.set('streetNumberAdditional', phone);
+        this.set("streetNumberAdditional", phone);
     }
 
     get zipcode(): string {
-        return this.get('postalCode');
+        return this.get("postalCode");
     }
 
     set zipcode(phone: string) {
-        this.set('postalCode', phone);
+        this.set("postalCode", phone);
     }
 }

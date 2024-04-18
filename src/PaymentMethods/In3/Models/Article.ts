@@ -1,4 +1,4 @@
-import { Article, IArticle } from '../../../Models';
+import { Article, IArticle } from "../../../Models";
 
 export interface IIn3Article extends IArticle {
     category?: string;
@@ -8,22 +8,22 @@ export interface IIn3Article extends IArticle {
 
 export class In3Article extends Article implements In3Article {
     set category(value: string) {
-        this.set('category', value);
+        this.set("category", value);
     }
 
     get price() {
-        return this.get('grossUnitPrice');
+        return this.get("grossUnitPrice");
     }
 
     set price(value: number) {
-        this.set('grossUnitPrice', value);
+        this.set("grossUnitPrice", value);
     }
 
     set url(value: string) {
-        this.set('url', value);
+        this.set("url", value);
     }
 
     set quantityDescription(value: string) {
-        this.set('quantityDescription', value);
+        this.set("quantityDescription", value);
     }
 }

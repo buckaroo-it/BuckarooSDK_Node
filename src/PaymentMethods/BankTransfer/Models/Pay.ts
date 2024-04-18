@@ -1,4 +1,4 @@
-import { IPaymentRequest, IPerson, Person, ServiceParameter } from '../../../Models';
+import { IPaymentRequest, IPerson, Person, ServiceParameter } from "../../../Models";
 
 export interface IPay extends IPaymentRequest {
     customer: Partial<IPerson>;
@@ -9,36 +9,36 @@ export interface IPay extends IPaymentRequest {
 
 class BankTransferPerson extends Person {
     set firstName(value: string) {
-        this.set('customerFirstName', value);
+        this.set("customerFirstName", value);
     }
 
     set lastName(value: string) {
-        this.set('customerLastName', value);
+        this.set("customerLastName", value);
     }
 
     set gender(value: string) {
-        this.set('customerGender', value);
+        this.set("customerGender", value);
     }
 }
 
 export class Pay extends ServiceParameter {
     set sendMail(sendMail: boolean) {
-        this.set('sendMail', sendMail);
+        this.set("sendMail", sendMail);
     }
 
     set dateDue(dateDue: string) {
-        this.set('dateDue', dateDue);
+        this.set("dateDue", dateDue);
     }
 
     set country(country: string) {
-        this.set('customerCountry', country);
+        this.set("customerCountry", country);
     }
 
     set customer(person: IPerson) {
-        this.set('customer', new BankTransferPerson(person));
+        this.set("customer", new BankTransferPerson(person));
     }
 
     set email(email: string) {
-        this.set('customerEmail', email);
+        this.set("customerEmail", email);
     }
 }

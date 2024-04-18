@@ -1,5 +1,5 @@
-import { Gender, RecipientCategory } from '../../Constants';
-import { Model } from '../Model';
+import { Gender, RecipientCategory } from "../../Constants";
+import { Model } from "../Model";
 
 export interface IRecipient {
     [key: string]: any;
@@ -30,47 +30,47 @@ export interface ICompany extends IRecipient {
 
 export class Recipient extends Model implements IRecipient {
     set birthDate(value: string) {
-        this.set('birthDate', value);
+        this.set("birthDate", value);
     }
 
     set careOf(value: string) {
-        this.set('careOf', value);
+        this.set("careOf", value);
     }
 
     set category(value: RecipientCategory) {
-        this.set('category', value);
+        this.set("category", value);
     }
 
     set culture(value: string) {
-        this.set('culture', value);
+        this.set("culture", value);
     }
 
     set firstName(value: string) {
-        this.set('firstName', value);
+        this.set("firstName", value);
     }
 
     set gender(value: string) {
-        this.set('gender', value);
+        this.set("gender", value);
     }
 
     set initials(value: string) {
-        this.set('initials', value);
+        this.set("initials", value);
     }
 
     set lastName(value: string) {
-        this.set('lastName', value);
+        this.set("lastName", value);
     }
 
     set lastNamePrefix(value: string) {
-        this.set('lastNamePrefix', value);
+        this.set("lastNamePrefix", value);
     }
 
     set placeOfBirth(value: string) {
-        this.set('placeOfBirth', value);
+        this.set("placeOfBirth", value);
     }
 
     set title(value: string) {
-        this.set('title', value);
+        this.set("title", value);
     }
 }
 
@@ -80,11 +80,11 @@ export class Person extends Recipient implements IPerson {
     }
 
     set name(value: string) {
-        this.set('name', value);
+        this.set("name", value);
     }
 
     set category(value: RecipientCategory.PERSON) {
-        this.set('category', value);
+        this.set("category", value);
     }
 }
 
@@ -94,26 +94,26 @@ export class Company extends Recipient implements ICompany {
     }
 
     set category(value: RecipientCategory.COMPANY) {
-        this.set('category', value);
+        this.set("category", value);
     }
 
     set chamberOfCommerce(value: string) {
-        this.set('chamberOfCommerce', value);
+        this.set("chamberOfCommerce", value);
     }
 
     set companyName(value: string) {
-        this.set('companyName', value);
+        this.set("companyName", value);
     }
 
     set culture(value: string) {
-        this.set('culture', value);
+        this.set("culture", value);
     }
 
     set vatApplicable(value: boolean) {
-        this.set('vatApplicable', value);
+        this.set("vatApplicable", value);
     }
 
     set vatNumber(value: string) {
-        this.set('vatNumber', value);
+        this.set("vatNumber", value);
     }
 }

@@ -1,4 +1,4 @@
-import { IAddress, IPaymentRequest } from '../../../Models';
+import { IAddress, IPaymentRequest } from "../../../Models";
 
 export interface IExtraInfo extends IPaymentRequest {
     bic?: string;

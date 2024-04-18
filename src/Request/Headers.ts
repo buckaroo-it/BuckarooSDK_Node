@@ -1,7 +1,7 @@
-import { AxiosRequestConfig } from 'axios';
+import { AxiosRequestConfig } from "axios";
 
 export type RequestHeaders = {
-    'Content-Type'?: string;
+    "Content-Type"?: string;
     Accept?: string;
     Culture?: string;
     Authorization?: string;
@@ -30,11 +30,11 @@ export default class Headers {
         } = {}
     ): this {
         this._headers.Software = JSON.stringify({
-            PlatformName: value.platformName || 'Node SDK',
-            PlatformVersion: value.platformVersion || '1.0',
-            ModuleSupplier: value.moduleSupplier || 'Buckaroo',
-            ModuleName: value.moduleName || 'BuckarooPayments',
-            ModuleVersion: value.moduleVersion || '1.0',
+            PlatformName: value.platformName || "Node SDK",
+            PlatformVersion: value.platformVersion || "1.0",
+            ModuleSupplier: value.moduleSupplier || "Buckaroo",
+            ModuleName: value.moduleName || "BuckarooPayments",
+            ModuleVersion: value.moduleVersion || "1.0",
         });
         return this;
     }
@@ -55,17 +55,17 @@ export default class Headers {
 
     protected getDefaultHeaders(): RequestHeaders {
         return {
-            'Content-type': 'application/json; charset=utf-8',
-            Accept: 'application/json',
-            Culture: 'nl-NL',
-            Authorization: '',
-            Channel: 'Web',
+            "Content-type": "application/json; charset=utf-8",
+            Accept: "application/json",
+            Culture: "nl-NL",
+            Authorization: "",
+            Channel: "Web",
             Software: JSON.stringify({
-                PlatformName: 'Node SDK',
-                PlatformVersion: '1.0',
-                ModuleSupplier: 'Buckaroo',
-                ModuleName: 'BuckarooPayments',
-                ModuleVersion: '1.0',
+                PlatformName: "Node SDK",
+                PlatformVersion: "1.0",
+                ModuleSupplier: "Buckaroo",
+                ModuleName: "BuckarooPayments",
+                ModuleVersion: "1.0",
             }),
         };
     }

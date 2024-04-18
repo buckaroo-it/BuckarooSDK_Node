@@ -1,8 +1,8 @@
-import { ResponseStatus } from '../../Constants';
-import { DataFormatter } from '../../Utils';
-import { HttpClientResponse } from './HttpClientResponse';
+import { ResponseStatus } from "../../Constants";
+import { DataFormatter } from "../../Utils";
+import { HttpClientResponse } from "./HttpClientResponse";
 
-import { IFormattedParameter } from '../IParameters';
+import { IFormattedParameter } from "../IParameters";
 
 export class TransactionResponse extends HttpClientResponse {
     get data(): ITransactionResponse {
@@ -26,10 +26,7 @@ export class TransactionResponse extends HttpClientResponse {
     }
 
     isCanceled() {
-        return (
-            this.getStatusCode() === ResponseStatus.STATUSCODE_CANCELLED_BY_USER ||
-            this.getStatusCode() === ResponseStatus.STATUSCODE_CANCELLED_BY_MERCHANT
-        );
+        return this.getStatusCode() === ResponseStatus.STATUSCODE_CANCELLED_BY_USER || this.getStatusCode() === ResponseStatus.STATUSCODE_CANCELLED_BY_MERCHANT;
     }
 
     isAwaitingConsumer() {
@@ -53,12 +50,12 @@ export class TransactionResponse extends HttpClientResponse {
     }
 
     hasRedirect() {
-        return this.data.requiredAction?.redirectURL.length > 0 && this.data.requiredAction?.name === 'Redirect';
+        return this.data.requiredAction?.redirectURL.length > 0 && this.data.requiredAction?.name === "Redirect";
     }
 
     getRedirectUrl() {
         if (this.hasRedirect()) return this.data.requiredAction?.redirectURL;
-        return '';
+        return "";
     }
 
     getServices() {
@@ -78,11 +75,7 @@ export class TransactionResponse extends HttpClientResponse {
     }
 
     getAdditionalParameters() {
-        return DataFormatter.parametersReverseMap(
-            this.data.additionalParameters?.additionalParameter ??
-                (this.data.additionalParameters as Record<string, any>)?.['list'] ??
-                []
-        );
+        return DataFormatter.parametersReverseMap(this.data.additionalParameters?.additionalParameter ?? (this.data.additionalParameters as Record<string, any>)?.["list"] ?? []);
     }
 
     getTransactionKey() {

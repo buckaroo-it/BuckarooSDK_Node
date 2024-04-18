@@ -1,27 +1,27 @@
-import buckaroo from '../buckarooClient';
+import buckaroo from "../buckarooClient";
 
-const subscription = buckaroo.method('subscriptions');
+const subscription = buckaroo.method("subscriptions");
 
 subscription.create({
     additionalParameters: {
-        signature: 'XXXXXXXX',
+        signature: "XXXXXXXX",
     },
     ratePlans: {
         add: {
-            startDate: '2024-07-23',
-            ratePlanCode: 'XXXXXXXX',
+            startDate: "2024-07-23",
+            ratePlanCode: "XXXXXXXX",
         },
     },
     ratePlanCharges: {
         add: {
-            ratePlanChargeCode: 'XXXXXXXX',
+            ratePlanChargeCode: "XXXXXXXX",
         },
     },
-    configurationCode: 'XXXXXXXX',
+    configurationCode: "XXXXXXXX",
     configuration: {
-        name: 'XXXXXXXX',
+        name: "XXXXXXXX",
     },
     debtor: {
-        code: 'XXXXXXXX',
+        code: "XXXXXXXX",
     },
 });

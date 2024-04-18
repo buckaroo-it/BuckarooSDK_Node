@@ -1,5 +1,5 @@
-import { Model } from './Model';
-import { IParameter, Parameter } from './IParameters';
+import { Model } from "./Model";
+import { IParameter, Parameter } from "./IParameters";
 
 export interface IService {
     name: string;
@@ -14,20 +14,20 @@ export class Service extends Model implements IService {
     }
 
     set action(value: string) {
-        this.set('action', value);
+        this.set("action", value);
     }
 
     set name(value: string) {
-        this.set('name', value);
+        this.set("name", value);
     }
 
     set version(value: number) {
-        this.set('version', value);
+        this.set("version", value);
     }
 
     set parameters(value: IParameter[]) {
         this.set(
-            'parameters',
+            "parameters",
             value.map((parameter) => new Parameter(parameter))
         );
     }
@@ -39,12 +39,12 @@ export class ServiceList extends Model {
     }
 
     get list(): Service[] {
-        return this.get('serviceList');
+        return this.get("serviceList");
     }
 
     set list(services: IService[]) {
         this.set(
-            'serviceList',
+            "serviceList",
             services.map((service) => new Service(service))
         );
     }

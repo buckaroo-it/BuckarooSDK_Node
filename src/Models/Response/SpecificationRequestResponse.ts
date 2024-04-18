@@ -1,5 +1,5 @@
-import { Str } from '../../Utils';
-import { HttpClientResponse } from './HttpClientResponse';
+import { Str } from "../../Utils";
+import { HttpClientResponse } from "./HttpClientResponse";
 
 export class SpecificationRequestResponse extends HttpClientResponse {
     get data(): ISpecificationRequestResponse {

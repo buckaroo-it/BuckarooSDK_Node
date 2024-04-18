@@ -25,7 +25,7 @@
         "payments",
         "api"
     ],
-    "author": "Rinor Haziri",
+    "author": "Buckaroo Devs",
     "license": "ISC",
     "devDependencies": {
         "@babel/plugin-proposal-class-properties": "^7.18.6",

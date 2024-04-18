@@ -1,12 +1,12 @@
-import { PayablePaymentMethod } from '../../Services';
-import { IPay, Pay } from './Models/Pay';
-import { IRefund, Refund } from './Models/Refund';
-import { Capture, ICapture } from './Models/Capture';
-import { ServiceCode } from '../../Utils';
+import { PayablePaymentMethod } from "../../Services";
+import { IPay, Pay } from "./Models/Pay";
+import { IRefund, Refund } from "./Models/Refund";
+import { Capture, ICapture } from "./Models/Capture";
+import { ServiceCode } from "../../Utils";
 
 export default class Billink extends PayablePaymentMethod {
     public defaultServiceCode(): ServiceCode {
-        return 'billink';
+        return "billink";
     }
 
     pay(payload: IPay) {
@@ -19,19 +19,19 @@ export default class Billink extends PayablePaymentMethod {
 
     authorize(payload: IPay) {
         this.setPayPayload(payload);
-        this.setServiceList('Authorize', new Pay(payload));
+        this.setServiceList("Authorize", new Pay(payload));
         return super.transactionRequest();
     }
 
     cancelAuthorize(payload: IRefund) {
         this.setPayload(payload);
-        this.setServiceList('CancelAuthorize', new Refund(payload));
+        this.setServiceList("CancelAuthorize", new Refund(payload));
         return super.transactionRequest();
     }
 
     capture(payload: ICapture) {
         this.setPayPayload(payload);
-        this.setServiceList('Capture', new Capture(payload));
+        this.setServiceList("Capture", new Capture(payload));
         return super.transactionRequest();
     }
 }

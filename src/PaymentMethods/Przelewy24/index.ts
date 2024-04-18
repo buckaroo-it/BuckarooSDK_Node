@@ -1,11 +1,11 @@
-import { PayablePaymentMethod } from '../../Services';
-import { IRefundRequest } from '../../Models';
-import { IPay, Pay } from './Models/Pay';
-import { ServiceCode } from '../../Utils';
+import { PayablePaymentMethod } from "../../Services";
+import { IRefundRequest } from "../../Models";
+import { IPay, Pay } from "./Models/Pay";
+import { ServiceCode } from "../../Utils";
 
 export default class Przelewy24 extends PayablePaymentMethod {
     public defaultServiceCode(): ServiceCode {
-        return 'przelewy24';
+        return "przelewy24";
     }
 
     pay(payload: IPay) {

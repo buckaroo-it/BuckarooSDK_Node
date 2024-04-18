@@ -1,6 +1,6 @@
-import { IPaymentRequest, ServiceParameter } from '../../../Models';
-import { IIn3Article, In3Article } from './Article';
-import { IIn3Recipient, In3Recipient } from './Recipient';
+import { IPaymentRequest, ServiceParameter } from "../../../Models";
+import { IIn3Article, In3Article } from "./Article";
+import { IIn3Recipient, In3Recipient } from "./Recipient";
 
 export interface IPay extends IPaymentRequest {
     invoiceDate?: string;
@@ -12,11 +12,11 @@ export interface IPay extends IPaymentRequest {
 
 export default class Pay extends ServiceParameter {
     set invoiceDate(value: string) {
-        this.set('invoiceDate', value);
+        this.set("invoiceDate", value);
     }
 
     set invoiceUrl(value: string) {
-        this.set('invoiceUrl', value);
+        this.set("invoiceUrl", value);
     }
 
     get billing() {
@@ -24,32 +24,32 @@ export default class Pay extends ServiceParameter {
     }
 
     set billing(billing: IIn3Recipient) {
-        this.set('billing', new In3Recipient(billing));
-        if (this.get('shipping') === undefined) {
+        this.set("billing", new In3Recipient(billing));
+        if (this.get("shipping") === undefined) {
             this.shipping = billing;
         }
     }
 
     set shipping(shipping: IIn3Recipient) {
-        this.set('shipping', new In3Recipient(shipping));
+        this.set("shipping", new In3Recipient(shipping));
     }
 
     set articles(articles: In3Article[]) {
         this.set(
-            'articles',
+            "articles",
             articles.map((article) => new In3Article(article))
         );
     }
 
     protected getGroups(): {} {
         return super.getGroups({
-            Billing: 'BillingCustomer',
-            Shipping: 'ShippingCustomer',
-            Articles: 'Article',
+            Billing: "BillingCustomer",
+            Shipping: "ShippingCustomer",
+            Articles: "Article",
         });
     }
 
     protected getCountable() {
-        return super.getCountable(['Articles']);
+        return super.getCountable(["Articles"]);
     }
 }

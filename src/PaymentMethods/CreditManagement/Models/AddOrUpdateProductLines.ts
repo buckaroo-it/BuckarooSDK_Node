@@ -1,5 +1,5 @@
-import { CreditArticle, ICreditArticle } from './Article';
-import { IRequest, ServiceParameter } from '../../../Models';
+import { CreditArticle, ICreditArticle } from "./Article";
+import { IRequest, ServiceParameter } from "../../../Models";
 
 export interface IAddOrUpdateProductLines extends IRequest {
     invoiceKey: string;
@@ -8,23 +8,23 @@ export interface IAddOrUpdateProductLines extends IRequest {
 
 export class AddOrUpdateProductLines extends ServiceParameter {
     set invoiceKey(value: string) {
-        this.set('invoiceKey', value);
+        this.set("invoiceKey", value);
     }
 
     set articles(value: ICreditArticle[]) {
         this.set(
-            'articles',
+            "articles",
             value.map((article) => new CreditArticle(article))
         );
     }
 
     protected getGroups() {
         return super.getGroups({
-            Articles: 'ProductLine',
+            Articles: "ProductLine",
         });
     }
 
     protected getCountable() {
-        return super.getCountable(['Articles']);
+        return super.getCountable(["Articles"]);
     }
 }

@@ -1,6 +1,6 @@
-import { Model } from './Model';
-import { DataFormatter } from '../Utils';
-import { IParameter } from './IParameters';
+import { Model } from "./Model";
+import { DataFormatter } from "../Utils";
+import { IParameter } from "./IParameters";
 
 export class ServiceParameter extends Model {
     toParameterList(): IParameter[] {
@@ -15,10 +15,7 @@ export class ServiceParameter extends Model {
         return countable;
     }
 
-    protected getAllPropertyDescriptors(
-        descriptors = {},
-        root: Model = ServiceParameter.prototype
-    ): { [p: string]: PropertyDescriptor } {
+    protected getAllPropertyDescriptors(descriptors = {}, root: Model = ServiceParameter.prototype): { [p: string]: PropertyDescriptor } {
         return super.getAllPropertyDescriptors(descriptors, root);
     }
 }

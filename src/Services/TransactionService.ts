@@ -1,6 +1,6 @@
-import { Request } from '../Request';
-import { HttpMethods, RequestTypes } from '../Constants';
-import { TransactionResponse } from '../Models';
+import { Request } from "../Request";
+import { HttpMethods, RequestTypes } from "../Constants";
+import { TransactionResponse } from "../Models";
 
 export default class TransactionService {
     private readonly _key: string;
@@ -10,12 +10,7 @@ export default class TransactionService {
     }
 
     status() {
-        return new Request(
-            `${RequestTypes.Transaction}/Status/${this._key}`,
-            HttpMethods.GET,
-            undefined,
-            TransactionResponse
-        ).request();
+        return new Request(`${RequestTypes.Transaction}/Status/${this._key}`, HttpMethods.GET, undefined, TransactionResponse).request();
     }
 
     refundInfo() {

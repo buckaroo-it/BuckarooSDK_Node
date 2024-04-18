@@ -1,6 +1,6 @@
-import { IBankAccount, IPerson, IRequest, ServiceParameter } from '../../../Models';
-import { Customer } from './Customer';
-import { BankAccount } from './BankAccount';
+import { IBankAccount, IPerson, IRequest, ServiceParameter } from "../../../Models";
+import { Customer } from "./Customer";
+import { BankAccount } from "./BankAccount";
 
 export interface IWallet extends IRequest {
     invoice?: string;
@@ -13,26 +13,26 @@ export interface IWallet extends IRequest {
 
 export class Wallet extends ServiceParameter {
     set walletId(value: string) {
-        this.set('walletId', value);
+        this.set("walletId", value);
     }
 
     set customer(value: Partial<IPerson>) {
-        this.set('customer', new Customer(value));
+        this.set("customer", new Customer(value));
     }
 
     set email(value: string) {
-        this.set('consumerEmail', value);
+        this.set("consumerEmail", value);
     }
 
     set status(value: string) {
-        this.set('status', value);
+        this.set("status", value);
     }
 
     set walletMutationGuid(value: string) {
-        this.set('walletMutationGuid', value);
+        this.set("walletMutationGuid", value);
     }
 
     set bankAccount(value: IBankAccount) {
-        this.set('bankAccount', new BankAccount(value));
+        this.set("bankAccount", new BankAccount(value));
     }
 }

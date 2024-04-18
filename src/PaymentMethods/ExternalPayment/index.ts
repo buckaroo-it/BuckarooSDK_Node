@@ -1,17 +1,17 @@
-import { PayablePaymentMethod } from '../../Services';
-import { ServiceCode } from '../../Utils';
-import { IRequest } from '../../Models';
+import { PayablePaymentMethod } from "../../Services";
+import { ServiceCode } from "../../Utils";
+import { IRequest } from "../../Models";
 
-export type ExternalPaymentChannels = 'BACKOFFICE' | 'POINT-OF-SALE';
+export type ExternalPaymentChannels = "BACKOFFICE" | "POINT-OF-SALE";
 
 export default class ExternalPayment extends PayablePaymentMethod {
-    private channel: ExternalPaymentChannels = 'BACKOFFICE';
+    private channel: ExternalPaymentChannels = "BACKOFFICE";
 
     public defaultServiceCode(): ServiceCode {
-        return 'externalpayment';
+        return "externalpayment";
     }
 
-    public setChannel(channel: 'BACKOFFICE' | 'POINT-OF-SALE') {
+    public setChannel(channel: "BACKOFFICE" | "POINT-OF-SALE") {
         this.channel = channel;
         return this;
     }

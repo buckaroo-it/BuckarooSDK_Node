@@ -1,10 +1,10 @@
-import buckarooClientTest from '../BuckarooClient.test';
-import { uniqid } from '../../src';
+import buckarooClientTest from "../BuckarooClient.test";
+import { uniqid } from "../../src";
 
-const method = buckarooClientTest.method('bancontactmrcash');
+const method = buckarooClientTest.method("bancontactmrcash");
 
-describe('BanContact methods', () => {
-    test('Pay Simple Payload', async () => {
+describe("BanContact methods", () => {
+    test("Pay Simple Payload", async () => {
         return method
             .pay({
                 amountDebit: 100,
@@ -15,19 +15,19 @@ describe('BanContact methods', () => {
                 expect(data.isWaitingOnUserInput()).toBeTruthy();
             });
     });
-    test('Refund', async () => {
+    test("Refund", async () => {
         return method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
             })
             .request()
             .then((data) => {
                 expect(data.httpResponse.status).toEqual(200);
             });
     });
-    test('Authenticate', async () => {
+    test("Authenticate", async () => {
         return method
             .authenticate({ invoice: uniqid(), amountDebit: 100 })
             .request()
@@ -35,11 +35,11 @@ describe('BanContact methods', () => {
                 expect(data.isWaitingOnUserInput()).toBeDefined();
             });
     });
-    test('PayOneClick', async () => {
+    test("PayOneClick", async () => {
         return method
             .payOneClick({
                 invoice: uniqid(),
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
                 amountDebit: 100,
             })
             .request()
@@ -47,35 +47,35 @@ describe('BanContact methods', () => {
                 expect(data.httpResponse.status).toEqual(200);
             });
     });
-    test('CompletePayment', async () => {
+    test("CompletePayment", async () => {
         return method
             .completePayment({
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-                encryptedCardData: 'XXXXXXXXXXXXXXXXXXXXXXXX',
+                originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+                encryptedCardData: "XXXXXXXXXXXXXXXXXXXXXXXX",
             })
             .request()
             .then((data) => {
                 expect(data.httpResponse.status).toEqual(200);
             });
     });
-    test('PayEncrypted', async () => {
+    test("PayEncrypted", async () => {
         return method
             .payEncrypted({
                 invoice: uniqid(),
                 amountDebit: 100,
-                encryptedCardData: 'XXXXXXXXXXXXXXXXXXXXXXXX',
+                encryptedCardData: "XXXXXXXXXXXXXXXXXXXXXXXX",
             })
             .request()
             .then((data) => {
                 expect(data.httpResponse.status).toEqual(200);
             });
     });
-    test('PayRecurring', async () => {
+    test("PayRecurring", async () => {
         return method
             .payRecurring({
                 invoice: uniqid(),
                 amountDebit: 100,
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
             })
             .request()
             .then((data) => {

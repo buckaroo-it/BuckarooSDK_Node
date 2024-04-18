@@ -1,4 +1,4 @@
-import { IPaymentRequest, ServiceParameter } from '../../../Models';
+import { IPaymentRequest, ServiceParameter } from "../../../Models";
 
 export interface IPay extends IPaymentRequest {
     bic?: string;
@@ -7,10 +7,10 @@ export interface IPay extends IPaymentRequest {
 
 export class Pay extends ServiceParameter {
     set bic(value: string) {
-        this.set('bic', value);
+        this.set("bic", value);
     }
 
     set costumerIBAN(value: string) {
-        this.set('costumerIBAN', value);
+        this.set("costumerIBAN", value);
     }
 }

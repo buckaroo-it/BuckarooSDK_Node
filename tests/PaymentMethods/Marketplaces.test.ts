@@ -1,35 +1,35 @@
-import buckarooClientTest from '../BuckarooClient.test';
-import { uniqid } from '../../src';
+import buckarooClientTest from "../BuckarooClient.test";
+import { uniqid } from "../../src";
 
-const marketplaces = buckarooClientTest.method('marketplaces');
-const ideal = buckarooClientTest.method('ideal');
+const marketplaces = buckarooClientTest.method("marketplaces");
+const ideal = buckarooClientTest.method("ideal");
 
-describe('Testing Marketplaces methods', () => {
-    test('Split', async () => {
+describe("Testing Marketplaces methods", () => {
+    test("Split", async () => {
         const marketplacesResponse = marketplaces.split({
-            description: 'INV0001',
+            description: "INV0001",
             daysUntilTransfer: 2,
             marketplace: {
                 amount: 10,
-                description: '',
+                description: "",
             },
             sellers: [
                 {
-                    accountId: 'XXXXXXXXXXXXXXXXXXXXXXXX',
+                    accountId: "XXXXXXXXXXXXXXXXXXXXXXXX",
                     amount: 50,
-                    description: '',
+                    description: "",
                 },
                 {
-                    accountId: 'XXXXXXXXXXXXXXXXXXXXXXXX',
+                    accountId: "XXXXXXXXXXXXXXXXXXXXXXXX",
                     amount: 45,
-                    description: '',
+                    description: "",
                 },
             ],
         });
         return ideal
             .combine(marketplacesResponse.data)
             .pay({
-                issuer: 'ABNANL2A',
+                issuer: "ABNANL2A",
                 amountDebit: 100,
             })
             .request()
@@ -37,19 +37,19 @@ describe('Testing Marketplaces methods', () => {
                 expect(response.isValidationFailure()).toBeTruthy();
             });
     });
-    test('transfer', async () => {
+    test("transfer", async () => {
         return marketplaces
             .transfer({
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
                 marketplace: {
                     amount: 10,
-                    description: 'INV0001 Commission Marketplace',
+                    description: "INV0001 Commission Marketplace",
                 },
                 sellers: [
                     {
-                        accountId: 'XXXXXXXXXXXXXXXXXXXXXXXX',
+                        accountId: "XXXXXXXXXXXXXXXXXXXXXXXX",
                         amount: 50,
-                        description: 'INV001 Payout Make-Up Products BV',
+                        description: "INV001 Payout Make-Up Products BV",
                     },
                 ],
             })
@@ -58,12 +58,12 @@ describe('Testing Marketplaces methods', () => {
                 expect(response.isValidationFailure()).toBeTruthy();
             });
     });
-    test('refundSupplementary', async () => {
+    test("refundSupplementary", async () => {
         const marketplacesResponse = marketplaces.refundSupplementary({
             sellers: [
                 {
-                    accountId: 'XXXXXXXXXXXXXXXXXXXXXXXX',
-                    description: 'INV001 Payout Make-Up Products BV',
+                    accountId: "XXXXXXXXXXXXXXXXXXXXXXXX",
+                    description: "INV001 Payout Make-Up Products BV",
                 },
             ],
         });
@@ -71,7 +71,7 @@ describe('Testing Marketplaces methods', () => {
             .combine(marketplacesResponse.data)
             .refund({
                 invoice: uniqid(),
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
                 amountCredit: 0.01,
             })
             .request()

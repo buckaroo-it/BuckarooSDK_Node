@@ -1,11 +1,11 @@
-import { PayablePaymentMethod } from '../../Services';
-import { IWallet, Wallet } from './Models/Wallet';
-import { IPaymentRequest, IRefundRequest, IRequest } from '../../Models';
-import { ServiceCode } from '../../Utils';
+import { PayablePaymentMethod } from "../../Services";
+import { IWallet, Wallet } from "./Models/Wallet";
+import { IPaymentRequest, IRefundRequest, IRequest } from "../../Models";
+import { ServiceCode } from "../../Utils";
 
 export default class BuckarooWallet extends PayablePaymentMethod {
     public defaultServiceCode(): ServiceCode {
-        return 'BuckarooWalletCollecting';
+        return "BuckarooWalletCollecting";
     }
 
     pay(payload: IWallet & IPaymentRequest) {
@@ -17,48 +17,48 @@ export default class BuckarooWallet extends PayablePaymentMethod {
     }
 
     create(payload: IWallet & IRequest) {
-        this._requiredFields = ['currency'];
+        this._requiredFields = ["currency"];
         this.setPayload(payload);
-        this.setServiceList('Create', new Wallet(payload));
+        this.setServiceList("Create", new Wallet(payload));
         return this.dataRequest();
     }
 
     deposit(payload: IWallet & IRefundRequest) {
         this.setPayload(payload);
-        this.setServiceList('Deposit', new Wallet(payload));
+        this.setServiceList("Deposit", new Wallet(payload));
         return super.transactionRequest();
     }
 
     reserve(payload: IWallet & IRefundRequest) {
         this.setPayload(payload);
-        this.setServiceList('Reserve', new Wallet(payload));
+        this.setServiceList("Reserve", new Wallet(payload));
         return super.transactionRequest();
     }
 
     withdrawal(payload: IWallet & IPaymentRequest) {
         this.setPayPayload(payload);
-        this.setServiceList('Withdrawal', new Wallet(payload));
+        this.setServiceList("Withdrawal", new Wallet(payload));
         return super.transactionRequest();
     }
 
     cancel(payload: IPaymentRequest & { walletMutationGuid: string }) {
         this.setPayPayload(payload);
-        this.setServiceList('Cancel', new Wallet(payload));
+        this.setServiceList("Cancel", new Wallet(payload));
         return super.transactionRequest();
     }
 
     update(payload: IWallet) {
-        this.setServiceList('Update', new Wallet(payload));
+        this.setServiceList("Update", new Wallet(payload));
         return this.dataRequest(payload);
     }
 
     getInfo(payload: IWallet) {
-        this.setServiceList('GetInfo', new Wallet(payload));
+        this.setServiceList("GetInfo", new Wallet(payload));
         return this.dataRequest(payload);
     }
 
     release(payload: IWallet & IRefundRequest) {
-        this.setServiceList('Release', new Wallet(payload));
+        this.setServiceList("Release", new Wallet(payload));
         return this.dataRequest(payload);
     }
 }

@@ -1,20 +1,20 @@
-import buckarooClient from '../buckarooClient';
+import buckarooClient from "../buckarooClient";
 
-const giropay = buckarooClient.method('giropay');
+const giropay = buckarooClient.method("giropay");
 
 //Pay
 giropay
     .pay({
         amountDebit: 10.1,
-        bic: 'XXXXXXXXX',
-        description: 'Giropay Payment',
+        bic: "XXXXXXXXX",
+        description: "Giropay Payment",
     })
     .request();
 //Refund
 giropay
     .refund({
-        originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        originalTransactionKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
         amountCredit: 10.1,
-        invoice: 'Giropay Refund',
+        invoice: "Giropay Refund",
     })
     .request();
