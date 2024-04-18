@@ -15,7 +15,7 @@
         "dev:library": "rollup --config rollup.config.js -w",
         "build:declarations": "tsc --project tsconfig-declarations.json",
         "test": "jest",
-        "prettier": "prettier --write ."
+        "prettier": "prettier --write . --config ./.prettierrc"
     },
     "keywords": [
         "buckaroo",
