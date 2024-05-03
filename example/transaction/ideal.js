@@ -16,5 +16,12 @@ ideal
     invoice: 'Ideal Refund'
 })
     .request();
+//PayFastCheckout
+ideal
+    .payFastCheckout({
+    currency: 'EUR',
+    amountDebit: 10.1,
+    invoice: 'Ideal Pay Fast Checkout',
+    })
 //Issuers
 ideal.issuers();

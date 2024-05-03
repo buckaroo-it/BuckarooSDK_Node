@@ -54,4 +54,16 @@ describe('testing Ideal methods', () => {
                 expect(data.isFailed()).toBeTruthy();
             });
     });
+    test('PayFastCheckout', async () => {
+        return ideal
+            .payFastCheckout({
+                invoice: uniqid(),
+                currency: 'EUR',
+                amountDebit: 0.01,
+            })
+            .request()
+            .then((data) => {
+                expect(data.isWaitingOnUserInput()).toBeTruthy();
+            });
+    });
 });
