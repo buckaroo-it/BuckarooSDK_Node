@@ -23,7 +23,7 @@ describe('WechatPay', () => {
             })
             .request()
             .then((response) => {
-                expect(response.httpResponse.status).toEqual(200)
+                expect(response.httpResponse.status).toEqual(200);
             });
     });
 });

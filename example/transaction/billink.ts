@@ -80,7 +80,8 @@ billink
         amountCredit: 10.1,
         invoice: 'Billink Refund',
     })
-    .request();billink
+    .request();
+billink;
 
 //Authorize
 billink

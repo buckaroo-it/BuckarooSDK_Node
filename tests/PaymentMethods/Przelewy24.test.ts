@@ -28,7 +28,7 @@ describe('Przelewy24', () => {
             })
             .request()
             .then((info) => {
-                expect(info.httpResponse.status).toEqual(200)
+                expect(info.httpResponse.status).toEqual(200);
             });
     });
 });

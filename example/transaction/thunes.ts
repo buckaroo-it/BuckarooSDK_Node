@@ -32,12 +32,10 @@ thunes
     })
     .request();
 //GetStatus
-thunes
-    .getStatus({
-            originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    })
+thunes.getStatus({
+    originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+});
 //Cancel
-thunes
-    .cancel({
-        originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    })
+thunes.cancel({
+    originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+});

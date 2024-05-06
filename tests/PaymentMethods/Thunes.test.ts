@@ -26,7 +26,7 @@ describe('Thunes methods', () => {
             })
             .request()
             .then((res) => {
-                expect(res.httpResponse.status).toEqual(200)
+                expect(res.httpResponse.status).toEqual(200);
             });
     });
     test('capture', async () => {
@@ -34,7 +34,7 @@ describe('Thunes methods', () => {
             .capture({ amountDebit: 100, originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' })
             .request()
             .then((res) => {
-                expect(res.httpResponse.status).toEqual(200)
+                expect(res.httpResponse.status).toEqual(200);
             });
     });
     test('getStatus', async () => {
@@ -42,7 +42,7 @@ describe('Thunes methods', () => {
             .getStatus({ originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' })
             .request()
             .then((res) => {
-                expect(res.httpResponse.status).toEqual(200)
+                expect(res.httpResponse.status).toEqual(200);
             });
     });
     test('cancel', async () => {
@@ -50,7 +50,7 @@ describe('Thunes methods', () => {
             .cancel({ originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' })
             .request()
             .then((res) => {
-                expect(res.httpResponse.status).toEqual(200)
+                expect(res.httpResponse.status).toEqual(200);
             });
     });
 });
