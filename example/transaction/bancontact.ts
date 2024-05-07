@@ -34,22 +34,19 @@ bancontact
     })
     .request();
 //CompletePayment
-bancontact
-    .completePayment({
-        originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-        encryptedCardData: 'XXXXXXXXXXXXXXXXXXXXXXXX',
-    })
+bancontact.completePayment({
+    originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    encryptedCardData: 'XXXXXXXXXXXXXXXXXXXXXXXX',
+});
 //PayEncrypted
-bancontact
-    .payEncrypted({
-        amountDebit: 100,
-        encryptedCardData: 'XXXXXXXXXXXXXXXXXXXXXXXX',
-        invoice: 'Bancontact PayEncrypred',
-    })
+bancontact.payEncrypted({
+    amountDebit: 100,
+    encryptedCardData: 'XXXXXXXXXXXXXXXXXXXXXXXX',
+    invoice: 'Bancontact PayEncrypred',
+});
 //PayRecurring
-bancontact
-    .payRecurring({
-        amountDebit: 100,
-        encryptedCardData: 'XXXXXXXXXXXXXXXXXXXXXXXX',
-        invoice: 'Bancontact PayRecurring',
-    })
+bancontact.payRecurring({
+    amountDebit: 100,
+    encryptedCardData: 'XXXXXXXXXXXXXXXXXXXXXXXX',
+    invoice: 'Bancontact PayRecurring',
+});
