@@ -23,7 +23,7 @@ describe('SEPA methods', () => {
             .pay(paymentPayload)
             .request()
             .then((info) => {
-                expect(info.httpResponse.status).toEqual(200)
+                expect(info.httpResponse.status).toEqual(200);
             });
     });
     test('Refund', async () => {
@@ -34,7 +34,7 @@ describe('SEPA methods', () => {
             })
             .request()
             .then((info) => {
-                expect(info.httpResponse.status).toEqual(200)
+                expect(info.httpResponse.status).toEqual(200);
             });
     });
     test('Authorize', async () => {
@@ -42,7 +42,7 @@ describe('SEPA methods', () => {
             .authorize(paymentPayload)
             .request()
             .then((info) => {
-                expect(info.httpResponse.status).toEqual(200)
+                expect(info.httpResponse.status).toEqual(200);
             });
     });
     test('PayRecurrent', async () => {
@@ -55,7 +55,7 @@ describe('SEPA methods', () => {
             })
             .request()
             .then((info) => {
-                expect(info.httpResponse.status).toEqual(200)
+                expect(info.httpResponse.status).toEqual(200);
             });
     });
     test('ExtraInfo', async () => {
@@ -82,7 +82,7 @@ describe('SEPA methods', () => {
             })
             .request()
             .then((info) => {
-                expect(info.httpResponse.status).toEqual(200)
+                expect(info.httpResponse.status).toEqual(200);
             });
     });
     test('Emandates', async () => {
@@ -95,7 +95,7 @@ describe('SEPA methods', () => {
             })
             .request()
             .then((info) => {
-                expect(info.httpResponse.status).toEqual(200)
+                expect(info.httpResponse.status).toEqual(200);
             });
     });
 });

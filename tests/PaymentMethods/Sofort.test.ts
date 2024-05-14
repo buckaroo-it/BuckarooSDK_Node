@@ -12,7 +12,7 @@ describe('Sofort', () => {
             })
             .request()
             .then((info) => {
-                expect(info.httpResponse.status).toEqual(200)
+                expect(info.httpResponse.status).toEqual(200);
             });
     });
     test('Refund', async () => {
@@ -24,7 +24,7 @@ describe('Sofort', () => {
             })
             .request()
             .then((info) => {
-                expect(info.httpResponse.status).toEqual(200)
+                expect(info.httpResponse.status).toEqual(200);
             });
     });
 
@@ -37,7 +37,7 @@ describe('Sofort', () => {
             })
             .request()
             .then((data) => {
-                expect(data.httpResponse.status).toEqual(200)
+                expect(data.httpResponse.status).toEqual(200);
             });
     });
 });
