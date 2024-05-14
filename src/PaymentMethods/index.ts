@@ -26,7 +26,6 @@ export { default as dankort } from './CreditCard';
 export { default as nexi } from './CreditCard';
 export { default as postepay } from './CreditCard';
 
-export { default as creditclick } from './CreditClick';
 export { default as CreditManagement3 } from './CreditManagement';
 export { default as emandate } from './Emandates';
 export { default as eps } from './EPS';
