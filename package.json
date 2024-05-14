@@ -1,6 +1,6 @@
 {
     "name": "@buckaroo/buckaroo_sdk",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "Buckaroo payment SDK",
     "main": "dist/buckaroo.cjs.js",
     "module": "dist/buckaroo.esm.js",
@@ -15,7 +15,7 @@
         "dev:library": "rollup --config rollup.config.js -w",
         "build:declarations": "tsc --project tsconfig-declarations.json",
         "test": "jest",
-        "prettier": "prettier --write ."
+        "prettier": "prettier --write . --config ./.prettierrc"
     },
     "keywords": [
         "buckaroo",
@@ -25,7 +25,7 @@
         "payments",
         "api"
     ],
-    "author": "Rinor Haziri",
+    "author": "Buckaroo Devs",
     "license": "ISC",
     "devDependencies": {
         "@babel/plugin-proposal-class-properties": "^7.18.6",

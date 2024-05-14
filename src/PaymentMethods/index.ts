@@ -7,6 +7,7 @@ export { default as bancontactmrcash } from './Bancontact';
 export { default as transfer } from './BankTransfer';
 export { default as belfius } from './Belfius';
 export { default as billink } from './Billink';
+export { default as blik } from './Blik';
 export { default as buckaroovoucher } from './BuckarooVoucher';
 export { default as BuckarooWalletCollecting } from './BuckarooWallet';
 export { default as CreditCard } from './CreditCard';

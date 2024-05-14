@@ -24,7 +24,7 @@ describe('PayPerEmail methods', () => {
             })
             .request()
             .then((res) => {
-                expect(res.httpResponse.status).toEqual(200)
+                expect(res.httpResponse.status).toEqual(200);
             });
     });
 });

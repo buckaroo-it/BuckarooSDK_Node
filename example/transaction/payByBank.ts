@@ -9,7 +9,6 @@ paybybank
         issuer: 'ABNANL2A',
         description: 'PayByBank Payment',
         countryCode: 'NL',
-
     })
     .request();
 //Refund
