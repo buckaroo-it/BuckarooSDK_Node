@@ -35,4 +35,11 @@ export default class Ideal extends PayablePaymentMethod {
     instantRefund(data: IRefundRequest) {
         return super.refund(data);
     }
+
+    payFastCheckout(data: IPay) {
+        this.setPayPayload(data);
+        this._payload.order = '';
+        this.setServiceList('PayFastCheckout', new Pay(data));
+        return this.transactionRequest();
+    }
 }
