@@ -11,7 +11,7 @@ describe('Paypal', () => {
             })
             .request()
             .then((info) => {
-                expect(info.httpResponse.status).toEqual(200)
+                expect(info.httpResponse.status).toEqual(200);
             });
     });
     test('Refund', async () => {
@@ -23,7 +23,7 @@ describe('Paypal', () => {
             })
             .request()
             .then((info) => {
-                expect(info.httpResponse.status).toEqual(200)
+                expect(info.httpResponse.status).toEqual(200);
             });
     });
     test('ExtraInfo', async () => {
@@ -46,7 +46,7 @@ describe('Paypal', () => {
             })
             .request()
             .then((info) => {
-                expect(info.httpResponse.status).toEqual(200)
+                expect(info.httpResponse.status).toEqual(200);
             });
     });
 });

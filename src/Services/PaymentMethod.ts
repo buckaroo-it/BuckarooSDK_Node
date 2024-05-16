@@ -38,6 +38,11 @@ export default abstract class PaymentMethod {
         this._payload.initialize(payload);
     }
 
+    setServiceVersion(value: number): this {
+        this._serviceVersion = value;
+        return this;
+    }
+
     getPayload(): Record<string, any> {
         return this._payload.getData();
     }
