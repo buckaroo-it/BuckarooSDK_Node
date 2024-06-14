@@ -56,6 +56,11 @@ export { default as yourgift } from './GiftCard';
 export { default as vvvgiftcard } from './GiftCard';
 export { default as parfumcadeaukaart } from './GiftCard';
 
+// Custom Giftcards
+export { default as customgiftcard } from './GiftCard';
+export { default as customgiftcard2 } from './GiftCard';
+export { default as customgiftcard3 } from './GiftCard';
+
 export { default as giropay } from './Giropay';
 export { default as idealqr } from './IdealQR';
 export { default as idin } from './Idin';
