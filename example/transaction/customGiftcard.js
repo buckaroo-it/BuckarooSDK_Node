@@ -1,4 +1,5 @@
 import buckarooClient from '../buckarooClient';
+import { uniqid } from '../../src';
 
 const giftcard = buckarooClient.method('giftcard');
 
@@ -15,7 +16,7 @@ giftcard
 //Refund
 giftcard
     .refund({
-        originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        originalTransactionKey: uniqid(),
         amountCredit: 10,
         invoice: 'Custom Giftcard Refund',
         name: 'customgiftcard3',
