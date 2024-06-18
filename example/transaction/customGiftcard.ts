@@ -16,7 +16,7 @@ giftcard
 giftcard
     .refund({
         originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-        amountCredit: 10.1,
+        amountCredit: 10,
         invoice: 'Custom Giftcard Refund',
         name: 'customgiftcard3',
         email: 'test@buckaroo.nl',
