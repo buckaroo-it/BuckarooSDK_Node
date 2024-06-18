@@ -6,9 +6,10 @@ const giftcard = buckarooClient.method('giftcard');
 giftcard
     .pay({
         amountDebit: 10,
-        description: 'Giftcard Payment',
-        intersolveCardnumber: '0000000000000000001',
-        intersolvePIN: '1000',
+        description: 'Custom Giftcard Payment',
+        name: 'customgiftcard3',
+        cardNumber: '0000000000000000001',
+        pin: '1000',
     })
     .request();
 //Refund
@@ -16,7 +17,8 @@ giftcard
     .refund({
         originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         amountCredit: 10.1,
-        invoice: 'Giftcard Refund',
+        invoice: 'Custom Giftcard Refund',
+        name: 'customgiftcard3',
         email: 'test@buckaroo.nl',
         lastName: 'Acceptatie',
     })
