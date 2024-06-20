@@ -9,10 +9,16 @@ export default class GiftCard extends PayablePaymentMethod {
     }
 
     pay(payload: IPay) {
+        if (payload.name) {
+            this.setServiceCode(payload.name);
+        }
         return super.pay(payload, new Pay(payload));
     }
 
     refund(payload: IRefund) {
+        if (payload.name) {
+            this.setServiceCode(payload.name);
+        }
         return super.refund(payload, new Refund(payload));
     }
 }
