@@ -3,7 +3,7 @@ import { IParameter, IPaymentRequest, IRefundRequest, IRequest, ServiceParameter
 import { uniqid } from '../Utils';
 
 export default abstract class PayablePaymentMethod extends PaymentMethod {
-    protected _requiredFields: Array<keyof IRequest> = ['currency', 'returnURL', 'returnURLCancel', 'pushURL'];
+    protected _requiredFields: Array<keyof IRequest> = ['currency'];
 
     pay(payload: IPaymentRequest, serviceParameters?: ServiceParameter | IParameter[]) {
         this.setPayPayload(payload);
