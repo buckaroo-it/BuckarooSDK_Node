@@ -7,6 +7,8 @@ export class Credentials implements ICredentials {
     websiteKey: string;
 
     constructor(secretKey: string, websiteKey: string) {
+        if (!secretKey || !websiteKey) throw new Error('Missing required credentials.');
+
         this.secretKey = secretKey;
         this.websiteKey = websiteKey;
     }
