@@ -7,7 +7,7 @@ import { ServiceCode } from '../Utils';
 export default abstract class PaymentMethod {
     protected _serviceCode?: ServiceCode;
     protected _serviceVersion: number = 0;
-    protected _payload: TransactionData = new TransactionData();
+    protected _payload: TransactionData = new TransactionData(Buckaroo.Client.config as IRequest);
     protected _requiredFields: Array<keyof IRequest> = [];
 
     constructor(serviceCode?: ServiceCode) {
