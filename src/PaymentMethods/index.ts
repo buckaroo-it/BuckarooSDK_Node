@@ -61,7 +61,6 @@ export { default as customgiftcard } from './GiftCard';
 export { default as customgiftcard2 } from './GiftCard';
 export { default as customgiftcard3 } from './GiftCard';
 
-export { default as giropay } from './Giropay';
 export { default as idealqr } from './IdealQR';
 export { default as idin } from './Idin';
 export { default as capayable } from './In3Old';
