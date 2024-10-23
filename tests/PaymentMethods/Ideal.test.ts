@@ -12,6 +12,7 @@ describe('testing Ideal methods', () => {
         return ideal
             .pay({
                 amountDebit: 100,
+                shippingCosts: 0.01,
                 issuer: 'ABNANL2A',
                 continueOnIncomplete: false,
                 additionalParameters: {
@@ -60,6 +61,7 @@ describe('testing Ideal methods', () => {
                 invoice: uniqid(),
                 currency: 'EUR',
                 amountDebit: 0.01,
+                shippingCosts: 0.01,
             })
             .request()
             .then((data) => {
