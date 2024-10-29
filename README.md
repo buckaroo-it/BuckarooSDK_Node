@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/105488705/233078855-473c45d4-34a6-492a-a5af-05752c803f6b.png" width="200px" position="center">
+  <img src="https://github.com/user-attachments/assets/1db61619-f6ec-4f8e-bb4e-f09fe4efc0e5" width="200px" position="center">
 </p>
 
 # Node SDK
