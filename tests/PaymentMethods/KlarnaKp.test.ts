@@ -1,5 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { Gender } from '../../src';
+import { Gender, getIPAddress } from '../../src';
 
 const klarnaKp = buckarooClientTest.method('klarnakp');
 
@@ -18,6 +18,7 @@ describe('KlarnaKp', () => {
     test('Reserve', async () => {
         return klarnaKp
             .reserve({
+                clientIP: getIPAddress(),
                 gender: Gender.MALE,
                 operatingCountry: 'NL',
                 pno: '01011990',
