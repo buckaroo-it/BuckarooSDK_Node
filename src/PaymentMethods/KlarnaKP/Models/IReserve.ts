@@ -1,13 +1,13 @@
 import { Gender } from '../../../Constants';
-import { IArticle, ICustomer, IRequest, ServiceParameter } from '../../../Models';
+import { ICustomer, IRequest, ServiceParameter } from '../../../Models';
 import { Customer } from './Customer';
-import Article from './Article';
+import Article, { IKlarnaKpArticle } from './Article';
 
 export interface IReserve extends IRequest {
     gender?: Gender.MALE | Gender.FEMALE;
     billing?: ICustomer;
     shipping?: ICustomer;
-    articles?: Partial<IArticle>[];
+    articles?: Partial<IKlarnaKpArticle>[];
     operatingCountry?: string;
     reservationNumber?: string;
     shippingSameAsBilling?: boolean;
@@ -39,7 +39,7 @@ export class Reserve extends ServiceParameter implements IReserve {
         this.set('shipping', new Customer({ prefix: 'shipping', ...value }));
     }
 
-    set articles(value: IArticle[]) {
+    set articles(value: IKlarnaKpArticle[]) {
         this.set(
             'articles',
             value.map((article) => new Article(article))

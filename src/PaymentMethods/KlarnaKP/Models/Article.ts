@@ -1,4 +1,9 @@
-import { Article as ArticleClass } from '../../../Models';
+import { Article as ArticleClass, IArticle } from '../../../Models';
+
+export interface IKlarnaKpArticle extends IArticle {
+    imageUrl?: string;
+    productUrl?: string;
+}
 
 export default class Article extends ArticleClass {
     get description(): string {
@@ -23,6 +28,14 @@ export default class Article extends ArticleClass {
 
     set identifier(identifier: string) {
         this.set('number', identifier);
+    }
+
+    set imageUrl(imageUrl: string) {
+        this.set('imageUrl', imageUrl);
+    }
+
+    set productUrl(productUrl: string) {
+        this.set('productUrl', productUrl);
     }
 
     set(name: string, value: any, hidden: boolean = false): this {
