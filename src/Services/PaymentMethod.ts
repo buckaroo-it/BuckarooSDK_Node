@@ -1,17 +1,28 @@
 import { RequestTypes } from '../Constants';
 import { IParameter, IRequest, IService, ServiceList, ServiceParameter } from '../Models';
-import Buckaroo, { PaymentMethodInstance } from '../index';
+import Buckaroo, { DataRequestData, PaymentMethodInstance } from '../index';
 import { Request, TransactionData } from '../Request';
 import { ServiceCode } from '../Utils';
 
 export default abstract class PaymentMethod {
     protected _serviceCode?: ServiceCode;
     protected _serviceVersion: number = 0;
-    protected _payload: TransactionData = new TransactionData(Buckaroo.Client.config as IRequest);
+    protected _payloadClass: typeof TransactionData = TransactionData;
+    protected _payload: TransactionData;
     protected _requiredFields: Array<keyof IRequest> = [];
 
     constructor(serviceCode?: ServiceCode) {
+        this._payload = this.createDefaultPayload();
         this.setServiceCode((serviceCode ?? this._serviceCode) as ServiceCode);
+    }
+
+    set payloadClass(value: typeof TransactionData) {
+        this._payloadClass = value;
+        this._payload = this.createDefaultPayload();
+    }
+
+    protected createDefaultPayload() {
+        return new this._payloadClass((this._payload ?? Buckaroo.Client.config) as IRequest);
     }
 
     get serviceVersion() {
@@ -112,6 +123,7 @@ export default abstract class PaymentMethod {
     }
 
     protected dataRequest(payload?: IRequest) {
+        this.payloadClass = DataRequestData;
         this.setPayload(payload);
         return Request.DataRequest(this._payload);
     }
