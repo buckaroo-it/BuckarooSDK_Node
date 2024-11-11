@@ -1,5 +1,5 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { Gender } from '../../src';
+import { Gender, getIPAddress, uniqid } from '../../src';
 
 const klarnaKp = buckarooClientTest.method('klarnakp');
 
@@ -18,6 +18,8 @@ describe('KlarnaKp', () => {
     test('Reserve', async () => {
         return klarnaKp
             .reserve({
+                clientIP: getIPAddress(),
+                invoice: uniqid(),
                 gender: Gender.MALE,
                 operatingCountry: 'NL',
                 pno: '01011990',
@@ -44,6 +46,8 @@ describe('KlarnaKp', () => {
                         vatPercentage: 21,
                         quantity: 2,
                         price: 20.1,
+                        imageUrl: 'https://example.com/image',
+                        productUrl: 'https://example.com/product',
                     },
                     {
                         identifier: 'Articlenumber2',
@@ -51,6 +55,8 @@ describe('KlarnaKp', () => {
                         vatPercentage: 21,
                         quantity: 1,
                         price: 10.1,
+                        imageUrl: 'https://example.com/image',
+                        productUrl: 'https://example.com/product',
                     },
                 ],
             })

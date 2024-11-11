@@ -31,7 +31,7 @@ export default class Headers {
     ): this {
         this._headers.Software = JSON.stringify({
             PlatformName: value.platformName || 'Node SDK',
-            PlatformVersion: value.platformVersion || '1.0',
+            PlatformVersion: value.platformVersion || '1.4.0',
             ModuleSupplier: value.moduleSupplier || 'Buckaroo',
             ModuleName: value.moduleName || 'BuckarooPayments',
             ModuleVersion: value.moduleVersion || '1.0',
@@ -62,7 +62,7 @@ export default class Headers {
             Channel: 'Web',
             Software: JSON.stringify({
                 PlatformName: 'Node SDK',
-                PlatformVersion: '1.0',
+                PlatformVersion: '1.4.0',
                 ModuleSupplier: 'Buckaroo',
                 ModuleName: 'BuckarooPayments',
                 ModuleVersion: '1.0',

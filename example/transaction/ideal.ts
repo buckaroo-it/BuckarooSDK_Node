@@ -6,6 +6,7 @@ const ideal = buckarooClient.method('ideal');
 ideal
     .pay({
         amountDebit: 10.1,
+        shippingCosts: 0.01,
         issuer: 'ABNANL2A',
         description: 'Ideal Payment',
     })
@@ -22,6 +23,7 @@ ideal
 ideal.payFastCheckout({
     currency: 'EUR',
     amountDebit: 10.1,
+    shippingCosts: 0.01,
     invoice: 'Ideal Pay Fast Checkout',
 });
 

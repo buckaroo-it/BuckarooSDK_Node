@@ -61,7 +61,6 @@ export { default as customgiftcard } from './GiftCard';
 export { default as customgiftcard2 } from './GiftCard';
 export { default as customgiftcard3 } from './GiftCard';
 
-export { default as giropay } from './Giropay';
 export { default as idealqr } from './IdealQR';
 export { default as idin } from './Idin';
 export { default as capayable } from './In3Old';
@@ -80,7 +79,6 @@ export { default as pim } from './PiM';
 export { default as pospayment } from './PointOfSale';
 export { default as przelewy24 } from './Przelewy24';
 export { default as sepadirectdebit } from './SEPA';
-export { default as sofortueberweisung } from './Sofort';
 export { default as subscriptions } from './Subscriptions';
 export { default as surepay } from './Surepay';
 export { default as thunes } from './Thunes';
