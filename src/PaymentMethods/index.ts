@@ -79,7 +79,6 @@ export { default as pim } from './PiM';
 export { default as pospayment } from './PointOfSale';
 export { default as przelewy24 } from './Przelewy24';
 export { default as sepadirectdebit } from './SEPA';
-export { default as sofortueberweisung } from './Sofort';
 export { default as subscriptions } from './Subscriptions';
 export { default as surepay } from './Surepay';
 export { default as thunes } from './Thunes';
