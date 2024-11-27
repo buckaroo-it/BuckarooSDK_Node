@@ -17,6 +17,16 @@ export class Pay extends ServiceParameter {
             articles.map((article) => new Article(article))
         );
     }
+
+    protected getGroups() {
+        return super.getGroups({
+            Articles: 'Article',
+        });
+    }
+
+    protected getCountable() {
+        return super.getCountable(['Articles']);
+    }
 }
 
 export class Customer extends Person {
