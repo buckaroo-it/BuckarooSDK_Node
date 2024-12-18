@@ -11,6 +11,7 @@ export declare interface IConfig {
     returnURLReject?: string;
     activePaymentMethods?: ServiceCode[];
     disabledPaymentMethods?: ServiceCode[];
+    timeout?: number;
 }
 
 export declare interface ICredentials {
