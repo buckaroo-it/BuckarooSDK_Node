@@ -14,7 +14,7 @@ export default class Buckaroo {
     constructor(credentials: ICredentials, config?: IConfig, agent?: Agent) {
         this._credentials = new Credentials(credentials.secretKey, credentials.websiteKey);
         this._config = { ...(config ?? { mode: 'TEST', currency: 'EUR' }) };
-        this._httpClient = new HttpsClient(agent);
+        this._httpClient = new HttpsClient(agent, this._config.timeout);
     }
 
     static get Client(): Buckaroo {

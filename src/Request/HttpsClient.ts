@@ -8,8 +8,8 @@ export default class HttpsClient {
     protected _options: AxiosRequestConfig = {};
     private _axiosInstance: AxiosInstance;
 
-    constructor(agent?: Agent) {
-        this._options.timeout = 10000;
+    constructor(agent?: Agent, timeout: number = 10000) {
+        this._options.timeout = timeout;
         this._options.maxRedirects = 10;
         this._options.withCredentials = true;
 
