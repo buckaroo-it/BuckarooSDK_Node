@@ -1,4 +1,3 @@
-import { getIPAddress } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
 
 const method = buckarooClientTest.method('ClickToPay');
