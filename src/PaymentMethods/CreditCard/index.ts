@@ -3,6 +3,7 @@ import { IPaymentRequest, IRefundRequest, IRequest } from '../../Models';
 import { CardData, ICardData } from './Models/CardData';
 import { ISecurityCode, SecurityCode } from './Models/SecurityCode';
 import { ServiceCode } from '../../Utils';
+import { ISessionData, SessionData } from './Models/SessionData';
 
 export default class CreditCard extends PayablePaymentMethod {
     public defaultServiceCode(): ServiceCode {
@@ -59,6 +60,18 @@ export default class CreditCard extends PayablePaymentMethod {
     payRemainderEncrypted(payload: ICardData) {
         this.setPayPayload(payload);
         this.setServiceList('PayRemainderEncrypted', new CardData(payload));
+        return super.transactionRequest();
+    }
+
+    authorizeWithToken(payload: ISessionData) {
+        this.setPayPayload(payload);
+        this.setServiceList('AuthorizeWithToken', new SessionData(payload));
+        return super.transactionRequest();
+    }
+
+    payWithToken(payload: ISessionData) {
+        this.setPayPayload(payload);
+        this.setServiceList('PayWithToken', new SessionData(payload));
         return super.transactionRequest();
     }
 }
