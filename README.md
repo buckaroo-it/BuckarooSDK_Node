@@ -45,7 +45,7 @@ npm install @buckaroo/buckaroo_sdk
 
 ### Example
 
-Initiate the buckaroo client with your website key and secret key. The keys can be retrieved from your [Buckaroo account](https://plaza.buckaroo.nl/Login).
+Initiate the buckaroo client with your store key and secret key. The keys can be retrieved from your [Buckaroo account](https://plaza.buckaroo.nl/Configuration/Merchant/ApiKeys).
 
 ```javascript
 import Buckaroo from '@buckaroo/buckaroo_sdk';
@@ -124,7 +124,7 @@ If you want to contribute as well, then please follow our [Contribution Guidelin
 
 ### Additional information
 
--   **Support:** https://support.buckaroo.eu/contact
+-   **Support:** https://docs.buckaroo.io/docs/contact-us
 -   **Contact:** [support@buckaroo.nl](mailto:support@buckaroo.nl) or [+31 (0)30 711 50 50](tel:+310307115050)
 
 ## License

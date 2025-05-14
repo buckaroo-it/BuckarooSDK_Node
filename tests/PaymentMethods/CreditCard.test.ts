@@ -120,4 +120,30 @@ describe('testing methods', () => {
                 expect(data.httpResponse.status).toEqual(200);
             });
     });
+    test('AuthorizeWithToken', async () => {
+        return method
+            .authorizeWithToken({
+                invoice: uniqid(),
+                amountDebit: 10,
+                name: 'Visa',
+                sessionId: 'hf_457vWCGGdZcWJzBY',
+            })
+            .request()
+            .then((data) => {
+                expect(data.httpResponse.status).toEqual(200);
+            });
+    });
+    test('PayWithToken', async () => {
+        return method
+            .payWithToken({
+                invoice: uniqid(),
+                amountDebit: 10,
+                name: 'Visa',
+                sessionId: 'hf_457vWCGGdZcWJzBY',
+            })
+            .request()
+            .then((data) => {
+                expect(data.httpResponse.status).toEqual(200);
+            });
+    });
 });
