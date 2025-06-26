@@ -1,118 +1,55 @@
 import { IInvoice } from '../../src/PaymentMethods/CreditManagement/Models/Invoice';
-import { CreditManagementInstallmentInterval, Gender, uniqid } from '../../src';
+import { Gender, PaymentMethodInstance, uniqid } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
+import { getServiceParameter, formatDate } from '../Payloads';
 
-const creditManagement = buckarooClientTest.method('CreditManagement3');
+let method: PaymentMethodInstance<'CreditManagement3'>;
+let invoiceKey: string;
+let invoice: string;
 
+beforeEach(() => {
+    method = buckarooClientTest.method('CreditManagement3');
+});
 describe('Testing Credit Management', () => {
     test('CreateInvoice', async () => {
-        return creditManagement
-            .createInvoice(creditManagementTestInvoice())
-            .request()
-            .then((data) => {
-                expect(data.isValidationFailure()).toBeTruthy();
-            });
-    });
-    test('CreateInvoice With Articles', async () => {
-        return creditManagement
-            .createInvoice(
-                creditManagementTestInvoice({
-                    invoice: uniqid(),
-                    description: 'buckaroo_schema_test_PDF',
-                    invoiceAmount: 217.8,
-                    invoiceDate: '2022-01-01',
-                    dueDate: '2024-01-01',
-                    schemeKey: 'XXXXXXX',
-                    poNumber: 'XX-XXXXX',
-                    debtor: {
-                        code: 'XXXXXXXX',
-                    },
-                    articles: [
-                        {
-                            productGroupName: 'Toys',
-                            productGroupOrderIndex: 1,
-                            productOrderIndex: 1,
-                            type: 'Regular',
-                            identifier: 'ART12',
-                            description: 'Blue Toy Car',
-                            quantity: 3,
-                            unitOfMeasurement: 'piece(s)',
-                            price: 10,
-                            discountPercentage: 20,
-                            totalDiscount: 6,
-                            vatPercentage: 21,
-                            totalVat: 0.6,
-                            totalAmountExVat: 8.4,
-                            totalAmount: 123,
-                        },
-                        {
-                            productGroupName: 'Toys',
-                            productGroupOrderIndex: 1,
-                            productOrderIndex: 2,
-                            type: 'Regular',
-                            identifier: 'ART12',
-                            description: 'Blue Toy Car',
-                            quantity: 3,
-                            unitOfMeasurement: 'piece(s)',
-                            price: 10,
-                            discountPercentage: 20,
-                            totalDiscount: 6,
-                            vatPercentage: 21,
-                            totalVat: 0.6,
-                            totalAmountExVat: 8.4,
-                            totalAmount: 123,
-                        },
-                    ],
-                })
-            )
-            .request()
-            .then((data) => {
-                expect(data.isValidationFailure()).toBeTruthy();
-            });
+        const response = await method.createInvoice(creditManagementTestInvoice()).request();
+        invoiceKey = getServiceParameter(response, 'InvoiceKey');
+
+        expect(response.isSuccess()).toBeTruthy();
     });
     test('Pause Invoice', async () => {
-        return creditManagement
-            .pauseInvoice({ invoice: uniqid() })
-            .request()
-            .then((data) => {
-                expect(data.isValidationFailure()).toBeTruthy();
-            });
+        const response = await method.pauseInvoice({ invoice: invoice }).request();
+
+        expect(response.isSuccess()).toBeTruthy();
     });
     test('UnPause Invoice', async () => {
-        return creditManagement
-            .unpauseInvoice({ invoice: uniqid() })
-            .request()
-            .then((data) => {
-                expect(data.isValidationFailure()).toBeTruthy();
-            });
+        const response = await method.unpauseInvoice({ invoice: invoice }).request();
+        expect(response.isSuccess()).toBeTruthy();
     });
     test('Invoice Info', async () => {
-        return creditManagement
+        const response = await method
             .invoiceInfo({
-                invoice: uniqid(),
-                invoices: [{ invoiceNumber: 'INV002' }, { invoiceNumber: 'INV003' }],
+                invoice: invoice,
             })
-            .request()
-            .then((data) => {
-                expect(data.isFailed()).toBeTruthy();
-            });
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
     });
     test('Debtor Info', async () => {
-        return creditManagement
+        const response = await method
             .debtorInfo({
                 debtor: {
-                    code: 'XXXXXXXX',
+                    code: 'johnsmith4',
                 },
             })
-            .request()
-            .then((data) => {
-                expect(data.isFailed()).toBeTruthy();
-            });
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
     });
     test('AddOrUpdateProductLines', async () => {
-        return creditManagement
+        expect(invoiceKey).toBeDefined();
+
+        const response = await method
             .addOrUpdateProductLines({
-                invoiceKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                invoiceKey: invoiceKey,
                 articles: [
                     {
                         type: 'Regular',
@@ -136,112 +73,120 @@ describe('Testing Credit Management', () => {
                     },
                 ],
             })
-            .request()
-            .then((data) => {
-                expect(data.isValidationFailure()).toBeTruthy();
-            });
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
     });
-    test('resumeDebtorFile', async () => {
-        return creditManagement
-            .resumeDebtorFile({ debtorFileGuid: 'xxx' })
-            .request()
-            .then((data) => {
-                expect(data.isValidationFailure()).toBeTruthy();
-            });
-    });
-    test('pauseDebtorFile', async () => {
-        return creditManagement
-            .pauseDebtorFile({ debtorFileGuid: 'xxx' })
-            .request()
-            .then((data) => {
-                expect(data.isValidationFailure()).toBeTruthy();
-            });
-    });
+    // No DebtorFile available for testing.
+    // test('resumeDebtorFile', async () => {
+    //     return method
+    //         .resumeDebtorFile({ debtorFileGuid: 'xxx' })
+    //         .request()
+    //         .then((data) => {
+    //             expect(data.isValidationFailure()).toBeTruthy();
+    //         });
+    // });
+    // test('pauseDebtorFile', async () => {
+    //     return method
+    //         .pauseDebtorFile({ debtorFileGuid: 'xxx' })
+    //         .request()
+    //         .then((data) => {
+    //             expect(data.isValidationFailure()).toBeTruthy();
+    //         });
+    // });
     test('addOrUpdateDebtor', async () => {
-        return creditManagement
+        const response = await method
             .addOrUpdateDebtor({
                 debtor: {
-                    code: 'XXXXXXXX',
+                    code: 'johnsmith4',
                 },
                 person: {
                     culture: 'nl-NL',
                     lastName: 'Acceptatie',
                 },
             })
-            .request()
-            .then((data) => {
-                expect(data.isSuccess()).toBeTruthy();
-            });
+            .request();
+
+        expect(response.isSuccess()).toBeTruthy();
     });
     test('CreateCombinedInvoice', async () => {
-        const combinedInvoice = creditManagement.createCombinedInvoice(creditManagementTestInvoice());
-        return buckarooClientTest
+        const combinedInvoice = method.createCombinedInvoice(creditManagementTestInvoice());
+        const response = await buckarooClientTest
             .method('sepadirectdebit')
             .combine(combinedInvoice.data)
             .pay({
-                iban: 'NLXXTESTXXXXXXXXXX',
-                bic: 'XXXXXXXXX',
-                mandateReference: 'XXXXXXXXXXXXXXX',
+                iban: 'NL13TEST0123456789',
+                bic: 'TESTNL2A',
+                mandateReference: '1DCtestreference',
                 mandateDate: '2020-01-01',
-                collectDate: '2020-07-03',
+                collectDate: '2030-07-03',
                 amountDebit: 100,
                 customer: {
                     name: 'Test Acceptatie',
                 },
                 invoice: uniqid('TestInvoice'),
             })
-            .request()
-            .then((data) => {
-                expect(data.isValidationFailure()).toBeTruthy();
-            });
+            .request();
+
+        expect(response.isPendingProcessing()).toBeTruthy();
     });
-    test('CreatePaymentPlan', async () => {
-        return creditManagement
-            .createPaymentPlan({
-                description: 'Payment in two intstallments',
-                includedInvoiceKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-                dossierNumber: 'XXXXXXXXXXXXXXXXXXXXXX',
-                installmentCount: 2,
-                initialAmount: 100,
-                startDate: '2030-01-01',
-                interval: CreditManagementInstallmentInterval.MONTH,
-                paymentPlanCostAmount: 3.5,
-                paymentPlanCostAmountVat: 1.2,
-                recipientemail: 'test@buckaroo.nl',
-            })
-            .request()
-            .then((data) => {
-                expect(data.isValidationFailure()).toBeTruthy();
-            });
-    });
-    test('pauseInvoice', async () => {
-        return creditManagement
-            .pauseInvoice({
+
+    test('CreateCreditNote', async () => {
+        const response = await method
+            .createCreditNote({
                 invoice: uniqid(),
+                originalInvoiceNumber: '6383cbc0498a24',
+                invoiceDate: formatDate(new Date()),
+                invoiceAmount: '0.01',
+                invoiceAmountVAT: '1',
+                sendCreditNoteMessage: 'Email',
             })
-            .request()
-            .then((data) => {
-                expect(data).toBeDefined();
-            });
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
     });
+
+    // Payment plans are not enabled for this Buckaroo Credit Management subscription
+    // test('CreatePaymentPlan', async () => {
+    //     let oneMonthFromNow = new Date();
+    //     oneMonthFromNow.setMonth(oneMonthFromNow.getMonth() + 1);
+    //     const response = await method
+    //         .createPaymentPlan({
+    //             description: 'Payment in two intstallments',
+    //             includedInvoiceKey: 'EFD023706C6D4F1CAC8E461FB269E583',
+    //             dossierNumber: 'PaymentplanJohnsmith4',
+    //             installmentCount: 2,
+    //             initialAmount: 5.0,
+    //             startDate: formatDate(oneMonthFromNow),
+    //             interval: CreditManagementInstallmentInterval.DAY,
+    //             paymentPlanCostAmount: 0.0,
+    //             paymentPlanCostAmountVat: 0.0,
+    //             recipientEmail: 'test@buckaroo.nl',
+    //         })
+    //         .request();
+    //     expect(response.isSuccess()).toBeTruthy();
+    // });
+    //todo: terminatePaymentPlan
 });
 export const creditManagementTestInvoice = (append: object = {}): IInvoice => {
+    invoice = uniqid();
+
     return {
-        invoice: uniqid(),
+        invoice: invoice,
+        description: 'buckaroo_schema_test_PDF',
         applyStartRecurrent: false,
         invoiceAmount: 10,
         invoiceAmountVAT: 1,
-        invoiceDate: '2022-01-01',
+        invoiceDate: formatDate(new Date()),
         dueDate: '2030-01-01',
-        schemeKey: 'XXXXXX',
+        schemeKey: 'rwe1kw',
+        poNumber: 'PO-12345',
         maxStepIndex: 1,
         allowedServices: 'ideal,mastercard',
         debtor: {
-            code: 'XXXXXXXX',
+            code: 'johnsmith4',
         },
         email: 'test@buckaroo.nl',
         phone: {
-            mobile: '0612345678',
+            mobile: '06198765432',
         },
         person: {
             culture: 'nl-NL',
@@ -249,15 +194,15 @@ export const creditManagementTestInvoice = (append: object = {}): IInvoice => {
             initials: 'JS',
             firstName: 'Test',
             lastNamePrefix: 'Jones',
-            lastName: 'Acceptatie',
+            lastName: 'Aflever',
             gender: Gender.MALE,
         },
         company: {
             culture: 'nl-NL',
             name: 'Buckaroo B.V.',
             vatApplicable: true,
-            vatNumber: 'NLXXXXXXXXXXB01',
-            chamberOfCommerce: 'XXXXXX41',
+            vatNumber: 'NL140619562B01',
+            chamberOfCommerce: '20091741',
         },
         address: {
             street: 'Hoofdstraat',
@@ -268,6 +213,42 @@ export const creditManagementTestInvoice = (append: object = {}): IInvoice => {
             state: 'Friesland',
             country: 'NL',
         },
+        articles: [
+            {
+                productGroupName: 'Toys',
+                productGroupOrderIndex: 1,
+                productOrderIndex: 1,
+                type: 'Regular',
+                identifier: 'ART12',
+                description: 'Blue Toy Car',
+                quantity: 3,
+                unitOfMeasurement: 'piece(s)',
+                price: 10,
+                discountPercentage: 20,
+                totalDiscount: 6,
+                vatPercentage: 21,
+                totalVat: 0.6,
+                totalAmountExVat: 8.4,
+                totalAmount: 123,
+            },
+            {
+                productGroupName: 'Toys',
+                productGroupOrderIndex: 1,
+                productOrderIndex: 2,
+                type: 'Regular',
+                identifier: 'ART12',
+                description: 'Blue Toy Car',
+                quantity: 3,
+                unitOfMeasurement: 'piece(s)',
+                price: 10,
+                discountPercentage: 20,
+                totalDiscount: 6,
+                vatPercentage: 21,
+                totalVat: 0.6,
+                totalAmountExVat: 8.4,
+                totalAmount: 123,
+            },
+        ],
         ...append,
     };
 };

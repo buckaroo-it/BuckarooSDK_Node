@@ -1,71 +1,77 @@
-import { getIPAddress, uniqid } from '../../src';
+import { IRefundRequest, PaymentMethodInstance, uniqid } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
+import { createRefundPayload } from '../Payloads';
 
-const ideal = buckarooClientTest.method('ideal');
+let method: PaymentMethodInstance<'ideal'>;
+
+beforeEach(() => {
+    method = buckarooClientTest.method('ideal');
+});
 describe('testing Ideal methods', () => {
     test('Issuers', async () => {
-        return ideal.issuers().then((response) => {
-            expect(Array.isArray(response)).toBeTruthy();
-        });
+        const response = await method.issuers();
+        expect(Array.isArray(response)).toBeTruthy();
     });
     test('Pay Simple Payload', async () => {
-        return ideal
+        const response = await method
             .pay({
                 amountDebit: 100,
-                shippingCosts: 0.01,
                 issuer: 'ABNANL2A',
                 continueOnIncomplete: false,
-                additionalParameters: {
-                    initiated_by_magento: 1,
-                    service_action: 'something',
-                },
             })
-            .request()
-            .then((data) => {
-                expect(data.isPendingProcessing()).toBeTruthy();
-            });
+            .request();
+        expect(response.isWaitingOnUserInput()).toBeTruthy();
     });
     test('Refund', async () => {
-        return ideal
-            .refund({
-                order: uniqid(),
-                invoice: uniqid(),
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-                amountCredit: 0.01,
-                clientIP: getIPAddress(),
-                additionalParameters: {
-                    initiated_by_magento: '1',
-                    service_action: 'something',
-                },
-            })
-            .request()
-            .then((data) => {
-                expect(data.isFailed()).toBeTruthy();
-            });
+        const response = await method
+            .refund(
+                createRefundPayload<IRefundRequest>({
+                    originalTransactionKey: 'D2FCFA2133F5412A8D6D376D2BFEF573',
+                })
+            )
+            .request();
+        expect(response.isSuccess).toBeTruthy();
     });
     test('InstantRefund', async () => {
-        return ideal
-            .instantRefund({
-                invoice: uniqid(),
-                amountCredit: 0.01,
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-            })
-            .request()
-            .then((data) => {
-                expect(data.isFailed()).toBeTruthy();
-            });
+        const response = await method
+            .instantRefund(
+                createRefundPayload<IRefundRequest>({
+                    originalTransactionKey: 'D2FCFA2133F5412A8D6D376D2BFEF573',
+                })
+            )
+            .request();
+        expect(response.isSuccess).toBeTruthy();
     });
     test('PayFastCheckout', async () => {
-        return ideal
+        const response = await method
             .payFastCheckout({
                 invoice: uniqid(),
                 currency: 'EUR',
-                amountDebit: 0.01,
-                shippingCosts: 0.01,
+                amountDebit: 10,
             })
-            .request()
-            .then((data) => {
-                expect(data.isWaitingOnUserInput()).toBeTruthy();
-            });
+            .request();
+        expect(response.isWaitingOnUserInput()).toBeTruthy();
+    });
+    test('Pay Reminder', async () => {
+        const response = await buckarooClientTest
+            .method('boekenbon')
+            .pay({
+                amountDebit: 10,
+                intersolveCardnumber: '0000000000000000001',
+                intersolvePIN: '500',
+            })
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
+
+        let relatedTransactionKey = response?.data?.relatedTransactions?.[0].relatedTransactionKey || '';
+        const responseRemainderPay = await method
+            .payRemainder({
+                amountDebit: 5,
+                originalTransactionKey: relatedTransactionKey,
+                issuer: 'ABNANL2A',
+            })
+            .request();
+        expect(responseRemainderPay.isWaitingOnUserInput()).toBeTruthy();
     });
 });
+

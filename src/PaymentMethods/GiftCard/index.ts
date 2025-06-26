@@ -15,6 +15,13 @@ export default class GiftCard extends PayablePaymentMethod {
         return super.pay(payload, new Pay(payload));
     }
 
+    payRemainder(payload: IPay) {
+        if (payload.name) {
+            this.setServiceCode(payload.name);
+        }
+        return super.payRemainder(payload, new Pay(payload));
+    }
+
     refund(payload: IRefund) {
         if (payload.name) {
             this.setServiceCode(payload.name);

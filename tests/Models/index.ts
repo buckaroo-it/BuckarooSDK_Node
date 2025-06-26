@@ -12,56 +12,57 @@ import {
 } from '../../src';
 
 export const TestPerson: IPerson = {
-    birthDate: '1990-01-01',
+    birthDate: '01-01-1990',
     category: RecipientCategory.PERSON,
-    culture: '321',
+    culture: 'nl-NL',
     firstName: 'John',
     gender: 'male',
     initials: 'R.T',
-    lastName: 'Do',
-    lastNamePrefix: 'testlastprefix',
-    placeOfBirth: 't',
-    title: 'title',
+    lastName: 'Doe',
+    // lastNamePrefix: 'van',
+    placeOfBirth: 'Amsterdam',
+    title: 'Mr.',
+    customerNumber: uniqid(),
 };
 export const TestCompany: ICompany = {
     category: RecipientCategory.COMPANY,
-    careOf: 'test',
-    chamberOfCommerce: 'test',
-    companyName: 'testCompany',
-    culture: 'culture',
+    careOf: 'Test',
+    chamberOfCommerce: '12345678',
+    companyName: 'Test Company BV',
+    culture: 'nl-NL',
     vatApplicable: false,
-    vatNumber: '321',
+    vatNumber: 'NL123456789B01',
 };
 export const TestAddress: IAddress = {
-    city: 'city',
+    city: 'Amsterdam',
     country: 'NL',
-    houseNumber: '2313432',
-    houseNumberAdditional: '324',
-    state: 'state',
-    street: 'street',
-    zipcode: '32323',
+    houseNumber: '123',
+    houseNumberAdditional: 'A',
+    // state: 'Netherland',
+    street: 'Hoftstraat',
+    zipcode: '1015CJ',
 };
 export const TestArticle: IArticle = {
-    description: 'test',
-    identifier: 'identifier',
-    price: 10,
+    description: 'Test Product',
+    identifier: 'ABC123',
+    price: 40.10,
     quantity: 2,
     type: 'PhysicalArticle',
-    unitCode: '23',
-    vatCategory: '323',
-    vatPercentage: 1,
+    unitCode: '123',
+    vatCategory: '1',
+    vatPercentage: 21,
 };
 
 export const TestPhone: IPhone = {
-    fax: '23232',
-    landline: '323123',
-    mobile: '21312332',
+    // fax: '0207654321',
+    landline: '0201234567',
+    mobile: '0612345678',
 };
-export const TestEmail = 'test@hotmail.com';
+export const TestEmail = 'test@buckaroo.nl';
 export const TestBankAccount: IBankAccount = {
-    accountName: 'accountName',
-    bic: 'bic',
-    iban: 'iban',
+    accountName: 'John Doe',
+    bic: 'ABNANL2A',
+    iban: 'NL91ABNA0417164300',
 };
 export const TestBilling = {
     recipient: TestPerson,
@@ -77,7 +78,7 @@ export const TestCustomer = {
     initials: TestPerson.initials,
     lastName: TestPerson.lastName,
     firstName: TestPerson.firstName,
-    birthDate: '1990-01-01',
+    birthDate: TestPerson.birthDate,
 };
 
 export const TestIp = getIPAddress();

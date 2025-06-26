@@ -1,34 +1,35 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { uniqid } from '../../src';
+import { IRefundRequest, PaymentMethodInstance } from '../../src';
+import { createRefundPayload } from '../Payloads';
 
-const method = buckarooClientTest.method('przelewy24');
+let method: PaymentMethodInstance<'przelewy24'>;
+
+beforeEach(() => {
+    method = buckarooClientTest.method('przelewy24');
+});
 
 describe('Przelewy24', () => {
     test('Pay', async () => {
-        return method
+        const response = await method
             .pay({
-                amountDebit: 100,
+                amountDebit: 100.3,
                 customer: {
                     firstName: 'Test',
                     lastName: 'Acceptatie',
                 },
                 email: 'test@buckaroo.nl',
             })
-            .request()
-            .then((res) => {
-                expect(res.isPendingProcessing()).toBeTruthy();
-            });
+            .request();
+        expect(response.isPendingProcessing()).toBeTruthy();
     });
     test('Refund', async () => {
-        return method
-            .refund({
-                invoice: uniqid(),
-                amountCredit: 0.01,
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-            })
-            .request()
-            .then((info) => {
-                expect(info.httpResponse.status).toEqual(200);
-            });
+        const response = await method
+            .refund(
+                createRefundPayload<IRefundRequest>({
+                    originalTransactionKey: 'C2D92C20BA244E02AB3CF2DE56E026F1',
+                })
+            )
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
     });
 });

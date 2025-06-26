@@ -1,97 +1,84 @@
-import { Gender, getIPAddress, RequestTypes, uniqid } from '../../src';
+import { Gender, getIPAddress, IRefundRequest, RequestTypes, uniqid } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
 import { IPay } from '../../src/PaymentMethods/AfterpayDigiAccept/Model/Pay';
+import { createBasePayload, createRefundPayload } from '../Payloads';
 
 const method = buckarooClientTest.method('afterpaydigiaccept');
 
-const paymentPayload: IPay = {
-    amountDebit: 100,
-    order: uniqid(),
-    invoice: uniqid(),
-    b2b: true,
-    addressesDiffer: true,
-    customerIPAddress: getIPAddress(),
-    shippingCosts: 0.5,
-    costCentre: 'Test',
-    department: 'Test',
-    establishmentNumber: 123456,
-    billing: {
-        recipient: {
-            gender: Gender.FEMALE,
-            initials: 'AB',
-            lastName: 'Acceptatie',
-            birthDate: '1990-01-01',
-            culture: 'NL',
-        },
-        address: {
-            street: 'Hoofdstraat',
-            houseNumber: '80',
-            houseNumberAdditional: 'a',
-            zipcode: '8441ER',
-            city: 'Heerenveen',
-            country: 'NL',
-        },
-        phone: {
-            mobile: '0612345678',
-        },
-        email: 'test@buckaroo.nl',
+const payload = createBasePayload<IPay>(
+    {
+        addressesDiffer: true,
+        customerIPAddress: getIPAddress(),
+        shippingCosts: 0.5,
+        costCentre: 'Test',
+        department: 'Test',
+        establishmentNumber: 123456,
     },
-    shipping: {
-        recipient: {
-            culture: 'NL',
-            gender: Gender.MALE,
-            initials: 'TA',
-            lastName: 'Acceptatie',
-            companyName: 'Buckaroo B.V.',
-            chamberOfCommerce: 'XXXXXX41',
-            birthDate: '1990-01-01',
-            vatNumber: 'NLXXXXXXXXXXB01',
+    {
+        billing: {
+            exclude: ['state', 'culture', 'gender', 'lastNamePrefix', 'placeOfBirth'],
         },
-        address: {
-            street: 'Hoofdstraat',
-            houseNumber: '80',
-            houseNumberAdditional: 'a',
-            zipcode: '8441ER',
-            city: 'Heerenveen',
-            country: 'NL',
+        shipping: {
+            exclude: ['state', 'culture', 'gender', 'lastNamePrefix', 'placeOfBirth'],
         },
-        phone: {
-            mobile: '0612345678',
+        articles: {
+            exclude: ['type', 'unitCode', 'vatCategory', 'vatPercentage'],
         },
-        email: 'test@buckaroo.nl',
-    },
-    articles: [
-        {
-            identifier: uniqid(),
-            description: 'Blue Toy Car',
-            price: 10.0,
-            quantity: 2,
-            vatCategory: '1',
-        },
-        {
-            identifier: uniqid(),
-            description: 'Red Toy Car',
-            price: 10.0,
-            quantity: 2,
-            vatCategory: '1',
-        },
-    ],
-};
+    }
+);
+
 describe('AfterPayDigiAccept methods', () => {
     test('Authorize', async () => {
         return method
-            .authorize(paymentPayload)
+            .authorize(payload)
             .request()
             .then((data) => {
-                expect(data.httpResponse.status).toEqual(200);
+                expect(data.isSuccess()).toBeTruthy();
+            });
+    });
+    test('CancelAuthorize', async () => {
+        return method
+            .cancelAuthorize(
+                createRefundPayload<IRefundRequest>({
+                    originalTransactionKey: 'F1924C34B80D4CA6838F44D6A8A6516A',
+                    amountCredit: payload.amountDebit,
+                })
+            )
+            .request()
+            .then((data) => {
+                expect(data.isSuccess()).toBeTruthy();
+            });
+    });
+    test('Capture', async () => {
+        return method
+            .capture({
+                ...payload,
+                originalTransactionKey: '4FFF55350BAF47F086F75CC693407823',
+            })
+            .request()
+            .then((data) => {
+                expect(data.isSuccess()).toBeTruthy();
             });
     });
     test('Pay', async () => {
         return method
-            .pay(paymentPayload)
+            .pay(payload)
             .request()
             .then((data) => {
-                expect(data.httpResponse.status).toEqual(200);
+                expect(data.isSuccess()).toBeTruthy();
+            });
+    });
+    test('Refund', async () => {
+        return method
+            .refund(
+                createRefundPayload<IRefundRequest>({
+                    originalTransactionKey: '5DA00BD4ED4B4AE8B6C0092E138D959B',
+                    amountCredit: payload.amountDebit,
+                })
+            )
+            .request()
+            .then((data) => {
+                expect(data.isSuccess()).toBeTruthy();
             });
     });
     test('Specification', async () => {
@@ -99,6 +86,7 @@ describe('AfterPayDigiAccept methods', () => {
             .specification(RequestTypes.Transaction)
             .request()
             .then((data) => {
+                console.log(data);
                 expect(data.httpResponse.status).toEqual(200);
             });
     });

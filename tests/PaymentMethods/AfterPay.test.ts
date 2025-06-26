@@ -1,47 +1,27 @@
 import buckarooClientTest from '../BuckarooClient.test';
 import { IPay } from '../../src/PaymentMethods/Afterpay/Model/Pay';
-import { getIPAddress, RecipientCategory, uniqid } from '../../src';
+import { createBasePayload, createRefundPayload } from '../Payloads';
+import { IRefund } from '../../src/PaymentMethods/Afterpay/Model/Refund';
 
-const paymentPayload: IPay = {
-    invoice: uniqid(),
-    clientIP: getIPAddress(),
-    amountDebit: 100,
-    billing: {
-        recipient: {
-            category: RecipientCategory.PERSON,
-            firstName: 'Test',
-            lastName: 'Acceptatie',
-            birthDate: '01-01-1990',
+const payload = createBasePayload<IPay>(
+    {},
+    {
+        billing: {
+            exclude: ['state', 'culture', 'gender', 'lastNamePrefix', 'placeOfBirth', 'initials', 'title'],
         },
-        address: {
-            street: 'Hoofdstraat',
-            houseNumber: '80',
-            zipcode: '8441ER',
-            city: 'Heerenveen',
-            country: 'NL',
+        shipping: {
+            exclude: ['state', 'culture', 'gender', 'lastNamePrefix', 'placeOfBirth', 'initials', 'title'],
         },
-        email: 'test@buckaroo.nl',
-        phone: {
-            mobile: '0612345678',
-            landline: '0201234567',
+        articles: {
+            exclude: ['type', 'unitCode', 'vatCategory'],
         },
-    },
-    articles: [
-        {
-            vatPercentage: 21,
-            price: 10,
-            description: 'Test',
-            quantity: 4,
-            identifier: 'test',
-        },
-    ],
-};
-
+    }
+);
 const method = buckarooClientTest.method('afterpay');
 describe('AfterPay methods', () => {
     test('Pay', async () => {
         return method
-            .pay(paymentPayload)
+            .pay(payload)
             .request()
             .then((data) => {
                 expect(data.isSuccess()).toBeTruthy();
@@ -50,7 +30,7 @@ describe('AfterPay methods', () => {
     test('Pay with Different Version', async () => {
         return method
             .setServiceVersion(2)
-            .pay(paymentPayload)
+            .pay(payload)
             .request()
             .then((data) => {
                 expect(data.isSuccess()).toBeTruthy();
@@ -58,45 +38,47 @@ describe('AfterPay methods', () => {
     });
     test('Refund', async () => {
         return method
-            .refund({
-                invoice: paymentPayload.invoice, //Set invoice number of the transaction to refund
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', //Set transaction key of the transaction to refund
-                amountCredit: paymentPayload.amountDebit,
-            })
+            .refund(
+                createRefundPayload<IRefund>({
+                    originalTransactionKey: '4D2D8ABD5EA14E908F855BC7A8B10735',
+                    amountCredit: payload.amountDebit,
+                })
+            )
             .request()
             .then((data) => {
-                expect(data.isFailed()).toBeDefined();
+                expect(data.isSuccess()).toBeTruthy();
             });
     });
     test('Authorize', async () => {
         return method
-            .authorize(paymentPayload)
+            .authorize(payload)
             .request()
             .then((data) => {
-                expect(data.httpResponse.status).toEqual(200);
+                expect(data.isSuccess()).toBeTruthy();
             });
-    });
+    }); //Add 10s timeout as third param
     test('CancelAuthorize', async () => {
         return method
-            .cancelAuthorize({
-                invoice: paymentPayload.invoice,
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-                amountCredit: 100,
-            })
+            .cancelAuthorize(
+                createRefundPayload<IRefund>({
+                    originalTransactionKey: '9CFEFC57074247DE92F7804246D1DD5D',
+                    amountCredit: payload.amountDebit,
+                })
+            )
             .request()
             .then((data) => {
-                expect(data.httpResponse.status).toEqual(200);
+                expect(data.isSuccess()).toBeTruthy();
             });
     });
     test('Capture', async () => {
         return method
             .capture({
-                ...paymentPayload,
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                ...payload,
+                originalTransactionKey: 'CD1493C19B69488CB88EC6576DD1E928',
             })
             .request()
             .then((data) => {
-                expect(data.httpResponse.status).toEqual(200);
+                expect(data.isSuccess()).toBeTruthy();
             });
     });
 });

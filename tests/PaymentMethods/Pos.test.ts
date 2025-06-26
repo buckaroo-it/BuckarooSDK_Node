@@ -5,15 +5,13 @@ const method = buckarooClientTest.method('pospayment');
 
 describe('POS methods', () => {
     test('Pay', async () => {
-        return method
+        const response = await method
             .pay({
                 amountDebit: 100,
                 invoice: uniqid(),
                 terminalId: '50000001',
             })
-            .request()
-            .then((data) => {
-                expect(data.isPendingProcessing()).toBeTruthy();
-            });
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
     });
 });

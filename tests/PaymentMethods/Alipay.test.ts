@@ -1,11 +1,11 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { uniqid } from '../../src';
-
-const alipay = buckarooClientTest.method('alipay');
+import { IRefundRequest } from '../../src';
+import { createRefundPayload } from '../Payloads';
 
 describe('Alipay methods', () => {
     test('Pay Simple Payload', async () => {
-        return alipay
+        return buckarooClientTest
+            .method('alipay')
             .pay({
                 amountDebit: 100,
                 useMobileView: false,
@@ -16,15 +16,16 @@ describe('Alipay methods', () => {
             });
     });
     test('Refund', async () => {
-        return alipay
-            .refund({
-                amountCredit: 0.01,
-                invoice: uniqid(),
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-            })
+        return buckarooClientTest
+            .method('alipay')
+            .refund(
+                createRefundPayload<IRefundRequest>({
+                    originalTransactionKey: '6CE35062C16C4F47A49314D533E9F7A3',
+                })
+            )
             .request()
             .then((data) => {
-                expect(data.isFailed()).toBeTruthy();
+                expect(data.isSuccess()).toBeTruthy();
             });
     });
 });

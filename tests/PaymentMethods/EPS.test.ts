@@ -1,28 +1,31 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { uniqid } from '../../src';
+import { PaymentMethodInstance, uniqid } from '../../src';
 
-const method = buckarooClientTest.method('eps');
+let method: PaymentMethodInstance<'eps'>;
+let transactionKey: string;
+
+beforeEach(() => {
+    method = buckarooClientTest.method('eps');
+});
 describe('Testing Eps methods', () => {
     test('Pay', async () => {
-        return method
+        const response = await method
             .pay({
                 amountDebit: 100,
             })
-            .request()
-            .then((response) => {
-                expect(response.isSuccess()).toBeTruthy();
-            });
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
+        transactionKey = response.getTransactionKey();
     });
     test('Refund', async () => {
-        return method
+        const response = await method
             .refund({
                 invoice: uniqid(),
                 amountCredit: 0.01,
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                originalTransactionKey: transactionKey,
             })
-            .request()
-            .then((response) => {
-                expect(response.isFailed()).toBeTruthy();
-            });
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
+
     });
 });

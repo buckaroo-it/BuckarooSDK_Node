@@ -1,131 +1,86 @@
 import { IPay } from '../../src/PaymentMethods/Billink/Models/Pay';
 import buckarooClientTest from '../BuckarooClient.test';
-import { RecipientCategory, uniqid } from '../../src';
+import { IRequest, RecipientCategory, uniqid } from '../../src';
+import { createBasePayload, createRefundPayload } from '../Payloads';
+import { IRefund } from '../../src/PaymentMethods/Billink/Models/Refund';
 
-const method = buckarooClientTest.method('billink');
+let payTransactionKey: string;
+let authorizeTransactionKey: string;
+let method = buckarooClientTest.method('billink');
+let payload: IPay;
 
-describe('Billink methods', () => {
-    const invoiceId = uniqid();
-
-    test('Pay', async () => {
-        return method
-            .pay(payload)
-            .request()
-            .then((data) => {
-                expect(data.isSuccess()).toBeTruthy();
-            });
-    });
-    test('Refund', async () => {
-        return method
-            .refund({
-                invoice: uniqid(),
-                amountCredit: 0.01,
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-            })
-            .request()
-            .then((data) => {
-                expect(data.httpResponse.status).toEqual(200);
-            });
-    });
-    test('Authorize', async () => {
-        return method
-            .authorize({ ...payload, invoice: invoiceId })
-            .request()
-            .then((data) => {
-                expect(data.httpResponse.status).toEqual(200);
-            });
-    });
-    test('CancelAuthorize', async () => {
-        return method
-            .cancelAuthorize({
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-                amountCredit: payload.amountDebit,
-                invoice: invoiceId,
-            })
-            .request()
-            .then((data) => {
-                expect(data).toBeDefined();
-            });
-    });
-    test('Capture', async () => {
-        return method
-            .capture({
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-                invoice: invoiceId,
-                amountDebit: payload.amountDebit,
-                articles: payload.articles,
-            })
-            .request()
-            .then((data) => {
-                expect(data.httpResponse.status).toEqual(200);
-            });
-    });
+beforeEach(() => {
+    method = buckarooClientTest.method('billink');
+    payload = createBasePayload<IPay>(
+        {
+            trackandtrace: 'ABC123',
+            VATNumber: 'NLXXXXXXXXXXB01',
+        },
+        {
+            billing: {
+                exclude: ['state', 'culture', 'gender', 'lastNamePrefix', 'placeOfBirth'],
+            },
+            shipping: {
+                exclude: ['state', 'culture', 'gender', 'lastNamePrefix', 'placeOfBirth'],
+            },
+            articles: {
+                exclude: ['type', 'unitCode', 'vatCategory'],
+            },
+        }
+    );
 });
 
-const payload: IPay = {
-    amountDebit: 100,
-    trackAndTrace: 'XXXXXXXXXXXXX',
-    vatNumber: 'NLXXXXXXXXXXB01',
-    billing: {
-        recipient: {
-            category: RecipientCategory.PERSON,
-            careOf: 'Test Acceptatie',
-            title: 'Female',
-            initials: 'TA',
-            firstName: 'Test',
-            lastName: 'Acceptatie',
-            birthDate: '01-01-1990',
-            chamberOfCommerce: 'XXXXXX41',
-        },
-        address: {
-            street: 'Hoofdstraat',
-            houseNumber: '80',
-            houseNumberAdditional: 'a',
-            zipcode: '8441ER',
-            city: 'Heerenveen',
-            country: 'NL',
-        },
-        phone: {
-            mobile: '0612345678',
-            landline: '0201234567',
-        },
-        email: 'test@buckaroo.nl',
-    },
-    shipping: {
-        recipient: {
-            category: RecipientCategory.PERSON,
-            careOf: 'Test Acceptatie',
-            title: 'Male',
-            initials: 'TA',
-            firstName: 'Test',
-            lastName: 'Acceptatie',
-            birthDate: '1990-01-01',
-        },
-        address: {
-            street: 'Hoofdstraat',
-            houseNumber: '80',
-            houseNumberAdditional: 'a',
-            zipcode: '8441ER',
-            city: 'Heerenveen',
-            country: 'NL',
-        },
-    },
-    articles: [
-        {
-            identifier: 'Articlenumber1',
-            description: 'Blue Toy Car',
-            vatPercentage: 21,
-            quantity: 2,
-            price: 20.1,
-            priceExcl: 5,
-        },
-        {
-            identifier: 'Articlenumber2',
-            description: 'Red Toy Car',
-            vatPercentage: 21,
-            quantity: 1,
-            price: 10.1,
-            priceExcl: 5,
-        },
-    ],
-};
+describe('Billink methods', () => {
+    test('Pay', async () => {
+        const response = await method.pay(payload).request();
+
+        expect(response.isSuccess()).toBeTruthy();
+        payTransactionKey = response.getTransactionKey();
+    });
+    test('Authorize', async () => {
+        const response = await method.authorize(payload).request();
+
+        expect(response.isSuccess()).toBeTruthy();
+        authorizeTransactionKey = response.getTransactionKey();
+    });
+    test('Refund', async () => {
+        expect(payTransactionKey).toBeDefined();
+        const response = await method
+            .refund(
+                createRefundPayload<IRefund>({
+                    originalTransactionKey: payTransactionKey,
+                })
+            )
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
+    });
+    test('CancelAuthorize', async () => {
+        expect(authorizeTransactionKey).toBeDefined();
+
+        const response = await method
+            .cancelAuthorize(
+                createRefundPayload<IRefund>({
+                    originalTransactionKey: authorizeTransactionKey,
+                    amountCredit: payload.amountDebit,
+                })
+            )
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
+    });
+    test('Capture', async () => {
+        // const authResponse = await method.authorize(payload).request();
+        // expect(authResponse.isSuccess()).toBeTruthy();
+        // let key = authResponse.getTransactionKey();
+        // expect(key).toBeDefined();
+
+        // new Promise((resolve) => setTimeout(resolve, 6000));
+
+        const response = await method
+            .capture({
+                ...payload,
+                originalTransactionKey: '1234',
+            })
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
+    });
+});

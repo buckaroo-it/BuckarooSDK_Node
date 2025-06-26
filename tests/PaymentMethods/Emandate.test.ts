@@ -1,59 +1,51 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { ServiceCode } from '../../src';
+import { ServiceCode, uniqid } from '../../src';
 
 const method = buckarooClientTest.method('emandate');
 describe('Testing Emandates methods', () => {
     test('GetIssuerList', async () => {
-        return method
-            .issuerList()
-            .request()
-            .then((response) => {
-                expect(response.isSuccess()).toBeTruthy();
-            });
+        const response = await method.issuerList().request();
+        expect(response.isSuccess()).toBeTruthy();
     });
+
     test('CreateMandate', async () => {
-        return method
+        const response = await method
             .createMandate({
-                debtorReference: 'XXXXXXXXX',
+                emandatereason: 'Testing',
+                sequenceType: 0,
+                purchaseId: uniqid(),
+                debtorbankid: 'INGBNL2A',
+                debtorReference: 'reference',
                 language: 'nl',
                 continueOnIncomplete: true,
-                purchaseId: 'XXXXXXXXXXXXXX',
-                sequenceType: 0,
             })
-            .request()
-            .then((response) => {
-                expect(response.isPendingProcessing()).toBeTruthy();
-            });
+            .request();
+        expect(response.isWaitingOnUserInput()).toBeTruthy();
     });
+
     test('GetStatus', async () => {
-        return method
-            .status({ mandateId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' })
-            .request()
-            .then((response) => {
-                expect(response.isSuccess()).toBeTruthy();
-            });
+        const response = await method.status({ mandateId: '1DC7F83B7B937864FB39966B0C08A7B86D8' }).request();
+        expect(response.isSuccess()).toBeTruthy();
     });
     test('ModifyMandate', async () => {
-        return method
+        const response = await method
             .modifyMandate({
-                originalMandateId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                originalMandateId: '1DC7F83B7B937864FB39966B0C08A7B86D8',
                 continueOnIncomplete: true,
             })
-            .request()
-            .then((response) => {
-                expect(response.isFailed()).toBeTruthy();
-            });
+            .request();
+        expect(response.isWaitingOnUserInput()).toBeTruthy();
     });
-    test('CancelMandate', async () => {
-        return method
-            .setServiceCode('emandateb2b' as ServiceCode)
-            .cancelMandate({
-                mandateId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-                purchaseId: 'XXXXXXXXXXXXXX',
-            })
-            .request()
-            .then((response) => {
-                expect(response.isValidationFailure()).toBeTruthy();
-            });
-    });
+    // Unknown action 'CancelMandate' used on service 'emandate'.
+    // No valid subscription found for service 'emandateb2b'.
+    // test('CancelMandate', async () => {
+    //     const response = await method
+    //         .setServiceCode('emandateb2b' as ServiceCode)
+    //         .cancelMandate({
+    //             mandateId: '1DC7F83B7B937864FB39966B0C08A7B86D8',
+    //             purchaseId: '6383d3e86944a0',
+    //         })
+    //         .request();
+    //     expect(response.isSuccess()).toBeTruthy();
+    // });
 });

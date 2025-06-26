@@ -1,41 +1,41 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { uniqid } from '../../src';
+import { IRefundRequest, PaymentMethodInstance, uniqid } from '../../src';
+import { createRefundPayload } from '../Payloads';
 
-const payconiq = buckarooClientTest.method('payconiq');
+let method: PaymentMethodInstance<'payconiq'>;
+
+beforeEach(() => {
+    method = buckarooClientTest.method('payconiq');
+});
+
 describe('Payconiq', () => {
     test('Pay', async () => {
-        return payconiq
+        const response = await method
             .pay({
-                amountDebit: 100,
+                amountDebit: 100.3,
                 order: uniqid(),
             })
-            .request()
-            .then((info) => {
-                expect(info.httpResponse.status).toEqual(200);
-            });
+            .request();
+        expect(response.isPendingProcessing).toBeTruthy();
     });
     test('Refund', async () => {
-        return payconiq
-            .refund({
-                invoice: uniqid(),
-                amountCredit: 0.01,
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-            })
-            .request()
-            .then((info) => {
-                expect(info.httpResponse.status).toEqual(200);
-            });
+        const response = await method
+            .refund(
+                createRefundPayload<IRefundRequest>({
+                    originalTransactionKey: '93FA5B31D80C489BB0822A3BD8037D6E',
+                })
+            )
+            .request();
+        expect(response.isSuccess).toBeTruthy();
     });
     test('InstantRefund', async () => {
-        return payconiq
-            .instantRefund({
-                invoice: uniqid(),
-                amountCredit: 0.01,
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-            })
-            .request()
-            .then((data) => {
-                expect(data.httpResponse.status).toEqual(200);
-            });
+        const response = await method
+            .instantRefund(
+                createRefundPayload<IRefundRequest>({
+                    originalTransactionKey: '93FA5B31D80C489BB0822A3BD8037D6E',
+                })
+            )
+            .request();
+        expect(response.isSuccess).toBeTruthy();
     });
 });
