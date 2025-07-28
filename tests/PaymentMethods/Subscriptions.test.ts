@@ -1,4 +1,3 @@
-import { uniq } from 'lodash';
 import { PaymentMethodInstance, uniqid } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
 import { formatDate, getServiceParameter } from '../Payloads';

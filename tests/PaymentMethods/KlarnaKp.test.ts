@@ -1,72 +1,68 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { Gender, getIPAddress, uniqid } from '../../src';
+import { Gender, getIPAddress, PaymentMethodInstance, uniqid } from '../../src';
+import { createBasePayload } from '../Payloads';
+import { IReserve } from '../../src/PaymentMethods/KlarnaKP/Models/IReserve';
 
-const klarnaKp = buckarooClientTest.method('klarnakp');
+let method: PaymentMethodInstance<'klarnakp'>;
+
+beforeEach(() => {
+    method = buckarooClientTest.method('klarnakp');
+});
 
 describe('KlarnaKp', () => {
     test('Pay', async () => {
-        return klarnaKp
+        const response = await method
             .pay({
-                amountDebit: 100,
-                reservationNumber: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                amountDebit: 100.3,
+                reservationNumber: '6c24888a-24ba-42bf-be19-7ceec6f0ee23',
             })
-            .request()
-            .then((info) => {
-                expect(info.isFailed()).toBeTruthy();
-            });
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
     });
-    test('Reserve', async () => {
-        return klarnaKp
-            .reserve({
-                clientIP: getIPAddress(),
-                invoice: uniqid(),
-                gender: Gender.MALE,
-                operatingCountry: 'NL',
-                pno: '01011990',
-                billing: {
-                    recipient: {
-                        firstName: 'Test',
-                        lastName: 'Acceptatie',
-                    },
-                    address: {
-                        street: 'Hoofdstraat',
-                        zipcode: '8441ER',
-                        city: 'Heerenveen',
-                        country: 'NL',
-                    },
-                    phone: {
-                        mobile: '0612345678',
-                    },
-                    email: 'test@buckaroo.nl',
-                },
-                articles: [
+    test.only('Reserve', async () => {
+        const response = await method
+            .reserve(
+                createBasePayload<IReserve>(
                     {
-                        identifier: 'Articlenumber1',
-                        description: 'Blue Toy Car',
-                        vatPercentage: 21,
-                        quantity: 2,
-                        price: 20.1,
-                        imageUrl: 'https://example.com/image',
-                        productUrl: 'https://example.com/product',
+                        clientIP: getIPAddress(),
+                        gender: Gender.MALE,
+                        operatingCountry: 'NL',
+                        pno: '01011990',
                     },
                     {
-                        identifier: 'Articlenumber2',
-                        description: 'Red Toy Car',
-                        vatPercentage: 21,
-                        quantity: 1,
-                        price: 10.1,
-                        imageUrl: 'https://example.com/image',
-                        productUrl: 'https://example.com/product',
-                    },
-                ],
-            })
-            .request()
-            .then((info) => {
-                expect(info.isPendingProcessing()).toBeTruthy();
-            });
+                        billing: {
+                            exclude: [
+                                'state',
+                                'lastNamePrefix',
+                                'placeOfBirth',
+                                'title',
+                                'phone',
+                                'initials',
+                                'culture',
+                            ],
+                        },
+                        shipping: {
+                            exclude: [
+                                'state',
+                                'lastNamePrefix',
+                                'placeOfBirth',
+                                'title',
+                                'phone',
+                                'initials',
+                                'culture',
+                            ],
+                        },
+                        articles: {
+                            exclude: ['type', 'unitCode', 'vatCategory'],
+                        },
+                    }
+                )
+            )
+            .request();
+        expect(response.isPendingProcessing()).toBeTruthy();
     });
     test('Cancel', async () => {
-        return klarnaKp
+        return method
             .cancel({
                 reservationNumber: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX',
             })

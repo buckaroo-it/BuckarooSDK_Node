@@ -1,30 +1,39 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { uniqid } from '../../src';
+import { IRefundRequest, PaymentMethodInstance, uniqid } from '../../src';
+import { createRefundPayload } from '../Payloads';
 
-const method = buckarooClientTest.method('knaken');
+let method: PaymentMethodInstance<'knaken'>;
+
+beforeEach(() => {
+    method = buckarooClientTest.method('knaken');
+});
 
 describe('Knaken', () => {
+    // The transaction was rejected during processing by Unauthorized..
     test('Pay', async () => {
-        return method
+        const response = await method
             .pay({
                 amountDebit: 0.01,
-                order: uniqid(),
+                invoice: uniqid(),
+                CustomerName: 'Rico',
+                returnURL: 'https://example.com/buckaroo/return',
+                returnURLCancel: 'https://example.com/buckaroo/cancel',
+                returnURLError: 'https://example.com/buckaroo/error',
+                returnURLReject: 'https://example.com/buckaroo/reject',
+                pushURL: 'https://example.com/buckaroo/push',
+                pushURLFailure: 'https://example.com/buckaroo/push-failure',
             })
-            .request()
-            .then((info) => {
-                expect(info.httpResponse.status).toEqual(200);
-            });
+            .request();
+        expect(response.isPendingProcessing()).toBeTruthy();
     });
     test('Refund', async () => {
-        return method
-            .refund({
-                invoice: uniqid(),
-                amountCredit: 0.01,
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-            })
-            .request()
-            .then((data) => {
-                expect(data.httpResponse.status).toEqual(200);
-            });
+        const response = await method
+            .refund(
+                createRefundPayload<IRefundRequest>({
+                    originalTransactionKey: '',
+                })
+            )
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
     });
 });

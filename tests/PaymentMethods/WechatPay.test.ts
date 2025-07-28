@@ -1,29 +1,31 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { uniqid } from '../../src';
+import { IRefundRequest, PaymentMethodInstance } from '../../src';
+import { createRefundPayload } from '../Payloads';
 
-const method = buckarooClientTest.method('wechatpay');
+let method: PaymentMethodInstance<'wechatpay'>;
+
+beforeEach(() => {
+    method = buckarooClientTest.method('wechatpay');
+});
+
 describe('WechatPay', () => {
     test('Pay', async () => {
-        return method
+        const response = await method
             .pay({
-                amountDebit: 100,
+                amountDebit: 100.3,
                 locale: 'en-US',
             })
-            .request()
-            .then((response) => {
-                expect(response.isPendingProcessing()).toBeDefined();
-            });
+            .request();
+        expect(response.isPendingProcessing()).toBeTruthy();
     });
     test('Refund', async () => {
-        return method
-            .refund({
-                invoice: uniqid(),
-                amountCredit: 0.01,
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-            })
-            .request()
-            .then((response) => {
-                expect(response.httpResponse.status).toEqual(200);
-            });
+        const response = await method
+            .refund(
+                createRefundPayload<IRefundRequest>({
+                    originalTransactionKey: '558B0120FD64458C8ED8349FE4C0714A',
+                })
+            )
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
     });
 });
