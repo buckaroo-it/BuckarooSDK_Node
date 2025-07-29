@@ -1,14 +1,14 @@
-import { Gender, uniqid } from '../../src';
+import { Gender, PaymentMethodInstance, uniqid } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
 
 const method = buckarooClientTest.method('payperemail');
 
 describe('PayPerEmail methods', () => {
     test('paymentInvitation', async () => {
-        return method
+        const response = await method
             .paymentInvitation({
                 currency: 'EUR',
-                amountDebit: 100,
+                amountDebit: 10,
                 order: uniqid(),
                 invoice: uniqid(),
                 merchantSendsEmail: false,
@@ -22,9 +22,7 @@ describe('PayPerEmail methods', () => {
                     lastName: 'Acceptatie',
                 },
             })
-            .request()
-            .then((res) => {
-                expect(res.httpResponse.status).toEqual(200);
-            });
+            .request();
+        expect(response.isAwaitingConsumer()).toBeTruthy();
     });
 });

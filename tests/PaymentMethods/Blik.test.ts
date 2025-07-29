@@ -1,34 +1,35 @@
+import { IRefundRequest, PaymentMethodInstance } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
+import { createRefundPayload } from '../Payloads';
 
-const blik = buckarooClientTest.method('blik');
+let method: PaymentMethodInstance<'blik'>;
+
+beforeEach(() => {
+    method = buckarooClientTest.method('blik');
+});
 
 describe('Testing Blik methods', () => {
     test('Pay', async () => {
-        return blik
+        const response = await method
             .pay({
                 currency: 'PLN',
-                amountDebit: 10.00,
+                amountDebit: 100.0,
                 invoice: 'Blik Test Plugin Example',
                 description: 'Blik Test Plugin Example',
                 email: 'test@buckaroo.nl',
             })
-            .request()
-            .then((res) => {
-                expect(res.isPendingProcessing()).toBeTruthy();
-            });
+            .request();
+        expect(response.isPendingProcessing()).toBeTruthy();
     });
     test('Refund', async () => {
-        return blik
-            .refund({
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-                currency: 'PLN',
-                amountCredit: 5.00,
-                invoice: 'Refund Blik Test Plugin Example',
-                description: 'Refund Blik Test Plugin Example',
-            })
-            .request()
-            .then((info) => {
-                expect(info.httpResponse.status).toEqual(200)
-            });
+        const response = await method
+            .refund(
+                createRefundPayload<IRefundRequest>({
+                    originalTransactionKey: 'DA18F7031E3547E898B68773E372ACB4',
+                    currency: 'PLN',
+                })
+            )
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
     });
 });

@@ -1,63 +1,86 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { uniqid } from '../../src';
+import { IRefundRequest, PaymentMethodInstance } from '../../src';
+import { createRefundPayload } from '../Payloads';
 
-const method = buckarooClientTest.method('buckaroovoucher');
+let method: PaymentMethodInstance<'buckaroovoucher'>;
+
+let voucherCode: string;
+let transactionKey: string;
+
+const formatDate = (date: Date) => date.toISOString().split('T')[0];
+
+beforeEach(() => {
+    method = buckarooClientTest.method('buckaroovoucher');
+});
 
 describe('testing methods', () => {
-    test('Pay', async () => {
-        return method
-            .pay({
-                amountDebit: 100,
-                voucherCode: 'XXXXXXX',
-            })
-            .request()
-            .then((data) => {
-                expect(data.httpResponse.status).toEqual(200);
-            });
-    });
-    test('Refund', async () => {
-        return method
-            .refund({
-                invoice: uniqid(),
-                amountCredit: 0.01,
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-            })
-            .request()
-            .then((data) => {
-                expect(data.httpResponse.status).toEqual(200);
-            });
-    });
-    test('GetBalance', async () => {
-        return method
-            .getBalance({
-                voucherCode: 'XXXXXXX',
-            })
-            .request()
-            .then((data) => {
-                expect(data.isFailed()).toBeTruthy();
-            });
-    });
     test('CreateApplication', async () => {
-        return method
+        const today = new Date();
+        const oneMonthFromNow = new Date();
+        oneMonthFromNow.setMonth(today.getMonth() + 1);
+
+        const response = await method
             .create({
                 creationBalance: 12,
                 usageType: 1,
-                validFrom: '2021-01-01',
-                validUntil: '2024-01-01',
+                validFrom: formatDate(today),
+                validUntil: formatDate(oneMonthFromNow),
+            })
+            .request();
+
+        expect(response.isSuccess()).toBeTruthy();
+
+        voucherCode = String(response.getServices()?.[0]?.parameters.find((p) => p.name === 'VoucherCode')?.value);
+    });
+    test('GetBalance', async () => {
+        if (!voucherCode) {
+            throw new Error('voucherCode is not set. Ensure CreateApplication test has run successfully.');
+        }
+
+        return method
+            .getBalance({
+                voucherCode: voucherCode,
             })
             .request()
             .then((data) => {
-                expect(data.httpResponse.status).toEqual(200);
+                expect(data.isSuccess()).toBeTruthy();
             });
     });
-    test('DeactivateVoucher', async () => {
-        return method
-            .deactivate({
-                voucherCode: 'XXXXXXX',
+    test('Pay', async () => {
+        if (!voucherCode) {
+            throw new Error('voucherCode is not set. Ensure CreateApplication test has run successfully.');
+        }
+
+        const response = await method
+            .pay({
+                amountDebit: 1,
+                voucherCode: voucherCode,
             })
-            .request()
-            .then((data) => {
-                expect(data.httpResponse.status).toEqual(200);
-            });
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
+        transactionKey = response.getTransactionKey();
+    });
+    test('Refund', async () => {
+        expect(transactionKey).toBeDefined();
+
+        const response = await method
+            .refund(
+                createRefundPayload<IRefundRequest>({
+                    originalTransactionKey: transactionKey,
+                })
+            )
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
+    });
+    test('DeactivateVoucher', async () => {
+        if (!voucherCode) {
+            throw new Error('voucherCode is not set. Ensure CreateApplication test has run successfully.');
+        }
+        const response = await method
+            .deactivate({
+                voucherCode: voucherCode,
+            })
+            .request();
+        expect(response.httpResponse.status).toEqual(200);
     });
 });

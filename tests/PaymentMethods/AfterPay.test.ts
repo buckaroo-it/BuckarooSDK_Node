@@ -1,102 +1,72 @@
 import buckarooClientTest from '../BuckarooClient.test';
 import { IPay } from '../../src/PaymentMethods/Afterpay/Model/Pay';
-import { getIPAddress, RecipientCategory, uniqid } from '../../src';
+import { createBasePayload, createRefundPayload } from '../Payloads';
+import { IRefund } from '../../src/PaymentMethods/Afterpay/Model/Refund';
+import { PaymentMethodInstance } from '../../src';
 
-const paymentPayload: IPay = {
-    invoice: uniqid(),
-    clientIP: getIPAddress(),
-    amountDebit: 100,
-    billing: {
-        recipient: {
-            category: RecipientCategory.PERSON,
-            firstName: 'Test',
-            lastName: 'Acceptatie',
-            birthDate: '01-01-1990',
-        },
-        address: {
-            street: 'Hoofdstraat',
-            houseNumber: '80',
-            zipcode: '8441ER',
-            city: 'Heerenveen',
-            country: 'NL',
-        },
-        email: 'test@buckaroo.nl',
-        phone: {
-            mobile: '0612345678',
-            landline: '0201234567',
-        },
-    },
-    articles: [
+let method: PaymentMethodInstance<'afterpay'>;
+let payload: IPay;
+
+beforeEach(() => {
+    method = buckarooClientTest.method('afterpay');
+    payload = createBasePayload<IPay>(
+        {},
         {
-            vatPercentage: 21,
-            price: 10,
-            description: 'Test',
-            quantity: 4,
-            identifier: 'test',
-        },
-    ],
-};
+            billing: {
+                exclude: ['state', 'culture', 'gender', 'lastNamePrefix', 'placeOfBirth', 'initials', 'title'],
+            },
+            shipping: {
+                exclude: ['state', 'culture', 'gender', 'lastNamePrefix', 'placeOfBirth', 'initials', 'title'],
+            },
+            articles: {
+                exclude: ['type', 'unitCode', 'vatCategory'],
+            },
+        }
+    );
+});
 
-const method = buckarooClientTest.method('afterpay');
 describe('AfterPay methods', () => {
     test('Pay', async () => {
-        return method
-            .pay(paymentPayload)
-            .request()
-            .then((data) => {
-                expect(data.isSuccess()).toBeTruthy();
-            });
+        const response = await method.pay(payload).request();
+        expect(response.isSuccess()).toBeTruthy();
     });
     test('Pay with Different Version', async () => {
-        return method
-            .setServiceVersion(2)
-            .pay(paymentPayload)
-            .request()
-            .then((data) => {
-                expect(data.isSuccess()).toBeTruthy();
-            });
+        const response = await method.setServiceVersion(2).pay(payload).request();
+        expect(response.isSuccess()).toBeTruthy();
     });
     test('Refund', async () => {
-        return method
-            .refund({
-                invoice: paymentPayload.invoice, //Set invoice number of the transaction to refund
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', //Set transaction key of the transaction to refund
-                amountCredit: paymentPayload.amountDebit,
-            })
-            .request()
-            .then((data) => {
-                expect(data.isFailed()).toBeDefined();
-            });
+        const response = await method
+            .refund(
+                createRefundPayload<IRefund>({
+                    originalTransactionKey: '4D2D8ABD5EA14E908F855BC7A8B10735',
+                    amountCredit: payload.amountDebit,
+                })
+            )
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
     });
     test('Authorize', async () => {
-        return method
-            .authorize(paymentPayload)
-            .request()
-            .then((data) => {
-                expect(data.httpResponse.status).toEqual(200);
-            });
+        const response = await method.authorize(payload).request();
+        expect(response.isSuccess()).toBeTruthy();
     });
     test('CancelAuthorize', async () => {
-        return method
-            .cancelAuthorize({
-                invoice: paymentPayload.invoice,
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-                amountCredit: 100,
-            })
-            .request()
-            .then((data) => {
-                expect(data.httpResponse.status).toEqual(200);
-            });
+        const response = await method
+            .cancelAuthorize(
+                createRefundPayload<IRefund>({
+                    originalTransactionKey: '9CFEFC57074247DE92F7804246D1DD5D',
+                    amountCredit: payload.amountDebit,
+                })
+            )
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
     });
     test('Capture', async () => {
-        return method
+        const response = await method
             .capture({
-                ...paymentPayload,
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                ...payload,
+                originalTransactionKey: 'CD1493C19B69488CB88EC6576DD1E928',
             })
-            .request()
-            .then((data) => {
-                expect(data.httpResponse.status).toEqual(200);
-            });
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
     });
 });

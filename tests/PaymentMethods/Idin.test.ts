@@ -1,38 +1,37 @@
+import { PaymentMethodInstance } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
 
-const method = buckarooClientTest.method('idin');
+let method: PaymentMethodInstance<'idin'>;
+
+beforeEach(() => {
+    method = buckarooClientTest.method('idin');
+});
 
 describe('Idin methods', () => {
     test('Verify', async () => {
-        return method
+        const response = await method
             .verify({
                 issuer: 'BANKNL2Y',
             })
-            .request()
-            .then((data) => {
-                expect(data.isPendingProcessing()).toBeTruthy();
-            });
+            .request();
+        expect(response.isPendingProcessing()).toBeTruthy();
     });
 
     test('Identify', async () => {
-        return method
+        const response = await method
             .identify({
                 issuer: 'BANKNL2Y',
             })
-            .request()
-            .then((data) => {
-                expect(data.isPendingProcessing()).toBeTruthy();
-            });
+            .request();
+        expect(response.isPendingProcessing()).toBeTruthy();
     });
 
     test('Login', async () => {
-        return method
+        const response = await method
             .login({
                 issuer: 'BANKNL2Y',
             })
-            .request()
-            .then((data) => {
-                expect(data.isPendingProcessing()).toBeTruthy();
-            });
+            .request();
+        expect(response.isPendingProcessing()).toBeTruthy();
     });
 });

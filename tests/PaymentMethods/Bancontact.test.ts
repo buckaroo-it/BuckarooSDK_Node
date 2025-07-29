@@ -1,85 +1,98 @@
+import { IRefundRequest, PaymentMethodInstance, uniqid } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
-import { uniqid } from '../../src';
+import { createRefundPayload } from '../Payloads';
 
-const method = buckarooClientTest.method('bancontactmrcash');
+let method: PaymentMethodInstance<'bancontactmrcash'>;
+let transactionKey: string;
 
-describe('BanContact methods', () => {
+beforeEach(() => {
+    method = buckarooClientTest.method('bancontactmrcash');
+});
+
+describe('Bancontact methods', () => {
     test('Pay Simple Payload', async () => {
-        return method
+        const response = await method
             .pay({
                 amountDebit: 100,
                 saveToken: true,
             })
-            .request()
-            .then((data) => {
-                expect(data.isWaitingOnUserInput()).toBeTruthy();
-            });
+            .request();
+
+        expect(response.isWaitingOnUserInput()).toBeTruthy();
     });
-    test('Refund', async () => {
-        return method
-            .refund({
-                invoice: uniqid(),
-                amountCredit: 0.01,
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-            })
-            .request()
-            .then((data) => {
-                expect(data.httpResponse.status).toEqual(200);
-            });
-    });
-    test('Authenticate', async () => {
-        return method
-            .authenticate({ invoice: uniqid(), amountDebit: 100 })
-            .request()
-            .then((data) => {
-                expect(data.isWaitingOnUserInput()).toBeDefined();
-            });
-    });
+
     test('PayOneClick', async () => {
-        return method
+        const response = await method
             .payOneClick({
                 invoice: uniqid(),
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                originalTransactionKey: 'FB45BE56A0584613A15DD5A453AC145F',
                 amountDebit: 100,
             })
-            .request()
-            .then((data) => {
-                expect(data.httpResponse.status).toEqual(200);
-            });
+            .request();
+
+        expect(response.isSuccess()).toBeTruthy();
+        transactionKey = response.getTransactionKey();
     });
-    test('CompletePayment', async () => {
-        return method
-            .completePayment({
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-                encryptedCardData: 'XXXXXXXXXXXXXXXXXXXXXXXX',
+
+    test('Refund (uses PayOneClick transaction key)', async () => {
+        expect(transactionKey).toBeDefined();
+
+        const refundPayload = createRefundPayload<IRefundRequest>({
+            originalTransactionKey: transactionKey,
+        });
+
+        const response = await method.refund(refundPayload).request();
+        expect(response.isSuccess()).toBeTruthy();
+    });
+
+    test('Authenticate', async () => {
+        const response = await method
+            .authenticate({
+                invoice: uniqid(),
+                amountDebit: 100,
             })
-            .request()
-            .then((data) => {
-                expect(data.httpResponse.status).toEqual(200);
-            });
+            .request();
+
+        expect(response.isWaitingOnUserInput()).toBeTruthy();
     });
+
     test('PayEncrypted', async () => {
-        return method
+        const response = await method
             .payEncrypted({
                 invoice: uniqid(),
                 amountDebit: 100,
-                encryptedCardData: 'XXXXXXXXXXXXXXXXXXXXXXXX',
+                encryptedCardData:
+                    '001SlXfd8MbiTd/JFwCiGVs3f6o4x6xt0aN29NzOSNZHPKlVsz/EWeQmyhb1gGZ86VY88DP7gfDV+UyjcPfpVfHZd7u+WkO71hnV2QfYILCBNqE1aiPv2GQVGdaGbuoQloKu1o3o3I1UDmVxivXTMQX76ovot89geA6hqbtakmpmvxeiwwea3l4htNoX1IlD1hfYkDDl9rzSu5ypcjvVs6aRGXK5iMHnyrmEsEnfdj/Q5XWbsD5xAm4u3y6J8d4UP7LB31VLECzZUTiJOtKKcCQlT01YThIkQlj8PWBBMtt4H52VN3IH2+wPYtR8HiOZzcA2HA7UxozogIpS53tIURj/g==',
             })
-            .request()
-            .then((data) => {
-                expect(data.httpResponse.status).toEqual(200);
-            });
+            .request();
+
+        expect(response.isPendingProcessing()).toBeTruthy();
+        transactionKey = response.getTransactionKey();
     });
+
+    test('CompletePayment (uses PayEncrypted transaction key)', async () => {
+        expect(transactionKey).toBeDefined();
+
+        const response = await method
+            .completePayment({
+                originalTransactionKey: transactionKey,
+                encryptedCardData:
+                    '001SlXfd8MbiTd/JFwCiGVs3f6o4x6xt0aN29NzOSNZHPKlVsz/EWeQmyhb1gGZ86VY88DP7gfDV+UyjcPfpVfHZd7u+WkO71hnV2QfYILCBNqE1aiPv2GQVGdaGbuoQloKu1o3o3I1UDmVxivXTMQX76ovot89geA6hqbtakmpmvxeiwwea3l4htNoX1IlD1hfYkDDl9rzSu5ypcjvVs6aRGXK5iMHnyrmEsEnfdj/Q5XWbsD5xAm4u3y6J8d4UP7LB31VLECzZUTiJOtKKcCQlT01YThIkQlj8PWBBMtt4H52VN3IH2+wPYtR8HiOZzcA2HA7UxozogIpS53tIURj/g==',
+            })
+            .request();
+
+        expect(response.isPendingProcessing()).toBeTruthy();
+    });
+
     test('PayRecurring', async () => {
-        return method
+        const response = await method
             .payRecurring({
                 invoice: uniqid(),
                 amountDebit: 100,
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                originalTransactionKey: transactionKey,
             })
-            .request()
-            .then((data) => {
-                expect(data.httpResponse.status).toEqual(200);
-            });
+            .request();
+
+        expect(response.httpResponse.status).toEqual(200);
     });
 });

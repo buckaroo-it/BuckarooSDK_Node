@@ -1,13 +1,18 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { uniqid } from '../../src';
+import { PaymentMethodInstance, uniqid } from '../../src';
 
-const method = buckarooClientTest.method('thunes');
+let method: PaymentMethodInstance<'thunes'>;
 
+beforeEach(() => {
+    method = buckarooClientTest.method('thunes');
+});
+
+// 'thunes' is not a valid service name.
 describe('Thunes methods', () => {
-    test('authorize', async () => {
-        return method
+    test.only('authorize', async () => {
+        const response = await method
             .authorize({
-                amountDebit: 100,
+                amountDebit: 10.0,
                 order: uniqid(),
                 invoice: uniqid(),
                 name: 'monizzeecovoucher',
@@ -24,33 +29,23 @@ describe('Thunes methods', () => {
                     },
                 ],
             })
-            .request()
-            .then((res) => {
-                expect(res.httpResponse.status).toEqual(200);
-            });
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
     });
     test('capture', async () => {
-        return method
+        const response = await method
             .capture({ amountDebit: 100, originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' })
-            .request()
-            .then((res) => {
-                expect(res.httpResponse.status).toEqual(200);
-            });
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
     });
     test('getStatus', async () => {
-        return method
+        const response = await method
             .getStatus({ originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' })
-            .request()
-            .then((res) => {
-                expect(res.httpResponse.status).toEqual(200);
-            });
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
     });
     test('cancel', async () => {
-        return method
-            .cancel({ originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' })
-            .request()
-            .then((res) => {
-                expect(res.httpResponse.status).toEqual(200);
-            });
+        const response = await method.cancel({ originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' }).request();
+        expect(response.isSuccess()).toBeTruthy();
     });
 });

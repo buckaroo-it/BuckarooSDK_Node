@@ -1,36 +1,35 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { uniqid } from '../../src';
+import { IRefundRequest, PaymentMethodInstance, uniqid } from '../../src';
+import { createRefundPayload } from '../Payloads';
 
-const method = buckarooClientTest.method('paypal');
+let method: PaymentMethodInstance<'paypal'>;
 
+beforeEach(() => {
+    method = buckarooClientTest.method('paypal');
+});
 describe('Paypal', () => {
     test('Pay', async () => {
-        return method
+        const response = await method
             .pay({
-                amountDebit: 100,
+                amountDebit: 100.3,
             })
-            .request()
-            .then((info) => {
-                expect(info.httpResponse.status).toEqual(200);
-            });
+            .request();
+        expect(response.isPendingProcessing()).toBeTruthy();
     });
     test('Refund', async () => {
-        return method
-            .refund({
-                invoice: uniqid(),
-                amountCredit: 0.01,
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-            })
-            .request()
-            .then((info) => {
-                expect(info.httpResponse.status).toEqual(200);
-            });
+        const response = await method
+            .refund(
+                createRefundPayload<IRefundRequest>({
+                    originalTransactionKey: 'EAD916B7D6544568A02B40B88F9207F6',
+                })
+            )
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
     });
     test('ExtraInfo', async () => {
-        buckarooClientTest.method('subscriptions').createCombined({});
-        return method
+        const response = await method
             .extraInfo({
-                amountDebit: 100,
+                amountDebit: 100.3,
                 address: {
                     street: 'Hoofdstraat',
                     street2: 'Street 2',
@@ -44,9 +43,7 @@ describe('Paypal', () => {
                 noShipping: '0',
                 phone: { mobile: '0612345678' },
             })
-            .request()
-            .then((info) => {
-                expect(info.httpResponse.status).toEqual(200);
-            });
+            .request();
+        expect(response.isPendingProcessing()).toBeTruthy();
     });
 });
