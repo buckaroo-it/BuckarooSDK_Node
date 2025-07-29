@@ -74,4 +74,3 @@ describe('testing Ideal methods', () => {
         expect(responseRemainderPay.isWaitingOnUserInput()).toBeTruthy();
     });
 });
-

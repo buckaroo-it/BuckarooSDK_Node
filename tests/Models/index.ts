@@ -45,7 +45,7 @@ export const TestAddress: IAddress = {
 export const TestArticle: IArticle = {
     description: 'Test Product',
     identifier: 'ABC123',
-    price: 40.10,
+    price: 40.1,
     quantity: 2,
     type: 'PhysicalArticle',
     unitCode: '123',

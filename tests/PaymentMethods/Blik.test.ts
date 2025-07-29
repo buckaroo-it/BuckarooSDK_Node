@@ -33,4 +33,3 @@ describe('Testing Blik methods', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
 });
-

@@ -14,7 +14,6 @@ describe('NoService methods', () => {
                 continueOnIncomplete: true,
             })
             .request();
-            expect(response.isWaitingOnUserInput()).toBeTruthy();
-
+        expect(response.isWaitingOnUserInput()).toBeTruthy();
     });
 });

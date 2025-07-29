@@ -12,4 +12,3 @@ describe('Testing ClickToPay methods', () => {
         expect(response.isWaitingOnUserInput()).toBeTruthy();
     });
 });
-

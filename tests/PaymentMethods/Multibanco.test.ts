@@ -12,7 +12,7 @@ describe('Multibanco methods', () => {
     test('Pay', async () => {
         const response = await method
             .pay({
-                amountDebit: 100.30,
+                amountDebit: 100.3,
             })
             .request();
         expect(response.isPendingProcessing()).toBeTruthy();

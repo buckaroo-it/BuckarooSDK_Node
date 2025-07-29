@@ -26,6 +26,5 @@ describe('Testing Eps methods', () => {
             })
             .request();
         expect(response.isSuccess()).toBeTruthy();
-
     });
 });

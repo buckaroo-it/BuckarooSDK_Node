@@ -85,12 +85,14 @@ describe('Bancontact methods', () => {
     });
 
     test('PayRecurring', async () => {
-      const response = await method.payRecurring({
-        invoice: uniqid(),
-        amountDebit: 100,
-        originalTransactionKey: transactionKey,
-      }).request();
+        const response = await method
+            .payRecurring({
+                invoice: uniqid(),
+                amountDebit: 100,
+                originalTransactionKey: transactionKey,
+            })
+            .request();
 
-      expect(response.httpResponse.status).toEqual(200);
+        expect(response.httpResponse.status).toEqual(200);
     });
 });
