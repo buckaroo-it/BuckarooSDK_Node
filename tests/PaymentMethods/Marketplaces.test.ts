@@ -1,82 +1,84 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { uniqid } from '../../src';
+import { IRefundRequest, PaymentMethodInstance, uniqid } from '../../src';
+import { createRefundPayload } from '../Payloads';
 
-const marketplaces = buckarooClientTest.method('marketplaces');
-const ideal = buckarooClientTest.method('ideal');
+let marketplaces: PaymentMethodInstance<'marketplaces'>;
+let ideal: PaymentMethodInstance<'ideal'>;
+
+beforeEach(() => {
+    marketplaces = buckarooClientTest.method('marketplaces');
+    ideal = buckarooClientTest.method('ideal');
+});
 
 describe('Testing Marketplaces methods', () => {
     test('Split', async () => {
-        const marketplacesResponse = marketplaces.split({
+        const marketplacesResponse = await marketplaces.split({
             description: 'INV0001',
-            daysUntilTransfer: 2,
+            daysUntilTransfer: 5,
             marketplace: {
                 amount: 10,
-                description: '',
+                description: 'INV0001 Commission Marketplace',
             },
             sellers: [
                 {
-                    accountId: 'XXXXXXXXXXXXXXXXXXXXXXXX',
+                    accountId: '789C60F316D24B088ACD471',
                     amount: 50,
-                    description: '',
+                    description: 'INV001 Payout Make-Up Products BV',
                 },
                 {
-                    accountId: 'XXXXXXXXXXXXXXXXXXXXXXXX',
-                    amount: 45,
-                    description: '',
+                    accountId: '369C60F316D24B088ACD238',
+                    amount: 35,
+                    description: 'INV0001 Payout Beauty Products BV',
                 },
             ],
         });
-        return ideal
+        const response = await ideal
             .combine(marketplacesResponse.data)
             .pay({
+                invoice: uniqid(),
                 issuer: 'ABNANL2A',
-                amountDebit: 100,
+                amountDebit: 95,
             })
-            .request()
-            .then((response) => {
-                expect(response.isValidationFailure()).toBeTruthy();
-            });
+            .request();
+        expect(response.isWaitingOnUserInput()).toBeTruthy();
     });
-    test('transfer', async () => {
-        return marketplaces
+    test.only('transfer', async () => {
+        const response = await marketplaces
             .transfer({
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                originalTransactionKey: 'DD58418EBE124DEB9E887EC059C729D5',
                 marketplace: {
                     amount: 10,
                     description: 'INV0001 Commission Marketplace',
                 },
                 sellers: [
                     {
-                        accountId: 'XXXXXXXXXXXXXXXXXXXXXXXX',
-                        amount: 50,
+                        accountId: '789C60F316D24B088ACD471',
+                        amount: 10,
                         description: 'INV001 Payout Make-Up Products BV',
                     },
                 ],
             })
-            .request()
-            .then((response) => {
-                expect(response.isValidationFailure()).toBeTruthy();
-            });
+            .request();
+
+        expect(response.isSuccess()).toBeTruthy();
     });
     test('refundSupplementary', async () => {
-        const marketplacesResponse = marketplaces.refundSupplementary({
+        const marketplacesResponse = await marketplaces.refundSupplementary({
             sellers: [
                 {
-                    accountId: 'XXXXXXXXXXXXXXXXXXXXXXXX',
+                    accountId: '789C60F316D24B088ACD471',
                     description: 'INV001 Payout Make-Up Products BV',
                 },
             ],
         });
-        return ideal
+        const response = await ideal
             .combine(marketplacesResponse.data)
-            .refund({
-                invoice: uniqid(),
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-                amountCredit: 0.01,
-            })
-            .request()
-            .then((response) => {
-                expect(response.isValidationFailure()).toBeTruthy();
-            });
+            .refund(
+                createRefundPayload<IRefundRequest>({
+                    originalTransactionKey: 'E933CC3B4CF9494294538935D297A03F',
+                })
+            )
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
     });
 });

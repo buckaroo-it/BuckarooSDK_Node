@@ -1,29 +1,29 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { uniqid } from '../../src';
+import { IRefundRequest, PaymentMethodInstance, uniqid } from '../../src';
+import { createRefundPayload } from '../Payloads';
 
-const method = buckarooClientTest.method('KBCPaymentButton');
+let method: PaymentMethodInstance<'KBCPaymentButton'>;
 
+beforeEach(() => {
+    method = buckarooClientTest.method('KBCPaymentButton');
+});
 describe('Testing KBC methods', () => {
     test('Pay', async () => {
-        return method
+        const response = await method
             .pay({
                 amountDebit: 100,
             })
-            .request()
-            .then((response) => {
-                expect(response.isPendingProcessing()).toBeTruthy();
-            });
+            .request();
+        expect(response.isPendingProcessing()).toBeTruthy();
     });
     test('Refund', async () => {
-        return method
-            .refund({
-                invoice: uniqid(),
-                amountCredit: 0.01,
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-            })
-            .request()
-            .then((response) => {
-                expect(response.isFailed()).toBeTruthy();
-            });
+        const response = await method
+            .refund(
+                createRefundPayload<IRefundRequest>({
+                    originalTransactionKey: 'F662726FCA4C4B609A6283DB686B1312',
+                })
+            )
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
     });
 });

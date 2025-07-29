@@ -1,11 +1,16 @@
-import { Gender } from '../../src';
+import { Gender, IRefundRequest, PaymentMethodInstance } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
+import { createRefundPayload } from '../Payloads';
 
-const method = buckarooClientTest.method('transfer');
+let method: PaymentMethodInstance<'transfer'>;
+
+beforeEach(() => {
+    method = buckarooClientTest.method('transfer');
+});
 
 describe('Transfer methods', () => {
     test('Pay', async () => {
-        return method
+        const response = await method
             .pay({
                 amountDebit: 100,
                 customer: {
@@ -17,9 +22,18 @@ describe('Transfer methods', () => {
                 sendMail: true,
                 dateDue: '2024-10-10',
             })
-            .request()
-            .then((res) => {
-                expect(res.isAwaitingConsumer()).toBeDefined();
-            });
+            .request();
+        expect(response.isAwaitingConsumer()).toBeTruthy();
+    });
+
+    test('Refund', async () => {
+        const response = await method
+            .refund(
+                createRefundPayload<IRefundRequest>({
+                    originalTransactionKey: '0D04AEAEE48E464597831E15BB92FBF1',
+                })
+            )
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
     });
 });

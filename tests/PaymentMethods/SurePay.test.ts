@@ -4,17 +4,16 @@ const method = buckarooClientTest.method('surepay');
 
 describe('SurePay methods', () => {
     test('Verify', async () => {
-        return method
+        const response = await method
             .verify({
-                amountDebit: 100,
+                currency: '',
+                amountDebit: 100.3,
                 bankAccount: {
                     iban: 'NLXXTESTXXXXXXXXXX',
                     accountName: 'Test Acceptatie',
                 },
             })
-            .request()
-            .then((info) => {
-                expect(info.httpResponse.status).toEqual(200);
-            });
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
     });
 });

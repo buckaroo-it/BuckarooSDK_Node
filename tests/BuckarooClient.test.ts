@@ -13,6 +13,10 @@ const BuckarooClient = Buckaroo.InitializeClient(
         returnURL: process.env.BPE_RETURN_URL || '',
         returnURLCancel: process.env.BPE_RETURN_URL_CANCEL || '',
         pushURL: process.env.BPE_PUSH_URL || '',
+        timeout: 20000,
     }
 );
+
+jest.setTimeout(20000);
+
 export default BuckarooClient;

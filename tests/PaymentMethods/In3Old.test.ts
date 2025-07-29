@@ -1,80 +1,54 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { Gender, getIPAddress, RecipientCategory, uniqid } from '../../src';
+import { IRefundRequest, PaymentMethodInstance, RecipientCategory } from '../../src';
+import { createAddressPayload, createBasePayload, createCustomerPayload, createRefundPayload } from '../Payloads';
+import { IPay } from '../../src/PaymentMethods/In3Old/Models/Pay';
 
-const capayable = buckarooClientTest.method('capayable');
+let method: PaymentMethodInstance<'capayable'>;
+const payload = createBasePayload<IPay>(
+    {
+        customerType: RecipientCategory.COMPANY,
+        invoiceDate: '22-01-2018',
+        email: 'test@buckaroo.nl',
+        phone: {
+            mobile: '0612345678',
+        },
+        company: {
+            companyName: 'Company B.V.',
+            chamberOfCommerce: '123456',
+        },
+        ...createAddressPayload({}, ['houseNumberAdditional']),
+        ...createCustomerPayload({}, ['firstName']),
+    },
+    {
+        billing: {
+            exclude: ['state', 'gender', 'lastNamePrefix', 'placeOfBirth', 'title'],
+        },
+        shipping: {
+            exclude: ['state', 'gender', 'lastNamePrefix', 'placeOfBirth', 'title'],
+        },
+        articles: {
+            exclude: ['type', 'unitCode', 'vatCategory', 'vatPercentage'],
+        },
+    }
+);
 
-describe('Testing capayable methods', () => {
-    test('Pay', async () => {
-        return capayable
-            .pay(paymentPayload)
-            .request()
-            .then((data) => {
-                expect(data.isSuccess()).toBeTruthy();
-            });
-    });
-    test('Refund', async () => {
-        return capayable
-            .refund({
-                invoice: uniqid(),
-                amountCredit: paymentPayload.amountDebit,
-                originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-            })
-            .request()
-            .then((data) => {
-                expect(data.isFailed()).toBeTruthy();
-            });
-    });
-    test('PayInInstallments', async () => {
-        return capayable
-            .payInInstallments(paymentPayload)
-            .request()
-            .then((response) => {
-                expect(response.isPendingProcessing()).toBeTruthy();
-            });
-    });
+beforeEach(() => {
+    method = buckarooClientTest.method('capayable');
 });
 
-const paymentPayload = {
-    clientIP: getIPAddress(),
-    description: 'Test',
-    amountDebit: 100,
-    customerType: RecipientCategory.COMPANY,
-    invoiceDate: '22-01-2018',
-    customer: {
-        gender: Gender.FEMALE,
-        culture: 'nl-NL',
-        initials: 'TA',
-        lastName: 'Acceptatie',
-        birthDate: '1990-01-01',
-    },
-    company: {
-        companyName: 'Buckaroo B.V.',
-        chamberOfCommerce: 'XXXXXX41',
-    },
-    address: {
-        street: 'Hoofdstraat',
-        houseNumber: '80',
-        houseNumberSuffix: 'a',
-        zipcode: '8441ER',
-        city: 'Heerenveen',
-        country: 'NL',
-    },
-    email: 'test@buckaroo.nl',
-    phone: {
-        mobile: '0612345678',
-    },
-    articles: [
-        {
-            identifier: '64381664f2f8b',
-            price: 10,
-            quantity: 1,
-            description: 'Blue Toy Car',
-        },
-    ],
-    subtotals: [
-        {
-            name: 'Verzendkosten',
-            value: 2,
-        },
-    ],
-};
+describe('Testing capayable methods', () => {
+    test('PayInInstallments', async () => {
+        const response = await method.payInInstallments(payload).request();
+        expect(response.isPendingProcessing()).toBeTruthy();
+    });
+    test('Refund', async () => {
+        const response = await method
+            .refund(
+                createRefundPayload<IRefundRequest>({
+                    originalTransactionKey: 'EF24A62B8D7B4F88859FBA4DF140B6C2',
+                })
+            )
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
+    });
+});

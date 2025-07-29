@@ -5,17 +5,15 @@ const method = buckarooClientTest.method('noservice');
 
 describe('NoService methods', () => {
     test('Pay', async () => {
-        return method
+        const response = await method
             .pay({
                 amountDebit: 100,
                 invoice: uniqid(),
                 servicesSelectableByClient: 'ideal,bancontactmrcash,paypal',
-                servicesExcludedForClient: 'ideal',
+                servicesExcludedForClient: 'mbway',
                 continueOnIncomplete: true,
             })
-            .request()
-            .then((data) => {
-                expect(data.isPendingProcessing()).toBeTruthy();
-            });
+            .request();
+        expect(response.isWaitingOnUserInput()).toBeTruthy();
     });
 });

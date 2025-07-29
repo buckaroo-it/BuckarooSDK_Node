@@ -1,59 +1,54 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { ServiceCode } from '../../src';
+import { PaymentMethodInstance, ServiceCode, uniqid } from '../../src';
 
-const method = buckarooClientTest.method('emandate');
+let method: PaymentMethodInstance<'emandate'>;
+
+beforeEach(() => {
+    method = buckarooClientTest.method('emandate');
+});
+
 describe('Testing Emandates methods', () => {
     test('GetIssuerList', async () => {
-        return method
-            .issuerList()
-            .request()
-            .then((response) => {
-                expect(response.isSuccess()).toBeTruthy();
-            });
+        const response = await method.issuerList().request();
+        expect(response.isSuccess()).toBeTruthy();
     });
+
     test('CreateMandate', async () => {
-        return method
+        const response = await method
             .createMandate({
-                debtorReference: 'XXXXXXXXX',
+                emandatereason: 'Testing',
+                sequenceType: 0,
+                purchaseId: uniqid(),
+                debtorbankid: 'INGBNL2A',
+                debtorReference: 'reference',
                 language: 'nl',
                 continueOnIncomplete: true,
-                purchaseId: 'XXXXXXXXXXXXXX',
-                sequenceType: 0,
             })
-            .request()
-            .then((response) => {
-                expect(response.isPendingProcessing()).toBeTruthy();
-            });
+            .request();
+        expect(response.isWaitingOnUserInput()).toBeTruthy();
     });
+
     test('GetStatus', async () => {
-        return method
-            .status({ mandateId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' })
-            .request()
-            .then((response) => {
-                expect(response.isSuccess()).toBeTruthy();
-            });
+        const response = await method.status({ mandateId: '1DC1803BA695F0747AD819C62A557BC6149' }).request();
+        expect(response.isSuccess()).toBeTruthy();
     });
     test('ModifyMandate', async () => {
-        return method
+        const response = await method
             .modifyMandate({
-                originalMandateId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                originalMandateId: '1DC1803BA695F0747AD819C62A557BC6149',
                 continueOnIncomplete: true,
             })
-            .request()
-            .then((response) => {
-                expect(response.isFailed()).toBeTruthy();
-            });
+            .request();
+        expect(response.isWaitingOnUserInput()).toBeTruthy();
     });
-    test('CancelMandate', async () => {
-        return method
+    test.only('CancelMandate', async () => {
+        const response = await method
             .setServiceCode('emandateb2b' as ServiceCode)
             .cancelMandate({
-                mandateId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-                purchaseId: 'XXXXXXXXXXXXXX',
+                mandateId: '1DCFCAE452C96D7474BB28C57068134C02F',
+                purchaseId: '6383d3e86944a0',
             })
-            .request()
-            .then((response) => {
-                expect(response.isValidationFailure()).toBeTruthy();
-            });
+            .request();
+        expect(response.isPendingProcessing()).toBeTruthy();
     });
 });

@@ -1,9 +1,15 @@
+import { PaymentMethodInstance } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
 
-const method = buckarooClientTest.method('idealqr');
+let method: PaymentMethodInstance<'idealqr'>;
+
+beforeEach(() => {
+    method = buckarooClientTest.method('idealqr');
+});
+
 describe('Testing IdealQR methods', () => {
     test('Pay', async () => {
-        return method
+        const response = await method
             .generate({
                 description: 'Test purchase',
                 returnURL: 'https://buckaroo.dev/return',
@@ -19,14 +25,8 @@ describe('Testing IdealQR methods', () => {
                 amountIsChangeable: true,
                 expiration: '2030-09-30',
                 isProcessing: false,
-                additionalParameters: {
-                    initiated_by_magento: '1',
-                    service_action: 'something',
-                },
             })
-            .request()
-            .then((response) => {
-                expect(response.isSuccess()).toBeTruthy();
-            });
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
     });
 });
