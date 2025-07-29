@@ -29,28 +29,26 @@ describe('Testing Emandates methods', () => {
     });
 
     test('GetStatus', async () => {
-        const response = await method.status({ mandateId: '1DC7F83B7B937864FB39966B0C08A7B86D8' }).request();
+        const response = await method.status({ mandateId: '1DC1803BA695F0747AD819C62A557BC6149' }).request();
         expect(response.isSuccess()).toBeTruthy();
     });
     test('ModifyMandate', async () => {
         const response = await method
             .modifyMandate({
-                originalMandateId: '1DC7F83B7B937864FB39966B0C08A7B86D8',
+                originalMandateId: '1DC1803BA695F0747AD819C62A557BC6149',
                 continueOnIncomplete: true,
             })
             .request();
         expect(response.isWaitingOnUserInput()).toBeTruthy();
     });
-    // Unknown action 'CancelMandate' used on service 'emandate'.
-    // No valid subscription found for service 'emandateb2b'.
-    // test('CancelMandate', async () => {
-    //     const response = await method
-    //         .setServiceCode('emandateb2b' as ServiceCode)
-    //         .cancelMandate({
-    //             mandateId: '1DC7F83B7B937864FB39966B0C08A7B86D8',
-    //             purchaseId: '6383d3e86944a0',
-    //         })
-    //         .request();
-    //     expect(response.isSuccess()).toBeTruthy();
-    // });
+    test.only('CancelMandate', async () => {
+        const response = await method
+            .setServiceCode('emandateb2b' as ServiceCode)
+            .cancelMandate({
+                mandateId: '1DCFCAE452C96D7474BB28C57068134C02F',
+                purchaseId: '6383d3e86944a0',
+            })
+            .request();
+        expect(response.isPendingProcessing()).toBeTruthy();
+    });
 });
