@@ -1,8 +1,8 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { IRefundRequest } from '../../src';
+import { IRefundRequest, PaymentMethodInstance } from '../../src';
 import { createRefundPayload } from '../Payloads';
 
-let method = buckarooClientTest.method('belfius');
+let method: PaymentMethodInstance<'belfius'>;
 
 beforeEach(() => {
     method = buckarooClientTest.method('belfius');

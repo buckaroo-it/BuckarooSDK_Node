@@ -50,7 +50,6 @@
         "axios": "^1.6.2",
         "crypto-js": "^4.1.1",
         "ip-address": "^8.1.0",
-        "lodash": "^4.17.21",
         "xml2js": "^0.6.2"
     },
     "repository": {

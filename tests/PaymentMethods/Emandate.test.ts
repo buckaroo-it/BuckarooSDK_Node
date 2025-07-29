@@ -1,7 +1,12 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { ServiceCode, uniqid } from '../../src';
+import { PaymentMethodInstance, ServiceCode, uniqid } from '../../src';
 
-const method = buckarooClientTest.method('emandate');
+let method: PaymentMethodInstance<'emandate'>;
+
+beforeEach(() => {
+    method = buckarooClientTest.method('emandate');
+});
+
 describe('Testing Emandates methods', () => {
     test('GetIssuerList', async () => {
         const response = await method.issuerList().request();

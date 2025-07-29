@@ -34,6 +34,6 @@ describe('PaymentInitiation methods', () => {
                 })
             )
             .request();
-        expect(response.isSuccess).toBeTruthy();
+        expect(response.isSuccess()).toBeTruthy();
     });
 });

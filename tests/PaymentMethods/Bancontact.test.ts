@@ -1,8 +1,8 @@
-import { IRefundRequest, uniqid } from '../../src';
+import { IRefundRequest, PaymentMethodInstance, uniqid } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
 import { createRefundPayload } from '../Payloads';
 
-let method = buckarooClientTest.method('bancontactmrcash');
+let method: PaymentMethodInstance<'bancontactmrcash'>;
 let transactionKey: string;
 
 beforeEach(() => {

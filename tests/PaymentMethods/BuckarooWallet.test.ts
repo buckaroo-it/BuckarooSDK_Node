@@ -1,5 +1,6 @@
 import buckarooClientTest from '../BuckarooClient.test';
-import { PaymentMethodInstance, uniqid } from '../../src';
+import { IRefundRequest, PaymentMethodInstance, uniqid } from '../../src';
+import { getServiceParameter, createRefundPayload } from '../Payloads';
 
 let method: PaymentMethodInstance<'BuckarooWalletCollecting'>;
 
@@ -11,13 +12,6 @@ let walletMutationGuid: string;
 beforeEach(() => {
     method = buckarooClientTest.method('BuckarooWalletCollecting');
 });
-
-const getServiceParameter = (response: any, name: string): string => {
-    const param = (response.getServices()?.[0]?.parameters as { name: string; value: any }[] | undefined)?.find(
-        (p) => p.name === name
-    );
-    return String(param?.value ?? '');
-};
 
 const payload = {
     walletId: uniqid(),
@@ -141,14 +135,13 @@ describe('BuckarooWallet methods', () => {
 
     test('Refund', async () => {
         const response = await method
-            .refund({
-                invoice: uniqid(),
-                amountCredit: 0.01,
-                originalTransactionKey: transactionKey,
-            })
+            .refund(
+                createRefundPayload<IRefundRequest>({
+                    originalTransactionKey: transactionKey,
+                })
+            )
             .request();
 
-        console.log(response.getStatusCode());
         expect(response.isSuccess()).toBeTruthy();
-    }, 10000);
+    });
 });

@@ -30,7 +30,7 @@ describe('testing Ideal methods', () => {
                 })
             )
             .request();
-        expect(response.isSuccess).toBeTruthy();
+        expect(response.isSuccess()).toBeTruthy();
     });
     test('InstantRefund', async () => {
         const response = await method
@@ -40,7 +40,7 @@ describe('testing Ideal methods', () => {
                 })
             )
             .request();
-        expect(response.isSuccess).toBeTruthy();
+        expect(response.isSuccess()).toBeTruthy();
     });
     test('PayFastCheckout', async () => {
         const response = await method

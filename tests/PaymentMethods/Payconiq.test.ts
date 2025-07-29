@@ -26,7 +26,7 @@ describe('Payconiq', () => {
                 })
             )
             .request();
-        expect(response.isSuccess).toBeTruthy();
+        expect(response.isSuccess()).toBeTruthy();
     });
     test('InstantRefund', async () => {
         const response = await method
@@ -36,6 +36,6 @@ describe('Payconiq', () => {
                 })
             )
             .request();
-        expect(response.isSuccess).toBeTruthy();
+        expect(response.isSuccess()).toBeTruthy();
     });
 });

@@ -1,12 +1,12 @@
 import { IPay } from '../../src/PaymentMethods/Billink/Models/Pay';
 import buckarooClientTest from '../BuckarooClient.test';
-import { IRequest, RecipientCategory, uniqid } from '../../src';
+import { PaymentMethodInstance } from '../../src';
 import { createBasePayload, createRefundPayload } from '../Payloads';
 import { IRefund } from '../../src/PaymentMethods/Billink/Models/Refund';
 
 let payTransactionKey: string;
 let authorizeTransactionKey: string;
-let method = buckarooClientTest.method('billink');
+let method: PaymentMethodInstance<'billink'>;
 let payload: IPay;
 
 beforeEach(() => {
@@ -68,17 +68,10 @@ describe('Billink methods', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('Capture', async () => {
-        // const authResponse = await method.authorize(payload).request();
-        // expect(authResponse.isSuccess()).toBeTruthy();
-        // let key = authResponse.getTransactionKey();
-        // expect(key).toBeDefined();
-
-        // new Promise((resolve) => setTimeout(resolve, 6000));
-
         const response = await method
             .capture({
                 ...payload,
-                originalTransactionKey: '1234',
+                originalTransactionKey: '4DAEE00C7C03475E87FDA2DB3674992F',
             })
             .request();
         expect(response.isSuccess()).toBeTruthy();

@@ -1,8 +1,8 @@
-import { Gender, IRefundRequest } from '../../src';
+import { Gender, IRefundRequest, PaymentMethodInstance } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
 import { createRefundPayload } from '../Payloads';
 
-let method = buckarooClientTest.method('transfer');
+let method: PaymentMethodInstance<'transfer'>;
 
 beforeEach(() => {
     method = buckarooClientTest.method('transfer');

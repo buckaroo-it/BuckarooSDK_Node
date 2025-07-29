@@ -1,8 +1,8 @@
-import { IRefundRequest } from '../../src';
+import { IRefundRequest, PaymentMethodInstance } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
 import { createRefundPayload } from '../Payloads';
 
-let method = buckarooClientTest.method('blik');
+let method: PaymentMethodInstance<'blik'>;
 
 beforeEach(() => {
     method = buckarooClientTest.method('blik');
@@ -13,7 +13,7 @@ describe('Testing Blik methods', () => {
         const response = await method
             .pay({
                 currency: 'PLN',
-                amountDebit: 10.0,
+                amountDebit: 100.0,
                 invoice: 'Blik Test Plugin Example',
                 description: 'Blik Test Plugin Example',
                 email: 'test@buckaroo.nl',
@@ -21,17 +21,16 @@ describe('Testing Blik methods', () => {
             .request();
         expect(response.isPendingProcessing()).toBeTruthy();
     });
-    //unexpected error in pay redirect link
-    // test('Refund', async () => {
-    //     const response = await method
-    //         .refund(
-    //             createRefundPayload<IRefundRequest>({
-    //                 originalTransactionKey: 'DA18F7031E3547E898B68773E372ACB4',
-    //                 currency: 'PLN',
-    //             })
-    //         )
-    //         .request();
-    //     expect(response.isSuccess()).toBeTruthy();
-    // });
+    test('Refund', async () => {
+        const response = await method
+            .refund(
+                createRefundPayload<IRefundRequest>({
+                    originalTransactionKey: 'DA18F7031E3547E898B68773E372ACB4',
+                    currency: 'PLN',
+                })
+            )
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
+    });
 });
 

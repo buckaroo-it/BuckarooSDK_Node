@@ -42,11 +42,11 @@ describe('Testing capayable methods', () => {
         const response = await method.pay(payload).request();
         expect(response.isSuccess()).toBeTruthy();
     });
-    test.only('PayInInstallments', async () => {
+    test('PayInInstallments', async () => {
         const response = await method.payInInstallments(payload).request();
         expect(response.isPendingProcessing()).toBeTruthy();
     });
-    test.only('Refund', async () => {
+    test('Refund', async () => {
         const response = await method
             .refund(
                 createRefundPayload<IRefundRequest>({

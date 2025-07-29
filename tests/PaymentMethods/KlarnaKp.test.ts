@@ -19,7 +19,7 @@ describe('KlarnaKp', () => {
             .request();
         expect(response.isSuccess()).toBeTruthy();
     });
-    test.only('Reserve', async () => {
+    test('Reserve', async () => {
         const response = await method
             .reserve(
                 createBasePayload<IReserve>(
