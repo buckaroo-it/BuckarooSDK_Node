@@ -37,11 +37,6 @@ beforeEach(() => {
 });
 
 describe('Testing capayable methods', () => {
-    //  "Action Pay is no longer available for Capayable"
-    test('Pay', async () => {
-        const response = await method.pay(payload).request();
-        expect(response.isSuccess()).toBeTruthy();
-    });
     test('PayInInstallments', async () => {
         const response = await method.payInInstallments(payload).request();
         expect(response.isPendingProcessing()).toBeTruthy();
