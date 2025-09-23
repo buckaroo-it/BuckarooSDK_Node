@@ -81,6 +81,7 @@ export { default as przelewy24 } from './Przelewy24';
 export { default as sepadirectdebit } from './SEPA';
 export { default as subscriptions } from './Subscriptions';
 export { default as surepay } from './Surepay';
+export { default as swish } from './Swish';
 export { default as thunes } from './Thunes';
 export { default as alipay } from './Alipay';
 export { default as trustly } from './Trustly';
