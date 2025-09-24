@@ -5,6 +5,7 @@ import { IIn3Recipient, In3Recipient } from './Recipient';
 export interface IPay extends IPaymentRequest {
     invoiceDate?: string;
     invoiceUrl?: string;
+    route?: string;
     billing?: IIn3Recipient;
     shipping?: Partial<IIn3Recipient>;
     articles?: Partial<IIn3Article>[];
@@ -17,6 +18,10 @@ export default class Pay extends ServiceParameter {
 
     set invoiceUrl(value: string) {
         this.set('invoiceUrl', value);
+    }
+
+    set route(value: string) {
+        this.set('route', value);
     }
 
     get billing() {
