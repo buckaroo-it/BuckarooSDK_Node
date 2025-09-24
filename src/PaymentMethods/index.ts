@@ -92,3 +92,4 @@ export { default as In3 } from './In3';
 export { default as noservice } from './NoService';
 export { default as externalpayment } from './ExternalPayment';
 export { default as ClickToPay } from './ClickToPay';
+export { default as wero } from './Wero';
