@@ -84,6 +84,7 @@ export { default as surepay } from './Surepay';
 export { default as thunes } from './Thunes';
 export { default as alipay } from './Alipay';
 export { default as trustly } from './Trustly';
+export { default as twint } from './Twint';
 export { default as wechatpay } from './WeChatPay';
 export { default as In3 } from './In3';
 export { default as noservice } from './NoService';
