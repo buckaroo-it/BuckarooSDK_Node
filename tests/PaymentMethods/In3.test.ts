@@ -28,6 +28,10 @@ describe('Testing In3 methods', () => {
         const response = await method.pay(payload).request();
         expect(response.isPendingProcessing()).toBeTruthy();
     });
+    test('Pay with ABN-AMRO', async () => {
+        const response = await method.pay({...payload, route: 'abn_b2b'}).request();
+        expect(response.isPendingProcessing()).toBeTruthy();
+    });
     test('Refund', async () => {
         const response = await method
             .refund(
