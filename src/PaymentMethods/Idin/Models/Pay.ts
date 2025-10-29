@@ -9,8 +9,4 @@ export class Pay extends ServiceParameter {
     set issuer(value: string) {
         this.set('issuerID', value);
     }
-
-    set additionalParameters(value: IAdditionalParameters) {
-        this.set('additionalParameters', value);
-    }
 }
