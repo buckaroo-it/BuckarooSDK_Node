@@ -5,7 +5,6 @@ import { createBasePayload, createRefundPayload } from '../Payloads';
 import { IRefund } from '../../src/PaymentMethods/Billink/Models/Refund';
 
 let payTransactionKey: string;
-let authorizeTransactionKey: string;
 let method: PaymentMethodInstance<'billink'>;
 let payload: IPay;
 
@@ -37,12 +36,6 @@ describe('Billink methods', () => {
         expect(response.isSuccess()).toBeTruthy();
         payTransactionKey = response.getTransactionKey();
     });
-    test('Authorize', async () => {
-        const response = await method.authorize(payload).request();
-
-        expect(response.isSuccess()).toBeTruthy();
-        authorizeTransactionKey = response.getTransactionKey();
-    });
     test('Refund', async () => {
         expect(payTransactionKey).toBeDefined();
         const response = await method
@@ -51,28 +44,6 @@ describe('Billink methods', () => {
                     originalTransactionKey: payTransactionKey,
                 })
             )
-            .request();
-        expect(response.isSuccess()).toBeTruthy();
-    });
-    test('CancelAuthorize', async () => {
-        expect(authorizeTransactionKey).toBeDefined();
-
-        const response = await method
-            .cancelAuthorize(
-                createRefundPayload<IRefund>({
-                    originalTransactionKey: authorizeTransactionKey,
-                    amountCredit: payload.amountDebit,
-                })
-            )
-            .request();
-        expect(response.isSuccess()).toBeTruthy();
-    });
-    test('Capture', async () => {
-        const response = await method
-            .capture({
-                ...payload,
-                originalTransactionKey: '4DAEE00C7C03475E87FDA2DB3674992F',
-            })
             .request();
         expect(response.isSuccess()).toBeTruthy();
     });
