@@ -1,4 +1,3 @@
-import { merge } from 'lodash';
 import {
     uniqid,
     getIPAddress,
@@ -11,6 +10,8 @@ import {
     Gender,
     IRequest,
 } from '../../src';
+
+import { deepMerge } from '../Utils';
 
 import {
     TestPerson,
@@ -52,7 +53,7 @@ export function createBillingPayload(overrides: any = {}, exclude: string[] = []
     };
 
     const clean = removeNestedKeys(payload, exclude);
-    return merge({}, clean, overrides);
+    return deepMerge(clean, overrides);
 }
 
 export function createShippingPayload(overrides: any = {}, exclude: string[] = []) {
@@ -63,7 +64,7 @@ export function createShippingPayload(overrides: any = {}, exclude: string[] = [
     };
 
     const clean = removeNestedKeys(payload, exclude);
-    return merge({}, clean, overrides);
+    return deepMerge(clean, overrides);
 }
 
 export function createAddressPayload(overrides: any = {}, exclude: string[] = []) {
@@ -72,7 +73,7 @@ export function createAddressPayload(overrides: any = {}, exclude: string[] = []
     };
 
     const clean = removeNestedKeys(payload, exclude);
-    return merge({}, clean, overrides);
+    return deepMerge(clean, overrides);
 }
 
 export function createCustomerPayload(overrides: any = {}, exclude: string[] = []) {
@@ -81,7 +82,7 @@ export function createCustomerPayload(overrides: any = {}, exclude: string[] = [
     };
 
     const clean = removeNestedKeys(payload, exclude);
-    return merge({}, clean, overrides);
+    return deepMerge(clean, overrides);
 }
 
 export function createArticlesPayload(overrides: Partial<IArticle>[] = [], exclude: string[] = []): IArticle[] {
@@ -97,7 +98,7 @@ export function createArticlesPayload(overrides: Partial<IArticle>[] = [], exclu
     ];
 
     const cleaned = articles.map((article) => removeNestedKeys(article, exclude));
-    return merge([], cleaned, overrides);
+    return deepMerge([], cleaned, overrides);
 }
 
 // ------------------------
@@ -138,7 +139,7 @@ export function createBasePayload<T extends IRequest>(
     }
 
     const payload = removeNestedKeys(basePayload, exclude);
-    return merge({}, payload, overrides) as T;
+    return deepMerge(payload, overrides) as T;
 }
 
 export function createRefundPayload<T extends object>(overrides: Partial<T> = {}, exclude: string[] = []): T {
@@ -149,7 +150,7 @@ export function createRefundPayload<T extends object>(overrides: Partial<T> = {}
     };
 
     const rpayload = removeNestedKeys(refundPayload, exclude);
-    return merge({}, rpayload, overrides) as T;
+    return deepMerge(rpayload, overrides) as T;
 }
 
 export const getServiceParameter = (response: any, name: string): string => {
