@@ -1,26 +1,25 @@
 import buckarooClient from '../buckarooClient';
-import { RecipientCategory, uniqid } from '../../src';
+import { RecipientCategory, Gender, uniqid } from '../../src';
 
 const klarna = buckarooClient.method('klarna');
 
-//Pay
+// Reserve (initial transaction)
 klarna
-    .pay({
-        amountDebit: 100,
+    .reserve({
+        amountDebit: 100.5,
         invoice: uniqid(),
         order: uniqid(),
         billing: {
             recipient: {
                 category: RecipientCategory.PERSON,
-                gender: 'female',
-                firstName: 'Test',
-                lastName: 'Acceptatie',
+                gender: Gender.MALE,
+                firstName: 'John',
+                lastName: 'Do',
                 birthDate: '1990-01-01',
             },
             address: {
                 street: 'Hoofdstraat',
                 houseNumber: '80',
-                houseNumberAdditional: 'a',
                 zipcode: '8441ER',
                 city: 'Heerenveen',
                 country: 'NL',
@@ -32,21 +31,18 @@ klarna
         },
         shipping: {
             recipient: {
-                category: RecipientCategory.COMPANY,
-                gender: 'male',
-                firstName: 'Test',
-                lastName: 'Acceptatie',
-                birthDate: '1990-01-01',
+                category: RecipientCategory.PERSON,
+                gender: Gender.MALE,
+                firstName: 'John',
+                lastName: 'Do',
             },
             address: {
                 street: 'Hoofdstraat',
                 houseNumber: '80',
-                houseNumberAdditional: 'a',
                 zipcode: '8441ER',
                 city: 'Heerenveen',
                 country: 'NL',
             },
-            email: 'test@buckaroo.nl',
         },
         articles: [
             {
@@ -54,7 +50,7 @@ klarna
                 description: 'Blue Toy Car',
                 vatPercentage: 21,
                 quantity: 1,
-                price: 50,
+                price: 50.5,
             },
             {
                 identifier: 'Articlenumber2',
@@ -64,13 +60,87 @@ klarna
                 price: 50,
             },
         ],
+        gender: Gender.MALE,
+        operatingCountry: 'NL',
+        pno: '01011990',
     })
     .request();
-//Refund
+
+// Pay
+klarna
+    .pay({
+        amountDebit: 100.5,
+        invoice: uniqid(),
+        order: uniqid(),
+        dataRequestKey: 'dataRequestKey from reserve transaction',
+        shippingInfo: {
+            company: 'DHL',
+            trackingNumber: '1234567890',
+            shippingMethod: 'Standard',
+        },
+    })
+    .request();
+
+// Update Reservation (modify shipping or articles)
+klarna
+    .update({
+        amountDebit: 100.5,
+        invoice: uniqid(),
+        order: uniqid(),
+        dataRequestKey: 'dataRequestKey from reserve transaction',
+        shipping: {
+            recipient: {
+                category: RecipientCategory.PERSON,
+                gender: Gender.MALE,
+                firstName: 'John Updated',
+                lastName: 'Do Updated',
+            },
+            address: {
+                street: 'Hoofdstraat',
+                houseNumber: '90',
+                zipcode: '8441ER',
+                city: 'Heerenveen',
+                country: 'NL',
+            },
+        },
+        articles: [
+            {
+                identifier: 'Articlenumber1',
+                description: 'Blue Toy Car',
+                vatPercentage: 21,
+                quantity: 1,
+                price: 50.5,
+            },
+            {
+                identifier: 'Articlenumber3',
+                description: 'Green Toy Car',
+                vatPercentage: 21,
+                quantity: 1,
+                price: 50,
+            },
+        ],
+    })
+    .request();
+
+// Extend Reservation
+klarna
+    .extend({
+        dataRequestKey: 'dataRequestKey from reserve transaction',
+    })
+    .request();
+
+// Cancel Reservation
+klarna
+    .cancel({
+        dataRequestKey: 'dataRequestKey from reserve transaction',
+    })
+    .request();
+
+// Refund
 klarna
     .refund({
-        originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        originalTransactionKey: 'transactionKey from pay transaction',
         amountCredit: 10.1,
-        invoice: 'Klarna Refund',
+        invoice: uniqid(),
     })
     .request();

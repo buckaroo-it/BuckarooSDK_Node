@@ -1,21 +1,23 @@
 import buckarooClient from '../buckarooClient';
-import { RecipientCategory, uniqid } from '../../src';
+import { Gender, RecipientCategory, uniqid } from '../../src';
 
 const klarna = buckarooClient.method('klarna');
 
-//Pay
+// Reserve
 klarna
-    .pay({
+    .reserve({
         amountDebit: 100,
         invoice: uniqid(),
         order: uniqid(),
+        clientIP: '127.0.0.1',
+        gender: Gender.MALE,
+        operatingCountry: 'NL',
+        pno: '01011990',
         billing: {
             recipient: {
                 category: RecipientCategory.PERSON,
-                gender: 'female',
                 firstName: 'Test',
                 lastName: 'Acceptatie',
-                birthDate: '1990-01-01',
             },
             address: {
                 street: 'Hoofdstraat',
@@ -32,11 +34,9 @@ klarna
         },
         shipping: {
             recipient: {
-                category: RecipientCategory.COMPANY,
-                gender: 'male',
+                category: RecipientCategory.PERSON,
                 firstName: 'Test',
                 lastName: 'Acceptatie',
-                birthDate: '1990-01-01',
             },
             address: {
                 street: 'Hoofdstraat',
@@ -53,23 +53,84 @@ klarna
                 identifier: 'Articlenumber1',
                 description: 'Blue Toy Car',
                 vatPercentage: 21,
-                quantity: 1,
-                price: 50,
+                quantity: 2,
+                price: 25.15,
             },
             {
                 identifier: 'Articlenumber2',
                 description: 'Red Toy Car',
                 vatPercentage: 21,
                 quantity: 1,
-                price: 50,
+                price: 25.15,
             },
         ],
     })
     .request();
-//Refund
+
+// Pay
+klarna
+    .pay({
+        amountDebit: 100,
+        invoice: uniqid(),
+        dataRequestKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // From reserve response
+        shippingInfo: {
+            company: 'DHL Express',
+            trackingNumber: 'TRACK1234567890',
+            shippingMethod: 'Next Day Delivery',
+        },
+    })
+    .request();
+
+// Update Reservation
+klarna
+    .update({
+        dataRequestKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // From reserve response
+        invoice: 'Updated-' + uniqid(),
+        shipping: {
+            recipient: {
+                category: RecipientCategory.PERSON,
+                firstName: 'Jane',
+                lastName: 'Smith',
+            },
+            address: {
+                street: 'Nieuwe Straat',
+                houseNumber: '25',
+                zipcode: '5678CD',
+                city: 'Rotterdam',
+                country: 'NL',
+            },
+            email: 'updated@buckaroo.nl',
+        },
+        articles: [
+            {
+                identifier: 'Articlenumber1',
+                description: 'Updated Blue Toy Car',
+                vatPercentage: 21,
+                quantity: 3,
+                price: 20.1,
+            },
+        ],
+    })
+    .request();
+
+// Extend Reservation
+klarna
+    .extend({
+        dataRequestKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // From reserve response
+    })
+    .request();
+
+// Cancel Reservation
+klarna
+    .cancel({
+        dataRequestKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // From reserve response
+    })
+    .request();
+
+// Refund
 klarna
     .refund({
-        originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // From pay response
         amountCredit: 10.1,
         invoice: 'Klarna Refund',
     })
