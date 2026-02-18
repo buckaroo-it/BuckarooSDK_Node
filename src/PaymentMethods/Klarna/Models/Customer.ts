@@ -1,5 +1,6 @@
-import { IAddress, IRecipient, Model } from '../../../Models';
+import { IAddress, IRecipient, IPhone, Model } from '../../../Models';
 import { Address } from './Address';
+import { Phone } from './Phone';
 import { Recipient } from './Recipient';
 
 export class Customer extends Model {
@@ -17,5 +18,9 @@ export class Customer extends Model {
 
     set recipient(recipient: Partial<IRecipient>) {
         this.set('recipient', new Recipient({ prefix: this.get('prefix'), ...recipient }));
+    }
+
+    set phone(phone: Partial<IPhone>) {
+        this.set('phone', new Phone({ prefix: this.get('prefix'), ...phone }));
     }
 }

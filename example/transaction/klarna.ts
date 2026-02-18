@@ -46,6 +46,9 @@ klarna
                 city: 'Heerenveen',
                 country: 'NL',
             },
+            phone: {
+                mobile: '0698765432',
+            },
             email: 'test@buckaroo.nl',
         },
         articles: [
@@ -72,11 +75,11 @@ klarna
     .pay({
         amountDebit: 100,
         invoice: uniqid(),
-        dataRequestKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // From reserve response
+        dataRequestKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // dataRequestKey from reserve transaction
         shippingInfo: {
             company: 'DHL Express',
             trackingNumber: 'TRACK1234567890',
-            shippingMethod: 'Next Day Delivery',
+            shippingMethod: 'Standard',
         },
     })
     .request();
@@ -84,8 +87,8 @@ klarna
 // Update Reservation
 klarna
     .update({
-        dataRequestKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // From reserve response
-        invoice: 'Updated-' + uniqid(),
+        dataRequestKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // dataRequestKey from reserve transaction
+        invoice: uniqid(),
         shipping: {
             recipient: {
                 category: RecipientCategory.PERSON,
@@ -99,8 +102,19 @@ klarna
                 city: 'Rotterdam',
                 country: 'NL',
             },
+            phone: {
+                mobile: '0698765432',
+            },
             email: 'updated@buckaroo.nl',
         },
+    })
+    .request();
+
+// Update Reservation - Update order lines
+klarna
+    .update({
+        invoice: uniqid(),
+        dataRequestKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // dataRequestKey from reserve transaction
         articles: [
             {
                 identifier: 'Articlenumber1',
@@ -108,6 +122,8 @@ klarna
                 vatPercentage: 21,
                 quantity: 3,
                 price: 20.1,
+                imageUrl: 'https://apod.nasa.gov/apod/image/2210/ngc4631_sherick.jpg',
+                url: 'https://apod.nasa.gov/apod/astropix.html',
             },
         ],
     })
@@ -116,22 +132,22 @@ klarna
 // Extend Reservation
 klarna
     .extend({
-        dataRequestKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // From reserve response
+        dataRequestKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // dataRequestKey from reserve transaction
     })
     .request();
 
 // Cancel Reservation
 klarna
     .cancel({
-        dataRequestKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // From reserve response
+        dataRequestKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // dataRequestKey from reserve transaction
     })
     .request();
 
 // Refund
 klarna
     .refund({
-        originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // From pay response
         amountCredit: 10.1,
-        invoice: 'Klarna Refund',
+        invoice: uniqid(),
+        originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // From pay transaction
     })
     .request();

@@ -30,7 +30,7 @@ export default class Klarna extends PayablePaymentMethod {
     }
 
     extend(payload: IRequest) {
-        this.setServiceList('ExtendReservation');
+        this.setServiceList('ExtendReservation', new Reserve(payload));
         return this.dataRequest(payload);
     }
 

@@ -3,7 +3,7 @@ import { RecipientCategory, Gender, uniqid } from '../../src';
 
 const klarna = buckarooClient.method('klarna');
 
-// Reserve (initial transaction)
+// Reserve
 klarna
     .reserve({
         amountDebit: 100.5,
@@ -72,9 +72,9 @@ klarna
         amountDebit: 100.5,
         invoice: uniqid(),
         order: uniqid(),
-        dataRequestKey: 'dataRequestKey from reserve transaction',
+        dataRequestKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // dataRequestKey from reserve transaction
         shippingInfo: {
-            company: 'DHL',
+            company: 'Company Name',
             trackingNumber: '1234567890',
             shippingMethod: 'Standard',
         },
@@ -87,7 +87,7 @@ klarna
         amountDebit: 100.5,
         invoice: uniqid(),
         order: uniqid(),
-        dataRequestKey: 'dataRequestKey from reserve transaction',
+        dataRequestKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // dataRequestKey from reserve transaction
         shipping: {
             recipient: {
                 category: RecipientCategory.PERSON,
@@ -125,21 +125,21 @@ klarna
 // Extend Reservation
 klarna
     .extend({
-        dataRequestKey: 'dataRequestKey from reserve transaction',
+        dataRequestKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // dataRequestKey from reserve transaction
     })
     .request();
 
 // Cancel Reservation
 klarna
     .cancel({
-        dataRequestKey: 'dataRequestKey from reserve transaction',
+        dataRequestKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // dataRequestKey from reserve transaction
     })
     .request();
 
 // Refund
 klarna
     .refund({
-        originalTransactionKey: 'transactionKey from pay transaction',
+        originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // transactionKey from pay transaction
         amountCredit: 10.1,
         invoice: uniqid(),
     })
