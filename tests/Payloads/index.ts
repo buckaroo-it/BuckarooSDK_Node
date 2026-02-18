@@ -98,7 +98,7 @@ export function createArticlesPayload(overrides: Partial<IArticle>[] = [], exclu
     ];
 
     const cleaned = articles.map((article) => removeNestedKeys(article, exclude));
-    return deepMerge([], cleaned, overrides);
+    return deepMerge(cleaned, overrides);
 }
 
 // ------------------------
