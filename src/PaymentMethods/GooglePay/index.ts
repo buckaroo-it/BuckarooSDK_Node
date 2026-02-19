@@ -16,6 +16,10 @@ export default class GooglePay extends PayablePaymentMethod {
         return super.refund(payload);
     }
 
+    payRemainder(payload: IPay) {
+        return super.payRemainder(payload, new Pay(payload));
+    }
+
     payRedirect(payload: IPaymentRequest) {
         this.setPayPayload(payload);
         return this.transactionRequest();

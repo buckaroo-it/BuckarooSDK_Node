@@ -11,6 +11,16 @@ googlepay
         customerCardName: 'XXXXXXX',
     })
     .request();
+//PayRemainder
+googlepay
+    .payRemainder({
+        originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        amountDebit: 10.1,
+        description: 'GooglePay Payment',
+        paymentData: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        customerCardName: 'XXXXXXX',
+    })
+    .request();
 //Refund
 googlepay
     .refund({

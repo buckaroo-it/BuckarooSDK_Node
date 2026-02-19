@@ -17,6 +17,19 @@ describe('GooglePay methods', () => {
                 expect(data.httpResponse.status).toEqual(200);
             });
     });
+    test('PayRemainder', async () => {
+        return method
+            .payRemainder({
+                amountDebit: 100,
+                invoice: uniqid(),
+                paymentData: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                customerCardName: 'XXXXXXX',
+            })
+            .request()
+            .then((data) => {
+                expect(data.httpResponse.status).toEqual(200);
+            });
+    });
     test('Pay Redirect Payload', async () => {
         return method
             .payRedirect({
