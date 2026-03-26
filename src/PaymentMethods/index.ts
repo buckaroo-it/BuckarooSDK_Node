@@ -4,6 +4,7 @@ export { default as afterpay } from './Afterpay';
 export { default as afterpaydigiaccept } from './AfterpayDigiAccept';
 export { default as applepay } from './ApplePay';
 export { default as bancontactmrcash } from './Bancontact';
+export { default as banking } from './Banking';
 export { default as transfer } from './BankTransfer';
 export { default as belfius } from './Belfius';
 export { default as billink } from './Billink';
