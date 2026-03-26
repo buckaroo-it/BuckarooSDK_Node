@@ -40,6 +40,10 @@ export class TransactionResponse extends HttpClientResponse {
         return this.getStatusCode() === ResponseStatus.STATUSCODE_PENDING_PROCESSING;
     }
 
+    isPendingApproval() {
+        return this.getStatusCode() === ResponseStatus.STATUSCODE_PENDING_APPROVAL;
+    }
+
     isWaitingOnUserInput() {
         return this.getStatusCode() === ResponseStatus.STATUSCODE_WAITING_ON_USER_INPUT;
     }
