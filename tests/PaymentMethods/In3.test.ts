@@ -3,7 +3,7 @@ import { IRefundRequest, PaymentMethodInstance } from '../../src';
 import { IPay } from '../../src/PaymentMethods/In3/Models/Pay';
 import { createRefundPayload, createBasePayload } from '../Payloads';
 
-let method: PaymentMethodInstance<'In3'>;
+let method: PaymentMethodInstance<'in3'>;
 
 const payload = createBasePayload<IPay>(
     {},
@@ -21,7 +21,7 @@ const payload = createBasePayload<IPay>(
 );
 
 beforeEach(() => {
-    method = buckarooClientTest.method('In3');
+    method = buckarooClientTest.method('in3');
 });
 describe('Testing In3 methods', () => {
     test('Pay', async () => {
