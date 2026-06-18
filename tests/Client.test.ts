@@ -10,7 +10,7 @@ describe('Testing Buckaroo Client', () => {
     });
     test('Batch transaction', async () => {
         const transactionData: IRequest[] = [];
-        const creditManagement = client.method('CreditManagement3');
+        const creditManagement = client.method('creditmanagement3');
         const sepaDirectDebit = client.method('sepadirectdebit');
         for (let i = 0; i < 3; i++) {
             const combinedInvoice = creditManagement.createCombinedInvoice(creditManagementTestInvoice());

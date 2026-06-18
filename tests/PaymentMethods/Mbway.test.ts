@@ -2,10 +2,10 @@ import { IRefundRequest, PaymentMethodInstance } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
 import { createRefundPayload } from '../Payloads';
 
-let method: PaymentMethodInstance<'MBWay'>;
+let method: PaymentMethodInstance<'mbway'>;
 
 beforeEach(() => {
-    method = buckarooClientTest.method('MBWay');
+    method = buckarooClientTest.method('mbway');
 });
 
 describe('Mbway methods', () => {

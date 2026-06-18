@@ -2,10 +2,10 @@ import buckarooClientTest from '../BuckarooClient.test';
 import { IRefundRequest, PaymentMethodInstance, uniqid } from '../../src';
 import { createRefundPayload } from '../Payloads';
 
-let method: PaymentMethodInstance<'PayByBank'>;
+let method: PaymentMethodInstance<'paybybank'>;
 
 beforeEach(() => {
-    method = buckarooClientTest.method('PayByBank');
+    method = buckarooClientTest.method('paybybank');
 });
 
 describe('PaymentInitiation methods', () => {

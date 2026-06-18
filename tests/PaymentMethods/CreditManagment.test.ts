@@ -3,12 +3,12 @@ import { Gender, PaymentMethodInstance, uniqid } from '../../src';
 import buckarooClientTest from '../BuckarooClient.test';
 import { getServiceParameter, formatDate } from '../Payloads';
 
-let method: PaymentMethodInstance<'CreditManagement3'>;
+let method: PaymentMethodInstance<'creditmanagement3'>;
 let invoiceKey: string;
 let invoice: string;
 
 beforeEach(() => {
-    method = buckarooClientTest.method('CreditManagement3');
+    method = buckarooClientTest.method('creditmanagement3');
 });
 describe('Testing Credit Management', () => {
     test('CreateInvoice', async () => {

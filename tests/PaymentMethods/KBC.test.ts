@@ -2,10 +2,10 @@ import buckarooClientTest from '../BuckarooClient.test';
 import { IRefundRequest, PaymentMethodInstance, uniqid } from '../../src';
 import { createRefundPayload } from '../Payloads';
 
-let method: PaymentMethodInstance<'KBCPaymentButton'>;
+let method: PaymentMethodInstance<'kbcpaymentbutton'>;
 
 beforeEach(() => {
-    method = buckarooClientTest.method('KBCPaymentButton');
+    method = buckarooClientTest.method('kbcpaymentbutton');
 });
 describe('Testing KBC methods', () => {
     test('Pay', async () => {
