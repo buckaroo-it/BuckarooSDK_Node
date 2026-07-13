@@ -3,10 +3,10 @@ import { getIPAddress, RecipientCategory, uniqid } from '../../src';
 
 const in3 = buckarooClient.method('In3');
 
-//Pay
-in3.pay({
+// ABN-AMRO "Zakelijk op rekening" runs over the abn_b2b route.
+const order = {
     amountDebit: 100,
-    description: 'in3 pay',
+    description: 'in3 abn-amro',
     order: uniqid(),
     invoice: uniqid(),
     clientIP: getIPAddress(),
@@ -81,8 +81,21 @@ in3.pay({
             price: 25,
         },
     ],
+};
+
+// Pay (standard In3 PAY flow)
+in3.pay(order).request();
+
+// Authorize (ABN-AMRO "Zakelijk op rekening" only allows Authorize/Capture, not Pay)
+in3.authorize(order).request();
+
+// Capture the previously authorized transaction
+in3.capture({
+    ...order,
+    originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
 }).request();
-//Refund
+
+// Refund
 in3.refund({
     originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     amountCredit: 10.1,
