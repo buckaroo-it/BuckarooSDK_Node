@@ -32,6 +32,16 @@ describe('Testing In3 methods', () => {
         const response = await method.pay({...payload, route: 'abn_b2b'}).request();
         expect(response.isPendingProcessing()).toBeTruthy();
     });
+    test('Authorize with ABN-AMRO', async () => {
+        const response = await method.authorize({ ...payload, route: 'abn_b2b' }).request();
+        expect(response.isPendingProcessing()).toBeTruthy();
+    });
+    test('Capture with ABN-AMRO', async () => {
+        const response = await method
+            .capture({ ...payload, route: 'abn_b2b', originalTransactionKey: '4BC466160ACB460EAFB8923D1BBFE33A' })
+            .request();
+        expect(response.isSuccess()).toBeTruthy();
+    });
     test('Refund', async () => {
         const response = await method
             .refund(
