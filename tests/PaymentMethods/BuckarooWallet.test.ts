@@ -2,7 +2,7 @@ import buckarooClientTest from '../BuckarooClient.test';
 import { IRefundRequest, PaymentMethodInstance, uniqid } from '../../src';
 import { getServiceParameter, createRefundPayload } from '../Payloads';
 
-let method: PaymentMethodInstance<'BuckarooWalletCollecting'>;
+let method: PaymentMethodInstance<'buckaroowalletcollecting'>;
 
 let walletId: string;
 let reservationId: string;
@@ -10,7 +10,7 @@ let transactionKey: string;
 let walletMutationGuid: string;
 
 beforeEach(() => {
-    method = buckarooClientTest.method('BuckarooWalletCollecting');
+    method = buckarooClientTest.method('buckaroowalletcollecting');
 });
 
 const payload = {

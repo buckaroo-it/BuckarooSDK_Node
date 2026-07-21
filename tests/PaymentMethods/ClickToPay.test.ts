@@ -1,6 +1,6 @@
 import buckarooClientTest from '../BuckarooClient.test';
 
-const method = buckarooClientTest.method('ClickToPay');
+const method = buckarooClientTest.method('clicktopay');
 describe('Testing ClickToPay methods', () => {
     test('Pay', async () => {
         const response = await method

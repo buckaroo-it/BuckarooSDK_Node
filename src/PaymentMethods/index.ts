@@ -11,7 +11,10 @@ export { default as billink } from './Billink';
 export { default as bizum } from './Bizum';
 export { default as blik } from './Blik';
 export { default as buckaroovoucher } from './BuckarooVoucher';
+export { default as buckaroowalletcollecting } from './BuckarooWallet';
+/** @deprecated Use `buckaroowalletcollecting` instead. Removed in next major version. */
 export { default as BuckarooWalletCollecting } from './BuckarooWallet';
+/** @deprecated Use `creditcard` instead. Removed in next major version. */
 export { default as CreditCard } from './CreditCard';
 
 // Credit Cards
@@ -28,6 +31,8 @@ export { default as dankort } from './CreditCard';
 export { default as nexi } from './CreditCard';
 export { default as postepay } from './CreditCard';
 
+export { default as creditmanagement3 } from './CreditManagement';
+/** @deprecated Use `creditmanagement3` instead. Removed in next major version. */
 export { default as CreditManagement3 } from './CreditManagement';
 export { default as emandate } from './Emandates';
 export { default as eps } from './EPS';
@@ -67,14 +72,20 @@ export { default as googlepay } from './GooglePay';
 export { default as idealqr } from './IdealQR';
 export { default as idin } from './Idin';
 export { default as capayable } from './In3Old';
+export { default as kbcpaymentbutton } from './KBC';
+/** @deprecated Use `kbcpaymentbutton` instead. Removed in next major version. */
 export { default as KBCPaymentButton } from './KBC';
 export { default as klarna } from './Klarna';
 export { default as klarnakp } from './KlarnaKP';
 export { default as knaken } from './Knaken';
 export { default as marketplaces } from './Marketplaces';
+export { default as mbway } from './Mbway';
+/** @deprecated Use `mbway` instead. Removed in next major version. */
 export { default as MBWay } from './Mbway';
 export { default as multibanco } from './Multibanco';
 export { default as payconiq } from './Payconiq';
+export { default as paybybank } from './PayByBank';
+/** @deprecated Use `paybybank` instead. Removed in next major version. */
 export { default as PayByBank } from './PayByBank';
 export { default as paypal } from './Paypal';
 export { default as payperemail } from './PayPerEmail';
@@ -90,8 +101,12 @@ export { default as alipay } from './Alipay';
 export { default as trustly } from './Trustly';
 export { default as twint } from './Twint';
 export { default as wechatpay } from './WeChatPay';
+export { default as in3 } from './In3';
+/** @deprecated Use `in3` instead. Removed in next major version. */
 export { default as In3 } from './In3';
 export { default as noservice } from './NoService';
 export { default as externalpayment } from './ExternalPayment';
+export { default as clicktopay } from './ClickToPay';
+/** @deprecated Use `clicktopay` instead. Removed in next major version. */
 export { default as ClickToPay } from './ClickToPay';
 export { default as wero } from './Wero';

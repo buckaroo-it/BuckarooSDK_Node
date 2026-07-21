@@ -1,6 +1,6 @@
 import { PayablePaymentMethod } from '../../Services';
 import { IPaymentRequest, IRefundRequest } from '../../Models';
-import Pay from './Models/Pay';
+import Pay, { IPay } from './Models/Pay';
 import { ServiceCode } from '../../Utils';
 
 export default class In3 extends PayablePaymentMethod {
@@ -10,6 +10,18 @@ export default class In3 extends PayablePaymentMethod {
 
     pay(payload: IPaymentRequest) {
         return super.pay(payload, new Pay(payload));
+    }
+
+    authorize(payload: IPay) {
+        this.setPayPayload(payload);
+        this.setServiceList('Authorize', new Pay(payload));
+        return this.transactionRequest();
+    }
+
+    capture(payload: IPay) {
+        this.setPayPayload(payload);
+        this.setServiceList('Capture', new Pay(payload));
+        return this.transactionRequest();
     }
 
     refund(payload: IRefundRequest) {
