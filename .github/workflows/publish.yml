@@ -45,18 +45,15 @@ jobs:
       - name: Ensure npm supports trusted publishing
         run: npm install --global npm@11
 
-      # The release event cannot filter on tag pattern, so enforce v* here. The tag
-      # is attacker-controllable — pass it through env, never inline into the shell.
+      # The release event cannot filter on tag pattern, so validate the tag here.
+      # Tags are unprefixed (1.12.2); a leading v is tolerated. The tag is
+      # attacker-controllable — pass it through env, never inline into the shell.
       - name: Derive package version from the release tag
         id: version
         env:
           TAG_NAME: ${{ github.event.release.tag_name }}
         run: |
           version="${TAG_NAME#v}"
-          if [ "$version" = "$TAG_NAME" ]; then
-            echo "::error::Refusing to publish: tag '$TAG_NAME' does not start with 'v'"
-            exit 1
-          fi
           if ! [[ "$version" =~ ^[0-9]+(\.[0-9]+)*(-[0-9A-Za-z.-]+)?$ ]]; then
             echo "::error::Refusing to publish: tag '$TAG_NAME' is not a valid version"
             exit 1
