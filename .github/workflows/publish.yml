@@ -1,0 +1,86 @@
+name: Publish npm package
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-npm
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+
+    # If the npmjs.com trusted publisher policy names an environment, it must
+    # be this exact name — otherwise leave that field blank on npmjs.com.
+    environment: release
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      # Trusted publishing needs Node >= 22.14. No cache: the repo commits no lockfile.
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+
+      # setup-node writes `_authToken=${NODE_AUTH_TOKEN}` into .npmrc. With no token
+      # that expands to empty, which npm reads as "auth configured" and skips OIDC.
+      - name: Remove empty auth token from .npmrc
+        run: sed -i '/_authToken/d' "${NPM_CONFIG_USERCONFIG:-$HOME/.npmrc}"
+
+      # Trusted publishing needs npm >= 11.5.1.
+      - name: Ensure npm supports trusted publishing
+        run: npm install --global npm@11
+
+      # The release event cannot filter on tag pattern, so enforce v* here. The tag
+      # is attacker-controllable — pass it through env, never inline into the shell.
+      - name: Derive package version from the release tag
+        id: version
+        env:
+          TAG_NAME: ${{ github.event.release.tag_name }}
+        run: |
+          version="${TAG_NAME#v}"
+          if [ "$version" = "$TAG_NAME" ]; then
+            echo "::error::Refusing to publish: tag '$TAG_NAME' does not start with 'v'"
+            exit 1
+          fi
+          if ! [[ "$version" =~ ^[0-9]+(\.[0-9]+)*(-[0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::Refusing to publish: tag '$TAG_NAME' is not a valid version"
+            exit 1
+          fi
+          echo "value=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Check package.json matches the release tag
+        env:
+          EXPECTED: ${{ steps.version.outputs.value }}
+        run: |
+          actual="$(node --print 'require("./package.json").version')"
+          if [ "$actual" != "$EXPECTED" ]; then
+            echo "::error::package.json is $actual but the release tag says $EXPECTED"
+            exit 1
+          fi
+
+      # No lockfile is committed, so `npm ci` is not an option.
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      # Rebuilds dist/ on the runner, so a stale local dist/ can never be published.
+      - name: Build
+        run: npm run build
+
+      # No token: npm exchanges the job's OIDC token via the trusted publisher policy.
+      - name: Publish to npm
+        run: npm publish --access public
