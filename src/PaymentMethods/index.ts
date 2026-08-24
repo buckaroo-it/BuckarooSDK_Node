@@ -77,7 +77,6 @@ export { default as kbcpaymentbutton } from './KBC';
 export { default as KBCPaymentButton } from './KBC';
 export { default as klarna } from './Klarna';
 export { default as klarnakp } from './KlarnaKP';
-export { default as knaken } from './Knaken';
 export { default as marketplaces } from './Marketplaces';
 export { default as mbway } from './Mbway';
 /** @deprecated Use `mbway` instead. Removed in next major version. */
