@@ -1,7 +1,7 @@
 import buckaroo from '../buckarooClient';
 import { ReplyHandler } from '../../src/Handlers/Reply/ReplyHandler';
 //START HTTP POST PUSH
-let post_data = `{
+let post_data = new URLSearchParams({
     "brq_amount": "10.10",
     "brq_currency": "EUR",
     "brq_customer_name": "J. de Tèster",
@@ -23,10 +23,11 @@ let post_data = `{
     "brq_transactions": "4C1BE53E2C42412AB32A799D9316E7DD",
     "brq_websitekey": "IBjihN7Fhp",
     "brq_signature": "bf7a62c830da2d2e004199919a8fe0d53b0668f5",
-}`;
+}).toString();
 let reply_handler = new ReplyHandler(buckaroo.credentials, post_data);
 reply_handler.validate();
 reply_handler.isValid(); // Return either true or false
+reply_handler.data(); // The validated fields, or undefined when the push is not valid
 //END HTTP POST PUSH
 //START JSON PUSH
 const auth_header = 'IBjihN7Fhp:0YvyjYAzDQ28W+hQi80f2nhe0Z1QFJLbz7IH//6LsAU=:cad1832100784f57a6e6de835d9f3638:1658227572';
@@ -36,4 +37,5 @@ const uri = 'https://buckaroo.dev/push';
 reply_handler = new ReplyHandler(buckaroo.credentials, post_data, auth_header, uri);
 reply_handler.validate();
 reply_handler.isValid(); // Return either true or false
+reply_handler.data(); // The validated fields, or undefined when the push is not valid
 //END JSON PUSH

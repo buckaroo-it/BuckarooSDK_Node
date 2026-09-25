@@ -80,14 +80,17 @@ export class Hmac {
 
     validate(credentials: ICredentials, authHeader: string, url: string, data: string, method: string): boolean {
         let header = authHeader.split(':');
-        let providedHash = header[1];
+        if (header.length !== 4 || header.some((part) => part.trim() === '')) {
+            return false;
+        }
+        let providedHash = Buffer.from(header[1]);
         this.nonce = header[2];
         this.time = header[3];
         this.method = method;
         this.url = url;
         this.data = data;
-        let hash = this.hashData(this.getHashString(credentials.websiteKey), credentials.secretKey);
-        return crypto.timingSafeEqual(Buffer.from(hash), Buffer.from(providedHash));
+        let hash = Buffer.from(this.hashData(this.getHashString(credentials.websiteKey), credentials.secretKey));
+        return providedHash.length === hash.length && crypto.timingSafeEqual(hash, providedHash);
     }
 
     protected getHashString(websiteKey: string) {
