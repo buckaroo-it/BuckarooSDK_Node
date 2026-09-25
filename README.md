@@ -116,6 +116,25 @@ await transaction.refundInfo(); // refund info
 await transaction.cancelInfo(); // cancellation info
 ```
 
+### Validating push messages
+
+Pass the raw request body to `ReplyHandler` as a string. Read the push values from `data()`, not from your own parse of the body. `data()` only returns the fields after they pass validation.
+
+```javascript
+import { ReplyHandler } from '@buckaroo/buckaroo_sdk';
+
+// HTTP post push: the raw application/x-www-form-urlencoded body
+const reply = new ReplyHandler(buckarooClient.credentials, rawBody).validate();
+
+// JSON push: also pass the Authorization header and the full push URL
+// const reply = new ReplyHandler(buckarooClient.credentials, rawBody, req.headers.authorization, pushUrl).validate();
+
+if (reply.isValid()) {
+    const push = reply.data();
+    // push.brq_statuscode, push.brq_invoicenumber, ...
+}
+```
+
 More runnable examples are in [`example/`](https://github.com/buckaroo-it/BuckarooSDK_Node/tree/master/example).
 
 ---

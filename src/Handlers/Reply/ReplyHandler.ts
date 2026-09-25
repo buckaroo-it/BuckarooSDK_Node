@@ -3,6 +3,11 @@ import { ICredentials } from '../../Utils';
 import { Hmac } from '../../Request';
 import { HttpMethods } from '../../Constants';
 
+// Buckaroo only signs brq_, add_ and cust_ fields. The signed string joins them without a separator,
+// so a key or value that contains another field could shift where fields start and end.
+const SIGNED_KEY = /^(brq|add|cust)_(?!\w*(brq|add|cust)_)\w+$/i;
+const EMBEDDED_FIELD = /(brq|add|cust)_\w+=/i;
+
 export class ReplyHandler {
     private readonly _data: object;
     private readonly uri?: string;
@@ -11,6 +16,7 @@ export class ReplyHandler {
     private _isValid: boolean = false;
     private strategy: 'JSON' | 'HTTP' = 'JSON';
     private method?: string;
+    private hasDuplicateKeys: boolean = false;
 
     constructor(credentials: ICredentials, data: string, auth_header?: string, uri?: string, httpMethod?: string) {
         this._data = this.formatStringData(data);
@@ -24,17 +30,21 @@ export class ReplyHandler {
         return this._isValid;
     }
 
+    // The validated fields, or undefined when the push is not valid. Read push values from here, not from your own parse of the body.
+    data(): Record<string, any> | undefined {
+        return this._isValid ? { ...this._data } : undefined;
+    }
+
     validate() {
         if (this.strategy === 'HTTP') {
-            let { brq_signature, BRQ_SIGNATURE, ...data } = this._data as any;
-            this._isValid = this.validateHttp(data, brq_signature || BRQ_SIGNATURE);
+            this._isValid = !this.hasDuplicateKeys && this.validateHttp(this._data);
             return this;
         }
-        if (this.strategy === 'JSON' && this.auth_header && this.uri) {
-            this._isValid = this.validateJson(this.auth_header, this.uri, JSON.stringify(this._data));
-            return this;
-        }
-        throw new Error('Invalid response data');
+        this._isValid =
+            !!this.auth_header &&
+            !!this.uri &&
+            this.validateJson(this.auth_header, this.uri, JSON.stringify(this._data));
+        return this;
     }
 
     private formatStringData(value: string) {
@@ -43,12 +53,11 @@ export class ReplyHandler {
             this.strategy = 'JSON';
             return data;
         } catch (e) {
-            let objData: Record<string, any> = {};
-            new URLSearchParams(value).forEach((value, name) => {
-                objData[name] = value;
-            });
+            const fields = Array.from(new URLSearchParams(value));
+            // Shops may read the first value or ignore key case, so any repeated name is ambiguous.
+            this.hasDuplicateKeys = new Set(fields.map(([name]) => name.toLowerCase())).size !== fields.length;
             this.strategy = 'HTTP';
-            return objData;
+            return Object.fromEntries(fields);
         }
     }
 
@@ -56,13 +65,23 @@ export class ReplyHandler {
         return new Hmac().validate(this.credentials, auth_header, url, data, this.method || HttpMethods.POST);
     }
 
-    private validateHttp(data: Record<string, any>, signature: string): boolean {
+    private validateHttp(data: Record<string, any>): boolean {
+        const signatureKey = Object.keys(data).find((key) => key.toLowerCase() === 'brq_signature');
+        const signature = signatureKey ? String(data[signatureKey]).trim() : '';
+        const keys = Object.keys(data).filter((key) => key !== signatureKey);
+        // Buckaroo signs the fields sorted case-insensitively; sorting also fixes where each field sits in the string.
         const stringData =
-            Object.keys(data)
+            keys
+                .sort((a, b) => (a.toLowerCase() < b.toLowerCase() ? -1 : 1))
                 .map((key) => `${key}=${data[key]}`)
                 .join('') + this.credentials.secretKey;
-        const hash = crypto.createHash('sha1').update(stringData).digest('hex');
+        const hash = Buffer.from(crypto.createHash('sha1').update(stringData).digest('hex'));
+        const provided = Buffer.from(signature);
+        if (provided.length !== hash.length || !crypto.timingSafeEqual(hash, provided)) {
+            return false;
+        }
 
-        return crypto.timingSafeEqual(Buffer.from(hash), Buffer.from(signature));
+        // Checked after the signature so unsigned requests can't make the regexes do heavy work.
+        return keys.every((key) => SIGNED_KEY.test(key) && !EMBEDDED_FIELD.test(String(data[key])));
     }
 }
