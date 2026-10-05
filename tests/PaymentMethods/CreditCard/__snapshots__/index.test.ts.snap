@@ -1,0 +1,412 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`payRemainderEncrypted builds the PayRemainderEncrypted request 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 10,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "PayRemainderEncrypted",
+            "Name": "mastercard",
+            "Parameters": [
+              {
+                "Name": "EncryptedCardData",
+                "Value": "synthetic-card",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`testing methods Authorize 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Authorize",
+            "Name": "visa",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`testing methods AuthorizeEncrypted 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "AuthorizeEncrypted",
+            "Name": "mastercard",
+            "Parameters": [
+              {
+                "Name": "EncryptedCardData",
+                "Value": "001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z+x0jCw6NjzbrweVQhBRkrbs7TBJkS4tR38JiDsXyH2E1JmRHE+o2P9qz4at6w3zggmwImvjt5IIjEr6g8KfsIDXfv7YjEzhJ3P+7uuGoyG2WYm/Pr0+iEmTj5Q/ijkxu1+cDqv5eiB+80KgffPItUZDrnv9sKlVBAr+f53nm1G+Sxp0Q==",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`testing methods AuthorizeWithSecurityCode 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "OriginalTransactionKey": "24F4BD71AAF843089C914135101F061A",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "AuthorizeWithSecurityCode",
+            "Name": "mastercard",
+            "Parameters": [
+              {
+                "Name": "EncryptedSecurityCode",
+                "Value": "001F3AJT7wkJa04zE8c78P7spOAgHSKH1YKgPlOwXhW049VfIXMwZO32RYna9xZRyUCtfODIoCL8GRQoaZbStlBT4rbF5e4PPvWFSKdvua4rq+GQDNAghfa+ZQz0BzBPfjS0WBdFape9n3zH2vC/0m+wI3QZiDpYYgyWC1/Y3udJDU7JRTVMq/BDHGet+IZ2CDnkeGl813kkYymzYon/QeuQRQ0Wsec5bmVQNYGx62fz70/vLgs0ffff+6DtZtnZWfByRkTwMNebJotlOsSkbhVR5FrHpAbNPCJI+LvJcJL7Eoo+ZuX5/LWGmsT6qnR/uLiIw1DI7mTKGy6/P7IljAE+g==",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`testing methods AuthorizeWithToken 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 10,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "AuthorizeWithToken",
+            "Name": "visa",
+            "Parameters": [
+              {
+                "Name": "SessionId",
+                "Value": "hf_457vWCGGdZcWJzBY",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`testing methods CancelAuthorize 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountCredit": 100,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "OriginalTransactionKey": "F5E4DEEF89594E85A7DC7244180FAF89",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "CancelAuthorize",
+            "Name": "visa",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`testing methods Capture 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "OriginalTransactionKey": "5DD1E0DE29CB4E4F91B477983AB375CD",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Capture",
+            "Name": "visa",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`testing methods Pay 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Pay",
+            "Name": "visa",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+      "StartRecurrent": true,
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`testing methods PayEncrypted 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "PayEncrypted",
+            "Name": "mastercard",
+            "Parameters": [
+              {
+                "Name": "EncryptedCardData",
+                "Value": "001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z+x0jCw6NjzbrweVQhBRkrbs7TBJkS4tR38JiDsXyH2E1JmRHE+o2P9qz4at6w3zggmwImvjt5IIjEr6g8KfsIDXfv7YjEzhJ3P+7uuGoyG2WYm/Pr0+iEmTj5Q/ijkxu1+cDqv5eiB+80KgffPItUZDrnv9sKlVBAr+f53nm1G+Sxp0Q==",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`testing methods PayRecurrent 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "OriginalTransactionKey": "B10DF7D5E6314A528BBA7BDF297EB21E",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "PayRecurrent",
+            "Name": "visa",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`testing methods PayWithSecurityCode 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "OriginalTransactionKey": "24F4BD71AAF843089C914135101F061A",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "PayWithSecurityCode",
+            "Name": "mastercard",
+            "Parameters": [
+              {
+                "Name": "EncryptedSecurityCode",
+                "Value": "001F3AJT7wkJa04zE8c78P7spOAgHSKH1YKgPlOwXhW049VfIXMwZO32RYna9xZRyUCtfODIoCL8GRQoaZbStlBT4rbF5e4PPvWFSKdvua4rq+GQDNAghfa+ZQz0BzBPfjS0WBdFape9n3zH2vC/0m+wI3QZiDpYYgyWC1/Y3udJDU7JRTVMq/BDHGet+IZ2CDnkeGl813kkYymzYon/QeuQRQ0Wsec5bmVQNYGx62fz70/vLgs0ffff+6DtZtnZWfByRkTwMNebJotlOsSkbhVR5FrHpAbNPCJI+LvJcJL7Eoo+ZuX5/LWGmsT6qnR/uLiIw1DI7mTKGy6/P7IljAE+g==",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`testing methods PayWithToken 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 10,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "PayWithToken",
+            "Name": "visa",
+            "Parameters": [
+              {
+                "Name": "SessionId",
+                "Value": "hf_457vWCGGdZcWJzBY",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`testing methods Refund 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountCredit": 0.01,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "OriginalTransactionKey": "DFD5107223F742F5B9A0431E52C1ADA7",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Refund",
+            "Name": "visa",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;

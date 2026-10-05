@@ -1,0 +1,168 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing Emandates methods CancelMandate 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "CancelMandate",
+            "Name": "emandateb2b",
+            "Parameters": [
+              {
+                "Name": "PurchaseId",
+                "Value": "6383d3e86944a0",
+              },
+              {
+                "Name": "MandateId",
+                "Value": "1DCFCAE452C96D7474BB28C57068134C02F",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Testing Emandates methods CreateMandate 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "ContinueOnIncomplete": 1,
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "CreateMandate",
+            "Name": "emandate",
+            "Parameters": [
+              {
+                "Name": "DebtorReference",
+                "Value": "reference",
+              },
+              {
+                "Name": "SequenceType",
+                "Value": 0,
+              },
+              {
+                "Name": "PurchaseId",
+                "Value": "64752550bf1f40",
+              },
+              {
+                "Name": "Language",
+                "Value": "nl",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Testing Emandates methods GetIssuerList 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "GetIssuerList",
+            "Name": "emandate",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Testing Emandates methods GetStatus 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "GetStatus",
+            "Name": "emandate",
+            "Parameters": [
+              {
+                "Name": "MandateId",
+                "Value": "1DC1803BA695F0747AD819C62A557BC6149",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Testing Emandates methods ModifyMandate 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "ContinueOnIncomplete": 1,
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "ModifyMandate",
+            "Name": "emandate",
+            "Parameters": [
+              {
+                "Name": "OriginalMandateId",
+                "Value": "1DC1803BA695F0747AD819C62A557BC6149",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;

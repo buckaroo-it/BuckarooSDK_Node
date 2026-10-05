@@ -113,9 +113,9 @@ export class JsonModel extends Model {
         return this;
     }
 
-    get(value: any) {
+    get(value: any): any {
         if (Array.isArray(value)) {
-            return value.map((v) => new JsonModel(v));
+            return value.map((v) => this.get(v));
         }
         if (value instanceof Object) {
             return new JsonModel(value);

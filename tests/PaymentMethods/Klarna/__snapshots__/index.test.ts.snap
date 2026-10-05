@@ -1,0 +1,517 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Klarna Cancel 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "CancelReservation",
+            "Name": "klarna",
+            "Parameters": [
+              {
+                "Name": "DataRequestKey",
+                "Value": "A3BB182AAB954DA49BE4BFBD61271D38",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Klarna ExtendReservation 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "ExtendReservation",
+            "Name": "klarna",
+            "Parameters": [
+              {
+                "Name": "DataRequestKey",
+                "Value": "AE5A22C01A1D445EB92360FBFD58F94D",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Klarna Pay 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100.3,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Pay",
+            "Name": "klarna",
+            "Parameters": [
+              {
+                "Name": "DataRequestKey",
+                "Value": "9814BB351CDA46A28E0CF78EBC9C8491",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Klarna Pay with Shipping Info 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100.3,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Pay",
+            "Name": "klarna",
+            "Parameters": [
+              {
+                "Name": "DataRequestKey",
+                "Value": "E5BE39D84FA44DE1BF78EEED128B2BB7",
+              },
+              {
+                "GroupType": "ShippingInfo",
+                "Name": "Company",
+                "Value": "Buckaroo",
+              },
+              {
+                "GroupType": "ShippingInfo",
+                "Name": "TrackingNumber",
+                "Value": "123456789",
+              },
+              {
+                "GroupType": "ShippingInfo",
+                "Name": "ShippingMethod",
+                "Value": "Default",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Klarna Refund 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountCredit": 0.01,
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Refund Transaction Test",
+      "Invoice": "64752550bf1f40",
+      "OriginalTransactionKey": "618024D9C4DF4CFAA018F5F7707E973B",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Refund",
+            "Name": "klarna",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Klarna Reserve 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100.3,
+      "ClientIP": {
+        "address": "203.0.113.10",
+        "type": 0,
+      },
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Test Transaction",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Reserve",
+            "Name": "klarna",
+            "Parameters": [
+              {
+                "Name": "Gender",
+                "Value": 1,
+              },
+              {
+                "Name": "OperatingCountry",
+                "Value": "NL",
+              },
+              {
+                "Name": "Pno",
+                "Value": "01011990",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "BillingEmail",
+                "Value": "test@buckaroo.nl",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "BillingStreet",
+                "Value": "Hoftstraat",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "BillingPostalCode",
+                "Value": "1015CJ",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "BillingCity",
+                "Value": "Amsterdam",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "BillingCountry",
+                "Value": "NL",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "BillingFirstName",
+                "Value": "John",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "BillingLastName",
+                "Value": "Doe",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "BillingCellPhoneNumber",
+                "Value": "0612345678",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "ShippingEmail",
+                "Value": "shipping@buckaroo.nl",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "ShippingStreet",
+                "Value": "Hoftstraat",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "ShippingPostalCode",
+                "Value": "1015CJ",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "ShippingCity",
+                "Value": "Amsterdam",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "ShippingCountry",
+                "Value": "NL",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "ShippingFirstName",
+                "Value": "John",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "ShippingLastName",
+                "Value": "Doe",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticleNumber",
+                "Value": "ABC123",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticlePrice",
+                "Value": 40.1,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticleQuantity",
+                "Value": 2,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticleVat",
+                "Value": 21,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticleTitle",
+                "Value": "Test Product",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticleNumber",
+                "Value": "DEF456",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticlePrice",
+                "Value": 20.1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticleQuantity",
+                "Value": 1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticleVat",
+                "Value": 21,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticleTitle",
+                "Value": "Second Product",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Klarna UpdateReservation 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100.3,
+      "ClientIP": {
+        "address": "203.0.113.10",
+        "type": 0,
+      },
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Test Transaction",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "UpdateReservation",
+            "Name": "klarna",
+            "Parameters": [
+              {
+                "Name": "DataRequestKey",
+                "Value": "AE5A22C01A1D445EB92360FBFD58F94D",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "ShippingEmail",
+                "Value": "updatedemail@test.com",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "ShippingStreet",
+                "Value": "Hoftstraat",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "ShippingPostalCode",
+                "Value": "1015CJ",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "ShippingCity",
+                "Value": "Amsterdam",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "ShippingCountry",
+                "Value": "NL",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "ShippingFirstName",
+                "Value": "John",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "ShippingLastName",
+                "Value": "Doe",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticleNumber",
+                "Value": "ABC123",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticlePrice",
+                "Value": 40.1,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticleQuantity",
+                "Value": 2,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticleVat",
+                "Value": 21,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticleTitle",
+                "Value": "Test Product",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticleNumber",
+                "Value": "DEF456",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticlePrice",
+                "Value": 20.1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticleQuantity",
+                "Value": 1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticleVat",
+                "Value": 21,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticleTitle",
+                "Value": "Second Product",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`addShippingInfo builds the AddShippingInfo request 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "OriginalTransactionKey": "test-original",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "AddShippingInfo",
+            "Name": "klarna",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;

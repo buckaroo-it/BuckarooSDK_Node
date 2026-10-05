@@ -1,0 +1,1221 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing Credit Management AddOrUpdateProductLines 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "AddOrUpdateProductLines",
+            "Name": "creditmanagement3",
+            "Parameters": [
+              {
+                "Name": "InvoiceKey",
+                "Value": "test-invoiceKey",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "ProductId",
+                "Value": "Articlenumber1",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "Type",
+                "Value": "Regular",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "PricePerUnit",
+                "Value": 20.1,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "Quantity",
+                "Value": 2,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "VatPercentage",
+                "Value": 21,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "ProductName",
+                "Value": "Blue Toy Car",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "TotalVat",
+                "Value": 12,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "TotalAmount",
+                "Value": 123,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "ProductId",
+                "Value": "Articlenumber2",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "Type",
+                "Value": "Regular",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "PricePerUnit",
+                "Value": 10.1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "Quantity",
+                "Value": 1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "VatPercentage",
+                "Value": 21,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "ProductName",
+                "Value": "Red Toy Car",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "TotalVat",
+                "Value": 12,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "TotalAmount",
+                "Value": 123,
+              },
+            ],
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Testing Credit Management CreateCombinedInvoice 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100,
+      "Currency": "EUR",
+      "Description": "buckaroo_schema_test_PDF",
+      "Invoice": "TestInvoice64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "CreateCombinedInvoice",
+            "Name": "creditmanagement3",
+            "Parameters": [
+              {
+                "Name": "InvoiceAmount",
+                "Value": 10,
+              },
+              {
+                "Name": "InvoiceAmountVAT",
+                "Value": 1,
+              },
+              {
+                "Name": "InvoiceDate",
+                "Value": "2026-01-01",
+              },
+              {
+                "Name": "DueDate",
+                "Value": "2030-01-01",
+              },
+              {
+                "Name": "SchemeKey",
+                "Value": "rwe1kw",
+              },
+              {
+                "Name": "MaxStepIndex",
+                "Value": 1,
+              },
+              {
+                "Name": "AllowedServices",
+                "Value": "ideal,mastercard",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "Culture",
+                "Value": "nl-NL",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "Title",
+                "Value": "Msc",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "Initials",
+                "Value": "JS",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "FirstName",
+                "Value": "Test",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "LastNamePrefix",
+                "Value": "Jones",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "LastName",
+                "Value": "Aflever",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "Gender",
+                "Value": 1,
+              },
+              {
+                "GroupType": "Company",
+                "Name": "Culture",
+                "Value": "nl-NL",
+              },
+              {
+                "GroupType": "Company",
+                "Name": "Name",
+                "Value": "Buckaroo B.V.",
+              },
+              {
+                "GroupType": "Company",
+                "Name": "VatApplicable",
+                "Value": true,
+              },
+              {
+                "GroupType": "Company",
+                "Name": "VatNumber",
+                "Value": "NL140619562B01",
+              },
+              {
+                "GroupType": "Company",
+                "Name": "ChamberOfCommerce",
+                "Value": "20091741",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "Street",
+                "Value": "Hoofdstraat",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "HouseNumber",
+                "Value": "80",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "HouseNumberSuffix",
+                "Value": "a",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "Zipcode",
+                "Value": "8441ER",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "City",
+                "Value": "Heerenveen",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "State",
+                "Value": "Friesland",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "Country",
+                "Value": "NL",
+              },
+              {
+                "GroupType": "Debtor",
+                "Name": "Code",
+                "Value": "johnsmith4",
+              },
+              {
+                "GroupType": "Email",
+                "Name": "Email",
+                "Value": "test@buckaroo.nl",
+              },
+              {
+                "GroupType": "Phone",
+                "Name": "Mobile",
+                "Value": "06198765432",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "ProductId",
+                "Value": "ART12",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "Type",
+                "Value": "Regular",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "PricePerUnit",
+                "Value": 10,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "Quantity",
+                "Value": 3,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "VatPercentage",
+                "Value": 21,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "ProductName",
+                "Value": "Blue Toy Car",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "ProductGroupName",
+                "Value": "Toys",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "ProductGroupOrderIndex",
+                "Value": 1,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "ProductOrderIndex",
+                "Value": 1,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "UnitOfMeasurement",
+                "Value": "piece(s)",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "DiscountPercentage",
+                "Value": 20,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "TotalDiscount",
+                "Value": 6,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "TotalVat",
+                "Value": 0.6,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "TotalAmountExVat",
+                "Value": 8.4,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "TotalAmount",
+                "Value": 123,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "ProductId",
+                "Value": "ART12",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "Type",
+                "Value": "Regular",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "PricePerUnit",
+                "Value": 10,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "Quantity",
+                "Value": 3,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "VatPercentage",
+                "Value": 21,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "ProductName",
+                "Value": "Blue Toy Car",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "ProductGroupName",
+                "Value": "Toys",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "ProductGroupOrderIndex",
+                "Value": 1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "ProductOrderIndex",
+                "Value": 2,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "UnitOfMeasurement",
+                "Value": "piece(s)",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "DiscountPercentage",
+                "Value": 20,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "TotalDiscount",
+                "Value": 6,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "TotalVat",
+                "Value": 0.6,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "TotalAmountExVat",
+                "Value": 8.4,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "TotalAmount",
+                "Value": 123,
+              },
+              {
+                "Name": "ApplyStartRecurrent",
+                "Value": false,
+              },
+            ],
+            "Version": 1,
+          },
+          {
+            "Action": "Pay",
+            "Name": "sepadirectdebit",
+            "Parameters": [
+              {
+                "Name": "Customerbic",
+                "Value": "TESTNL2A",
+              },
+              {
+                "Name": "CustomerIBAN",
+                "Value": "NL13TEST0123456789",
+              },
+              {
+                "Name": "CollectDate",
+                "Value": "2030-07-03",
+              },
+              {
+                "Name": "MandateReference",
+                "Value": "1DCtestreference",
+              },
+              {
+                "Name": "MandateDate",
+                "Value": "2020-01-01",
+              },
+              {
+                "Name": "Customeraccountname",
+                "Value": "Test Acceptatie",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Testing Credit Management CreateCreditNote 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "CreateCreditNote",
+            "Name": "creditmanagement3",
+            "Parameters": [
+              {
+                "Name": "OriginalInvoiceNumber",
+                "Value": "6383cbc0498a24",
+              },
+              {
+                "Name": "InvoiceDate",
+                "Value": "2026-01-01",
+              },
+              {
+                "Name": "InvoiceAmount",
+                "Value": "0.01",
+              },
+              {
+                "Name": "InvoiceAmountVAT",
+                "Value": "1",
+              },
+              {
+                "Name": "SendCreditNoteMessage",
+                "Value": "Email",
+              },
+            ],
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Testing Credit Management CreateInvoice 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "Description": "buckaroo_schema_test_PDF",
+      "Invoice": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "CreateInvoice",
+            "Name": "creditmanagement3",
+            "Parameters": [
+              {
+                "Name": "InvoiceAmount",
+                "Value": 10,
+              },
+              {
+                "Name": "InvoiceAmountVAT",
+                "Value": 1,
+              },
+              {
+                "Name": "InvoiceDate",
+                "Value": "2026-01-01",
+              },
+              {
+                "Name": "DueDate",
+                "Value": "2030-01-01",
+              },
+              {
+                "Name": "SchemeKey",
+                "Value": "rwe1kw",
+              },
+              {
+                "Name": "MaxStepIndex",
+                "Value": 1,
+              },
+              {
+                "Name": "AllowedServices",
+                "Value": "ideal,mastercard",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "Culture",
+                "Value": "nl-NL",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "Title",
+                "Value": "Msc",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "Initials",
+                "Value": "JS",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "FirstName",
+                "Value": "Test",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "LastNamePrefix",
+                "Value": "Jones",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "LastName",
+                "Value": "Aflever",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "Gender",
+                "Value": 1,
+              },
+              {
+                "GroupType": "Company",
+                "Name": "Culture",
+                "Value": "nl-NL",
+              },
+              {
+                "GroupType": "Company",
+                "Name": "Name",
+                "Value": "Buckaroo B.V.",
+              },
+              {
+                "GroupType": "Company",
+                "Name": "VatApplicable",
+                "Value": true,
+              },
+              {
+                "GroupType": "Company",
+                "Name": "VatNumber",
+                "Value": "NL140619562B01",
+              },
+              {
+                "GroupType": "Company",
+                "Name": "ChamberOfCommerce",
+                "Value": "20091741",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "Street",
+                "Value": "Hoofdstraat",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "HouseNumber",
+                "Value": "80",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "HouseNumberSuffix",
+                "Value": "a",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "Zipcode",
+                "Value": "8441ER",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "City",
+                "Value": "Heerenveen",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "State",
+                "Value": "Friesland",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "Country",
+                "Value": "NL",
+              },
+              {
+                "GroupType": "Debtor",
+                "Name": "Code",
+                "Value": "johnsmith4",
+              },
+              {
+                "GroupType": "Email",
+                "Name": "Email",
+                "Value": "test@buckaroo.nl",
+              },
+              {
+                "GroupType": "Phone",
+                "Name": "Mobile",
+                "Value": "06198765432",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "ProductId",
+                "Value": "ART12",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "Type",
+                "Value": "Regular",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "PricePerUnit",
+                "Value": 10,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "Quantity",
+                "Value": 3,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "VatPercentage",
+                "Value": 21,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "ProductName",
+                "Value": "Blue Toy Car",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "ProductGroupName",
+                "Value": "Toys",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "ProductGroupOrderIndex",
+                "Value": 1,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "ProductOrderIndex",
+                "Value": 1,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "UnitOfMeasurement",
+                "Value": "piece(s)",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "DiscountPercentage",
+                "Value": 20,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "TotalDiscount",
+                "Value": 6,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "TotalVat",
+                "Value": 0.6,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "TotalAmountExVat",
+                "Value": 8.4,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "TotalAmount",
+                "Value": 123,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "ProductId",
+                "Value": "ART12",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "Type",
+                "Value": "Regular",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "PricePerUnit",
+                "Value": 10,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "Quantity",
+                "Value": 3,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "VatPercentage",
+                "Value": 21,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "ProductName",
+                "Value": "Blue Toy Car",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "ProductGroupName",
+                "Value": "Toys",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "ProductGroupOrderIndex",
+                "Value": 1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "ProductOrderIndex",
+                "Value": 2,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "UnitOfMeasurement",
+                "Value": "piece(s)",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "DiscountPercentage",
+                "Value": 20,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "TotalDiscount",
+                "Value": 6,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "TotalVat",
+                "Value": 0.6,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "TotalAmountExVat",
+                "Value": 8.4,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "TotalAmount",
+                "Value": 123,
+              },
+              {
+                "Name": "ApplyStartRecurrent",
+                "Value": false,
+              },
+            ],
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Testing Credit Management Debtor Info 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "DebtorInfo",
+            "Name": "creditmanagement3",
+            "Parameters": [
+              {
+                "GroupType": "Debtor",
+                "Name": "DebtorCode",
+                "Value": "johnsmith4",
+              },
+            ],
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Testing Credit Management Invoice Info 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "Invoice": "test-invoice",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "InvoiceInfo",
+            "Name": "creditmanagement3",
+            "Parameters": [],
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Testing Credit Management Pause Invoice 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "Invoice": "test-invoice",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "PauseInvoice",
+            "Name": "creditmanagement3",
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Testing Credit Management UnPause Invoice 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "Invoice": "test-invoice",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "UnpauseInvoice",
+            "Name": "creditmanagement3",
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Testing Credit Management addOrUpdateDebtor 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "AddOrUpdateDebtor",
+            "Name": "creditmanagement3",
+            "Parameters": [
+              {
+                "GroupType": "Debtor",
+                "Name": "Code",
+                "Value": "johnsmith4",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "Culture",
+                "Value": "nl-NL",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "LastName",
+                "Value": "Acceptatie",
+              },
+            ],
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`createPaymentPlan builds the CreatePaymentPlan request 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "Description": "Two installments",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "CreatePaymentPlan",
+            "Name": "creditmanagement3",
+            "Parameters": [
+              {
+                "Name": "IncludedInvoiceKey",
+                "Value": "test-invoice",
+              },
+              {
+                "Name": "DossierNumber",
+                "Value": "test-dossier",
+              },
+              {
+                "Name": "InstallmentCount",
+                "Value": 2,
+              },
+              {
+                "Name": "InitialAmount",
+                "Value": 5,
+              },
+              {
+                "Name": "StartDate",
+                "Value": "2026-01-02",
+              },
+              {
+                "Name": "Interval",
+                "Value": "Day",
+              },
+              {
+                "Name": "PaymentPlanCostAmount",
+                "Value": 0,
+              },
+              {
+                "Name": "PaymentPlanCostAmountVat",
+                "Value": 0,
+              },
+              {
+                "Name": "RecipientEmail",
+                "Value": "test@example.com",
+              },
+            ],
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`pauseDebtorFile builds the PauseDebtorFile request 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "PauseDebtorFile",
+            "Name": "creditmanagement3",
+            "Parameters": [
+              {
+                "Name": "DebtorFileGuid",
+                "Value": "test-debtor",
+              },
+            ],
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`resumeDebtorFile builds the ResumeDebtorFile request 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "ResumeDebtorFile",
+            "Name": "creditmanagement3",
+            "Parameters": [
+              {
+                "Name": "DebtorFileGuid",
+                "Value": "test-debtor",
+              },
+            ],
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`terminatePaymentPlan builds the TerminatePaymentPlan request 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "TerminatePaymentPlan",
+            "Name": "creditmanagement3",
+            "Parameters": [
+              {
+                "Name": "IncludedInvoiceKey",
+                "Value": "test-invoice",
+              },
+            ],
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;

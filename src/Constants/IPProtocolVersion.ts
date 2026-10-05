@@ -7,6 +7,9 @@ export class IPProtocolVersion {
     public static readonly IPV6: number = 1;
 
     public static getVersion(ipAddress: string = '0.0.0.0'): number {
+        if (ipAddress.length > 256) {
+            throw new Error('IP address exceeds 256 characters');
+        }
         if (IpAddress.Address4.isValid(ipAddress)) {
             return IPProtocolVersion.IPV4;
         }

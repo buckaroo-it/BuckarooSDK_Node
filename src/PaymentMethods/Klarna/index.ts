@@ -5,7 +5,6 @@ import { IReserve, Reserve } from './Models/IReserve';
 import { ServiceCode } from '../../Utils';
 
 export default class Klarna extends PayablePaymentMethod {
-
     public defaultServiceCode(): ServiceCode {
         return 'klarna';
     }

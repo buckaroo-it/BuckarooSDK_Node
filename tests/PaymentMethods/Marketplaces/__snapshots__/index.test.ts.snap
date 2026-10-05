@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing Marketplaces methods Split 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 95,
+      "Currency": "EUR",
+      "Description": "INV0001",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Pay",
+            "Name": "ideal",
+            "Parameters": [
+              {
+                "Name": "Issuer",
+                "Value": "ABNANL2A",
+              },
+            ],
+            "Version": 2,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Testing Marketplaces methods refundSupplementary 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountCredit": 0.01,
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Refund Transaction Test",
+      "Invoice": "64752550bf1f40",
+      "OriginalTransactionKey": "E933CC3B4CF9494294538935D297A03F",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Refund",
+            "Name": "ideal",
+            "Version": 2,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Testing Marketplaces methods transfer 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "OriginalTransactionKey": "DD58418EBE124DEB9E887EC059C729D5",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Transfer",
+            "Name": "marketplaces",
+            "Parameters": [
+              {
+                "GroupType": "Marketplace",
+                "Name": "Amount",
+                "Value": 10,
+              },
+              {
+                "GroupType": "Marketplace",
+                "Name": "Description",
+                "Value": "INV0001 Commission Marketplace",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;

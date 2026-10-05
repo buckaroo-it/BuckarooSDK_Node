@@ -1,0 +1,352 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing capayable methods PayInInstallments 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100.3,
+      "ClientIP": {
+        "address": "203.0.113.10",
+        "type": 0,
+      },
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Test Transaction",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "PayInInstallments",
+            "Name": "capayable",
+            "Parameters": [
+              {
+                "Name": "CustomerType",
+                "Value": "COMPANY",
+              },
+              {
+                "Name": "InvoiceDate",
+                "Value": "22-01-2018",
+              },
+              {
+                "GroupType": "Email",
+                "Name": "Email",
+                "Value": "test@buckaroo.nl",
+              },
+              {
+                "GroupType": "Phone",
+                "Name": "Phone",
+                "Value": "0612345678",
+              },
+              {
+                "GroupType": "Company",
+                "Name": "ChamberOfCommerce",
+                "Value": "123456",
+              },
+              {
+                "GroupType": "Company",
+                "Name": "Name",
+                "Value": "Company B.V.",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "BirthDate",
+                "Value": "01-01-1990",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "Culture",
+                "Value": "nl-NL",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "Gender",
+                "Value": 2,
+              },
+              {
+                "GroupType": "Person",
+                "Name": "Initials",
+                "Value": "R.T",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "LastName",
+                "Value": "Doe",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "Street",
+                "Value": "Hoftstraat",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "HouseNumber",
+                "Value": "123",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "Zipcode",
+                "Value": "1015CJ",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "City",
+                "Value": "Amsterdam",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "Country",
+                "Value": "NL",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "Code",
+                "Value": "ABC123",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "Price",
+                "Value": 40.1,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "Quantity",
+                "Value": 2,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "Name",
+                "Value": "Test Product",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "Code",
+                "Value": "DEF456",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "Price",
+                "Value": 20.1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "Quantity",
+                "Value": 1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "Name",
+                "Value": "Second Product",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Testing capayable methods Refund 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountCredit": 0.01,
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Refund Transaction Test",
+      "Invoice": "64752550bf1f40",
+      "OriginalTransactionKey": "EF24A62B8D7B4F88859FBA4DF140B6C2",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Refund",
+            "Name": "capayable",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`pay builds the Pay request 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100.3,
+      "ClientIP": {
+        "address": "203.0.113.10",
+        "type": 0,
+      },
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Test Transaction",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Pay",
+            "Name": "capayable",
+            "Parameters": [
+              {
+                "Name": "CustomerType",
+                "Value": "COMPANY",
+              },
+              {
+                "Name": "InvoiceDate",
+                "Value": "22-01-2018",
+              },
+              {
+                "GroupType": "Email",
+                "Name": "Email",
+                "Value": "test@buckaroo.nl",
+              },
+              {
+                "GroupType": "Phone",
+                "Name": "Phone",
+                "Value": "0612345678",
+              },
+              {
+                "GroupType": "Company",
+                "Name": "ChamberOfCommerce",
+                "Value": "123456",
+              },
+              {
+                "GroupType": "Company",
+                "Name": "Name",
+                "Value": "Company B.V.",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "BirthDate",
+                "Value": "01-01-1990",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "Culture",
+                "Value": "nl-NL",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "Gender",
+                "Value": 2,
+              },
+              {
+                "GroupType": "Person",
+                "Name": "Initials",
+                "Value": "R.T",
+              },
+              {
+                "GroupType": "Person",
+                "Name": "LastName",
+                "Value": "Doe",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "Street",
+                "Value": "Hoftstraat",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "HouseNumber",
+                "Value": "123",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "Zipcode",
+                "Value": "1015CJ",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "City",
+                "Value": "Amsterdam",
+              },
+              {
+                "GroupType": "Address",
+                "Name": "Country",
+                "Value": "NL",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "Code",
+                "Value": "ABC123",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "Price",
+                "Value": 40.1,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "Quantity",
+                "Value": 2,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "ProductLine",
+                "Name": "Name",
+                "Value": "Test Product",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "Code",
+                "Value": "DEF456",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "Price",
+                "Value": 20.1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "Quantity",
+                "Value": 1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "ProductLine",
+                "Name": "Name",
+                "Value": "Second Product",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
