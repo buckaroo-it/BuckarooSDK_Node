@@ -1,6 +1,7 @@
 import { IRefundRequest, PaymentMethodInstance } from '../../src';
-import buckarooClientTest from '../BuckarooClient.test';
+import buckarooClientTest from '../BuckarooClient';
 import { createRefundPayload } from '../Payloads';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 let method: PaymentMethodInstance<'blik'>;
 
@@ -10,6 +11,8 @@ beforeEach(() => {
 
 describe('Testing Blik methods', () => {
     test('Pay', async () => {
+        mockResponse(transactionResponse(791));
+
         const response = await method
             .pay({
                 currency: 'PLN',
@@ -22,6 +25,8 @@ describe('Testing Blik methods', () => {
         expect(response.isPendingProcessing()).toBeTruthy();
     });
     test('Refund', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .refund(
                 createRefundPayload<IRefundRequest>({
@@ -32,4 +37,8 @@ describe('Testing Blik methods', () => {
             .request();
         expect(response.isSuccess()).toBeTruthy();
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
 });

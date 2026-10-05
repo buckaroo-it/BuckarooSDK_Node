@@ -1,10 +1,13 @@
-import { Gender, PaymentMethodInstance, uniqid } from '../../src';
-import buckarooClientTest from '../BuckarooClient.test';
+import { Gender, uniqid } from '../../src';
+import buckarooClientTest from '../BuckarooClient';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 const method = buckarooClientTest.method('payperemail');
 
 describe('PayPerEmail methods', () => {
     test('paymentInvitation', async () => {
+        mockResponse(transactionResponse(792));
+
         const response = await method
             .paymentInvitation({
                 currency: 'EUR',
@@ -25,4 +28,8 @@ describe('PayPerEmail methods', () => {
             .request();
         expect(response.isAwaitingConsumer()).toBeTruthy();
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
 });

@@ -1,6 +1,7 @@
-import buckarooClientTest from '../BuckarooClient.test';
 import { IRefundRequest, PaymentMethodInstance, uniqid } from '../../src';
+import buckarooClientTest from '../BuckarooClient';
 import { createRefundPayload } from '../Payloads';
+import { issuerResponse, mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 let method: PaymentMethodInstance<'paybybank'>;
 
@@ -10,11 +11,15 @@ beforeEach(() => {
 
 describe('PaymentInitiation methods', () => {
     test('Issuers', async () => {
+        mockResponse(issuerResponse, '/json/Transaction/Specification/paybybank', 'GET');
+
         await method.issuers().then((response) => {
             expect(Array.isArray(response)).toBeTruthy();
         });
     });
     test('Pay', async () => {
+        mockResponse(transactionResponse(791));
+
         const response = await method
             .pay({
                 issuer: 'RABONL2U',
@@ -27,6 +32,8 @@ describe('PaymentInitiation methods', () => {
         expect(response.isPendingProcessing()).toBeTruthy();
     });
     test('Refund', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .refund(
                 createRefundPayload<IRefundRequest>({
@@ -36,4 +43,8 @@ describe('PaymentInitiation methods', () => {
             .request();
         expect(response.isSuccess()).toBeTruthy();
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
 });

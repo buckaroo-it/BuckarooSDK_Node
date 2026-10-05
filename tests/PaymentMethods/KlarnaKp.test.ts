@@ -1,7 +1,8 @@
-import buckarooClientTest from '../BuckarooClient.test';
-import { Gender, getIPAddress, PaymentMethodInstance, uniqid } from '../../src';
-import { createBasePayload } from '../Payloads';
+import { Gender, PaymentMethodInstance } from '../../src';
 import { IReserve } from '../../src/PaymentMethods/KlarnaKP/Models/IReserve';
+import buckarooClientTest from '../BuckarooClient';
+import { createBasePayload } from '../Payloads';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 let method: PaymentMethodInstance<'klarnakp'>;
 
@@ -11,6 +12,8 @@ beforeEach(() => {
 
 describe('KlarnaKp', () => {
     test('Pay', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .pay({
                 amountDebit: 100.3,
@@ -20,11 +23,13 @@ describe('KlarnaKp', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('Reserve', async () => {
+        mockResponse(transactionResponse(791), '/json/DataRequest');
+
         const response = await method
             .reserve(
                 createBasePayload<IReserve>(
                     {
-                        clientIP: getIPAddress(),
+                        clientIP: '203.0.113.10',
                         gender: Gender.MALE,
                         operatingCountry: 'NL',
                         pno: '01011990',
@@ -62,6 +67,8 @@ describe('KlarnaKp', () => {
         expect(response.isPendingProcessing()).toBeTruthy();
     });
     test('Cancel', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         return method
             .cancel({
                 reservationNumber: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX',
@@ -71,4 +78,53 @@ describe('KlarnaKp', () => {
                 expect(info).toBeDefined();
             });
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
+});
+
+test('update builds the UpdateReservation request', async () => {
+    mockResponse(transactionResponse(), '/json/DataRequest');
+    const result = await method.update({ originalTransactionKey: 'test-original' }).request();
+    expect(result.isSuccess()).toBe(true);
+    expect(recordedRequests()).toEqual([
+        expect.objectContaining({
+            data: expect.objectContaining({
+                Services: {
+                    ServiceList: expect.arrayContaining([expect.objectContaining({ Action: 'UpdateReservation' })]),
+                },
+            }),
+        }),
+    ]);
+});
+
+test('extend builds the ExtendReservation request', async () => {
+    mockResponse(transactionResponse(), '/json/DataRequest');
+    const result = await method.extend({ originalTransactionKey: 'test-original' }).request();
+    expect(result.isSuccess()).toBe(true);
+    expect(recordedRequests()).toEqual([
+        expect.objectContaining({
+            data: expect.objectContaining({
+                Services: {
+                    ServiceList: expect.arrayContaining([expect.objectContaining({ Action: 'ExtendReservation' })]),
+                },
+            }),
+        }),
+    ]);
+});
+
+test('addShippingInfo builds the AddShippingInfo request', async () => {
+    mockResponse(transactionResponse(), '/json/DataRequest');
+    const result = await method.addShippingInfo({ originalTransactionKey: 'test-original' }).request();
+    expect(result.isSuccess()).toBe(true);
+    expect(recordedRequests()).toEqual([
+        expect.objectContaining({
+            data: expect.objectContaining({
+                Services: {
+                    ServiceList: expect.arrayContaining([expect.objectContaining({ Action: 'AddShippingInfo' })]),
+                },
+            }),
+        }),
+    ]);
 });

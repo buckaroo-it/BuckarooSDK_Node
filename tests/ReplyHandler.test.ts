@@ -159,6 +159,7 @@ describe('Testing ReplyHandler HTTP post push', () => {
     });
 
     test('rejects a large unsigned value quickly', () => {
+        jest.useRealTimers();
         const started = Date.now();
         expect(httpPost(body([...signed, ['brq_note', 'brq_'.repeat(50000)], ['brq_signature', signature]]))).toBe(
             false

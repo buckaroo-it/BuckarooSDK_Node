@@ -1,0 +1,1011 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing In3 methods Authorize with ABN-AMRO 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100.3,
+      "ClientIP": {
+        "address": "203.0.113.10",
+        "type": 0,
+      },
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Test Transaction",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Authorize",
+            "Name": "in3",
+            "Parameters": [
+              {
+                "Name": "Route",
+                "Value": "abn_b2b",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "BirthDate",
+                "Value": "01-01-1990",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "Category",
+                "Value": "B2C",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "FirstName",
+                "Value": "John",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "Initials",
+                "Value": "R.T",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "LastName",
+                "Value": "Doe",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "CustomerNumber",
+                "Value": "64752550bf1f40",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "Street",
+                "Value": "Hoftstraat",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "StreetNumber",
+                "Value": "123",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "StreetNumberSuffix",
+                "Value": "A",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "PostalCode",
+                "Value": "1015CJ",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "City",
+                "Value": "Amsterdam",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "CountryCode",
+                "Value": "NL",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "Email",
+                "Value": "test@buckaroo.nl",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "Phone",
+                "Value": "0612345678",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "BirthDate",
+                "Value": "01-01-1990",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "Category",
+                "Value": "B2C",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "FirstName",
+                "Value": "John",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "Initials",
+                "Value": "R.T",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "LastName",
+                "Value": "Doe",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "CustomerNumber",
+                "Value": "64752550bf1f40",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "Street",
+                "Value": "Hoftstraat",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "StreetNumber",
+                "Value": "123",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "StreetNumberSuffix",
+                "Value": "A",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "PostalCode",
+                "Value": "1015CJ",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "City",
+                "Value": "Amsterdam",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "CountryCode",
+                "Value": "NL",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "Email",
+                "Value": "shipping@buckaroo.nl",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "Identifier",
+                "Value": "ABC123",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "Type",
+                "Value": "PhysicalArticle",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "GrossUnitPrice",
+                "Value": 40.1,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "Quantity",
+                "Value": 2,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "VatPercentage",
+                "Value": 21,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "Description",
+                "Value": "Test Product",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "Identifier",
+                "Value": "DEF456",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "Type",
+                "Value": "PhysicalArticle",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "GrossUnitPrice",
+                "Value": 20.1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "Quantity",
+                "Value": 1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "VatPercentage",
+                "Value": 21,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "Description",
+                "Value": "Second Product",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Testing In3 methods Capture with ABN-AMRO 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100.3,
+      "ClientIP": {
+        "address": "203.0.113.10",
+        "type": 0,
+      },
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Test Transaction",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "OriginalTransactionKey": "4BC466160ACB460EAFB8923D1BBFE33A",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Capture",
+            "Name": "in3",
+            "Parameters": [
+              {
+                "Name": "Route",
+                "Value": "abn_b2b",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "BirthDate",
+                "Value": "01-01-1990",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "Category",
+                "Value": "B2C",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "FirstName",
+                "Value": "John",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "Initials",
+                "Value": "R.T",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "LastName",
+                "Value": "Doe",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "CustomerNumber",
+                "Value": "64752550bf1f40",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "Street",
+                "Value": "Hoftstraat",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "StreetNumber",
+                "Value": "123",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "StreetNumberSuffix",
+                "Value": "A",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "PostalCode",
+                "Value": "1015CJ",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "City",
+                "Value": "Amsterdam",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "CountryCode",
+                "Value": "NL",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "Email",
+                "Value": "test@buckaroo.nl",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "Phone",
+                "Value": "0612345678",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "BirthDate",
+                "Value": "01-01-1990",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "Category",
+                "Value": "B2C",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "FirstName",
+                "Value": "John",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "Initials",
+                "Value": "R.T",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "LastName",
+                "Value": "Doe",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "CustomerNumber",
+                "Value": "64752550bf1f40",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "Street",
+                "Value": "Hoftstraat",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "StreetNumber",
+                "Value": "123",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "StreetNumberSuffix",
+                "Value": "A",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "PostalCode",
+                "Value": "1015CJ",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "City",
+                "Value": "Amsterdam",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "CountryCode",
+                "Value": "NL",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "Email",
+                "Value": "shipping@buckaroo.nl",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "Identifier",
+                "Value": "ABC123",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "Type",
+                "Value": "PhysicalArticle",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "GrossUnitPrice",
+                "Value": 40.1,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "Quantity",
+                "Value": 2,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "VatPercentage",
+                "Value": 21,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "Description",
+                "Value": "Test Product",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "Identifier",
+                "Value": "DEF456",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "Type",
+                "Value": "PhysicalArticle",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "GrossUnitPrice",
+                "Value": 20.1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "Quantity",
+                "Value": 1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "VatPercentage",
+                "Value": 21,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "Description",
+                "Value": "Second Product",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Testing In3 methods Pay 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100.3,
+      "ClientIP": {
+        "address": "203.0.113.10",
+        "type": 0,
+      },
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Test Transaction",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Pay",
+            "Name": "in3",
+            "Parameters": [
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "BirthDate",
+                "Value": "01-01-1990",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "Category",
+                "Value": "B2C",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "FirstName",
+                "Value": "John",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "Initials",
+                "Value": "R.T",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "LastName",
+                "Value": "Doe",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "CustomerNumber",
+                "Value": "64752550bf1f40",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "Street",
+                "Value": "Hoftstraat",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "StreetNumber",
+                "Value": "123",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "StreetNumberSuffix",
+                "Value": "A",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "PostalCode",
+                "Value": "1015CJ",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "City",
+                "Value": "Amsterdam",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "CountryCode",
+                "Value": "NL",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "Email",
+                "Value": "test@buckaroo.nl",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "Phone",
+                "Value": "0612345678",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "BirthDate",
+                "Value": "01-01-1990",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "Category",
+                "Value": "B2C",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "FirstName",
+                "Value": "John",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "Initials",
+                "Value": "R.T",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "LastName",
+                "Value": "Doe",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "CustomerNumber",
+                "Value": "64752550bf1f40",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "Street",
+                "Value": "Hoftstraat",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "StreetNumber",
+                "Value": "123",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "StreetNumberSuffix",
+                "Value": "A",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "PostalCode",
+                "Value": "1015CJ",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "City",
+                "Value": "Amsterdam",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "CountryCode",
+                "Value": "NL",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "Email",
+                "Value": "shipping@buckaroo.nl",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "Identifier",
+                "Value": "ABC123",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "Type",
+                "Value": "PhysicalArticle",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "GrossUnitPrice",
+                "Value": 40.1,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "Quantity",
+                "Value": 2,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "VatPercentage",
+                "Value": 21,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "Description",
+                "Value": "Test Product",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "Identifier",
+                "Value": "DEF456",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "Type",
+                "Value": "PhysicalArticle",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "GrossUnitPrice",
+                "Value": 20.1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "Quantity",
+                "Value": 1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "VatPercentage",
+                "Value": 21,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "Description",
+                "Value": "Second Product",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Testing In3 methods Pay with ABN-AMRO 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100.3,
+      "ClientIP": {
+        "address": "203.0.113.10",
+        "type": 0,
+      },
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Test Transaction",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Pay",
+            "Name": "in3",
+            "Parameters": [
+              {
+                "Name": "Route",
+                "Value": "abn_b2b",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "BirthDate",
+                "Value": "01-01-1990",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "Category",
+                "Value": "B2C",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "FirstName",
+                "Value": "John",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "Initials",
+                "Value": "R.T",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "LastName",
+                "Value": "Doe",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "CustomerNumber",
+                "Value": "64752550bf1f40",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "Street",
+                "Value": "Hoftstraat",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "StreetNumber",
+                "Value": "123",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "StreetNumberSuffix",
+                "Value": "A",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "PostalCode",
+                "Value": "1015CJ",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "City",
+                "Value": "Amsterdam",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "CountryCode",
+                "Value": "NL",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "Email",
+                "Value": "test@buckaroo.nl",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "Phone",
+                "Value": "0612345678",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "BirthDate",
+                "Value": "01-01-1990",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "Category",
+                "Value": "B2C",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "FirstName",
+                "Value": "John",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "Initials",
+                "Value": "R.T",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "LastName",
+                "Value": "Doe",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "CustomerNumber",
+                "Value": "64752550bf1f40",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "Street",
+                "Value": "Hoftstraat",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "StreetNumber",
+                "Value": "123",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "StreetNumberSuffix",
+                "Value": "A",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "PostalCode",
+                "Value": "1015CJ",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "City",
+                "Value": "Amsterdam",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "CountryCode",
+                "Value": "NL",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "Email",
+                "Value": "shipping@buckaroo.nl",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "Identifier",
+                "Value": "ABC123",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "Type",
+                "Value": "PhysicalArticle",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "GrossUnitPrice",
+                "Value": 40.1,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "Quantity",
+                "Value": 2,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "VatPercentage",
+                "Value": 21,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "Description",
+                "Value": "Test Product",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "Identifier",
+                "Value": "DEF456",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "Type",
+                "Value": "PhysicalArticle",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "GrossUnitPrice",
+                "Value": 20.1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "Quantity",
+                "Value": 1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "VatPercentage",
+                "Value": 21,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "Description",
+                "Value": "Second Product",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Testing In3 methods Refund 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountCredit": 0.01,
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Refund Transaction Test",
+      "Invoice": "64752550bf1f40",
+      "OriginalTransactionKey": "4BC466160ACB460EAFB8923D1BBFE33A",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Refund",
+            "Name": "in3",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;

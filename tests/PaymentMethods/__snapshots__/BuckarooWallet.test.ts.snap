@@ -1,0 +1,356 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BuckarooWallet methods CancelReservation 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 30,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "",
+      "OriginalTransactionKey": "",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "CancelReservation",
+            "Name": "buckaroowalletcollecting",
+            "Parameters": [
+              {
+                "Name": "WalletMutationGuid",
+                "Value": "test-walletMutationGuid",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`BuckarooWallet methods Create Wallet 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Create",
+            "Name": "buckaroowalletcollecting",
+            "Parameters": [
+              {
+                "Name": "WalletId",
+                "Value": "64752550bf1f40",
+              },
+              {
+                "Name": "ConsumerFirstName",
+                "Value": "Test",
+              },
+              {
+                "Name": "ConsumerLastName",
+                "Value": "Acceptatie",
+              },
+              {
+                "Name": "ConsumerIban",
+                "Value": "NL13TEST0123456789",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`BuckarooWallet methods Deposit 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountCredit": 50,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "OriginalTransactionKey": "288EC0C84DF24C5C8B34723E50782BD4",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Deposit",
+            "Name": "buckaroowalletcollecting",
+            "Parameters": [
+              {
+                "Name": "WalletId",
+                "Value": "test-walletId",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`BuckarooWallet methods GetInfo 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "GetInfo",
+            "Name": "buckaroowalletcollecting",
+            "Parameters": [
+              {
+                "Name": "WalletId",
+                "Value": "test-walletId",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`BuckarooWallet methods Pay 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 10,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Pay",
+            "Name": "buckaroowalletcollecting",
+            "Parameters": [
+              {
+                "Name": "WalletId",
+                "Value": "test-walletId",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`BuckarooWallet methods Refund 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountCredit": 0.01,
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Refund Transaction Test",
+      "Invoice": "64752550bf1f40",
+      "OriginalTransactionKey": "test-transactionKey",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Refund",
+            "Name": "buckaroowalletcollecting",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`BuckarooWallet methods Release 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountCredit": 40,
+      "Currency": "EUR",
+      "OriginalTransactionKey": "",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Release",
+            "Name": "buckaroowalletcollecting",
+            "Parameters": [
+              {
+                "Name": "WalletId",
+                "Value": "test-walletId",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`BuckarooWallet methods Reservation 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountCredit": 40,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "OriginalTransactionKey": "288EC0C84DF24C5C8B34723E50782BD4",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Reserve",
+            "Name": "buckaroowalletcollecting",
+            "Parameters": [
+              {
+                "Name": "WalletId",
+                "Value": "test-walletId",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`BuckarooWallet methods Update 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Update",
+            "Name": "buckaroowalletcollecting",
+            "Parameters": [
+              {
+                "Name": "WalletId",
+                "Value": "64752550bf1f40",
+              },
+              {
+                "Name": "ConsumerFirstName",
+                "Value": "Test",
+              },
+              {
+                "Name": "ConsumerLastName",
+                "Value": "Acceptatie",
+              },
+              {
+                "Name": "Status",
+                "Value": "Active",
+              },
+              {
+                "Name": "ConsumerIban",
+                "Value": "NL13TEST0123456789",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`BuckarooWallet methods Withdrawal 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 10,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "",
+      "OriginalTransactionKey": "test-reservationId",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Withdrawal",
+            "Name": "buckaroowalletcollecting",
+            "Parameters": [
+              {
+                "Name": "WalletId",
+                "Value": "test-walletId",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;

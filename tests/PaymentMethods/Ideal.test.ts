@@ -1,6 +1,7 @@
 import { IRefundRequest, PaymentMethodInstance, uniqid } from '../../src';
-import buckarooClientTest from '../BuckarooClient.test';
+import buckarooClientTest from '../BuckarooClient';
 import { createRefundPayload } from '../Payloads';
+import { issuerResponse, mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 let method: PaymentMethodInstance<'ideal'>;
 
@@ -9,10 +10,14 @@ beforeEach(() => {
 });
 describe('testing Ideal methods', () => {
     test('Issuers', async () => {
+        mockResponse(issuerResponse, '/json/Transaction/Specification/ideal', 'GET');
+
         const response = await method.issuers();
         expect(Array.isArray(response)).toBeTruthy();
     });
     test('Pay Simple Payload', async () => {
+        mockResponse(transactionResponse(790));
+
         const response = await method
             .pay({
                 amountDebit: 100,
@@ -23,6 +28,8 @@ describe('testing Ideal methods', () => {
         expect(response.isWaitingOnUserInput()).toBeTruthy();
     });
     test('Refund', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .refund(
                 createRefundPayload<IRefundRequest>({
@@ -33,6 +40,8 @@ describe('testing Ideal methods', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('InstantRefund', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .instantRefund(
                 createRefundPayload<IRefundRequest>({
@@ -43,6 +52,8 @@ describe('testing Ideal methods', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('PayFastCheckout', async () => {
+        mockResponse(transactionResponse(790));
+
         const response = await method
             .payFastCheckout({
                 invoice: uniqid(),
@@ -53,6 +64,9 @@ describe('testing Ideal methods', () => {
         expect(response.isWaitingOnUserInput()).toBeTruthy();
     });
     test('Pay Reminder', async () => {
+        mockResponse(transactionResponse(190));
+        mockResponse(transactionResponse(790));
+
         const response = await buckarooClientTest
             .method('boekenbon')
             .pay({
@@ -73,4 +87,8 @@ describe('testing Ideal methods', () => {
             .request();
         expect(responseRemainderPay.isWaitingOnUserInput()).toBeTruthy();
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
 });

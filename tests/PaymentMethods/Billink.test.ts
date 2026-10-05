@@ -1,14 +1,16 @@
-import { IPay } from '../../src/PaymentMethods/Billink/Models/Pay';
-import buckarooClientTest from '../BuckarooClient.test';
 import { PaymentMethodInstance } from '../../src';
-import { createBasePayload, createRefundPayload } from '../Payloads';
+import { IPay } from '../../src/PaymentMethods/Billink/Models/Pay';
 import { IRefund } from '../../src/PaymentMethods/Billink/Models/Refund';
+import buckarooClientTest from '../BuckarooClient';
+import { createBasePayload, createRefundPayload } from '../Payloads';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
-let payTransactionKey: string;
+let payTransactionKey = 'test-payTransactionKey';
 let method: PaymentMethodInstance<'billink'>;
 let payload: IPay;
 
 beforeEach(() => {
+    payTransactionKey = 'test-payTransactionKey';
     method = buckarooClientTest.method('billink');
     payload = createBasePayload<IPay>(
         {
@@ -31,12 +33,16 @@ beforeEach(() => {
 
 describe('Billink methods', () => {
     test('Pay', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method.pay(payload).request();
 
         expect(response.isSuccess()).toBeTruthy();
         payTransactionKey = response.getTransactionKey();
     });
     test('Refund', async () => {
+        mockResponse(transactionResponse(190));
+
         expect(payTransactionKey).toBeDefined();
         const response = await method
             .refund(
@@ -47,4 +53,8 @@ describe('Billink methods', () => {
             .request();
         expect(response.isSuccess()).toBeTruthy();
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
 });

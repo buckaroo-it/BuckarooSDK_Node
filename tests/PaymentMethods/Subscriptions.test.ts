@@ -1,16 +1,20 @@
 import { PaymentMethodInstance, uniqid } from '../../src';
-import buckarooClientTest from '../BuckarooClient.test';
+import buckarooClientTest from '../BuckarooClient';
 import { formatDate, getServiceParameter } from '../Payloads';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 let method: PaymentMethodInstance<'subscriptions'>;
-let transactionKey: string;
+let transactionKey = 'test-transactionKey';
 
 beforeEach(() => {
+    transactionKey = 'test-transactionKey';
     method = buckarooClientTest.method('subscriptions');
 });
 
 describe('Subscription methods', () => {
     test('Create', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method
             .create({
                 startDate: formatDate(new Date()),
@@ -50,6 +54,8 @@ describe('Subscription methods', () => {
     });
 
     test('Combined Subscription', async () => {
+        mockResponse(transactionResponse(790));
+
         method.createCombined({
             pushURL: 'https://buckaroo.dev/push',
             includeTransaction: false,
@@ -99,6 +105,8 @@ describe('Subscription methods', () => {
     });
 
     test('Update', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         expect(transactionKey).toBeDefined();
         const response = await method
             .update({
@@ -121,6 +129,8 @@ describe('Subscription methods', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('Update Combined Subscription', async () => {
+        mockResponse(transactionResponse(190));
+
         method.updateCombined({
             startRecurrent: true,
             subscriptionGuid: 'E29238210FE04E069FD83E16ACE50950',
@@ -136,6 +146,8 @@ describe('Subscription methods', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('Subscription Info', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method
             .info({
                 subscriptionGuid: transactionKey,
@@ -144,6 +156,8 @@ describe('Subscription methods', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('Delete Subscription Config', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method
             .deletePaymentConfig({
                 subscriptionGuid: transactionKey,
@@ -152,6 +166,8 @@ describe('Subscription methods', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('Subscription Pause', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method
             .pause({
                 subscriptionGuid: transactionKey,
@@ -161,6 +177,8 @@ describe('Subscription methods', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('Subscription Resume', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method
             .resume({
                 resumeDate: '2030-01-01',
@@ -170,6 +188,8 @@ describe('Subscription methods', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('Stop Subscription', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method
             .stop({
                 subscriptionGuid: transactionKey,
@@ -177,4 +197,8 @@ describe('Subscription methods', () => {
             .request();
         expect(response.isSuccess()).toBeTruthy();
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
 });

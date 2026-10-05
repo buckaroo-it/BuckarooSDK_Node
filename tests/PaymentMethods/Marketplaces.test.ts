@@ -1,6 +1,7 @@
-import buckarooClientTest from '../BuckarooClient.test';
 import { IRefundRequest, PaymentMethodInstance, uniqid } from '../../src';
+import buckarooClientTest from '../BuckarooClient';
 import { createRefundPayload } from '../Payloads';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 let marketplaces: PaymentMethodInstance<'marketplaces'>;
 let ideal: PaymentMethodInstance<'ideal'>;
@@ -12,6 +13,8 @@ beforeEach(() => {
 
 describe('Testing Marketplaces methods', () => {
     test('Split', async () => {
+        mockResponse(transactionResponse(790));
+
         const marketplacesResponse = await marketplaces.split({
             description: 'INV0001',
             daysUntilTransfer: 5,
@@ -42,7 +45,9 @@ describe('Testing Marketplaces methods', () => {
             .request();
         expect(response.isWaitingOnUserInput()).toBeTruthy();
     });
-    test.only('transfer', async () => {
+    test('transfer', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await marketplaces
             .transfer({
                 originalTransactionKey: 'DD58418EBE124DEB9E887EC059C729D5',
@@ -63,6 +68,8 @@ describe('Testing Marketplaces methods', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('refundSupplementary', async () => {
+        mockResponse(transactionResponse(190));
+
         const marketplacesResponse = await marketplaces.refundSupplementary({
             sellers: [
                 {
@@ -81,4 +88,8 @@ describe('Testing Marketplaces methods', () => {
             .request();
         expect(response.isSuccess()).toBeTruthy();
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
 });

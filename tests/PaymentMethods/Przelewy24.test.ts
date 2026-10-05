@@ -1,6 +1,7 @@
-import buckarooClientTest from '../BuckarooClient.test';
 import { IRefundRequest, PaymentMethodInstance } from '../../src';
+import buckarooClientTest from '../BuckarooClient';
 import { createRefundPayload } from '../Payloads';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 let method: PaymentMethodInstance<'przelewy24'>;
 
@@ -10,6 +11,8 @@ beforeEach(() => {
 
 describe('Przelewy24', () => {
     test('Pay', async () => {
+        mockResponse(transactionResponse(791));
+
         const response = await method
             .pay({
                 amountDebit: 100.3,
@@ -23,6 +26,8 @@ describe('Przelewy24', () => {
         expect(response.isPendingProcessing()).toBeTruthy();
     });
     test('Refund', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .refund(
                 createRefundPayload<IRefundRequest>({
@@ -32,4 +37,8 @@ describe('Przelewy24', () => {
             .request();
         expect(response.isSuccess()).toBeTruthy();
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
 });

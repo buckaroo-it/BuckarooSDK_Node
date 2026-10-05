@@ -1,0 +1,202 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing Ideal methods InstantRefund 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountCredit": 0.01,
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Refund Transaction Test",
+      "Invoice": "64752550bf1f40",
+      "OriginalTransactionKey": "D2FCFA2133F5412A8D6D376D2BFEF573",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Refund",
+            "Name": "ideal",
+            "Version": 2,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`testing Ideal methods Issuers 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": undefined,
+    "method": "GET",
+    "path": "/json/Transaction/Specification/ideal?serviceVersion=2",
+  },
+]
+`;
+
+exports[`testing Ideal methods Pay Reminder 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 10,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Pay",
+            "Name": "boekenbon",
+            "Parameters": [
+              {
+                "Name": "IntersolveCardnumber",
+                "Value": "0000000000000000001",
+              },
+              {
+                "Name": "IntersolvePIN",
+                "Value": "500",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 5,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "OriginalTransactionKey": "test-related-transaction",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "PayRemainder",
+            "Name": "ideal",
+            "Parameters": [
+              {
+                "Name": "Issuer",
+                "Value": "ABNANL2A",
+              },
+            ],
+            "Version": 2,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`testing Ideal methods Pay Simple Payload 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100,
+      "ContinueOnIncomplete": 0,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Pay",
+            "Name": "ideal",
+            "Parameters": [
+              {
+                "Name": "Issuer",
+                "Value": "ABNANL2A",
+              },
+            ],
+            "Version": 2,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`testing Ideal methods PayFastCheckout 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 10,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "PayFastCheckout",
+            "Name": "ideal",
+            "Parameters": [],
+            "Version": 2,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`testing Ideal methods Refund 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountCredit": 0.01,
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Refund Transaction Test",
+      "Invoice": "64752550bf1f40",
+      "OriginalTransactionKey": "D2FCFA2133F5412A8D6D376D2BFEF573",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Refund",
+            "Name": "ideal",
+            "Version": 2,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;

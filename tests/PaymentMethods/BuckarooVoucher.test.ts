@@ -1,20 +1,25 @@
-import buckarooClientTest from '../BuckarooClient.test';
 import { IRefundRequest, PaymentMethodInstance } from '../../src';
+import buckarooClientTest from '../BuckarooClient';
 import { createRefundPayload } from '../Payloads';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 let method: PaymentMethodInstance<'buckaroovoucher'>;
 
-let voucherCode: string;
-let transactionKey: string;
+let voucherCode = 'test-voucherCode';
+let transactionKey = 'test-transactionKey';
 
 const formatDate = (date: Date) => date.toISOString().split('T')[0];
 
 beforeEach(() => {
+    voucherCode = 'test-voucherCode';
+    transactionKey = 'test-transactionKey';
     method = buckarooClientTest.method('buckaroovoucher');
 });
 
 describe('testing methods', () => {
     test('CreateApplication', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const today = new Date();
         const oneMonthFromNow = new Date();
         oneMonthFromNow.setMonth(today.getMonth() + 1);
@@ -33,9 +38,7 @@ describe('testing methods', () => {
         voucherCode = String(response.getServices()?.[0]?.parameters.find((p) => p.name === 'VoucherCode')?.value);
     });
     test('GetBalance', async () => {
-        if (!voucherCode) {
-            throw new Error('voucherCode is not set. Ensure CreateApplication test has run successfully.');
-        }
+        mockResponse(transactionResponse(190), '/json/DataRequest');
 
         return method
             .getBalance({
@@ -47,9 +50,7 @@ describe('testing methods', () => {
             });
     });
     test('Pay', async () => {
-        if (!voucherCode) {
-            throw new Error('voucherCode is not set. Ensure CreateApplication test has run successfully.');
-        }
+        mockResponse(transactionResponse(190));
 
         const response = await method
             .pay({
@@ -61,6 +62,8 @@ describe('testing methods', () => {
         transactionKey = response.getTransactionKey();
     });
     test('Refund', async () => {
+        mockResponse(transactionResponse(190));
+
         expect(transactionKey).toBeDefined();
 
         const response = await method
@@ -73,9 +76,8 @@ describe('testing methods', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('DeactivateVoucher', async () => {
-        if (!voucherCode) {
-            throw new Error('voucherCode is not set. Ensure CreateApplication test has run successfully.');
-        }
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method
             .deactivate({
                 voucherCode: voucherCode,
@@ -83,4 +85,8 @@ describe('testing methods', () => {
             .request();
         expect(response.httpResponse.status).toEqual(200);
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
 });

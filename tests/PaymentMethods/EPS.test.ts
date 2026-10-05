@@ -1,14 +1,18 @@
-import buckarooClientTest from '../BuckarooClient.test';
 import { PaymentMethodInstance, uniqid } from '../../src';
+import buckarooClientTest from '../BuckarooClient';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 let method: PaymentMethodInstance<'eps'>;
-let transactionKey: string;
+let transactionKey = 'test-transactionKey';
 
 beforeEach(() => {
+    transactionKey = 'test-transactionKey';
     method = buckarooClientTest.method('eps');
 });
 describe('Testing Eps methods', () => {
     test('Pay', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .pay({
                 amountDebit: 100,
@@ -18,6 +22,8 @@ describe('Testing Eps methods', () => {
         transactionKey = response.getTransactionKey();
     });
     test('Refund', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .refund({
                 invoice: uniqid(),
@@ -27,4 +33,8 @@ describe('Testing Eps methods', () => {
             .request();
         expect(response.isSuccess()).toBeTruthy();
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
 });

@@ -1,8 +1,9 @@
-import buckarooClientTest from '../BuckarooClient.test';
-import { IPay } from '../../src/PaymentMethods/Afterpay/Model/Pay';
-import { createBasePayload, createRefundPayload } from '../Payloads';
-import { IRefund } from '../../src/PaymentMethods/Afterpay/Model/Refund';
 import { PaymentMethodInstance } from '../../src';
+import { IPay } from '../../src/PaymentMethods/Afterpay/Model/Pay';
+import { IRefund } from '../../src/PaymentMethods/Afterpay/Model/Refund';
+import buckarooClientTest from '../BuckarooClient';
+import { createBasePayload, createRefundPayload } from '../Payloads';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 let method: PaymentMethodInstance<'afterpay'>;
 let payload: IPay;
@@ -27,14 +28,20 @@ beforeEach(() => {
 
 describe('AfterPay methods', () => {
     test('Pay', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method.pay(payload).request();
         expect(response.isSuccess()).toBeTruthy();
     });
     test('Pay with Different Version', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method.setServiceVersion(2).pay(payload).request();
         expect(response.isSuccess()).toBeTruthy();
     });
     test('Refund', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .refund(
                 createRefundPayload<IRefund>({
@@ -46,10 +53,14 @@ describe('AfterPay methods', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('Authorize', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method.authorize(payload).request();
         expect(response.isSuccess()).toBeTruthy();
     });
     test('CancelAuthorize', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .cancelAuthorize(
                 createRefundPayload<IRefund>({
@@ -61,6 +72,8 @@ describe('AfterPay methods', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('Capture', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .capture({
                 ...payload,
@@ -69,4 +82,38 @@ describe('AfterPay methods', () => {
             .request();
         expect(response.isSuccess()).toBeTruthy();
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
+});
+
+test('payRemainder builds the PayRemainder request', async () => {
+    mockResponse(transactionResponse(), '/json/Transaction');
+    const result = await method.payRemainder(payload).request();
+    expect(result.isSuccess()).toBe(true);
+    expect(recordedRequests()).toEqual([
+        expect.objectContaining({
+            data: expect.objectContaining({
+                Services: {
+                    ServiceList: expect.arrayContaining([expect.objectContaining({ Action: 'PayRemainder' })]),
+                },
+            }),
+        }),
+    ]);
+});
+
+test('authorizeRemainder builds the AuthorizeRemainder request', async () => {
+    mockResponse(transactionResponse(), '/json/Transaction');
+    const result = await method.authorizeRemainder(payload).request();
+    expect(result.isSuccess()).toBe(true);
+    expect(recordedRequests()).toEqual([
+        expect.objectContaining({
+            data: expect.objectContaining({
+                Services: {
+                    ServiceList: expect.arrayContaining([expect.objectContaining({ Action: 'AuthorizeRemainder' })]),
+                },
+            }),
+        }),
+    ]);
 });

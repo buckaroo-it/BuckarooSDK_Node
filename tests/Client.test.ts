@@ -1,4 +1,3 @@
-import client from './BuckarooClient.test';
 import { Agent } from 'https';
 import Buckaroo, {
     ActiveSubscriptions,
@@ -6,23 +5,27 @@ import Buckaroo, {
     getMethod,
     Hmac,
     HttpClientResponse,
-    IRequest,
     HttpsClient,
     ICredentials,
+    IRequest,
     Request,
-    TransactionService,
     TransactionResponse,
+    TransactionService,
     uniqid,
 } from '../src';
-import { creditManagementTestInvoice } from './PaymentMethods/CreditManagment.test';
+import client from './BuckarooClient';
+import { creditManagementTestInvoice } from './Payloads/CreditManagement';
+import { issuerResponse, mockResponse, recordedRequests, transactionResponse } from './Utils/HttpMock';
 
 describe('Testing Buckaroo Client', () => {
     test('Credentials', async () => {
+        mockResponse(issuerResponse, '/json/Transaction/Specification/ideal', 'GET');
         return client.confirmCredentials().then((response) => {
             expect(response).toBeTruthy();
         });
     });
     test('Batch transaction', async () => {
+        mockResponse({ Message: '3 transactions were queued for processing.' }, '/json/batch/Transactions');
         const transactionData: IRequest[] = [];
         const creditManagement = client.method('creditmanagement3');
         const sepaDirectDebit = client.method('sepadirectdebit');
@@ -58,6 +61,7 @@ describe('Testing Buckaroo Client', () => {
     describe('Transaction', () => {
         const transactionService = client.transaction('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
         test('transaction Status', async () => {
+            mockResponse(transactionResponse(), '/json/Transaction/Status/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', 'GET');
             return transactionService
                 .status()
                 .then((res) => {
@@ -68,12 +72,14 @@ describe('Testing Buckaroo Client', () => {
                 });
         });
         test('transaction Cancel Info', async () => {
+            mockResponse({}, '/json/Transaction/Cancel/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', 'GET');
             return transactionService.cancelInfo().then((res) => {
                 expect(res instanceof HttpClientResponse).toBeTruthy();
             });
         });
 
         test('transaction Refund Info', async () => {
+            mockResponse({}, '/json/Transaction/RefundInfo/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', 'GET');
             return transactionService.refundInfo().then((res) => {
                 expect(res instanceof HttpClientResponse).toBeTruthy();
             });
@@ -82,8 +88,22 @@ describe('Testing Buckaroo Client', () => {
 
     describe('Active Subscription', () => {
         test('Get', async () => {
+            mockResponse(
+                {
+                    Services: [
+                        {
+                            Parameters: [
+                                {
+                                    Value: '<ArrayOfServiceCurrencies><ServiceCurrencies><ServiceCode>ideal</ServiceCode><Currencies><string>EUR</string></Currencies></ServiceCurrencies></ArrayOfServiceCurrencies>',
+                                },
+                            ],
+                        },
+                    ],
+                },
+                '/json/DataRequest'
+            );
             await client.getActiveSubscriptions().then((response) => {
-                expect(Array.isArray(response)).toBeDefined();
+                expect(response).toEqual([{ serviceCode: 'ideal', currencies: ['EUR'] }]);
             });
         });
     });
@@ -266,4 +286,8 @@ describe('Testing Buckaroo Client', () => {
             }
         });
     });
+});
+
+afterEach(() => {
+    if (recordedRequests().length) expect(recordedRequests()).toMatchSnapshot();
 });

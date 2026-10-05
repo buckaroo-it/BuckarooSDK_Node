@@ -1,5 +1,6 @@
 import { PaymentMethodInstance } from '../../src';
-import buckarooClientTest from '../BuckarooClient.test';
+import buckarooClientTest from '../BuckarooClient';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 let method: PaymentMethodInstance<'idin'>;
 
@@ -9,6 +10,8 @@ beforeEach(() => {
 
 describe('Idin methods', () => {
     test('Verify', async () => {
+        mockResponse(transactionResponse(791), '/json/DataRequest');
+
         const response = await method
             .verify({
                 issuer: 'BANKNL2Y',
@@ -18,6 +21,8 @@ describe('Idin methods', () => {
     });
 
     test('Identify', async () => {
+        mockResponse(transactionResponse(791), '/json/DataRequest');
+
         const response = await method
             .identify({
                 issuer: 'BANKNL2Y',
@@ -27,6 +32,8 @@ describe('Idin methods', () => {
     });
 
     test('Login', async () => {
+        mockResponse(transactionResponse(791), '/json/DataRequest');
+
         const response = await method
             .login({
                 issuer: 'BANKNL2Y',
@@ -34,4 +41,8 @@ describe('Idin methods', () => {
             .request();
         expect(response.isPendingProcessing()).toBeTruthy();
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
 });

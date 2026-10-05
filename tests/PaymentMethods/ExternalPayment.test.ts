@@ -1,15 +1,19 @@
-import buckarooClientTest from '../BuckarooClient.test';
-import { IRefundRequest, PaymentMethodInstance, uniqid } from '../../src';
+import { IRefundRequest, PaymentMethodInstance } from '../../src';
+import buckarooClientTest from '../BuckarooClient';
 import { createRefundPayload } from '../Payloads';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 let method: PaymentMethodInstance<'externalpayment'>;
-let transactionKey: string;
+let transactionKey = 'test-transactionKey';
 
 beforeEach(() => {
+    transactionKey = 'test-transactionKey';
     method = buckarooClientTest.method('externalpayment');
 });
 describe('Testing ExternalPayment methods', () => {
     test('Pay', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .pay({
                 amountDebit: 10,
@@ -19,6 +23,8 @@ describe('Testing ExternalPayment methods', () => {
         transactionKey = response.getTransactionKey();
     });
     test('Refund', async () => {
+        mockResponse(transactionResponse(190));
+
         expect(transactionKey).toBeDefined();
         const response = await method
             .refund(
@@ -29,4 +35,14 @@ describe('Testing ExternalPayment methods', () => {
             .request();
         expect(response.isSuccess()).toBeTruthy();
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
+});
+
+test('sets the point-of-sale channel on external payments', async () => {
+    mockResponse(transactionResponse());
+    await method.setChannel('POINT-OF-SALE').pay({ amountDebit: 10 }).request();
+    expect(recordedRequests()).toEqual([expect.objectContaining({ channel: 'POINT-OF-SALE' })]);
 });

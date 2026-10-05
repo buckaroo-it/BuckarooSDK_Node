@@ -1,16 +1,20 @@
 import { IRefundRequest, PaymentMethodInstance, uniqid } from '../../src';
-import buckarooClientTest from '../BuckarooClient.test';
+import buckarooClientTest from '../BuckarooClient';
 import { createRefundPayload } from '../Payloads';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 let method: PaymentMethodInstance<'bancontactmrcash'>;
-let transactionKey: string;
+let transactionKey = 'test-transactionKey';
 
 beforeEach(() => {
+    transactionKey = 'test-transactionKey';
     method = buckarooClientTest.method('bancontactmrcash');
 });
 
 describe('Bancontact methods', () => {
     test('Pay Simple Payload', async () => {
+        mockResponse(transactionResponse(790));
+
         const response = await method
             .pay({
                 amountDebit: 100,
@@ -22,6 +26,8 @@ describe('Bancontact methods', () => {
     });
 
     test('PayOneClick', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .payOneClick({
                 invoice: uniqid(),
@@ -34,7 +40,9 @@ describe('Bancontact methods', () => {
         transactionKey = response.getTransactionKey();
     });
 
-    test('Refund (uses PayOneClick transaction key)', async () => {
+    test('Refund', async () => {
+        mockResponse(transactionResponse(190));
+
         expect(transactionKey).toBeDefined();
 
         const refundPayload = createRefundPayload<IRefundRequest>({
@@ -46,6 +54,8 @@ describe('Bancontact methods', () => {
     });
 
     test('Authenticate', async () => {
+        mockResponse(transactionResponse(790));
+
         const response = await method
             .authenticate({
                 invoice: uniqid(),
@@ -57,6 +67,8 @@ describe('Bancontact methods', () => {
     });
 
     test('PayEncrypted', async () => {
+        mockResponse(transactionResponse(791));
+
         const response = await method
             .payEncrypted({
                 invoice: uniqid(),
@@ -70,7 +82,9 @@ describe('Bancontact methods', () => {
         transactionKey = response.getTransactionKey();
     });
 
-    test('CompletePayment (uses PayEncrypted transaction key)', async () => {
+    test('CompletePayment', async () => {
+        mockResponse(transactionResponse(791), '/json/DataRequest');
+
         expect(transactionKey).toBeDefined();
 
         const response = await method
@@ -85,6 +99,8 @@ describe('Bancontact methods', () => {
     });
 
     test('PayRecurring', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .payRecurring({
                 invoice: uniqid(),
@@ -95,4 +111,8 @@ describe('Bancontact methods', () => {
 
         expect(response.httpResponse.status).toEqual(200);
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
 });

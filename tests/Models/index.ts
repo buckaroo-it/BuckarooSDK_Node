@@ -1,6 +1,5 @@
 import {
     Gender,
-    getIPAddress,
     IAddress,
     IArticle,
     IBankAccount,
@@ -81,4 +80,4 @@ export const TestCustomer = {
     birthDate: TestPerson.birthDate,
 };
 
-export const TestIp = getIPAddress();
+export const TestIp = '203.0.113.10';

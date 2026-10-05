@@ -1,7 +1,8 @@
-import buckarooClientTest from '../BuckarooClient.test';
 import { IRefundRequest, PaymentMethodInstance, RecipientCategory } from '../../src';
-import { createAddressPayload, createBasePayload, createCustomerPayload, createRefundPayload } from '../Payloads';
 import { IPay } from '../../src/PaymentMethods/In3Old/Models/Pay';
+import buckarooClientTest from '../BuckarooClient';
+import { createAddressPayload, createBasePayload, createCustomerPayload, createRefundPayload } from '../Payloads';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 let method: PaymentMethodInstance<'capayable'>;
 const payload = createBasePayload<IPay>(
@@ -38,10 +39,14 @@ beforeEach(() => {
 
 describe('Testing capayable methods', () => {
     test('PayInInstallments', async () => {
+        mockResponse(transactionResponse(791));
+
         const response = await method.payInInstallments(payload).request();
         expect(response.isPendingProcessing()).toBeTruthy();
     });
     test('Refund', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .refund(
                 createRefundPayload<IRefundRequest>({
@@ -51,4 +56,21 @@ describe('Testing capayable methods', () => {
             .request();
         expect(response.isSuccess()).toBeTruthy();
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
+});
+
+test('pay builds the Pay request', async () => {
+    mockResponse(transactionResponse(), '/json/Transaction');
+    const result = await method.pay(payload).request();
+    expect(result.isSuccess()).toBe(true);
+    expect(recordedRequests()).toEqual([
+        expect.objectContaining({
+            data: expect.objectContaining({
+                Services: { ServiceList: expect.arrayContaining([expect.objectContaining({ Action: 'Pay' })]) },
+            }),
+        }),
+    ]);
 });

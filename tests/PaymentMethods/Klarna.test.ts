@@ -1,7 +1,8 @@
-import buckarooClientTest from '../BuckarooClient.test';
-import { Gender, getIPAddress, PaymentMethodInstance, IRefundRequest } from '../../src';
-import { createBasePayload, createRefundPayload } from '../Payloads';
+import { Gender, IRefundRequest, PaymentMethodInstance } from '../../src';
 import { IReserve } from '../../src/PaymentMethods/Klarna/Models/IReserve';
+import buckarooClientTest from '../BuckarooClient';
+import { createBasePayload, createRefundPayload } from '../Payloads';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 let method: PaymentMethodInstance<'klarna'>;
 
@@ -11,35 +12,23 @@ beforeEach(() => {
 
 describe('Klarna', () => {
     test('Reserve', async () => {
+        mockResponse(transactionResponse(791), '/json/DataRequest');
+
         const response = await method
             .reserve(
                 createBasePayload<IReserve>(
                     {
-                        clientIP: getIPAddress(),
+                        clientIP: '203.0.113.10',
                         gender: Gender.MALE,
                         operatingCountry: 'NL',
                         pno: '01011990',
                     },
                     {
                         billing: {
-                            exclude: [
-                                'state',
-                                'lastNamePrefix',
-                                'placeOfBirth',
-                                'title',
-                                'initials',
-                                'culture',
-                            ],
+                            exclude: ['state', 'lastNamePrefix', 'placeOfBirth', 'title', 'initials', 'culture'],
                         },
                         shipping: {
-                            exclude: [
-                                'state',
-                                'lastNamePrefix',
-                                'placeOfBirth',
-                                'title',
-                                'initials',
-                                'culture',
-                            ],
+                            exclude: ['state', 'lastNamePrefix', 'placeOfBirth', 'title', 'initials', 'culture'],
                         },
                         articles: {
                             exclude: ['type', 'unitCode', 'vatCategory'],
@@ -51,6 +40,8 @@ describe('Klarna', () => {
         expect(response.isPendingProcessing()).toBeTruthy();
     });
     test('UpdateReservation', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method
             .update(
                 createBasePayload<IReserve>(
@@ -63,14 +54,7 @@ describe('Klarna', () => {
                             overrides: {
                                 email: 'updatedemail@test.com',
                             },
-                            exclude: [
-                                'state',
-                                'lastNamePrefix',
-                                'placeOfBirth',
-                                'title',
-                                'initials',
-                                'culture',
-                            ],
+                            exclude: ['state', 'lastNamePrefix', 'placeOfBirth', 'title', 'initials', 'culture'],
                         },
                         articles: {
                             overrides: [
@@ -78,7 +62,7 @@ describe('Klarna', () => {
                                     description: 'Updated Article',
                                     vatPercentage: 21,
                                     identifier: 'updated-article-1',
-                                    price: 50.00,
+                                    price: 50.0,
                                     quantity: 1,
                                 },
                             ],
@@ -91,6 +75,8 @@ describe('Klarna', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('ExtendReservation', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method
             .extend({
                 dataRequestKey: 'AE5A22C01A1D445EB92360FBFD58F94D',
@@ -99,6 +85,8 @@ describe('Klarna', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('Cancel', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method
             .cancel({
                 dataRequestKey: 'A3BB182AAB954DA49BE4BFBD61271D38',
@@ -107,6 +95,8 @@ describe('Klarna', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('Pay', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .pay({
                 amountDebit: 100.3,
@@ -116,6 +106,8 @@ describe('Klarna', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('Pay with Shipping Info', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .pay({
                 amountDebit: 100.3,
@@ -130,6 +122,8 @@ describe('Klarna', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('Refund', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .refund(
                 createRefundPayload<IRefundRequest>({
@@ -139,4 +133,23 @@ describe('Klarna', () => {
             .request();
         expect(response.isSuccess()).toBeTruthy();
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
+});
+
+test('addShippingInfo builds the AddShippingInfo request', async () => {
+    mockResponse(transactionResponse(), '/json/DataRequest');
+    const result = await method.addShippingInfo({ originalTransactionKey: 'test-original' }).request();
+    expect(result.isSuccess()).toBe(true);
+    expect(recordedRequests()).toEqual([
+        expect.objectContaining({
+            data: expect.objectContaining({
+                Services: {
+                    ServiceList: expect.arrayContaining([expect.objectContaining({ Action: 'AddShippingInfo' })]),
+                },
+            }),
+        }),
+    ]);
 });

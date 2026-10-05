@@ -1,32 +1,43 @@
-import { IInvoice } from '../../src/PaymentMethods/CreditManagement/Models/Invoice';
-import { Gender, PaymentMethodInstance, uniqid } from '../../src';
-import buckarooClientTest from '../BuckarooClient.test';
-import { getServiceParameter, formatDate } from '../Payloads';
+import { CreditManagementInstallmentInterval, PaymentMethodInstance, uniqid } from '../../src';
+import buckarooClientTest from '../BuckarooClient';
+import { formatDate, getServiceParameter } from '../Payloads';
+import { creditManagementTestInvoice } from '../Payloads/CreditManagement';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 let method: PaymentMethodInstance<'creditmanagement3'>;
-let invoiceKey: string;
-let invoice: string;
+let invoiceKey = 'test-invoiceKey';
+let invoice = 'test-invoice';
 
 beforeEach(() => {
+    invoiceKey = 'test-invoiceKey';
+    invoice = 'test-invoice';
     method = buckarooClientTest.method('creditmanagement3');
 });
 describe('Testing Credit Management', () => {
     test('CreateInvoice', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method.createInvoice(creditManagementTestInvoice()).request();
         invoiceKey = getServiceParameter(response, 'InvoiceKey');
 
         expect(response.isSuccess()).toBeTruthy();
     });
     test('Pause Invoice', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method.pauseInvoice({ invoice: invoice }).request();
 
         expect(response.isSuccess()).toBeTruthy();
     });
     test('UnPause Invoice', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method.unpauseInvoice({ invoice: invoice }).request();
         expect(response.isSuccess()).toBeTruthy();
     });
     test('Invoice Info', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method
             .invoiceInfo({
                 invoice: invoice,
@@ -35,6 +46,8 @@ describe('Testing Credit Management', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('Debtor Info', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method
             .debtorInfo({
                 debtor: {
@@ -45,6 +58,8 @@ describe('Testing Credit Management', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('AddOrUpdateProductLines', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         expect(invoiceKey).toBeDefined();
 
         const response = await method
@@ -77,23 +92,9 @@ describe('Testing Credit Management', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     // No DebtorFile available for testing.
-    // test('resumeDebtorFile', async () => {
-    //     return method
-    //         .resumeDebtorFile({ debtorFileGuid: 'xxx' })
-    //         .request()
-    //         .then((data) => {
-    //             expect(data.isValidationFailure()).toBeTruthy();
-    //         });
-    // });
-    // test('pauseDebtorFile', async () => {
-    //     return method
-    //         .pauseDebtorFile({ debtorFileGuid: 'xxx' })
-    //         .request()
-    //         .then((data) => {
-    //             expect(data.isValidationFailure()).toBeTruthy();
-    //         });
-    // });
     test('addOrUpdateDebtor', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method
             .addOrUpdateDebtor({
                 debtor: {
@@ -109,6 +110,8 @@ describe('Testing Credit Management', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('CreateCombinedInvoice', async () => {
+        mockResponse(transactionResponse(791));
+
         const combinedInvoice = method.createCombinedInvoice(creditManagementTestInvoice());
         const response = await buckarooClientTest
             .method('sepadirectdebit')
@@ -131,6 +134,8 @@ describe('Testing Credit Management', () => {
     });
 
     test('CreateCreditNote', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method
             .createCreditNote({
                 invoice: uniqid(),
@@ -143,112 +148,81 @@ describe('Testing Credit Management', () => {
             .request();
         expect(response.isSuccess()).toBeTruthy();
     });
-
-    // Payment plans are not enabled for this Buckaroo Credit Management subscription
-    // test('CreatePaymentPlan', async () => {
-    //     let oneMonthFromNow = new Date();
-    //     oneMonthFromNow.setMonth(oneMonthFromNow.getMonth() + 1);
-    //     const response = await method
-    //         .createPaymentPlan({
-    //             description: 'Payment in two intstallments',
-    //             includedInvoiceKey: 'EFD023706C6D4F1CAC8E461FB269E583',
-    //             dossierNumber: 'PaymentplanJohnsmith4',
-    //             installmentCount: 2,
-    //             initialAmount: 5.0,
-    //             startDate: formatDate(oneMonthFromNow),
-    //             interval: CreditManagementInstallmentInterval.DAY,
-    //             paymentPlanCostAmount: 0.0,
-    //             paymentPlanCostAmountVat: 0.0,
-    //             recipientEmail: 'test@buckaroo.nl',
-    //         })
-    //         .request();
-    //     expect(response.isSuccess()).toBeTruthy();
-    // });
-    //todo: terminatePaymentPlan
 });
-export const creditManagementTestInvoice = (append: object = {}): IInvoice => {
-    invoice = uniqid();
 
-    return {
-        invoice: invoice,
-        description: 'buckaroo_schema_test_PDF',
-        applyStartRecurrent: false,
-        invoiceAmount: 10,
-        invoiceAmountVAT: 1,
-        invoiceDate: formatDate(new Date()),
-        dueDate: '2030-01-01',
-        schemeKey: 'rwe1kw',
-        poNumber: 'PO-12345',
-        maxStepIndex: 1,
-        allowedServices: 'ideal,mastercard',
-        debtor: {
-            code: 'johnsmith4',
-        },
-        email: 'test@buckaroo.nl',
-        phone: {
-            mobile: '06198765432',
-        },
-        person: {
-            culture: 'nl-NL',
-            title: 'Msc',
-            initials: 'JS',
-            firstName: 'Test',
-            lastNamePrefix: 'Jones',
-            lastName: 'Aflever',
-            gender: Gender.MALE,
-        },
-        company: {
-            culture: 'nl-NL',
-            name: 'Buckaroo B.V.',
-            vatApplicable: true,
-            vatNumber: 'NL140619562B01',
-            chamberOfCommerce: '20091741',
-        },
-        address: {
-            street: 'Hoofdstraat',
-            houseNumber: '80',
-            houseNumberAdditional: 'a',
-            zipcode: '8441ER',
-            city: 'Heerenveen',
-            state: 'Friesland',
-            country: 'NL',
-        },
-        articles: [
-            {
-                productGroupName: 'Toys',
-                productGroupOrderIndex: 1,
-                productOrderIndex: 1,
-                type: 'Regular',
-                identifier: 'ART12',
-                description: 'Blue Toy Car',
-                quantity: 3,
-                unitOfMeasurement: 'piece(s)',
-                price: 10,
-                discountPercentage: 20,
-                totalDiscount: 6,
-                vatPercentage: 21,
-                totalVat: 0.6,
-                totalAmountExVat: 8.4,
-                totalAmount: 123,
-            },
-            {
-                productGroupName: 'Toys',
-                productGroupOrderIndex: 1,
-                productOrderIndex: 2,
-                type: 'Regular',
-                identifier: 'ART12',
-                description: 'Blue Toy Car',
-                quantity: 3,
-                unitOfMeasurement: 'piece(s)',
-                price: 10,
-                discountPercentage: 20,
-                totalDiscount: 6,
-                vatPercentage: 21,
-                totalVat: 0.6,
-                totalAmountExVat: 8.4,
-                totalAmount: 123,
-            },
-        ],
-        ...append,
-    };
-};
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
+});
+
+test('createPaymentPlan builds the CreatePaymentPlan request', async () => {
+    mockResponse(transactionResponse(), '/json/DataRequest');
+    const result = await method
+        .createPaymentPlan({
+            description: 'Two installments',
+            includedInvoiceKey: 'test-invoice',
+            dossierNumber: 'test-dossier',
+            installmentCount: 2,
+            initialAmount: 5,
+            startDate: '2026-01-02',
+            interval: CreditManagementInstallmentInterval.DAY,
+            paymentPlanCostAmount: 0,
+            paymentPlanCostAmountVat: 0,
+            recipientEmail: 'test@example.com',
+        })
+        .request();
+    expect(result.isSuccess()).toBe(true);
+    expect(recordedRequests()).toEqual([
+        expect.objectContaining({
+            data: expect.objectContaining({
+                Services: {
+                    ServiceList: expect.arrayContaining([expect.objectContaining({ Action: 'CreatePaymentPlan' })]),
+                },
+            }),
+        }),
+    ]);
+});
+
+test('terminatePaymentPlan builds the TerminatePaymentPlan request', async () => {
+    mockResponse(transactionResponse(), '/json/DataRequest');
+    const result = await method.terminatePaymentPlan({ includedInvoiceKey: 'test-invoice' }).request();
+    expect(result.isSuccess()).toBe(true);
+    expect(recordedRequests()).toEqual([
+        expect.objectContaining({
+            data: expect.objectContaining({
+                Services: {
+                    ServiceList: expect.arrayContaining([expect.objectContaining({ Action: 'TerminatePaymentPlan' })]),
+                },
+            }),
+        }),
+    ]);
+});
+
+test('resumeDebtorFile builds the ResumeDebtorFile request', async () => {
+    mockResponse(transactionResponse(), '/json/DataRequest');
+    const result = await method.resumeDebtorFile({ debtorFileGuid: 'test-debtor' }).request();
+    expect(result.isSuccess()).toBe(true);
+    expect(recordedRequests()).toEqual([
+        expect.objectContaining({
+            data: expect.objectContaining({
+                Services: {
+                    ServiceList: expect.arrayContaining([expect.objectContaining({ Action: 'ResumeDebtorFile' })]),
+                },
+            }),
+        }),
+    ]);
+});
+
+test('pauseDebtorFile builds the PauseDebtorFile request', async () => {
+    mockResponse(transactionResponse(), '/json/DataRequest');
+    const result = await method.pauseDebtorFile({ debtorFileGuid: 'test-debtor' }).request();
+    expect(result.isSuccess()).toBe(true);
+    expect(recordedRequests()).toEqual([
+        expect.objectContaining({
+            data: expect.objectContaining({
+                Services: {
+                    ServiceList: expect.arrayContaining([expect.objectContaining({ Action: 'PauseDebtorFile' })]),
+                },
+            }),
+        }),
+    ]);
+});

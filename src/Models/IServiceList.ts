@@ -51,7 +51,9 @@ export class ServiceList extends Model {
 
     addService(service: IService) {
         if (this.getService(service.name)) {
-            this.list[this.list.findIndex((s) => s.name === service.name)] = new Service(service);
+            this.list[this.list.findIndex((s) => s.name.toLowerCase() === service.name.toLowerCase())] = new Service(
+                service
+            );
         } else this.list.push(new Service(service));
     }
 

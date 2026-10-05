@@ -1,5 +1,6 @@
 import { PaymentMethodInstance } from '../../src';
-import buckarooClientTest from '../BuckarooClient.test';
+import buckarooClientTest from '../BuckarooClient';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 let method: PaymentMethodInstance<'banking'>;
 
@@ -9,6 +10,8 @@ beforeEach(() => {
 
 describe('Banking methods', () => {
     test('PaymentOrder with all optional parameters', async () => {
+        mockResponse(transactionResponse(794));
+
         const response = await method
             .paymentOrder({
                 amountCredit: 150.0,
@@ -27,6 +30,8 @@ describe('Banking methods', () => {
     });
 
     test('PaymentOrder with minimal parameters', async () => {
+        mockResponse(transactionResponse(794));
+
         const response = await method
             .paymentOrder({
                 amountCredit: 100.0,
@@ -40,6 +45,8 @@ describe('Banking methods', () => {
     });
 
     test('InstantPaymentOrder', async () => {
+        mockResponse(transactionResponse(794));
+
         const response = await method
             .instantPaymentOrder({
                 amountCredit: 75.0,
@@ -51,4 +58,7 @@ describe('Banking methods', () => {
             .request();
         expect(response.isPendingApproval()).toBeTruthy();
     });
+});
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
 });

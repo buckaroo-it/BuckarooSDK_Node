@@ -1,14 +1,18 @@
-import buckarooClientTest from '../BuckarooClient.test';
 import { PaymentMethodInstance, uniqid } from '../../src';
+import buckarooClientTest from '../BuckarooClient';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 let method: PaymentMethodInstance<'boekenbon'>;
-let transactionKey: string;
+let transactionKey = 'test-transactionKey';
 
 beforeEach(() => {
+    transactionKey = 'test-transactionKey';
     method = buckarooClientTest.method('boekenbon');
 });
 describe('GiftCard methods', () => {
     test('Pay', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .pay({
                 amountDebit: 10,
@@ -21,6 +25,9 @@ describe('GiftCard methods', () => {
     });
 
     test('Pay Reminder', async () => {
+        mockResponse(transactionResponse(190));
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .pay({
                 amountDebit: 50,
@@ -43,6 +50,8 @@ describe('GiftCard methods', () => {
     });
 
     test('Refund', async () => {
+        mockResponse(transactionResponse(190));
+
         expect(transactionKey).toBeDefined();
         const response = await method
             .refund({
@@ -55,4 +64,8 @@ describe('GiftCard methods', () => {
             .request();
         expect(response.isSuccess()).toBeTruthy();
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
 });

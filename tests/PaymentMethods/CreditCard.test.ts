@@ -1,18 +1,23 @@
-import buckarooClientTest from '../BuckarooClient.test';
 import { PaymentMethodInstance, uniqid } from '../../src';
+import buckarooClientTest from '../BuckarooClient';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 let visa: PaymentMethodInstance<'visa'>;
 let mastercard: PaymentMethodInstance<'mastercard'>;
-let transactionKey: string;
-let authorizationKey: string;
+let transactionKey = 'test-transactionKey';
+let authorizationKey = 'test-authorizationKey';
 
 beforeEach(() => {
+    transactionKey = 'test-transactionKey';
+    authorizationKey = 'test-authorizationKey';
     visa = buckarooClientTest.method('visa');
     mastercard = buckarooClientTest.method('mastercard');
 });
 
 describe('testing methods', () => {
     test('Pay', async () => {
+        mockResponse(transactionResponse(790));
+
         const response = await visa
             .pay({
                 amountDebit: 100,
@@ -23,6 +28,8 @@ describe('testing methods', () => {
         transactionKey = response.getTransactionKey();
     });
     test('Refund', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await visa
             .refund({
                 invoice: uniqid(),
@@ -33,6 +40,8 @@ describe('testing methods', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('Authorize', async () => {
+        mockResponse(transactionResponse(790));
+
         const response = await visa
             .authorize({
                 amountDebit: 100,
@@ -42,6 +51,8 @@ describe('testing methods', () => {
         authorizationKey = response.getTransactionKey();
     });
     test('PayEncrypted', async () => {
+        mockResponse(transactionResponse(791));
+
         const response = await mastercard
             .payEncrypted({
                 amountDebit: 100,
@@ -53,6 +64,8 @@ describe('testing methods', () => {
         expect(response.isPendingProcessing()).toBeTruthy();
     });
     test('PayWithSecurityCode', async () => {
+        mockResponse(transactionResponse(791));
+
         const response = await mastercard
             .payWithSecurityCode({
                 amountDebit: 100,
@@ -66,6 +79,8 @@ describe('testing methods', () => {
     });
     // "Technical failure"
     test('AuthorizeWithSecurityCode', async () => {
+        mockResponse(transactionResponse(791));
+
         const response = await mastercard
             .authorizeWithSecurityCode({
                 amountDebit: 100,
@@ -78,6 +93,8 @@ describe('testing methods', () => {
         expect(response.isPendingProcessing()).toBeTruthy();
     });
     test('AuthorizeEncrypted', async () => {
+        mockResponse(transactionResponse(791));
+
         const response = await mastercard
             .authorizeEncrypted({
                 amountDebit: 100,
@@ -89,6 +106,8 @@ describe('testing methods', () => {
         expect(response.isPendingProcessing()).toBeTruthy();
     });
     test('CancelAuthorize', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await visa
             .cancelAuthorize({
                 originalTransactionKey: 'F5E4DEEF89594E85A7DC7244180FAF89',
@@ -100,6 +119,8 @@ describe('testing methods', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('Capture', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await visa
             .capture({
                 originalTransactionKey: '5DD1E0DE29CB4E4F91B477983AB375CD',
@@ -110,6 +131,8 @@ describe('testing methods', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('PayRecurrent', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await visa
             .payRecurrent({
                 originalTransactionKey: 'B10DF7D5E6314A528BBA7BDF297EB21E',
@@ -120,6 +143,8 @@ describe('testing methods', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('AuthorizeWithToken', async () => {
+        mockResponse(transactionResponse(791));
+
         const response = await visa
             .authorizeWithToken({
                 invoice: uniqid(),
@@ -131,6 +156,8 @@ describe('testing methods', () => {
         expect(response.isPendingProcessing()).toBeTruthy();
     });
     test('PayWithToken', async () => {
+        mockResponse(transactionResponse(790));
+
         const response = await visa
             .payWithToken({
                 invoice: uniqid(),
@@ -141,4 +168,25 @@ describe('testing methods', () => {
             .request();
         expect(response.isWaitingOnUserInput()).toBeTruthy();
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
+});
+
+test('payRemainderEncrypted builds the PayRemainderEncrypted request', async () => {
+    mockResponse(transactionResponse(), '/json/Transaction');
+    const result = await mastercard
+        .payRemainderEncrypted({ amountDebit: 10, encryptedCardData: 'synthetic-card' })
+        .request();
+    expect(result.isSuccess()).toBe(true);
+    expect(recordedRequests()).toEqual([
+        expect.objectContaining({
+            data: expect.objectContaining({
+                Services: {
+                    ServiceList: expect.arrayContaining([expect.objectContaining({ Action: 'PayRemainderEncrypted' })]),
+                },
+            }),
+        }),
+    ]);
 });

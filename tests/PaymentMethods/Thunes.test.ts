@@ -1,5 +1,6 @@
-import buckarooClientTest from '../BuckarooClient.test';
 import { PaymentMethodInstance, uniqid } from '../../src';
+import buckarooClientTest from '../BuckarooClient';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 let method: PaymentMethodInstance<'thunes'>;
 
@@ -9,7 +10,9 @@ beforeEach(() => {
 
 // 'thunes' is not a valid service name.
 describe('Thunes methods', () => {
-    test.only('authorize', async () => {
+    test('authorize', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method
             .authorize({
                 amountDebit: 10.0,
@@ -33,19 +36,29 @@ describe('Thunes methods', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('capture', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .capture({ amountDebit: 100, originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' })
             .request();
         expect(response.isSuccess()).toBeTruthy();
     });
     test('getStatus', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method
             .getStatus({ originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' })
             .request();
         expect(response.isSuccess()).toBeTruthy();
     });
     test('cancel', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method.cancel({ originalTransactionKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' }).request();
         expect(response.isSuccess()).toBeTruthy();
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
 });

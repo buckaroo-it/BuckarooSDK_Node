@@ -1,10 +1,13 @@
-import buckarooClientTest from '../BuckarooClient.test';
 import { Gender } from '../../src';
+import buckarooClientTest from '../BuckarooClient';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 const method = buckarooClientTest.method('pim');
 
 describe('PiM', () => {
     test('generate', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method
             .generate({
                 amountDebit: 100,
@@ -27,4 +30,8 @@ describe('PiM', () => {
             .request();
         expect(response.isSuccess()).toBeTruthy();
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
 });

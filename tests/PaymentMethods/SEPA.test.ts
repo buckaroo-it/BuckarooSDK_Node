@@ -1,7 +1,8 @@
-import buckarooClientTest from '../BuckarooClient.test';
 import { IRefundRequest, PaymentMethodInstance, uniqid } from '../../src';
 import { IPay } from '../../src/PaymentMethods/SEPA/Models/Pay';
+import buckarooClientTest from '../BuckarooClient';
 import { createRefundPayload } from '../Payloads';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 let method: PaymentMethodInstance<'sepadirectdebit'>;
 
@@ -25,14 +26,20 @@ const paymentPayload: IPay = {
 
 describe('SEPA methods', () => {
     test('Pay', async () => {
+        mockResponse(transactionResponse(791));
+
         const response = await method.pay(paymentPayload).request();
         expect(response.isPendingProcessing()).toBeTruthy();
     });
     test('Authorize', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method.authorize(paymentPayload).request();
         expect(response.isSuccess()).toBeTruthy();
     });
     test('PayRecurrent', async () => {
+        mockResponse(transactionResponse(791));
+
         const response = await method
             .payRecurrent({
                 invoice: uniqid(),
@@ -43,6 +50,8 @@ describe('SEPA methods', () => {
         expect(response.isPendingProcessing()).toBeTruthy();
     });
     test('Refund', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .refund(
                 createRefundPayload<IRefundRequest>({
@@ -53,6 +62,8 @@ describe('SEPA methods', () => {
         expect(response.isSuccess()).toBeTruthy();
     });
     test('ExtraInfo', async () => {
+        mockResponse(transactionResponse(791));
+
         const response = await method
             .extraInfo({
                 amountDebit: 100,
@@ -78,6 +89,8 @@ describe('SEPA methods', () => {
         expect(response.isPendingProcessing()).toBeTruthy();
     });
     test('Emandates', async () => {
+        mockResponse(transactionResponse(791));
+
         const response = await method
             .payWithEmandate({
                 order: '',
@@ -88,4 +101,8 @@ describe('SEPA methods', () => {
             .request();
         expect(response.isPendingProcessing()).toBeTruthy();
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
 });

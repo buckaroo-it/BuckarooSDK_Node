@@ -1,0 +1,1200 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing Buckaroo Client Active Subscription Get 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "GetActiveSubscriptions",
+            "Name": "GetActiveSubscriptions",
+            "Version": 1,
+          },
+        ],
+      },
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Testing Buckaroo Client Batch transaction 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": [
+      {
+        "AmountDebit": 10.1,
+        "Currency": "EUR",
+        "Description": "buckaroo_schema_test_PDF",
+        "Invoice": "TestInvoice64752550bf1f40",
+        "Order": "64752550bf1f40",
+        "PushURL": "https://example.com/push",
+        "ReturnURL": "https://example.com/return",
+        "Services": {
+          "ServiceList": [
+            {
+              "Action": "CreateCombinedInvoice",
+              "Name": "creditmanagement3",
+              "Parameters": [
+                {
+                  "Name": "InvoiceAmount",
+                  "Value": 10,
+                },
+                {
+                  "Name": "InvoiceAmountVAT",
+                  "Value": 1,
+                },
+                {
+                  "Name": "InvoiceDate",
+                  "Value": "2026-01-01",
+                },
+                {
+                  "Name": "DueDate",
+                  "Value": "2030-01-01",
+                },
+                {
+                  "Name": "SchemeKey",
+                  "Value": "rwe1kw",
+                },
+                {
+                  "Name": "MaxStepIndex",
+                  "Value": 1,
+                },
+                {
+                  "Name": "AllowedServices",
+                  "Value": "ideal,mastercard",
+                },
+                {
+                  "GroupType": "Person",
+                  "Name": "Culture",
+                  "Value": "nl-NL",
+                },
+                {
+                  "GroupType": "Person",
+                  "Name": "Title",
+                  "Value": "Msc",
+                },
+                {
+                  "GroupType": "Person",
+                  "Name": "Initials",
+                  "Value": "JS",
+                },
+                {
+                  "GroupType": "Person",
+                  "Name": "FirstName",
+                  "Value": "Test",
+                },
+                {
+                  "GroupType": "Person",
+                  "Name": "LastNamePrefix",
+                  "Value": "Jones",
+                },
+                {
+                  "GroupType": "Person",
+                  "Name": "LastName",
+                  "Value": "Aflever",
+                },
+                {
+                  "GroupType": "Person",
+                  "Name": "Gender",
+                  "Value": 1,
+                },
+                {
+                  "GroupType": "Company",
+                  "Name": "Culture",
+                  "Value": "nl-NL",
+                },
+                {
+                  "GroupType": "Company",
+                  "Name": "Name",
+                  "Value": "Buckaroo B.V.",
+                },
+                {
+                  "GroupType": "Company",
+                  "Name": "VatApplicable",
+                  "Value": true,
+                },
+                {
+                  "GroupType": "Company",
+                  "Name": "VatNumber",
+                  "Value": "NL140619562B01",
+                },
+                {
+                  "GroupType": "Company",
+                  "Name": "ChamberOfCommerce",
+                  "Value": "20091741",
+                },
+                {
+                  "GroupType": "Address",
+                  "Name": "Street",
+                  "Value": "Hoofdstraat",
+                },
+                {
+                  "GroupType": "Address",
+                  "Name": "HouseNumber",
+                  "Value": "80",
+                },
+                {
+                  "GroupType": "Address",
+                  "Name": "HouseNumberSuffix",
+                  "Value": "a",
+                },
+                {
+                  "GroupType": "Address",
+                  "Name": "Zipcode",
+                  "Value": "8441ER",
+                },
+                {
+                  "GroupType": "Address",
+                  "Name": "City",
+                  "Value": "Heerenveen",
+                },
+                {
+                  "GroupType": "Address",
+                  "Name": "State",
+                  "Value": "Friesland",
+                },
+                {
+                  "GroupType": "Address",
+                  "Name": "Country",
+                  "Value": "NL",
+                },
+                {
+                  "GroupType": "Debtor",
+                  "Name": "Code",
+                  "Value": "johnsmith4",
+                },
+                {
+                  "GroupType": "Email",
+                  "Name": "Email",
+                  "Value": "test@buckaroo.nl",
+                },
+                {
+                  "GroupType": "Phone",
+                  "Name": "Mobile",
+                  "Value": "06198765432",
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductId",
+                  "Value": "ART12",
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "Type",
+                  "Value": "Regular",
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "PricePerUnit",
+                  "Value": 10,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "Quantity",
+                  "Value": 3,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "VatPercentage",
+                  "Value": 21,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductName",
+                  "Value": "Blue Toy Car",
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductGroupName",
+                  "Value": "Toys",
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductGroupOrderIndex",
+                  "Value": 1,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductOrderIndex",
+                  "Value": 1,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "UnitOfMeasurement",
+                  "Value": "piece(s)",
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "DiscountPercentage",
+                  "Value": 20,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalDiscount",
+                  "Value": 6,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalVat",
+                  "Value": 0.6,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalAmountExVat",
+                  "Value": 8.4,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalAmount",
+                  "Value": 123,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductId",
+                  "Value": "ART12",
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "Type",
+                  "Value": "Regular",
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "PricePerUnit",
+                  "Value": 10,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "Quantity",
+                  "Value": 3,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "VatPercentage",
+                  "Value": 21,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductName",
+                  "Value": "Blue Toy Car",
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductGroupName",
+                  "Value": "Toys",
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductGroupOrderIndex",
+                  "Value": 1,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductOrderIndex",
+                  "Value": 2,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "UnitOfMeasurement",
+                  "Value": "piece(s)",
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "DiscountPercentage",
+                  "Value": 20,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalDiscount",
+                  "Value": 6,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalVat",
+                  "Value": 0.6,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalAmountExVat",
+                  "Value": 8.4,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalAmount",
+                  "Value": 123,
+                },
+                {
+                  "Name": "ApplyStartRecurrent",
+                  "Value": false,
+                },
+              ],
+              "Version": 1,
+            },
+            {
+              "Action": "Pay",
+              "Name": "sepadirectdebit",
+              "Parameters": [
+                {
+                  "Name": "Customerbic",
+                  "Value": "RABONL2U",
+                },
+                {
+                  "Name": "CustomerIBAN",
+                  "Value": "NL39RABO0300065264",
+                },
+                {
+                  "Name": "CollectDate",
+                  "Value": "2020-07-03",
+                },
+                {
+                  "Name": "MandateReference",
+                  "Value": "1DCtestreference",
+                },
+                {
+                  "Name": "MandateDate",
+                  "Value": "2022-07-03",
+                },
+                {
+                  "Name": "Customeraccountname",
+                  "Value": "John Smith",
+                },
+              ],
+              "Version": 0,
+            },
+          ],
+        },
+        "ServicesSelectableByClient": "",
+      },
+      {
+        "AmountDebit": 10.1,
+        "Currency": "EUR",
+        "Description": "buckaroo_schema_test_PDF",
+        "Invoice": "TestInvoice64752550bf1f40",
+        "Order": "64752550bf1f40",
+        "PushURL": "https://example.com/push",
+        "ReturnURL": "https://example.com/return",
+        "Services": {
+          "ServiceList": [
+            {
+              "Action": "CreateCombinedInvoice",
+              "Name": "creditmanagement3",
+              "Parameters": [
+                {
+                  "Name": "InvoiceAmount",
+                  "Value": 10,
+                },
+                {
+                  "Name": "InvoiceAmountVAT",
+                  "Value": 1,
+                },
+                {
+                  "Name": "InvoiceDate",
+                  "Value": "2026-01-01",
+                },
+                {
+                  "Name": "DueDate",
+                  "Value": "2030-01-01",
+                },
+                {
+                  "Name": "SchemeKey",
+                  "Value": "rwe1kw",
+                },
+                {
+                  "Name": "MaxStepIndex",
+                  "Value": 1,
+                },
+                {
+                  "Name": "AllowedServices",
+                  "Value": "ideal,mastercard",
+                },
+                {
+                  "GroupType": "Person",
+                  "Name": "Culture",
+                  "Value": "nl-NL",
+                },
+                {
+                  "GroupType": "Person",
+                  "Name": "Title",
+                  "Value": "Msc",
+                },
+                {
+                  "GroupType": "Person",
+                  "Name": "Initials",
+                  "Value": "JS",
+                },
+                {
+                  "GroupType": "Person",
+                  "Name": "FirstName",
+                  "Value": "Test",
+                },
+                {
+                  "GroupType": "Person",
+                  "Name": "LastNamePrefix",
+                  "Value": "Jones",
+                },
+                {
+                  "GroupType": "Person",
+                  "Name": "LastName",
+                  "Value": "Aflever",
+                },
+                {
+                  "GroupType": "Person",
+                  "Name": "Gender",
+                  "Value": 1,
+                },
+                {
+                  "GroupType": "Company",
+                  "Name": "Culture",
+                  "Value": "nl-NL",
+                },
+                {
+                  "GroupType": "Company",
+                  "Name": "Name",
+                  "Value": "Buckaroo B.V.",
+                },
+                {
+                  "GroupType": "Company",
+                  "Name": "VatApplicable",
+                  "Value": true,
+                },
+                {
+                  "GroupType": "Company",
+                  "Name": "VatNumber",
+                  "Value": "NL140619562B01",
+                },
+                {
+                  "GroupType": "Company",
+                  "Name": "ChamberOfCommerce",
+                  "Value": "20091741",
+                },
+                {
+                  "GroupType": "Address",
+                  "Name": "Street",
+                  "Value": "Hoofdstraat",
+                },
+                {
+                  "GroupType": "Address",
+                  "Name": "HouseNumber",
+                  "Value": "80",
+                },
+                {
+                  "GroupType": "Address",
+                  "Name": "HouseNumberSuffix",
+                  "Value": "a",
+                },
+                {
+                  "GroupType": "Address",
+                  "Name": "Zipcode",
+                  "Value": "8441ER",
+                },
+                {
+                  "GroupType": "Address",
+                  "Name": "City",
+                  "Value": "Heerenveen",
+                },
+                {
+                  "GroupType": "Address",
+                  "Name": "State",
+                  "Value": "Friesland",
+                },
+                {
+                  "GroupType": "Address",
+                  "Name": "Country",
+                  "Value": "NL",
+                },
+                {
+                  "GroupType": "Debtor",
+                  "Name": "Code",
+                  "Value": "johnsmith4",
+                },
+                {
+                  "GroupType": "Email",
+                  "Name": "Email",
+                  "Value": "test@buckaroo.nl",
+                },
+                {
+                  "GroupType": "Phone",
+                  "Name": "Mobile",
+                  "Value": "06198765432",
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductId",
+                  "Value": "ART12",
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "Type",
+                  "Value": "Regular",
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "PricePerUnit",
+                  "Value": 10,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "Quantity",
+                  "Value": 3,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "VatPercentage",
+                  "Value": 21,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductName",
+                  "Value": "Blue Toy Car",
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductGroupName",
+                  "Value": "Toys",
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductGroupOrderIndex",
+                  "Value": 1,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductOrderIndex",
+                  "Value": 1,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "UnitOfMeasurement",
+                  "Value": "piece(s)",
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "DiscountPercentage",
+                  "Value": 20,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalDiscount",
+                  "Value": 6,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalVat",
+                  "Value": 0.6,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalAmountExVat",
+                  "Value": 8.4,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalAmount",
+                  "Value": 123,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductId",
+                  "Value": "ART12",
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "Type",
+                  "Value": "Regular",
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "PricePerUnit",
+                  "Value": 10,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "Quantity",
+                  "Value": 3,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "VatPercentage",
+                  "Value": 21,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductName",
+                  "Value": "Blue Toy Car",
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductGroupName",
+                  "Value": "Toys",
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductGroupOrderIndex",
+                  "Value": 1,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductOrderIndex",
+                  "Value": 2,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "UnitOfMeasurement",
+                  "Value": "piece(s)",
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "DiscountPercentage",
+                  "Value": 20,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalDiscount",
+                  "Value": 6,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalVat",
+                  "Value": 0.6,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalAmountExVat",
+                  "Value": 8.4,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalAmount",
+                  "Value": 123,
+                },
+                {
+                  "Name": "ApplyStartRecurrent",
+                  "Value": false,
+                },
+              ],
+              "Version": 1,
+            },
+            {
+              "Action": "Pay",
+              "Name": "sepadirectdebit",
+              "Parameters": [
+                {
+                  "Name": "Customerbic",
+                  "Value": "RABONL2U",
+                },
+                {
+                  "Name": "CustomerIBAN",
+                  "Value": "NL39RABO0300065264",
+                },
+                {
+                  "Name": "CollectDate",
+                  "Value": "2020-07-03",
+                },
+                {
+                  "Name": "MandateReference",
+                  "Value": "1DCtestreference",
+                },
+                {
+                  "Name": "MandateDate",
+                  "Value": "2022-07-03",
+                },
+                {
+                  "Name": "Customeraccountname",
+                  "Value": "John Smith",
+                },
+              ],
+              "Version": 0,
+            },
+          ],
+        },
+        "ServicesSelectableByClient": "",
+      },
+      {
+        "AmountDebit": 10.1,
+        "Currency": "EUR",
+        "Description": "buckaroo_schema_test_PDF",
+        "Invoice": "TestInvoice64752550bf1f40",
+        "Order": "64752550bf1f40",
+        "PushURL": "https://example.com/push",
+        "ReturnURL": "https://example.com/return",
+        "Services": {
+          "ServiceList": [
+            {
+              "Action": "CreateCombinedInvoice",
+              "Name": "creditmanagement3",
+              "Parameters": [
+                {
+                  "Name": "InvoiceAmount",
+                  "Value": 10,
+                },
+                {
+                  "Name": "InvoiceAmountVAT",
+                  "Value": 1,
+                },
+                {
+                  "Name": "InvoiceDate",
+                  "Value": "2026-01-01",
+                },
+                {
+                  "Name": "DueDate",
+                  "Value": "2030-01-01",
+                },
+                {
+                  "Name": "SchemeKey",
+                  "Value": "rwe1kw",
+                },
+                {
+                  "Name": "MaxStepIndex",
+                  "Value": 1,
+                },
+                {
+                  "Name": "AllowedServices",
+                  "Value": "ideal,mastercard",
+                },
+                {
+                  "GroupType": "Person",
+                  "Name": "Culture",
+                  "Value": "nl-NL",
+                },
+                {
+                  "GroupType": "Person",
+                  "Name": "Title",
+                  "Value": "Msc",
+                },
+                {
+                  "GroupType": "Person",
+                  "Name": "Initials",
+                  "Value": "JS",
+                },
+                {
+                  "GroupType": "Person",
+                  "Name": "FirstName",
+                  "Value": "Test",
+                },
+                {
+                  "GroupType": "Person",
+                  "Name": "LastNamePrefix",
+                  "Value": "Jones",
+                },
+                {
+                  "GroupType": "Person",
+                  "Name": "LastName",
+                  "Value": "Aflever",
+                },
+                {
+                  "GroupType": "Person",
+                  "Name": "Gender",
+                  "Value": 1,
+                },
+                {
+                  "GroupType": "Company",
+                  "Name": "Culture",
+                  "Value": "nl-NL",
+                },
+                {
+                  "GroupType": "Company",
+                  "Name": "Name",
+                  "Value": "Buckaroo B.V.",
+                },
+                {
+                  "GroupType": "Company",
+                  "Name": "VatApplicable",
+                  "Value": true,
+                },
+                {
+                  "GroupType": "Company",
+                  "Name": "VatNumber",
+                  "Value": "NL140619562B01",
+                },
+                {
+                  "GroupType": "Company",
+                  "Name": "ChamberOfCommerce",
+                  "Value": "20091741",
+                },
+                {
+                  "GroupType": "Address",
+                  "Name": "Street",
+                  "Value": "Hoofdstraat",
+                },
+                {
+                  "GroupType": "Address",
+                  "Name": "HouseNumber",
+                  "Value": "80",
+                },
+                {
+                  "GroupType": "Address",
+                  "Name": "HouseNumberSuffix",
+                  "Value": "a",
+                },
+                {
+                  "GroupType": "Address",
+                  "Name": "Zipcode",
+                  "Value": "8441ER",
+                },
+                {
+                  "GroupType": "Address",
+                  "Name": "City",
+                  "Value": "Heerenveen",
+                },
+                {
+                  "GroupType": "Address",
+                  "Name": "State",
+                  "Value": "Friesland",
+                },
+                {
+                  "GroupType": "Address",
+                  "Name": "Country",
+                  "Value": "NL",
+                },
+                {
+                  "GroupType": "Debtor",
+                  "Name": "Code",
+                  "Value": "johnsmith4",
+                },
+                {
+                  "GroupType": "Email",
+                  "Name": "Email",
+                  "Value": "test@buckaroo.nl",
+                },
+                {
+                  "GroupType": "Phone",
+                  "Name": "Mobile",
+                  "Value": "06198765432",
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductId",
+                  "Value": "ART12",
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "Type",
+                  "Value": "Regular",
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "PricePerUnit",
+                  "Value": 10,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "Quantity",
+                  "Value": 3,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "VatPercentage",
+                  "Value": 21,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductName",
+                  "Value": "Blue Toy Car",
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductGroupName",
+                  "Value": "Toys",
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductGroupOrderIndex",
+                  "Value": 1,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductOrderIndex",
+                  "Value": 1,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "UnitOfMeasurement",
+                  "Value": "piece(s)",
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "DiscountPercentage",
+                  "Value": 20,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalDiscount",
+                  "Value": 6,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalVat",
+                  "Value": 0.6,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalAmountExVat",
+                  "Value": 8.4,
+                },
+                {
+                  "GroupID": 1,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalAmount",
+                  "Value": 123,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductId",
+                  "Value": "ART12",
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "Type",
+                  "Value": "Regular",
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "PricePerUnit",
+                  "Value": 10,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "Quantity",
+                  "Value": 3,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "VatPercentage",
+                  "Value": 21,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductName",
+                  "Value": "Blue Toy Car",
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductGroupName",
+                  "Value": "Toys",
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductGroupOrderIndex",
+                  "Value": 1,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "ProductOrderIndex",
+                  "Value": 2,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "UnitOfMeasurement",
+                  "Value": "piece(s)",
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "DiscountPercentage",
+                  "Value": 20,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalDiscount",
+                  "Value": 6,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalVat",
+                  "Value": 0.6,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalAmountExVat",
+                  "Value": 8.4,
+                },
+                {
+                  "GroupID": 2,
+                  "GroupType": "ProductLine",
+                  "Name": "TotalAmount",
+                  "Value": 123,
+                },
+                {
+                  "Name": "ApplyStartRecurrent",
+                  "Value": false,
+                },
+              ],
+              "Version": 1,
+            },
+            {
+              "Action": "Pay",
+              "Name": "sepadirectdebit",
+              "Parameters": [
+                {
+                  "Name": "Customerbic",
+                  "Value": "RABONL2U",
+                },
+                {
+                  "Name": "CustomerIBAN",
+                  "Value": "NL39RABO0300065264",
+                },
+                {
+                  "Name": "CollectDate",
+                  "Value": "2020-07-03",
+                },
+                {
+                  "Name": "MandateReference",
+                  "Value": "1DCtestreference",
+                },
+                {
+                  "Name": "MandateDate",
+                  "Value": "2022-07-03",
+                },
+                {
+                  "Name": "Customeraccountname",
+                  "Value": "John Smith",
+                },
+              ],
+              "Version": 0,
+            },
+          ],
+        },
+        "ServicesSelectableByClient": "",
+      },
+    ],
+    "method": "POST",
+    "path": "/json/batch/Transactions",
+  },
+]
+`;
+
+exports[`Testing Buckaroo Client Credentials 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": undefined,
+    "method": "GET",
+    "path": "/json/Transaction/Specification/ideal?serviceVersion=2",
+  },
+]
+`;
+
+exports[`Testing Buckaroo Client Transaction transaction Cancel Info 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": undefined,
+    "method": "GET",
+    "path": "/json/Transaction/Cancel/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  },
+]
+`;
+
+exports[`Testing Buckaroo Client Transaction transaction Refund Info 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": undefined,
+    "method": "GET",
+    "path": "/json/Transaction/RefundInfo/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  },
+]
+`;
+
+exports[`Testing Buckaroo Client Transaction transaction Status 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": undefined,
+    "method": "GET",
+    "path": "/json/Transaction/Status/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  },
+]
+`;

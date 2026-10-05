@@ -1,15 +1,20 @@
-import buckarooClientTest from '../BuckarooClient.test';
 import { IRefundRequest, PaymentMethodInstance, uniqid } from '../../src';
-import { getServiceParameter, createRefundPayload } from '../Payloads';
+import buckarooClientTest from '../BuckarooClient';
+import { createRefundPayload, getServiceParameter } from '../Payloads';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 let method: PaymentMethodInstance<'buckaroowalletcollecting'>;
 
-let walletId: string;
-let reservationId: string;
-let transactionKey: string;
-let walletMutationGuid: string;
+let walletId = 'test-walletId';
+let reservationId = 'test-reservationId';
+let transactionKey = 'test-transactionKey';
+let walletMutationGuid = 'test-walletMutationGuid';
 
 beforeEach(() => {
+    walletId = 'test-walletId';
+    reservationId = 'test-reservationId';
+    transactionKey = 'test-transactionKey';
+    walletMutationGuid = 'test-walletMutationGuid';
     method = buckarooClientTest.method('buckaroowalletcollecting');
 });
 
@@ -28,6 +33,8 @@ const payload = {
 
 describe('BuckarooWallet methods', () => {
     test('Create Wallet', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method.create(payload).request();
 
         expect(response.isSuccess()).toBeTruthy();
@@ -35,6 +42,8 @@ describe('BuckarooWallet methods', () => {
     });
 
     test('Update', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method
             .update({
                 ...payload,
@@ -46,11 +55,15 @@ describe('BuckarooWallet methods', () => {
     });
 
     test('GetInfo', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method.getInfo({ walletId }).request();
         expect(response.isSuccess()).toBeTruthy();
     });
 
     test('Deposit', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .deposit({
                 invoice: uniqid(),
@@ -64,6 +77,8 @@ describe('BuckarooWallet methods', () => {
     });
 
     test('Reservation', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .reserve({
                 invoice: uniqid(),
@@ -80,6 +95,8 @@ describe('BuckarooWallet methods', () => {
     });
 
     test('Release', async () => {
+        mockResponse(transactionResponse(190), '/json/DataRequest');
+
         const response = await method
             .release({
                 amountCredit: 40,
@@ -93,6 +110,8 @@ describe('BuckarooWallet methods', () => {
     });
 
     test('CancelReservation', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .cancel({
                 invoice: uniqid(),
@@ -107,6 +126,8 @@ describe('BuckarooWallet methods', () => {
     });
 
     test('Withdrawal', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .withdrawal({
                 invoice: uniqid(),
@@ -121,6 +142,8 @@ describe('BuckarooWallet methods', () => {
     });
 
     test('Pay', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .pay({
                 invoice: uniqid(),
@@ -134,6 +157,8 @@ describe('BuckarooWallet methods', () => {
     });
 
     test('Refund', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .refund(
                 createRefundPayload<IRefundRequest>({
@@ -144,4 +169,8 @@ describe('BuckarooWallet methods', () => {
 
         expect(response.isSuccess()).toBeTruthy();
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
 });

@@ -1,10 +1,13 @@
-import buckarooClientTest from '../BuckarooClient.test';
 import { uniqid } from '../../src';
+import buckarooClientTest from '../BuckarooClient';
+import { mockResponse, recordedRequests, transactionResponse } from '../Utils/HttpMock';
 
 const method = buckarooClientTest.method('pospayment');
 
 describe('POS methods', () => {
     test('Pay', async () => {
+        mockResponse(transactionResponse(190));
+
         const response = await method
             .pay({
                 amountDebit: 100,
@@ -14,4 +17,8 @@ describe('POS methods', () => {
             .request();
         expect(response.isSuccess()).toBeTruthy();
     });
+});
+
+afterEach(() => {
+    expect(recordedRequests()).toMatchSnapshot();
 });
