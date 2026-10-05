@@ -1,5 +1,6 @@
 import { getMethod, IConfig, ICredentials, PaymentMethodInstance, ServiceCode } from './Utils';
-import { HttpsClient, Request } from './Request';
+import { DataRequestData, HttpsClient, Request } from './Request';
+import { IRequest } from './Models';
 import { Agent } from 'https';
 import NoService from './PaymentMethods/NoService';
 import { ActiveSubscriptions, TransactionService } from './Services';
@@ -39,8 +40,8 @@ export default class Buckaroo {
 
     get batch() {
         return {
-            transaction: Request.BatchTransaction,
-            data: Request.BatchDataRequest,
+            transaction: (payload?: IRequest[]) => Request.BatchTransaction(payload, this),
+            data: (payload?: DataRequestData[]) => Request.BatchDataRequest(payload, this),
         };
     }
 
@@ -52,21 +53,21 @@ export default class Buckaroo {
     method<Name extends ServiceCode>(name: Name): PaymentMethodInstance<Name>;
     method<K extends ServiceCode>(name?: K) {
         if (!name) {
-            return new NoService();
+            return new NoService(undefined, this);
         }
-        return getMethod(name);
+        return getMethod(name, this);
     }
 
     confirmCredentials() {
-        return this._credentials.confirm();
+        return this._credentials.confirm(this);
     }
 
     transaction(key: string) {
-        return new TransactionService(key);
+        return new TransactionService(key, this);
     }
 
     getActiveSubscriptions() {
-        return new ActiveSubscriptions().get();
+        return new ActiveSubscriptions(this).get();
     }
 }
 

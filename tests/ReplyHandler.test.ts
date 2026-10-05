@@ -1,8 +1,7 @@
 import crypto from 'crypto';
-import client from './BuckarooClient.test';
 import { Hmac, ReplyHandler } from '../src';
 
-const credentials = client.credentials;
+const credentials = { websiteKey: 'test-website', secretKey: 'synthetic-secret' };
 const uri = 'https://example.com/push';
 
 // Signs like Buckaroo: fields sorted case-insensitively, joined without a separator.
@@ -27,8 +26,53 @@ describe('Testing ReplyHandler HTTP post push', () => {
         ['brq_invoicenumber', 'INV1'],
         ['brq_statuscode', '490'],
         ['brq_test', 'true'],
+        ['brq_websitekey', credentials.websiteKey],
     ];
     const signature = sign(signed);
+
+    test('rejects a signed notification for another store sharing the secret', () => {
+        const fields: [string, string][] = signed.map(([key, value]) => [
+            key,
+            key === 'brq_websitekey' ? 'another-store' : value,
+        ]);
+        const handler = new ReplyHandler(credentials, body([...fields, ['brq_signature', sign(fields)]])).validate();
+        expect(handler.isValid()).toBe(false);
+        expect(handler.data()).toBeUndefined();
+    });
+
+    test.each(['brq_websitekey', 'BRQ_WEBSITEKEY', 'Brq_WebsiteKey'])('accepts the signed %s field', (name) => {
+        const fields: [string, string][] = signed.map(([key, value]) => [key === 'brq_websitekey' ? name : key, value]);
+        const handler = new ReplyHandler(credentials, body([...fields, ['brq_signature', sign(fields)]])).validate();
+        expect(handler.isValid()).toBe(true);
+        expect(handler.data()![name]).toBe(credentials.websiteKey);
+    });
+
+    test.each([undefined, '', 'TEST-WEBSITE', 'test-website '])(
+        'rejects a missing or mismatched store value %s',
+        (value) => {
+            const fields = signed.filter(([key]) => key !== 'brq_websitekey');
+            if (value !== undefined) fields.push(['brq_websitekey', value]);
+            const handler = new ReplyHandler(
+                credentials,
+                body([...fields, ['brq_signature', sign(fields)]])
+            ).validate();
+            expect(handler.isValid()).toBe(false);
+            expect(handler.data()).toBeUndefined();
+        }
+    );
+
+    test.each(['brq_websitekey', 'BRQ_WEBSITEKEY'])('rejects duplicate store fields named %s', (name) => {
+        expect(httpPost(body([[name, 'other-store'], ...signed, ['brq_signature', signature]]))).toBe(false);
+    });
+
+    test('rejects a different secret for the same store', () => {
+        const handler = new ReplyHandler(
+            { ...credentials, secretKey: 'another-secret' },
+            body([...signed, ['brq_signature', signature]])
+        ).validate();
+        expect(handler.isValid()).toBe(false);
+        expect(handler.data()).toBeUndefined();
+    });
 
     test('validates a genuine push', () => {
         expect(httpPost(body([...signed, ['brq_signature', signature]]))).toBe(true);
@@ -44,6 +88,7 @@ describe('Testing ReplyHandler HTTP post push', () => {
             ['brq_amount', '10.00'],
             ['brq_SERVICE_ideal_consumerName', 'Test'],
             ['brq_statuscode', '190'],
+            ['brq_websitekey', credentials.websiteKey],
             ['CUST_CustomerBillingStreet', 'Main'],
         ];
         expect(httpPost(body([...fields].reverse().concat([['brq_signature', sign(fields)]])))).toBe(true);
@@ -65,7 +110,7 @@ describe('Testing ReplyHandler HTTP post push', () => {
         expect(
             httpPost(
                 'brq_amount=10.00&brq_invoicenumber=INV1&brq_statuscode=190&brq_statuscode=490&brq_test=true' +
-                    `&brq_signature=${signature}`
+                    `&brq_websitekey=${credentials.websiteKey}&brq_signature=${signature}`
             )
         ).toBe(false);
     });
@@ -83,6 +128,7 @@ describe('Testing ReplyHandler HTTP post push', () => {
             ['brq_invoicenumber', 'INV1'],
             ['brq_payment', 'PAYKEY'],
             ['brq_statuscode', '490'],
+            ['brq_websitekey', credentials.websiteKey],
             ['CUST_CustomerBillingStreet', 'Mainbrq_statuscode=190'],
         ];
         const forged: [string, string][] = [
@@ -90,6 +136,7 @@ describe('Testing ReplyHandler HTTP post push', () => {
             ['brq_payment', 'PAYKEYbrq_statuscode=490'],
             ['CUST_CustomerBillingStreet', 'Main'],
             ['brq_statuscode', '190'],
+            ['brq_websitekey', credentials.websiteKey],
         ];
         expect(httpPost(body([...forged, ['brq_signature', sign(fields)]]))).toBe(false);
     });
@@ -187,7 +234,7 @@ describe('Testing ReplyHandler JSON push', () => {
 
 describe('Testing ReplyHandler with gateway push shapes', () => {
     // Pinned vectors shared with the PHP SDK, modelled on real Buckaroo push traffic (synthetic values).
-    const gatewayCredentials = { websiteKey: 'test-website', secretKey: 'golden-secret-not-a-real-key' };
+    const gatewayCredentials = { websiteKey: 'EXAMPLEKEY01', secretKey: 'golden-secret-not-a-real-key' };
     const pushes: [string, string, string][] = [
         [
             'PayPal (service fields, ADD_ prefix)',

@@ -23,8 +23,15 @@ export default class Request<
     protected _httpMethod: HttpMethods;
     protected _responseHandler?: HttpResponseConstructor;
 
-    constructor(path?: string, method?: HttpMethods, data?: RequestData, responseHandler?: HttpResponse) {
+    constructor(
+        path?: string,
+        method?: HttpMethods,
+        data?: RequestData,
+        responseHandler?: HttpResponse,
+        protected readonly client: Buckaroo = Buckaroo.Client
+    ) {
         super();
+        Object.defineProperty(this, 'client', { enumerable: false });
         this._path = path;
         this._data = data;
         this._httpMethod = method || HttpMethods.GET;
@@ -40,29 +47,37 @@ export default class Request<
     }
 
     get url(): URL {
-        return new URL(Endpoints[Buckaroo.Client.config.mode] + (this._path || ''));
+        return new URL(Endpoints[this.client.config.mode] + (this._path || ''));
     }
 
     protected get responseHandler(): HttpResponse {
         return (this._responseHandler || HttpClientResponse) as HttpResponse;
     }
 
-    static Transaction(payload?: IRequest) {
+    static Transaction(payload?: IRequest, client: Buckaroo = Buckaroo.Client) {
         return new Request(
             RequestTypes.Transaction,
             HttpMethods.POST,
             new TransactionData(payload),
-            TransactionResponse
+            TransactionResponse,
+            client
         );
     }
 
-    static DataRequest(payload?: IRequest) {
-        return new Request(RequestTypes.Data, HttpMethods.POST, new DataRequestData(payload), TransactionResponse);
+    static DataRequest(payload?: IRequest, client: Buckaroo = Buckaroo.Client) {
+        return new Request(
+            RequestTypes.Data,
+            HttpMethods.POST,
+            new DataRequestData(payload),
+            TransactionResponse,
+            client
+        );
     }
 
     static Specification<T extends IService[] | IService>(
         type: RequestTypes.Data | RequestTypes.Transaction,
-        data: T
+        data: T,
+        client: Buckaroo = Buckaroo.Client
     ): T extends IService[]
         ? Request<typeof SpecificationRequestResponse, SpecificationRequestData>
         : Request<typeof SpecificationRequestResponse> {
@@ -71,34 +86,37 @@ export default class Request<
                 type + `/Specifications`,
                 HttpMethods.POST,
                 new SpecificationRequestData(data),
-                SpecificationRequestResponse
+                SpecificationRequestResponse,
+                client
             ) as any;
         }
         return new Request(
             type + `/Specification/${data?.name}?serviceVersion=${data?.version}`,
             HttpMethods.GET,
             undefined,
-            SpecificationRequestResponse
+            SpecificationRequestResponse,
+            client
         ) as any;
     }
 
-    static BatchTransaction(payload: IRequest[] = []) {
+    static BatchTransaction(payload: IRequest[] = [], client: Buckaroo = Buckaroo.Client) {
         return new Request(
             RequestTypes.BatchTransaction,
             HttpMethods.POST,
             payload.map((data) => new TransactionData(data)),
-            BatchRequestResponse
+            BatchRequestResponse,
+            client
         );
     }
 
-    static BatchDataRequest(data: DataRequestData[] = []) {
-        return new Request(RequestTypes.BatchData, HttpMethods.POST, data, BatchRequestResponse);
+    static BatchDataRequest(data: DataRequestData[] = [], client: Buckaroo = Buckaroo.Client) {
+        return new Request(RequestTypes.BatchData, HttpMethods.POST, data, BatchRequestResponse, client);
     }
 
     request(options: RequestConfig = {}) {
         let data = (this._httpMethod === HttpMethods.GET ? {} : this.data) ?? {};
         this.setAuthorizationHeader(data);
-        return Buckaroo.Client.httpClient.sendRequest(
+        return this.client.httpClient.sendRequest(
             this.url,
             data,
             {
@@ -110,7 +128,7 @@ export default class Request<
         );
     }
 
-    protected setAuthorizationHeader(data?: object, credentials: ICredentials = Buckaroo.Client.credentials): this {
+    protected setAuthorizationHeader(data?: object, credentials: ICredentials = this.client.credentials): this {
         let hmac = new Hmac();
         hmac.data = JSON.stringify(data);
         hmac.method = this.httpMethod;

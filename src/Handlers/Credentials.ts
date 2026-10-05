@@ -1,4 +1,5 @@
 import { ICredentials } from '../Utils';
+import Buckaroo from '../buckaroo';
 import { Request } from '../Request';
 import { RequestTypes } from '../Constants';
 
@@ -13,11 +14,15 @@ export class Credentials implements ICredentials {
         this.websiteKey = websiteKey;
     }
 
-    confirm() {
-        return Request.Specification(RequestTypes.Transaction, {
-            name: 'ideal',
-            version: 2,
-        })
+    confirm(client: Buckaroo = new Buckaroo(this)) {
+        return Request.Specification(
+            RequestTypes.Transaction,
+            {
+                name: 'ideal',
+                version: 2,
+            },
+            client
+        )
             .request()
             .then((response) => {
                 return response.httpResponse.status === 200;

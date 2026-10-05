@@ -68,6 +68,10 @@ export class ReplyHandler {
     private validateHttp(data: Record<string, any>): boolean {
         const signatureKey = Object.keys(data).find((key) => key.toLowerCase() === 'brq_signature');
         const signature = signatureKey ? String(data[signatureKey]).trim() : '';
+        const websiteKey = Object.keys(data).find((key) => key.toLowerCase() === 'brq_websitekey');
+        if (!websiteKey || !data[websiteKey] || data[websiteKey] !== this.credentials.websiteKey) {
+            return false;
+        }
         const keys = Object.keys(data).filter((key) => key !== signatureKey);
         // Buckaroo signs the fields sorted case-insensitively; sorting also fixes where each field sits in the string.
         const stringData =
