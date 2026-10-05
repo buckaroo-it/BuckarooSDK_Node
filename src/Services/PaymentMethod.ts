@@ -3,6 +3,7 @@ import { IParameter, IRequest, IService, ServiceList, ServiceParameter } from '.
 import Buckaroo, { DataRequestData, PaymentMethodInstance } from '../index';
 import { Request, TransactionData } from '../Request';
 import { ServiceCode } from '../Utils';
+import { bindClient, clientFor } from '../Request/ClientBinding';
 
 export default abstract class PaymentMethod {
     protected _serviceCode?: ServiceCode;
@@ -11,8 +12,8 @@ export default abstract class PaymentMethod {
     protected _payload: TransactionData;
     protected _requiredFields: Array<keyof IRequest> = [];
 
-    constructor(serviceCode?: ServiceCode, protected readonly client: Buckaroo = Buckaroo.Client) {
-        Object.defineProperty(this, 'client', { enumerable: false });
+    constructor(serviceCode?: ServiceCode, client: Buckaroo = Buckaroo.Client) {
+        bindClient(this, client);
         this._payload = this.createDefaultPayload();
         this.setServiceCode((serviceCode ?? this._serviceCode) as ServiceCode);
     }
@@ -23,7 +24,7 @@ export default abstract class PaymentMethod {
     }
 
     protected createDefaultPayload() {
-        return new this._payloadClass((this._payload ?? this.client.config) as IRequest);
+        return new this._payloadClass((this._payload ?? clientFor(this).config) as IRequest);
     }
 
     get serviceVersion() {
@@ -71,7 +72,7 @@ export default abstract class PaymentMethod {
 
     combine(data: any): this {
         if (typeof data === 'string') {
-            const method: PaymentMethod = this.client.method(data as any);
+            const method: PaymentMethod = clientFor(this).method(data as any);
             method.setPayload(this._payload);
             return method as any;
         }
@@ -83,12 +84,15 @@ export default abstract class PaymentMethod {
         type: RequestTypes.Transaction | RequestTypes.Data = RequestTypes.Data,
         serviceVersion: number = this.serviceVersion
     ) {
-        return Request.Specification(type, { name: this.serviceCode, version: serviceVersion }, this.client);
+        return bindClient(
+            Request.Specification(type, { name: this.serviceCode, version: serviceVersion }),
+            clientFor(this)
+        );
     }
 
     protected setRequiredFields(requiredFields: Array<keyof IRequest> = this._requiredFields) {
         for (const fieldKey of requiredFields) {
-            let field = this._payload[fieldKey] ?? (this.client.config as IRequest)[fieldKey];
+            let field = this._payload[fieldKey] ?? (clientFor(this).config as IRequest)[fieldKey];
             if (field === undefined) {
                 throw new Error(`Missing required config parameter ${String(fieldKey)}`);
             }
@@ -120,12 +124,12 @@ export default abstract class PaymentMethod {
 
     protected transactionRequest(payload?: IRequest) {
         this.setPayload(payload);
-        return Request.Transaction(this._payload, this.client);
+        return bindClient(Request.Transaction(this._payload), clientFor(this));
     }
 
     protected dataRequest(payload?: IRequest) {
         this.payloadClass = DataRequestData;
         this.setPayload(payload);
-        return Request.DataRequest(this._payload, this.client);
+        return bindClient(Request.DataRequest(this._payload), clientFor(this));
     }
 }

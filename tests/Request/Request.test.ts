@@ -1,5 +1,5 @@
 import Buckaroo, { DataRequestData, HttpMethods, IRequest, Request, RequestTypes } from '../../src';
-import { issuerResponse, mockResponse, recordedRequests } from '../Utils/HttpMock';
+import { issuerResponse, mockResponse, recordedRequests } from '../Support/HttpMock';
 
 describe('Testing request factories', () => {
     beforeEach(() => {
@@ -103,4 +103,49 @@ test('preserves explicit transaction options without changing client configurati
         ServicesSelectableByClient: 'ideal,visa',
     });
     expect(client.config).toEqual({ mode: 'TEST', currency: 'EUR' });
+});
+
+import { initialize, credentials } from '../Support/Client';
+test('request factories work as Array.map callbacks', async () => {
+    const { send } = initialize();
+    const payloads: IRequest[] = [{ amountDebit: 10 }, { amountDebit: 20 }];
+    const requests = [
+        ...payloads.map(Request.Transaction),
+        ...payloads.map(Request.DataRequest),
+        ...[payloads].map(Request.BatchTransaction),
+        ...[[new DataRequestData({ invoice: 'batch' })]].map(Request.BatchDataRequest),
+    ];
+    for (const request of requests) await request.request();
+    expect(send).toHaveBeenCalledTimes(6);
+    for (const [, , options] of send.mock.calls) expect(options.headers!.Authorization).toMatch(/^hmac compat-store:/);
+});
+
+class CustomRequest extends Request {
+    client = 'consumer-owned';
+}
+
+test('a consumer client field does not replace the request owner', async () => {
+    const { send } = initialize();
+    const request = new CustomRequest('/status');
+    initialize('another-store');
+    await request.request();
+    expect(request.client).toBe('consumer-owned');
+    expect(send).toHaveBeenCalledTimes(1);
+    expect(JSON.stringify(request)).not.toContain(credentials.secretKey);
+});
+
+test('a request created before initialization binds once on first use', async () => {
+    const previous = Buckaroo.Client;
+    try {
+        (Buckaroo as any)._client = undefined;
+        const request = Request.Transaction({ amountDebit: 10 });
+        const { send } = initialize();
+        await request.request();
+        const other = initialize('another-store');
+        await request.request();
+        expect(send).toHaveBeenCalledTimes(2);
+        expect(other.send).not.toHaveBeenCalled();
+    } finally {
+        (Buckaroo as any)._client = previous;
+    }
 });

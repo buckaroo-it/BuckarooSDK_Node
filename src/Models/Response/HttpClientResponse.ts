@@ -23,9 +23,15 @@ export class HttpClientResponse implements IHttpClientResponse {
     constructor(httpResponse: AxiosResponse) {
         this._httpResponse = httpResponse;
         this._rawData = httpResponse.data;
-        this._data = new JsonModel(
-            typeof httpResponse.data === 'string' ? JSON.parse(httpResponse.data) : httpResponse.data
-        );
+        let data = httpResponse.data;
+        if (typeof data === 'string') {
+            try {
+                data = JSON.parse(data);
+            } catch {
+                // Keep non-JSON responses available through rawData and httpResponse.
+            }
+        }
+        this._data = new JsonModel(data);
     }
 
     get httpResponse(): AxiosResponse {

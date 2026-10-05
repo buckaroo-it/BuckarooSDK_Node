@@ -66,3 +66,20 @@ test('uses request metadata when config has no URL or method and prefers explici
     });
     expect(preferred.validateResponse(credentials)).toBe(true);
 });
+
+test.each(['', 'OK', '<html>maintenance</html>'])(
+    'keeps status and raw data available for non-JSON body %j',
+    (data) => {
+        const httpResponse = {
+            data,
+            status: data ? 200 : 204,
+            statusText: 'OK',
+            headers: {},
+            config: { headers: new AxiosHeaders() },
+        };
+        const response = new HttpClientResponse(httpResponse);
+        expect(response.httpResponse.status).toBe(httpResponse.status);
+        expect(response.rawData).toBe(data);
+        expect(response.validateResponse(credentials)).toBe(false);
+    }
+);

@@ -5,7 +5,7 @@ import {
     recordedRequests,
     resetRequests,
     transactionResponse,
-} from '../Utils/HttpMock';
+} from '../Support/HttpMock';
 
 describe('Testing HTTP transport', () => {
     test('rejects an unexpected request instead of contacting the gateway', async () => {

@@ -1,13 +1,14 @@
 import { Request } from '../Request';
 import Buckaroo from '../buckaroo';
+import { bindClient, clientFor } from '../Request/ClientBinding';
 import { HttpMethods, RequestTypes } from '../Constants';
 import { TransactionResponse } from '../Models';
 
 export default class TransactionService {
     private readonly _key: string;
 
-    constructor(key: string, private readonly client: Buckaroo = Buckaroo.Client) {
-        Object.defineProperty(this, 'client', { enumerable: false });
+    constructor(key: string, client: Buckaroo = Buckaroo.Client) {
+        bindClient(this, client);
         this._key = key;
     }
 
@@ -17,7 +18,7 @@ export default class TransactionService {
             HttpMethods.GET,
             undefined,
             TransactionResponse,
-            this.client
+            clientFor(this)
         ).request();
     }
 
@@ -27,7 +28,7 @@ export default class TransactionService {
             HttpMethods.GET,
             undefined,
             undefined,
-            this.client
+            clientFor(this)
         ).request();
     }
 
@@ -37,7 +38,7 @@ export default class TransactionService {
             HttpMethods.GET,
             undefined,
             undefined,
-            this.client
+            clientFor(this)
         ).request();
     }
 }

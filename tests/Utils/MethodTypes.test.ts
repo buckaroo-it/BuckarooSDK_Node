@@ -1,4 +1,4 @@
-import client from '../BuckarooClient';
+import client from '../Support/BuckarooClient';
 
 const Methods: typeof import('../../src/PaymentMethods') = require('../../src/PaymentMethods');
 
@@ -309,4 +309,14 @@ describe('Testing payment method registration', () => {
     test('the contract lists every public payment method alias', () => {
         expect(services.flatMap((service) => [...service.aliases]).sort()).toEqual(Object.keys(Methods).sort());
     });
+});
+
+import { getMethod, ServiceCode } from '../../src';
+import { initialize } from '../Support/Client';
+test('getMethod works as an Array.map callback', () => {
+    initialize();
+    const codes: ServiceCode[] = ['ideal', 'paypal'];
+    const methods = codes.map(getMethod);
+    expect(methods.map((method) => method.serviceCode)).toEqual(codes);
+    expect(methods[0].getPayload()).toMatchObject({ Currency: 'EUR' });
 });

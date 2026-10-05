@@ -1,10 +1,12 @@
-import { getMethod, IConfig, ICredentials, PaymentMethodInstance, ServiceCode } from './Utils';
+import { createPaymentMethod } from './Utils/MethodTypes';
+import { IConfig, ICredentials, PaymentMethodInstance, ServiceCode } from './Utils';
 import { DataRequestData, HttpsClient, Request } from './Request';
 import { IRequest } from './Models';
 import { Agent } from 'https';
 import NoService from './PaymentMethods/NoService';
 import { ActiveSubscriptions, TransactionService } from './Services';
 import { Credentials } from './Handlers';
+import { bindClient } from './Request/ClientBinding';
 
 export default class Buckaroo {
     private static _client: Buckaroo;
@@ -13,7 +15,7 @@ export default class Buckaroo {
     private _config: IConfig;
 
     constructor(credentials: ICredentials, config?: IConfig, agent?: Agent) {
-        this._credentials = new Credentials(credentials.secretKey, credentials.websiteKey);
+        this._credentials = new Credentials(credentials.secretKey, credentials.websiteKey, this);
         this._config = { ...(config ?? { mode: 'TEST', currency: 'EUR' }) };
         this._httpClient = new HttpsClient(agent, this._config.timeout);
     }
@@ -40,8 +42,8 @@ export default class Buckaroo {
 
     get batch() {
         return {
-            transaction: (payload?: IRequest[]) => Request.BatchTransaction(payload, this),
-            data: (payload?: DataRequestData[]) => Request.BatchDataRequest(payload, this),
+            transaction: (payload?: IRequest[]) => bindClient(Request.BatchTransaction(payload), this),
+            data: (payload?: DataRequestData[]) => bindClient(Request.BatchDataRequest(payload), this),
         };
     }
 
@@ -55,11 +57,11 @@ export default class Buckaroo {
         if (!name) {
             return new NoService(undefined, this);
         }
-        return getMethod(name, this);
+        return createPaymentMethod(name, this);
     }
 
     confirmCredentials() {
-        return this._credentials.confirm(this);
+        return this._credentials.confirm();
     }
 
     transaction(key: string) {
