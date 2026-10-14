@@ -1,0 +1,31 @@
+name: Tests
+
+on:
+    pull_request:
+    push:
+        branches: [develop, master]
+
+permissions:
+    contents: read
+
+jobs:
+    tests:
+        name: Node ${{ matrix.node }}
+        runs-on: ubuntu-24.04
+        timeout-minutes: 10
+        strategy:
+            fail-fast: false
+            matrix:
+                node: [22, 24]
+        steps:
+            - uses: actions/checkout@v7
+              with:
+                  persist-credentials: false
+            - uses: actions/setup-node@v7
+              with:
+                  node-version: ${{ matrix.node }}
+            # This repository does not commit a lockfile.
+            - run: npm install --no-audit --no-fund
+            - run: npm test -- --ci --runInBand --coverage
+            - run: npm run typecheck
+            - run: npm run build

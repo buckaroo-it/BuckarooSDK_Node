@@ -23,7 +23,15 @@ export class HttpClientResponse implements IHttpClientResponse {
     constructor(httpResponse: AxiosResponse) {
         this._httpResponse = httpResponse;
         this._rawData = httpResponse.data;
-        this._data = new JsonModel(httpResponse.data);
+        let data = httpResponse.data;
+        if (typeof data === 'string') {
+            try {
+                data = JSON.parse(data);
+            } catch {
+                // Keep non-JSON responses available through rawData and httpResponse.
+            }
+        }
+        this._data = new JsonModel(data);
     }
 
     get httpResponse(): AxiosResponse {
@@ -41,10 +49,10 @@ export class HttpClientResponse implements IHttpClientResponse {
     validateResponse(credentials: ICredentials) {
         return new ReplyHandler(
             credentials,
-            JSON.parse(this._rawData ?? {}),
+            typeof this._rawData === 'string' ? this._rawData : JSON.stringify(this._rawData),
             this.httpResponse.headers['authorization'],
-            this.httpResponse.request.url,
-            this.httpResponse.request.method
+            this.httpResponse.config?.url ?? this.httpResponse.request?.url,
+            (this.httpResponse.config?.method ?? this.httpResponse.request?.method)?.toUpperCase()
         )
             .validate()
             .isValid();

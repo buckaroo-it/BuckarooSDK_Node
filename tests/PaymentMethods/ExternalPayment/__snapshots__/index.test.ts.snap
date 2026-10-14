@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing ExternalPayment methods Pay 1`] = `
+[
+  {
+    "channel": "BACKOFFICE",
+    "data": {
+      "AmountDebit": 10,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Pay",
+            "Name": "externalpayment",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Testing ExternalPayment methods Refund 1`] = `
+[
+  {
+    "channel": "BACKOFFICE",
+    "data": {
+      "AmountCredit": 0.01,
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Refund Transaction Test",
+      "Invoice": "64752550bf1f40",
+      "OriginalTransactionKey": "test-transactionKey",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Refund",
+            "Name": "externalpayment",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`sets the point-of-sale channel on external payments 1`] = `
+[
+  {
+    "channel": "POINT-OF-SALE",
+    "data": {
+      "AmountDebit": 10,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Pay",
+            "Name": "externalpayment",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;

@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing Blik methods Pay 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100,
+      "Currency": "PLN",
+      "Description": "Blik Test Plugin Example",
+      "Invoice": "Blik Test Plugin Example",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Pay",
+            "Name": "blik",
+            "Parameters": [
+              {
+                "Name": "Email",
+                "Value": "test@buckaroo.nl",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Testing Blik methods Refund 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountCredit": 0.01,
+      "Currency": "PLN",
+      "Description": "Buckaroo Node SDK Refund Transaction Test",
+      "Invoice": "64752550bf1f40",
+      "OriginalTransactionKey": "DA18F7031E3547E898B68773E372ACB4",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Refund",
+            "Name": "blik",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;

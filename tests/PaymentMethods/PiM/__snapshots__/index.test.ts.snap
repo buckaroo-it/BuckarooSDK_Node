@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PiM generate 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Generate",
+            "Name": "pim",
+            "Parameters": [
+              {
+                "Name": "Description",
+                "Value": "Omschrijving",
+              },
+              {
+                "Name": "Title",
+                "Value": "Titel",
+              },
+              {
+                "Name": "ReturnNickname",
+                "Value": "test",
+              },
+              {
+                "Name": "ReturnInitials",
+                "Value": "TA",
+              },
+              {
+                "Name": "ReturnFirstname",
+                "Value": "Test",
+              },
+              {
+                "Name": "ReturnLastname",
+                "Value": "Acceptatie",
+              },
+              {
+                "Name": "ReturnDateOfBirth",
+                "Value": "01-01-1990",
+              },
+              {
+                "Name": "ReturnGender",
+                "Value": 1,
+              },
+              {
+                "Name": "ReturnEmail",
+                "Value": "test@buckaroo.nl",
+              },
+              {
+                "Name": "ResultTitle",
+                "Value": "success",
+              },
+              {
+                "Name": "ResultText",
+                "Value": "bedankt",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;

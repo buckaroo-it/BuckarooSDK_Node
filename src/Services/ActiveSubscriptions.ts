@@ -1,4 +1,5 @@
 import { DataRequestData, Request } from '../Request';
+import Buckaroo from '../buckaroo';
 import { HttpMethods, RequestTypes } from '../Constants';
 import { ITransactionResponse, ServiceList, TransactionResponse } from '../Models';
 
@@ -10,8 +11,8 @@ export interface IActiveSubscription {
 export default class ActiveSubscriptions extends Request<typeof TransactionResponse, DataRequestData> {
     private readonly _serviceCode: string = 'GetActiveSubscriptions';
 
-    constructor() {
-        super(RequestTypes.Data, HttpMethods.POST, new DataRequestData(), TransactionResponse);
+    constructor(client: Buckaroo = Buckaroo.Client) {
+        super(RequestTypes.Data, HttpMethods.POST, new DataRequestData(), TransactionResponse, client);
     }
     async get() {
         this.data.setServiceList(

@@ -1,0 +1,142 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Wero methods Authorize 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 10,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Authorize",
+            "Name": "wero",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Wero methods CancelAuthorize 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountCredit": 10,
+      "Currency": "EUR",
+      "OriginalTransactionKey": "C0D904513E2D40FC826C9C76XXXXXXXX",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "CancelAuthorize",
+            "Name": "wero",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Wero methods Capture 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 10,
+      "Currency": "EUR",
+      "Description": "Test Capture Transaction",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "OriginalTransactionKey": "C0D904513E2D40FC826C9C76XXXXXXXX",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Capture",
+            "Name": "wero",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Wero methods Pay 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 10,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Pay",
+            "Name": "wero",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Wero methods Refund 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountCredit": 10,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "OriginalTransactionKey": "C0D904513E2D40FC826C9C76XXXXXXXX",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Refund",
+            "Name": "wero",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;

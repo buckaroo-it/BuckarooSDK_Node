@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Applepay methods Pay 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Pay",
+            "Name": "applepay",
+            "Parameters": [
+              {
+                "Name": "PaymentData",
+                "Value": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+              },
+              {
+                "Name": "CustomerCardName",
+                "Value": "XXXXXXX",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Applepay methods Pay Redirect Payload 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100,
+      "ContinueOnIncomplete": 1,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "ServicesSelectableByClient": "applepay",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Applepay methods Refund 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountCredit": 0.01,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "OriginalTransactionKey": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Refund",
+            "Name": "applepay",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;

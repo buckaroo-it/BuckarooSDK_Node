@@ -13,6 +13,7 @@ import Buckaroo from '../index';
 import { Endpoints, HttpMethods, RequestTypes } from '../Constants';
 import { ICredentials } from '../Utils';
 import { Hmac } from './Hmac';
+import { bindClient, clientFor, credentialsFor } from './ClientBinding';
 
 export default class Request<
     HttpResponse extends HttpResponseConstructor = HttpResponseConstructor,
@@ -23,8 +24,15 @@ export default class Request<
     protected _httpMethod: HttpMethods;
     protected _responseHandler?: HttpResponseConstructor;
 
-    constructor(path?: string, method?: HttpMethods, data?: RequestData, responseHandler?: HttpResponse) {
+    constructor(
+        path?: string,
+        method?: HttpMethods,
+        data?: RequestData,
+        responseHandler?: HttpResponse,
+        client: Buckaroo = Buckaroo.Client
+    ) {
         super();
+        bindClient(this, client);
         this._path = path;
         this._data = data;
         this._httpMethod = method || HttpMethods.GET;
@@ -40,7 +48,7 @@ export default class Request<
     }
 
     get url(): URL {
-        return new URL(Endpoints[Buckaroo.Client.config.mode] + (this._path || ''));
+        return new URL(Endpoints[clientFor(this).config.mode] + (this._path || ''));
     }
 
     protected get responseHandler(): HttpResponse {
@@ -98,7 +106,7 @@ export default class Request<
     request(options: RequestConfig = {}) {
         let data = (this._httpMethod === HttpMethods.GET ? {} : this.data) ?? {};
         this.setAuthorizationHeader(data);
-        return Buckaroo.Client.httpClient.sendRequest(
+        return clientFor(this).httpClient.sendRequest(
             this.url,
             data,
             {
@@ -110,7 +118,7 @@ export default class Request<
         );
     }
 
-    protected setAuthorizationHeader(data?: object, credentials: ICredentials = Buckaroo.Client.credentials): this {
+    protected setAuthorizationHeader(data?: object, credentials: ICredentials = credentialsFor(this)): this {
         let hmac = new Hmac();
         hmac.data = JSON.stringify(data);
         hmac.method = this.httpMethod;

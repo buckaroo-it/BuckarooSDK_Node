@@ -1,0 +1,321 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`KlarnaKp Cancel 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "CancelReservation",
+            "Name": "klarnakp",
+            "Parameters": [
+              {
+                "Name": "ReservationNumber",
+                "Value": "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+              },
+            ],
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`KlarnaKp Pay 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100.3,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Pay",
+            "Name": "klarnakp",
+            "Parameters": [
+              {
+                "Name": "ReservationNumber",
+                "Value": "6c24888a-24ba-42bf-be19-7ceec6f0ee23",
+              },
+            ],
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`KlarnaKp Reserve 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100.3,
+      "ClientIP": {
+        "address": "203.0.113.10",
+        "type": 0,
+      },
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Test Transaction",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Reserve",
+            "Name": "klarnakp",
+            "Parameters": [
+              {
+                "Name": "Gender",
+                "Value": 1,
+              },
+              {
+                "Name": "OperatingCountry",
+                "Value": "NL",
+              },
+              {
+                "Name": "Pno",
+                "Value": "01011990",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "BillingEmail",
+                "Value": "test@buckaroo.nl",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "BillingStreet",
+                "Value": "Hoftstraat",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "BillingPostalCode",
+                "Value": "1015CJ",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "BillingCity",
+                "Value": "Amsterdam",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "BillingCountry",
+                "Value": "NL",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "BillingFirstName",
+                "Value": "John",
+              },
+              {
+                "GroupType": "BillingCustomer",
+                "Name": "BillingLastName",
+                "Value": "Doe",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "ShippingEmail",
+                "Value": "shipping@buckaroo.nl",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "ShippingStreet",
+                "Value": "Hoftstraat",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "ShippingPostalCode",
+                "Value": "1015CJ",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "ShippingCity",
+                "Value": "Amsterdam",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "ShippingCountry",
+                "Value": "NL",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "ShippingFirstName",
+                "Value": "John",
+              },
+              {
+                "GroupType": "ShippingCustomer",
+                "Name": "ShippingLastName",
+                "Value": "Doe",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticleNumber",
+                "Value": "ABC123",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticlePrice",
+                "Value": 40.1,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticleQuantity",
+                "Value": 2,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticleVat",
+                "Value": 21,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticleTitle",
+                "Value": "Test Product",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticleNumber",
+                "Value": "DEF456",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticlePrice",
+                "Value": 20.1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticleQuantity",
+                "Value": 1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticleVat",
+                "Value": 21,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticleTitle",
+                "Value": "Second Product",
+              },
+            ],
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`addShippingInfo builds the AddShippingInfo request 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "OriginalTransactionKey": "test-original",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "AddShippingInfo",
+            "Name": "klarnakp",
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`extend builds the ExtendReservation request 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "OriginalTransactionKey": "test-original",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "ExtendReservation",
+            "Name": "klarnakp",
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`update builds the UpdateReservation request 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "OriginalTransactionKey": "test-original",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "UpdateReservation",
+            "Name": "klarnakp",
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;

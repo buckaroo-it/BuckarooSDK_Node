@@ -1,0 +1,576 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AfterPayDigiAccept methods Authorize 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100.3,
+      "ClientIP": {
+        "address": "203.0.113.10",
+        "type": 0,
+      },
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Test Transaction",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Authorize",
+            "Name": "afterpaydigiaccept",
+            "Parameters": [
+              {
+                "Name": "AddressesDiffer",
+                "Value": true,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticleId",
+                "Value": "ABC123",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticleUnitprice",
+                "Value": 40.1,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticleQuantity",
+                "Value": 2,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticleDescription",
+                "Value": "Test Product",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticleId",
+                "Value": "DEF456",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticleUnitprice",
+                "Value": 20.1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticleQuantity",
+                "Value": 1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticleDescription",
+                "Value": "Second Product",
+              },
+              {
+                "Name": "BillingInitials",
+                "Value": "R.T",
+              },
+              {
+                "Name": "BillingBirthDate",
+                "Value": "01-01-1990",
+              },
+              {
+                "Name": "BillingFirstName",
+                "Value": "John",
+              },
+              {
+                "Name": "BillingLastName",
+                "Value": "Doe",
+              },
+              {
+                "Name": "BillingStreet",
+                "Value": "Hoftstraat",
+              },
+              {
+                "Name": "BillingHouseNumber",
+                "Value": "123",
+              },
+              {
+                "Name": "BillingCity",
+                "Value": "Amsterdam",
+              },
+              {
+                "Name": "BillingHouseNumberSuffix",
+                "Value": "A",
+              },
+              {
+                "Name": "BillingPostalCode",
+                "Value": "1015CJ",
+              },
+              {
+                "Name": "BillingCountry",
+                "Value": "NL",
+              },
+              {
+                "Name": "BillingEmail",
+                "Value": "test@buckaroo.nl",
+              },
+              {
+                "Name": "BillingPhoneNumber",
+                "Value": "0612345678",
+              },
+              {
+                "Name": "ShippingInitials",
+                "Value": "R.T",
+              },
+              {
+                "Name": "ShippingBirthDate",
+                "Value": "01-01-1990",
+              },
+              {
+                "Name": "ShippingFirstName",
+                "Value": "John",
+              },
+              {
+                "Name": "ShippingLastName",
+                "Value": "Doe",
+              },
+              {
+                "Name": "ShippingStreet",
+                "Value": "Hoftstraat",
+              },
+              {
+                "Name": "ShippingHouseNumber",
+                "Value": "123",
+              },
+              {
+                "Name": "ShippingCity",
+                "Value": "Amsterdam",
+              },
+              {
+                "Name": "ShippingHouseNumberSuffix",
+                "Value": "A",
+              },
+              {
+                "Name": "ShippingPostalCode",
+                "Value": "1015CJ",
+              },
+              {
+                "Name": "ShippingCountryCode",
+                "Value": "NL",
+              },
+              {
+                "Name": "ShippingEmail",
+                "Value": "shipping@buckaroo.nl",
+              },
+              {
+                "Name": "CostCentre",
+                "Value": "Test",
+              },
+              {
+                "Name": "CustomerIPAddress",
+                "Value": "203.0.113.10",
+              },
+              {
+                "Name": "Department",
+                "Value": "Test",
+              },
+              {
+                "Name": "EstablishmentNumber",
+                "Value": 123456,
+              },
+              {
+                "Name": "ShippingCosts",
+                "Value": 0.5,
+              },
+              {
+                "Name": "Accept",
+                "Value": true,
+              },
+            ],
+            "Version": 2,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`AfterPayDigiAccept methods CancelAuthorize 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountCredit": 100.3,
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Refund Transaction Test",
+      "Invoice": "64752550bf1f40",
+      "OriginalTransactionKey": "F1924C34B80D4CA6838F44D6A8A6516A",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "CancelAuthorize",
+            "Name": "afterpaydigiaccept",
+            "Version": 2,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`AfterPayDigiAccept methods Capture 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100.3,
+      "ClientIP": {
+        "address": "203.0.113.10",
+        "type": 0,
+      },
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Test Transaction",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "OriginalTransactionKey": "4FFF55350BAF47F086F75CC693407823",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Capture",
+            "Name": "afterpaydigiaccept",
+            "Version": 2,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`AfterPayDigiAccept methods Pay 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100.3,
+      "ClientIP": {
+        "address": "203.0.113.10",
+        "type": 0,
+      },
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Test Transaction",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Pay",
+            "Name": "afterpaydigiaccept",
+            "Parameters": [
+              {
+                "Name": "AddressesDiffer",
+                "Value": true,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticleId",
+                "Value": "ABC123",
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticleUnitprice",
+                "Value": 40.1,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticleQuantity",
+                "Value": 2,
+              },
+              {
+                "GroupID": 1,
+                "GroupType": "Article",
+                "Name": "ArticleDescription",
+                "Value": "Test Product",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticleId",
+                "Value": "DEF456",
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticleUnitprice",
+                "Value": 20.1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticleQuantity",
+                "Value": 1,
+              },
+              {
+                "GroupID": 2,
+                "GroupType": "Article",
+                "Name": "ArticleDescription",
+                "Value": "Second Product",
+              },
+              {
+                "Name": "BillingInitials",
+                "Value": "R.T",
+              },
+              {
+                "Name": "BillingBirthDate",
+                "Value": "01-01-1990",
+              },
+              {
+                "Name": "BillingFirstName",
+                "Value": "John",
+              },
+              {
+                "Name": "BillingLastName",
+                "Value": "Doe",
+              },
+              {
+                "Name": "BillingStreet",
+                "Value": "Hoftstraat",
+              },
+              {
+                "Name": "BillingHouseNumber",
+                "Value": "123",
+              },
+              {
+                "Name": "BillingCity",
+                "Value": "Amsterdam",
+              },
+              {
+                "Name": "BillingHouseNumberSuffix",
+                "Value": "A",
+              },
+              {
+                "Name": "BillingPostalCode",
+                "Value": "1015CJ",
+              },
+              {
+                "Name": "BillingCountry",
+                "Value": "NL",
+              },
+              {
+                "Name": "BillingEmail",
+                "Value": "test@buckaroo.nl",
+              },
+              {
+                "Name": "BillingPhoneNumber",
+                "Value": "0612345678",
+              },
+              {
+                "Name": "ShippingInitials",
+                "Value": "R.T",
+              },
+              {
+                "Name": "ShippingBirthDate",
+                "Value": "01-01-1990",
+              },
+              {
+                "Name": "ShippingFirstName",
+                "Value": "John",
+              },
+              {
+                "Name": "ShippingLastName",
+                "Value": "Doe",
+              },
+              {
+                "Name": "ShippingStreet",
+                "Value": "Hoftstraat",
+              },
+              {
+                "Name": "ShippingHouseNumber",
+                "Value": "123",
+              },
+              {
+                "Name": "ShippingCity",
+                "Value": "Amsterdam",
+              },
+              {
+                "Name": "ShippingHouseNumberSuffix",
+                "Value": "A",
+              },
+              {
+                "Name": "ShippingPostalCode",
+                "Value": "1015CJ",
+              },
+              {
+                "Name": "ShippingCountryCode",
+                "Value": "NL",
+              },
+              {
+                "Name": "ShippingEmail",
+                "Value": "shipping@buckaroo.nl",
+              },
+              {
+                "Name": "CostCentre",
+                "Value": "Test",
+              },
+              {
+                "Name": "CustomerIPAddress",
+                "Value": "203.0.113.10",
+              },
+              {
+                "Name": "Department",
+                "Value": "Test",
+              },
+              {
+                "Name": "EstablishmentNumber",
+                "Value": 123456,
+              },
+              {
+                "Name": "ShippingCosts",
+                "Value": 0.5,
+              },
+              {
+                "Name": "Accept",
+                "Value": true,
+              },
+            ],
+            "Version": 2,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`AfterPayDigiAccept methods Refund 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountCredit": 100.3,
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Refund Transaction Test",
+      "Invoice": "64752550bf1f40",
+      "OriginalTransactionKey": "5DA00BD4ED4B4AE8B6C0092E138D959B",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Refund",
+            "Name": "afterpaydigiaccept",
+            "Version": 2,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`AfterPayDigiAccept methods Specification 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": undefined,
+    "method": "GET",
+    "path": "/json/Transaction/Specification/afterpaydigiaccept?serviceVersion=2",
+  },
+]
+`;
+
+exports[`authorizeRemainder builds the AuthorizeRemainder request 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100.3,
+      "ClientIP": {
+        "address": "203.0.113.10",
+        "type": 0,
+      },
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Test Transaction",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "AuthorizeRemainder",
+            "Name": "afterpaydigiaccept",
+            "Version": 2,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`payRemainder builds the PayRemainder request 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100.3,
+      "ClientIP": {
+        "address": "203.0.113.10",
+        "type": 0,
+      },
+      "Currency": "EUR",
+      "Description": "Buckaroo Node SDK Test Transaction",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "PayRemainder",
+            "Name": "afterpaydigiaccept",
+            "Version": 2,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;

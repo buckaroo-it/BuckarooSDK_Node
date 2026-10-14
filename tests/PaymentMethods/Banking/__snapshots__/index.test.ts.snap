@@ -1,0 +1,138 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Banking methods InstantPaymentOrder 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountCredit": 75,
+      "Currency": "EUR",
+      "Description": "Banking InstantPaymentOrder Test",
+      "Invoice": "Banking_Instant_Test_1767268800000",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "InstantPaymentOrder",
+            "Name": "banking",
+            "Parameters": [
+              {
+                "Name": "AccountHolderName",
+                "Value": "John Doe",
+              },
+              {
+                "Name": "IBAN",
+                "Value": "NL44RABO0123456789",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Banking methods PaymentOrder with all optional parameters 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountCredit": 150,
+      "Currency": "EUR",
+      "Description": "Banking PaymentOrder Test",
+      "Invoice": "Banking_Test_1767268800000",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "PaymentOrder",
+            "Name": "banking",
+            "Parameters": [
+              {
+                "Name": "AccountHolderName",
+                "Value": "John Doe",
+              },
+              {
+                "Name": "IBAN",
+                "Value": "NL44RABO0123456789",
+              },
+              {
+                "Name": "ProcessingDate",
+                "Value": "12/12/2026",
+              },
+              {
+                "Name": "BIC",
+                "Value": "PAYMINBBXXX",
+              },
+              {
+                "Name": "Purpose",
+                "Value": "Testing",
+              },
+              {
+                "Name": "StructuredIssuerType",
+                "Value": "ISO",
+              },
+              {
+                "Name": "StructuredReference",
+                "Value": "RF18539007547034",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Banking methods PaymentOrder with minimal parameters 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountCredit": 100,
+      "Currency": "EUR",
+      "Description": "Banking PaymentOrder Minimal Test",
+      "Invoice": "Banking_Minimal_Test_1767268800000",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "PaymentOrder",
+            "Name": "banking",
+            "Parameters": [
+              {
+                "Name": "AccountHolderName",
+                "Value": "John Doe",
+              },
+              {
+                "Name": "IBAN",
+                "Value": "NL44RABO0123456789",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;

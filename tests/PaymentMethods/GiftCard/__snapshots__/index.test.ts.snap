@@ -1,0 +1,149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GiftCard methods Pay 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 10,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Pay",
+            "Name": "boekenbon",
+            "Parameters": [
+              {
+                "Name": "IntersolveCardnumber",
+                "Value": "0000000000000000001",
+              },
+              {
+                "Name": "IntersolvePIN",
+                "Value": "1000",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`GiftCard methods Pay Reminder 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 50,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Pay",
+            "Name": "boekenbon",
+            "Parameters": [
+              {
+                "Name": "IntersolveCardnumber",
+                "Value": "0000000000000000001",
+              },
+              {
+                "Name": "IntersolvePIN",
+                "Value": "1000",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 40,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "OriginalTransactionKey": "test-related-transaction",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "PayRemainder",
+            "Name": "boekenbon",
+            "Parameters": [
+              {
+                "Name": "IntersolveCardnumber",
+                "Value": "0000000000000000001",
+              },
+              {
+                "Name": "IntersolvePIN",
+                "Value": "1000",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`GiftCard methods Refund 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountCredit": 0.01,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "OriginalTransactionKey": "test-transactionKey",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Refund",
+            "Name": "boekenbon",
+            "Parameters": [
+              {
+                "Name": "Email",
+                "Value": "test@buckaroo.nl",
+              },
+              {
+                "Name": "LastName",
+                "Value": "Acceptatie",
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;

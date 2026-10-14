@@ -1,9 +1,12 @@
-import { getMethod, IConfig, ICredentials, PaymentMethodInstance, ServiceCode } from './Utils';
-import { HttpsClient, Request } from './Request';
+import { createPaymentMethod } from './Utils/MethodTypes';
+import { IConfig, ICredentials, PaymentMethodInstance, ServiceCode } from './Utils';
+import { DataRequestData, HttpsClient, Request } from './Request';
+import { IRequest } from './Models';
 import { Agent } from 'https';
 import NoService from './PaymentMethods/NoService';
 import { ActiveSubscriptions, TransactionService } from './Services';
 import { Credentials } from './Handlers';
+import { bindClient } from './Request/ClientBinding';
 
 export default class Buckaroo {
     private static _client: Buckaroo;
@@ -12,7 +15,7 @@ export default class Buckaroo {
     private _config: IConfig;
 
     constructor(credentials: ICredentials, config?: IConfig, agent?: Agent) {
-        this._credentials = new Credentials(credentials.secretKey, credentials.websiteKey);
+        this._credentials = new Credentials(credentials.secretKey, credentials.websiteKey, this);
         this._config = { ...(config ?? { mode: 'TEST', currency: 'EUR' }) };
         this._httpClient = new HttpsClient(agent, this._config.timeout);
     }
@@ -39,8 +42,8 @@ export default class Buckaroo {
 
     get batch() {
         return {
-            transaction: Request.BatchTransaction,
-            data: Request.BatchDataRequest,
+            transaction: (payload?: IRequest[]) => bindClient(Request.BatchTransaction(payload), this),
+            data: (payload?: DataRequestData[]) => bindClient(Request.BatchDataRequest(payload), this),
         };
     }
 
@@ -52,9 +55,9 @@ export default class Buckaroo {
     method<Name extends ServiceCode>(name: Name): PaymentMethodInstance<Name>;
     method<K extends ServiceCode>(name?: K) {
         if (!name) {
-            return new NoService();
+            return new NoService(undefined, this);
         }
-        return getMethod(name);
+        return createPaymentMethod(name, this);
     }
 
     confirmCredentials() {
@@ -62,11 +65,11 @@ export default class Buckaroo {
     }
 
     transaction(key: string) {
-        return new TransactionService(key);
+        return new TransactionService(key, this);
     }
 
     getActiveSubscriptions() {
-        return new ActiveSubscriptions().get();
+        return new ActiveSubscriptions(this).get();
     }
 }
 

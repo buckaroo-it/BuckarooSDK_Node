@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Thunes methods authorize 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 10,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Authorize",
+            "Name": "thunes",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Thunes methods cancel 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "OriginalTransactionKey": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Cancel",
+            "Name": "thunes",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Thunes methods capture 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100,
+      "Currency": "EUR",
+      "OriginalTransactionKey": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Capture",
+            "Name": "thunes",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Thunes methods getStatus 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "OriginalTransactionKey": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "getStatus",
+            "Name": "thunes",
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;

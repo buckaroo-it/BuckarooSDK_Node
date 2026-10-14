@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NoService methods Pay 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 100,
+      "ContinueOnIncomplete": 1,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "ServicesExcludedForClient": "mbway",
+      "ServicesSelectableByClient": "ideal,bancontactmrcash,paypal",
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;

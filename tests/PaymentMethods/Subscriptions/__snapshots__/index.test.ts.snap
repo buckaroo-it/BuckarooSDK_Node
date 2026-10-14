@@ -1,0 +1,390 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Subscription methods Combined Subscription 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 10.1,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://buckaroo.dev/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Pay",
+            "Name": "ideal",
+            "Parameters": [
+              {
+                "Name": "Issuer",
+                "Value": "ABNANL2A",
+              },
+            ],
+            "Version": 2,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+      "StartRecurrent": true,
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;
+
+exports[`Subscription methods Create 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "CreateSubscription",
+            "Name": "subscriptions",
+            "Parameters": [
+              {
+                "Name": "ConfigurationCode",
+                "Value": "1jg5ke6j",
+              },
+              {
+                "GroupType": "Debtor",
+                "Name": "Code",
+                "Value": "johnsmith4",
+              },
+              {
+                "GroupType": "AddRatePlan",
+                "Name": "StartDate",
+                "Value": "2026-01-01",
+              },
+              {
+                "GroupType": "AddRatePlan",
+                "Name": "BillingTiming",
+                "Value": 1,
+              },
+              {
+                "GroupType": "AddRatePlan",
+                "Name": "RatePlanName",
+                "Value": "Test Rate Plan",
+              },
+              {
+                "GroupType": "AddRatePlan",
+                "Name": "RatePlanDescription",
+                "Value": "This is a test rate plan",
+              },
+              {
+                "GroupType": "AddRatePlan",
+                "Name": "Currency",
+                "Value": "EUR",
+              },
+              {
+                "GroupType": "AddRatePlan",
+                "Name": "BillingInterval",
+                "Value": "Weekly",
+              },
+              {
+                "GroupType": "AddRatePlan",
+                "Name": "TermStartDay",
+                "Value": 1,
+              },
+              {
+                "GroupType": "AddRatePlanCharge",
+                "Name": "RatePlanChargeName",
+                "Value": "Rate Plan Charge",
+              },
+              {
+                "GroupType": "AddRatePlanCharge",
+                "Name": "RatePlanChargeDescription",
+                "Value": "This is a test rate plan charge",
+              },
+              {
+                "GroupType": "AddRatePlanCharge",
+                "Name": "UnitOfMeasure",
+                "Value": "Quantity",
+              },
+              {
+                "GroupType": "AddRatePlanCharge",
+                "Name": "BaseNumberOfUnits",
+                "Value": 1,
+              },
+              {
+                "GroupType": "AddRatePlanCharge",
+                "Name": "PartialBilling",
+                "Value": "Billfull",
+              },
+              {
+                "GroupType": "AddRatePlanCharge",
+                "Name": "PricePerUnit",
+                "Value": 2,
+              },
+              {
+                "GroupType": "AddRatePlanCharge",
+                "Name": "PriceIncludesVat",
+                "Value": true,
+              },
+              {
+                "GroupType": "AddRatePlanCharge",
+                "Name": "VatPercentage",
+                "Value": 21,
+              },
+              {
+                "GroupType": "AddRatePlanCharge",
+                "Name": "RatePlanChargeType",
+                "Value": "Recurring",
+              },
+            ],
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Subscription methods Delete Subscription Config 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "DeletePaymentConfiguration",
+            "Name": "subscriptions",
+            "Parameters": [
+              {
+                "Name": "SubscriptionGuid",
+                "Value": "test-transactionKey",
+              },
+            ],
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Subscription methods Stop Subscription 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "StopSubscription",
+            "Name": "subscriptions",
+            "Parameters": [
+              {
+                "Name": "SubscriptionGuid",
+                "Value": "test-transactionKey",
+              },
+            ],
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Subscription methods Subscription Info 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "SubscriptionInfo",
+            "Name": "subscriptions",
+            "Parameters": [
+              {
+                "Name": "SubscriptionGuid",
+                "Value": "test-transactionKey",
+              },
+            ],
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Subscription methods Subscription Pause 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "PauseSubscription",
+            "Name": "subscriptions",
+            "Parameters": [
+              {
+                "Name": "SubscriptionGuid",
+                "Value": "test-transactionKey",
+              },
+              {
+                "Name": "ResumeDate",
+                "Value": "2030-01-01",
+              },
+            ],
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Subscription methods Subscription Resume 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "ResumeSubscription",
+            "Name": "subscriptions",
+            "Parameters": [
+              {
+                "Name": "SubscriptionGuid",
+                "Value": "test-transactionKey",
+              },
+              {
+                "Name": "ResumeDate",
+                "Value": "2030-01-01",
+              },
+            ],
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Subscription methods Update 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "UpdateSubscription",
+            "Name": "subscriptions",
+            "Parameters": [
+              {
+                "Name": "ConfigurationCode",
+                "Value": "1jg5ke6j",
+              },
+              {
+                "Name": "SubscriptionGuid",
+                "Value": "test-transactionKey",
+              },
+              {
+                "GroupType": "Email",
+                "Name": "Email",
+                "Value": "test@buckaroo.nl",
+              },
+            ],
+            "Version": 1,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;
+
+exports[`Subscription methods Update Combined Subscription 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "AmountDebit": 10.1,
+      "Currency": "EUR",
+      "Invoice": "64752550bf1f40",
+      "Order": "64752550bf1f40",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Pay",
+            "Name": "ideal",
+            "Parameters": [
+              {
+                "Name": "Issuer",
+                "Value": "ABNANL2A",
+              },
+            ],
+            "Version": 2,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+      "StartRecurrent": true,
+    },
+    "method": "POST",
+    "path": "/json/Transaction",
+  },
+]
+`;

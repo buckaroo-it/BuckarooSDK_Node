@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing IdealQR methods Pay 1`] = `
+[
+  {
+    "channel": "Web",
+    "data": {
+      "Currency": "EUR",
+      "PushURL": "https://example.com/push",
+      "ReturnURL": "https://example.com/return",
+      "Services": {
+        "ServiceList": [
+          {
+            "Action": "Generate",
+            "Name": "idealqr",
+            "Parameters": [
+              {
+                "Name": "Amount",
+                "Value": 1,
+              },
+              {
+                "Name": "AmountIsChangeable",
+                "Value": true,
+              },
+              {
+                "Name": "PurchaseId",
+                "Value": "Testpurchase123",
+              },
+              {
+                "Name": "Description",
+                "Value": "Test purchase",
+              },
+              {
+                "Name": "IsOneOff",
+                "Value": false,
+              },
+              {
+                "Name": "Expiration",
+                "Value": "2030-09-30",
+              },
+              {
+                "Name": "IsProcessing",
+                "Value": false,
+              },
+              {
+                "Name": "MinAmount",
+                "Value": 0.1,
+              },
+              {
+                "Name": "MaxAmount",
+                "Value": 10,
+              },
+              {
+                "Name": "ImageSize",
+                "Value": 2000,
+              },
+            ],
+            "Version": 0,
+          },
+        ],
+      },
+      "ServicesSelectableByClient": "",
+    },
+    "method": "POST",
+    "path": "/json/DataRequest",
+  },
+]
+`;

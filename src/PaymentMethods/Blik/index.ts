@@ -4,7 +4,6 @@ import { IPay, Pay } from './Models/Pay';
 import { ServiceCode } from '../../Utils';
 
 export default class Blik extends PayablePaymentMethod {
-
     public defaultServiceCode(): ServiceCode {
         return 'blik';
     }
