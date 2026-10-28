@@ -11,10 +11,10 @@ All notable changes to this project will be documented in this file.
 
 ## [1.13.0]
 - BTI-1350 Remove GoSettle (Knaken) as a payment method, including its public export.
-- BTI-1689 Security improvements: form pushes require a signed `brq_websitekey` matching the configured store, requests keep their original client, and IP strings over 256 characters are rejected.
+- BTI-1689 Security improvements.
 
 ## [1.12.3]
-- BTI-1607 Improve push signature validation in `ReplyHandler`; add `data()` for the validated push fields; `validate()` returns `false` instead of throwing.
+- BTI-1607 Push signature | Security improvements.
 
 ## [1.12.2]
 - BTI-1297 Update README.md.
