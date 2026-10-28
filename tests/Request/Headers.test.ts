@@ -1,3 +1,4 @@
+import { version } from '../../package.json';
 import Headers from '../../src/Request/Headers';
 
 describe('Testing request headers', () => {
@@ -23,5 +24,10 @@ describe('Testing request headers', () => {
             ModuleSupplier: 'Buckaroo',
         });
         expect(JSON.parse(headers.setSoftwareHeader().headers.Software!).PlatformName).toBe('Node SDK');
+    });
+    test('sends the package.json version as the default platform version', () => {
+        const headers = new Headers();
+        expect(JSON.parse(headers.headers.Software!).PlatformVersion).toBe(version);
+        expect(JSON.parse(headers.setSoftwareHeader().headers.Software!).PlatformVersion).toBe(version);
     });
 });
