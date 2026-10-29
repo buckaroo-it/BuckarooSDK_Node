@@ -1,6 +1,7 @@
 import { Address, Company, IAddress, ICompany, ICustomer, IPerson, IPhone, Model, Person } from '../../../Models';
 import { In3Phone } from './Phone';
 import { RecipientCategory } from '../../../Constants';
+import { ParameterValidationError } from '../../../Errors';
 
 export interface IIn3Recipient extends ICustomer {
     recipient: Partial<IIn3Company | IIn3Person>;
@@ -17,7 +18,7 @@ export class In3Recipient extends Model implements In3Recipient {
             this.set('recipient', new In3Company(value));
         } else if (value.category === RecipientCategory.PERSON) {
             this.set('recipient', new In3Person(value));
-        } else throw new Error('Invalid recipient category');
+        } else throw new ParameterValidationError('Invalid recipient category', { parameterName: 'category' });
     }
 
     get address(): IAddress {

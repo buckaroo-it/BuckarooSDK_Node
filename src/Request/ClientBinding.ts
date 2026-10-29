@@ -1,5 +1,6 @@
 import Buckaroo from '../buckaroo';
 import type { ICredentials } from '../Utils/Types';
+import { BuckarooError } from '../Errors';
 
 // Keep ownership out of consumer subclasses and serialized request data.
 const bindings = new WeakMap<object, { client?: Buckaroo; credentials?: ICredentials }>();
@@ -16,7 +17,7 @@ export function bindClient<T extends object>(
 export function clientFor(target: object): Buckaroo {
     const binding = bindings.get(target);
     const client = binding?.client ?? Buckaroo.Client;
-    if (!client) throw new Error('Initialize a Buckaroo client before using this operation.');
+    if (!client) throw new BuckarooError('Initialize a Buckaroo client before using this operation.');
     if (!binding?.client) bindClient(target, client, binding?.credentials);
     return client;
 }

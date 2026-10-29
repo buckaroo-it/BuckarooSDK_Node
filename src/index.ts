@@ -1,6 +1,7 @@
 import Buckaroo from './buckaroo';
 
 export * from './Constants';
+export * from './Errors';
 export * from './Handlers';
 export * from './Models';
 export * from './PaymentMethods';

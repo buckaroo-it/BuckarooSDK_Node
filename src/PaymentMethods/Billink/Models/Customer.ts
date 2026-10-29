@@ -2,6 +2,7 @@ import { Phone } from './Phone';
 import { Address } from './Address';
 import { Company, Customer, IAddress, ICompany, IPerson, IPhone, Person } from '../../../Models';
 import { RecipientCategory } from '../../../Constants';
+import { ParameterValidationError } from '../../../Errors';
 
 export class BillinkCustomer extends Customer {
     set address(address: IAddress) {
@@ -17,7 +18,7 @@ export class BillinkCustomer extends Customer {
             this.set('recipient', new BillinkPerson(recipient));
         } else if (recipient.category === RecipientCategory.COMPANY) {
             this.set('recipient', new BillinkCompany(recipient));
-        } else throw new Error('Invalid recipient category');
+        } else throw new ParameterValidationError('Invalid recipient category', { parameterName: 'category' });
     }
 }
 
