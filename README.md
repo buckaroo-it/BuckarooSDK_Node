@@ -135,37 +135,6 @@ if (reply.isValid()) {
 }
 ```
 
-### Handling errors
-
-A payment that Buckaroo declines or rejects is a normal response. Check it with `isSuccess()`, `getStatusCode()` and `getErrorMessage()`.
-
-When a request cannot be sent or completed, the SDK throws an error. All SDK errors extend `BuckarooError`:
-
-| Error                      | When                                                                     |
-| -------------------------- | ------------------------------------------------------------------------ |
-| `AuthenticationError`      | Missing credentials, or the API answers with HTTP 401 or 403             |
-| `ParameterValidationError` | Invalid or missing input. `parameterName` names the field when known     |
-| `BuckarooApiError`         | The API answers with another non-2xx status, or the request fails to run |
-
-HTTP errors carry `httpStatus`, `body` and `headers`. The original error is available as `cause`.
-
-```javascript
-import { AuthenticationError, BuckarooApiError } from '@buckaroo/buckaroo_sdk';
-
-try {
-    const payment = await buckarooClient.method('ideal').pay({ amountDebit: 10 }).request();
-    if (!payment.isSuccess()) console.warn(payment.getErrorMessage());
-} catch (error) {
-    if (error instanceof AuthenticationError) {
-        // check the website key and secret key
-    } else if (error instanceof BuckarooApiError) {
-        console.error(error.httpStatus, error.body);
-    } else {
-        throw error;
-    }
-}
-```
-
 More runnable examples are in [`example/`](https://github.com/buckaroo-it/BuckarooSDK_Node/tree/master/example).
 
 ---
