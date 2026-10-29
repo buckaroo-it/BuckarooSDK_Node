@@ -2,6 +2,7 @@ import { ICredentials } from '../Utils';
 import Buckaroo from '../buckaroo';
 import { Request } from '../Request';
 import { RequestTypes } from '../Constants';
+import { AuthenticationError } from '../Errors';
 import { bindClient, clientFor } from '../Request/ClientBinding';
 
 export class Credentials implements ICredentials {
@@ -9,7 +10,7 @@ export class Credentials implements ICredentials {
     websiteKey: string;
 
     constructor(secretKey: string, websiteKey: string, client: Buckaroo = Buckaroo.Client) {
-        if (!secretKey || !websiteKey) throw new Error('Missing required credentials.');
+        if (!secretKey || !websiteKey) throw new AuthenticationError('Missing required credentials.');
 
         bindClient(this, client);
         this.secretKey = secretKey;

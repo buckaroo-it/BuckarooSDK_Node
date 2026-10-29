@@ -1,4 +1,5 @@
 import { RequestTypes } from '../Constants';
+import { ParameterValidationError } from '../Errors';
 import { IParameter, IRequest, IService, ServiceList, ServiceParameter } from '../Models';
 import Buckaroo, { DataRequestData, PaymentMethodInstance } from '../index';
 import { Request, TransactionData } from '../Request';
@@ -94,7 +95,9 @@ export default abstract class PaymentMethod {
         for (const fieldKey of requiredFields) {
             let field = this._payload[fieldKey] ?? (clientFor(this).config as IRequest)[fieldKey];
             if (field === undefined) {
-                throw new Error(`Missing required config parameter ${String(fieldKey)}`);
+                throw new ParameterValidationError(`Missing required config parameter ${String(fieldKey)}`, {
+                    parameterName: String(fieldKey),
+                });
             }
             this._payload[fieldKey] = field;
         }
