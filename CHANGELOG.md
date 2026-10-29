@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
-## [2.0.0]
+## [1.14.0]
 - BTI-1785 Breaking: add typed errors (`BuckarooError`, `AuthenticationError`, `ParameterValidationError`, `BuckarooApiError`). HTTP failures now throw `BuckarooApiError` or `AuthenticationError` instead of the raw response body; the body is available as `error.body`. Network failures and timeouts now throw `BuckarooApiError`; the original axios error is available as `error.cause`.
 - BTI-1824 Fix: Software header sends an outdated PlatformVersion.
 
