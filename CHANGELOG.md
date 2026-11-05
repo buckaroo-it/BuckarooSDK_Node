@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 ## [1.14.0]
 - BTI-1785 Breaking: add typed errors (`BuckarooError`, `AuthenticationError`, `ParameterValidationError`, `BuckarooApiError`). HTTP failures now throw `BuckarooApiError` or `AuthenticationError` instead of the raw response body; the body is available as `error.body`. Network failures and timeouts now throw `BuckarooApiError`; the original axios error is available as `error.cause`.
 - BTI-1824 Fix: Software header sends an outdated PlatformVersion.
+- BTI-1825 Docs: add release history for earlier versions to CHANGELOG.md.
 
 ## [1.13.0]
 - BTI-1350 Remove GoSettle (Knaken) as a payment method, including its public export.
