@@ -1,5 +1,6 @@
 import * as AllPaymentMethods from '../PaymentMethods';
 import type Buckaroo from '../buckaroo';
+import { ParameterValidationError } from '../Errors';
 
 export type AvailablePaymentMethods = typeof AllPaymentMethods;
 export type ServiceCode = keyof AvailablePaymentMethods;
@@ -15,7 +16,7 @@ export function createPaymentMethod<Code extends ServiceCode>(
 ): PaymentMethodInstance<Code> {
     const methodClass = AllPaymentMethods[code];
     if (!methodClass) {
-        throw new Error(`Invalid payment method code: ${code}`);
+        throw new ParameterValidationError(`Invalid payment method code: ${code}`);
     }
 
     return new methodClass(code as any, client) as PaymentMethodInstance<Code>;

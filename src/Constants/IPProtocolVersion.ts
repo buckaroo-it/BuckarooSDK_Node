@@ -1,6 +1,7 @@
 import * as IpAddress from 'ip-address';
 
 import { getIPAddress } from '../Utils';
+import { ParameterValidationError } from '../Errors';
 
 export class IPProtocolVersion {
     public static readonly IPV4: number = 0;
@@ -8,7 +9,7 @@ export class IPProtocolVersion {
 
     public static getVersion(ipAddress: string = '0.0.0.0'): number {
         if (ipAddress.length > 256) {
-            throw new Error('IP address exceeds 256 characters');
+            throw new ParameterValidationError('IP address exceeds 256 characters');
         }
         if (IpAddress.Address4.isValid(ipAddress)) {
             return IPProtocolVersion.IPV4;
@@ -16,7 +17,7 @@ export class IPProtocolVersion {
         if (IpAddress.Address6.isValid(ipAddress)) {
             return IPProtocolVersion.IPV6;
         }
-        throw new Error(`Invalid IP address: ${ipAddress}`);
+        throw new ParameterValidationError(`Invalid IP address: ${ipAddress}`);
     }
 }
 

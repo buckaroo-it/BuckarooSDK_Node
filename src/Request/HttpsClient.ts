@@ -2,6 +2,7 @@ import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { HttpResponseConstructor } from '../Models';
 import { RequestConfig } from './Headers';
 import { HttpMethods } from '../Constants';
+import { AuthenticationError, BuckarooApiError } from '../Errors';
 import { Agent } from 'https';
 
 export default class HttpsClient {
@@ -41,10 +42,23 @@ export default class HttpsClient {
 
             return new responseClass(response, response.data) as InstanceType<R>;
         } catch (error: unknown) {
-            if (axios.isAxiosError(error)) {
-                throw error.response?.data ?? error;
+            if (!axios.isAxiosError(error)) {
+                throw error;
             }
-            throw error;
+            const { response } = error;
+            if (!response) {
+                throw new BuckarooApiError(`Request failed: ${error.message}`, { cause: error });
+            }
+            const details = {
+                httpStatus: response.status,
+                body: response.data,
+                headers: { ...response.headers },
+                cause: error,
+            };
+            if (response.status === 401 || response.status === 403) {
+                throw new AuthenticationError(`Authentication failed with HTTP status ${response.status}`, details);
+            }
+            throw new BuckarooApiError(`Buckaroo API returned HTTP status ${response.status}`, details);
         }
     }
 }
